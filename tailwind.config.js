@@ -19,7 +19,11 @@ module.exports = {
       colors: {
         bgGrey: "#F4F8FF",
         textGrey: "#3A3A3A",
-        borderGrey:'#808080'
+        borderGrey: "#808080",
+        lineGrey: "#C4C4C4",
+        textPrimary: "#041A50",
+        textSecondary: "#5B5B5B",
+        borderBlue: "#00B2BF",
       },
       keyframes: {
         "accordion-down": {

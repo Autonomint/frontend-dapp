@@ -9,6 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        primary:
+          "border-borderBlue rounded-[100px] border bg-[linear-gradient(180deg,_#00679F_0%,#041A50_100%)] shadow-[0px_2px_4px 0px_rgba(0,0,0,0.25)]",
         default:
           "bg-slate-900 text-slate-50 shadow hover:bg-slate-900/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90",
         destructive:
@@ -20,17 +22,19 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
+        showMore: " bg-transparent hover:bg-slate-300 ",
       },
       size: {
-        default: "h-9 px-4 py-2",
+        primary: "px-5 py-[10px]",
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
         icon: "h-9 w-9",
+        full:"h-full px-5 py-[10px]"
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: "primary",
+      size: "primary",
     },
   }
 );
