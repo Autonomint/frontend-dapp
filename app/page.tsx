@@ -1,14 +1,19 @@
-import HandleShowMore from "@/components/Header/HandleShowMore";
 import HeaderItems from "@/components/Header/HeaderItems";
 import SideBar from "@/components/Sidebar/SideBar";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import showMore from "@/app/assets/arrow_circle_down.svg";
-import wallets from "@/app/assets/wallet icons.svg";
-import linkIcon from "@/app/assets/link.svg";
-import heroPattern from "@/app/assets/gridBg.svg";
-import addIcon from "@/app/assets/add_circle.svg";
+import heroPattern from "@/app/assets/gridBg.svg"
 import DashboardStatsItem from "@/components/Dashboard/DashboardStatsItem";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import CreateNewDeposit from "@/components/Dashboard/CreateNewDeposit";
 
 const headerItems = [
   {
@@ -70,6 +75,25 @@ const dasboardStatsItem = [
   },
 ];
 
+const tableDetails = [
+  {
+    ethDeposited: "10.23",
+    amintMinted: "12.0123",
+    abondMinted: "12.0123",
+    index: "index",
+    liquidated: "Yes",
+    interestRate: "3%",
+  },
+  {
+    ethDeposited: "10.23",
+    amintMinted: "12.0123",
+    abondMinted: "12.0123",
+    index: "index",
+    liquidated: "No",
+    interestRate: "4%",
+  },
+];
+
 export default function Home() {
   return (
     <main className="grid min-h-screen grid-cols-[140px_1fr]">
@@ -87,7 +111,7 @@ export default function Home() {
             className="px-4 pb-4 py-0 flex flex-col gap-[10px] items-center h-full"
           >
             <Image src={showMore} alt="show more" width={35} height={35} />
-            <p className="text-borderGrey text-base font-medium">Show More</p>
+            <p className="text-borderGrey text-base font-medium whitespace-nowrap">Show More</p>
           </Button>
         </div>
         {/* <div className="flex px-4 py-5">
@@ -140,7 +164,7 @@ export default function Home() {
             </Button>
           </div>
         </div> */}
-        <div className="p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col gap-[30px] self-stretch overflow-hidden h-full">
+        <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col gap-[30px] self-stretch overflow-hidden h-full">
           {/* <div className={`absolute w-[1740px] rotate-[14deg] h-[1200px] z-0`}>
             <Image
               src={heroPattern}
@@ -166,31 +190,43 @@ export default function Home() {
             ))}
           </div>
           <div className="w-full bg-lineGrey h-[1px] my-[30px]"></div>
-          <div className="flex justify-between items-center mb-[30px]">
-            <div className="flex flex-col gap-[15px] ">
-              <h2 className="text-textPrimary font-medium text-4xl tracking-[-1.8px]">
-                Your Deposits
-              </h2>
-              <p className="text-textSecondary">
-                A list of all the deposits you have made.
-              </p>
-            </div>
-            <Button
-              variant={"primary"}
-              size={"full"}
-              className="flex gap-[10px] items-center justify-center"
-            >
-              <Image
-                src={addIcon}
-                alt="add icon"
-                width={24}
-                height={24}
-              ></Image>
-              <p className="text-white bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] text-transparent font-semibold text-base">
-                Create a New Deposit
-              </p>
-            </Button>
-          </div>
+          <CreateNewDeposit />
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-textGrey">ETH Deposited</TableHead>
+                <TableHead className="text-textGrey">AMint minted</TableHead>
+                <TableHead className="text-textGrey">Index</TableHead>
+                <TableHead className="text-textGrey">Interest rate</TableHead>
+                <TableHead className="text-textGrey">Abond minted</TableHead>
+                <TableHead className="text-textGrey">Liquidated</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {tableDetails.map((details, index) => (
+                <TableRow key={index}>
+                  <TableCell className="text-textGrey">
+                    {details.ethDeposited}
+                  </TableCell>
+                  <TableCell className="text-textGrey">
+                    {details.amintMinted}
+                  </TableCell>
+                  <TableCell className="text-textGrey">
+                    {details.index}
+                  </TableCell>
+                  <TableCell className="text-textGrey">
+                    {details.interestRate}
+                  </TableCell>
+                  <TableCell className="text-textGrey">
+                    {details.abondMinted}
+                  </TableCell>
+                  <TableCell className="text-textGrey">
+                    {details.liquidated}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
       </div>
     </main>
