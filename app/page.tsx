@@ -14,6 +14,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import CreateNewDeposit from "@/components/Dashboard/CreateNewDeposit";
+import ProductList from "@/components/Markets/ProductList";
+import Divider from "@/components/Divider/Divider";
 
 const headerItems = [
   {
@@ -53,25 +55,21 @@ const headerItems2nd = [
 ];
 const dasboardStatsItem = [
   {
-    heading: "Total amount of ETH Deposited",
-    value: "$10.23",
-    subheadingBefore: "Across a total of",
-    subheadingHighlight: "3",
-    subheadingAfter: "investments",
+    heading: "Total amount of AMINT Deposited",
+    value: "1324.32",
   },
   {
-    heading: "Total amount of Amint received.",
-    value: "12.0123",
-    subheadingBefore: "",
-    subheadingHighlight: "7.204",
-    subheadingAfter: "Amint is available in your wallet.",
+    heading: "Total Number of Deposits",
+    value: "6",
+    
   },
   {
-    heading: "Total amount of Abond received.",
+    heading: "Total accumulated Fees",
     value: "12.0123",
-    subheadingBefore: "",
-    subheadingHighlight: "7.204",
-    subheadingAfter: "Abond is available in your wallet.",
+  },
+  {
+    heading: "Total Fees withdrawn",
+    value: "5.34",
   },
 ];
 
@@ -164,7 +162,7 @@ export default function Home() {
             </Button>
           </div>
         </div> */}
-        <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col gap-[30px] self-stretch overflow-hidden h-full">
+        <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full">
           {/* <div className={`absolute w-[1740px] rotate-[14deg] h-[1200px] z-0`}>
             <Image
               src={heroPattern}
@@ -173,23 +171,23 @@ export default function Home() {
               style={{ objectFit: "cover", opacity: 0.4 }}
             ></Image>
           </div> */}
+
+          <ProductList></ProductList>
+          <Divider/>
           <div className="flex gap-[30px]">
             {dasboardStatsItem.map((item, index) => (
-              <div className="flex border border-lineGrey min-w-[390px] w-full">
+              <div className="flex border border-lineGrey min-w-[150px] w-full">
                 <DashboardStatsItem
                   key={index}
                   props={{
                     heading: item.heading,
                     value: item.value,
-                    subheadingBefore: item.subheadingBefore,
-                    subheadingHighlight: item.subheadingHighlight,
-                    subheadingAfter: item.subheadingAfter,
                   }}
                 />
               </div>
             ))}
           </div>
-          <div className="w-full bg-lineGrey h-[1px] my-[30px]"></div>
+          <Divider/>
           <CreateNewDeposit />
           <Table>
             <TableHeader>

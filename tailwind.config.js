@@ -23,6 +23,7 @@ module.exports = {
         lineGrey: "#C4C4C4",
         textPrimary: "#041A50",
         textSecondary: "#5B5B5B",
+        textHighlight:'#020202',
         borderBlue: "#00B2BF",
       },
       keyframes: {
