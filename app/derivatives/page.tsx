@@ -1,5 +1,7 @@
-import heroPattern from "@/app/assets/gridBg.svg";
+import CreateNewDeposit from "@/components/Dashboard/CreateNewDeposit";
 import DashboardStatsItem from "@/components/Dashboard/DashboardStatsItem";
+import Divider from "@/components/Divider/Divider";
+import ProductList from "@/components/Markets/ProductList";
 import {
   Table,
   TableBody,
@@ -8,68 +10,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import CreateNewDeposit from "@/components/Dashboard/CreateNewDeposit";
-import ProductList from "@/components/Markets/ProductList";
-import Divider from "@/components/Divider/Divider";
+import React from "react";
 
-const headerItems = [
-  {
-    headline: "AMINT Price",
-    value: "$1.023",
-  },
-  {
-    headline: "ABOND Price",
-    value: "$1.012",
-  },
-  {
-    headline: "AMINT Supply",
-    value: "$1M",
-  },
-  {
-    headline: "Current APY",
-    value: "5%",
-  },
-  {
-    headline: "Options Fees",
-    value: "3%",
-  },
-];
-const headerItems2nd = [
-  {
-    headline: "Total Value Locked",
-    value: "$2.23M",
-  },
-  {
-    headline: "dCDS Pooled Amount",
-    value: "$2.23M",
-  },
-  {
-    headline: "Downside Protection",
-    value: "3%",
-  },
-];
 const dasboardStatsItem = [
   {
     heading: "Total amount of AMINT Deposited",
     value: "1324.32",
-    subheadingBefore: "Across a total of",
-    subheadingHighlight: "3",
-    subheadingAfter: "investments",
-    showSubHeading: true,
+    showSubHeading: false,
   },
   {
-    heading: "Total amount of AMINT received.",
-    value: "12.0123",
-    subheadingHighlight: "7.204",
-    subheadingAfter: "AMINT is available in your wallet",
-    showSubHeading: true,
+    heading: "Total Number of Deposits",
+    value: "6",
+    showSubHeading: false,
   },
   {
-    heading: "Total amount of ABOND received.",
+    heading: "Total accumulated Fees",
     value: "12.0123",
-    subheadingHighlight: "7.204",
-    subheadingAfter: "ABOND is available in your wallet.",
-    showSubHeading: true,
+    showSubHeading: false,
+  },
+  {
+    heading: "Total Fees withdrawn",
+    value: "5.34",
+    showSubHeading: false,
   },
 ];
 
@@ -92,7 +54,7 @@ const tableDetails = [
   },
 ];
 
-export default function Home() {
+const page = () => {
   return (
     <>
       {/* <div className="flex px-4 py-5">
@@ -154,6 +116,9 @@ export default function Home() {
               style={{ objectFit: "cover", opacity: 0.4 }}
             ></Image>
           </div> */}
+
+        <ProductList></ProductList>
+        <Divider />
         <div className="flex gap-[30px]">
           {dasboardStatsItem.map((item, index) => (
             <div className="flex border border-lineGrey min-w-[150px] w-full">
@@ -162,10 +127,7 @@ export default function Home() {
                 props={{
                   heading: item.heading,
                   value: item.value,
-                  showSubHeading: true,
-                  subheadingBefore: item.subheadingBefore,
-                  subheadingHighlight: item.subheadingHighlight,
-                  subheadingAfter: item.subheadingAfter,
+                  showSubHeading: item.showSubHeading,
                 }}
               />
             </div>
@@ -208,4 +170,6 @@ export default function Home() {
       </div>
     </>
   );
-}
+};
+
+export default page;

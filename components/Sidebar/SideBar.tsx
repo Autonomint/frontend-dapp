@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import logo from "@/app/assets/logo.svg";
@@ -7,31 +8,61 @@ import derivatives from "@/app/assets/toll.svg";
 import NavItems from "./NavItems";
 import Profile from "./Profile";
 import metamask from "@/app/assets/metamask.svg";
+import { useSelectedLayoutSegment } from "next/navigation";
+import Link from "next/link";
 
 const navItemsList = [
   {
     image: currencyExchange,
-    text: "Deposit & Withdraw",
+    label: "Deposit & Withdraw",
+    href: "/",
+    targetSegment: null,
   },
   {
     image: derivatives,
-    text: "Derivatives",
+    label: "Derivatives",
+    href: "derivatives",
+    targetSegment: "derivatives",
   },
   {
     image: dashboard,
-    text: "Dashboard",
+    label: "Dashboard",
+    href: "dashboard",
+    targetSegment: "dashboard",
   },
 ];
 
 const SideBar = () => {
+  const segment = useSelectedLayoutSegment();
+
   return (
     <nav className="h-full px-[10px] py-[30px] bg-bgGrey flex flex-col items-center justify-between">
       <div className="flex flex-col items-center gap-[45px]">
-        <Image src={logo} alt="autonomint-dapp" width={50} height={46} />
+        <Link href={"/"}>
+          <Image src={logo} alt="autonomint-dapp" width={50} height={46} />
+        </Link>
         <div className="flex flex-col items-center gap-4">
-          {navItemsList.map((item, index) => (
-            <NavItems key={index} props={item} />
-          ))}
+          {navItemsList.map((item) => {
+            const isActive = segment;
+            return (
+              <Link
+                className={
+                  isActive === item.targetSegment
+                    ? "rounded-[6px] bg-[#E4EDFF]"
+                    : ""
+                }
+                href={item.href}
+                key={item.href}
+              >
+                <NavItems
+                  props={{
+                    image: item.image,
+                    label: item.label,
+                  }}
+                />
+              </Link>
+            );
+          })}
         </div>
       </div>
       <Profile
