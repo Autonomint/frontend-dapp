@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import HeaderItems from "@/components/Header/HeaderItems";
 import SideBar from "@/components/Sidebar/SideBar";
 import Image from "next/image";
-
+import { Toaster } from 'sonner';
 import showMore from "@/app/assets/arrow_circle_down.svg";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -68,6 +68,7 @@ export default function RootLayout({
             {children}
           </div>
         </main>
+        <Toaster richColors closeButton={true} position="top-center" />
       </body>
     </html>
   );
