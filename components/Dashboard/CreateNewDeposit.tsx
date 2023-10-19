@@ -26,6 +26,8 @@ import {
 } from "../ui/select";
 import { Input } from "../ui/input";
 import { Slider } from "../ui/slider";
+import Link from "next/link";
+import CustomToast from "../CustomUI/CustomToast";
 
 const CreateNewDeposit = () => {
   const [open, setOpen] = useState(false);
@@ -60,20 +62,18 @@ const CreateNewDeposit = () => {
               setOpen(false);
               e.preventDefault();
               toast.custom((t) => (
-                <div className="flex gap-[10px] bg-[#268730] text-white px-[10px] py-4 items-center">
-                  <div className="flex flex-col gap-[10px]">
-                    <p>Transaction Submitted</p>
-                    <p>{`Tx Hash: 0xa2334234324`}</p>
-                  </div>
-                  <Button
-                    variant={"ghost"}
-                    size={"full"}
-                    onClick={() => toast.dismiss(t)}
-                    className="flex items-center"
-                  >
-                    <Cross1Icon />
-                  </Button>
-                </div>
+                <CustomToast
+                  props={{
+                    t,
+                    toastMainColor: "#268730",
+                    headline: "Transaction Submitted",
+                    transactionHash: "09405049530945",
+                    transactionHashLink: "https:etherscan.io/",
+                    linkLabel: "View Transaction",
+                    toastClosebuttonHoverColor: "#90e398",
+                    toastClosebuttonColor: "#57C262",
+                  }}
+                />
               ));
             }}
             action="#"

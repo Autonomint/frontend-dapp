@@ -25,13 +25,15 @@ const buttonVariants = cva(
           "border border-borderGrey rounded-[100px] bg-transparent shadow-sm hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
         showMore: " bg-transparent hover:bg-slate-300 ",
+        toastClose:"bg-transparent rounded-r"
       },
       size: {
         primary: "px-5 py-[10px]",
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
         icon: "h-9 w-9",
-        full:"h-full px-5 py-[10px]"
+        full:"h-full px-5 py-[10px]",
+        toastSize:"h-full p-[10px]"
       },
     },
     defaultVariants: {
