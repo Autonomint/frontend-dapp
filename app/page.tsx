@@ -1,17 +1,12 @@
 import heroPattern from "@/app/assets/gridBg.svg";
 import DashboardStatsItem from "@/components/Dashboard/DashboardStatsItem";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+
 import CreateNewDeposit from "@/components/Dashboard/CreateNewDeposit";
-import Divider from "@/components/Divider/Divider";
+import Divider from "@/components/CustomUI/Divider/Divider";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import Image from "next/image";
+
+import OurTable from "@/components/Table/OurTable";
 
 const headerItems2nd = [
   {
@@ -52,25 +47,6 @@ const dasboardStatsItem = [
   },
 ];
 
-const tableDetails = [
-  {
-    ethDeposited: "10.23",
-    amintMinted: "12.0123",
-    abondMinted: "12.0123",
-    index: "index",
-    liquidated: "Yes",
-    interestRate: "3%",
-  },
-  {
-    ethDeposited: "10.23",
-    amintMinted: "12.0123",
-    abondMinted: "12.0123",
-    index: "index",
-    liquidated: "No",
-    interestRate: "4%",
-  },
-];
-
 export default function Home() {
   return (
     <>
@@ -86,13 +62,13 @@ export default function Home() {
       {/* <ConnectWallet/> */}
       <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full">
         <div className={`absolute w-[1740px] rotate-[14deg] h-[1200px] -z-10`}>
-            <Image
-              src={heroPattern}
-              alt="grid bg"
-              className="w-full h-full"
-              style={{ objectFit: "cover", opacity: 0.1 }}
-            ></Image>
-          </div>
+          <Image
+            src={heroPattern}
+            alt="grid bg"
+            className="w-full h-full"
+            style={{ objectFit: "cover", opacity: 0.1 }}
+          ></Image>
+        </div>
         <div className="flex gap-[30px] z-10">
           {dasboardStatsItem.map((item, index) => (
             <div className="flex border border-lineGrey min-w-[150px] w-full">
@@ -112,38 +88,7 @@ export default function Home() {
         </div>
         <Divider />
         <CreateNewDeposit />
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-textGrey">ETH Deposited</TableHead>
-              <TableHead className="text-textGrey">AMint minted</TableHead>
-              <TableHead className="text-textGrey">Interest rate</TableHead>
-              <TableHead className="text-textGrey">Abond minted</TableHead>
-              <TableHead className="text-textGrey">Liquidated</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {tableDetails.map((details, index) => (
-              <TableRow key={index}>
-                <TableCell className="text-textGrey">
-                  {details.ethDeposited}
-                </TableCell>
-                <TableCell className="text-textGrey">
-                  {details.amintMinted}
-                </TableCell>
-                <TableCell className="text-textGrey">
-                  {details.interestRate}
-                </TableCell>
-                <TableCell className="text-textGrey">
-                  {details.abondMinted}
-                </TableCell>
-                <TableCell className="text-textGrey">
-                  {details.liquidated}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <OurTable />
       </div>
     </>
   );

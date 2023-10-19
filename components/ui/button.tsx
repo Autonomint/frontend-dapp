@@ -33,7 +33,8 @@ const buttonVariants = cva(
         lg: "h-10 rounded-md px-8",
         icon: "h-9 w-9",
         full:"h-full px-5 py-[10px]",
-        toastSize:"h-full p-[10px]"
+        toastSize:"h-full p-[10px]",
+        row:'px-[10px] py-[6px] h-auto'
       },
     },
     defaultVariants: {

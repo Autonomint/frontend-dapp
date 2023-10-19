@@ -1,6 +1,6 @@
 import CreateNewDeposit from "@/components/Dashboard/CreateNewDeposit";
 import DashboardStatsItem from "@/components/Dashboard/DashboardStatsItem";
-import Divider from "@/components/Divider/Divider";
+import Divider from "@/components/CustomUI/Divider/Divider";
 import ProductList from "@/components/Markets/ProductList";
 import {
   Table,

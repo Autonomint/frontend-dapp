@@ -28,6 +28,7 @@ import { Input } from "../ui/input";
 import { Slider } from "../ui/slider";
 import Link from "next/link";
 import CustomToast from "../CustomUI/CustomToast";
+import Note from "../CustomUI/Note";
 
 const CreateNewDeposit = () => {
   const [open, setOpen] = useState(false);
@@ -158,14 +159,12 @@ const CreateNewDeposit = () => {
                   </p>
                 </div>
               </div>
-              <div className="p-4 rounded-[6px] border-[#9F9700] border bg-[#FFFDD7]">
-                <p className="text-base text-[#201F00]">
-                  Note: Only 50% of the amount is retrievable on initial
+              <Note
+                note="Note: Only 50% of the amount is retrievable on initial
                   withdrawal. For 2nd 50% of amount, you will be getting
                   Protocol tokens and your collateral can be withdrawn after a
-                  month by returning Protocol tokens.
-                </p>
-              </div>
+                  month by returning Protocol tokens."
+              />
               <Button type="submit" variant={"primary"} className="text-white">
                 Confirm Deposit
               </Button>
