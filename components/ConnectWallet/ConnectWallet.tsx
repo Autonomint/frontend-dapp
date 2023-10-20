@@ -1,11 +1,17 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
 import heroPattern from "@/app/assets/gridBg.svg";
 import wallets from "@/app/assets/wallet icons.svg";
 import linkIcon from "@/app/assets/link.svg";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { useConnect } from "wagmi";
 
 const ConnectWallet = () => {
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
   return (
     <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] h-full flex flex-col gap-[30px] flex-1 items-center justify-center self-stretch overflow-hidden">
       <div className={`absolute w-[1740px] rotate-[14deg] h-[1200px] z-0`}>
@@ -30,6 +36,7 @@ const ConnectWallet = () => {
         <Button
           variant={"primary"}
           className="flex items-center justify-center gap-[5px]"
+          onClick={()=>connect()}
         >
           <p className="text-white bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] text-transparent font-semibold text-base">
             Connect Wallet

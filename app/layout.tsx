@@ -7,6 +7,7 @@ import SideBar from "@/components/Sidebar/SideBar";
 import Image from "next/image";
 import { Toaster } from "sonner";
 import showMore from "@/app/assets/arrow_circle_down.svg";
+import WalletProvider from "@/providers/WalletProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 const headerItems = [
@@ -46,27 +47,37 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <main className="grid min-h-screen grid-cols-[140px_1fr]">
-          <SideBar />
-          <div className="h-full bg-bgGrey flex flex-col pb-6 pr-6">
-            <div className="flex px-4 py-5">
-              {headerItems.map((item, index) => (
-                <HeaderItems
-                  key={index}
-                  props={{ textHeadline: item.headline, textValue: item.value }}
-                />
-              ))}
-              <Button
-                variant={"showMore"}
-                className="px-4 pb-4 py-0 flex flex-col gap-[10px] items-center h-full"
-              >
-                <Image src={showMore} alt="show more" width={35} height={35} />
-                <p className="text-borderGrey text-base font-medium whitespace-nowrap">
-                  Show More
-                </p>
-              </Button>
+          <WalletProvider>
+            <SideBar />
+            <div className="h-full bg-bgGrey flex flex-col pb-6 pr-6">
+              <div className="flex px-4 py-5">
+                {headerItems.map((item, index) => (
+                  <HeaderItems
+                    key={index}
+                    props={{
+                      textHeadline: item.headline,
+                      textValue: item.value,
+                    }}
+                  />
+                ))}
+                <Button
+                  variant={"showMore"}
+                  className="px-4 pb-4 py-0 flex flex-col gap-[10px] items-center h-full"
+                >
+                  <Image
+                    src={showMore}
+                    alt="show more"
+                    width={35}
+                    height={35}
+                  />
+                  <p className="text-borderGrey text-base font-medium whitespace-nowrap">
+                    Show More
+                  </p>
+                </Button>
+              </div>
+              {children}
             </div>
-            {children}
-          </div>
+          </WalletProvider>
         </main>
         <Toaster
           duration={10000}
