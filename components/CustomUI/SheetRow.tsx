@@ -7,7 +7,7 @@ interface Props {
   };
 }
 
-const Row = ({ props: { heading, value } }: Props) => {
+const SheetRow = ({ props: { heading, value } }: Props) => {
   return (
     <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
       <p className="text-base text-textSecondary">{heading}</p>
@@ -16,4 +16,4 @@ const Row = ({ props: { heading, value } }: Props) => {
   );
 };
 
-export default Row;
+export default SheetRow;
