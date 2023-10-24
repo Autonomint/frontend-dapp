@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { ABOND_MATIC, AMINT_MATIC } from "@/constants/Addresses";
 import heroPattern from "@/app/assets/gridBg.svg";
 import DashboardStatsItem from "@/components/Dashboard/DashboardStatsItem";
 
@@ -10,8 +10,7 @@ import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import Image from "next/image";
 
 import OurTable from "@/components/Table/OurTable";
-import { useAccount } from "wagmi";
-
+import { useAccount, useBalance } from "wagmi";
 
 const dasboardStatsItem = [
   {
@@ -25,21 +24,31 @@ const dasboardStatsItem = [
   {
     heading: "Total amount of AMINT received.",
     value: "12.0123",
-    subheadingHighlight: "7.204",
+    subheadingHighlight: "0",
     subheadingAfter: "AMINT is available in your wallet",
     showSubHeading: true,
+    tokenAddress: AMINT_MATIC,
   },
   {
     heading: "Total amount of ABOND received.",
     value: "12.0123",
-    subheadingHighlight: "7.204",
+    subheadingHighlight: "0",
     subheadingAfter: "ABOND is available in your wallet.",
     showSubHeading: true,
+    tokenAddress: ABOND_MATIC,
   },
 ];
 
 const WalletOrContent = () => {
   const { isConnected } = useAccount();
+
+  // useEffect(() => {
+  //   const newArray = [...dasboardStatsItem];
+  //   newArray[2] = { ...newArray[2], subheadingHighlight: data?.formatted as string };
+  //   newArray[1] = { ...newArray[1], subheadingHighlight: data?.formatted as string };
+  //   setDashboardStats(newArray);
+  // }, [dashboardStats]);
+
   return (
     <>
       {isConnected ? (
@@ -56,9 +65,11 @@ const WalletOrContent = () => {
           </div>
           <div className="flex gap-[30px] z-10">
             {dasboardStatsItem.map((item, index) => (
-              <div className="flex border border-lineGrey min-w-[150px] w-full">
+              <div
+                key={`index${item.heading}`}
+                className="flex border border-lineGrey min-w-[150px] w-full"
+              >
                 <DashboardStatsItem
-                  key={index}
                   props={{
                     heading: item.heading,
                     value: item.value,
@@ -66,6 +77,7 @@ const WalletOrContent = () => {
                     subheadingBefore: item.subheadingBefore,
                     subheadingHighlight: item.subheadingHighlight,
                     subheadingAfter: item.subheadingAfter,
+                    tokenAddress: item.tokenAddress,
                   }}
                 />
               </div>

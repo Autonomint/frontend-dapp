@@ -99,7 +99,7 @@ const NavBar = () => {
               props={{
                 textHeadline: item.headline,
                 textValue: item.value,
-                className: "w-full",
+                className: "",
               }}
             />
           ))}

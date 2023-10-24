@@ -89,10 +89,9 @@ const TableRows = ({
     }
   }
   return (
-    <Sheet open={sheetOpen} onOpenChange={setSheetOpen} >
+    <Sheet key={details.id} open={sheetOpen} onOpenChange={setSheetOpen} >
       <TableRow
         className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF]"
-        key={details.id}
       >
         <TableCell className="text-borderGrey w-3">
           {`#${details.id}`}

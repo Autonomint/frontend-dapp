@@ -44,8 +44,8 @@ const OurTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {tableDetails.map((details) => (
-          <TableRows details={details} key={details.id} />
+        {tableDetails.map((details, index) => (
+          <TableRows key={details.id+index} details={details} />
         ))}
       </TableBody>
     </Table>

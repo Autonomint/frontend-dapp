@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-bgGrey`}>
-        <div className="max-w-[1440px] mx-auto">
+        {/* <div className="max-w-[1440px] mx-auto"> */}
           <main className="grid h-screen grid-cols-[140px_1fr]">
             <WalletProvider>
               <SideBar />
@@ -35,7 +35,7 @@ export default function RootLayout({
               </div>
             </WalletProvider>
           </main>
-        </div>
+        {/* </div> */}
         <Toaster
           duration={10000}
           richColors

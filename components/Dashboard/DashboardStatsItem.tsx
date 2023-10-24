@@ -1,4 +1,5 @@
 import React from "react";
+import { useAccount, useBalance } from "wagmi";
 interface Props {
   props: {
     heading: string;
@@ -7,6 +8,7 @@ interface Props {
     subheadingHighlight?: string;
     subheadingAfter?: string;
     showSubHeading: boolean;
+    tokenAddress?: `0x${string}`;
   };
 }
 
@@ -18,8 +20,15 @@ const DashboardStatsItem = ({
     subheadingHighlight,
     subheadingAfter,
     showSubHeading,
+    tokenAddress,
   },
 }: Props) => {
+  const { address } = useAccount();
+  const { data, isError, isLoading } = useBalance({
+    address: tokenAddress ? address : undefined,
+    token: tokenAddress,
+  });
+
   return (
     <div className="p-4 gap-[20px] flex flex-col">
       <p className="text-textGrey font-normal text-[16px] whitespace-nowrap leading-4">
@@ -32,7 +41,7 @@ const DashboardStatsItem = ({
         <p className="text-textGrey font-normal text-base leading-none">
           {subheadingBefore}{" "}
           <span className="text-[#020202] font-medium">
-            {subheadingHighlight}
+            {tokenAddress ? data?.formatted : subheadingHighlight}
           </span>{" "}
           {subheadingAfter}
         </p>
