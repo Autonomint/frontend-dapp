@@ -194,16 +194,17 @@ const CreateNewDeposit = () => {
                     </span>
                   </p>
                 </div>
-                <div className="p-[10px]">
-                  <p className="text-base text-textGrey mb-4">
-                    Select Strike Price for call options
-                  </p>
+                <div className="p-[6px]">
                   <FormField
                     control={form.control}
                     name="strikePrice"
                     render={({ field: { value, onChange } }) => (
                       <FormItem>
-                        <FormLabel>StrikePrice - {value}</FormLabel>
+                        <FormLabel className="mb-[10px]">
+                          <p className="text-base font-normal text-textGrey mb-4">
+                            Select Strike Price for call options. Current StrikePrice={value}
+                          </p>
+                        </FormLabel>
                         <FormControl>
                           <Slider
                             defaultValue={[value]}
@@ -219,7 +220,7 @@ const CreateNewDeposit = () => {
                       </FormItem>
                     )}
                   />
-                  <div className="w-full flex justify-between">
+                  <div className="w-full flex justify-between mt-[10px]">
                     <p>5</p>
                     <p>15</p>
                     <p>25</p>
