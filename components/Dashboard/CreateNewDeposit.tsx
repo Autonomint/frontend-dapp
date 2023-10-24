@@ -61,7 +61,7 @@ const CreateNewDeposit = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      collateral: "ETH",
+      collateral: undefined,
       collateralAmount: 0.02,
       strikePrice: 5,
     },
@@ -146,7 +146,10 @@ const CreateNewDeposit = () => {
                   name="collateral"
                   render={({ field }) => (
                     <FormItem>
-                      <Select onValueChange={field.onChange}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Choose a Collateral" />
