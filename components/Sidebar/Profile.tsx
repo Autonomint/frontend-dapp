@@ -7,7 +7,6 @@ import { useAccount, useDisconnect, useEnsName } from "wagmi";
 interface Props {
   props: {
     image: string;
-
     buttonText: string;
   };
 }

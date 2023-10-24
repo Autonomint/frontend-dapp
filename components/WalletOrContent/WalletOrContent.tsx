@@ -12,20 +12,7 @@ import Image from "next/image";
 import OurTable from "@/components/Table/OurTable";
 import { useAccount } from "wagmi";
 
-const headerItems2nd = [
-  {
-    headline: "Total Value Locked",
-    value: "$2.23M",
-  },
-  {
-    headline: "dCDS Pooled Amount",
-    value: "$2.23M",
-  },
-  {
-    headline: "Downside Protection",
-    value: "3%",
-  },
-];
+
 const dasboardStatsItem = [
   {
     heading: "Total amount of AMINT Deposited",

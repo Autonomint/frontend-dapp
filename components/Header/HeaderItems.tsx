@@ -4,13 +4,14 @@ interface Props {
   props: {
     textHeadline: string;
     textValue: string;
+    className:string;
   };
 }
 
-const HeaderItems = ({ props: { textHeadline, textValue } }: Props) => {
+const HeaderItems = ({ props: { textHeadline, textValue,className="" } }: Props) => {
   return (
     <>
-      <div className="flex justify-between min-w-[164px] w-full">
+      <div className={`flex justify-between min-w-[164px] ${className}`}>
         <div className="flex flex-col">
           <p className="text-textGrey text-base font-normal text-center">
             {textHeadline}

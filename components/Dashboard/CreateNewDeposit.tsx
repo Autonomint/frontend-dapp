@@ -129,7 +129,12 @@ const CreateNewDeposit = () => {
                 <p className="text-base text-textGrey mb-4">
                   Select Strike Price for call options
                 </p>
-                <Slider step={3} max={50} />
+                <Slider step={3} max={50}  className="mb-[10px]"/>
+                <div className="w-full flex justify-between">
+                  <p>0%</p>
+                  <p>25%</p>
+                  <p>50%</p>
+                </div>
               </div>
               <div className="py-[10px] flex flex-col">
                 <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
