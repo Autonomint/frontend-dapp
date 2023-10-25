@@ -202,7 +202,7 @@ const CreateNewDeposit = () => {
                       <FormItem>
                         <FormLabel className="mb-[10px]">
                           <p className="text-base font-normal text-textGrey mb-4">
-                            Select Strike Price for call options. Current StrikePrice={value}
+                            Select Strike Price for call options.
                           </p>
                         </FormLabel>
                         <FormControl>
@@ -221,8 +221,10 @@ const CreateNewDeposit = () => {
                     )}
                   />
                   <div className="w-full flex justify-between mt-[10px]">
-                    <p>5</p>
+                    <p>05</p>
+                    <p>10</p>
                     <p>15</p>
+                    <p>20</p>
                     <p>25</p>
                   </div>
                 </div>
