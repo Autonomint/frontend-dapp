@@ -3,12 +3,13 @@ import { Button } from "../ui/button";
 import { Cross1Icon, ExternalLinkIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { toast } from "sonner";
+import truncateWeb3WalletAddress from "@/app/utils/truncateWeb3Address";
 
 interface Props {
   props: {
     t: string | number;
     headline: string;
-    transactionHash: string;
+    transactionHash: `0x${string}` | undefined;
     transactionHashLink: string;
     linkLabel: string;
     toastMainColor?: string;
@@ -32,12 +33,12 @@ const CustomToast = ({
   return (
     <div className="flex rounded">
       <div
-        className={`flex gap-[10px] bg-[${toastMainColor}] text-white  items-center rounded`}
+        className={`flex gap-[10px] bg-[${toastMainColor}] text-black  items-center rounded`}
       >
         <div className="flex flex-col px-[10px] py-4 gap-[10px] ">
           <p>{headline}</p>
           <p className=" whitespace-nowrap flex gap-1">
-            {`Tx Hash: ${transactionHash}  `}
+            {`Tx Hash: ${truncateWeb3WalletAddress(transactionHash)}`}
             <Link
               href={transactionHashLink}
               target="_blank"

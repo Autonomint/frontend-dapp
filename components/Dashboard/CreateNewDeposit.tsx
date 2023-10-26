@@ -13,7 +13,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons";
+import {
+  Cross1Icon,
+  Cross2Icon,
+  ExternalLinkIcon,
+  InfoCircledIcon,
+} from "@radix-ui/react-icons";
 import {
   Select,
   SelectContent,
@@ -39,7 +44,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { useAccount } from "wagmi";
+import { useAccount, useWaitForTransaction } from "wagmi";
 import { useContractRead } from "wagmi";
 import { BorrowingABI } from "@/constants/BorrowingAbi";
 import { BORROWING_MATIC } from "@/constants/Addresses";
@@ -50,6 +55,7 @@ import {
   useBorrowingContractDepositTokens,
   useBorrowingContractRead,
 } from "@/abiAndHooks";
+import truncateWeb3WalletAddress from "@/app/utils/truncateWeb3Address";
 
 const formSchema = z.object({
   collateral: z.string(),
@@ -69,6 +75,7 @@ const formSchema = z.object({
 const CreateNewDeposit = () => {
   const [open, setOpen] = useState(false);
   const { address } = useAccount();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -81,30 +88,119 @@ const CreateNewDeposit = () => {
   const {
     data: ethPrice,
     // isError,
-    isLoading,
+    // isLoading,
   } = useBorrowingContractRead({
     functionName: "getUSDValue",
     watch: true,
   });
 
-  const { data, write } = useBorrowingContractDepositTokens({
+  const { data: depositData, write } = useBorrowingContractDepositTokens({
     functionName: "depositTokens",
     args: [
       BigInt(ethPrice === undefined ? "0" : ethPrice) | BigInt(0),
       BigInt(Date.now()),
     ],
     value: parseEther(form.watch("collateralAmount").toString()),
+    onSettled(data) {
+      setOpen(false);
+      console.log(data?.hash);
+      const hashLink: string = `https:mumbai.polygonscan.com/tx/${depositData?.hash}`;
+      toast.custom((t) => (
+        <CustomToast
+          props={{
+            t,
+            toastMainColor: "#268730",
+            headline: "Transaction Submitted",
+            transactionHash: data?.hash,
+            transactionHashLink: hashLink,
+            linkLabel: "View Transaction",
+            toastClosebuttonHoverColor: "#90e398",
+            toastClosebuttonColor: "#57C262",
+          }}
+        />
+      ));
+    },
+  });
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: depositData?.hash,
+    onSuccess(data) {
+      console.log("transaction completed", depositData?.hash, data);
+      const hashLink: string = `https:mumbai.polygonscan.com/tx/${depositData?.hash}`;
+      toast.custom((t) => (
+        // <CustomToast
+        //   props={{
+        //     t,
+        //     toastMainColor: "#268730",
+        //     headline: "Transaction Completed",
+        //     transactionHash: depositData?.hash,
+        //     transactionHashLink: hashLink,
+        //     linkLabel: "View Transaction",
+        //     toastClosebuttonHoverColor: "#90e398",
+        //     toastClosebuttonColor: "#57C262",
+        //   }}
+        // />
+        <div className="flex rounded">
+          <div
+            className={`flex gap-[10px] bg-[#268730] text-white  items-center rounded`}
+          >
+            <div className="flex flex-col px-[10px] py-4 gap-[10px] ">
+              <p>Transaction Completed</p>
+              <p className=" whitespace-nowrap flex gap-1">
+                {`Tx Hash: ${truncateWeb3WalletAddress(depositData?.hash)}`}
+                <Link
+                  href={`https:mumbai.polygonscan.com/tx/${depositData?.hash}`}
+                  target="_blank"
+                  className="flex items-center gap-1"
+                >
+                  <ExternalLinkIcon />
+                  View Transaction
+                </Link>
+              </p>
+            </div>
+            <div className={`bg-[#57C262] rounded-r h-full flex`}>
+              <Button
+                variant={"ghost"}
+                size={"toastSize"}
+                onClick={() => toast.dismiss(t)}
+                className={`flex items-center justify-center hover:bg-[#90e398] rounded-none`}
+              >
+                <Cross1Icon />
+              </Button>
+            </div>
+          </div>
+        </div>
+      ));
+    },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+
     // console.log(write);
     // console.log(config);
-    console.log(data);
+    console.log("depositData", depositData);
     write?.();
   }
   return (
     <div className="flex justify-between items-center mb-[30px]">
+      {/* {isSuccess && (
+        <>
+          {toast.custom((t) => (
+            <CustomToast
+              props={{
+                t,
+                toastMainColor: "#268730",
+                headline: "Transaction Completed",
+                transactionHash: depositData?.hash,
+                transactionHashLink: hashLink,
+                linkLabel: "View Transaction",
+                toastClosebuttonHoverColor: "#90e398",
+                toastClosebuttonColor: "#57C262",
+              }}
+            />
+          ))}
+        </>
+      )} */}
       <div className="flex flex-col gap-[15px] ">
         <h2 className="text-textPrimary font-medium text-4xl tracking-[-1.8px]">
           Your Deposits

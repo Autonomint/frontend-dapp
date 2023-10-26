@@ -37,7 +37,7 @@ export default function RootLayout({
           </main>
         {/* </div> */}
         <Toaster
-          duration={10000}
+          duration={3000}
           richColors
           closeButton={true}
           position="top-center"
