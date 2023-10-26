@@ -11,6 +11,7 @@ import Image from "next/image";
 
 import OurTable from "@/components/Table/OurTable";
 import { useAccount, useBalance } from "wagmi";
+import { abondAddress, amintAddress } from "@/abiAndHooks";
 
 const dasboardStatsItem = [
   {
@@ -27,7 +28,7 @@ const dasboardStatsItem = [
     subheadingHighlight: "0",
     subheadingAfter: "AMINT is available in your wallet",
     showSubHeading: true,
-    tokenAddress: AMINT_MATIC,
+    tokenAddress: amintAddress,
   },
   {
     heading: "Total amount of ABOND received.",
@@ -35,7 +36,7 @@ const dasboardStatsItem = [
     subheadingHighlight: "0",
     subheadingAfter: "ABOND is available in your wallet.",
     showSubHeading: true,
-    tokenAddress: ABOND_MATIC,
+    tokenAddress: abondAddress,
   },
 ];
 

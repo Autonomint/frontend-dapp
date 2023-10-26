@@ -13,7 +13,7 @@ interface Props {
 
 const Profile = ({ props: { image, buttonText } }: Props) => {
   const { address, isConnected } = useAccount();
-  const { data: ensName } = useEnsName({ address });
+  // const { data: ensName } = useEnsName({ address });
   const { disconnect } = useDisconnect();
   return (
     <>
@@ -22,7 +22,7 @@ const Profile = ({ props: { image, buttonText } }: Props) => {
           <Image src={image} alt="user Profile" width={80} height={80} />
           <p className="text-center font-normal text-base text-textGrey">
             {truncateWeb3WalletAddress(address)}
-            {ensName ? ` (${ensName})` : null}
+            {/* {ensName ? ` (${ensName})` : null} */}
           </p>
           <Button variant={"outline"} onClick={() => disconnect()}>
             <p className="text-transparent font-semibold text-base text-center bg-clip-text bg-gradient-to-b from-[#808080] to-[#000] ">

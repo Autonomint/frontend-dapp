@@ -1,5 +1,5 @@
 import React from "react";
-import { useAccount, useBalance } from "wagmi";
+import { useAccount, useBalance, useChainId } from "wagmi";
 interface Props {
   props: {
     heading: string;
@@ -8,7 +8,10 @@ interface Props {
     subheadingHighlight?: string;
     subheadingAfter?: string;
     showSubHeading: boolean;
-    tokenAddress?: `0x${string}`;
+    tokenAddress?: {
+      80001: `0x${string}`;
+      11155111: `0x${string}`;
+    };
   };
 }
 
@@ -24,9 +27,12 @@ const DashboardStatsItem = ({
   },
 }: Props) => {
   const { address } = useAccount();
+  const chainId = useChainId();
   const { data, isError, isLoading } = useBalance({
     address: tokenAddress ? address : undefined,
-    token: tokenAddress,
+    token: tokenAddress
+      ? tokenAddress[chainId as keyof typeof tokenAddress]
+      : undefined,
   });
 
   return (

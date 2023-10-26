@@ -9,12 +9,11 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { Cross1Icon, Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons";
+import { Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons";
 import {
   Select,
   SelectContent,
@@ -40,6 +39,17 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { useAccount } from "wagmi";
+import { useContractRead } from "wagmi";
+import { BorrowingABI } from "@/constants/BorrowingAbi";
+import { BORROWING_MATIC } from "@/constants/Addresses";
+import { parseEther } from "viem";
+import {
+  borrowingContractABI,
+  borrowingContractAddress,
+  useBorrowingContractDepositTokens,
+  useBorrowingContractRead,
+} from "@/abiAndHooks";
 
 const formSchema = z.object({
   collateral: z.string(),
@@ -58,19 +68,41 @@ const formSchema = z.object({
 
 const CreateNewDeposit = () => {
   const [open, setOpen] = useState(false);
+  const { address } = useAccount();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       collateral: undefined,
-      collateralAmount: 0.02,
+      collateralAmount: 0,
       strikePrice: 5,
     },
   });
 
+  const {
+    data: ethPrice,
+    // isError,
+    isLoading,
+  } = useBorrowingContractRead({
+    functionName: "getUSDValue",
+    watch: true,
+  });
+
+  const { data, write } = useBorrowingContractDepositTokens({
+    functionName: "depositTokens",
+    args: [
+      BigInt(ethPrice === undefined ? "0" : ethPrice) | BigInt(0),
+      BigInt(Date.now()),
+    ],
+    value: parseEther(form.watch("collateralAmount").toString()),
+  });
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    // console.log(write);
+    // console.log(config);
+    console.log(data);
+    write?.();
   }
-
   return (
     <div className="flex justify-between items-center mb-[30px]">
       <div className="flex flex-col gap-[15px] ">
@@ -268,6 +300,7 @@ const CreateNewDeposit = () => {
                   type="submit"
                   variant={"primary"}
                   className="text-white"
+                  disabled={!write}
                 >
                   Confirm Deposit
                 </Button>
