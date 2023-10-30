@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { ABOND_MATIC, AMINT_MATIC } from "@/constants/Addresses";
+import React from "react";
 import heroPattern from "@/app/assets/gridBg.svg";
 import DashboardStatsItem from "@/components/Dashboard/DashboardStatsItem";
 
@@ -9,8 +8,8 @@ import Divider from "@/components/CustomUI/Divider/Divider";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import Image from "next/image";
 
-import OurTable from "@/components/Table/OurTable";
-import { useAccount, useBalance } from "wagmi";
+import DepositAndWithDrawTable from "@/components/Table/OurTable";
+import { useAccount } from "wagmi";
 import { abondAddress, amintAddress } from "@/abiAndHooks";
 
 const dasboardStatsItem = [
@@ -43,25 +42,18 @@ const dasboardStatsItem = [
 const WalletOrContent = () => {
   const { isConnected } = useAccount();
 
-  // useEffect(() => {
-  //   const newArray = [...dasboardStatsItem];
-  //   newArray[2] = { ...newArray[2], subheadingHighlight: data?.formatted as string };
-  //   newArray[1] = { ...newArray[1], subheadingHighlight: data?.formatted as string };
-  //   setDashboardStats(newArray);
-  // }, [dashboardStats]);
-
   return (
     <>
       {isConnected ? (
         <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full">
           <div
-            className={`absolute w-[1740px] rotate-[14deg] h-[1200px] -z-10`}
+            className={`absolute w-[1740px] rotate-[14deg] h-[1200px] z-0 opacity-30`}
           >
             <Image
               src={heroPattern}
               alt="grid bg"
               className="w-full h-full"
-              style={{ objectFit: "cover", opacity: 0.1 }}
+              style={{ objectFit: "cover", opacity: 1 }}
             ></Image>
           </div>
           <div className="flex gap-[30px] z-10">
@@ -86,7 +78,7 @@ const WalletOrContent = () => {
           </div>
           <Divider />
           <CreateNewDeposit />
-          <OurTable />
+          <DepositAndWithDrawTable />
         </div>
       ) : (
         <ConnectWallet />

@@ -25,7 +25,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 //   storage: noopStorage,
 // });
 const config = createConfig({
-  storage: createStorage({ storage: window.localStorage }),
+  // storage: createStorage({ storage: window.localStorage }),
   autoConnect: false,
   publicClient,
   webSocketPublicClient,

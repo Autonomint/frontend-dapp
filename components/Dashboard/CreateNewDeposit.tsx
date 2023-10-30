@@ -46,8 +46,6 @@ import {
 } from "../ui/form";
 import { useAccount, useWaitForTransaction } from "wagmi";
 import { useContractRead } from "wagmi";
-import { BorrowingABI } from "@/constants/BorrowingAbi";
-import { BORROWING_MATIC } from "@/constants/Addresses";
 import { parseEther } from "viem";
 import {
   borrowingContractABI,
@@ -146,7 +144,7 @@ const CreateNewDeposit = () => {
           props={{
             t,
             toastMainColor: "#268730",
-            headline: "Transaction Completed",
+            headline: "Transaction Completed. A new Deposit has been created",
             transactionHash: depositData?.hash,
             linkLabel: "View Transaction",
             toastClosebuttonHoverColor: "#90e398",
@@ -231,23 +229,6 @@ const CreateNewDeposit = () => {
         <DialogContent className="w-[672px]">
           <Form {...form}>
             <form
-              // onSubmit={(e) => {
-              //   setOpen(false);
-              //   e.preventDefault();
-              //   toast.custom((t) => (
-              //     <CustomToast
-              //       props={{
-              //         t,
-              //         toastMainColor: "#268730",
-              //         headline: "Transaction Submitted",
-              //         transactionHash: "09405049530945",
-              //         linkLabel: "View Transaction",
-              //         toastClosebuttonHoverColor: "#90e398",
-              //         toastClosebuttonColor: "#57C262",
-              //       }}
-              //     />
-              //   ));
-              // }}
               onSubmit={form.handleSubmit(onSubmit)}
               action="#"
             >

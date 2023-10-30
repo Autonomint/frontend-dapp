@@ -30,7 +30,7 @@ const tableDetails = [
   },
 ];
 
-const OurTable = () => {
+const DepositAndWithDrawTable = () => {
   return (
     <Table>
       <TableHeader>
@@ -52,4 +52,4 @@ const OurTable = () => {
   );
 };
 
-export default OurTable;
+export default DepositAndWithDrawTable;

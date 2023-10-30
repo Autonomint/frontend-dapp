@@ -24,7 +24,7 @@ const CustomToast = ({
     headline,
     transactionHash,
     linkLabel = "view",
-    toastMainColor = "#33ef46",
+    toastMainColor = "#268730",
     toastClosebuttonColor = "#57C262",
     toastClosebuttonHoverColor = "#90e398",
   },

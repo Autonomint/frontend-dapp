@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { useAccount, useBalance, useChainId } from "wagmi";
 interface Props {
