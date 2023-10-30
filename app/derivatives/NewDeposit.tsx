@@ -57,7 +57,7 @@ const NewDeposit = () => {
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // console.log(values);
+    console.log(values);
     // console.log("depositData", depositData);
     // write?.();
   }

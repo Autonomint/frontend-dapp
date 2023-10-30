@@ -79,7 +79,7 @@ const CreateNewDeposit = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       collateral: undefined,
-      collateralAmount: 0,
+      collateralAmount: undefined,
       strikePrice: 5,
     },
   });
@@ -291,6 +291,7 @@ const CreateNewDeposit = () => {
                           step={0.01}
                           placeholder="Collateral Amount"
                           {...field}
+                          value={field.value ?? ""}
                         ></Input>
                       </FormControl>
                       <FormMessage />
