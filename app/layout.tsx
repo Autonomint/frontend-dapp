@@ -26,21 +26,21 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-bgGrey`}>
         {/* <div className="max-w-[1440px] mx-auto"> */}
-          <main className="grid h-screen grid-cols-[140px_1fr]">
-            <WalletProvider>
-              <SideBar />
-              <div className="h-full flex flex-col pb-6 pr-6">
-                <NavBar />
-                {children}
-              </div>
-            </WalletProvider>
-          </main>
+        <main className="grid h-screen grid-cols-[140px_1fr]">
+          <WalletProvider>
+            <SideBar />
+            <div className="h-full flex flex-col pb-6 pr-6">
+              <NavBar />
+              {children}
+            </div>
+          </WalletProvider>
+        </main>
         {/* </div> */}
         <Toaster
           duration={3000}
-          richColors
           closeButton={true}
           position="top-center"
+          toastOptions={{style:{zIndex:999}}}
         />
       </body>
     </html>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -73,6 +73,7 @@ const formSchema = z.object({
 });
 
 const CreateNewDeposit = () => {
+  const [amintToBeMinted, setAmintToBeMinted] = useState(0);
   const [open, setOpen] = useState(false);
   const { address } = useAccount();
 
@@ -96,28 +97,43 @@ const CreateNewDeposit = () => {
 
   const { data: depositData, write } = useBorrowingContractDepositTokens({
     functionName: "depositTokens",
-    args: [
-      BigInt(ethPrice === undefined ? "0" : ethPrice) | BigInt(0),
-      BigInt(Date.now()),
-    ],
+    args: [BigInt(ethPrice ? ethPrice : BigInt(0)), BigInt(Date.now())],
     value: parseEther(form.watch("collateralAmount").toString()),
-    onSettled(data) {
+    onError(error) {
+      setOpen(false);
+      console.log(error);
+      toast.custom((t) => (
+        <div>
+          <CustomToast
+            key={2}
+            props={{
+              t,
+              toastMainColor: "#B43939",
+              headline: `Uhh Ohh! ${error.cause}`,
+              toastClosebuttonHoverColor: "#e66d6d",
+              toastClosebuttonColor: "#C25757",
+            }}
+          />
+        </div>
+      ));
+    },
+    onSuccess(data) {
       setOpen(false);
       console.log(data?.hash);
-      const hashLink: string = `https:mumbai.polygonscan.com/tx/${depositData?.hash}`;
       toast.custom((t) => (
-        <CustomToast
-          props={{
-            t,
-            toastMainColor: "#268730",
-            headline: "Transaction Submitted",
-            transactionHash: data?.hash,
-            transactionHashLink: hashLink,
-            linkLabel: "View Transaction",
-            toastClosebuttonHoverColor: "#90e398",
-            toastClosebuttonColor: "#57C262",
-          }}
-        />
+        <div>
+          <CustomToast
+            props={{
+              t,
+              toastMainColor: "#268730",
+              headline: "Transaction Submitted",
+              transactionHash: data?.hash,
+              linkLabel: "View Transaction",
+              toastClosebuttonHoverColor: "#90e398",
+              toastClosebuttonColor: "#57C262",
+            }}
+          />
+        </div>
       ));
     },
   });
@@ -125,82 +141,70 @@ const CreateNewDeposit = () => {
     hash: depositData?.hash,
     onSuccess(data) {
       console.log("transaction completed", depositData?.hash, data);
-      const hashLink: string = `https:mumbai.polygonscan.com/tx/${depositData?.hash}`;
       toast.custom((t) => (
-        // <CustomToast
-        //   props={{
-        //     t,
-        //     toastMainColor: "#268730",
-        //     headline: "Transaction Completed",
-        //     transactionHash: depositData?.hash,
-        //     transactionHashLink: hashLink,
-        //     linkLabel: "View Transaction",
-        //     toastClosebuttonHoverColor: "#90e398",
-        //     toastClosebuttonColor: "#57C262",
-        //   }}
-        // />
-        <div className="flex rounded">
-          <div
-            className={`flex gap-[10px] bg-[#268730] text-white  items-center rounded`}
-          >
-            <div className="flex flex-col px-[10px] py-4 gap-[10px] ">
-              <p>Transaction Completed</p>
-              <p className=" whitespace-nowrap flex gap-1">
-                {`Tx Hash: ${truncateWeb3WalletAddress(depositData?.hash)}`}
-                <Link
-                  href={`https:mumbai.polygonscan.com/tx/${depositData?.hash}`}
-                  target="_blank"
-                  className="flex items-center gap-1"
-                >
-                  <ExternalLinkIcon />
-                  View Transaction
-                </Link>
-              </p>
-            </div>
-            <div className={`bg-[#57C262] rounded-r h-full flex`}>
-              <Button
-                variant={"ghost"}
-                size={"toastSize"}
-                onClick={() => toast.dismiss(t)}
-                className={`flex items-center justify-center hover:bg-[#90e398] rounded-none`}
-              >
-                <Cross1Icon />
-              </Button>
-            </div>
-          </div>
-        </div>
+        <CustomToast
+          props={{
+            t,
+            toastMainColor: "#268730",
+            headline: "Transaction Completed",
+            transactionHash: depositData?.hash,
+            linkLabel: "View Transaction",
+            toastClosebuttonHoverColor: "#90e398",
+            toastClosebuttonColor: "#57C262",
+          }}
+        />
+        // <div className="flex rounded">
+        //   <div
+        //     className={`flex gap-[10px] bg-[#268730] text-white  items-center rounded`}
+        //   >
+        //     <div className="flex flex-col px-[10px] py-4 gap-[10px] ">
+        //       <p>Transaction Completed</p>
+        //       <p className=" whitespace-nowrap flex gap-1">
+        //         {`Tx Hash: ${truncateWeb3WalletAddress(depositData?.hash)}`}
+        //         <Link
+        //           href={`https:mumbai.polygonscan.com/tx/${depositData?.hash}`}
+        //           target="_blank"
+        //           className="flex items-center gap-1"
+        //         >
+        //           <ExternalLinkIcon />
+        //           View Transaction
+        //         </Link>
+        //       </p>
+        //     </div>
+        //     <div className={`bg-[#57C262] rounded-r h-full flex`}>
+        //       <Button
+        //         variant={"ghost"}
+        //         size={"toastSize"}
+        //         onClick={() => toast.dismiss(t)}
+        //         className={`flex items-center justify-center hover:bg-[#90e398] rounded-none`}
+        //       >
+        //         <Cross1Icon />
+        //       </Button>
+        //     </div>
+        //   </div>
+        // </div>
       ));
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-
-    // console.log(write);
-    // console.log(config);
     console.log("depositData", depositData);
     write?.();
   }
+
+  const handleAmintToBeMinted = () => {
+    const amintToMint =
+      (form.watch("collateralAmount") * Number(ethPrice) * 80) / 10000;
+    setAmintToBeMinted(amintToMint);
+  };
+
+  useEffect(() => {
+    handleAmintToBeMinted();
+  }, [form.watch("collateralAmount")]);
+
   return (
     <div className="flex justify-between items-center mb-[30px]">
-      {/* {isSuccess && (
-        <>
-          {toast.custom((t) => (
-            <CustomToast
-              props={{
-                t,
-                toastMainColor: "#268730",
-                headline: "Transaction Completed",
-                transactionHash: depositData?.hash,
-                transactionHashLink: hashLink,
-                linkLabel: "View Transaction",
-                toastClosebuttonHoverColor: "#90e398",
-                toastClosebuttonColor: "#57C262",
-              }}
-            />
-          ))}
-        </>
-      )} */}
       <div className="flex flex-col gap-[15px] ">
         <h2 className="text-textPrimary font-medium text-4xl tracking-[-1.8px]">
           Your Deposits
@@ -237,7 +241,6 @@ const CreateNewDeposit = () => {
               //         toastMainColor: "#268730",
               //         headline: "Transaction Submitted",
               //         transactionHash: "09405049530945",
-              //         transactionHashLink: "https:etherscan.io/",
               //         linkLabel: "View Transaction",
               //         toastClosebuttonHoverColor: "#90e398",
               //         toastClosebuttonColor: "#57C262",
@@ -248,7 +251,7 @@ const CreateNewDeposit = () => {
               onSubmit={form.handleSubmit(onSubmit)}
               action="#"
             >
-              <div className="flex w-full justify-end">
+              <div className=" flex w-full justify-end">
                 <DialogClose asChild>
                   <Button
                     variant={"ghostOutline"}
@@ -362,7 +365,7 @@ const CreateNewDeposit = () => {
                       Amount of Amint that will be minted
                     </p>
                     <p className="text-textHighlight font-medium text-base">
-                      0.00123
+                      {amintToBeMinted}
                     </p>
                   </div>
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">

@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  important: true,
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -25,6 +26,10 @@ module.exports = {
         textSecondary: "#5B5B5B",
         textHighlight:'#020202',
         borderBlue: "#00B2BF",
+        toastSuccess:'#268730',
+        toastSuccessClose:'#57C262',
+        toastError:'#B43939',
+        toastErrorClose:'#C25757'
       },
       keyframes: {
         "accordion-down": {
