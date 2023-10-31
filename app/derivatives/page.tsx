@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import CreateNewDeposit from "@/components/Dashboard/CreateNewDeposit";
 import DashboardStatsItem from "@/components/Dashboard/DashboardStatsItem";
 import Divider from "@/components/CustomUI/Divider/Divider";
@@ -15,6 +15,7 @@ import React from "react";
 import { useAccount } from "wagmi";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import NewDeposit from "./NewDeposit";
+import AmintDepositRow from "./AmintDepositRow";
 
 const dasboardStatsItem = [
   {
@@ -41,18 +42,18 @@ const dasboardStatsItem = [
 
 const tableDetails = [
   {
-    id: "1",
-    AmintDeposited: "1200",
+    id: 1,
+    AmintDeposited: 1200,
     DepositedTime: "5 days ago",
     lockInPeriod: "30 days",
-    ETHPriceAtDeposit:"1.234"
+    ETHPriceAtDeposit: "1.234",
   },
   {
-    id: "2",
-    AmintDeposited: "1500",
+    id: 2,
+    AmintDeposited: 1500,
     DepositedTime: "4 days ago",
     lockInPeriod: "60 days",
-    ETHPriceAtDeposit:"1.225"
+    ETHPriceAtDeposit: "1.225",
   },
 ];
 
@@ -61,8 +62,9 @@ const page = () => {
   return (
     <>
       {/* Main area */}
-      {isConnected ?<div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full">
-        {/* <div className={`absolute w-[1740px] rotate-[14deg] h-[1200px] z-0`}>
+      {isConnected ? (
+        <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full">
+          {/* <div className={`absolute w-[1740px] rotate-[14deg] h-[1200px] z-0`}>
             <Image
               src={heroPattern}
               alt="grid bg"
@@ -71,57 +73,44 @@ const page = () => {
             ></Image>
           </div> */}
 
-        <ProductList></ProductList>
-        <Divider />
-        <div className="flex gap-[30px]">
-          {dasboardStatsItem.map((item, index) => (
-            <div className="flex border border-lineGrey min-w-[150px] w-full">
-              <DashboardStatsItem
-                key={index}
-                props={{
-                  heading: item.heading,
-                  value: item.value,
-                  showSubHeading: item.showSubHeading,
-                }}
-              />
-            </div>
-          ))}
-        </div>
-        <Divider />
-        <NewDeposit />
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-textGrey/0">Id</TableHead>
-              <TableHead className="text-textGrey">Amint Deposited</TableHead>
-              <TableHead className="text-textGrey">Deposited Time</TableHead>
-              <TableHead className="text-textGrey">Lock In period</TableHead>
-              <TableHead className="text-textGrey">Abond minted</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {tableDetails.map((details, index) => (
-              <TableRow key={details.id} className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF]">
-                <TableCell className="text-borderGrey">
-                  {`#${details.id}`}
-                </TableCell>
-                <TableCell className="text-textGrey">
-                  {details.AmintDeposited}
-                </TableCell>
-                <TableCell className="text-textGrey">
-                  {details.DepositedTime}
-                </TableCell>
-                <TableCell className="text-textGrey">
-                  {details.lockInPeriod}
-                </TableCell>
-                <TableCell className="text-textGrey">
-                  {details.ETHPriceAtDeposit}
-                </TableCell>
-              </TableRow>
+          <ProductList></ProductList>
+          <Divider />
+          <div className="flex gap-[30px]">
+            {dasboardStatsItem.map((item, index) => (
+              <div className="flex border border-lineGrey min-w-[150px] w-full">
+                <DashboardStatsItem
+                  key={index}
+                  props={{
+                    heading: item.heading,
+                    value: item.value,
+                    showSubHeading: item.showSubHeading,
+                  }}
+                />
+              </div>
             ))}
-          </TableBody>
-        </Table>
-      </div>:<ConnectWallet/>}
+          </div>
+          <Divider />
+          <NewDeposit />
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-textGrey/0">Id</TableHead>
+                <TableHead className="text-textGrey">Amint Deposited</TableHead>
+                <TableHead className="text-textGrey">Deposited Time</TableHead>
+                <TableHead className="text-textGrey">Lock In period</TableHead>
+                <TableHead className="text-textGrey">Abond minted</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {tableDetails.map((details, index) => (
+                <AmintDepositRow details={details} />
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <ConnectWallet />
+      )}
     </>
   );
 };

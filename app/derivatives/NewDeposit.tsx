@@ -34,6 +34,9 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import payments from "@/app/assets/payments.svg";
+import trending from "@/app/assets/trending_up.svg";
+import calendar from "@/app/assets/date_range.svg";
 
 const formSchema = z.object({
   AmintDepositAmount: z
@@ -52,14 +55,17 @@ const NewDeposit = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      AmintDepositAmount: undefined,
       lockInPeriod: undefined,
       liquidationGains: false,
     },
   });
+  const [amintAmnt, lockIn] = form.watch(
+    ["AmintDepositAmount", "lockInPeriod"],
+    { AmintDepositAmount: undefined, lockInPeriod: undefined }
+  );
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    // console.log("depositData", depositData);
-    // write?.();
   }
   return (
     <div className="flex justify-between items-center mb-[30px]">
@@ -194,6 +200,61 @@ const NewDeposit = () => {
                   />
 
                   <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
+                  {Boolean(amintAmnt) && Boolean(lockIn) ? (
+                    <div className="px-[15px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee]">
+                      <div className="py-[15px] flex items-center justify-between border-b border-lineGrey">
+                        <div className="flex gap-[10px] items-center">
+                          <Image
+                            src={payments}
+                            alt="payment"
+                            width={24}
+                            height={24}
+                          />
+                          <p className="text-base text-textHighlight">
+                            {amintAmnt} AMINT
+                          </p>
+                        </div>
+                        <div className="flex gap-[10px]">
+                          <Image
+                            src={calendar}
+                            alt="date range"
+                            width={24}
+                            height={24}
+                          ></Image>
+                          <p>
+                            {lockIn === "30 days" ? (
+                              <>30 Days (~1 Month)</>
+                            ) : lockIn === "60 days" ? (
+                              <>60 Days (~2 Months)</>
+                            ) : lockIn === "120 days" ? (
+                              <>120 Days (~4 Months)</>
+                            ) : lockIn === "180 days" ? (
+                              <>180 Days (~6 Months)</>
+                            ) : (
+                              <></>
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="py-[15px] flex items-center justify-between">
+                        <div className="flex gap-[10px] items-center">
+                          <Image
+                            src={trending}
+                            alt="apr"
+                            width={24}
+                            height={24}
+                          />
+                          <p className="text-base text-[#242424]">
+                            Expected APR can range from{" "}
+                            <span className="text-textHighlight"> ~5%</span> to{" "}
+                            <span className="text-textHighlight">~200%</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                   <Button
                     type="submit"
                     variant={"primary"}
