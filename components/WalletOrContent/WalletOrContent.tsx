@@ -46,16 +46,16 @@ const WalletOrContent = () => {
     <>
       {isConnected ? (
         <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full">
-          <div
+          {/* <div
             className={`absolute w-[1740px] rotate-[14deg] h-[1200px] z-0 opacity-30`}
           >
             <Image
               src={heroPattern}
               alt="grid bg"
               className="w-full h-full"
-              style={{ objectFit: "cover", opacity: 1 }}
+              style={{ objectFit: "cover", opacity: 0.4 }}
             ></Image>
-          </div>
+          </div> */}
           <div className="flex gap-[30px] z-10">
             {dasboardStatsItem.map((item, index) => (
               <div

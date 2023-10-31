@@ -79,24 +79,20 @@ const CreateNewDeposit = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       collateral: undefined,
-      collateralAmount: undefined,
+      collateralAmount: 0,
       strikePrice: 5,
     },
   });
 
-  const {
-    data: ethPrice,
-    // isError,
-    // isLoading,
-  } = useBorrowingContractRead({
+  const { data: ethPrice } = useBorrowingContractRead({
     functionName: "getUSDValue",
     watch: true,
   });
 
   const { data: depositData, write } = useBorrowingContractDepositTokens({
     functionName: "depositTokens",
-    args: [BigInt(ethPrice ? ethPrice : BigInt(0)), BigInt(Date.now())],
-    value: parseEther(form.watch("collateralAmount").toString()),
+    args: [BigInt(ethPrice ? ethPrice : 0), BigInt(Date.now())],
+    value: parseEther(form.watch("collateralAmount")?.toString()),
     onError(error) {
       setOpen(false);
       console.log(error);
@@ -202,7 +198,7 @@ const CreateNewDeposit = () => {
   }, [form.watch("collateralAmount")]);
 
   return (
-    <div className="flex justify-between items-center mb-[30px]">
+    <div className="flex justify-between items-center mb-[30px">
       <div className="flex flex-col gap-[15px] ">
         <h2 className="text-textPrimary font-medium text-4xl tracking-[-1.8px]">
           Your Deposits
@@ -228,10 +224,7 @@ const CreateNewDeposit = () => {
 
         <DialogContent className="w-[672px]">
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              action="#"
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)} action="#">
               <div className=" flex w-full justify-end">
                 <DialogClose asChild>
                   <Button
@@ -291,7 +284,7 @@ const CreateNewDeposit = () => {
                           step={0.01}
                           placeholder="Collateral Amount"
                           {...field}
-                          value={field.value ?? ""}
+                          value={Boolean(field.value) ? field.value : ""}
                         ></Input>
                       </FormControl>
                       <FormMessage />
