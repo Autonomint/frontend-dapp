@@ -198,7 +198,7 @@ const CreateNewDeposit = () => {
   }, [form.watch("collateralAmount")]);
 
   return (
-    <div className="flex justify-between items-center mb-[30px">
+    <div className="flex justify-between items-center mb-[30px]">
       <div className="flex flex-col gap-[15px] ">
         <h2 className="text-textPrimary font-medium text-4xl tracking-[-1.8px]">
           Your Deposits

@@ -1,17 +1,22 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 
 interface Props {
   props: {
     textHeadline: string;
     textValue: string;
-    className:string;
+    ref?: React.MutableRefObject<null>;
+    width?: number;
+    className: string;
   };
 }
 
-const HeaderItems = ({ props: { textHeadline, textValue,className="" } }: Props) => {
+const HeaderItems = ({
+  props: { textHeadline, textValue, className },
+}: Props) => {
   return (
     <>
-      <div className={`flex justify-between min-w-[164px] ${className}`}>
+      <div className={cn(`flex justify-between min-w-[164px] w-full`,className)}>
         <div className="flex flex-col">
           <p className="text-textGrey text-base font-normal text-center">
             {textHeadline}
@@ -19,9 +24,8 @@ const HeaderItems = ({ props: { textHeadline, textValue,className="" } }: Props)
           <h3 className="font-medium text-[2rem]">{textValue}</h3>
         </div>
       </div>
-      <div className="w-[1px] h-full bg-lineGrey  ml-6 mr-6"></div>
+      <div className={cn("w-[1px] h-full bg-lineGrey  ml-6 mr-6",className)}></div>
     </>
   );
 };
-
 export default HeaderItems;

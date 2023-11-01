@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import dropdown from "@/app/assets/arrow_circle_down.svg";
@@ -45,6 +45,13 @@ const headerItems2nd = [
 
 const NavBar = () => {
   const [showMore, setShowMore] = useState(false);
+  // const widthRef = useRef(null);
+
+  // const [width, setWidth] = useState(0);
+  // useLayoutEffect(() => {
+  //   setWidth(widthRef.current?.offsetWidth);
+  // }, []);
+  // console.log(width)
   return (
     <div className="bg-bgGrey flex flex-col pb-6 pr-6">
       <div className="flex px-4 py-5">
@@ -54,7 +61,7 @@ const NavBar = () => {
             props={{
               textHeadline: item.headline,
               textValue: item.value,
-              className: "w-full",
+              className: "",
             }}
           />
         ))}
@@ -86,7 +93,7 @@ const NavBar = () => {
               />
             </div>
           )}
-          <p className="text-borderGrey text-base font-medium whitespace-nowrap">
+          <p className="text-borderGrey text-base font-medium whitespace-nowrap min-w-[82.7px]">
             {!showMore ? "Show More" : "Show Less"}
           </p>
         </Button>
@@ -103,6 +110,33 @@ const NavBar = () => {
               }}
             />
           ))}
+          {headerItems2nd.slice(0,2).map((item, index) => (
+            <HeaderItems
+              key={index}
+              props={{
+                textHeadline: item.headline,
+                textValue: item.value,
+                className: "opacity-0 cursor-default",
+              }}
+            />
+          ))}
+          <Button
+            variant={"showMore"}
+            className="px-4 pb-4 py-0 flex flex-col gap-[10px] items-center h-full opacity-0 cursor-default"
+          >
+            <div className="w-[35px] h-[35px]">
+              <Image
+                src={dropdown}
+                alt="show more"
+                width={0}
+                height={0}
+                style={{ width: "100%", height: "100%" }}
+              />
+            </div>
+            <p className="text-borderGrey text-base font-medium whitespace-nowrap opacity-0">
+            {!showMore ? "Show More" : "Show Less"}
+          </p>
+          </Button>
         </div>
       )}
     </div>
