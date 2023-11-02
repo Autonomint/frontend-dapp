@@ -22,7 +22,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Cross2Icon } from "@radix-ui/react-icons";
+import { Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons";
 import {
   Select,
   SelectContent,
@@ -42,9 +42,13 @@ const formSchema = z.object({
   AmintDepositAmount: z
     .number()
     .positive({ message: "Value must be positive" })
+    .min(500, { message: "Value must be above 500" })
     .or(z.string())
     .pipe(
-      z.coerce.number().positive({ message: "Value must be positive" }).min(1)
+      z.coerce
+        .number()
+        .positive({ message: "Value must be positive" })
+        .min(500, { message: "Value must be above 500" })
     ),
   lockInPeriod: z.string(),
   liquidationGains: z.boolean(),
@@ -133,7 +137,7 @@ const NewDeposit = () => {
                         <FormControl>
                           <Input
                             type="number"
-                            min={1}
+                            min={500}
                             step={1}
                             placeholder="Enter Amint Amount to Deposit"
                             {...field}
@@ -144,6 +148,17 @@ const NewDeposit = () => {
                       </FormItem>
                     )}
                   />
+                  <div className="flex gap-[10px] items-center">
+                    <div className="flex items-center">
+                      <InfoCircledIcon width={18} height={18} />
+                    </div>
+                    <p className="text-base font-normal text-textGrey text-center leading-none">
+                      Minimum Amint Amount is{" "}
+                      <span className="font-medium text-textHighlight">
+                        500 AMINT
+                      </span>
+                    </p>
+                  </div>
                   <FormField
                     control={form.control}
                     name="lockInPeriod"
