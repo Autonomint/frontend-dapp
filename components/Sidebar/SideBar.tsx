@@ -68,7 +68,6 @@ const SideBar = () => {
       <Profile
         props={{
           image: metamask,
-          address: "0xe7775680518A9A371231300DBAf2313dB6FeA7DC",
           buttonText: "Logout",
         }}
       />
