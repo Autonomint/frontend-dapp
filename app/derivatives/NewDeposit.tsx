@@ -137,7 +137,6 @@ const NewDeposit = () => {
                         <FormControl>
                           <Input
                             type="number"
-                            min={500}
                             step={1}
                             placeholder="Enter Amint Amount to Deposit"
                             {...field}
