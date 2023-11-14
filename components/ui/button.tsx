@@ -34,7 +34,9 @@ const buttonVariants = cva(
         icon: "h-9 w-9",
         full:"h-full px-5 py-[10px]",
         toastSize:"h-full p-[10px]",
-        row:'px-[10px] py-[6px] h-auto'
+        row:'px-[10px] py-[6px] h-auto',
+        arrow:'px-[10px] py-[4px] h-auto rounded-none',
+        timeline:'p-[5px] rounded-none h-auto',
       },
     },
     defaultVariants: {
