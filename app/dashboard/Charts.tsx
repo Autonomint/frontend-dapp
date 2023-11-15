@@ -6,9 +6,9 @@ interface ChartData {
   price: number;
 }
 
-const Charts: React.FC<{ chartData: ChartData[] }> = ({ chartData }) => {
+const Charts: React.FC<{ chartData: ChartData[],height?:number }> = ({ chartData,height=400 }) => {
   return (
-    <ResponsiveContainer style={{marginLeft:"-20px"}} width="100%" height={400}>
+    <ResponsiveContainer style={{marginLeft:"-20px"}} width="100%" height={height}>
       <LineChart data={chartData}>
         <Line
           style={{

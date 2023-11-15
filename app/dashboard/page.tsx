@@ -12,7 +12,7 @@ import HeaderItems from "@/components/Header/HeaderItems";
 import Charts from "./Charts";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
-import RatioChart from "./RatioChart";
+import RatioPieChart from "./RatioPieChart";
 
 const amintValues = [
   {
@@ -45,9 +45,40 @@ const abondValues = [
   },
 ];
 
+const chartData = [
+  {
+    name: "26",
+    price: 0.95,
+  },
+  {
+    name: "27",
+    price: 0.96,
+  },
+  {
+    name: "28",
+    price: 1.05,
+  },
+  {
+    name: "29",
+    price: 0.95,
+  },
+  {
+    name: "30",
+    price: 0.96,
+  },
+  {
+    name: "31",
+    price: 0.9,
+  },
+  {
+    name: "Nov",
+    price: 0.9,
+  },
+];
+
 const page = () => {
   return (
-    <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full">
+    <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden h-full">
       <div className="flex flex-col gap-6">
         <div className="flex justify-between flex-1 gap-6">
           <DashboardCard headline="AMINT" data={amintValues} />
@@ -56,24 +87,94 @@ const page = () => {
         <div className="flex gap-6">
           <ValueLocked />
           <div className="flex flex-col w-full">
-          <CollateralRatio />
-          <div className="flex w-full">
-            <div className="flex w-[350px] flex-col bg-[linear-gradient(270deg,#CDF3FF_0%,#D8FFEA_100%)] border-r border-solid border-lineGrey">
-              <div className="px-[50px] py-[25px] flex justify-between">
-                <div className="flex flex-col">
-                  <h5 className="text-[#00773F] text-base font-normal">Collateral</h5>
-                  <p className="font-medium text-4xl text-[#00773F]">75%</p>
+            <CollateralRatio />
+            <div className="flex w-full h-full">
+              <div className="flex h-full w-[350px] flex-col bg-[linear-gradient(270deg,#CDF3FF_0%,#D8FFEA_100%)] border-r border-solid border-lineGrey rounded-[10px] rounded-t-none rounded-br-none">
+                <div className="px-[50px] py-[25px] flex justify-between">
+                  <div className="flex flex-col">
+                    <h5 className="text-[#00773F] text-base font-normal">
+                      Collateral
+                    </h5>
+                    <p className="font-medium text-4xl text-[#00773F]">75%</p>
+                  </div>
+                  <div className="flex flex-col">
+                    <h5 className="text-[#0F46E9] text-base font-normal">
+                      dCDS
+                    </h5>
+                    <p className="font-medium text-4xl text-[#0F46E9]">25%</p>
+                  </div>
                 </div>
-                <div className="flex flex-col">
-                  <h5 className="text-[#0F46E9] text-base font-normal">dCDS</h5>
-                  <p className="font-medium text-4xl text-[#0F46E9]">25%</p>
+                <div className="h-full w-full">
+                  <RatioPieChart />
                 </div>
               </div>
-              <div className="h-[234px] w-full">
-                <RatioChart/>
+              <div className="p-4 w-full">
+                <div className="flex justify-end items-center">
+                  <div className="flex gap-[10px] mr-5">
+                    <Button
+                      variant={"showMore"}
+                      size={"timeline"}
+                      className="text-borderGrey"
+                    >
+                      All Time
+                    </Button>
+                    <Button
+                      variant={"showMore"}
+                      size={"timeline"}
+                      className="text-borderGrey"
+                    >
+                      1Y
+                    </Button>
+                    <Button
+                      variant={"showMore"}
+                      size={"timeline"}
+                      className="text-borderGrey"
+                    >
+                      6M
+                    </Button>
+                    <Button
+                      variant={"showMore"}
+                      size={"timeline"}
+                      className="text-borderGrey"
+                    >
+                      1M
+                    </Button>
+                    <Button
+                      variant={"showMore"}
+                      size={"timeline"}
+                      className="text-[#020202]  rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]"
+                    >
+                      10D
+                    </Button>
+                    <Button
+                      variant={"showMore"}
+                      size={"timeline"}
+                      className="text-borderGrey"
+                    >
+                      1D
+                    </Button>
+                  </div>
+                </div>
+                <Charts chartData={chartData} height={180} />
+                <div className="flex justify-between items-center px-10 ">
+                  <Button
+                    variant={"secondary"}
+                    size={"arrow"}
+                    className="flex items-center bg-[#EEE] "
+                  >
+                    <ArrowLeftIcon width={12} height={9} />
+                  </Button>
+                  <p>Time</p>
+                  <Button
+                    variant={"secondary"}
+                    size={"arrow"}
+                    className="flex items-center bg-[#EEE]"
+                  >
+                    <ArrowRightIcon width={12} height={9} />
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
         <div className="flex w-full rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
@@ -289,36 +390,6 @@ const page = () => {
     headline: string;
     data: { headline: string; value: string; lastElement?: boolean }[];
   }) {
-    const chartData = [
-      {
-        name: "26",
-        price: 0.95,
-      },
-      {
-        name: "27",
-        price: 0.96,
-      },
-      {
-        name: "28",
-        price: 1.05,
-      },
-      {
-        name: "29",
-        price: 0.95,
-      },
-      {
-        name: "30",
-        price: 0.96,
-      },
-      {
-        name: "31",
-        price: 0.9,
-      },
-      {
-        name: "Nov",
-        price: 0.9,
-      },
-    ];
     return (
       <div className="flex flex-col w-[50%] border border-lineGrey rounded-lg">
         <div className="flex flex-col p-5 gap-[10px] bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)] rounded-lg border border-lineGrey shadow-[0_4px_8px_0px_rgba(0,0,0,0.1)]">
