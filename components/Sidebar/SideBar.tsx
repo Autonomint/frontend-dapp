@@ -39,7 +39,9 @@ const SideBar = () => {
     <nav className="h-full px-[10px] py-[30px] bg-bgGrey flex flex-col items-center justify-between">
       <div className="flex flex-col items-center gap-[45px]">
         <Link href={"/"}>
-          <Image src={logo} alt="autonomint-dapp" width={50} height={46} />
+        <div className="w-[3rem] h-[3rem]">
+          <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
+          </div>
         </Link>
         <div className="flex flex-col items-center gap-4">
           {navItemsList.map((item) => {

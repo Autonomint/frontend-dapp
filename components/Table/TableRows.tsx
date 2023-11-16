@@ -135,7 +135,7 @@ const TableRows = ({
             </SheetHeader>
             <div className="flex flex-col">
               {depositDetails.map((detail, index) => (
-                <SheetRow
+                <SheetRow key={detail.headline}
                   props={{
                     heading: detail.headline,
                     value: detail.value,

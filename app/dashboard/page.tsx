@@ -80,7 +80,7 @@ const page = () => {
   return (
     <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden h-full">
       <div className="flex flex-col gap-6">
-        <div className="flex justify-between flex-1 gap-6">
+        <div className="flex justify-between flex-1 gap-6 w-full">
           <DashboardCard headline="AMINT" data={amintValues} />
           <DashboardCard headline="ABOND" data={abondValues} />
         </div>
@@ -108,7 +108,7 @@ const page = () => {
                   <RatioPieChart />
                 </div>
               </div>
-              <div className="p-4 w-full">
+              <div className="p-4 w-[70%]">
                 <div className="flex justify-end items-center">
                   <div className="flex gap-[10px] mr-5">
                     <Button
@@ -298,7 +298,7 @@ const page = () => {
 
   function ValueLocked() {
     return (
-      <div className="flex max-w-[366px] w-full flex-col rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
+      <div className="flex max-w-[366px] w-full flex-col justify-between rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
         <div className="flex flex-col gap-[10px] p-5">
           <div className="flex gap-[10px] flex-start w-full">
             <Image src={dollar} alt="atm local" width={35} height={35}></Image>
@@ -460,7 +460,7 @@ const page = () => {
               </Button>
             </div>
           </div>
-          <Charts chartData={chartData} />
+          <Charts chartData={chartData} height={180} />
           <div className="flex justify-between items-center px-10 ">
             <Button
               variant={"secondary"}

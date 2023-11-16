@@ -53,7 +53,7 @@ const NavBar = () => {
   // }, []);
   // console.log(width)
   return (
-    <div className="bg-bgGrey flex flex-col pb-6 pr-6">
+    <div className="bg-bgGrey flex flex-col min-[1440px]:pb-6">
       <div className="flex px-4 py-5">
         {headerItems.map((item, index) => (
           <HeaderItems
@@ -67,7 +67,7 @@ const NavBar = () => {
         ))}
         <Button
           variant={"showMore"}
-          className="px-4 pb-4 py-0 flex flex-col gap-[10px] items-center h-full min-w-"
+          className="px-4 pb-4 py-0 flex flex-col gap-[10px] items-center h-full"
           onClick={() => {
             setShowMore(!showMore);
           }}
@@ -133,7 +133,7 @@ const NavBar = () => {
                 style={{ width: "100%", height: "100%" }}
               />
             </div>
-            <p className="text-borderGrey text-base font-medium whitespace-nowrap opacity-0">
+            <p className="text-borderGrey text-base font-medium whitespace-nowrap opacity-0 min-w-[82.7px]">
             {!showMore ? "Show More" : "Show Less"}
           </p>
           </Button>

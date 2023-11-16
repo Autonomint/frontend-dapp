@@ -19,7 +19,13 @@ const Profile = ({ props: { image, buttonText } }: Props) => {
     <>
       {isConnected && (
         <div className="flex flex-col items-center gap-5">
-          <Image src={image} alt="user Profile" width={80} height={80} />
+          <div className="min-[1440px]:w-[5rem] min-[1440px]:h-[5rem] w-[3.5rem] h-[3.5rem]">
+            <Image
+              src={image}
+              alt="user Profile"
+              style={{ width: "100%", height: "100%" }}
+            />
+          </div>
           <p className="text-center font-normal text-base text-textGrey">
             {truncateWeb3WalletAddress(address)}
             {/* {ensName ? ` (${ensName})` : null} */}

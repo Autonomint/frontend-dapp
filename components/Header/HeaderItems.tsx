@@ -19,15 +19,18 @@ const HeaderItems = ({
   return (
     <>
       <div
-        className={cn(`flex justify-between min-w-[164px] w-full`, className)}
+        className={cn(
+          `flex justify-between min-[1440px]:min-w-[164px] w-full`,
+          className
+        )}
       >
-        <div className="flex flex-col gap-[20px]">
-          <p className="text-textGrey text-base font-normal leading-none whitespace-nowrap">
+        <div className="flex flex-col justify-center min-[1440px]:gap-[20px] gap-2">
+          <p className="text-textGrey min-[1440px]:text-base text-sm font-normal leading-none whitespace-nowrap">
             {textHeadline}
           </p>
           <h3
             style={{ color: textColor ? textColor : "" }}
-            className="font-medium text-[2rem] leading-none"
+            className="font-medium min-[1440px]:text-[2rem] text-2xl leading-none"
           >
             {textValue}
           </h3>
@@ -36,7 +39,11 @@ const HeaderItems = ({
 
       <div
         className={cn(
-          `${lastElement ? "" : "w-[1px] h-full bg-lineGrey  ml-6 mr-6"}`,
+          `${
+            lastElement
+              ? ""
+              : "w-[1px] h-full bg-lineGrey  mx-6 max-[1000px]:mx-3"
+          }`,
           className
         )}
       ></div>

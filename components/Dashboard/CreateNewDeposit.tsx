@@ -199,11 +199,11 @@ const CreateNewDeposit = () => {
 
   return (
     <div className="flex justify-between items-center mb-[30px]">
-      <div className="flex flex-col gap-[15px] ">
-        <h2 className="text-textPrimary font-medium text-4xl tracking-[-1.8px]">
+      <div className="flex flex-col gap-[8px] min-[1440px]:gap-[15px]">
+        <h2 className="text-textPrimary leading-none font-medium text-3xl tracking-[-1.8px] min-[1440px]:text-4xl">
           Your Deposits
         </h2>
-        <p className="text-textSecondary">
+        <p className="text-textSecondary leading-none text-sm min-[1440px]:text-base">
           A list of all the deposits you have made.
         </p>
       </div>

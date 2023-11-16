@@ -45,7 +45,7 @@ const DepositAndWithDrawTable = () => {
       </TableHeader>
       <TableBody>
         {tableDetails.map((details, index) => (
-          <TableRows key={details.id+index} details={details} />
+          <TableRows key={details.id} details={details} />
         ))}
       </TableBody>
     </Table>
