@@ -57,19 +57,23 @@ const depositDetails = [
   },
 ];
 
-const TableRows = ({
-  details,
-}: {
-  details: {
-    id: number;
-    ethDeposited: string;
-    amintMinted: string;
-    abondMinted: string;
-    interestRate: string;
-    liquidated: string;
-    index: string;
-  };
-}) => {
+interface TableData {
+  id: string;
+  address: string;
+  index: number;
+  collateralType: string;
+  depositedAmount: string;
+  depositedTime: number;
+  ethPrice: number;
+  noOfAmintMinted: string;
+  strikePrice: number;
+  withdrawTime1: number;
+  withdrawTime2: number;
+  amountYetToWithdraw: number;
+  noOfAbondMinted: number;
+  status: "DEPOSITED" | "WITHDREW1" | "WITHDREW2" | "LIQUIDATED";
+}
+const TableRows = ({ details,interest }: { details: TableData,interest?: number }) => {
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [openConfirmNotice, setOpenConfirmNotice] = React.useState(false);
   const [amountView, setAmountView] = React.useState(false);
@@ -89,31 +93,29 @@ const TableRows = ({
     }
   }
   return (
-    <Sheet key={details.id} open={sheetOpen} onOpenChange={setSheetOpen} >
-      <TableRow
-        className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF]"
-      >
+    <Sheet key={details.id} open={sheetOpen} onOpenChange={setSheetOpen}>
+      <TableRow className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF]">
         <TableCell className="text-borderGrey w-3">
-          {`#${details.id}`}
+          {`#${details.index}`}
         </TableCell>
         <TableCell className="text-textGrey">
-          <SheetTrigger>{details.ethDeposited}</SheetTrigger>
+          <SheetTrigger>{details.depositedAmount}</SheetTrigger>
         </TableCell>
         <TableCell className="text-textGrey">
-          <SheetTrigger>{details.amintMinted}</SheetTrigger>
+          <SheetTrigger>{details.noOfAmintMinted}</SheetTrigger>
         </TableCell>
         <TableCell className="text-textGrey">
-          <SheetTrigger>{details.interestRate}</SheetTrigger>
+          <SheetTrigger>{interest}%</SheetTrigger>
         </TableCell>
         <TableCell className="text-textGrey">
-          <SheetTrigger>{details.abondMinted}</SheetTrigger>
+          <SheetTrigger>{details.noOfAbondMinted===null?"-":details.noOfAbondMinted}</SheetTrigger>
         </TableCell>
         <TableCell className="text-textGrey">
-          <SheetTrigger>{details.liquidated}</SheetTrigger>
+          <SheetTrigger>{details.status==="LIQUIDATED"?"Yes":"No"}</SheetTrigger>
         </TableCell>
 
         <SheetContent>
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col min-[1440px]:gap-6 gap-[10px]">
             <div className="flex w-full justify-end">
               <SheetClose asChild>
                 <Button
@@ -129,20 +131,21 @@ const TableRows = ({
               </SheetClose>
             </div>
             <SheetHeader>
-              <SheetTitle className="text-textPrimary font-medium text-4xl tracking-[-1.8px]">
+              <SheetTitle className="text-textPrimary font-medium min-[1440px]:text-4xl text-2xl tracking-[-1.8px]">
                 Deposit #1
               </SheetTitle>
             </SheetHeader>
             <div className="flex flex-col">
               {depositDetails.map((detail, index) => (
-                <SheetRow key={detail.headline}
+                <SheetRow
+                  key={detail.headline}
                   props={{
                     heading: detail.headline,
                     value: detail.value,
                   }}
                 />
               ))}
-              <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
+              <div className="flex justify-between min-[1440px]:px-4 px-2 min-[1440px]:py-[10px] py-[5px] border-b border-lineGrey">
                 <p className="text-base text-textSecondary">Amount Protected</p>
                 {!amountView ? (
                   <Button

@@ -9,9 +9,9 @@ interface Props {
 
 const SheetRow = ({ props: { heading, value } }: Props) => {
   return (
-    <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-      <p className="text-base text-textSecondary">{heading}</p>
-      <p className="text-textHighlight font-medium text-base">{value}</p>
+    <div className="flex justify-between min-[1440px]:px-4 px-2 min-[1440px]:py-[10px] py-[5px] border-b border-lineGrey">
+      <p className="min-[1440px]:text-base text-sm text-textSecondary">{heading}</p>
+      <p className="min-[1440px]:text-base text-sm text-textHighlight font-medium ">{value}</p>
     </div>
   );
 };

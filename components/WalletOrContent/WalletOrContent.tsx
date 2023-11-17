@@ -135,7 +135,7 @@ const WalletOrContent = () => {
           </div>
           <Divider />
           <CreateNewDeposit />
-          <DepositAndWithDrawTable />
+          <DepositAndWithDrawTable tableData={depositorData?.borrows} />
         </div>
       ) : (
         <ConnectWallet />
