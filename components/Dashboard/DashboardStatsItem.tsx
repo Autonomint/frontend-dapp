@@ -4,7 +4,6 @@ import React from "react";
 import { useAccount, useBalance, useChainId } from "wagmi";
 interface Props {
   props: {
-    index: number;
     heading: string;
     value: string;
     subheadingBefore?: string;
@@ -20,7 +19,6 @@ interface Props {
 
 const DashboardStatsItem = ({
   props: {
-    index,
     heading,
     value,
     subheadingBefore,

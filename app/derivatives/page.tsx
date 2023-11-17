@@ -79,7 +79,6 @@ const page = () => {
             {dasboardStatsItem.map((item, index) => (
               <div className="flex border border-lineGrey min-w-[150px] w-full">
                 <DashboardStatsItem
-                  key={index}
                   props={{
                     heading: item.heading,
                     value: item.value,

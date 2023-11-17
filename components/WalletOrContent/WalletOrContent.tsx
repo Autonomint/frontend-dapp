@@ -121,7 +121,6 @@ const WalletOrContent = () => {
               >
                 <DashboardStatsItem
                   props={{
-                    index: index,
                     heading: item.heading,
                     value: item.value,
                     showSubHeading: true,
