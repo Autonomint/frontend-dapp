@@ -28,7 +28,7 @@ const buttonVariants = cva(
         toastClose:"bg-transparent rounded-r"
       },
       size: {
-        primary: "px-5 py-[10px]",
+        primary: "min-[1440px]:px-5 min-[1440px]:py-[10px] px-[10px] py-[5px]",
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 px-8",
         icon: "h-9 w-9",

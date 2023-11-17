@@ -225,7 +225,7 @@ const CreateNewDeposit = () => {
         <DialogContent className="w-[672px]">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} action="#">
-              <div className=" flex w-full justify-end">
+              <div className="flex w-full justify-end">
                 <DialogClose asChild>
                   <Button
                     variant={"ghostOutline"}
@@ -241,11 +241,11 @@ const CreateNewDeposit = () => {
               </div>
 
               <DialogHeader className="flex items-start">
-                <DialogTitle className="text-textPrimary font-medium text-4xl tracking-[-1.8px]">
+                <DialogTitle className="text-textPrimary font-medium min-[1440px]:text-4xl text-2xl tracking-[-1.8px] leading-none ">
                   Make a New Deposit
                 </DialogTitle>
               </DialogHeader>
-              <div className="flex flex-col pt-[30px] gap-[20px]">
+              <div className="flex flex-col min-[1440px]:pt-[30px] pt-[15px] min-[1440px]:gap-[20px] gap-[10px]">
                 <FormField
                   control={form.control}
                   name="collateral"
@@ -291,23 +291,23 @@ const CreateNewDeposit = () => {
                     </FormItem>
                   )}
                 />
-                <div className="flex gap-[10px] items-center">
+                <div className="px-[6px] flex gap-[10px] items-center">
                   <InfoCircledIcon width={18} height={18} />
-                  <p className="text-base font-normal text-textGrey text-center">
+                  <p className=" min-[1440px]:text-base text-sm font-normal text-textGrey text-center">
                     Minimum Collateral Amount is{" "}
                     <span className="font-medium text-textHighlight">
                       0.02 ETH
                     </span>
                   </p>
                 </div>
-                <div className="p-[6px]">
+                <div className="pt-[4px] px-[6px]">
                   <FormField
                     control={form.control}
                     name="strikePrice"
                     render={({ field: { value, onChange } }) => (
                       <FormItem>
-                        <FormLabel className="mb-[10px]">
-                          <p className="text-base font-normal text-textGrey mb-4">
+                        <FormLabel className="min-[1440px]:mb-[10px] mb-1">
+                          <p className="min-[1440px]:text-base text-sm font-normal text-textGrey min-[1440px]:mb-4 mb-3">
                             Select Strike Price for call options.
                           </p>
                         </FormLabel>
@@ -326,40 +326,40 @@ const CreateNewDeposit = () => {
                       </FormItem>
                     )}
                   />
-                  <div className="w-full flex justify-between mt-[10px]">
-                    <p>05</p>
-                    <p>10</p>
-                    <p>15</p>
-                    <p>20</p>
-                    <p>25</p>
+                  <div className="w-full flex justify-between min-[1440px]:mt-[10px] mt-2">
+                    <p className="text-sm min-[1440px]:text-base">05</p>
+                    <p className="text-sm min-[1440px]:text-base">10</p>
+                    <p className="text-sm min-[1440px]:text-base">15</p>
+                    <p className="text-sm min-[1440px]:text-base">20</p>
+                    <p className="text-sm min-[1440px]:text-base">25</p>
                   </div>
                 </div>
-                <div className="py-[10px] flex flex-col">
+                <div className="flex flex-col">
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                    <p className="text-base text-textSecondary">
+                    <p className=" min-[1440px]:text-base text-sm text-textSecondary">
                       Amount of Amint that will be minted
                     </p>
-                    <p className="text-textHighlight font-medium text-base">
+                    <p className="text-textHighlight font-medium  min-[1440px]:text-base text-sm">
                       {amintToBeMinted}
                     </p>
                   </div>
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                    <p className="text-base text-textSecondary">Options Fees</p>
-                    <p className="text-textHighlight font-medium text-base">
+                    <p className=" min-[1440px]:text-base text-sm text-textSecondary">Options Fees</p>
+                    <p className="text-textHighlight font-medium  min-[1440px]:text-base text-sm">
                       3%
                     </p>
                   </div>
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                    <p className="text-base text-textSecondary">APY</p>
-                    <p className="text-textHighlight font-medium text-base">
+                    <p className=" min-[1440px]:text-base text-sm text-textSecondary">APY</p>
+                    <p className="text-textHighlight font-medium  min-[1440px]:text-base text-sm">
                       5% - 0.00023 Amint
                     </p>
                   </div>
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                    <p className="text-base text-textSecondary">
+                    <p className=" min-[1440px]:text-base text-sm text-textSecondary">
                       Downside Protection Amount
                     </p>
-                    <p className="text-textHighlight font-medium text-base">
+                    <p className="text-textHighlight font-medium  min-[1440px]:text-base text-sm">
                       1.234
                     </p>
                   </div>

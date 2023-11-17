@@ -62,7 +62,7 @@ const tableDetails = [
 ];
 
 const WalletOrContent = () => {
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
   const [dashboardStats, setDashboardStats] = useState(dasboardStatsItem);
   function getDepositorData(address: `0x${string}` | undefined) {
     return fetch(`http://43.204.73.16:3000/borrows/${address}`).then(
@@ -73,6 +73,7 @@ const WalletOrContent = () => {
     queryKey: ["depositorData"],
     queryFn: () =>
       getDepositorData("0x2Ea5DA7Dd4c252D1B63c106477d93f9878186f4F"),
+    enabled: !!address,
   });
   console.log("returned data", depositorData);
 
@@ -84,8 +85,7 @@ const WalletOrContent = () => {
       updatedStats[2].value = depositorData.totalAbond;
       updatedStats[0].subheadingHighlight = depositorData.totalIndex;
       setDashboardStats(updatedStats);
-    }
-    else {
+    } else {
       const updatedStats = [...dashboardStats];
       updatedStats[0].value = "-";
       updatedStats[1].value = "-";
@@ -96,7 +96,7 @@ const WalletOrContent = () => {
   }
   useEffect(() => {
     handleStatsItem();
-    console.log(dashboardStats)
+    console.log(dashboardStats);
   }, [depositorData]);
 
   return (
