@@ -86,7 +86,7 @@ const page = () => {
         </div>
         <div className="flex gap-6">
           <ValueLocked />
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-[70%]">
             <CollateralRatio />
             <div className="flex w-full h-full">
               <div className="flex h-full w-[350px] flex-col bg-[linear-gradient(270deg,#CDF3FF_0%,#D8FFEA_100%)] border-r border-solid border-lineGrey rounded-[10px] rounded-t-none rounded-br-none">
@@ -298,7 +298,7 @@ const page = () => {
 
   function ValueLocked() {
     return (
-      <div className="flex max-w-[366px] w-full flex-col justify-between rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
+      <div className="flex max-w-[30%] w-full flex-col justify-between rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
         <div className="flex flex-col gap-[10px] p-5">
           <div className="flex gap-[10px] flex-start w-full">
             <Image src={dollar} alt="atm local" width={35} height={35}></Image>
