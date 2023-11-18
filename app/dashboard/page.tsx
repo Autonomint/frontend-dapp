@@ -179,7 +179,72 @@ const page = () => {
         </div>
         <div className="flex w-full rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
           <FeesComp />
-          <div className="p-[15px] bg-white w-full rounded-lg"></div>
+          <div className="p-4 w-[70%] bg-white">
+            <div className="flex justify-end items-center">
+              <div className="flex gap-[10px] mr-5">
+                <Button
+                  variant={"showMore"}
+                  size={"timeline"}
+                  className="text-borderGrey"
+                >
+                  All Time
+                </Button>
+                <Button
+                  variant={"showMore"}
+                  size={"timeline"}
+                  className="text-borderGrey"
+                >
+                  1Y
+                </Button>
+                <Button
+                  variant={"showMore"}
+                  size={"timeline"}
+                  className="text-borderGrey"
+                >
+                  6M
+                </Button>
+                <Button
+                  variant={"showMore"}
+                  size={"timeline"}
+                  className="text-borderGrey"
+                >
+                  1M
+                </Button>
+                <Button
+                  variant={"showMore"}
+                  size={"timeline"}
+                  className="text-[#020202]  rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]"
+                >
+                  10D
+                </Button>
+                <Button
+                  variant={"showMore"}
+                  size={"timeline"}
+                  className="text-borderGrey"
+                >
+                  1D
+                </Button>
+              </div>
+            </div>
+            <Charts chartData={chartData} height={230} />
+            <div className="flex justify-between items-center px-10 ">
+              <Button
+                variant={"secondary"}
+                size={"arrow"}
+                className="flex items-center bg-[#EEE] "
+              >
+                <ArrowLeftIcon width={12} height={9} />
+              </Button>
+              <p>Time</p>
+              <Button
+                variant={"secondary"}
+                size={"arrow"}
+                className="flex items-center bg-[#EEE]"
+              >
+                <ArrowRightIcon width={12} height={9} />
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -187,7 +252,7 @@ const page = () => {
 
   function FeesComp() {
     return (
-      <div className="flex flex-col gap-[10px] p-5 mr-2">
+      <div className="flex flex-col gap-[10px] p-5 mr-2 w-[40%]">
         <div className="flex gap-[10px] flex-start w-full">
           <Image src={money} alt="money" width={35} height={35}></Image>
           <h2 className="text-textPrimary font-normal text-[32px] leading-none">

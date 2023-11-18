@@ -10,7 +10,11 @@ import Image from "next/image";
 
 import DepositAndWithDrawTable from "@/components/Table/OurTable";
 import { useAccount } from "wagmi";
-import { abondAddress, amintAddress } from "@/abiAndHooks";
+import {
+  abondAddress,
+  amintAddress,
+  useBorrowingContractRead,
+} from "@/abiAndHooks";
 import { useQuery } from "@tanstack/react-query";
 
 const dasboardStatsItem = [
@@ -40,47 +44,33 @@ const dasboardStatsItem = [
   },
 ];
 
-const tableDetails = [
-  {
-    id: 1,
-    ethDeposited: "10.23",
-    amintMinted: "12.0123",
-    abondMinted: "12.0123",
-    index: "index",
-    liquidated: "Yes",
-    interestRate: "3%",
-  },
-  {
-    id: 2,
-    ethDeposited: "10.23",
-    amintMinted: "12.0123",
-    abondMinted: "12.0123",
-    index: "index",
-    liquidated: "No",
-    interestRate: "4%",
-  },
-];
-
 const WalletOrContent = () => {
   const { isConnected, address } = useAccount();
   const [dashboardStats, setDashboardStats] = useState(dasboardStatsItem);
+  const { data: ethPrice } = useBorrowingContractRead({
+    functionName: "getUSDValue",
+    watch: true,
+    staleTime: 60 * 1000 * 24,
+  });
   function getDepositorData(address: `0x${string}` | undefined) {
     return fetch(`http://43.204.73.16:3000/borrows/${address}`).then(
       (response) => response.json()
     );
   }
   const { data: depositorData } = useQuery({
-    queryKey: ["depositorData"],
+    queryKey: ["depositorsData"],
     queryFn: () =>
       getDepositorData("0x2Ea5DA7Dd4c252D1B63c106477d93f9878186f4F"),
     enabled: !!address,
+    staleTime: 60 * 24 * 1000,
   });
-  console.log("returned data", depositorData);
-
   function handleStatsItem() {
     if (depositorData) {
       const updatedStats = [...dashboardStats];
-      updatedStats[0].value = depositorData.totalDepositedAmount;
+      const ethPriceNow = ethPrice ? ethPrice : 0n;
+      updatedStats[0].value = `$${
+        (BigInt(depositorData.totalDepositedAmount) * ethPriceNow) / 100n
+      }`;
       updatedStats[1].value = depositorData.totalAmint;
       updatedStats[2].value = depositorData.totalAbond;
       updatedStats[0].subheadingHighlight = depositorData.totalIndex;
@@ -93,8 +83,10 @@ const WalletOrContent = () => {
       updatedStats[0].subheadingHighlight = "-";
       setDashboardStats(updatedStats);
     }
+    console.log("returned data", depositorData);
   }
   useEffect(() => {
+    console.log("returned data", depositorData);
     handleStatsItem();
     console.log(dashboardStats);
   }, [depositorData]);

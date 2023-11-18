@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Sheet,
   SheetClose,
@@ -17,6 +17,7 @@ import pace from "@/app/assets/pace.svg";
 import ConfirmNotice from "../CustomUI/ConfirmNotice";
 import Note from "../CustomUI/Note";
 import SheetRow from "../CustomUI/SheetRow";
+import { usePrepareBorrowingContractWithDraw } from "@/abiAndHooks";
 
 const depositDetails = [
   {
@@ -73,11 +74,20 @@ interface TableData {
   noOfAbondMinted: number;
   status: "DEPOSITED" | "WITHDREW1" | "WITHDREW2" | "LIQUIDATED";
 }
-const TableRows = ({ details,interest }: { details: TableData,interest?: number }) => {
-  const [sheetOpen, setSheetOpen] = React.useState(false);
-  const [openConfirmNotice, setOpenConfirmNotice] = React.useState(false);
-  const [amountView, setAmountView] = React.useState(false);
-  const [withdrawalTime, setWithdrawalTime] = React.useState("first");
+const TableRows = ({
+  details,
+  interest,
+}: {
+  details: TableData;
+  interest?: number;
+}) => {
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [openConfirmNotice, setOpenConfirmNotice] = useState(false);
+  const [amountView, setAmountView] = useState(false);
+  const [withdrawalTime, setWithdrawalTime] = useState("first");
+  const [depositData, setDepositData] = useState(depositDetails);
+  // usePrepareBorrowingContractWithDraw();
+
   function handleWithdrawalTime() {
     if (withdrawalTime === "first") {
       setOpenConfirmNotice(false);
@@ -92,8 +102,36 @@ const TableRows = ({ details,interest }: { details: TableData,interest?: number 
       console.log(withdrawalTime);
     }
   }
+  function handleDepositData() {
+    if (details) {
+      const updatedData = [...depositData];
+      updatedData[0].value = details.depositedAmount;
+      updatedData[1].value = `${details.ethPrice}`;
+      updatedData[2].value = details.noOfAmintMinted;
+      // updatedData[3].value = details.depositedAmount;
+      // updatedData[4].value = details.depositedAmount;
+      // updatedData[5].value = details.depositedAmount;
+      // updatedData[6].value = details.depositedAmount;
+      // updatedData[7].value = details.depositedAmount;
+      updatedData[8].value = details.noOfAbondMinted
+        ? `${details.noOfAbondMinted}`
+        : "-";
+    }
+  }
+
+  useEffect(() => {
+    handleDepositData();
+  }, [details]);
+
   return (
-    <Sheet key={details.id} open={sheetOpen} onOpenChange={setSheetOpen}>
+    <Sheet
+      key={details.id}
+      open={sheetOpen}
+      onOpenChange={() => {
+        setSheetOpen(!sheetOpen);
+        setOpenConfirmNotice(false);
+      }}
+    >
       <TableRow className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF]">
         <TableCell className="text-borderGrey w-3">
           {`#${details.index}`}
@@ -108,10 +146,14 @@ const TableRows = ({ details,interest }: { details: TableData,interest?: number 
           <SheetTrigger>{interest}%</SheetTrigger>
         </TableCell>
         <TableCell className="text-textGrey">
-          <SheetTrigger>{details.noOfAbondMinted===null?"-":details.noOfAbondMinted}</SheetTrigger>
+          <SheetTrigger>
+            {details.noOfAbondMinted === null ? "-" : details.noOfAbondMinted}
+          </SheetTrigger>
         </TableCell>
         <TableCell className="text-textGrey">
-          <SheetTrigger>{details.status==="LIQUIDATED"?"Yes":"No"}</SheetTrigger>
+          <SheetTrigger>
+            {details.status === "LIQUIDATED" ? "Yes" : "No"}
+          </SheetTrigger>
         </TableCell>
 
         <SheetContent>

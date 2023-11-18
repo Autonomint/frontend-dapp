@@ -54,6 +54,7 @@ import {
   useBorrowingContractRead,
 } from "@/abiAndHooks";
 import truncateWeb3WalletAddress from "@/app/utils/truncateWeb3Address";
+import { useMutation } from "@tanstack/react-query";
 
 const formSchema = z.object({
   collateral: z.string(),
@@ -83,6 +84,41 @@ const CreateNewDeposit = () => {
       strikePrice: 5,
     },
   });
+  const { mutate } = useMutation({
+    mutationFn: storeToBackend,
+    onError(error, variables, context) {
+      console.log(error);
+    },
+  });
+
+  async function storeToBackend(address: `0x${string}` | undefined) {
+    const response = await fetch("http://43.204.73.16:3000/borrows", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        address: '0xC905A79E4a4e866815F61E644530A574C3Af6eA5',
+        collateralType: "ETH",
+        index: 1,
+        depositedAmount: parseEther(
+          form.watch("collateralAmount")?.toString()
+        ).toString(),
+        depositedTime: Date.now(),
+        ethPrice: Number(ethPrice ? ethPrice : 0),
+        noOfAmintMinted: `${amintToBeMinted}`,
+        strikePrice: form.watch("strikePrice"),
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message);
+    }
+
+    return result;
+  }
 
   const { data: ethPrice } = useBorrowingContractRead({
     functionName: "getUSDValue",
@@ -129,6 +165,7 @@ const CreateNewDeposit = () => {
           />
         </div>
       ));
+      mutate(address);
     },
   });
   const { isLoading, isSuccess } = useWaitForTransaction({
@@ -344,13 +381,17 @@ const CreateNewDeposit = () => {
                     </p>
                   </div>
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                    <p className=" min-[1440px]:text-base text-sm text-textSecondary">Options Fees</p>
+                    <p className=" min-[1440px]:text-base text-sm text-textSecondary">
+                      Options Fees
+                    </p>
                     <p className="text-textHighlight font-medium  min-[1440px]:text-base text-sm">
                       3%
                     </p>
                   </div>
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                    <p className=" min-[1440px]:text-base text-sm text-textSecondary">APY</p>
+                    <p className=" min-[1440px]:text-base text-sm text-textSecondary">
+                      APY
+                    </p>
                     <p className="text-textHighlight font-medium  min-[1440px]:text-base text-sm">
                       5% - 0.00023 Amint
                     </p>
