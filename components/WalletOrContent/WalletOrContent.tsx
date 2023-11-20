@@ -47,6 +47,7 @@ const dasboardStatsItem = [
 const WalletOrContent = () => {
   const { isConnected, address } = useAccount();
   const [dashboardStats, setDashboardStats] = useState(dasboardStatsItem);
+  const [shouldRefetch, setShouldRefetch] = useState(1);
   const { data: ethPrice } = useBorrowingContractRead({
     functionName: "getUSDValue",
     watch: true,
@@ -57,19 +58,31 @@ const WalletOrContent = () => {
       (response) => response.json()
     );
   }
-  const { data: depositorData } = useQuery({
-    queryKey: ["depositorsData"],
-    queryFn: () =>
-      getDepositorData("0x2Ea5DA7Dd4c252D1B63c106477d93f9878186f4F"),
+  const { data: depositorData, error: depositorDataError } = useQuery({
+    queryKey: ["depositorsData", shouldRefetch],
+    queryFn: () => getDepositorData(address ? address : undefined),
     enabled: !!address,
-    staleTime: 60 * 24 * 1000,
   });
+
+  function handleRefetch() {
+    setShouldRefetch(shouldRefetch + 1);
+  }
   function handleStatsItem() {
+    if (depositorDataError || depositorData?.statusCode === 404) {
+      const updatedStats = [...dashboardStats];
+      updatedStats[0].value = "-";
+      updatedStats[1].value = "-";
+      updatedStats[2].value = "-";
+      updatedStats[0].subheadingHighlight = "-";
+      setDashboardStats(updatedStats);
+      return;
+    }
+
     if (depositorData) {
       const updatedStats = [...dashboardStats];
       const ethPriceNow = ethPrice ? ethPrice : 0n;
       updatedStats[0].value = `$${
-        (BigInt(depositorData.totalDepositedAmount) * ethPriceNow) / 100n
+        (depositorData.totalDepositedAmount * Number(ethPriceNow)) / 100
       }`;
       updatedStats[1].value = depositorData.totalAmint;
       updatedStats[2].value = depositorData.totalAbond;
@@ -81,15 +94,15 @@ const WalletOrContent = () => {
       updatedStats[1].value = "-";
       updatedStats[2].value = "-";
       updatedStats[0].subheadingHighlight = "-";
-      setDashboardStats(updatedStats);
     }
     console.log("returned data", depositorData);
   }
   useEffect(() => {
     console.log("returned data", depositorData);
+    console.log("error0", depositorDataError);
     handleStatsItem();
     console.log(dashboardStats);
-  }, [depositorData]);
+  }, [depositorData, depositorDataError]);
 
   return (
     <>
@@ -126,7 +139,7 @@ const WalletOrContent = () => {
             ))}
           </div>
           <Divider />
-          <CreateNewDeposit />
+          <CreateNewDeposit handleRefetch={handleRefetch} />
           <DepositAndWithDrawTable tableData={depositorData?.borrows} />
         </div>
       ) : (

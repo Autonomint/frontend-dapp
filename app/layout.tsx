@@ -9,6 +9,7 @@ import { Toaster } from "sonner";
 import WalletProvider from "@/providers/WalletProvider";
 import NavBar from "@/components/NavBar/NavBar";
 import QueryProvider from "@/providers/QueryProvider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,14 +29,18 @@ export default function RootLayout({
       <body className={`${inter.className} bg-bgGrey`}>
         {/* <div className="max-w-[1440px] mx-auto"> */}
         <main className="grid h-screen grid-cols-[140px_1fr]">
-        <QueryProvider>
-          <WalletProvider>
-            <SideBar />
-            <div className="h-full flex flex-col pb-6 pr-6">
-              <NavBar />
-              {children}
-            </div>
-          </WalletProvider>
+          <QueryProvider>
+            <WalletProvider>
+              <SideBar />
+              <div className="h-full flex flex-col pb-6 pr-6">
+                <NavBar />
+                {children}
+              </div>
+              <ReactQueryDevtools
+                buttonPosition="top-left"
+                initialIsOpen={false}
+              />
+            </WalletProvider>
           </QueryProvider>
         </main>
         {/* </div> */}
@@ -43,7 +48,7 @@ export default function RootLayout({
           duration={3000}
           closeButton={true}
           position="top-center"
-          toastOptions={{style:{zIndex:999}}}
+          toastOptions={{ style: { zIndex: 999 } }}
         />
       </body>
     </html>

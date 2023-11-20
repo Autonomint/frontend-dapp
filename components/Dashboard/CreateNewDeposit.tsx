@@ -54,7 +54,7 @@ import {
   useBorrowingContractRead,
 } from "@/abiAndHooks";
 import truncateWeb3WalletAddress from "@/app/utils/truncateWeb3Address";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const formSchema = z.object({
   collateral: z.string(),
@@ -71,7 +71,7 @@ const formSchema = z.object({
   strikePrice: z.number().min(5).max(25),
 });
 
-const CreateNewDeposit = () => {
+const CreateNewDeposit = ({handleRefetch}: {handleRefetch: () => void}) => {
   const [amintToBeMinted, setAmintToBeMinted] = useState(0);
   const [open, setOpen] = useState(false);
   const { address } = useAccount();
@@ -91,25 +91,40 @@ const CreateNewDeposit = () => {
     },
   });
 
+  function getTotalIndex(address: `0x${string}` | undefined) {
+    return fetch(`http://43.204.73.16:3000/borrows/index/${address}`).then(
+      (response) => response.json()
+    );
+  }
+  const { data: totalIndex } = useQuery({
+    queryKey: ["totalIndex"],
+    queryFn: () => getTotalIndex(address ? address : undefined),
+    enabled: !!address,
+  });
+
   async function storeToBackend(address: `0x${string}` | undefined) {
-    const response = await fetch("http://43.204.73.16:3000/borrows", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        address: '0xC905A79E4a4e866815F61E644530A574C3Af6eA5',
-        collateralType: "ETH",
-        index: 1,
-        depositedAmount: parseEther(
-          form.watch("collateralAmount")?.toString()
-        ).toString(),
-        depositedTime: Date.now(),
-        ethPrice: Number(ethPrice ? ethPrice : 0),
-        noOfAmintMinted: `${amintToBeMinted}`,
-        strikePrice: form.watch("strikePrice"),
-      }),
+    console.log(totalIndex);
+    let bodyValue = JSON.stringify({
+      address: "0xC905A79E4a4e866815F61E644530A574C3Af6eA5",
+      collateralType: "ETH",
+      index: totalIndex + 1,
+      depositedAmount: `${form.watch("collateralAmount")}`,
+      depositedTime: `${Date.now()}`,
+      ethPrice: Number(ethPrice ? ethPrice : 0),
+      noOfAmintMinted: `${amintToBeMinted}`,
+      strikePrice: form.watch("strikePrice"),
     });
+    console.log(bodyValue);
+    const response = await fetch(
+      "http://43.204.73.16:3000/borrows/borrowAmint",
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: bodyValue,
+      }
+    );
 
     const result = await response.json();
 
@@ -119,6 +134,7 @@ const CreateNewDeposit = () => {
 
     return result;
   }
+  console.log(totalIndex);
 
   const { data: ethPrice } = useBorrowingContractRead({
     functionName: "getUSDValue",
@@ -166,6 +182,7 @@ const CreateNewDeposit = () => {
         </div>
       ));
       mutate(address);
+      handleRefetch();
     },
   });
   const { isLoading, isSuccess } = useWaitForTransaction({
@@ -220,8 +237,9 @@ const CreateNewDeposit = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    console.log("depositData", depositData);
-    write?.();
+    // console.log("depositData", depositData);
+    // write?.();
+    mutate(address);
   }
 
   const handleAmintToBeMinted = () => {
