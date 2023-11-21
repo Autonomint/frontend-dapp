@@ -71,7 +71,7 @@ const formSchema = z.object({
   strikePrice: z.number().min(5).max(25),
 });
 
-const CreateNewDeposit = ({handleRefetch}: {handleRefetch: () => void}) => {
+const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   const [amintToBeMinted, setAmintToBeMinted] = useState(0);
   const [open, setOpen] = useState(false);
   const { address } = useAccount();
@@ -100,17 +100,18 @@ const CreateNewDeposit = ({handleRefetch}: {handleRefetch: () => void}) => {
     queryKey: ["totalIndex"],
     queryFn: () => getTotalIndex(address ? address : undefined),
     enabled: !!address,
+    staleTime: 10 * 1000,
   });
 
   async function storeToBackend(address: `0x${string}` | undefined) {
     console.log(totalIndex);
     let bodyValue = JSON.stringify({
-      address: "0xC905A79E4a4e866815F61E644530A574C3Af6eA5",
+      address: address,
       collateralType: "ETH",
       index: totalIndex + 1,
       depositedAmount: `${form.watch("collateralAmount")}`,
       depositedTime: `${Date.now()}`,
-      ethPrice: Number(ethPrice ? ethPrice : 0),
+      ethPrice: Number(ethPrice ? ethPrice : 0) / 100,
       noOfAmintMinted: `${amintToBeMinted}`,
       strikePrice: form.watch("strikePrice"),
     });
@@ -134,11 +135,10 @@ const CreateNewDeposit = ({handleRefetch}: {handleRefetch: () => void}) => {
 
     return result;
   }
-  console.log(totalIndex);
 
   const { data: ethPrice } = useBorrowingContractRead({
     functionName: "getUSDValue",
-    watch: true,
+    staleTime: 10 * 1000,
   });
 
   const { data: depositData, write } = useBorrowingContractDepositTokens({
@@ -263,7 +263,13 @@ const CreateNewDeposit = ({handleRefetch}: {handleRefetch: () => void}) => {
         </p>
       </div>
 
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog
+        open={open}
+        onOpenChange={() => {
+          setOpen(!open);
+          if (open === true) handleRefetch();
+        }}
+      >
         <DialogTrigger asChild>
           <Button
             variant={"primary"}

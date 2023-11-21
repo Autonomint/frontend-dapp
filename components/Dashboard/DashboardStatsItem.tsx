@@ -35,6 +35,8 @@ const DashboardStatsItem = ({
     token: tokenAddress
       ? tokenAddress[chainId as keyof typeof tokenAddress]
       : undefined,
+    enabled: !!address,
+    staleTime: 2_000,
   });
   // function getDepositorData(address: `0x${string}` | undefined) {
   //   return fetch(`http://43.204.73.16:3000/borrows/${address}`).then(
@@ -67,7 +69,7 @@ const DashboardStatsItem = ({
             ? "-"
             : depositorData?.totalAbond
           : "-"} */}
-          {value}
+        {value}
       </p>
       {showSubHeading && (
         <p className="text-textGrey font-normal min-[1440px]:text-base leading-none text-sm">
@@ -80,7 +82,7 @@ const DashboardStatsItem = ({
                 ? "-"
                 : depositorData?.totalIndex
               : "-"} */}
-              {tokenAddress?data?.formatted.slice(0, 8):subheadingHighlight}
+            {tokenAddress ? data?.formatted.slice(0, 8) : subheadingHighlight}
           </span>{" "}
           {subheadingAfter}
         </p>

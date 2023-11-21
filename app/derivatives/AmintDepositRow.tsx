@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/sheet";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import calculateTimeDifference from "../utils/calculateTimeDifference";
 
 const depositDetails = [
   {
@@ -48,37 +49,79 @@ const depositDetails = [
   },
 ];
 
-const AmintDepositRow = ({
-  details,
-}: {
-  details: {
-    id: number;
-    AmintDeposited: number;
-    DepositedTime: string;
-    lockInPeriod: string;
-    ETHPriceAtDeposit: string;
-  };
-}) => {
+interface DepositDetail {
+  id: string;
+  address: string;
+  index: number;
+  depositedAmint: string;
+  depositedTime: string;
+  ethPriceAtDeposit: number;
+  Apr: number;
+  lockingPeriod: number;
+  ethPriceAtWithdraw: number;
+  liquidationAmount: string;
+  optedForLiquidation: boolean;
+  withdrawTime: number;
+  withdrawAmount: number;
+  withdrawEthAmount: number;
+  fees: string;
+  status: "DEPOSITED" | "WITHDREW";
+}
+
+const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [amountView, setAmountView] = React.useState(false);
+  const [depositData, setDepositData] = useState(depositDetails);
+  function handleDepositData() {
+    if (details) {
+      const updatedData = [...depositData];
+      updatedData[0].value = details.depositedAmint;
+      updatedData[1].value = `${details.ethPriceAtDeposit}`;
+      updatedData[2].value = calculateTimeDifference(details.depositedTime);
+      updatedData[3].value = `${details.lockingPeriod} days`;
+      updatedData[4].value = calculateTimeDifference(details.depositedTime);
+      updatedData[5].value = `${details.Apr}`;
+      updatedData[6].value = `${details.Apr}`;
+      updatedData[7].value = details.optedForLiquidation ? "Yes" : "No";
+      setDepositData(updatedData);
+    } else {
+      const updatedData = [...depositData];
+      updatedData[0].value = "-";
+      updatedData[1].value = "-";
+      updatedData[2].value = "-";
+      updatedData[3].value = "-";
+      updatedData[4].value = "-";
+      updatedData[5].value = "-";
+      updatedData[6].value = "-";
+      updatedData[7].value = "-";
+      setDepositData(updatedData);
+    }
+  }
+
+  useEffect(() => {
+    handleDepositData();
+  }, [details]);
+
   return (
     <Sheet key={details.id} open={sheetOpen} onOpenChange={setSheetOpen}>
       <TableRow
         key={details.id}
         className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF]"
       >
-        <TableCell className="text-borderGrey">{`#${details.id}`}</TableCell>
+        <TableCell className="text-borderGrey">{`#${details.index}`}</TableCell>
         <TableCell className="text-textGrey">
-          <SheetTrigger>{details.AmintDeposited}</SheetTrigger>
+          <SheetTrigger>{details.depositedAmint}</SheetTrigger>
         </TableCell>
         <TableCell className="text-textGrey">
-          <SheetTrigger>{details.DepositedTime}</SheetTrigger>
+          <SheetTrigger>
+            {calculateTimeDifference(details.depositedTime)}
+          </SheetTrigger>
         </TableCell>
         <TableCell className="text-textGrey">
-          <SheetTrigger>{details.lockInPeriod}</SheetTrigger>
+          <SheetTrigger>{details.lockingPeriod} days</SheetTrigger>
         </TableCell>
         <TableCell className="text-textGrey">
-          <SheetTrigger>{details.ETHPriceAtDeposit}</SheetTrigger>
+          <SheetTrigger>{details.ethPriceAtDeposit}</SheetTrigger>
         </TableCell>
       </TableRow>
       <SheetContent>

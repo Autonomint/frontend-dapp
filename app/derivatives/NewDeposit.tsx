@@ -37,6 +37,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import payments from "@/app/assets/payments.svg";
 import trending from "@/app/assets/trending_up.svg";
 import calendar from "@/app/assets/date_range.svg";
+import { useBorrowingContractGetUsdValue } from "@/abiAndHooks";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useAccount } from "wagmi";
 
 const formSchema = z.object({
   AmintDepositAmount: z
@@ -56,6 +59,7 @@ const formSchema = z.object({
 
 const NewDeposit = () => {
   const [open, setOpen] = useState(false);
+  const { address } = useAccount();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -64,12 +68,66 @@ const NewDeposit = () => {
       liquidationGains: false,
     },
   });
-  const [amintAmnt, lockIn] = form.watch(
-    ["AmintDepositAmount", "lockInPeriod"],
-    { AmintDepositAmount: undefined, lockInPeriod: undefined }
+  const [amintAmnt, lockIn, liquidationGains] = form.watch(
+    ["AmintDepositAmount", "lockInPeriod", "liquidationGains"],
+    {
+      AmintDepositAmount: undefined,
+      lockInPeriod: undefined,
+      liquidationGains: false,
+    }
   );
+  const { data: ethPrice } = useBorrowingContractGetUsdValue({
+    staleTime: 10 * 1000,
+  });
+  const { data: totalCDSIndex } = useQuery({
+    queryKey: ["totalCDSIndex"],
+    queryFn: () => getCDSTotalIndex(address ? address : undefined),
+    enabled: !!address,
+    staleTime: 10 * 1000,
+  });
+  function getCDSTotalIndex(address: `0x${string}` | undefined) {
+    return fetch(`http://43.204.73.16:3000/cds/index/${address}`).then(
+      (response) => response.json()
+    );
+  }
+  const { mutate } = useMutation({
+    mutationFn: storeToCDSBackend,
+    onError(error) {
+      console.log(error);
+    },
+  });
+  async function storeToCDSBackend(address: `0x${string}` | undefined) {
+    let bodyValue = JSON.stringify({
+      address: address,
+      index: totalCDSIndex ? totalCDSIndex + 1 : 1,
+      depositedAmint: `${amintAmnt}`,
+      depositedTime: `${Date.now()}`,
+      ethPriceAtDeposit: Number(ethPrice ? ethPrice : 0) / 100,
+      apr: 4,
+      lockingPeriod: Number(lockIn),
+      optedForLiquidation: liquidationGains,
+      liquidationAmount: `${amintAmnt}`,
+    });
+    console.log(bodyValue);
+    const response = await fetch("http://43.204.73.16:3000/cds/depositAmint", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: bodyValue,
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message);
+    }
+
+    return result;
+  }
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    mutate(address);
   }
   return (
     <div className="flex justify-between items-center mb-[30px]">
@@ -175,14 +233,14 @@ const NewDeposit = () => {
                           <SelectContent>
                             <SelectGroup>
                               <SelectLabel>Lock-In Period</SelectLabel>
-                              <SelectItem value="30 days">30 Days</SelectItem>
-                              <SelectItem value="60 days">
+                              <SelectItem value="30">30 Days</SelectItem>
+                              <SelectItem value="60">
                                 60 Days (~2 Months)
                               </SelectItem>
-                              <SelectItem value="120 days">
+                              <SelectItem value="120">
                                 120 Days (~4 Months)
                               </SelectItem>
-                              <SelectItem value="180 days">
+                              <SelectItem value="180">
                                 180 Days (~6 Months)
                               </SelectItem>
                             </SelectGroup>
@@ -236,13 +294,13 @@ const NewDeposit = () => {
                             height={24}
                           ></Image>
                           <p>
-                            {lockIn === "30 days" ? (
+                            {lockIn === "30" ? (
                               <>30 Days (~1 Month)</>
-                            ) : lockIn === "60 days" ? (
+                            ) : lockIn === "60" ? (
                               <>60 Days (~2 Months)</>
-                            ) : lockIn === "120 days" ? (
+                            ) : lockIn === "120" ? (
                               <>120 Days (~4 Months)</>
-                            ) : lockIn === "180 days" ? (
+                            ) : lockIn === "180" ? (
                               <>180 Days (~6 Months)</>
                             ) : (
                               <></>

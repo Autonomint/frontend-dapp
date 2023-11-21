@@ -20,7 +20,7 @@ const navItemsList = [
   },
   {
     image: derivatives,
-    label: "Derivatives",
+    label: "dCDS",
     href: "derivatives",
     targetSegment: "derivatives",
   },

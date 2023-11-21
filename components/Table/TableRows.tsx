@@ -17,7 +17,11 @@ import pace from "@/app/assets/pace.svg";
 import ConfirmNotice from "../CustomUI/ConfirmNotice";
 import Note from "../CustomUI/Note";
 import SheetRow from "../CustomUI/SheetRow";
-import { usePrepareBorrowingContractWithDraw } from "@/abiAndHooks";
+import {
+  useBorrowingContractWithDraw,
+  usePrepareBorrowingContractWithDraw,
+} from "@/abiAndHooks";
+import { useAccount } from "wagmi";
 
 const depositDetails = [
   {
@@ -84,21 +88,62 @@ const TableRows = ({
   const [sheetOpen, setSheetOpen] = useState(false);
   const [openConfirmNotice, setOpenConfirmNotice] = useState(false);
   const [amountView, setAmountView] = useState(false);
-  const [withdrawalTime, setWithdrawalTime] = useState("first");
+  const [withdrawalTime, setWithdrawalTime] = useState(details.status);
   const [depositData, setDepositData] = useState(depositDetails);
-  // usePrepareBorrowingContractWithDraw();
+  const { address } = useAccount();
+  // const { config, error } = usePrepareBorrowingContractWithDraw({
+  //   args: [
+  //     address as `0x${string}`,
+  //     BigInt(details.index),
+  //     BigInt(details.ethPrice),
+  //     BigInt(Date.now()),
+  //   ],
+  //   enabled: !!address,
+  //   onError(error) {
+  //     console.log(error);
+  //   },
+  // });
+  // const { write } = useBorrowingContractWithDraw(config);
+
+  async function withdrawFromBackend(address: `0x${string}` | undefined) {
+    let bodyValue = JSON.stringify({
+      address: address,
+      index: details.index,
+      borrowDebt: `4`,
+      withdrawTime: `${Date.now()}`,
+      withdrawAmount: 12,
+      amountYetToWithdraw: 12,
+      noOfAbond: 4,
+    });
+    console.log(bodyValue);
+    const response = await fetch("http://43.204.73.16:3000/borrows/withdraw", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: bodyValue,
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message);
+    }
+
+    return result;
+  }
 
   function handleWithdrawalTime() {
-    if (withdrawalTime === "first") {
+    if (withdrawalTime === "DEPOSITED") {
+      // write?.();
       setOpenConfirmNotice(false);
-      setWithdrawalTime("second");
       setSheetOpen(false);
-    } else if (withdrawalTime === "second") {
+    } else if (withdrawalTime === "WITHDREW1") {
       setOpenConfirmNotice(false);
-      setWithdrawalTime("liquidated");
+      // setWithdrawalTime("liquidated");
       setSheetOpen(false);
     } else {
-      setWithdrawalTime("liquidated");
+      // setWithdrawalTime("WITHDREW2");
       console.log(withdrawalTime);
     }
   }
@@ -212,7 +257,7 @@ const TableRows = ({
               </>
             ) : (
               <>
-                {withdrawalTime === "first" ? (
+                {withdrawalTime === "DEPOSITED" ? (
                   <Button
                     variant={"primary"}
                     className="text-white"
@@ -222,7 +267,7 @@ const TableRows = ({
                   >
                     Withdraw for the first time
                   </Button>
-                ) : withdrawalTime === "second" ? (
+                ) : withdrawalTime === "WITHDREW1" ? (
                   <>
                     <div className="px-[15px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee]">
                       <div className="py-[15px] flex items-center justify-between border-b border-lineGrey">

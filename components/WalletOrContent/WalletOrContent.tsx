@@ -50,8 +50,7 @@ const WalletOrContent = () => {
   const [shouldRefetch, setShouldRefetch] = useState(1);
   const { data: ethPrice } = useBorrowingContractRead({
     functionName: "getUSDValue",
-    watch: true,
-    staleTime: 60 * 1000 * 24,
+    staleTime: 10 * 1000,
   });
   function getDepositorData(address: `0x${string}` | undefined) {
     return fetch(`http://43.204.73.16:3000/borrows/${address}`).then(

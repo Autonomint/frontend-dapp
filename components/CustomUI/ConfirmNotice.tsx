@@ -18,7 +18,7 @@ const ConfirmNotice = ({
           </p>
         </div>
         <p className="min-[1440px]:text-base text-sm text-textHighlight  leading-none">
-          {withdrawalTime === "first"
+          {withdrawalTime === "DEPOSITED"
             ? `Second time withdrawal date will be ${`##-##-####`}`
             : `After second time withdrawal, this asset will be fully liquidated.`}
         </p>
@@ -29,7 +29,7 @@ const ConfirmNotice = ({
         onClick={handleWithdrawal}
       >
         Confirm Withdrawal for the{" "}
-        {withdrawalTime === "first" ? `First` : `Second`} time
+        {withdrawalTime === "DEPOSITED" ? `First` : `Second`} time
       </Button>
     </div>
   );
