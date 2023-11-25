@@ -44,7 +44,7 @@ import {
   useCdsDeposit,
   usePrepareCdsDeposit,
 } from "@/abiAndHooks";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAccount, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
@@ -77,6 +77,7 @@ const NewDeposit = () => {
       liquidationGains: false,
     },
   });
+  const queryClient = useQueryClient();
   const [amintAmnt, lockIn, liquidationGains] = form.watch(
     ["AmintDepositAmount", "lockInPeriod", "liquidationGains"],
     {
@@ -103,6 +104,11 @@ const NewDeposit = () => {
     mutationFn: storeToCDSBackend,
     onError(error) {
       console.log(error);
+    },
+    onSettled() {
+      queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
+      reset?.();
+      amintReset?.();
     },
   });
   async function storeToCDSBackend(address: `0x${string}` | undefined) {
@@ -162,6 +168,7 @@ const NewDeposit = () => {
     isLoading: isApproveLoading,
     write: amintApprove,
     data: amintApproveData,
+    reset: amintReset,
   } = useAmintApprove({
     onError(error) {
       console.log(error);
@@ -196,7 +203,8 @@ const NewDeposit = () => {
 
   useEffect(() => {
     if (cdsDepositSuccess) {
-      reset();
+      reset?.();
+      amintReset?.();
     }
   }, [cdsDepositSuccess]);
   return (

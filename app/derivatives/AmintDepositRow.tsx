@@ -23,6 +23,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAccount, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
+import { parseEther } from "viem";
 
 const depositDetails = [
   {
@@ -59,8 +60,8 @@ const depositDetails = [
   },
 ];
 const events = {
-  withdrewAmint: "",
-  withdrawETH: "",
+  withdrewAmint: "0",
+  withdrawETH: "0",
 };
 
 interface DepositDetail {
@@ -133,14 +134,15 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
     listener(log) {
       console.log(log);
       if (!!log) {
-        eventsValue.current =
-          log[0].args.withdrewAmint && log[0].args.withdrawETH
-            ? {
-                ...eventsValue.current,
-                withdrewAmint: log[0]?.args?.withdrewAmint.toString(),
-                withdrawETH: log[0]?.args?.withdrawETH.toString(),
-              }
-            : { ...eventsValue.current };
+        eventsValue.current = log[0].args.withdrewAmint
+          ? {
+              ...eventsValue.current,
+              withdrewAmint: log[0]?.args?.withdrewAmint.toString(),
+              withdrawETH: log[0]?.args?.withdrawETH
+                ? log[0]?.args?.withdrawETH.toString()
+                : "0",
+            }
+          : { ...eventsValue.current };
         backendCDSWithdraw(address);
       }
       if (log[0].args) {
@@ -153,6 +155,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
     mutationFn: withdrawCDSFromBackend,
     onError(error) {
       console.log(error);
+      queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
     },
     onSettled() {
       queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
@@ -183,11 +186,11 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       address: address,
       index: details.index,
       withdrawTime: `${Date.now()}`,
-      withdrawAmount: `${eventsValue.current.withdrewAmint}`,
-      withdrawEthAmount: `${eventsValue.current.withdrawETH}`,
+      withdrawAmount: eventsValue.current.withdrewAmint,
+      withdrawEthAmount: eventsValue.current.withdrawETH,
       ethPriceAtWithdraw: Number(ethPrice || 0),
-      fees: "",
-      feesWithdrawn: "",
+      fees: parseEther("4").toString(),
+      feesWithdrawn: parseEther("2").toString(),
     });
     console.log(bodyValue);
     const response = await fetch("http://43.204.73.16:3000/cds/withdraw", {

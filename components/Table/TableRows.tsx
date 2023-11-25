@@ -55,7 +55,7 @@ const depositDetails = [
   },
   {
     headline: "Downside percentage at Deposit",
-    value: "5%",
+    value: "20%",
   },
   {
     headline: "Liquidated?",
