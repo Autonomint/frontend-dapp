@@ -18,6 +18,7 @@ interface TableData {
   depositedTime: number;
   ethPrice: number;
   noOfAmintMinted: string;
+  normalizedAmount: string;
   strikePrice: number;
   withdrawTime1: number;
   withdrawTime2: number;

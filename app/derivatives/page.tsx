@@ -31,8 +31,8 @@ interface DepositDetail {
   liquidationAmount: string;
   optedForLiquidation: boolean;
   withdrawTime: number;
-  withdrawAmount: number;
-  withdrawEthAmount: number;
+  withdrawAmount: string;
+  withdrawEthAmount: string;
   fees: string;
   status: "DEPOSITED" | "WITHDREW";
 }
@@ -156,7 +156,7 @@ const page = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {dCDSdepositorData?.deposits.map((details: DepositDetail) => (
+              {dCDSdepositorData?.deposits?.map((details: DepositDetail) => (
                 <AmintDepositRow key={details.id} details={details} />
               ))}
             </TableBody>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -13,12 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import {
-  Cross1Icon,
-  Cross2Icon,
-  ExternalLinkIcon,
-  InfoCircledIcon,
-} from "@radix-ui/react-icons";
+import { Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons";
 import {
   Select,
   SelectContent,
@@ -45,16 +40,13 @@ import {
   FormMessage,
 } from "../ui/form";
 import { useAccount, useWaitForTransaction } from "wagmi";
-import { useContractRead } from "wagmi";
 import { parseEther } from "viem";
 import {
-  borrowingContractABI,
-  borrowingContractAddress,
+  useBorrowingContractDepositEvent,
   useBorrowingContractDepositTokens,
   useBorrowingContractRead,
 } from "@/abiAndHooks";
-import truncateWeb3WalletAddress from "@/app/utils/truncateWeb3Address";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
   collateral: z.string(),
@@ -75,7 +67,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   const [amintToBeMinted, setAmintToBeMinted] = useState(0);
   const [open, setOpen] = useState(false);
   const { address } = useAccount();
-
+  const queryClient = useQueryClient();
+  const normalizedAmount = useRef("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -84,10 +77,31 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       strikePrice: 5,
     },
   });
+  const strikePrice = form.watch("strikePrice");
+
   const { mutate } = useMutation({
     mutationFn: storeToBackend,
     onError(error, variables, context) {
       console.log(error);
+    },
+    onSettled() {
+      queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
+    },
+  });
+  const unwatch = useBorrowingContractDepositEvent({
+    listener(log) {
+      console.log(log);
+      if (!!log) {
+        normalizedAmount.current = log[0].args.normalizedAmount
+          ? log[0]?.args?.normalizedAmount.toString()
+          : "";
+
+        mutate(address);
+        handleRefetch();
+      }
+      if (log[0].args) {
+        unwatch?.();
+      }
     },
   });
 
@@ -113,7 +127,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       depositedTime: `${Date.now()}`,
       ethPrice: Number(ethPrice ? ethPrice : 0) / 100,
       noOfAmintMinted: `${amintToBeMinted}`,
-      strikePrice: form.watch("strikePrice"),
+      strikePricePercent: strikePrice,
+      normalizedAmount: normalizedAmount.current,
     });
     console.log(bodyValue);
     const response = await fetch(
@@ -140,10 +155,17 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     functionName: "getUSDValue",
     staleTime: 10 * 1000,
   });
-
-  const { data: depositData, write } = useBorrowingContractDepositTokens({
+  const {
+    data: depositData,
+    write,
+    reset,
+  } = useBorrowingContractDepositTokens({
     functionName: "depositTokens",
-    args: [BigInt(ethPrice ? ethPrice : 0), BigInt(Date.now())],
+    args: [
+      BigInt(ethPrice ? ethPrice : 0),
+      BigInt(Date.now()),
+      BigInt(ethPrice ? (ethPrice * (100n + BigInt(strikePrice))) / 100n : 0),
+    ],
     value: parseEther(form.watch("collateralAmount")?.toString()),
     onError(error) {
       setOpen(false);
@@ -181,11 +203,10 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
           />
         </div>
       ));
-      mutate(address);
-      handleRefetch();
+      // mutate(address);
     },
   });
-  const { isLoading, isSuccess } = useWaitForTransaction({
+  const { isLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
     hash: depositData?.hash,
     onSuccess(data) {
       console.log("transaction completed", depositData?.hash, data);
@@ -238,8 +259,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     // console.log("depositData", depositData);
-    // write?.();
-    mutate(address);
+    write?.();
+    // mutate(address);
   }
 
   const handleAmintToBeMinted = () => {
@@ -251,6 +272,12 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   useEffect(() => {
     handleAmintToBeMinted();
   }, [form.watch("collateralAmount")]);
+
+  useEffect(() => {
+    if (transactionSuccess) {
+      reset();
+    }
+  }, [transactionSuccess]);
 
   return (
     <div className="flex justify-between items-center mb-[30px]">

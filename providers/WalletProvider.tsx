@@ -10,10 +10,14 @@ import {
 import { polygonMumbai } from "@wagmi/core/chains";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { publicProvider } from "wagmi/providers/public";
+import { alchemyProvider } from "wagmi/providers/alchemy";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [sepolia, polygonMumbai],
-  [publicProvider()]
+  [
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API as string }),
+    publicProvider(),
+  ]
 );
 // export const noopStorage: any = {
 //   getItem: (key) => "",

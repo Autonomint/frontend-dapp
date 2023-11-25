@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Sheet,
   SheetClose,
@@ -18,10 +18,19 @@ import ConfirmNotice from "../CustomUI/ConfirmNotice";
 import Note from "../CustomUI/Note";
 import SheetRow from "../CustomUI/SheetRow";
 import {
+  borrowingContractAddress,
+  useAmintAllowance,
+  useAmintApprove,
+  useBorrowingContractCalculateCumulativeRate,
+  useBorrowingContractRead,
   useBorrowingContractWithDraw,
+  useBorrowingContractWithdrawEvent,
   usePrepareBorrowingContractWithDraw,
 } from "@/abiAndHooks";
-import { useAccount } from "wagmi";
+import { useAccount, useWaitForTransaction } from "wagmi";
+import { toast } from "sonner";
+import CustomToast from "../CustomUI/CustomToast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const depositDetails = [
   {
@@ -61,6 +70,11 @@ const depositDetails = [
     value: "-",
   },
 ];
+const events = {
+  borrowDebt: "",
+  withdrawAmount: "",
+  noOfAbond: "",
+};
 
 interface TableData {
   id: string;
@@ -74,8 +88,9 @@ interface TableData {
   strikePrice: number;
   withdrawTime1: number;
   withdrawTime2: number;
-  amountYetToWithdraw: number;
-  noOfAbondMinted: number;
+  normalizedAmount: string;
+  amountYetToWithdraw: string;
+  noOfAbondMinted: string;
   status: "DEPOSITED" | "WITHDREW1" | "WITHDREW2" | "LIQUIDATED";
 }
 const TableRows = ({
@@ -90,34 +105,184 @@ const TableRows = ({
   const [amountView, setAmountView] = useState(false);
   const [withdrawalTime, setWithdrawalTime] = useState(details.status);
   const [depositData, setDepositData] = useState(depositDetails);
+  const queryClient = useQueryClient();
   const { address } = useAccount();
-  // const { config, error } = usePrepareBorrowingContractWithDraw({
-  //   args: [
-  //     address as `0x${string}`,
-  //     BigInt(details.index),
-  //     BigInt(details.ethPrice),
-  //     BigInt(Date.now()),
-  //   ],
-  //   enabled: !!address,
-  //   onError(error) {
-  //     console.log(error);
-  //   },
-  // });
-  // const { write } = useBorrowingContractWithDraw(config);
+  const eventsValue = useRef(events);
+  const { data: ethPrice } = useBorrowingContractRead({
+    functionName: "getUSDValue",
+    staleTime: 10 * 1000,
+  });
+
+  const {
+    data: cumulativeRate,
+    write: calculateCumulativeRate,
+    reset: cumulativeReset,
+  } = useBorrowingContractCalculateCumulativeRate({
+    onError(error) {
+      console.log(error);
+      toast.custom((t) => (
+        <div>
+          <CustomToast
+            key={2}
+            props={{
+              t,
+              toastMainColor: "#B43939",
+              headline: `Uhh Ohh! ${error.cause}`,
+              toastClosebuttonHoverColor: "#e66d6d",
+              toastClosebuttonColor: "#C25757",
+            }}
+          />
+        </div>
+      ));
+    },
+    onSuccess(data, variables, context) {
+      toast.custom((t) => (
+        <CustomToast
+          props={{
+            t,
+            toastMainColor: "#268730",
+            headline: "Transaction Submitted",
+            transactionHash: data?.hash,
+            linkLabel: "View Transaction",
+            toastClosebuttonHoverColor: "#90e398",
+            toastClosebuttonColor: "#57C262",
+          }}
+        />
+      ));
+    },
+  });
+
+  const { isLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
+    hash: cumulativeRate?.hash,
+    confirmations: 3,
+    onSuccess(data) {
+      console.log("transaction completed", cumulativeRate?.hash, data);
+      toast.custom((t) => (
+        <CustomToast
+          props={{
+            t,
+            toastMainColor: "#268730",
+            headline:
+              "Transaction Completed. Please Approve Amint to move Forward",
+            transactionHash: cumulativeRate?.hash,
+            linkLabel: "View Transaction",
+            toastClosebuttonHoverColor: "#90e398",
+            toastClosebuttonColor: "#57C262",
+          }}
+        />
+      ));
+      amintApprove?.({
+        args: [
+          borrowingContractAddress[80001] as `0x${string}`,
+          BigInt(details.normalizedAmount),
+        ],
+      });
+    },
+  });
+
+  const {
+    data: amintApproveData,
+    write: amintApprove,
+    reset: approveReset,
+  } = useAmintApprove();
+  const { data: amintTransactionAllowed } = useWaitForTransaction({
+    hash: amintApproveData?.hash,
+    onSuccess() {
+      borrowWithdraw?.({
+        args: [
+          address as `0x${string}`,
+          BigInt(details.index),
+          BigInt(ethPrice ? ethPrice : 0),
+          BigInt(Date.now()),
+        ],
+      });
+    },
+  });
+  const { write: borrowWithdraw, reset: borrowReset } =
+    useBorrowingContractWithDraw({
+      onSuccess(data, variables, context) {
+        toast.custom((t) => (
+          <div>
+            <CustomToast
+              props={{
+                t,
+                toastMainColor: "#268730",
+                headline: "Transaction Submitted",
+                transactionHash: data?.hash,
+                linkLabel: "View Transaction",
+                toastClosebuttonHoverColor: "#90e398",
+                toastClosebuttonColor: "#57C262",
+              }}
+            />
+          </div>
+        ));
+      },
+      onError(error, variables, context) {
+        toast.custom((t) => (
+          <div>
+            <CustomToast
+              key={2}
+              props={{
+                t,
+                toastMainColor: "#B43939",
+                headline: `Uhh Ohh! ${error.cause}`,
+                toastClosebuttonHoverColor: "#e66d6d",
+                toastClosebuttonColor: "#C25757",
+              }}
+            />
+          </div>
+        ));
+      },
+    });
+  const { mutate: backendWithdraw } = useMutation({
+    mutationFn: withdrawFromBackend,
+    onError(error, variables, context) {
+      console.log(error);
+    },
+    onSettled() {
+      queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
+      approveReset?.();
+      cumulativeReset?.();
+      borrowReset?.();
+      setSheetOpen(false);
+    },
+  });
+  const unwatch = useBorrowingContractWithdrawEvent({
+    listener(log) {
+      console.log(log);
+      if (!!log) {
+        eventsValue.current =
+          log[0].args.borrowDebt &&
+          log[0].args.withdrawAmount &&
+          log[0].args.noOfAbond
+            ? {
+                ...eventsValue.current,
+                borrowDebt: log[0]?.args?.borrowDebt.toString(),
+                withdrawAmount: log[0]?.args?.withdrawAmount.toString(),
+                noOfAbond: log[0]?.args?.noOfAbond.toString(),
+              }
+            : { ...eventsValue.current };
+        backendWithdraw?.(address);
+      }
+      if (log[0].args) {
+        unwatch?.();
+      }
+    },
+  });
 
   async function withdrawFromBackend(address: `0x${string}` | undefined) {
     let bodyValue = JSON.stringify({
       address: address,
       index: details.index,
-      borrowDebt: `4`,
+      borrowDebt: eventsValue.current.borrowDebt,
       withdrawTime: `${Date.now()}`,
-      withdrawAmount: 12,
-      amountYetToWithdraw: 12,
-      noOfAbond: 4,
+      withdrawAmount: `${eventsValue.current.withdrawAmount}`,
+      amountYetToWithdraw: `${eventsValue.current.withdrawAmount}`,
+      noOfAbond: eventsValue.current.noOfAbond,
     });
     console.log(bodyValue);
     const response = await fetch("http://43.204.73.16:3000/borrows/withdraw", {
-      method: "POST",
+      method: "PATCH",
       headers: {
         "content-type": "application/json",
       },
@@ -136,9 +301,23 @@ const TableRows = ({
   function handleWithdrawalTime() {
     if (withdrawalTime === "DEPOSITED") {
       // write?.();
-      setOpenConfirmNotice(false);
-      setSheetOpen(false);
+      calculateCumulativeRate?.();
+      // setOpenConfirmNotice(false);
     } else if (withdrawalTime === "WITHDREW1") {
+      toast.custom((t) => (
+        <div>
+          <CustomToast
+            key={2}
+            props={{
+              t,
+              toastMainColor: "#B43939",
+              headline: `You have to wait for 30 days to withdraw after first withdrawal`,
+              toastClosebuttonHoverColor: "#e66d6d",
+              toastClosebuttonColor: "#C25757",
+            }}
+          />
+        </div>
+      ));
       setOpenConfirmNotice(false);
       // setWithdrawalTime("liquidated");
       setSheetOpen(false);
@@ -167,7 +346,6 @@ const TableRows = ({
   useEffect(() => {
     handleDepositData();
   }, [details]);
-
   return (
     <Sheet
       key={details.id}

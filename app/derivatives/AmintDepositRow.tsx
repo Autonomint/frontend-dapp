@@ -11,8 +11,18 @@ import {
 } from "@/components/ui/sheet";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import calculateTimeDifference from "../utils/calculateTimeDifference";
+import {
+  useAmintApprove,
+  useBorrowingContractGetUsdValue,
+  useCdsWithdraw,
+  useCdsWithdrawEvent,
+} from "@/abiAndHooks";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAccount, useWaitForTransaction } from "wagmi";
+import { toast } from "sonner";
+import CustomToast from "@/components/CustomUI/CustomToast";
 
 const depositDetails = [
   {
@@ -48,6 +58,10 @@ const depositDetails = [
     value: "Yes",
   },
 ];
+const events = {
+  withdrewAmint: "",
+  withdrawETH: "",
+};
 
 interface DepositDetail {
   id: string;
@@ -62,8 +76,8 @@ interface DepositDetail {
   liquidationAmount: string;
   optedForLiquidation: boolean;
   withdrawTime: number;
-  withdrawAmount: number;
-  withdrawEthAmount: number;
+  withdrawAmount: string;
+  withdrawEthAmount: string;
   fees: string;
   status: "DEPOSITED" | "WITHDREW";
 }
@@ -72,6 +86,126 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [amountView, setAmountView] = React.useState(false);
   const [depositData, setDepositData] = useState(depositDetails);
+  const { address } = useAccount();
+  const eventsValue = useRef(events);
+  const queryClient = useQueryClient();
+  const { data: ethPrice } = useBorrowingContractGetUsdValue({
+    staleTime: 10 * 1000,
+  });
+  const { write: cdsWithdraw, data: cdsWithdrawData } = useCdsWithdraw({
+    onError(error) {
+      console.log(error);
+      toast.custom((t) => (
+        <div>
+          <CustomToast
+            key={2}
+            props={{
+              t,
+              toastMainColor: "#B43939",
+              headline: `Uhh Ohh! ${error.cause}`,
+              toastClosebuttonHoverColor: "#e66d6d",
+              toastClosebuttonColor: "#C25757",
+            }}
+          />
+        </div>
+      ));
+    },
+    onSuccess(data) {
+      console.log(data?.hash);
+      toast.custom((t) => (
+        <div>
+          <CustomToast
+            props={{
+              t,
+              toastMainColor: "#268730",
+              headline: "Transaction Submitted",
+              transactionHash: data?.hash,
+              linkLabel: "View Transaction",
+              toastClosebuttonHoverColor: "#90e398",
+              toastClosebuttonColor: "#57C262",
+            }}
+          />
+        </div>
+      ));
+    },
+  });
+  const unwatch = useCdsWithdrawEvent({
+    listener(log) {
+      console.log(log);
+      if (!!log) {
+        eventsValue.current =
+          log[0].args.withdrewAmint && log[0].args.withdrawETH
+            ? {
+                ...eventsValue.current,
+                withdrewAmint: log[0]?.args?.withdrewAmint.toString(),
+                withdrawETH: log[0]?.args?.withdrawETH.toString(),
+              }
+            : { ...eventsValue.current };
+        backendCDSWithdraw(address);
+      }
+      if (log[0].args) {
+        unwatch?.();
+      }
+    },
+  });
+
+  const { mutate: backendCDSWithdraw } = useMutation({
+    mutationFn: withdrawCDSFromBackend,
+    onError(error) {
+      console.log(error);
+    },
+    onSettled() {
+      queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
+    },
+  });
+  useWaitForTransaction({
+    hash: cdsWithdrawData?.hash,
+    onSuccess() {
+      toast.custom((t) => (
+        <div>
+          <CustomToast
+            props={{
+              t,
+              toastMainColor: "#268730",
+              headline: "Transaction Completed",
+              transactionHash: cdsWithdrawData?.hash,
+              linkLabel: "View Transaction",
+              toastClosebuttonHoverColor: "#90e398",
+              toastClosebuttonColor: "#57C262",
+            }}
+          />
+        </div>
+      ));
+    },
+  });
+  async function withdrawCDSFromBackend(address: `0x${string}` | undefined) {
+    let bodyValue = JSON.stringify({
+      address: address,
+      index: details.index,
+      withdrawTime: `${Date.now()}`,
+      withdrawAmount: `${eventsValue.current.withdrewAmint}`,
+      withdrawEthAmount: `${eventsValue.current.withdrawETH}`,
+      ethPriceAtWithdraw: Number(ethPrice || 0),
+      fees: "",
+      feesWithdrawn: "",
+    });
+    console.log(bodyValue);
+    const response = await fetch("http://43.204.73.16:3000/cds/withdraw", {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: bodyValue,
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message);
+    }
+
+    return result;
+  }
   function handleDepositData() {
     if (details) {
       const updatedData = [...depositData];
@@ -173,7 +307,12 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
             </div>
           </div>
           <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
-          <Button variant={"primary"} className="text-white">
+          <Button
+            variant={"primary"}
+            className="text-white"
+            onClick={() => cdsWithdraw?.({ args: [BigInt(details.index)] })}
+            disabled={details.status === "WITHDREW" ? true : false}
+          >
             Withdraw
           </Button>
         </div>

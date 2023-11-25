@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import addIcon from "@/app/assets/add_circle.svg";
 import Note from "@/components/CustomUI/Note";
 import {
@@ -37,9 +37,18 @@ import { Checkbox } from "@/components/ui/checkbox";
 import payments from "@/app/assets/payments.svg";
 import trending from "@/app/assets/trending_up.svg";
 import calendar from "@/app/assets/date_range.svg";
-import { useBorrowingContractGetUsdValue } from "@/abiAndHooks";
+import {
+  cdsAddress,
+  useAmintApprove,
+  useBorrowingContractGetUsdValue,
+  useCdsDeposit,
+  usePrepareCdsDeposit,
+} from "@/abiAndHooks";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useAccount } from "wagmi";
+import { useAccount, useWaitForTransaction } from "wagmi";
+import { toast } from "sonner";
+import CustomToast from "@/components/CustomUI/CustomToast";
+import { parseEther } from "viem";
 
 const formSchema = z.object({
   AmintDepositAmount: z
@@ -106,7 +115,7 @@ const NewDeposit = () => {
       apr: 4,
       lockingPeriod: Number(lockIn),
       optedForLiquidation: liquidationGains,
-      liquidationAmount: `${amintAmnt}`,
+      liquidationAmount: `${(amintAmnt * 80) / 100}`,
     });
     console.log(bodyValue);
     const response = await fetch("http://43.204.73.16:3000/cds/depositAmint", {
@@ -125,17 +134,78 @@ const NewDeposit = () => {
 
     return result;
   }
+
+  const { write, data: CdsDepositData, reset } = useCdsDeposit();
+  const { isLoading, isSuccess: cdsDepositSuccess } = useWaitForTransaction({
+    hash: CdsDepositData?.hash,
+    onSuccess() {
+      mutate(address);
+      toast.custom((t) => (
+        <div>
+          <CustomToast
+            props={{
+              t,
+              toastMainColor: "#268730",
+              headline: "Transaction Completed",
+              transactionHash: CdsDepositData?.hash,
+              linkLabel: "View Transaction",
+              toastClosebuttonHoverColor: "#90e398",
+              toastClosebuttonColor: "#57C262",
+            }}
+          />
+        </div>
+      ));
+    },
+  });
+
+  const {
+    isLoading: isApproveLoading,
+    write: amintApprove,
+    data: amintApproveData,
+  } = useAmintApprove({
+    onError(error) {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
+  const { data: amintTransactionAllowed } = useWaitForTransaction({
+    hash: amintApproveData?.hash,
+    onSuccess() {
+      write?.({
+        args: [
+          BigInt(parseEther(amintAmnt.toString())),
+          liquidationGains,
+          BigInt(parseEther(((amintAmnt * 80) / 100).toString())),
+        ],
+      });
+    },
+  });
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    mutate(address);
+    // write?.({ args: [BigInt(amintAmnt), liquidationGains, BigInt(lockIn)] });
+    amintApprove?.({
+      args: [
+        cdsAddress[80001] as `0x${string}`,
+        BigInt(parseEther(amintAmnt.toString())),
+      ],
+    });
   }
+
+  useEffect(() => {
+    if (cdsDepositSuccess) {
+      reset();
+    }
+  }, [cdsDepositSuccess]);
   return (
     <div className="flex justify-between items-center mb-[30px]">
       <div className="flex flex-col gap-[15px] ">
-        <h2 className="text-textPrimary font-medium text-4xl tracking-[-1.8px]">
+        <h2 className="text-textPrimary font-medium text-3xl tracking-[-1.8px] min-[1440px]:text-4xl">
           Your Deposits
         </h2>
-        <p className="text-textSecondary">
+        <p className="text-textSecondary text-sm min-[1440px]:text-base">
           A list of all the deposits you have made.
         </p>
       </div>
