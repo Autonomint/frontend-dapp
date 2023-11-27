@@ -4,9 +4,9 @@ import toll from "@/app/assets/toll.svg";
 import dollar from "@/app/assets/local_atm.svg";
 import donut from "@/app/assets/donut_small.svg";
 import eth from "@/app/assets/eth.svg";
-import avax from "@/app/assets/avax.png";
+import avax from "@/app/assets/avax.svg";
 import mantle from "@/app/assets/mantle.svg";
-import matic from "@/app/assets/matic.png";
+import matic from "@/app/assets/matic.svg";
 import money from "@/app/assets/send_money.svg";
 import HeaderItems from "@/components/Header/HeaderItems";
 import Charts from "./Charts";
@@ -433,7 +433,7 @@ const page = () => {
   }) {
     return (
       <div className="flex gap-[10px] ">
-        <Image src={img} alt="eth icon" width={45} height={45}></Image>
+        <Image src={img} alt="currency icon" width={45} height={45}></Image>
         <div className="relative w-full rounded-md border border-[#EEE] overflow-hidden">
           <div
             style={{ width: `${progress}%` }}

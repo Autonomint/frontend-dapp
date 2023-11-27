@@ -22,6 +22,7 @@ import {
   useAmintAllowance,
   useAmintApprove,
   useBorrowingContractCalculateCumulativeRate,
+  useBorrowingContractLastCumulativeRate,
   useBorrowingContractRead,
   useBorrowingContractWithDraw,
   useBorrowingContractWithdrawEvent,
@@ -47,7 +48,7 @@ const depositDetails = [
   },
   {
     headline: "Total Amount (Amint minted + Interest Amount returned)",
-    value: "1.934",
+    value: "-",
   },
   {
     headline: "APY at Deposit",
@@ -151,6 +152,7 @@ const TableRows = ({
       ));
     },
   });
+  const { data: lastCumulativeRate } = useBorrowingContractLastCumulativeRate();
 
   const { isLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
     hash: cumulativeRate?.hash,
@@ -327,12 +329,17 @@ const TableRows = ({
     }
   }
   function handleDepositData() {
+    const totalAmintAmount =
+      BigInt(
+        BigInt(details.normalizedAmount) *
+          (lastCumulativeRate ? lastCumulativeRate : BigInt(0))
+      ) / BigInt(10 ** 27);
     if (details) {
       const updatedData = [...depositData];
       updatedData[0].value = details.depositedAmount;
       updatedData[1].value = `${details.ethPrice}`;
       updatedData[2].value = details.noOfAmintMinted;
-      // updatedData[3].value = details.depositedAmount;
+      updatedData[3].value = `${totalAmintAmount}`;
       // updatedData[4].value = details.depositedAmount;
       // updatedData[5].value = details.depositedAmount;
       // updatedData[6].value = details.depositedAmount;
@@ -431,6 +438,7 @@ const TableRows = ({
                 <ConfirmNotice
                   withdrawalTime={withdrawalTime}
                   handleWithdrawal={handleWithdrawalTime}
+                  amintToMint={BigInt(details.normalizedAmount)}
                 />
               </>
             ) : (
