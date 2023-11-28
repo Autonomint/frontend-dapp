@@ -32,6 +32,8 @@ import { useAccount, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "../CustomUI/CustomToast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { formatEther } from "viem";
+import displayNumberWithPrecision from "@/app/utils/precision";
 
 const depositDetails = [
   {
@@ -331,7 +333,7 @@ const TableRows = ({
   function handleDepositData() {
     const totalAmintAmount =
       BigInt(
-        BigInt(details.normalizedAmount) *
+        BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
           (lastCumulativeRate ? lastCumulativeRate : BigInt(0))
       ) / BigInt(10 ** 27);
     if (details) {
@@ -339,13 +341,15 @@ const TableRows = ({
       updatedData[0].value = details.depositedAmount;
       updatedData[1].value = `${details.ethPrice}`;
       updatedData[2].value = details.noOfAmintMinted;
-      updatedData[3].value = `${totalAmintAmount}`;
+      updatedData[3].value = displayNumberWithPrecision(
+        formatEther(totalAmintAmount)
+      );
       // updatedData[4].value = details.depositedAmount;
       // updatedData[5].value = details.depositedAmount;
       // updatedData[6].value = details.depositedAmount;
       // updatedData[7].value = details.depositedAmount;
       updatedData[8].value = details.noOfAbondMinted
-        ? `${details.noOfAbondMinted}`
+        ? formatEther(BigInt(details.noOfAbondMinted))
         : "-";
     }
   }

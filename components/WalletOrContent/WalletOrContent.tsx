@@ -16,6 +16,8 @@ import {
   useBorrowingContractRead,
 } from "@/abiAndHooks";
 import { useQuery } from "@tanstack/react-query";
+import displayNumberWithPrecision from "@/app/utils/precision";
+import { formatEther } from "viem";
 
 const dasboardStatsItem = [
   {
@@ -84,7 +86,9 @@ const WalletOrContent = () => {
         (depositorData.totalDepositedAmount * Number(ethPriceNow)) / 100
       }`;
       updatedStats[1].value = depositorData.totalAmint;
-      updatedStats[2].value = depositorData.totalAbond;
+      updatedStats[2].value = displayNumberWithPrecision(
+        formatEther(depositorData.totalAbond)
+      );
       updatedStats[0].subheadingHighlight = depositorData.totalIndex;
       setDashboardStats(updatedStats);
     } else {
