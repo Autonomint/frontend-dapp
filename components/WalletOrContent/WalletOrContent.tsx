@@ -143,7 +143,10 @@ const WalletOrContent = () => {
           </div>
           <Divider />
           <CreateNewDeposit handleRefetch={handleRefetch} />
-          <DepositAndWithDrawTable tableData={depositorData?.borrows} />
+          <DepositAndWithDrawTable
+            tableData={depositorData?.borrows}
+            handleRefetch={handleRefetch}
+          />
         </div>
       ) : (
         <ConnectWallet />

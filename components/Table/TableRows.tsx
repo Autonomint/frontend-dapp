@@ -99,9 +99,11 @@ interface TableData {
 const TableRows = ({
   details,
   interest,
+  handleRefetch,
 }: {
   details: TableData;
   interest?: number;
+  handleRefetch: Function;
 }) => {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [openConfirmNotice, setOpenConfirmNotice] = useState(false);
@@ -243,12 +245,17 @@ const TableRows = ({
     onError(error, variables, context) {
       console.log(error);
     },
-    onSettled() {
+    onSuccess(data, variables, context) {
       queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
+    },
+    onSettled(data) {
+      queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
+      handleRefetch();
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
       setSheetOpen(false);
+      data.reset();
     },
   });
   const unwatch = useBorrowingContractWithdrawEvent({
@@ -386,7 +393,9 @@ const TableRows = ({
         </TableCell>
         <TableCell className="text-textGrey">
           <SheetTrigger>
-            {details.status === "LIQUIDATED" ? "Yes" : "No"}
+            {details.status === "LIQUIDATED" || details.status === "WITHDREW2"
+              ? "Yes"
+              : "No"}
           </SheetTrigger>
         </TableCell>
 

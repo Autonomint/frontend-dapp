@@ -22,12 +22,18 @@ interface TableData {
   strikePrice: number;
   withdrawTime1: number;
   withdrawTime2: number;
-  amountYetToWithdraw: number;
-  noOfAbondMinted: number;
+  amountYetToWithdraw: string;
+  noOfAbondMinted: string;
   status: "DEPOSITED" | "WITHDREW1" | "WITHDREW2" | "LIQUIDATED";
 }
 
-const DepositAndWithDrawTable = ({ tableData }:{tableData:TableData[]}) => {
+const DepositAndWithDrawTable = ({
+  tableData,
+  handleRefetch,
+}: {
+  tableData: TableData[];
+  handleRefetch: Function;
+}) => {
   return (
     <Table>
       <TableHeader>
@@ -42,7 +48,7 @@ const DepositAndWithDrawTable = ({ tableData }:{tableData:TableData[]}) => {
       </TableHeader>
       <TableBody>
         {tableData?.map((details, index) => (
-          <TableRows key={details.id} details={details} interest={3} />
+          <TableRows key={details.id} details={details} interest={3} handleRefetch={handleRefetch} />
         ))}
       </TableBody>
     </Table>

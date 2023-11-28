@@ -17,6 +17,8 @@ import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import NewDeposit from "./NewDeposit";
 import AmintDepositRow from "./AmintDepositRow";
 import { useQuery } from "@tanstack/react-query";
+import displayNumberWithPrecision from "../utils/precision";
+import { formatEther } from "viem";
 
 interface DepositDetail {
   id: string;
@@ -44,12 +46,12 @@ const dasboardStatsItem = [
   },
   {
     heading: "Total Number of Deposits",
-    value: "6",
+    value: "-",
     showSubHeading: false,
   },
   {
     heading: "Total accumulated Fees",
-    value: "12.0123",
+    value: "-",
     showSubHeading: false,
   },
   {
@@ -91,11 +93,13 @@ const page = () => {
       updatedStats[0].value = dCDSdepositorData.totalDepositedAmint;
       updatedStats[1].value = dCDSdepositorData.totalIndex;
       updatedStats[2].value = dCDSdepositorData.totalFees
-        ? dCDSdepositorData.totalFees
-        : 0;
+        ? displayNumberWithPrecision(formatEther(dCDSdepositorData.totalFees))
+        : "0";
       updatedStats[3].value = dCDSdepositorData.totalFeesWithdrawn
-        ? dCDSdepositorData.totalFeesWithdrawn
-        : 0;
+        ? displayNumberWithPrecision(
+            formatEther(dCDSdepositorData.totalFeesWithdrawn)
+          )
+        : "0";
       setDashboardStats(updatedStats);
     } else {
       const updatedStats = [...dashboardStats];

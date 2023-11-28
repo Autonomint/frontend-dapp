@@ -1,6 +1,8 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { formatEther } from "viem";
+import displayNumberWithPrecision from "@/app/utils/precision";
+import calculateDate from "@/app/utils/calculateDate";
 
 const ConfirmNotice = ({
   withdrawalTime,
@@ -19,12 +21,12 @@ const ConfirmNotice = ({
             Amount
           </p>
           <p className="text-[#020202] font-medium min-[1440px]:text-[32px] text-2xl leading-none">
-            {formatEther(amintToMint)} AMINT
+            {displayNumberWithPrecision(formatEther(amintToMint))} AMINT
           </p>
         </div>
         <p className="min-[1440px]:text-base text-sm text-textHighlight  leading-none">
           {withdrawalTime === "DEPOSITED"
-            ? `Second time withdrawal date will be ${`##-##-####`}`
+            ? `Second time withdrawal date will be ${calculateDate()}`
             : `After second time withdrawal, this asset will be fully liquidated.`}
         </p>
       </div>
