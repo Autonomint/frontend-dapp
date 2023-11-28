@@ -349,7 +349,7 @@ const TableRows = ({
       // updatedData[6].value = details.depositedAmount;
       // updatedData[7].value = details.depositedAmount;
       updatedData[8].value = details.noOfAbondMinted
-        ? formatEther(BigInt(details.noOfAbondMinted))
+        ? details.noOfAbondMinted
         : "-";
     }
   }
