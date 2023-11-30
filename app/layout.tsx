@@ -45,7 +45,7 @@ export default function RootLayout({
         </main>
         {/* </div> */}
         <Toaster
-          duration={3000}
+          duration={10000}
           closeButton={true}
           position="top-center"
           toastOptions={{ style: { zIndex: 999 } }}

@@ -31,7 +31,7 @@ const CustomToast = ({
 }: Props) => {
   const chainId = useChainId();
   return (
-    <div className="flex rounded">
+    <div className="flex fixed rounded z-[999]">
       <div
         style={{ background: toastMainColor }}
         className={`flex gap-[10px] text-white items-center rounded`}
@@ -39,7 +39,7 @@ const CustomToast = ({
         <div className="flex flex-col px-[10px] py-4 gap-[10px] ">
           <p>{headline}</p>
           {Boolean(transactionHash) && (
-            <p className=" whitespace-nowrap flex gap-1">
+            <p className=" whitespace-nowrap flex gap-1 z-[999]">
               {`Tx Hash: ${truncateWeb3WalletAddress(transactionHash)}`}
               <Link
                 href={
@@ -50,7 +50,7 @@ const CustomToast = ({
                     : "Network Not yet Supported please switch to mumbai or sepolia"
                 }
                 target="_blank"
-                className="flex items-center gap-1"
+                className="flex items-center gap-1 z-[999]"
               >
                 <ExternalLinkIcon />
                 {linkLabel}
@@ -60,7 +60,7 @@ const CustomToast = ({
         </div>
         <div
           style={{ background: toastClosebuttonColor }}
-          className={`rounded-r h-full flex`}
+          className={`rounded-r h-full flex z-[999]`}
         >
           <Button
             variant={"ghost"}

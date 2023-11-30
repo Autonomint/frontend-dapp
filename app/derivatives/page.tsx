@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import React, { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useChainId } from "wagmi";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import NewDeposit from "./NewDeposit";
 import AmintDepositRow from "./AmintDepositRow";
@@ -24,6 +24,7 @@ interface DepositDetail {
   id: string;
   address: string;
   index: number;
+  chainId: number;
   depositedAmint: string;
   depositedTime: string;
   ethPriceAtDeposit: number;
@@ -40,21 +41,25 @@ interface DepositDetail {
 }
 const dasboardStatsItem = [
   {
+    id: 1,
     heading: "Total amount of AMINT Deposited",
     value: "1324.32",
     showSubHeading: false,
   },
   {
+    id: 2,
     heading: "Total Number of Deposits",
     value: "-",
     showSubHeading: false,
   },
   {
+    id: 3,
     heading: "Total accumulated Fees",
     value: "-",
     showSubHeading: false,
   },
   {
+    id: 4,
     heading: "Total Fees withdrawn",
     value: "5.34",
     showSubHeading: false,
@@ -63,6 +68,7 @@ const dasboardStatsItem = [
 
 const page = () => {
   const { isConnected, address } = useAccount();
+  const chainId = useChainId();
   const [dashboardStats, setDashboardStats] = useState(dasboardStatsItem);
   function getCDSDepositorData(
     address: `0x${string}` | undefined
@@ -74,6 +80,18 @@ const page = () => {
   const { data: dCDSdepositorData, error: dCDSdepositorDataError } = useQuery({
     queryKey: ["dCDSdepositorsData"],
     queryFn: () => getCDSDepositorData(address ? address : undefined),
+    enabled: !!address,
+  });
+  function getDeposits(
+    address: `0x${string}` | undefined
+  ): Promise<DepositDetail[]> {
+    return fetch(`http://43.204.73.16:3000/cds/${chainId}/${address}`).then(
+      (response) => response.json()
+    );
+  }
+  const { data: deposits, error: depositsError } = useQuery({
+    queryKey: ["dCDSdeposits"],
+    queryFn: () => getDeposits(address ? address : undefined),
     enabled: !!address,
   });
 
@@ -111,7 +129,8 @@ const page = () => {
     console.log("cds data", dCDSdepositorData);
   }
   useEffect(() => {
-    console.log("cds data", dCDSdepositorData);
+    console.log("cds deposits", deposits);
+    console.log("cds total data", dCDSdepositorData);
     console.log("error1", dCDSdepositorDataError);
     handleStatsItem();
     console.log(dCDSdepositorData);
@@ -134,10 +153,10 @@ const page = () => {
           <ProductList></ProductList>
           <Divider />
           <div className="flex gap-[30px]">
-            {dasboardStatsItem.map((item, index) => (
+            {dashboardStats.map((item, index) => (
               <div className="flex border border-lineGrey min-w-[150px] w-full">
                 <DashboardStatsItem
-                  key={`${item.heading + `${index}`}`}
+                  key={item.id}
                   props={{
                     heading: item.heading,
                     value: item.value,
@@ -160,8 +179,8 @@ const page = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {dCDSdepositorData?.deposits?.map((details: DepositDetail) => (
-                <AmintDepositRow key={details.id} details={details} />
+              {deposits?.map((details: DepositDetail) => (
+                <AmintDepositRow key={details.index} details={details} />
               ))}
             </TableBody>
           </Table>

@@ -24,41 +24,8 @@ import { useAccount, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
 import { parseEther } from "viem";
+import { formatDateFromUnixTimestamp } from "../utils/calculateNext30Days";
 
-const depositDetails = [
-  {
-    headline: "AMINT Deposited",
-    value: "1200",
-  },
-  {
-    headline: "ETH Price at Deposit",
-    value: "$1645.121",
-  },
-  {
-    headline: "Deposit Time",
-    value: "10 mins ago",
-  },
-  {
-    headline: "Lock In Period",
-    value: "30 days",
-  },
-  {
-    headline: "Days passed since Deposit",
-    value: "0 days",
-  },
-  {
-    headline: "Deposit Time APR",
-    value: "5%",
-  },
-  {
-    headline: "Current Time APR",
-    value: "5%",
-  },
-  {
-    headline: "Opted for liquidations",
-    value: "Yes",
-  },
-];
 const events = {
   withdrewAmint: "0",
   withdrawETH: "0",
@@ -84,6 +51,40 @@ interface DepositDetail {
 }
 
 const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
+  const depositDetails = [
+    {
+      headline: "AMINT Deposited",
+      value: "1200",
+    },
+    {
+      headline: "ETH Price at Deposit",
+      value: "$1645.121",
+    },
+    {
+      headline: "Deposit Time",
+      value: "10 mins ago",
+    },
+    {
+      headline: "Lock In Period",
+      value: "30 days",
+    },
+    {
+      headline: "Days passed since Deposit",
+      value: "0 days",
+    },
+    {
+      headline: "Deposit Time APR",
+      value: "5%",
+    },
+    {
+      headline: "Current Time APR",
+      value: "5%",
+    },
+    {
+      headline: "Opted for liquidations",
+      value: "Yes",
+    },
+  ];
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [amountView, setAmountView] = React.useState(false);
   const [depositData, setDepositData] = useState(depositDetails);
@@ -214,7 +215,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       const updatedData = [...depositData];
       updatedData[0].value = details.depositedAmint;
       updatedData[1].value = `${details.ethPriceAtDeposit}`;
-      updatedData[2].value = calculateTimeDifference(details.depositedTime);
+      updatedData[2].value = formatDateFromUnixTimestamp(details.depositedTime);
       updatedData[3].value = `${details.lockingPeriod} days`;
       updatedData[4].value = calculateTimeDifference(details.depositedTime);
       updatedData[5].value = `${details.Apr}`;
@@ -283,8 +284,9 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
             </SheetTitle>
           </SheetHeader>
           <div className="flex flex-col">
-            {depositDetails.map((detail, index) => (
+            {depositData.map((detail, index) => (
               <SheetRow
+                key={index}
                 props={{
                   heading: detail.headline,
                   value: detail.value,

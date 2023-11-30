@@ -9,7 +9,7 @@ import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import Image from "next/image";
 
 import DepositAndWithDrawTable from "@/components/Table/OurTable";
-import { useAccount } from "wagmi";
+import { useAccount, useChainId } from "wagmi";
 import {
   abondAddress,
   amintAddress,
@@ -48,6 +48,7 @@ const dasboardStatsItem = [
 
 const WalletOrContent = () => {
   const { isConnected, address } = useAccount();
+  const chainId=useChainId();
   const [dashboardStats, setDashboardStats] = useState(dasboardStatsItem);
   const [shouldRefetch, setShouldRefetch] = useState(1);
   const { data: ethPrice } = useBorrowingContractRead({
@@ -69,7 +70,11 @@ const WalletOrContent = () => {
     setShouldRefetch(shouldRefetch + 1);
   }
   function handleStatsItem() {
-    if (depositorDataError || depositorData?.statusCode === 404) {
+    if (
+      depositorDataError ||
+      depositorData?.statusCode === 404 ||
+      depositorData?.statusCode === 500
+    ) {
       const updatedStats = [...dashboardStats];
       updatedStats[0].value = "-";
       updatedStats[1].value = "-";
@@ -86,9 +91,9 @@ const WalletOrContent = () => {
         (depositorData.totalDepositedAmount * Number(ethPriceNow)) / 100
       }`;
       updatedStats[1].value = depositorData.totalAmint;
-      updatedStats[2].value = displayNumberWithPrecision(
-        formatEther(depositorData.totalAbond)
-      );
+      // updatedStats[2].value = displayNumberWithPrecision(
+      //   formatEther(depositorData.totalAbond)
+      // );
       updatedStats[0].subheadingHighlight = depositorData.totalIndex;
       setDashboardStats(updatedStats);
     } else {

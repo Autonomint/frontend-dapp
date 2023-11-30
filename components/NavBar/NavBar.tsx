@@ -1,10 +1,19 @@
 "use client";
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import dropdown from "@/app/assets/arrow_circle_down.svg";
 import dropup from "@/app/assets/arrow_circle_up.svg";
 import HeaderItems from "../Header/HeaderItems";
+import {
+  useBorrowingContractGetApy,
+  useBorrowingContractGetLtv,
+  useBorrowingContractTotalAmintSupply,
+  useCdsTotalCdsDepositedAmount,
+} from "@/abiAndHooks";
+import { formatEther } from "viem";
+import displayNumberWithPrecision from "@/app/utils/precision";
+import { useAccount } from "wagmi";
 
 const headerItems = [
   {
@@ -17,11 +26,11 @@ const headerItems = [
   },
   {
     headline: "AMINT Supply",
-    value: "$1M",
+    value: "-",
   },
   {
     headline: "Current APY",
-    value: "5%",
+    value: "-",
   },
   {
     headline: "Options Fees",
@@ -35,23 +44,54 @@ const headerItems2nd = [
   },
   {
     headline: "dCDS Pooled Amount",
-    value: "$2.23M",
+    value: "-",
   },
   {
     headline: "Downside Protection",
-    value: "3%",
+    value: "-",
   },
 ];
 
 const NavBar = () => {
   const [showMore, setShowMore] = useState(false);
-  // const widthRef = useRef(null);
+  const { address } = useAccount();
+  const { data: totalAmintSupply } = useBorrowingContractTotalAmintSupply({
+    enabled: !!address,
+  });
+  const { data: currentApy } = useBorrowingContractGetApy({
+    enabled: !!address,
+  });
+  const { data: ltv } = useBorrowingContractGetLtv({
+    enabled: !!address,
+  });
+  const { data: totalCdsAmount } = useCdsTotalCdsDepositedAmount({
+    enabled: !!address,
+  });
+  const [updatedHeaderItems, setUpdatedHeaderItems] = useState(headerItems);
+  const [updatedHeaderItems2nd, setUpdatedHeaderItems2nd] =
+    useState(headerItems2nd);
+  const handleNavItems = () => {
+    if (totalAmintSupply && currentApy) {
+      const updatedData = [...updatedHeaderItems];
+      updatedData[2].value = `${displayNumberWithPrecision(
+        formatEther(totalAmintSupply)
+      )}`;
+      updatedData[3].value = `${currentApy}%`;
+      setUpdatedHeaderItems(updatedData);
+    }
+    if (ltv && totalCdsAmount) {
+      const updatedData2nd = [...updatedHeaderItems2nd];
+      updatedData2nd[1].value = `${displayNumberWithPrecision(
+        formatEther(totalCdsAmount)
+      )}`;
+      updatedData2nd[2].value = `${100 - ltv}%`;
+      setUpdatedHeaderItems2nd(updatedData2nd);
+    }
+  };
+  useEffect(() => {
+    handleNavItems();
+  }, [currentApy, ltv, totalAmintSupply]);
 
-  // const [width, setWidth] = useState(0);
-  // useLayoutEffect(() => {
-  //   setWidth(widthRef.current?.offsetWidth);
-  // }, []);
-  // console.log(width)
   return (
     <div className="bg-bgGrey flex flex-col min-[1440px]:pb-6">
       <div className="flex px-4 py-5">
@@ -110,7 +150,7 @@ const NavBar = () => {
               }}
             />
           ))}
-          {headerItems2nd.slice(0,2).map((item, index) => (
+          {headerItems2nd.slice(0, 2).map((item, index) => (
             <HeaderItems
               key={index}
               props={{
@@ -134,8 +174,8 @@ const NavBar = () => {
               />
             </div>
             <p className="text-borderGrey text-base font-medium whitespace-nowrap opacity-0 min-w-[82.7px]">
-            {!showMore ? "Show More" : "Show Less"}
-          </p>
+              {!showMore ? "Show More" : "Show Less"}
+            </p>
           </Button>
         </div>
       )}

@@ -20,8 +20,10 @@ interface TableData {
   noOfAmintMinted: string;
   normalizedAmount: string;
   strikePrice: number;
-  withdrawTime1: number;
-  withdrawTime2: number;
+  withdrawTime1: string;
+  withdrawTime2: string;
+  withdrawAmount1: string;
+  withdrawAmount2: string;
   amountYetToWithdraw: string;
   noOfAbondMinted: string;
   status: "DEPOSITED" | "WITHDREW1" | "WITHDREW2" | "LIQUIDATED";

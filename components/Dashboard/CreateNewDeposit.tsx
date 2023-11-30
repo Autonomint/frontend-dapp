@@ -44,9 +44,11 @@ import { parseEther } from "viem";
 import {
   useBorrowingContractDepositEvent,
   useBorrowingContractDepositTokens,
+  useBorrowingContractGetLtv,
   useBorrowingContractRead,
 } from "@/abiAndHooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import displayNumberWithPrecision from "@/app/utils/precision";
 
 const formSchema = z.object({
   collateral: z.string(),
@@ -64,11 +66,13 @@ const formSchema = z.object({
 });
 
 const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
-  const [amintToBeMinted, setAmintToBeMinted] = useState(0);
+  const [amintToBeMinted, setAmintToBeMinted] = useState("0");
+  const [downsideProtectionAmnt, setDownsideProtectionAmnt] = useState("0");
   const [open, setOpen] = useState(false);
   const { address } = useAccount();
   const queryClient = useQueryClient();
   const normalizedAmount = useRef("");
+  const [toastId, setToastId] = useState<string | number>(0);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -78,6 +82,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     },
   });
   const strikePrice = form.watch("strikePrice");
+  const { data: ltv } = useBorrowingContractGetLtv({ enabled: !!address });
 
   const { mutate } = useMutation({
     mutationFn: storeToBackend,
@@ -188,71 +193,49 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     onSuccess(data) {
       setOpen(false);
       console.log(data?.hash);
-      toast.custom((t) => (
-        <div>
-          <CustomToast
-            props={{
-              t,
-              toastMainColor: "#268730",
-              headline: "Transaction Submitted",
-              transactionHash: data?.hash,
-              linkLabel: "View Transaction",
-              toastClosebuttonHoverColor: "#90e398",
-              toastClosebuttonColor: "#57C262",
-            }}
-          />
-        </div>
-      ));
-      // mutate(address);
+      toast.custom(
+        (t) => {
+          setToastId(t);
+          return (
+            <div>
+              <CustomToast
+                props={{
+                  t,
+                  toastMainColor: "#268730",
+                  headline: "Transaction Submitted",
+                  transactionHash: data?.hash,
+                  linkLabel: "View Transaction",
+                  toastClosebuttonHoverColor: "#90e398",
+                  toastClosebuttonColor: "#57C262",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 3600 * 1000 }
+      );
     },
   });
   const { isLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
     hash: depositData?.hash,
     onSuccess(data) {
       console.log("transaction completed", depositData?.hash, data);
-      toast.custom((t) => (
-        <CustomToast
-          props={{
-            t,
-            toastMainColor: "#268730",
-            headline: "Transaction Completed. A new Deposit has been created",
-            transactionHash: depositData?.hash,
-            linkLabel: "View Transaction",
-            toastClosebuttonHoverColor: "#90e398",
-            toastClosebuttonColor: "#57C262",
-          }}
-        />
-        // <div className="flex rounded">
-        //   <div
-        //     className={`flex gap-[10px] bg-[#268730] text-white  items-center rounded`}
-        //   >
-        //     <div className="flex flex-col px-[10px] py-4 gap-[10px] ">
-        //       <p>Transaction Completed</p>
-        //       <p className=" whitespace-nowrap flex gap-1">
-        //         {`Tx Hash: ${truncateWeb3WalletAddress(depositData?.hash)}`}
-        //         <Link
-        //           href={`https:mumbai.polygonscan.com/tx/${depositData?.hash}`}
-        //           target="_blank"
-        //           className="flex items-center gap-1"
-        //         >
-        //           <ExternalLinkIcon />
-        //           View Transaction
-        //         </Link>
-        //       </p>
-        //     </div>
-        //     <div className={`bg-[#57C262] rounded-r h-full flex`}>
-        //       <Button
-        //         variant={"ghost"}
-        //         size={"toastSize"}
-        //         onClick={() => toast.dismiss(t)}
-        //         className={`flex items-center justify-center hover:bg-[#90e398] rounded-none`}
-        //       >
-        //         <Cross1Icon />
-        //       </Button>
-        //     </div>
-        //   </div>
-        // </div>
-      ));
+      toast.custom(
+        () => (
+          <CustomToast
+            props={{
+              t: toastId,
+              toastMainColor: "#268730",
+              headline: "Transaction Completed. A new Deposit has been created",
+              transactionHash: depositData?.hash,
+              linkLabel: "View Transaction",
+              toastClosebuttonHoverColor: "#90e398",
+              toastClosebuttonColor: "#57C262",
+            }}
+          />
+        ),
+        { id: toastId }
+      );
     },
   });
 
@@ -266,7 +249,17 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   const handleAmintToBeMinted = () => {
     const amintToMint =
       (form.watch("collateralAmount") * Number(ethPrice) * 80) / 10000;
-    setAmintToBeMinted(amintToMint);
+    const amint2Decimal = displayNumberWithPrecision(amintToMint.toString());
+    setAmintToBeMinted(amint2Decimal);
+    const downsideProtection =
+      (form.watch("collateralAmount") *
+        Number(ethPrice) *
+        (100 - (ltv ? ltv : 0))) /
+      10000;
+    const downsideProtection2Decimal = displayNumberWithPrecision(
+      downsideProtection.toString()
+    );
+    setDownsideProtectionAmnt(downsideProtection2Decimal);
   };
 
   useEffect(() => {
@@ -444,7 +437,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                       APY
                     </p>
                     <p className="text-textHighlight font-medium  min-[1440px]:text-base text-sm">
-                      5% - 0.00023 Amint
+                      5% ~ 0.00023 Amint
                     </p>
                   </div>
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
@@ -452,7 +445,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                       Downside Protection Amount
                     </p>
                     <p className="text-textHighlight font-medium  min-[1440px]:text-base text-sm">
-                      1.234
+                      {downsideProtectionAmnt}
                     </p>
                   </div>
                 </div>

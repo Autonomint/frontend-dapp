@@ -45,7 +45,7 @@ import {
   usePrepareCdsDeposit,
 } from "@/abiAndHooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAccount, useWaitForTransaction } from "wagmi";
+import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
 import { parseEther } from "viem";
@@ -69,6 +69,8 @@ const formSchema = z.object({
 const NewDeposit = () => {
   const [open, setOpen] = useState(false);
   const { address } = useAccount();
+  const chainId = useChainId();
+  const [toastid, setToastId] = useState<number | string>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -96,9 +98,9 @@ const NewDeposit = () => {
     staleTime: 10 * 1000,
   });
   function getCDSTotalIndex(address: `0x${string}` | undefined) {
-    return fetch(`http://43.204.73.16:3000/cds/index/${address}`).then(
-      (response) => response.json()
-    );
+    return fetch(
+      `http://43.204.73.16:3000/cds/index/${chainId}/${address}`
+    ).then((response) => response.json());
   }
   const { mutate } = useMutation({
     mutationFn: storeToCDSBackend,
@@ -109,12 +111,14 @@ const NewDeposit = () => {
       queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
       reset?.();
       amintReset?.();
+      form.reset();
     },
   });
   async function storeToCDSBackend(address: `0x${string}` | undefined) {
     let bodyValue = JSON.stringify({
       address: address,
       index: totalCDSIndex ? totalCDSIndex + 1 : 1,
+      chainId: chainId,
       depositedAmint: `${amintAmnt}`,
       depositedTime: `${Date.now()}`,
       ethPriceAtDeposit: Number(ethPrice ? ethPrice : 0) / 100,
@@ -141,26 +145,63 @@ const NewDeposit = () => {
     return result;
   }
 
-  const { write, data: CdsDepositData, reset } = useCdsDeposit();
+  const {
+    write,
+    data: CdsDepositData,
+    reset,
+  } = useCdsDeposit({
+    onError(error) {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      toast.custom(
+        (t) => {
+          setToastId(t);
+          return (
+            <div>
+              <CustomToast
+                props={{
+                  t,
+                  toastMainColor: "#268730",
+                  headline: "Transaction Submitted",
+                  transactionHash: data?.hash,
+                  linkLabel: "View Transaction",
+                  toastClosebuttonHoverColor: "#90e398",
+                  toastClosebuttonColor: "#57C262",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 3600 * 1000 }
+      );
+    },
+  });
   const { isLoading, isSuccess: cdsDepositSuccess } = useWaitForTransaction({
     hash: CdsDepositData?.hash,
     onSuccess() {
       mutate(address);
-      toast.custom((t) => (
-        <div>
-          <CustomToast
-            props={{
-              t,
-              toastMainColor: "#268730",
-              headline: "Transaction Completed",
-              transactionHash: CdsDepositData?.hash,
-              linkLabel: "View Transaction",
-              toastClosebuttonHoverColor: "#90e398",
-              toastClosebuttonColor: "#57C262",
-            }}
-          />
-        </div>
-      ));
+      toast.custom(
+        (t) => (
+          <div>
+            <CustomToast
+              props={{
+                t:toastid,
+                toastMainColor: "#268730",
+                headline: "Transaction Completed",
+                transactionHash: CdsDepositData?.hash,
+                linkLabel: "View Transaction",
+                toastClosebuttonHoverColor: "#90e398",
+                toastClosebuttonColor: "#57C262",
+              }}
+            />
+          </div>
+        ),
+        { id: toastid, duration: 1000 }
+      );
+      setToastId("");
+      setOpen(false);
     },
   });
 
@@ -218,11 +259,11 @@ const NewDeposit = () => {
         </p>
       </div>
       <div className="flex gap-[10px]">
-        <Button variant={"outline"}>
+        {/* <Button variant={"outline"}>
           <p className="text-transparent font-semibold text-base text-center bg-clip-text bg-gradient-to-b from-[#808080] to-[#000] ">
             Withdraw Fees from All Deposits
           </p>
-        </Button>
+        </Button> */}
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button

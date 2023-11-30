@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { formatEther } from "viem";
 import displayNumberWithPrecision from "@/app/utils/precision";
-import calculateDate from "@/app/utils/calculateDate";
+import calculateNext30Days from "@/app/utils/calculateNext30Days";
 
 const ConfirmNotice = ({
   withdrawalTime,
@@ -26,7 +26,7 @@ const ConfirmNotice = ({
         </div>
         <p className="min-[1440px]:text-base text-sm text-textHighlight  leading-none">
           {withdrawalTime === "DEPOSITED"
-            ? `Second time withdrawal date will be ${calculateDate()}`
+            ? `Second time withdrawal date will be ${calculateNext30Days()}`
             : `After second time withdrawal, this asset will be fully liquidated.`}
         </p>
       </div>

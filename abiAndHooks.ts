@@ -610,7 +610,7 @@ export const amintConfig = { address: amintAddress, abi: amintABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export const borrowingContractABI = [
@@ -789,6 +789,13 @@ export const borrowingContractABI = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
+    name: 'getLTV',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
     name: 'getUSDValue',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
@@ -921,6 +928,20 @@ export const borrowingContractABI = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
+    name: 'totalAmintSupply',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalDiracSupply',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
     name: 'totalNormalizedAmount',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
@@ -986,16 +1007,16 @@ export const borrowingContractABI = [
 ] as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export const borrowingContractAddress = {
-  80001: '0xB2227E67361EeDEf9a8f6a73d179672200f21C6E',
+  80001: '0xe723f91263e45b49bB05a35F914554c26B335DE8',
   11155111: '0xb573579ADCBA8a685F8484128927C683e0938EC1',
 } as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export const borrowingContractConfig = {
@@ -1008,7 +1029,7 @@ export const borrowingContractConfig = {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export const cdsABI = [
@@ -1384,16 +1405,16 @@ export const cdsABI = [
 ] as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export const cdsAddress = {
-  80001: '0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6',
+  80001: '0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d',
   11155111: '0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d',
 } as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export const cdsConfig = { address: cdsAddress, abi: cdsABI } as const
@@ -3998,7 +4019,7 @@ export function useAmintUnpausedEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractRead<
@@ -4034,7 +4055,7 @@ export function useBorrowingContractRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"APY"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractApy<
@@ -4071,7 +4092,7 @@ export function useBorrowingContractApy<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"Trinity"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractTrinity<
@@ -4108,7 +4129,7 @@ export function useBorrowingContractTrinity<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"admin"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractAdmin<
@@ -4145,7 +4166,7 @@ export function useBorrowingContractAdmin<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"cds"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractCds<
@@ -4182,7 +4203,7 @@ export function useBorrowingContractCds<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"cdsAddress"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractCdsAddress<
@@ -4219,7 +4240,7 @@ export function useBorrowingContractCdsAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getAPY"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractGetApy<
@@ -4254,9 +4275,46 @@ export function useBorrowingContractGetApy<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getLTV"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
+ */
+export function useBorrowingContractGetLtv<
+  TFunctionName extends 'getLTV',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: borrowingContractABI,
+    address:
+      borrowingContractAddress[
+        chainId as keyof typeof borrowingContractAddress
+      ],
+    functionName: 'getLTV',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getUSDValue"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractGetUsdValue<
@@ -4293,7 +4351,7 @@ export function useBorrowingContractGetUsdValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastCDSPoolValue"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractLastCdsPoolValue<
@@ -4330,7 +4388,7 @@ export function useBorrowingContractLastCdsPoolValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastCumulativeRate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractLastCumulativeRate<
@@ -4367,7 +4425,7 @@ export function useBorrowingContractLastCumulativeRate<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastEthVaultValue"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractLastEthVaultValue<
@@ -4404,7 +4462,7 @@ export function useBorrowingContractLastEthVaultValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastEthprice"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractLastEthprice<
@@ -4441,7 +4499,7 @@ export function useBorrowingContractLastEthprice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastTotalCDSPool"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractLastTotalCdsPool<
@@ -4478,7 +4536,7 @@ export function useBorrowingContractLastTotalCdsPool<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"noOfLiquidations"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractNoOfLiquidations<
@@ -4515,7 +4573,7 @@ export function useBorrowingContractNoOfLiquidations<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"options"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractOptions<
@@ -4552,7 +4610,7 @@ export function useBorrowingContractOptions<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractOwner<
@@ -4589,7 +4647,7 @@ export function useBorrowingContractOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"priceFeedAddress"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractPriceFeedAddress<
@@ -4626,7 +4684,7 @@ export function useBorrowingContractPriceFeedAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"protocolToken"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractProtocolToken<
@@ -4661,9 +4719,83 @@ export function useBorrowingContractProtocolToken<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"totalAmintSupply"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
+ */
+export function useBorrowingContractTotalAmintSupply<
+  TFunctionName extends 'totalAmintSupply',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: borrowingContractABI,
+    address:
+      borrowingContractAddress[
+        chainId as keyof typeof borrowingContractAddress
+      ],
+    functionName: 'totalAmintSupply',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"totalDiracSupply"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
+ */
+export function useBorrowingContractTotalDiracSupply<
+  TFunctionName extends 'totalDiracSupply',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: borrowingContractABI,
+    address:
+      borrowingContractAddress[
+        chainId as keyof typeof borrowingContractAddress
+      ],
+    functionName: 'totalDiracSupply',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"totalNormalizedAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractTotalNormalizedAmount<
@@ -4700,7 +4832,7 @@ export function useBorrowingContractTotalNormalizedAmount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"treasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractTreasury<
@@ -4737,7 +4869,7 @@ export function useBorrowingContractTreasury<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"treasuryAddress"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractTreasuryAddress<
@@ -4774,7 +4906,7 @@ export function useBorrowingContractTreasuryAddress<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractWrite<
@@ -4817,7 +4949,7 @@ export function useBorrowingContractWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractCalculateCumulativeRate<
@@ -4869,7 +5001,7 @@ export function useBorrowingContractCalculateCumulativeRate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositToAaveProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractDepositToAaveProtocol<
@@ -4921,7 +5053,7 @@ export function useBorrowingContractDepositToAaveProtocol<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositToCompoundProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractDepositToCompoundProtocol<
@@ -4973,7 +5105,7 @@ export function useBorrowingContractDepositToCompoundProtocol<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositTokens"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractDepositTokens<
@@ -5021,7 +5153,7 @@ export function useBorrowingContractDepositTokens<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"initializeTreasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractInitializeTreasury<
@@ -5073,7 +5205,7 @@ export function useBorrowingContractInitializeTreasury<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"liquidate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractLiquidate<
@@ -5117,7 +5249,7 @@ export function useBorrowingContractLiquidate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractRenounceOwnership<
@@ -5169,7 +5301,7 @@ export function useBorrowingContractRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAPY"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractSetApy<
@@ -5209,7 +5341,7 @@ export function useBorrowingContractSetApy<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAdmin"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractSetAdmin<
@@ -5249,7 +5381,7 @@ export function useBorrowingContractSetAdmin<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setLTV"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractSetLtv<
@@ -5289,7 +5421,7 @@ export function useBorrowingContractSetLtv<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setOptions"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractSetOptions<
@@ -5333,7 +5465,7 @@ export function useBorrowingContractSetOptions<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractTransferOwnership<
@@ -5385,7 +5517,7 @@ export function useBorrowingContractTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"updateLastEthVaultValue"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractUpdateLastEthVaultValue<
@@ -5437,7 +5569,7 @@ export function useBorrowingContractUpdateLastEthVaultValue<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withDraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractWithDraw<
@@ -5477,7 +5609,7 @@ export function useBorrowingContractWithDraw<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawFromAaveProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractWithdrawFromAaveProtocol<
@@ -5529,7 +5661,7 @@ export function useBorrowingContractWithdrawFromAaveProtocol<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawFromCompoundProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractWithdrawFromCompoundProtocol<
@@ -5581,7 +5713,7 @@ export function useBorrowingContractWithdrawFromCompoundProtocol<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractWrite<TFunctionName extends string>(
@@ -5609,7 +5741,7 @@ export function usePrepareBorrowingContractWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractCalculateCumulativeRate(
@@ -5641,7 +5773,7 @@ export function usePrepareBorrowingContractCalculateCumulativeRate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositToAaveProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractDepositToAaveProtocol(
@@ -5673,7 +5805,7 @@ export function usePrepareBorrowingContractDepositToAaveProtocol(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositToCompoundProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractDepositToCompoundProtocol(
@@ -5705,7 +5837,7 @@ export function usePrepareBorrowingContractDepositToCompoundProtocol(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositTokens"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractDepositTokens(
@@ -5734,7 +5866,7 @@ export function usePrepareBorrowingContractDepositTokens(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"initializeTreasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractInitializeTreasury(
@@ -5766,7 +5898,7 @@ export function usePrepareBorrowingContractInitializeTreasury(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"liquidate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractLiquidate(
@@ -5792,7 +5924,7 @@ export function usePrepareBorrowingContractLiquidate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractRenounceOwnership(
@@ -5824,7 +5956,7 @@ export function usePrepareBorrowingContractRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAPY"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractSetApy(
@@ -5850,7 +5982,7 @@ export function usePrepareBorrowingContractSetApy(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAdmin"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractSetAdmin(
@@ -5876,7 +6008,7 @@ export function usePrepareBorrowingContractSetAdmin(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setLTV"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractSetLtv(
@@ -5902,7 +6034,7 @@ export function usePrepareBorrowingContractSetLtv(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setOptions"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractSetOptions(
@@ -5928,7 +6060,7 @@ export function usePrepareBorrowingContractSetOptions(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractTransferOwnership(
@@ -5960,7 +6092,7 @@ export function usePrepareBorrowingContractTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"updateLastEthVaultValue"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractUpdateLastEthVaultValue(
@@ -5992,7 +6124,7 @@ export function usePrepareBorrowingContractUpdateLastEthVaultValue(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withDraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractWithDraw(
@@ -6018,7 +6150,7 @@ export function usePrepareBorrowingContractWithDraw(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawFromAaveProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractWithdrawFromAaveProtocol(
@@ -6050,7 +6182,7 @@ export function usePrepareBorrowingContractWithdrawFromAaveProtocol(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawFromCompoundProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function usePrepareBorrowingContractWithdrawFromCompoundProtocol(
@@ -6082,7 +6214,7 @@ export function usePrepareBorrowingContractWithdrawFromCompoundProtocol(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractEvent<TEventName extends string>(
@@ -6107,7 +6239,7 @@ export function useBorrowingContractEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Deposit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractDepositEvent(
@@ -6133,7 +6265,7 @@ export function useBorrowingContractDepositEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractOwnershipTransferredEvent(
@@ -6162,7 +6294,7 @@ export function useBorrowingContractOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Withdraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xB2227E67361EeDEf9a8f6a73d179672200f21C6E)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xe723f91263e45b49bB05a35F914554c26B335DE8)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb573579ADCBA8a685F8484128927C683e0938EC1)
  */
 export function useBorrowingContractWithdrawEvent(
@@ -6188,7 +6320,7 @@ export function useBorrowingContractWithdrawEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsRead<
@@ -6213,7 +6345,7 @@ export function useCdsRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"PRECISION"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsPrecision<
@@ -6239,7 +6371,7 @@ export function useCdsPrecision<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"Trinity_token"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsTrinityToken<
@@ -6265,7 +6397,7 @@ export function useCdsTrinityToken<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"borrowing"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsBorrowing<
@@ -6291,7 +6423,7 @@ export function useCdsBorrowing<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"borrowingContract"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsBorrowingContract<
@@ -6317,7 +6449,7 @@ export function useCdsBorrowingContract<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cdsCount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsCdsCount<
@@ -6343,7 +6475,7 @@ export function useCdsCdsCount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cdsDetails"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsCdsDetails<
@@ -6369,7 +6501,7 @@ export function useCdsCdsDetails<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"ethVault"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsEthVault<
@@ -6395,7 +6527,7 @@ export function useCdsEthVault<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"fallbackEthPrice"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsFallbackEthPrice<
@@ -6421,7 +6553,7 @@ export function useCdsFallbackEthPrice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"getCDSDepositDetails"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsGetCdsDepositDetails<
@@ -6447,7 +6579,7 @@ export function useCdsGetCdsDepositDetails<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"lastCumulativeRate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsLastCumulativeRate<
@@ -6473,7 +6605,7 @@ export function useCdsLastCumulativeRate<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"lastEthPrice"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsLastEthPrice<
@@ -6499,7 +6631,7 @@ export function useCdsLastEthPrice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"liquidationIndexToInfo"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsLiquidationIndexToInfo<
@@ -6525,7 +6657,7 @@ export function useCdsLiquidationIndexToInfo<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsOwner<
@@ -6551,7 +6683,7 @@ export function useCdsOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalAvailableLiquidationAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsTotalAvailableLiquidationAmount<
@@ -6577,7 +6709,7 @@ export function useCdsTotalAvailableLiquidationAmount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalCdsDepositedAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsTotalCdsDepositedAmount<
@@ -6603,7 +6735,7 @@ export function useCdsTotalCdsDepositedAmount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"treasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsTreasury<
@@ -6629,7 +6761,7 @@ export function useCdsTreasury<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"treasuryAddress"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsTreasuryAddress<
@@ -6655,7 +6787,7 @@ export function useCdsTreasuryAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdrawTimeLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsWithdrawTimeLimit<
@@ -6681,7 +6813,7 @@ export function useCdsWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsWrite<
@@ -6714,7 +6846,7 @@ export function useCdsWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"approval"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsApproval<
@@ -6748,7 +6880,7 @@ export function useCdsApproval<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsCalculateCumulativeRate<
@@ -6793,7 +6925,7 @@ export function useCdsCalculateCumulativeRate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"deposit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsDeposit<
@@ -6827,7 +6959,7 @@ export function useCdsDeposit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsRenounceOwnership<
@@ -6868,7 +7000,7 @@ export function useCdsRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsSetBorrowingContract<
@@ -6909,7 +7041,7 @@ export function useCdsSetBorrowingContract<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setTreasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsSetTreasury<
@@ -6950,7 +7082,7 @@ export function useCdsSetTreasury<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsSetWithdrawTimeLimit<
@@ -6991,7 +7123,7 @@ export function useCdsSetWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsTransferOwnership<
@@ -7032,7 +7164,7 @@ export function useCdsTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateLiquidationInfo"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsUpdateLiquidationInfo<
@@ -7073,7 +7205,7 @@ export function useCdsUpdateLiquidationInfo<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalAvailableLiquidationAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsUpdateTotalAvailableLiquidationAmount<
@@ -7122,7 +7254,7 @@ export function useCdsUpdateTotalAvailableLiquidationAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsUpdateTotalCdsDepositedAmount<
@@ -7171,7 +7303,7 @@ export function useCdsUpdateTotalCdsDepositedAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsWithdraw<
@@ -7205,7 +7337,7 @@ export function useCdsWithdraw<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsWrite<TFunctionName extends string>(
@@ -7227,7 +7359,7 @@ export function usePrepareCdsWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"approval"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsApproval(
@@ -7250,7 +7382,7 @@ export function usePrepareCdsApproval(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsCalculateCumulativeRate(
@@ -7273,7 +7405,7 @@ export function usePrepareCdsCalculateCumulativeRate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"deposit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsDeposit(
@@ -7296,7 +7428,7 @@ export function usePrepareCdsDeposit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsRenounceOwnership(
@@ -7319,7 +7451,7 @@ export function usePrepareCdsRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsSetBorrowingContract(
@@ -7342,7 +7474,7 @@ export function usePrepareCdsSetBorrowingContract(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setTreasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsSetTreasury(
@@ -7365,7 +7497,7 @@ export function usePrepareCdsSetTreasury(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsSetWithdrawTimeLimit(
@@ -7388,7 +7520,7 @@ export function usePrepareCdsSetWithdrawTimeLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsTransferOwnership(
@@ -7411,7 +7543,7 @@ export function usePrepareCdsTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateLiquidationInfo"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsUpdateLiquidationInfo(
@@ -7434,7 +7566,7 @@ export function usePrepareCdsUpdateLiquidationInfo(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalAvailableLiquidationAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsUpdateTotalAvailableLiquidationAmount(
@@ -7463,7 +7595,7 @@ export function usePrepareCdsUpdateTotalAvailableLiquidationAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsUpdateTotalCdsDepositedAmount(
@@ -7492,7 +7624,7 @@ export function usePrepareCdsUpdateTotalCdsDepositedAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function usePrepareCdsWithdraw(
@@ -7515,7 +7647,7 @@ export function usePrepareCdsWithdraw(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsEvent<TEventName extends string>(
@@ -7537,7 +7669,7 @@ export function useCdsEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Deposit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsDepositEvent(
@@ -7560,7 +7692,7 @@ export function useCdsDepositEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsOwnershipTransferredEvent(
@@ -7583,7 +7715,7 @@ export function useCdsOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Withdraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x91901746460bdc30C8F144327aa0E45a1a9c4Dc6)
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xc7001CC75c4Bfa973f2d0ee9A7528097c618a25d)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0e1bB9119a7cEEf3f3dEb970E1F02c77b692Ba3d)
  */
 export function useCdsWithdrawEvent(

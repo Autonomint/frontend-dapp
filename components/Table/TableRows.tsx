@@ -34,45 +34,9 @@ import CustomToast from "../CustomUI/CustomToast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatEther } from "viem";
 import displayNumberWithPrecision from "@/app/utils/precision";
+import { useWithdrawFromBackend } from "@/app/utils/backendHooks/useWithdrawFromBackend";
+import { calculate30DaysFromStoredTime } from "@/app/utils/calculateNext30Days";
 
-const depositDetails = [
-  {
-    headline: "Eth Deposited",
-    value: "0.00123",
-  },
-  {
-    headline: "ETH Price at Deposit",
-    value: "$1645.121",
-  },
-  {
-    headline: "Amint Amount minted",
-    value: "1.234",
-  },
-  {
-    headline: "Total Amount (Amint minted + Interest Amount returned)",
-    value: "-",
-  },
-  {
-    headline: "APY at Deposit",
-    value: "5%",
-  },
-  {
-    headline: "Downside percentage at Deposit",
-    value: "20%",
-  },
-  {
-    headline: "Liquidated?",
-    value: "No",
-  },
-  {
-    headline: "Interest rate gained",
-    value: "3%",
-  },
-  {
-    headline: "Abond Minted",
-    value: "-",
-  },
-];
 const events = {
   borrowDebt: "",
   withdrawAmount: "",
@@ -89,8 +53,10 @@ interface TableData {
   ethPrice: number;
   noOfAmintMinted: string;
   strikePrice: number;
-  withdrawTime1: number;
-  withdrawTime2: number;
+  withdrawTime1: string;
+  withdrawTime2: string;
+  withdrawAmount1: string;
+  withdrawAmount2: string;
   normalizedAmount: string;
   amountYetToWithdraw: string;
   noOfAbondMinted: string;
@@ -105,6 +71,44 @@ const TableRows = ({
   interest?: number;
   handleRefetch: Function;
 }) => {
+  const depositDetails = [
+    {
+      headline: "Eth Deposited",
+      value: "0.00123",
+    },
+    {
+      headline: "ETH Price at Deposit",
+      value: "$1645.121",
+    },
+    {
+      headline: "Amint Amount minted",
+      value: "1.234",
+    },
+    {
+      headline: "Total Amount (Amint minted + Interest Amount returned)",
+      value: "-",
+    },
+    {
+      headline: "APY at Deposit",
+      value: "5%",
+    },
+    {
+      headline: "Downside percentage at Deposit",
+      value: "20%",
+    },
+    {
+      headline: "Liquidated?",
+      value: "No",
+    },
+    {
+      headline: "Interest rate gained",
+      value: "3%",
+    },
+    {
+      headline: "Abond Minted",
+      value: "-",
+    },
+  ];
   const [sheetOpen, setSheetOpen] = useState(false);
   const [openConfirmNotice, setOpenConfirmNotice] = useState(false);
   const [amountView, setAmountView] = useState(false);
@@ -240,24 +244,28 @@ const TableRows = ({
         ));
       },
     });
-  const { mutate: backendWithdraw } = useMutation({
-    mutationFn: withdrawFromBackend,
-    onError(error, variables, context) {
-      console.log(error);
-    },
-    onSuccess(data, variables, context) {
-      queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
-    },
-    onSettled(data) {
-      queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
-      handleRefetch();
-      approveReset?.();
-      cumulativeReset?.();
-      borrowReset?.();
-      setSheetOpen(false);
-      data.reset();
-    },
-  });
+  const {
+    mutate: backendWithdraw,
+    reset: backendWithdrawReset,
+    isSuccess: backendWithdrawSuccess,
+  } = useWithdrawFromBackend();
+  // const { mutate: backendWithdraw,reset:backendWithdrawReset,isSuccess:backendWithdrawSuccess } = useMutation({
+  //   mutationFn: withdrawFromBackend,
+  //   onError(error, variables, context) {
+  //     console.log(error);
+  //   },
+  //   onSuccess(data, variables, context) {
+  //     queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
+  //   },
+  //   onSettled() {
+  //     queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
+  //     handleRefetch();
+  //     approveReset?.();
+  //     cumulativeReset?.();
+  //     borrowReset?.();
+  //     setSheetOpen(false);
+  //   },
+  // });
   const unwatch = useBorrowingContractWithdrawEvent({
     listener(log) {
       console.log(log);
@@ -273,41 +281,21 @@ const TableRows = ({
                 noOfAbond: log[0]?.args?.noOfAbond.toString(),
               }
             : { ...eventsValue.current };
-        backendWithdraw?.(address);
+        backendWithdraw?.({
+          address: address as `0x${string}`,
+          index: details.index,
+          borrowDebt: eventsValue.current.borrowDebt,
+          withdrawTime: `${Date.now()}`,
+          withdrawAmount: eventsValue.current.withdrawAmount,
+          amountYetToWithdraw: eventsValue.current.withdrawAmount,
+          noOfAbond: eventsValue.current.noOfAbond,
+        });
       }
       if (log[0].args) {
         unwatch?.();
       }
     },
   });
-
-  async function withdrawFromBackend(address: `0x${string}` | undefined) {
-    let bodyValue = JSON.stringify({
-      address: address,
-      index: details.index,
-      borrowDebt: eventsValue.current.borrowDebt,
-      withdrawTime: `${Date.now()}`,
-      withdrawAmount: `${eventsValue.current.withdrawAmount}`,
-      amountYetToWithdraw: `${eventsValue.current.withdrawAmount}`,
-      noOfAbond: eventsValue.current.noOfAbond,
-    });
-    console.log(bodyValue);
-    const response = await fetch("http://43.204.73.16:3000/borrows/withdraw", {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: bodyValue,
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message);
-    }
-
-    return result;
-  }
 
   function handleWithdrawalTime() {
     if (withdrawalTime === "DEPOSITED") {
@@ -358,15 +346,30 @@ const TableRows = ({
       updatedData[8].value = details.noOfAbondMinted
         ? details.noOfAbondMinted
         : "-";
+      setDepositData(updatedData);
+    } else {
+      const updatedData = [...depositData];
+      updatedData[0].value = "-";
+      updatedData[1].value = "-";
+      updatedData[2].value = "-";
+      updatedData[3].value = "-";
+      updatedData[4].value = "-";
+      updatedData[5].value = "-";
+      updatedData[6].value = "-";
+      updatedData[7].value = "-";
+      updatedData[8].value = "-";
+      setDepositData(updatedData);
     }
   }
 
   useEffect(() => {
     handleDepositData();
+    // if(backendWithdrawSuccess){
+    //   backendWithdrawReset?.();
+    // }
   }, [details]);
   return (
     <Sheet
-      key={details.id}
       open={sheetOpen}
       onOpenChange={() => {
         setSheetOpen(!sheetOpen);
@@ -417,13 +420,13 @@ const TableRows = ({
             </div>
             <SheetHeader>
               <SheetTitle className="text-textPrimary font-medium min-[1440px]:text-4xl text-2xl tracking-[-1.8px]">
-                Deposit #1
+                Deposit #{details.index}
               </SheetTitle>
             </SheetHeader>
             <div className="flex flex-col">
-              {depositDetails.map((detail, index) => (
+              {depositData.map((detail, index) => (
                 <SheetRow
-                  key={detail.headline}
+                  key={detail.headline + index}
                   props={{
                     heading: detail.headline,
                     value: detail.value,
@@ -478,11 +481,17 @@ const TableRows = ({
                             height={24}
                           />
                           <p className="text-base text-textSecondary">
-                            First time withdrawal amount
+                            First time withdrawed amount
                           </p>
                         </div>
 
-                        <p>######</p>
+                        <p>
+                          {parseFloat(
+                            details.withdrawAmount1
+                              ? details.withdrawAmount1
+                              : "0"
+                          ).toFixed(4)}
+                        </p>
                       </div>
                       <div className="py-[15px] flex items-center justify-between">
                         <div className="flex gap-[10px] items-center">
@@ -493,11 +502,11 @@ const TableRows = ({
                             height={24}
                           />
                           <p className="text-base text-textSecondary">
-                            Second Time Withdrawal time
+                            Second Withdrawal time
                           </p>
                         </div>
                         <p className="text-textHighlight font-medium text-base">
-                          ######
+                          {calculate30DaysFromStoredTime(details.withdrawTime1)}
                         </p>
                       </div>
                     </div>
