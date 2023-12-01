@@ -28,7 +28,7 @@ import {
   useBorrowingContractWithdrawEvent,
   usePrepareBorrowingContractWithDraw,
 } from "@/abiAndHooks";
-import { useAccount, useWaitForTransaction } from "wagmi";
+import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "../CustomUI/CustomToast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -53,6 +53,7 @@ interface TableData {
   ethPrice: number;
   noOfAmintMinted: string;
   strikePrice: number;
+  downsideProtectionPercentage: number;
   withdrawTime1: string;
   withdrawTime2: string;
   withdrawAmount1: string;
@@ -114,6 +115,8 @@ const TableRows = ({
   const [amountView, setAmountView] = useState(false);
   const [withdrawalTime, setWithdrawalTime] = useState(details.status);
   const [depositData, setDepositData] = useState(depositDetails);
+  const chainId = useChainId();
+  const toastId = useRef<string | number>("");
   const queryClient = useQueryClient();
   const { address } = useAccount();
   const eventsValue = useRef(events);
@@ -145,19 +148,29 @@ const TableRows = ({
       ));
     },
     onSuccess(data, variables, context) {
-      toast.custom((t) => (
-        <CustomToast
-          props={{
-            t,
-            toastMainColor: "#268730",
-            headline: "Transaction Submitted",
-            transactionHash: data?.hash,
-            linkLabel: "View Transaction",
-            toastClosebuttonHoverColor: "#90e398",
-            toastClosebuttonColor: "#57C262",
-          }}
-        />
-      ));
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <CustomToast
+              props={{
+                t,
+                toastMainColor: "#268730",
+                headline: "Transaction Submitted",
+                transactionHash: data?.hash,
+                linkLabel: "View Transaction",
+                toastClosebuttonHoverColor: "#90e398",
+                toastClosebuttonColor: "#57C262",
+              }}
+            />
+          );
+        },
+        { duration: 600 * 1000 }
+      );
+    },
+    onSettled() {
+      setSheetOpen(false);
+      setOpenConfirmNotice(false);
     },
   });
   const { data: lastCumulativeRate } = useBorrowingContractLastCumulativeRate();
@@ -167,23 +180,28 @@ const TableRows = ({
     confirmations: 3,
     onSuccess(data) {
       console.log("transaction completed", cumulativeRate?.hash, data);
-      toast.custom((t) => (
-        <CustomToast
-          props={{
-            t,
-            toastMainColor: "#268730",
-            headline:
-              "Transaction Completed. Please Approve Amint to move Forward",
-            transactionHash: cumulativeRate?.hash,
-            linkLabel: "View Transaction",
-            toastClosebuttonHoverColor: "#90e398",
-            toastClosebuttonColor: "#57C262",
-          }}
-        />
-      ));
+      toast.custom(
+        (t) => (
+          <CustomToast
+            props={{
+              t: toastId.current,
+              toastMainColor: "#268730",
+              headline:
+                "Transaction Completed. Please Approve Amint to move Forward",
+              transactionHash: cumulativeRate?.hash,
+              linkLabel: "View Transaction",
+              toastClosebuttonHoverColor: "#90e398",
+              toastClosebuttonColor: "#57C262",
+            }}
+          />
+        ),
+        { duration: 20 * 1000, id: toastId.current }
+      );
       amintApprove?.({
         args: [
-          borrowingContractAddress[80001] as `0x${string}`,
+          borrowingContractAddress[
+            chainId as keyof typeof borrowingContractAddress
+          ] as `0x${string}`,
           BigInt(details.normalizedAmount),
         ],
       });
@@ -208,42 +226,98 @@ const TableRows = ({
       });
     },
   });
-  const { write: borrowWithdraw, reset: borrowReset } =
-    useBorrowingContractWithDraw({
-      onSuccess(data, variables, context) {
-        toast.custom((t) => (
-          <div>
-            <CustomToast
-              props={{
-                t,
-                toastMainColor: "#268730",
-                headline: "Transaction Submitted",
-                transactionHash: data?.hash,
-                linkLabel: "View Transaction",
-                toastClosebuttonHoverColor: "#90e398",
-                toastClosebuttonColor: "#57C262",
-              }}
-            />
-          </div>
-        ));
-      },
-      onError(error, variables, context) {
-        toast.custom((t) => (
-          <div>
-            <CustomToast
-              key={2}
-              props={{
-                t,
-                toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.cause}`,
-                toastClosebuttonHoverColor: "#e66d6d",
-                toastClosebuttonColor: "#C25757",
-              }}
-            />
-          </div>
-        ));
-      },
-    });
+  const {
+    write: borrowWithdraw,
+    reset: borrowReset,
+    data: borrowWithdrawData,
+  } = useBorrowingContractWithDraw({
+    onSuccess(data, variables, context) {
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                props={{
+                  t,
+                  toastMainColor: "#268730",
+                  headline: "Transaction Submitted",
+                  transactionHash: data?.hash,
+                  linkLabel: "View Transaction",
+                  toastClosebuttonHoverColor: "#90e398",
+                  toastClosebuttonColor: "#57C262",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 600 * 1000 }
+      );
+    },
+    onError(error, variables, context) {
+      toast.custom((t) => (
+        <div>
+          <CustomToast
+            props={{
+              t,
+              toastMainColor: "#B43939",
+              headline: `Uhh Ohh! ${error.cause}`,
+              toastClosebuttonHoverColor: "#e66d6d",
+              toastClosebuttonColor: "#C25757",
+            }}
+          />
+        </div>
+      ));
+    },
+  });
+  const {
+    isLoading: borrowWithdrawisLoading,
+    isSuccess: borrowWithdrawtransactionSuccess,
+  } = useWaitForTransaction({
+    hash: borrowWithdrawData?.hash,
+    confirmations: 3,
+    onSuccess(data) {
+      console.log("transaction completed", borrowWithdrawData?.hash, data);
+      toast.custom(
+        (t) => (
+          <CustomToast
+            props={{
+              t: toastId.current,
+              toastMainColor: "#268730",
+              headline: "Transaction Completed. Withdrawal Done",
+              transactionHash: cumulativeRate?.hash,
+              linkLabel: "View Transaction",
+              toastClosebuttonHoverColor: "#90e398",
+              toastClosebuttonColor: "#57C262",
+            }}
+          />
+        ),
+        { duration: 20 * 1000, id: toastId.current }
+      );
+      approveReset?.();
+      cumulativeReset?.();
+      borrowReset?.();
+    },
+    onError(error) {
+      toast.custom((t) => (
+        <div>
+          <CustomToast
+            key={2}
+            props={{
+              t,
+              toastMainColor: "#B43939",
+              headline: `Uhh Ohh! ${error.cause}`,
+              toastClosebuttonHoverColor: "#e66d6d",
+              toastClosebuttonColor: "#C25757",
+            }}
+          />
+        </div>
+      ));
+      approveReset?.();
+      cumulativeReset?.();
+      borrowReset?.();
+    },
+  });
   const {
     mutate: backendWithdraw,
     reset: backendWithdrawReset,
@@ -284,6 +358,7 @@ const TableRows = ({
         backendWithdraw?.({
           address: address as `0x${string}`,
           index: details.index,
+          chainId: chainId,
           borrowDebt: eventsValue.current.borrowDebt,
           withdrawTime: `${Date.now()}`,
           withdrawAmount: eventsValue.current.withdrawAmount,
@@ -340,7 +415,7 @@ const TableRows = ({
         formatEther(totalAmintAmount)
       );
       // updatedData[4].value = details.depositedAmount;
-      // updatedData[5].value = details.depositedAmount;
+      updatedData[5].value = `${details.downsideProtectionPercentage}%`;
       // updatedData[6].value = details.depositedAmount;
       // updatedData[7].value = details.depositedAmount;
       updatedData[8].value = details.noOfAbondMinted
@@ -374,6 +449,7 @@ const TableRows = ({
       onOpenChange={() => {
         setSheetOpen(!sheetOpen);
         setOpenConfirmNotice(false);
+        setAmountView(false);
       }}
     >
       <TableRow className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF]">

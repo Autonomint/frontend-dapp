@@ -39,7 +39,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { useAccount, useWaitForTransaction } from "wagmi";
+import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
 import { parseEther } from "viem";
 import {
   useBorrowingContractDepositEvent,
@@ -70,9 +70,10 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   const [downsideProtectionAmnt, setDownsideProtectionAmnt] = useState("0");
   const [open, setOpen] = useState(false);
   const { address } = useAccount();
+  const chainId = useChainId();
   const queryClient = useQueryClient();
   const normalizedAmount = useRef("");
-  const [toastId, setToastId] = useState<string | number>(0);
+  const toastId = useRef<string | number>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -91,6 +92,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     },
     onSettled() {
       queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
+      queryClient.invalidateQueries({ queryKey: ["deposits"] });
     },
   });
   const unwatch = useBorrowingContractDepositEvent({
@@ -111,9 +113,9 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   });
 
   function getTotalIndex(address: `0x${string}` | undefined) {
-    return fetch(`http://43.204.73.16:3000/borrows/index/${address}`).then(
-      (response) => response.json()
-    );
+    return fetch(
+      `http://43.204.73.16:3000/borrows/index/${chainId}/${address}`
+    ).then((response) => response.json());
   }
   const { data: totalIndex } = useQuery({
     queryKey: ["totalIndex"],
@@ -128,6 +130,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       address: address,
       collateralType: "ETH",
       index: totalIndex + 1,
+      chainId: chainId,
+      downsideProtectionPercentage: 100 - (ltv ? ltv : 0),
       depositedAmount: `${form.watch("collateralAmount")}`,
       depositedTime: `${Date.now()}`,
       ethPrice: Number(ethPrice ? ethPrice : 0) / 100,
@@ -195,7 +199,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       console.log(data?.hash);
       toast.custom(
         (t) => {
-          setToastId(t);
+          toastId.current = t;
           return (
             <div>
               <CustomToast
@@ -224,7 +228,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
         () => (
           <CustomToast
             props={{
-              t: toastId,
+              t: toastId.current,
               toastMainColor: "#268730",
               headline: "Transaction Completed. A new Deposit has been created",
               transactionHash: depositData?.hash,
@@ -234,7 +238,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
             }}
           />
         ),
-        { id: toastId }
+        { id: toastId.current, duration: 10 * 1000 }
       );
     },
   });

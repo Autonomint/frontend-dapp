@@ -1,7 +1,14 @@
-import React from "react";
+import React, { FC, HTMLAttributes } from "react";
+import cn from "classnames";
 
-const Divider = () => {
-  return <div className="w-full bg-lineGrey h-[1px] my-[30px]"></div>;
+interface DividerProps extends HTMLAttributes<HTMLDivElement> {
+  className?: string;
+}
+
+const Divider: FC<DividerProps> = ({ className, ...rest }) => {
+  return (
+    <div className={cn("w-full bg-lineGrey h-[1px] my-[30px]", className)} {...rest}></div>
+  );
 };
 
 export default Divider;

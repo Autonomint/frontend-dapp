@@ -48,7 +48,7 @@ const dasboardStatsItem = [
 
 const WalletOrContent = () => {
   const { isConnected, address } = useAccount();
-  const chainId=useChainId();
+  const chainId = useChainId();
   const [dashboardStats, setDashboardStats] = useState(dasboardStatsItem);
   const [shouldRefetch, setShouldRefetch] = useState(1);
   const { data: ethPrice } = useBorrowingContractRead({
@@ -63,6 +63,16 @@ const WalletOrContent = () => {
   const { data: depositorData, error: depositorDataError } = useQuery({
     queryKey: ["depositorsData", shouldRefetch],
     queryFn: () => getDepositorData(address ? address : undefined),
+    enabled: !!address,
+  });
+  function getDeposits(address: `0x${string}` | undefined) {
+    return fetch(`http://43.204.73.16:3000/borrows/${chainId}/${address}`).then(
+      (response) => response.json()
+    );
+  }
+  const { data: deposits, error: depositsError } = useQuery({
+    queryKey: ["deposits"],
+    queryFn: (): Promise<any> => getDeposits(address ? address : undefined),
     enabled: !!address,
   });
 
@@ -87,14 +97,30 @@ const WalletOrContent = () => {
     if (depositorData) {
       const updatedStats = [...dashboardStats];
       const ethPriceNow = ethPrice ? ethPrice : 0n;
-      updatedStats[0].value = `$${
-        (depositorData.totalDepositedAmount * Number(ethPriceNow)) / 100
-      }`;
-      updatedStats[1].value = depositorData.totalAmint;
-      // updatedStats[2].value = displayNumberWithPrecision(
-      //   formatEther(depositorData.totalAbond)
-      // );
-      updatedStats[0].subheadingHighlight = depositorData.totalIndex;
+      updatedStats[0].value =
+        chainId === 80001
+          ? `$${
+              (depositorData.totalDepositedAmountInPolygon *
+                Number(ethPriceNow)) /
+              100
+            }`
+          : `$${
+              (depositorData.totalDepositedAmountInEthereum *
+                Number(ethPriceNow)) /
+              100
+            }`;
+      updatedStats[1].value =
+        chainId === 80001
+          ? depositorData.totalAmintInPolygon
+          : depositorData.totalAmintInEthereum;
+      updatedStats[2].value =
+        chainId === 80001
+          ? depositorData.totalAbondInPolygon
+          : depositorData.totalAbondInEthereum;
+      updatedStats[0].subheadingHighlight =
+        chainId === 80001
+          ? depositorData.totalIndexInPolygon
+          : depositorData.totalIndexInEthereum;
       setDashboardStats(updatedStats);
     } else {
       const updatedStats = [...dashboardStats];
@@ -149,7 +175,7 @@ const WalletOrContent = () => {
           <Divider />
           <CreateNewDeposit handleRefetch={handleRefetch} />
           <DepositAndWithDrawTable
-            tableData={depositorData?.borrows}
+            tableData={deposits}
             handleRefetch={handleRefetch}
           />
         </div>

@@ -20,6 +20,7 @@ interface TableData {
   noOfAmintMinted: string;
   normalizedAmount: string;
   strikePrice: number;
+  downsideProtectionPercentage: number;
   withdrawTime1: string;
   withdrawTime2: string;
   withdrawAmount1: string;

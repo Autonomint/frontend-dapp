@@ -1420,6 +1420,600 @@ export const cdsAddress = {
 export const cdsConfig = { address: cdsAddress, abi: cdsABI } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Treasury
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export const treasuryABI = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+    inputs: [
+      { name: '_borrowing', internalType: 'address', type: 'address' },
+      { name: '_tokenAddress', internalType: 'address', type: 'address' },
+      { name: '_cdsContract', internalType: 'address', type: 'address' },
+      { name: '_wethGateway', internalType: 'address', type: 'address' },
+      { name: '_cEther', internalType: 'address', type: 'address' },
+      {
+        name: '_aavePoolAddressProvider',
+        internalType: 'address',
+        type: 'address',
+      },
+      { name: '_aToken', internalType: 'address', type: 'address' },
+    ],
+  },
+  { type: 'error', inputs: [], name: 'Treasury_AaveDepositAndMintFailed' },
+  { type: 'error', inputs: [], name: 'Treasury_AavePoolAddressZero' },
+  { type: 'error', inputs: [], name: 'Treasury_AaveWithdrawFailed' },
+  { type: 'error', inputs: [], name: 'Treasury_CompoundDepositAndMintFailed' },
+  { type: 'error', inputs: [], name: 'Treasury_CompoundWithdrawFailed' },
+  {
+    type: 'error',
+    inputs: [],
+    name: 'Treasury_EthTransferToCdsLiquidatorFailed',
+  },
+  { type: 'error', inputs: [], name: 'Treasury_ZeroDeposit' },
+  { type: 'error', inputs: [], name: 'Treasury_ZeroWithdraw' },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'user', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Deposit',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'count', internalType: 'uint64', type: 'uint64', indexed: false },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'DepositToAave',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'count', internalType: 'uint64', type: 'uint64', indexed: false },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'DepositToCompound',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'user', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Withdraw',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'count', internalType: 'uint64', type: 'uint64', indexed: false },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'WithdrawFromAave',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'count', internalType: 'uint64', type: 'uint64', indexed: false },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'WithdrawFromCompound',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'aToken',
+    outputs: [{ name: '', internalType: 'contract IATOKEN', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'aavePoolAddressProvider',
+    outputs: [
+      {
+        name: '',
+        internalType: 'contract IPoolAddressesProvider',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'aaveWETH',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: '_address', internalType: 'address', type: 'address' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approval',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'borrow',
+    outputs: [
+      { name: '', internalType: 'contract IBorrowing', type: 'address' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'depositor', internalType: 'address', type: 'address' }],
+    name: 'borrowing',
+    outputs: [
+      { name: 'depositedAmount', internalType: 'uint256', type: 'uint256' },
+      { name: 'totalBorrowedAmount', internalType: 'uint256', type: 'uint256' },
+      { name: 'hasBorrowed', internalType: 'bool', type: 'bool' },
+      { name: 'hasDeposited', internalType: 'bool', type: 'bool' },
+      { name: 'borrowerIndex', internalType: 'uint64', type: 'uint64' },
+      { name: 'totalPTokens', internalType: 'uint128', type: 'uint128' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'borrowingContract',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'cEther',
+    outputs: [{ name: '', internalType: 'contract ICEther', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'cdsContract',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'compoundAddress',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'payable',
+    type: 'function',
+    inputs: [
+      { name: 'user', internalType: 'address', type: 'address' },
+      { name: '_ethPrice', internalType: 'uint128', type: 'uint128' },
+      { name: '_depositTime', internalType: 'uint64', type: 'uint64' },
+    ],
+    name: 'deposit',
+    outputs: [
+      { name: '', internalType: 'bool', type: 'bool' },
+      { name: '', internalType: 'uint64', type: 'uint64' },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'depositToAave',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'depositToCompound',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getBalanceInTreasury',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'depositor', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
+    ],
+    name: 'getBorrowing',
+    outputs: [
+      { name: '', internalType: 'uint64', type: 'uint64' },
+      {
+        name: '',
+        internalType: 'struct Treasury.DepositDetails',
+        type: 'tuple',
+        components: [
+          { name: 'depositedTime', internalType: 'uint64', type: 'uint64' },
+          { name: 'depositedAmount', internalType: 'uint128', type: 'uint128' },
+          {
+            name: 'downsidePercentage',
+            internalType: 'uint64',
+            type: 'uint64',
+          },
+          {
+            name: 'ethPriceAtDeposit',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
+          { name: 'borrowedAmount', internalType: 'uint128', type: 'uint128' },
+          {
+            name: 'normalizedAmount',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
+          { name: 'withdrawNo', internalType: 'uint8', type: 'uint8' },
+          { name: 'withdrawed', internalType: 'bool', type: 'bool' },
+          { name: 'withdrawAmount', internalType: 'uint128', type: 'uint128' },
+          { name: 'liquidated', internalType: 'bool', type: 'bool' },
+          {
+            name: 'ethPriceAtWithdraw',
+            internalType: 'uint64',
+            type: 'uint64',
+          },
+          { name: 'withdrawTime', internalType: 'uint64', type: 'uint64' },
+          { name: 'pTokensAmount', internalType: 'uint128', type: 'uint128' },
+          { name: 'strikePrice', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'noOfBorrowers',
+    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'enum Treasury.Protocol', type: 'uint8' },
+    ],
+    name: 'protocolDeposit',
+    outputs: [
+      { name: 'depositIndex', internalType: 'uint64', type: 'uint64' },
+      { name: 'depositedAmount', internalType: 'uint256', type: 'uint256' },
+      { name: 'totalCreditedTokens', internalType: 'uint256', type: 'uint256' },
+      { name: 'depositedUsdValue', internalType: 'uint256', type: 'uint256' },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: '_address', internalType: 'address', type: 'address' }],
+    name: 'setBorrowingContract',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalInterest',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalInterestFromLiquidation',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalVolumeOfBorrowersAmountinUSD',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalVolumeOfBorrowersAmountinWei',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'borrower', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint128', type: 'uint128' },
+    ],
+    name: 'transferEthToCdsLiquidators',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'trinity',
+    outputs: [
+      { name: '', internalType: 'contract ITrinityToken', type: 'address' },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'depositor', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
+      {
+        name: 'depositDetail',
+        internalType: 'struct Treasury.DepositDetails',
+        type: 'tuple',
+        components: [
+          { name: 'depositedTime', internalType: 'uint64', type: 'uint64' },
+          { name: 'depositedAmount', internalType: 'uint128', type: 'uint128' },
+          {
+            name: 'downsidePercentage',
+            internalType: 'uint64',
+            type: 'uint64',
+          },
+          {
+            name: 'ethPriceAtDeposit',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
+          { name: 'borrowedAmount', internalType: 'uint128', type: 'uint128' },
+          {
+            name: 'normalizedAmount',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
+          { name: 'withdrawNo', internalType: 'uint8', type: 'uint8' },
+          { name: 'withdrawed', internalType: 'bool', type: 'bool' },
+          { name: 'withdrawAmount', internalType: 'uint128', type: 'uint128' },
+          { name: 'liquidated', internalType: 'bool', type: 'bool' },
+          {
+            name: 'ethPriceAtWithdraw',
+            internalType: 'uint64',
+            type: 'uint64',
+          },
+          { name: 'withdrawTime', internalType: 'uint64', type: 'uint64' },
+          { name: 'pTokensAmount', internalType: 'uint128', type: 'uint128' },
+          { name: 'strikePrice', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+    ],
+    name: 'updateDepositDetails',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'borrower', internalType: 'address', type: 'address' },
+      { name: '_bool', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'updateHasBorrowed',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'borrower', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'updateTotalBorrowedAmount',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'borrower', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint128', type: 'uint128' },
+    ],
+    name: 'updateTotalDepositedAmount',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: '_amount', internalType: 'uint256', type: 'uint256' }],
+    name: 'updateTotalInterest',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: '_amount', internalType: 'uint256', type: 'uint256' }],
+    name: 'updateTotalInterestFromLiquidation',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'borrower', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint128', type: 'uint128' },
+    ],
+    name: 'updateTotalPTokensDecrease',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'borrower', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint128', type: 'uint128' },
+    ],
+    name: 'updateTotalPTokensIncrease',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'wethGateway',
+    outputs: [
+      {
+        name: '',
+        internalType: 'contract IWrappedTokenGatewayV3',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'borrower', internalType: 'address', type: 'address' },
+      { name: 'toAddress', internalType: 'address', type: 'address' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
+      { name: '_ethPrice', internalType: 'uint64', type: 'uint64' },
+    ],
+    name: 'withdraw',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'withdrawFromAave',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'index', internalType: 'uint64', type: 'uint64' }],
+    name: 'withdrawFromCompound',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'toAddress', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'withdrawInterest',
+    outputs: [],
+  },
+  { stateMutability: 'payable', type: 'receive' },
+] as const
+
+/**
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export const treasuryAddress = {
+  80001: '0xd06F40436cCa17C465615Ac931b2B2bE79a21021',
+  11155111: '0xd06F40436cCa17C465615Ac931b2B2bE79a21021',
+} as const
+
+/**
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export const treasuryConfig = {
+  address: treasuryAddress,
+  abi: treasuryABI,
+} as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // erc20
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -7733,6 +8327,2169 @@ export function useCdsWithdrawEvent(
     eventName: 'Withdraw',
     ...config,
   } as UseContractEventConfig<typeof cdsABI, 'Withdraw'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aToken"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryAToken<
+  TFunctionName extends 'aToken',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'aToken',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aavePoolAddressProvider"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryAavePoolAddressProvider<
+  TFunctionName extends 'aavePoolAddressProvider',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'aavePoolAddressProvider',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aaveWETH"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryAaveWeth<
+  TFunctionName extends 'aaveWETH',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'aaveWETH',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrow"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryBorrow<
+  TFunctionName extends 'borrow',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'borrow',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrowing"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryBorrowing<
+  TFunctionName extends 'borrowing',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'borrowing',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrowingContract"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryBorrowingContract<
+  TFunctionName extends 'borrowingContract',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'borrowingContract',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"cEther"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryCEther<
+  TFunctionName extends 'cEther',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'cEther',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"cdsContract"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryCdsContract<
+  TFunctionName extends 'cdsContract',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'cdsContract',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"compoundAddress"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryCompoundAddress<
+  TFunctionName extends 'compoundAddress',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'compoundAddress',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getBalanceInTreasury"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryGetBalanceInTreasury<
+  TFunctionName extends 'getBalanceInTreasury',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'getBalanceInTreasury',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getBorrowing"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryGetBorrowing<
+  TFunctionName extends 'getBorrowing',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'getBorrowing',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"noOfBorrowers"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryNoOfBorrowers<
+  TFunctionName extends 'noOfBorrowers',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'noOfBorrowers',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"owner"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryOwner<
+  TFunctionName extends 'owner',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'owner',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"protocolDeposit"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryProtocolDeposit<
+  TFunctionName extends 'protocolDeposit',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'protocolDeposit',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalInterest"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryTotalInterest<
+  TFunctionName extends 'totalInterest',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'totalInterest',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalInterestFromLiquidation"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryTotalInterestFromLiquidation<
+  TFunctionName extends 'totalInterestFromLiquidation',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'totalInterestFromLiquidation',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalVolumeOfBorrowersAmountinUSD"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryTotalVolumeOfBorrowersAmountinUsd<
+  TFunctionName extends 'totalVolumeOfBorrowersAmountinUSD',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'totalVolumeOfBorrowersAmountinUSD',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalVolumeOfBorrowersAmountinWei"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryTotalVolumeOfBorrowersAmountinWei<
+  TFunctionName extends 'totalVolumeOfBorrowersAmountinWei',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'totalVolumeOfBorrowersAmountinWei',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"trinity"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryTrinity<
+  TFunctionName extends 'trinity',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'trinity',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"wethGateway"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryWethGateway<
+  TFunctionName extends 'wethGateway',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'wethGateway',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryWrite<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          string
+        >['request']['abi'],
+        TFunctionName,
+        TMode
+      > & { address?: Address; chainId?: TChainId }
+    : UseContractWriteConfig<typeof treasuryABI, TFunctionName, TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, TFunctionName, TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approval"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryApproval<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'approval'
+        >['request']['abi'],
+        'approval',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'approval' }
+    : UseContractWriteConfig<typeof treasuryABI, 'approval', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'approval'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'approval', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'approval',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"deposit"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryDeposit<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'deposit'
+        >['request']['abi'],
+        'deposit',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'deposit' }
+    : UseContractWriteConfig<typeof treasuryABI, 'deposit', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'deposit'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'deposit', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'deposit',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"depositToAave"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryDepositToAave<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'depositToAave'
+        >['request']['abi'],
+        'depositToAave',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'depositToAave'
+      }
+    : UseContractWriteConfig<typeof treasuryABI, 'depositToAave', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'depositToAave'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'depositToAave', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'depositToAave',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"depositToCompound"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryDepositToCompound<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'depositToCompound'
+        >['request']['abi'],
+        'depositToCompound',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'depositToCompound'
+      }
+    : UseContractWriteConfig<typeof treasuryABI, 'depositToCompound', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'depositToCompound'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'depositToCompound', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'depositToCompound',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"renounceOwnership"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryRenounceOwnership<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'renounceOwnership'
+        >['request']['abi'],
+        'renounceOwnership',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'renounceOwnership'
+      }
+    : UseContractWriteConfig<typeof treasuryABI, 'renounceOwnership', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'renounceOwnership'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'renounceOwnership', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'renounceOwnership',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"setBorrowingContract"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasurySetBorrowingContract<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'setBorrowingContract'
+        >['request']['abi'],
+        'setBorrowingContract',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'setBorrowingContract'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'setBorrowingContract',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'setBorrowingContract'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'setBorrowingContract', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'setBorrowingContract',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferEthToCdsLiquidators"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryTransferEthToCdsLiquidators<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'transferEthToCdsLiquidators'
+        >['request']['abi'],
+        'transferEthToCdsLiquidators',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'transferEthToCdsLiquidators'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'transferEthToCdsLiquidators',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'transferEthToCdsLiquidators'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<
+    typeof treasuryABI,
+    'transferEthToCdsLiquidators',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'transferEthToCdsLiquidators',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferOwnership"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryTransferOwnership<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'transferOwnership'
+        >['request']['abi'],
+        'transferOwnership',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'transferOwnership'
+      }
+    : UseContractWriteConfig<typeof treasuryABI, 'transferOwnership', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'transferOwnership'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'transferOwnership', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'transferOwnership',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateDepositDetails"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryUpdateDepositDetails<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateDepositDetails'
+        >['request']['abi'],
+        'updateDepositDetails',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateDepositDetails'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'updateDepositDetails',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateDepositDetails'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'updateDepositDetails', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateDepositDetails',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateHasBorrowed"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryUpdateHasBorrowed<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateHasBorrowed'
+        >['request']['abi'],
+        'updateHasBorrowed',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateHasBorrowed'
+      }
+    : UseContractWriteConfig<typeof treasuryABI, 'updateHasBorrowed', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateHasBorrowed'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'updateHasBorrowed', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateHasBorrowed',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalBorrowedAmount"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryUpdateTotalBorrowedAmount<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateTotalBorrowedAmount'
+        >['request']['abi'],
+        'updateTotalBorrowedAmount',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateTotalBorrowedAmount'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'updateTotalBorrowedAmount',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateTotalBorrowedAmount'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<
+    typeof treasuryABI,
+    'updateTotalBorrowedAmount',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateTotalBorrowedAmount',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalDepositedAmount"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryUpdateTotalDepositedAmount<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateTotalDepositedAmount'
+        >['request']['abi'],
+        'updateTotalDepositedAmount',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateTotalDepositedAmount'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'updateTotalDepositedAmount',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateTotalDepositedAmount'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<
+    typeof treasuryABI,
+    'updateTotalDepositedAmount',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateTotalDepositedAmount',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterest"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryUpdateTotalInterest<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateTotalInterest'
+        >['request']['abi'],
+        'updateTotalInterest',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateTotalInterest'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'updateTotalInterest',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateTotalInterest'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'updateTotalInterest', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateTotalInterest',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterestFromLiquidation"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryUpdateTotalInterestFromLiquidation<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateTotalInterestFromLiquidation'
+        >['request']['abi'],
+        'updateTotalInterestFromLiquidation',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateTotalInterestFromLiquidation'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'updateTotalInterestFromLiquidation',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateTotalInterestFromLiquidation'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<
+    typeof treasuryABI,
+    'updateTotalInterestFromLiquidation',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateTotalInterestFromLiquidation',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalPTokensDecrease"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryUpdateTotalPTokensDecrease<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateTotalPTokensDecrease'
+        >['request']['abi'],
+        'updateTotalPTokensDecrease',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateTotalPTokensDecrease'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'updateTotalPTokensDecrease',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateTotalPTokensDecrease'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<
+    typeof treasuryABI,
+    'updateTotalPTokensDecrease',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateTotalPTokensDecrease',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalPTokensIncrease"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryUpdateTotalPTokensIncrease<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateTotalPTokensIncrease'
+        >['request']['abi'],
+        'updateTotalPTokensIncrease',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateTotalPTokensIncrease'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'updateTotalPTokensIncrease',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateTotalPTokensIncrease'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<
+    typeof treasuryABI,
+    'updateTotalPTokensIncrease',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateTotalPTokensIncrease',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdraw"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryWithdraw<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'withdraw'
+        >['request']['abi'],
+        'withdraw',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'withdraw' }
+    : UseContractWriteConfig<typeof treasuryABI, 'withdraw', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'withdraw'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'withdraw', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'withdraw',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromAave"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryWithdrawFromAave<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'withdrawFromAave'
+        >['request']['abi'],
+        'withdrawFromAave',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'withdrawFromAave'
+      }
+    : UseContractWriteConfig<typeof treasuryABI, 'withdrawFromAave', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'withdrawFromAave'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'withdrawFromAave', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'withdrawFromAave',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromCompound"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryWithdrawFromCompound<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'withdrawFromCompound'
+        >['request']['abi'],
+        'withdrawFromCompound',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'withdrawFromCompound'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'withdrawFromCompound',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'withdrawFromCompound'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'withdrawFromCompound', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'withdrawFromCompound',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawInterest"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryWithdrawInterest<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'withdrawInterest'
+        >['request']['abi'],
+        'withdrawInterest',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'withdrawInterest'
+      }
+    : UseContractWriteConfig<typeof treasuryABI, 'withdrawInterest', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'withdrawInterest'
+      } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractWrite<typeof treasuryABI, 'withdrawInterest', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'withdrawInterest',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryWrite<TFunctionName extends string>(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, TFunctionName>,
+    'abi' | 'address'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof treasuryABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approval"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryApproval(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'approval'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'approval',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'approval'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"deposit"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryDeposit(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'deposit'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'deposit',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'deposit'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"depositToAave"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryDepositToAave(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'depositToAave'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'depositToAave',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'depositToAave'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"depositToCompound"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryDepositToCompound(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'depositToCompound'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'depositToCompound',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'depositToCompound'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"renounceOwnership"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryRenounceOwnership(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'renounceOwnership'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'renounceOwnership',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'renounceOwnership'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"setBorrowingContract"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasurySetBorrowingContract(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'setBorrowingContract'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'setBorrowingContract',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'setBorrowingContract'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferEthToCdsLiquidators"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryTransferEthToCdsLiquidators(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'transferEthToCdsLiquidators'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'transferEthToCdsLiquidators',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'transferEthToCdsLiquidators'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferOwnership"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryTransferOwnership(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'transferOwnership'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'transferOwnership',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'transferOwnership'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateDepositDetails"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryUpdateDepositDetails(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'updateDepositDetails'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateDepositDetails',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'updateDepositDetails'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateHasBorrowed"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryUpdateHasBorrowed(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'updateHasBorrowed'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateHasBorrowed',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'updateHasBorrowed'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalBorrowedAmount"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryUpdateTotalBorrowedAmount(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'updateTotalBorrowedAmount'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateTotalBorrowedAmount',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'updateTotalBorrowedAmount'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalDepositedAmount"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryUpdateTotalDepositedAmount(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'updateTotalDepositedAmount'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateTotalDepositedAmount',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'updateTotalDepositedAmount'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterest"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryUpdateTotalInterest(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'updateTotalInterest'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateTotalInterest',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'updateTotalInterest'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterestFromLiquidation"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryUpdateTotalInterestFromLiquidation(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'updateTotalInterestFromLiquidation'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateTotalInterestFromLiquidation',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'updateTotalInterestFromLiquidation'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalPTokensDecrease"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryUpdateTotalPTokensDecrease(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'updateTotalPTokensDecrease'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateTotalPTokensDecrease',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'updateTotalPTokensDecrease'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalPTokensIncrease"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryUpdateTotalPTokensIncrease(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'updateTotalPTokensIncrease'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'updateTotalPTokensIncrease',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'updateTotalPTokensIncrease'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdraw"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryWithdraw(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'withdraw'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'withdraw',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'withdraw'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromAave"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryWithdrawFromAave(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawFromAave'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'withdrawFromAave',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawFromAave'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromCompound"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryWithdrawFromCompound(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawFromCompound'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'withdrawFromCompound',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'withdrawFromCompound'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawInterest"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function usePrepareTreasuryWithdrawInterest(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawInterest'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    functionName: 'withdrawInterest',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawInterest'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryEvent<TEventName extends string>(
+  config: Omit<
+    UseContractEventConfig<typeof treasuryABI, TEventName>,
+    'abi' | 'address'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    ...config,
+  } as UseContractEventConfig<typeof treasuryABI, TEventName>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Deposit"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryDepositEvent(
+  config: Omit<
+    UseContractEventConfig<typeof treasuryABI, 'Deposit'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    eventName: 'Deposit',
+    ...config,
+  } as UseContractEventConfig<typeof treasuryABI, 'Deposit'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"DepositToAave"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryDepositToAaveEvent(
+  config: Omit<
+    UseContractEventConfig<typeof treasuryABI, 'DepositToAave'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    eventName: 'DepositToAave',
+    ...config,
+  } as UseContractEventConfig<typeof treasuryABI, 'DepositToAave'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"DepositToCompound"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryDepositToCompoundEvent(
+  config: Omit<
+    UseContractEventConfig<typeof treasuryABI, 'DepositToCompound'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    eventName: 'DepositToCompound',
+    ...config,
+  } as UseContractEventConfig<typeof treasuryABI, 'DepositToCompound'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"OwnershipTransferred"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryOwnershipTransferredEvent(
+  config: Omit<
+    UseContractEventConfig<typeof treasuryABI, 'OwnershipTransferred'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    eventName: 'OwnershipTransferred',
+    ...config,
+  } as UseContractEventConfig<typeof treasuryABI, 'OwnershipTransferred'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Withdraw"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryWithdrawEvent(
+  config: Omit<
+    UseContractEventConfig<typeof treasuryABI, 'Withdraw'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    eventName: 'Withdraw',
+    ...config,
+  } as UseContractEventConfig<typeof treasuryABI, 'Withdraw'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"WithdrawFromAave"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryWithdrawFromAaveEvent(
+  config: Omit<
+    UseContractEventConfig<typeof treasuryABI, 'WithdrawFromAave'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    eventName: 'WithdrawFromAave',
+    ...config,
+  } as UseContractEventConfig<typeof treasuryABI, 'WithdrawFromAave'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"WithdrawFromCompound"`.
+ *
+ * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd06F40436cCa17C465615Ac931b2B2bE79a21021)
+ */
+export function useTreasuryWithdrawFromCompoundEvent(
+  config: Omit<
+    UseContractEventConfig<typeof treasuryABI, 'WithdrawFromCompound'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  const { chain } = useNetwork()
+  const defaultChainId = useChainId()
+  const chainId = config.chainId ?? chain?.id ?? defaultChainId
+  return useContractEvent({
+    abi: treasuryABI,
+    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    eventName: 'WithdrawFromCompound',
+    ...config,
+  } as UseContractEventConfig<typeof treasuryABI, 'WithdrawFromCompound'>)
 }
 
 /**

@@ -15,16 +15,18 @@ import React, { useEffect, useRef, useState } from "react";
 import calculateTimeDifference from "../utils/calculateTimeDifference";
 import {
   useAmintApprove,
+  useBorrowingContractGetApy,
   useBorrowingContractGetUsdValue,
   useCdsWithdraw,
   useCdsWithdrawEvent,
 } from "@/abiAndHooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAccount, useWaitForTransaction } from "wagmi";
+import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
 import { parseEther } from "viem";
 import { formatDateFromUnixTimestamp } from "../utils/calculateNext30Days";
+import ConfirmNoticeCds from "./ConfirmNoticeCds";
 
 const events = {
   withdrewAmint: "0",
@@ -88,11 +90,17 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [amountView, setAmountView] = React.useState(false);
   const [depositData, setDepositData] = useState(depositDetails);
+  const [openConfirmNotice, setOpenConfirmNotice] = useState(false);
+  const toastId = useRef<string | number>("");
   const { address } = useAccount();
+  const chainId = useChainId();
   const eventsValue = useRef(events);
   const queryClient = useQueryClient();
   const { data: ethPrice } = useBorrowingContractGetUsdValue({
     staleTime: 10 * 1000,
+  });
+  const { data: currentApy } = useBorrowingContractGetApy({
+    enabled: !!address,
   });
   const { write: cdsWithdraw, data: cdsWithdrawData } = useCdsWithdraw({
     onError(error) {
@@ -114,21 +122,28 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
     },
     onSuccess(data) {
       console.log(data?.hash);
-      toast.custom((t) => (
-        <div>
-          <CustomToast
-            props={{
-              t,
-              toastMainColor: "#268730",
-              headline: "Transaction Submitted",
-              transactionHash: data?.hash,
-              linkLabel: "View Transaction",
-              toastClosebuttonHoverColor: "#90e398",
-              toastClosebuttonColor: "#57C262",
-            }}
-          />
-        </div>
-      ));
+      setSheetOpen(false);
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                props={{
+                  t,
+                  toastMainColor: "#268730",
+                  headline: "Transaction Submitted",
+                  transactionHash: data?.hash,
+                  linkLabel: "View Transaction",
+                  toastClosebuttonHoverColor: "#90e398",
+                  toastClosebuttonColor: "#57C262",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 600 * 1000 }
+      );
     },
   });
   const unwatch = useCdsWithdrawEvent({
@@ -160,32 +175,38 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
     },
     onSettled() {
       queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
+      queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
     },
   });
   useWaitForTransaction({
     hash: cdsWithdrawData?.hash,
     onSuccess() {
-      toast.custom((t) => (
-        <div>
-          <CustomToast
-            props={{
-              t,
-              toastMainColor: "#268730",
-              headline: "Transaction Completed",
-              transactionHash: cdsWithdrawData?.hash,
-              linkLabel: "View Transaction",
-              toastClosebuttonHoverColor: "#90e398",
-              toastClosebuttonColor: "#57C262",
-            }}
-          />
-        </div>
-      ));
+      toast.custom(
+        (t) => (
+          <div>
+            <CustomToast
+              props={{
+                t:toastId.current,
+                toastMainColor: "#268730",
+                headline:
+                  "Transaction Completed.Withdrawal Completed Successfully",
+                transactionHash: cdsWithdrawData?.hash,
+                linkLabel: "View Transaction",
+                toastClosebuttonHoverColor: "#90e398",
+                toastClosebuttonColor: "#57C262",
+              }}
+            />
+          </div>
+        ),
+        { id: toastId.current, duration: 10 * 1000 }
+      );
     },
   });
   async function withdrawCDSFromBackend(address: `0x${string}` | undefined) {
     let bodyValue = JSON.stringify({
       address: address,
       index: details.index,
+      chainId: chainId,
       withdrawTime: `${Date.now()}`,
       withdrawAmount: eventsValue.current.withdrewAmint,
       withdrawEthAmount: eventsValue.current.withdrawETH,
@@ -234,6 +255,9 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       updatedData[7].value = "-";
       setDepositData(updatedData);
     }
+  }
+  function handleWithdrawal() {
+    cdsWithdraw?.({ args: [BigInt(details.index)] });
   }
 
   useEffect(() => {
@@ -312,14 +336,23 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
             </div>
           </div>
           <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
-          <Button
-            variant={"primary"}
-            className="text-white"
-            onClick={() => cdsWithdraw?.({ args: [BigInt(details.index)] })}
-            disabled={details.status === "WITHDREW" ? true : false}
-          >
-            Withdraw
-          </Button>
+          {openConfirmNotice ? (
+            <>
+              <ConfirmNoticeCds
+                handleWithdrawal={handleWithdrawal}
+                // amintToMint={BigInt(details.normalizedAmount)}
+              />
+            </>
+          ) : (
+            <Button
+              variant={"primary"}
+              className="text-white"
+              onClick={() => setOpenConfirmNotice(true)}
+              disabled={details.status === "WITHDREW" ? true : false}
+            >
+              Withdraw
+            </Button>
+          )}
         </div>
       </SheetContent>
     </Sheet>

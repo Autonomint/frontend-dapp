@@ -41,25 +41,21 @@ interface DepositDetail {
 }
 const dasboardStatsItem = [
   {
-    id: 1,
-    heading: "Total amount of AMINT Deposited",
+    heading: "Total AMINT Deposited",
     value: "1324.32",
     showSubHeading: false,
   },
   {
-    id: 2,
     heading: "Total Number of Deposits",
     value: "-",
     showSubHeading: false,
   },
   {
-    id: 3,
     heading: "Total accumulated Fees",
     value: "-",
     showSubHeading: false,
   },
   {
-    id: 4,
     heading: "Total Fees withdrawn",
     value: "5.34",
     showSubHeading: false,
@@ -108,16 +104,38 @@ const page = () => {
 
     if (dCDSdepositorData) {
       const updatedStats = [...dashboardStats];
-      updatedStats[0].value = dCDSdepositorData.totalDepositedAmint;
-      updatedStats[1].value = dCDSdepositorData.totalIndex;
-      updatedStats[2].value = dCDSdepositorData.totalFees
-        ? displayNumberWithPrecision(formatEther(dCDSdepositorData.totalFees))
-        : "0";
-      updatedStats[3].value = dCDSdepositorData.totalFeesWithdrawn
-        ? displayNumberWithPrecision(
-            formatEther(dCDSdepositorData.totalFeesWithdrawn)
-          )
-        : "0";
+      updatedStats[0].value =
+        chainId === 80001
+          ? dCDSdepositorData.totalDepositedAmintInPolygon
+            ? dCDSdepositorData.totalDepositedAmintInPolygon
+            : "0"
+          : dCDSdepositorData.totalDepositedAmintInEthereum
+          ? dCDSdepositorData.totalDepositedAmintInEthereum
+          : "0";
+      updatedStats[1].value =
+        chainId === 80001
+          ? dCDSdepositorData.totalIndexInPolygon
+            ? dCDSdepositorData.totalIndexInPolygon
+            : "0"
+          : dCDSdepositorData.totalIndexInEthereum
+          ? dCDSdepositorData.totalIndexInEthereum
+          : "0";
+      updatedStats[2].value =
+        chainId === 80001
+          ? dCDSdepositorData.totalFeesInPolygon
+            ? dCDSdepositorData.totalFeesInPolygon
+            : "0"
+          : dCDSdepositorData.totalFeesInEthereum
+          ? dCDSdepositorData.totalFeesInEthereum
+          : "0";
+      updatedStats[3].value =
+        chainId === 80001
+          ? dCDSdepositorData.totalFeesWithdrawnInPolygon
+            ? dCDSdepositorData.totalFeesWithdrawnInPolygon
+            : "0"
+          : dCDSdepositorData.totalFeesWithdrawnInEthereum
+          ? dCDSdepositorData.totalFeesWithdrawnInEthereum
+          : "0";
       setDashboardStats(updatedStats);
     } else {
       const updatedStats = [...dashboardStats];
@@ -156,7 +174,7 @@ const page = () => {
             {dashboardStats.map((item, index) => (
               <div className="flex border border-lineGrey min-w-[150px] w-full">
                 <DashboardStatsItem
-                  key={item.id}
+                  key={item.heading + index}
                   props={{
                     heading: item.heading,
                     value: item.value,
@@ -179,9 +197,11 @@ const page = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {deposits?.map((details: DepositDetail) => (
-                <AmintDepositRow key={details.index} details={details} />
-              ))}
+              {!depositsError
+                ? deposits?.map((details: DepositDetail) => (
+                    <AmintDepositRow key={details.index} details={details} />
+                  ))
+                : null}
             </TableBody>
           </Table>
         </div>

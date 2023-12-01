@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import addIcon from "@/app/assets/add_circle.svg";
 import Note from "@/components/CustomUI/Note";
 import {
@@ -70,7 +70,7 @@ const NewDeposit = () => {
   const [open, setOpen] = useState(false);
   const { address } = useAccount();
   const chainId = useChainId();
-  const [toastid, setToastId] = useState<number | string>("");
+  const toastId = useRef<number | string>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -157,7 +157,7 @@ const NewDeposit = () => {
       console.log(data);
       toast.custom(
         (t) => {
-          setToastId(t);
+          toastId.current = t;
           return (
             <div>
               <CustomToast
@@ -187,7 +187,7 @@ const NewDeposit = () => {
           <div>
             <CustomToast
               props={{
-                t:toastid,
+                t: toastId.current,
                 toastMainColor: "#268730",
                 headline: "Transaction Completed",
                 transactionHash: CdsDepositData?.hash,
@@ -198,9 +198,8 @@ const NewDeposit = () => {
             />
           </div>
         ),
-        { id: toastid, duration: 1000 }
+        { id: toastId.current, duration: 10000 }
       );
-      setToastId("");
       setOpen(false);
     },
   });

@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 type withdrawData = {
   address: `0x${string}` | undefined;
   index: number;
+  chainId:number;
   borrowDebt: string;
   withdrawTime: string;
   withdrawAmount: string;
@@ -36,6 +37,7 @@ export const useWithdrawFromBackend = () => {
   return useMutation<withdrawData, Error, withdrawData>(withdrawFromBackend, {
     onSuccess(data, variables, context) {
       queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
+      queryClient.invalidateQueries({ queryKey: ["deposits"] });
     },
     onError(error, variables, context) {
       console.log(error);

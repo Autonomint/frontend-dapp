@@ -10,11 +10,14 @@ import {ABOND_SEPOLIA,
   BORROWING_SEPOLIA,
   CDS_MATIC,
   CDS_SEPOLIA,
+  TREASURY_MATIC,
+  TREASURY_SEPOLIA,
 } from "./constants/Addresses";
 import * as chains from "wagmi/chains";
 import { AmintABI } from "./constants/AmintAbi";
 import { AbondABI } from "./constants/ABondAbi";
 import { CDSABI } from "./constants/CDSAbi";
+import { TreasuryAbi } from "./constants/TreasuryAbi";
 
 export default defineConfig({
   out: "abiAndHooks.ts",
@@ -29,6 +32,14 @@ export default defineConfig({
       address: {
         [chains.polygonMumbai.id]: BORROWING_MATIC,
         [chains.sepolia.id]: BORROWING_SEPOLIA,
+      },
+    },
+    {
+      name: "Treasury",
+      abi: TreasuryAbi,
+      address: {
+        [chains.polygonMumbai.id]: TREASURY_MATIC,
+        [chains.sepolia.id]: TREASURY_SEPOLIA,
       },
     },
     {

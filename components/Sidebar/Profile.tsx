@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import truncateWeb3WalletAddress from "@/app/utils/truncateWeb3Address";
 import { useAccount, useDisconnect, useEnsName } from "wagmi";
+import NetworkSwitch from "../ConnectWallet/NetworkSwitch";
 
 interface Props {
   props: {
@@ -19,6 +20,9 @@ const Profile = ({ props: { image, buttonText } }: Props) => {
     <>
       {isConnected && (
         <div className="flex flex-col items-center gap-5">
+          <div className="relative justify-center flex items-center">
+            <NetworkSwitch />
+          </div>
           <div className="min-[1440px]:w-[5rem] min-[1440px]:h-[5rem] w-[3.5rem] h-[3.5rem]">
             <Image
               src={image}

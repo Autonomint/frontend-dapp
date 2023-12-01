@@ -8,8 +8,10 @@ import HeaderItems from "../Header/HeaderItems";
 import {
   useBorrowingContractGetApy,
   useBorrowingContractGetLtv,
+  useBorrowingContractGetUsdValue,
   useBorrowingContractTotalAmintSupply,
   useCdsTotalCdsDepositedAmount,
+  useTreasuryTotalVolumeOfBorrowersAmountinWei,
 } from "@/abiAndHooks";
 import { formatEther } from "viem";
 import displayNumberWithPrecision from "@/app/utils/precision";
@@ -40,7 +42,7 @@ const headerItems = [
 const headerItems2nd = [
   {
     headline: "Total Value Locked",
-    value: "$2.23M",
+    value: "-",
   },
   {
     headline: "dCDS Pooled Amount",
@@ -67,6 +69,13 @@ const NavBar = () => {
   const { data: totalCdsAmount } = useCdsTotalCdsDepositedAmount({
     enabled: !!address,
   });
+  const { data: totalValueLocked } =
+    useTreasuryTotalVolumeOfBorrowersAmountinWei({
+      enabled: !!address,
+    });
+  const { data: ethPrice } = useBorrowingContractGetUsdValue({
+    enabled: !!address,
+  });
   const [updatedHeaderItems, setUpdatedHeaderItems] = useState(headerItems);
   const [updatedHeaderItems2nd, setUpdatedHeaderItems2nd] =
     useState(headerItems2nd);
@@ -79,9 +88,12 @@ const NavBar = () => {
       updatedData[3].value = `${currentApy}%`;
       setUpdatedHeaderItems(updatedData);
     }
-    if (ltv && totalCdsAmount) {
+    if (ltv && totalCdsAmount && ethPrice && totalValueLocked) {
       const updatedData2nd = [...updatedHeaderItems2nd];
-      updatedData2nd[1].value = `${displayNumberWithPrecision(
+      updatedData2nd[0].value = `$${displayNumberWithPrecision(
+        formatEther((totalValueLocked * ethPrice) / BigInt(100))
+      )}`;
+      updatedData2nd[1].value = `$${displayNumberWithPrecision(
         formatEther(totalCdsAmount)
       )}`;
       updatedData2nd[2].value = `${100 - ltv}%`;
@@ -90,7 +102,7 @@ const NavBar = () => {
   };
   useEffect(() => {
     handleNavItems();
-  }, [currentApy, ltv, totalAmintSupply]);
+  }, [currentApy, ltv, totalAmintSupply, totalValueLocked, ethPrice]);
 
   return (
     <div className="bg-bgGrey flex flex-col min-[1440px]:pb-6">
