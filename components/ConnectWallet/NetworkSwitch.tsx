@@ -23,7 +23,7 @@ const NetworkSwitch: React.FC<NetworkSwitchProps> = () => {
           )}
         </div>
       )}
-      {chain?.unsupported ?null :<p>Unsupported Network</p>}
+      {chain?.unsupported ? null : <p>Unsupported Network</p>}
 
       {/* {chains.map((x) => (
         <button

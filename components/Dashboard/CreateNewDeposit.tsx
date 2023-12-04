@@ -132,6 +132,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       index: totalIndex + 1,
       chainId: chainId,
       downsideProtectionPercentage: 100 - (ltv ? ltv : 0),
+      aprAtDeposit:5,
       depositedAmount: `${form.watch("collateralAmount")}`,
       depositedTime: `${Date.now()}`,
       ethPrice: Number(ethPrice ? ethPrice : 0) / 100,

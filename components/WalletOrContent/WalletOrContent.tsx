@@ -99,16 +99,20 @@ const WalletOrContent = () => {
       const ethPriceNow = ethPrice ? ethPrice : 0n;
       updatedStats[0].value =
         chainId === 80001
-          ? `$${
-              (depositorData.totalDepositedAmountInPolygon *
-                Number(ethPriceNow)) /
-              100
-            }`
-          : `$${
-              (depositorData.totalDepositedAmountInEthereum *
-                Number(ethPriceNow)) /
-              100
-            }`;
+          ? `$${parseFloat(
+              (
+                (depositorData.totalDepositedAmountInPolygon *
+                  Number(ethPriceNow)) /
+                100
+              ).toString()
+            ).toFixed(2)}`
+          : `$${parseFloat(
+              (
+                (depositorData.totalDepositedAmountInEthereum *
+                  Number(ethPriceNow)) /
+                100
+              ).toString()
+            ).toFixed(2)}`;
       updatedStats[1].value =
         chainId === 80001
           ? depositorData.totalAmintInPolygon

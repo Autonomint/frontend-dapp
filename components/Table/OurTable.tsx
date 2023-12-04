@@ -21,6 +21,7 @@ interface TableData {
   normalizedAmount: string;
   strikePrice: number;
   downsideProtectionPercentage: number;
+  aprAtDeposit:number;
   withdrawTime1: string;
   withdrawTime2: string;
   withdrawAmount1: string;

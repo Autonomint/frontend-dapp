@@ -19,7 +19,7 @@ const ConfirmNoticeCds = ({
         </p>
         <Switch onCheckedChange={() => setSwitchOn(!switchOn)} />
       </div>
-      <Divider className="my-[10px]" />
+      <Divider className="my-[5px]" />
       <div className="flex flex-col min-[1440px]:gap-5 gap-[10px]">
         <div className="flex flex-col gap-[15px] ">
           <p className="min-[1440px]:text-base text-sm text-textSecondary">

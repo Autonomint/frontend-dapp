@@ -54,6 +54,7 @@ interface TableData {
   noOfAmintMinted: string;
   strikePrice: number;
   downsideProtectionPercentage: number;
+  aprAtDeposit: number;
   withdrawTime1: string;
   withdrawTime2: string;
   withdrawAmount1: string;
@@ -90,7 +91,7 @@ const TableRows = ({
       value: "-",
     },
     {
-      headline: "APY at Deposit",
+      headline: "APR at Deposit",
       value: "5%",
     },
     {
@@ -343,6 +344,7 @@ const TableRows = ({
   const unwatch = useBorrowingContractWithdrawEvent({
     listener(log) {
       console.log(log);
+      console.log("inside event listner index",details.index);
       if (!!log) {
         eventsValue.current =
           log[0].args.borrowDebt &&
@@ -414,9 +416,12 @@ const TableRows = ({
       updatedData[3].value = displayNumberWithPrecision(
         formatEther(totalAmintAmount)
       );
-      // updatedData[4].value = details.depositedAmount;
+      updatedData[4].value = `${details.aprAtDeposit}%`;
       updatedData[5].value = `${details.downsideProtectionPercentage}%`;
-      // updatedData[6].value = details.depositedAmount;
+      updatedData[6].value =
+        details.status === "WITHDREW2" || details.status === "LIQUIDATED"
+          ? "Yes"
+          : "No";
       // updatedData[7].value = details.depositedAmount;
       updatedData[8].value = details.noOfAbondMinted
         ? details.noOfAbondMinted

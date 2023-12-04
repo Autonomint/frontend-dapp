@@ -109,6 +109,7 @@ const NewDeposit = () => {
     },
     onSettled() {
       queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
+      queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
       reset?.();
       amintReset?.();
       form.reset();
@@ -122,7 +123,7 @@ const NewDeposit = () => {
       depositedAmint: `${amintAmnt}`,
       depositedTime: `${Date.now()}`,
       ethPriceAtDeposit: Number(ethPrice ? ethPrice : 0) / 100,
-      apr: 4,
+      aprAtDeposit: 5,
       lockingPeriod: Number(lockIn),
       optedForLiquidation: liquidationGains,
       liquidationAmount: `${(amintAmnt * 80) / 100}`,
@@ -151,7 +152,20 @@ const NewDeposit = () => {
     reset,
   } = useCdsDeposit({
     onError(error) {
-      console.log(error);
+      toast.custom((t) => (
+        <div>
+          <CustomToast
+            key={2}
+            props={{
+              t,
+              toastMainColor: "#B43939",
+              headline: `Uhh Ohh! ${error.cause}`,
+              toastClosebuttonHoverColor: "#e66d6d",
+              toastClosebuttonColor: "#C25757",
+            }}
+          />
+        </div>
+      ));
     },
     onSuccess: (data) => {
       console.log(data);
@@ -173,8 +187,7 @@ const NewDeposit = () => {
               />
             </div>
           );
-        },
-        { duration: 3600 * 1000 }
+        }
       );
     },
   });
@@ -198,9 +211,8 @@ const NewDeposit = () => {
             />
           </div>
         ),
-        { id: toastId.current, duration: 10000 }
+        { id: toastId.current, duration: 3000 }
       );
-      setOpen(false);
     },
   });
 
@@ -211,15 +223,70 @@ const NewDeposit = () => {
     reset: amintReset,
   } = useAmintApprove({
     onError(error) {
-      console.log(error);
+      toast.custom((t) => (
+        <div>
+          <CustomToast
+            key={2}
+            props={{
+              t,
+              toastMainColor: "#B43939",
+              headline: `Uhh Ohh! ${error.cause}`,
+              toastClosebuttonHoverColor: "#e66d6d",
+              toastClosebuttonColor: "#C25757",
+            }}
+          />
+        </div>
+      ));
+      setOpen(false);
     },
     onSuccess: (data) => {
-      console.log(data);
+      toast.custom(
+        (t) => {
+          return (
+            <div>
+              <CustomToast
+                props={{
+                  t,
+                  toastMainColor: "#268730",
+                  headline: "Transaction Submitted",
+                  transactionHash: data?.hash,
+                  linkLabel: "View Transaction",
+                  toastClosebuttonHoverColor: "#90e398",
+                  toastClosebuttonColor: "#57C262",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 3 * 1000 }
+      );
+      setOpen(false);
     },
   });
   const { data: amintTransactionAllowed } = useWaitForTransaction({
     hash: amintApproveData?.hash,
     onSuccess() {
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                props={{
+                  t,
+                  toastMainColor: "#268730",
+                  headline: "Amint Approved Transaction Completed",
+                  transactionHash: amintApproveData?.hash,
+                  linkLabel: "View Transaction",
+                  toastClosebuttonHoverColor: "#90e398",
+                  toastClosebuttonColor: "#57C262",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 3000 }
+      );
       write?.({
         args: [
           BigInt(parseEther(amintAmnt.toString())),
