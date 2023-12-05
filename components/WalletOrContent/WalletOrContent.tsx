@@ -115,12 +115,12 @@ const WalletOrContent = () => {
             ).toFixed(2)}`;
       updatedStats[1].value =
         chainId === 80001
-          ? depositorData.totalAmintInPolygon
-          : depositorData.totalAmintInEthereum;
+          ? parseFloat(depositorData.totalAmintInPolygon).toFixed(2)
+          : parseFloat(depositorData.totalAmintInEthereum).toFixed(2);
       updatedStats[2].value =
         chainId === 80001
-          ? depositorData.totalAbondInPolygon
-          : depositorData.totalAbondInEthereum;
+          ? parseFloat(depositorData.totalAbondInPolygon).toPrecision(2)
+          : parseFloat(depositorData.totalAbondInEthereum).toFixed(2);
       updatedStats[0].subheadingHighlight =
         chainId === 80001
           ? depositorData.totalIndexInPolygon

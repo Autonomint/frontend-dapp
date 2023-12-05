@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 type withdrawData = {
   address: `0x${string}` | undefined;
   index: number;
-  chainId:number;
+  chainId: number;
   borrowDebt: string;
   withdrawTime: string;
   withdrawAmount: string;
@@ -31,7 +31,7 @@ async function withdrawFromBackend(data: withdrawData) {
 
   return result;
 }
-export const useWithdrawFromBackend = () => {
+export const useWithdrawFromBackend = (callback?: Function) => {
   const queryClient = useQueryClient();
 
   return useMutation<withdrawData, Error, withdrawData>(withdrawFromBackend, {
@@ -41,6 +41,9 @@ export const useWithdrawFromBackend = () => {
     },
     onError(error, variables, context) {
       console.log(error);
+    },
+    onSettled(data) {
+      callback?.();
     },
   });
 };

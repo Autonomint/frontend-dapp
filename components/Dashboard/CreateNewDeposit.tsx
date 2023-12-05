@@ -93,6 +93,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     onSettled() {
       queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
       queryClient.invalidateQueries({ queryKey: ["deposits"] });
+      handleRefetch();
+      form.reset();
     },
   });
   const unwatch = useBorrowingContractDepositEvent({
@@ -104,7 +106,6 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
           : "";
 
         mutate(address);
-        handleRefetch();
       }
       if (log[0].args) {
         unwatch?.();

@@ -323,7 +323,7 @@ const TableRows = ({
     mutate: backendWithdraw,
     reset: backendWithdrawReset,
     isSuccess: backendWithdrawSuccess,
-  } = useWithdrawFromBackend();
+  } = useWithdrawFromBackend(handleRefetch);
   // const { mutate: backendWithdraw,reset:backendWithdrawReset,isSuccess:backendWithdrawSuccess } = useMutation({
   //   mutationFn: withdrawFromBackend,
   //   onError(error, variables, context) {
@@ -444,9 +444,11 @@ const TableRows = ({
 
   useEffect(() => {
     handleDepositData();
-    // if(backendWithdrawSuccess){
-    //   backendWithdrawReset?.();
-    // }
+    setWithdrawalTime(details.status);
+    if(backendWithdrawSuccess){
+      handleRefetch()
+      backendWithdrawReset?.();
+    }
   }, [details]);
   return (
     <Sheet

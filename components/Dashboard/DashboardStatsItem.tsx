@@ -35,8 +35,7 @@ const DashboardStatsItem = ({
     token: tokenAddress
       ? tokenAddress[chainId as keyof typeof tokenAddress]
       : undefined,
-    enabled: !!address,
-    staleTime: 2_000,
+    watch: true,
   });
   // function getDepositorData(address: `0x${string}` | undefined) {
   //   return fetch(`http://43.204.73.16:3000/borrows/${address}`).then(
