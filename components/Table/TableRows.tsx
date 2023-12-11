@@ -295,8 +295,11 @@ const TableRows = ({
             />
           </div>
         ),
-        { duration: 5000, id: toastId.current }
+        { id: toastId.current }
       );
+      setTimeout(() => {
+        toast.dismiss(toastId.current);
+      },5000);
     },
   });
   const {
@@ -487,6 +490,12 @@ const TableRows = ({
       backendWithdrawReset?.();
     }
   }, [details]);
+useEffect(() => {
+  return () => {
+    unwatch?.();
+    backendWithdrawReset?.();
+  }
+},[chainId])
   return (
     <Sheet
       open={sheetOpen}
