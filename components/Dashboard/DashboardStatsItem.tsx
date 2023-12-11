@@ -38,7 +38,7 @@ const DashboardStatsItem = ({
     watch: true,
   });
   // function getDepositorData(address: `0x${string}` | undefined) {
-  //   return fetch(`http://43.204.73.16:3000/borrows/${address}`).then(
+  //   return fetch(`${BACKEND_API_URL}/borrows/${address}`).then(
   //     (response) => response.json()
   //   );
   // }

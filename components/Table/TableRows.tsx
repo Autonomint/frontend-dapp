@@ -140,13 +140,13 @@ const TableRows = ({
             props={{
               t,
               toastMainColor: "#B43939",
-              headline: `Uhh Ohh! ${error.cause}`,
+              headline: `Uhh Ohh! ${error.name}`,
               toastClosebuttonHoverColor: "#e66d6d",
               toastClosebuttonColor: "#C25757",
             }}
           />
         </div>
-      ));
+      ),{duration:5000});
     },
     onSuccess(data, variables, context) {
       toast.custom(
@@ -166,7 +166,7 @@ const TableRows = ({
             />
           );
         },
-        { duration: 600 * 1000 }
+        { duration: Infinity }
       );
     },
     onSettled() {
@@ -196,7 +196,7 @@ const TableRows = ({
             }}
           />
         ),
-        { duration: 20 * 1000, id: toastId.current }
+        { duration: Infinity, id: toastId.current }
       );
       amintApprove?.({
         args: [
@@ -252,7 +252,7 @@ const TableRows = ({
             </div>
           );
         },
-        { duration: 600 * 1000 }
+        { duration: Infinity }
       );
     },
     onError(error, variables, context) {
@@ -262,13 +262,13 @@ const TableRows = ({
             props={{
               t,
               toastMainColor: "#B43939",
-              headline: `Uhh Ohh! ${error.cause}`,
+              headline: `Uhh Ohh! ${error.name}`,
               toastClosebuttonHoverColor: "#e66d6d",
               toastClosebuttonColor: "#C25757",
             }}
           />
         </div>
-      ));
+      ),{duration:5000});
     },
   });
   const {
@@ -293,8 +293,11 @@ const TableRows = ({
             }}
           />
         ),
-        { duration: 20 * 1000, id: toastId.current }
+        { id: toastId.current }
       );
+      setTimeout(() => {
+        toast.dismiss(toastId.current);
+      }, 5000);
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
@@ -307,13 +310,13 @@ const TableRows = ({
             props={{
               t,
               toastMainColor: "#B43939",
-              headline: `Uhh Ohh! ${error.cause}`,
+              headline: `Uhh Ohh! ${error.name}`,
               toastClosebuttonHoverColor: "#e66d6d",
               toastClosebuttonColor: "#C25757",
             }}
           />
         </div>
-      ));
+      ),{duration:5000});
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
@@ -393,7 +396,7 @@ const TableRows = ({
             }}
           />
         </div>
-      ));
+      ),{duration:5000});
       setOpenConfirmNotice(false);
       // setWithdrawalTime("liquidated");
       setSheetOpen(false);

@@ -27,6 +27,7 @@ import CustomToast from "@/components/CustomUI/CustomToast";
 import { parseEther } from "viem";
 import { formatDateFromUnixTimestamp } from "../utils/calculateNext30Days";
 import ConfirmNoticeCds from "./ConfirmNoticeCds";
+import { BACKEND_API_URL } from "@/constants/BackendUrl";
 
 const events = {
   withdrewAmint: "0",
@@ -90,6 +91,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [amountView, setAmountView] = React.useState(false);
   const [depositData, setDepositData] = useState(depositDetails);
+  const [status, setStatus] = useState(details.status);
   const [openConfirmNotice, setOpenConfirmNotice] = useState(false);
   const toastId = useRef<string | number>("");
   const { address } = useAccount();
@@ -105,20 +107,23 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
   const { write: cdsWithdraw, data: cdsWithdrawData } = useCdsWithdraw({
     onError(error) {
       console.log(error);
-      toast.custom((t) => (
-        <div>
-          <CustomToast
-            key={2}
-            props={{
-              t,
-              toastMainColor: "#B43939",
-              headline: `Uhh Ohh! ${error.cause}`,
-              toastClosebuttonHoverColor: "#e66d6d",
-              toastClosebuttonColor: "#C25757",
-            }}
-          />
-        </div>
-      ));
+      toast.custom(
+        (t) => (
+          <div>
+            <CustomToast
+              key={2}
+              props={{
+                t,
+                toastMainColor: "#B43939",
+                headline: `Uhh Ohh! ${error.name}`,
+                toastClosebuttonHoverColor: "#e66d6d",
+                toastClosebuttonColor: "#C25757",
+              }}
+            />
+          </div>
+        ),
+        { duration: 5000 }
+      );
     },
     onSuccess(data) {
       console.log(data?.hash);
@@ -142,7 +147,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
             </div>
           );
         },
-        { duration: 600 * 1000 }
+        { duration: Infinity }
       );
     },
   });
@@ -198,8 +203,11 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
             />
           </div>
         ),
-        { id: toastId.current, duration: 10 * 1000 }
+        { id: toastId.current }
       );
+      setTimeout(() => {
+        toast.dismiss(toastId.current);
+      }, 5000);
     },
   });
   async function withdrawCDSFromBackend(address: `0x${string}` | undefined) {
@@ -215,7 +223,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       feesWithdrawn: parseEther("2").toString(),
     });
     console.log(bodyValue);
-    const response = await fetch("http://43.204.73.16:3000/cds/withdraw", {
+    const response = await fetch(`${BACKEND_API_URL}/cds/withdraw`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
@@ -262,14 +270,19 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
 
   useEffect(() => {
     handleDepositData();
+    setStatus(details.status);
   }, [details]);
 
   return (
-    <Sheet key={details.id} open={sheetOpen} onOpenChange={() => {
-      setSheetOpen(!sheetOpen);
-      setOpenConfirmNotice(false);
-      setAmountView(false);
-    }}>
+    <Sheet
+      key={details.id}
+      open={sheetOpen}
+      onOpenChange={() => {
+        setSheetOpen(!sheetOpen);
+        setOpenConfirmNotice(false);
+        setAmountView(false);
+      }}
+    >
       <TableRow
         key={details.id}
         className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF]"
@@ -352,7 +365,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
               variant={"primary"}
               className="text-white"
               onClick={() => setOpenConfirmNotice(true)}
-              disabled={details.status === "WITHDREW" ? true : false}
+              disabled={status === "WITHDREW" ? true : false}
             >
               Withdraw
             </Button>

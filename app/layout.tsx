@@ -45,10 +45,12 @@ export default function RootLayout({
         </main>
         {/* </div> */}
         <Toaster
-          duration={3600*1000}
+          expand
+          visibleToasts={9}
+          duration={Infinity}
           closeButton={true}
           position="top-center"
-          toastOptions={{ style: { zIndex: 999 } }}
+          toastOptions={{ style: { zIndex: 999,left:"-30%" } }}
         />
       </body>
     </html>

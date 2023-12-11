@@ -49,6 +49,7 @@ import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
 import { parseEther } from "viem";
+import { BACKEND_API_URL } from "@/constants/BackendUrl";
 
 const formSchema = z.object({
   AmintDepositAmount: z
@@ -98,9 +99,9 @@ const NewDeposit = () => {
     staleTime: 10 * 1000,
   });
   function getCDSTotalIndex(address: `0x${string}` | undefined) {
-    return fetch(
-      `http://43.204.73.16:3000/cds/index/${chainId}/${address}`
-    ).then((response) => response.json());
+    return fetch(`${BACKEND_API_URL}/cds/index/${chainId}/${address}`).then(
+      (response) => response.json()
+    );
   }
   const { mutate } = useMutation({
     mutationFn: storeToCDSBackend,
@@ -129,7 +130,7 @@ const NewDeposit = () => {
       liquidationAmount: `${(amintAmnt * 80) / 100}`,
     });
     console.log(bodyValue);
-    const response = await fetch("http://43.204.73.16:3000/cds/depositAmint", {
+    const response = await fetch(`${BACKEND_API_URL}/cds/depositAmint`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -152,26 +153,28 @@ const NewDeposit = () => {
     reset,
   } = useCdsDeposit({
     onError(error) {
-      toast.custom((t) => (
-        <div>
-          <CustomToast
-            key={2}
-            props={{
-              t,
-              toastMainColor: "#B43939",
-              headline: `Uhh Ohh! ${error.cause}`,
-              toastClosebuttonHoverColor: "#e66d6d",
-              toastClosebuttonColor: "#C25757",
-            }}
-          />
-        </div>
-      ));
+      toast.custom(
+        (t) => (
+          <div>
+            <CustomToast
+              key={2}
+              props={{
+                t,
+                toastMainColor: "#B43939",
+                headline: `Uhh Ohh! ${error.name}`,
+                toastClosebuttonHoverColor: "#e66d6d",
+                toastClosebuttonColor: "#C25757",
+              }}
+            />
+          </div>
+        ),
+        { duration: 5000 }
+      );
     },
     onSuccess: (data) => {
       console.log(data);
       toast.custom(
         (t) => {
-          toastId.current = t;
           return (
             <div>
               <CustomToast
@@ -187,14 +190,14 @@ const NewDeposit = () => {
               />
             </div>
           );
-        }
+        },
+        { duration: Infinity,id: toastId.current }
       );
     },
   });
   const { isLoading, isSuccess: cdsDepositSuccess } = useWaitForTransaction({
     hash: CdsDepositData?.hash,
     onSuccess() {
-      mutate(address);
       toast.custom(
         (t) => (
           <div>
@@ -211,8 +214,12 @@ const NewDeposit = () => {
             />
           </div>
         ),
-        { id: toastId.current, duration: 3000 }
+        { id: toastId.current }
       );
+      mutate(address);
+      setTimeout(() => {
+        toast.dismiss(toastId.current);
+      }, 5000);
     },
   });
 
@@ -223,25 +230,32 @@ const NewDeposit = () => {
     reset: amintReset,
   } = useAmintApprove({
     onError(error) {
-      toast.custom((t) => (
-        <div>
-          <CustomToast
-            key={2}
-            props={{
-              t,
-              toastMainColor: "#B43939",
-              headline: `Uhh Ohh! ${error.cause}`,
-              toastClosebuttonHoverColor: "#e66d6d",
-              toastClosebuttonColor: "#C25757",
-            }}
-          />
-        </div>
-      ));
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                key={2}
+                props={{
+                  t,
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! ${error.name}`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 5000 }
+      );
       setOpen(false);
     },
     onSuccess: (data) => {
       toast.custom(
         (t) => {
+          toastId.current = t;
           return (
             <div>
               <CustomToast
@@ -258,7 +272,7 @@ const NewDeposit = () => {
             </div>
           );
         },
-        { duration: 3 * 1000 }
+        { duration: Infinity }
       );
       setOpen(false);
     },
@@ -268,7 +282,6 @@ const NewDeposit = () => {
     onSuccess() {
       toast.custom(
         (t) => {
-          toastId.current = t;
           return (
             <div>
               <CustomToast
@@ -285,7 +298,7 @@ const NewDeposit = () => {
             </div>
           );
         },
-        { duration: 3000 }
+        { duration: Infinity, id: toastId.current }
       );
       write?.({
         args: [
@@ -372,6 +385,35 @@ const NewDeposit = () => {
                   </DialogTitle>
                 </DialogHeader>
                 <div className="flex flex-col pt-[30px] gap-[20px]">
+                  {/* <FormField
+                    control={form.control}
+                    name="selectedToken"
+                    render={({ field }) => (
+                      <FormItem>
+                        <Select
+                          onValueChange={field.onChange}
+                          // defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Choose a token to deposit" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>
+                                Select a token to deposit
+                              </SelectLabel>
+                              <SelectItem value="amint">AMINT</SelectItem>
+                              <SelectItem value="usdt">USDT</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  /> */}
                   <FormField
                     control={form.control}
                     name="AmintDepositAmount"
@@ -381,7 +423,7 @@ const NewDeposit = () => {
                           <Input
                             type="number"
                             step={1}
-                            placeholder="Enter Amint Amount to Deposit"
+                            placeholder="Enter Amount of Amint to Deposit"
                             {...field}
                             value={field.value ?? ""}
                           ></Input>

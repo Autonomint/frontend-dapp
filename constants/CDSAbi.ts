@@ -82,16 +82,6 @@ export const CDSABI = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "address", name: "_address", type: "address" },
-      { internalType: "uint256", name: "_amount", type: "uint256" },
-    ],
-    name: "approval",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "borrowing",
     outputs: [

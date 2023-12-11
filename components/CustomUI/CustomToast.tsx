@@ -36,8 +36,8 @@ const CustomToast = ({
         style={{ background: toastMainColor }}
         className={`flex gap-[10px] text-white items-center rounded`}
       >
-        <div className="flex flex-col px-[10px] py-4 gap-[10px] ">
-          <p className="whitespace-nowrap">{headline}</p>
+        <div className="flex flex-col px-[10px] py-4 gap-[10px] min-w-[480px] max-w-[700px]">
+          <p className="w-full">{headline}</p>
           {Boolean(transactionHash) && (
             <p className=" whitespace-nowrap flex gap-1 z-[999]">
               {`Tx Hash: ${truncateWeb3WalletAddress(transactionHash)}`}

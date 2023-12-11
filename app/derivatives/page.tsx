@@ -19,6 +19,7 @@ import AmintDepositRow from "./AmintDepositRow";
 import { useQuery } from "@tanstack/react-query";
 import displayNumberWithPrecision from "../utils/precision";
 import { formatEther } from "viem";
+import { BACKEND_API_URL } from "@/constants/BackendUrl";
 
 interface DepositDetail {
   id: string;
@@ -69,7 +70,7 @@ const page = () => {
   function getCDSDepositorData(
     address: `0x${string}` | undefined
   ): Promise<any> {
-    return fetch(`http://43.204.73.16:3000/cds/${address}`).then((response) =>
+    return fetch(`${BACKEND_API_URL}/cds/${address}`).then((response) =>
       response.json()
     );
   }
@@ -81,11 +82,11 @@ const page = () => {
   function getDeposits(
     address: `0x${string}` | undefined
   ): Promise<DepositDetail[]> {
-    return fetch(`http://43.204.73.16:3000/cds/${chainId}/${address}`).then(
+    return fetch(`${BACKEND_API_URL}/cds/${chainId}/${address}`).then(
       (response) => response.json()
     );
   }
-  const { data: deposits, error: depositsError } = useQuery({
+  const { data: deposits, error: depositsError } = useQuery<DepositDetail[]>({
     queryKey: ["dCDSdeposits"],
     queryFn: () => getDeposits(address ? address : undefined),
     enabled: !!address,

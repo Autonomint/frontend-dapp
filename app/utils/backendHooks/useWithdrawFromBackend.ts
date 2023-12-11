@@ -1,3 +1,4 @@
+import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type withdrawData = {
@@ -15,7 +16,7 @@ async function withdrawFromBackend(data: withdrawData) {
     ...data,
   });
   console.log(bodyValue);
-  const response = await fetch("http://43.204.73.16:3000/borrows/withdraw", {
+  const response = await fetch(`${BACKEND_API_URL}/borrows/withdraw`, {
     method: "PATCH",
     headers: {
       "content-type": "application/json",

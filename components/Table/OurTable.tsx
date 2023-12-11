@@ -51,7 +51,7 @@ const DepositAndWithDrawTable = ({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {tableData?.map((details, index) => (
+        {tableData && tableData?.map((details, index) => (
           <TableRows key={details.id} details={details} interest={3} handleRefetch={handleRefetch} />
         ))}
       </TableBody>

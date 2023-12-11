@@ -18,6 +18,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import displayNumberWithPrecision from "@/app/utils/precision";
 import { formatEther } from "viem";
+import { BACKEND_API_URL } from "@/constants/BackendUrl";
 
 const dasboardStatsItem = [
   {
@@ -56,7 +57,7 @@ const WalletOrContent = () => {
     staleTime: 10 * 1000,
   });
   function getDepositorData(address: `0x${string}` | undefined) {
-    return fetch(`http://43.204.73.16:3000/borrows/${address}`).then(
+    return fetch(`${BACKEND_API_URL}/borrows/${address}`).then(
       (response) => response.json()
     );
   }
@@ -66,7 +67,7 @@ const WalletOrContent = () => {
     enabled: !!address,
   });
   function getDeposits(address: `0x${string}` | undefined) {
-    return fetch(`http://43.204.73.16:3000/borrows/${chainId}/${address}`).then(
+    return fetch(`${BACKEND_API_URL}/borrows/${chainId}/${address}`).then(
       (response) => response.json()
     );
   }

@@ -49,6 +49,7 @@ import {
 } from "@/abiAndHooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import displayNumberWithPrecision from "@/app/utils/precision";
+import { BACKEND_API_URL } from "@/constants/BackendUrl";
 
 const formSchema = z.object({
   collateral: z.string(),
@@ -71,6 +72,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   const [open, setOpen] = useState(false);
   const { address } = useAccount();
   const chainId = useChainId();
+  // const timer = useRef<number>();
   const queryClient = useQueryClient();
   const normalizedAmount = useRef("");
   const toastId = useRef<string | number>("");
@@ -96,6 +98,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       handleRefetch();
       form.reset();
     },
+    retry: 4,
   });
   const unwatch = useBorrowingContractDepositEvent({
     listener(log) {
@@ -114,9 +117,9 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   });
 
   function getTotalIndex(address: `0x${string}` | undefined) {
-    return fetch(
-      `http://43.204.73.16:3000/borrows/index/${chainId}/${address}`
-    ).then((response) => response.json());
+    return fetch(`${BACKEND_API_URL}/borrows/index/${chainId}/${address}`).then(
+      (response) => response.json()
+    );
   }
   const { data: totalIndex } = useQuery({
     queryKey: ["totalIndex"],
@@ -133,7 +136,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       index: totalIndex + 1,
       chainId: chainId,
       downsideProtectionPercentage: 100 - (ltv ? ltv : 0),
-      aprAtDeposit:5,
+      aprAtDeposit: 5,
       depositedAmount: `${form.watch("collateralAmount")}`,
       depositedTime: `${Date.now()}`,
       ethPrice: Number(ethPrice ? ethPrice : 0) / 100,
@@ -142,16 +145,13 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       normalizedAmount: normalizedAmount.current,
     });
     console.log(bodyValue);
-    const response = await fetch(
-      "http://43.204.73.16:3000/borrows/borrowAmint",
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: bodyValue,
-      }
-    );
+    const response = await fetch(`${BACKEND_API_URL}/borrows/borrowAmint`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: bodyValue,
+    });
 
     const result = await response.json();
 
@@ -181,20 +181,23 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     onError(error) {
       setOpen(false);
       console.log(error);
-      toast.custom((t) => (
-        <div>
-          <CustomToast
-            key={2}
-            props={{
-              t,
-              toastMainColor: "#B43939",
-              headline: `Uhh Ohh! ${error.cause}`,
-              toastClosebuttonHoverColor: "#e66d6d",
-              toastClosebuttonColor: "#C25757",
-            }}
-          />
-        </div>
-      ));
+      toast.custom(
+        (t) => (
+          <div>
+            <CustomToast
+              key={2}
+              props={{
+                t,
+                toastMainColor: "#B43939",
+                headline: `Uhh Ohh! ${error.name}`,
+                toastClosebuttonHoverColor: "#e66d6d",
+                toastClosebuttonColor: "#C25757",
+              }}
+            />
+          </div>
+        ),
+        { duration: 5000 }
+      );
     },
     onSuccess(data) {
       setOpen(false);
@@ -218,7 +221,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
             </div>
           );
         },
-        { duration: 3600 * 1000 }
+        { duration: Infinity }
       );
     },
   });
@@ -240,8 +243,11 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
             }}
           />
         ),
-        { id: toastId.current, duration: 10 * 1000 }
+        { id: toastId.current }
       );
+      setTimeout(() => {
+        toast.dismiss(toastId.current);
+      }, 3000);
     },
   });
 
@@ -276,6 +282,9 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     if (transactionSuccess) {
       reset();
     }
+    // return () => {
+    //   window.clearTimeout(timer.current);
+    // };
   }, [transactionSuccess]);
 
   return (

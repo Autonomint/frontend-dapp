@@ -36,7 +36,7 @@ const NetworkSwitch: React.FC<NetworkSwitchProps> = () => {
         </button>
       ))} */}
 
-      <div>{error && error.message}</div>
+      <div>{error && error.name}</div>
     </>
   );
 };
