@@ -44,9 +44,9 @@ const CustomToast = ({
               <Link
                 href={
                   chainId === 80001
-                    ? `https:mumbai.polygonscan.com/tx/${transactionHash}`
+                    ? `https://mumbai.polygonscan.com/tx/${transactionHash}`
                     : chainId === 11155111
-                    ? `https:sepolia.etherscan.io/tx/${transactionHash}`
+                    ? `https://sepolia.etherscan.io/tx/${transactionHash}`
                     : "Network Not yet Supported please switch to mumbai or sepolia"
                 }
                 target="_blank"

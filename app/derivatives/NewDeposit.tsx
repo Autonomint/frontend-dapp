@@ -288,7 +288,7 @@ const NewDeposit = () => {
                 props={{
                   t,
                   toastMainColor: "#268730",
-                  headline: "Amint Approved Transaction Completed",
+                  headline: "Amint Approved,Plz Confirm Deposit Now",
                   transactionHash: amintApproveData?.hash,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
