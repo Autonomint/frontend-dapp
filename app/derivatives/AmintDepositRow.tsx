@@ -108,7 +108,9 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
     onError(error) {
       console.log(error);
       toast.custom(
-        (t) => (
+        (t) => {
+          toastId.current=t;
+          return (
           <div>
             <CustomToast
               key={2}
@@ -121,7 +123,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
               }}
             />
           </div>
-        ),
+        )},
         { duration: 5000 }
       );
     },

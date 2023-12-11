@@ -133,7 +133,9 @@ const TableRows = ({
   } = useBorrowingContractCalculateCumulativeRate({
     onError(error) {
       console.log(error);
-      toast.custom((t) => (
+      toast.custom((t) => {
+        toastId.current=t;
+        return (
         <div>
           <CustomToast
             key={2}
@@ -146,7 +148,7 @@ const TableRows = ({
             }}
           />
         </div>
-      ),{duration:5000});
+      )},{duration:5000});
     },
     onSuccess(data, variables, context) {
       toast.custom(
@@ -196,7 +198,7 @@ const TableRows = ({
             }}
           />
         ),
-        { duration: Infinity, id: toastId.current }
+        { id: toastId.current }
       );
       amintApprove?.({
         args: [
@@ -235,12 +237,11 @@ const TableRows = ({
     onSuccess(data, variables, context) {
       toast.custom(
         (t) => {
-          toastId.current = t;
           return (
             <div>
               <CustomToast
                 props={{
-                  t,
+                  t:toastId.current,
                   toastMainColor: "#268730",
                   headline: "Transaction Submitted",
                   transactionHash: data?.hash,
@@ -252,7 +253,7 @@ const TableRows = ({
             </div>
           );
         },
-        { duration: Infinity }
+        { id=toastId.current }
       );
     },
     onError(error, variables, context) {
@@ -260,7 +261,7 @@ const TableRows = ({
         <div>
           <CustomToast
             props={{
-              t,
+              t: toastId.current,
               toastMainColor: "#B43939",
               headline: `Uhh Ohh! ${error.name}`,
               toastClosebuttonHoverColor: "#e66d6d",
@@ -268,7 +269,7 @@ const TableRows = ({
             }}
           />
         </div>
-      ),{duration:5000});
+      ),{duration:5000,id:toastId.current});
     },
   });
   const {
@@ -308,7 +309,7 @@ const TableRows = ({
           <CustomToast
             key={2}
             props={{
-              t,
+              t:toastId.current,
               toastMainColor: "#B43939",
               headline: `Uhh Ohh! ${error.name}`,
               toastClosebuttonHoverColor: "#e66d6d",
@@ -316,7 +317,7 @@ const TableRows = ({
             }}
           />
         </div>
-      ),{duration:5000});
+      ),{duration:5000,id:toastId.current});
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
