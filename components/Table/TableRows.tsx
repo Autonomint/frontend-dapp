@@ -133,22 +133,26 @@ const TableRows = ({
   } = useBorrowingContractCalculateCumulativeRate({
     onError(error) {
       console.log(error);
-      toast.custom((t) => {
-        toastId.current=t;
-        return (
-        <div>
-          <CustomToast
-            key={2}
-            props={{
-              t,
-              toastMainColor: "#B43939",
-              headline: `Uhh Ohh! ${error.name}`,
-              toastClosebuttonHoverColor: "#e66d6d",
-              toastClosebuttonColor: "#C25757",
-            }}
-          />
-        </div>
-      )},{duration:5000});
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                key={2}
+                props={{
+                  t,
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! ${error.name}`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 5000 }
+      );
     },
     onSuccess(data, variables, context) {
       toast.custom(
@@ -241,7 +245,7 @@ const TableRows = ({
             <div>
               <CustomToast
                 props={{
-                  t:toastId.current,
+                  t: toastId.current,
                   toastMainColor: "#268730",
                   headline: "Transaction Submitted",
                   transactionHash: data?.hash,
@@ -253,23 +257,26 @@ const TableRows = ({
             </div>
           );
         },
-        { id=toastId.current }
+        { id: toastId.current }
       );
     },
     onError(error, variables, context) {
-      toast.custom((t) => (
-        <div>
-          <CustomToast
-            props={{
-              t: toastId.current,
-              toastMainColor: "#B43939",
-              headline: `Uhh Ohh! ${error.name}`,
-              toastClosebuttonHoverColor: "#e66d6d",
-              toastClosebuttonColor: "#C25757",
-            }}
-          />
-        </div>
-      ),{duration:5000,id:toastId.current});
+      toast.custom(
+        (t) => (
+          <div>
+            <CustomToast
+              props={{
+                t: toastId.current,
+                toastMainColor: "#B43939",
+                headline: `Uhh Ohh! ${error.name}`,
+                toastClosebuttonHoverColor: "#e66d6d",
+                toastClosebuttonColor: "#C25757",
+              }}
+            />
+          </div>
+        ),
+        { duration: 5000, id: toastId.current }
+      );
     },
   });
   const {
@@ -304,20 +311,23 @@ const TableRows = ({
       borrowReset?.();
     },
     onError(error) {
-      toast.custom((t) => (
-        <div>
-          <CustomToast
-            key={2}
-            props={{
-              t:toastId.current,
-              toastMainColor: "#B43939",
-              headline: `Uhh Ohh! ${error.name}`,
-              toastClosebuttonHoverColor: "#e66d6d",
-              toastClosebuttonColor: "#C25757",
-            }}
-          />
-        </div>
-      ),{duration:5000,id:toastId.current});
+      toast.custom(
+        (t) => (
+          <div>
+            <CustomToast
+              key={2}
+              props={{
+                t: toastId.current,
+                toastMainColor: "#B43939",
+                headline: `Uhh Ohh! ${error.name}`,
+                toastClosebuttonHoverColor: "#e66d6d",
+                toastClosebuttonColor: "#C25757",
+              }}
+            />
+          </div>
+        ),
+        { duration: 5000, id: toastId.current }
+      );
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
@@ -348,7 +358,7 @@ const TableRows = ({
   const unwatch = useBorrowingContractWithdrawEvent({
     listener(log) {
       console.log(log);
-      console.log("inside event listner index",details.index);
+      console.log("inside event listner index", details.index);
       if (!!log) {
         eventsValue.current =
           log[0].args.borrowDebt &&
@@ -384,20 +394,23 @@ const TableRows = ({
       calculateCumulativeRate?.();
       // setOpenConfirmNotice(false);
     } else if (withdrawalTime === "WITHDREW1") {
-      toast.custom((t) => (
-        <div>
-          <CustomToast
-            key={2}
-            props={{
-              t,
-              toastMainColor: "#B43939",
-              headline: `You have to wait for 30 days to withdraw after first withdrawal`,
-              toastClosebuttonHoverColor: "#e66d6d",
-              toastClosebuttonColor: "#C25757",
-            }}
-          />
-        </div>
-      ),{duration:5000});
+      toast.custom(
+        (t) => (
+          <div>
+            <CustomToast
+              key={2}
+              props={{
+                t,
+                toastMainColor: "#B43939",
+                headline: `You have to wait for 30 days to withdraw after first withdrawal`,
+                toastClosebuttonHoverColor: "#e66d6d",
+                toastClosebuttonColor: "#C25757",
+              }}
+            />
+          </div>
+        ),
+        { duration: 5000 }
+      );
       setOpenConfirmNotice(false);
       // setWithdrawalTime("liquidated");
       setSheetOpen(false);
@@ -449,8 +462,8 @@ const TableRows = ({
   useEffect(() => {
     handleDepositData();
     setWithdrawalTime(details.status);
-    if(backendWithdrawSuccess){
-      handleRefetch()
+    if (backendWithdrawSuccess) {
+      handleRefetch();
       backendWithdrawReset?.();
     }
   }, [details]);
