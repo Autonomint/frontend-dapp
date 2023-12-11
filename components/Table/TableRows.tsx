@@ -222,7 +222,27 @@ const TableRows = ({
   } = useAmintApprove();
   const { data: amintTransactionAllowed } = useWaitForTransaction({
     hash: amintApproveData?.hash,
-    onSuccess() {
+    onSuccess(data) {
+      toast.custom(
+        (t) => {
+          return (
+            <div>
+              <CustomToast
+                props={{
+                  t: toastId.current,
+                  toastMainColor: "#268730",
+                  headline: "Amint Approved,Confirm Final Withdrawal",
+                  transactionHash: amintApproveData?.hash,
+                  linkLabel: "View Transaction",
+                  toastClosebuttonHoverColor: "#90e398",
+                  toastClosebuttonColor: "#57C262",
+                }}
+              />
+            </div>
+          );
+        },
+        { id: toastId.current }
+      );
       borrowWithdraw?.({
         args: [
           address as `0x${string}`,
