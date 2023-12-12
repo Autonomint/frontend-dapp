@@ -159,7 +159,7 @@ const NewDeposit = () => {
             <CustomToast
               key={2}
               props={{
-                t,
+                t:toastId.current,
                 toastMainColor: "#B43939",
                 headline: `Uhh Ohh! ${error.name}`,
                 toastClosebuttonHoverColor: "#e66d6d",
@@ -168,8 +168,11 @@ const NewDeposit = () => {
             />
           </div>
         ),
-        { duration: 5000 }
+        { id:toastId.current }
       );
+      setTimeout(() => {
+        toast.dismiss(toastId.current);
+      }, 5000);
     },
     onSuccess: (data) => {
       console.log(data);
@@ -179,7 +182,7 @@ const NewDeposit = () => {
             <div>
               <CustomToast
                 props={{
-                  t,
+                  t:toastId.current,
                   toastMainColor: "#268730",
                   headline: "Transaction Submitted",
                   transactionHash: data?.hash,
