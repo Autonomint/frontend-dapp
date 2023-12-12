@@ -180,7 +180,9 @@ const TableRows = ({
       setOpenConfirmNotice(false);
     },
   });
-  const { data: lastCumulativeRate } = useBorrowingContractLastCumulativeRate();
+  const { data: lastCumulativeRate } = useBorrowingContractLastCumulativeRate({
+    watch: true,
+  });
 
   const { isLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
     hash: cumulativeRate?.hash,
@@ -483,8 +485,8 @@ const TableRows = ({
     handleDepositData();
     setWithdrawalTime(details.status);
     if (backendWithdrawSuccess) {
-      handleRefetch();
       backendWithdrawReset?.();
+      unwatch?.();
     }
   }, [details]);
   useEffect(() => {

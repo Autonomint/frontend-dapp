@@ -97,6 +97,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       queryClient.invalidateQueries({ queryKey: ["deposits"] });
       handleRefetch();
       form.reset();
+      unwatch?.();
     },
     retry: 4,
   });
