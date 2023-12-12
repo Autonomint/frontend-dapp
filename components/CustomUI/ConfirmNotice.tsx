@@ -18,7 +18,7 @@ const ConfirmNotice = ({
       <div className="flex flex-col min-[1440px]:gap-5 gap-[10px]">
         <div className="flex flex-col gap-[15px] ">
           <p className="min-[1440px]:text-base text-sm text-textSecondary">
-            Amount
+            Amount to be returned back
           </p>
           <p className="text-[#020202] font-medium min-[1440px]:text-[32px] text-2xl leading-none">
             {displayNumberWithPrecision(formatEther(amintToMint))} AMINT
