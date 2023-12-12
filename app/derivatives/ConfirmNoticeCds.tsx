@@ -8,7 +8,7 @@ const ConfirmNoticeCds = ({
   amintToMint,
 }: {
   handleWithdrawal: VoidFunction;
-  amintToMint?: bigint;
+  amintToMint: string;
 }) => {
   const [switchOn, setSwitchOn] = React.useState(false);
   return (
@@ -27,7 +27,7 @@ const ConfirmNoticeCds = ({
           </p>
           <p className="text-[#020202] font-medium min-[1440px]:text-[32px] text-2xl leading-none">
             {/* {displayNumberWithPrecision(formatEther(amintToMint))}  */}
-            {switchOn ? `0.002 ETH` : `3.42 AMINT or 0.002 ETH`}
+            {switchOn ? `0.002 ETH` : `${amintToMint} AMINT or 0.002 ETH`}
           </p>
         </div>
       </div>

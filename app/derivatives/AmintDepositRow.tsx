@@ -359,7 +359,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
             <>
               <ConfirmNoticeCds
                 handleWithdrawal={handleWithdrawal}
-                // amintToMint={BigInt(details.normalizedAmount)}
+                amintToMint={details.depositedAmint}
               />
             </>
           ) : (
