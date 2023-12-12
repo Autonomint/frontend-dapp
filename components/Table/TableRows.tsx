@@ -458,10 +458,7 @@ const TableRows = ({
       );
       updatedData[4].value = `${details.aprAtDeposit}%`;
       updatedData[5].value = `${details.downsideProtectionPercentage}%`;
-      updatedData[6].value =
-        details.status === "WITHDREW2" || details.status === "LIQUIDATED"
-          ? "Yes"
-          : "No";
+      updatedData[6].value = details.status === "LIQUIDATED" ? "Yes" : "No";
       // updatedData[7].value = details.depositedAmount;
       updatedData[8].value = details.noOfAbondMinted
         ? details.noOfAbondMinted
@@ -651,7 +648,11 @@ const TableRows = ({
                   </>
                 ) : (
                   <>
-                    {details.status==="LIQUIDATED" ? <Note note="position is already liquidated" /> : <Note note="amount fully withdrawn" />}
+                    {details.status === "LIQUIDATED" ? (
+                      <Note note="position is already liquidated" />
+                    ) : (
+                      <Note note="amount fully withdrawn" />
+                    )}
                   </>
                 )}
               </>
