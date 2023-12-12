@@ -334,7 +334,7 @@ const NewDeposit = () => {
   return (
     <div className="flex justify-between items-center mb-[30px]">
       <div className="flex flex-col gap-[15px] ">
-        <h2 className="text-textPrimary font-medium text-3xl tracking-[-1.8px] min-[1440px]:text-4xl">
+        <h2 className="text-textPrimary font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl">
           Your Deposits
         </h2>
         <p className="text-textSecondary text-sm min-[1440px]:text-base">
@@ -384,11 +384,11 @@ const NewDeposit = () => {
                 </div>
 
                 <DialogHeader className="flex items-start">
-                  <DialogTitle className="text-textPrimary font-medium text-4xl tracking-[-1.8px]">
+                  <DialogTitle className="text-textPrimary font-medium  min-[1440px]:text-4xl min-[1280px]:text-3xl text-2xl tracking-[-1.8px]">
                     Make a New Deposit
                   </DialogTitle>
                 </DialogHeader>
-                <div className="flex flex-col pt-[30px] gap-[20px]">
+                <div className="flex flex-col min-[1440px]:pt-[30px] pt-[15px] min-[1440px]:gap-[20px] min-[1280px]:gap-[16px] gap-[10px]">
                   {/* <FormField
                     control={form.control}
                     name="selectedToken"
@@ -437,10 +437,10 @@ const NewDeposit = () => {
                     )}
                   />
                   <div className="flex gap-[10px] items-center">
-                    <div className="flex items-center">
+                    <div className="flex items-center ml-[4px]">
                       <InfoCircledIcon width={18} height={18} />
                     </div>
-                    <p className="text-base font-normal text-textGrey text-center leading-none">
+                    <p className="min-[1440px]:text-base text-sm font-normal text-textGrey text-center leading-none">
                       Minimum Amint Amount is{" "}
                       <span className="font-medium text-textHighlight">
                         500 AMINT
@@ -486,7 +486,7 @@ const NewDeposit = () => {
                     control={form.control}
                     name="liquidationGains"
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md p-4">
+                      <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md p-2 min-[1440px]:p-4">
                         <FormControl>
                           <Checkbox
                             checked={field.value}
@@ -504,8 +504,8 @@ const NewDeposit = () => {
 
                   <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
                   {Boolean(amintAmnt) && Boolean(lockIn) ? (
-                    <div className="px-[15px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee]">
-                      <div className="py-[15px] flex items-center justify-between border-b border-lineGrey">
+                    <div className="min-[144px]:px-[15px] px-[10px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee]">
+                      <div className="min-[144px]:py-[15px] py-[10px] flex items-center justify-between border-b border-lineGrey">
                         <div className="flex gap-[10px] items-center">
                           <Image
                             src={payments}
@@ -513,7 +513,7 @@ const NewDeposit = () => {
                             width={24}
                             height={24}
                           />
-                          <p className="text-base text-textHighlight">
+                          <p className="min-[1440px]:text-base text-sm text-textHighlight">
                             {amintAmnt} AMINT
                           </p>
                         </div>
@@ -526,13 +526,13 @@ const NewDeposit = () => {
                           ></Image>
                           <p>
                             {lockIn === "30" ? (
-                              <>30 Days (~1 Month)</>
+                              <p className="min-[1440px]:text-base text-sm text-textHighlight">30 Days (~1 Month)</p>
                             ) : lockIn === "60" ? (
-                              <>60 Days (~2 Months)</>
+                              <p className="min-[1440px]:text-base text-sm text-textHighlight">60 Days (~2 Months)</p>
                             ) : lockIn === "120" ? (
-                              <>120 Days (~4 Months)</>
+                              <p className="min-[1440px]:text-base text-sm text-textHighlight">120 Days (~4 Months)</p>
                             ) : lockIn === "180" ? (
-                              <>180 Days (~6 Months)</>
+                              <p className="min-[1440px]:text-base text-sm text-textHighlight">180 Days (~6 Months)</p>
                             ) : (
                               <></>
                             )}
@@ -547,7 +547,7 @@ const NewDeposit = () => {
                             width={24}
                             height={24}
                           />
-                          <p className="text-base text-[#242424]">
+                          <p className="min-[1440px]:text-base text-sm text-[#242424]">
                             Expected APR can range from{" "}
                             <span className="text-textHighlight"> ~5%</span> to{" "}
                             <span className="text-textHighlight">~200%</span>
