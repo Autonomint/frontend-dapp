@@ -327,6 +327,7 @@ const NewDeposit = () => {
       amintReset?.();
     }
   }, [cdsDepositSuccess]);
+  
   return (
     <div className="flex justify-between items-center mb-[30px]">
       <div className="flex flex-col gap-[15px] ">

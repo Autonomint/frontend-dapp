@@ -495,7 +495,7 @@ useEffect(() => {
     unwatch?.();
     backendWithdrawReset?.();
   }
-},[chainId])
+},[])
   return (
     <Sheet
       open={sheetOpen}

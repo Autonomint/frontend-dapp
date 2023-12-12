@@ -87,7 +87,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   const strikePrice = form.watch("strikePrice");
   const { data: ltv } = useBorrowingContractGetLtv({ enabled: !!address });
 
-  const { mutate } = useMutation({
+  const { mutate,reset:depositReset } = useMutation({
     mutationFn: storeToBackend,
     onError(error, variables, context) {
       console.log(error);
@@ -286,6 +286,13 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     //   window.clearTimeout(timer.current);
     // };
   }, [transactionSuccess]);
+
+  useEffect(() => {
+    return () => {
+      unwatch?.();
+      depositReset?.();
+    }
+  },[])
 
   return (
     <div className="flex justify-between items-center mb-[30px]">
