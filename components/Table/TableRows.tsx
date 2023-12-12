@@ -299,7 +299,7 @@ const TableRows = ({
       );
       setTimeout(() => {
         toast.dismiss(toastId.current);
-      },5000);
+      }, 5000);
     },
   });
   const {
@@ -490,12 +490,12 @@ const TableRows = ({
       backendWithdrawReset?.();
     }
   }, [details]);
-useEffect(() => {
-  return () => {
-    unwatch?.();
-    backendWithdrawReset?.();
-  }
-},[])
+  useEffect(() => {
+    return () => {
+      unwatch?.();
+      backendWithdrawReset?.();
+    };
+  }, []);
   return (
     <Sheet
       open={sheetOpen}
@@ -525,13 +525,13 @@ useEffect(() => {
         </TableCell>
         <TableCell className="text-textGrey">
           <SheetTrigger>
-            {details.status === "LIQUIDATED" || details.status === "WITHDREW2"
-              ? "Yes"
-              : "No"}
+            {details.status === "LIQUIDATED" ? "Yes" : "No"}
           </SheetTrigger>
         </TableCell>
 
-        <SheetContent className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen"}>
+        <SheetContent
+          className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen"}
+        >
           <div className="flex flex-col min-[1440px]:gap-6 gap-[10px]">
             <div className="flex w-full justify-end">
               <SheetClose asChild>
@@ -651,7 +651,7 @@ useEffect(() => {
                   </>
                 ) : (
                   <>
-                    <Note note="position is already liquidated" />
+                    {details.status==="LIQUIDATED" ? <Note note="position is already liquidated" /> : <Note note="amount fully withdrawn" />}
                   </>
                 )}
               </>

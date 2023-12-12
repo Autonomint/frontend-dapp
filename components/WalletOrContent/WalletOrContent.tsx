@@ -15,7 +15,7 @@ import {
   amintAddress,
   useBorrowingContractRead,
 } from "@/abiAndHooks";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import displayNumberWithPrecision from "@/app/utils/precision";
 import { formatEther } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
@@ -50,6 +50,7 @@ const dasboardStatsItem = [
 const WalletOrContent = () => {
   const { isConnected, address } = useAccount();
   const chainId = useChainId();
+  const queryClient = useQueryClient();
   const [dashboardStats, setDashboardStats] = useState(dasboardStatsItem);
   const [shouldRefetch, setShouldRefetch] = useState(1);
   const { data: ethPrice } = useBorrowingContractRead({
@@ -62,7 +63,7 @@ const WalletOrContent = () => {
     );
   }
   const { data: depositorData, error: depositorDataError } = useQuery({
-    queryKey: ["depositorsData", shouldRefetch],
+    queryKey: ["depositorsData", shouldRefetch,chainId, address],
     queryFn: () => getDepositorData(address ? address : undefined),
     enabled: !!address,
   });
@@ -72,7 +73,7 @@ const WalletOrContent = () => {
     );
   }
   const { data: deposits, error: depositsError } = useQuery({
-    queryKey: ["deposits"],
+    queryKey: ["deposits",chainId, address, shouldRefetch],
     queryFn: (): Promise<any> => getDeposits(address ? address : undefined),
     enabled: !!address,
   });

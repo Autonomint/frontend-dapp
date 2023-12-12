@@ -16,7 +16,7 @@ import { useAccount, useChainId } from "wagmi";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import NewDeposit from "./NewDeposit";
 import AmintDepositRow from "./AmintDepositRow";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import displayNumberWithPrecision from "../utils/precision";
 import { formatEther } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
@@ -66,6 +66,7 @@ const dasboardStatsItem = [
 const page = () => {
   const { isConnected, address } = useAccount();
   const chainId = useChainId();
+  const queryClient = useQueryClient();
   const [dashboardStats, setDashboardStats] = useState(dasboardStatsItem);
   function getCDSDepositorData(
     address: `0x${string}` | undefined
@@ -75,7 +76,7 @@ const page = () => {
     );
   }
   const { data: dCDSdepositorData, error: dCDSdepositorDataError } = useQuery({
-    queryKey: ["dCDSdepositorsData"],
+    queryKey: ["dCDSdepositorsData",chainId,address],
     queryFn: () => getCDSDepositorData(address ? address : undefined),
     enabled: !!address,
   });
@@ -87,7 +88,7 @@ const page = () => {
     );
   }
   const { data: deposits, error: depositsError } = useQuery<DepositDetail[]>({
-    queryKey: ["dCDSdeposits"],
+    queryKey: ["dCDSdeposits",chainId,address],
     queryFn: () => getDeposits(address ? address : undefined),
     enabled: !!address,
   });
@@ -144,6 +145,7 @@ const page = () => {
     handleStatsItem();
     console.log(dCDSdepositorData);
   }, [dCDSdepositorData, dCDSdepositorDataError]);
+  
 
   return (
     <>
