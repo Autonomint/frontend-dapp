@@ -87,7 +87,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   const strikePrice = form.watch("strikePrice");
   const { data: ltv } = useBorrowingContractGetLtv({ enabled: !!address });
 
-  const { mutate,reset:depositReset } = useMutation({
+  const { mutate, reset: depositReset } = useMutation({
     mutationFn: storeToBackend,
     onError(error, variables, context) {
       console.log(error);
@@ -291,8 +291,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     return () => {
       unwatch?.();
       depositReset?.();
-    }
-  },[])
+    };
+  }, []);
 
   return (
     <div className="flex justify-between items-center mb-[30px]">
@@ -309,7 +309,6 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
         open={open}
         onOpenChange={() => {
           setOpen(!open);
-          if (open === true) handleRefetch();
         }}
       >
         <DialogTrigger asChild>
@@ -325,7 +324,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="w-[672px]">
+        <DialogContent className={"w-[672px]"}>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} action="#">
               <div className="flex w-full justify-end">
@@ -344,11 +343,11 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
               </div>
 
               <DialogHeader className="flex items-start">
-                <DialogTitle className="text-textPrimary font-medium min-[1440px]:text-4xl text-2xl tracking-[-1.8px] leading-none ">
+                <DialogTitle className="text-textPrimary font-medium min-[1440px]:text-4xl min-[1280px]:text-3xl text-2xl tracking-[-1.8px] leading-none ">
                   Make a New Deposit
                 </DialogTitle>
               </DialogHeader>
-              <div className="flex flex-col min-[1440px]:pt-[30px] pt-[15px] min-[1440px]:gap-[20px] gap-[10px]">
+              <div className="flex flex-col min-[1440px]:pt-[30px] pt-[15px] min-[1440px]:gap-[20px] min-[1280px]:gap-[16px] gap-[10px]">
                 <FormField
                   control={form.control}
                   name="collateral"
