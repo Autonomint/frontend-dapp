@@ -531,7 +531,7 @@ useEffect(() => {
           </SheetTrigger>
         </TableCell>
 
-        <SheetContent>
+        <SheetContent className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen"}>
           <div className="flex flex-col min-[1440px]:gap-6 gap-[10px]">
             <div className="flex w-full justify-end">
               <SheetClose asChild>

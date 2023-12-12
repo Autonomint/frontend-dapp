@@ -305,7 +305,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
           <SheetTrigger>-</SheetTrigger>
         </TableCell>
       </TableRow>
-      <SheetContent>
+      <SheetContent className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen"}>
         <div className="flex flex-col min-[1440px]:gap-6 gap-2">
           <div className="flex w-full justify-end">
             <SheetClose asChild>
