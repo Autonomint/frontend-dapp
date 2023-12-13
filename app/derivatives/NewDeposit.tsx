@@ -160,7 +160,7 @@ const NewDeposit = () => {
             <CustomToast
               key={2}
               props={{
-                t:toastId.current,
+                t: toastId.current,
                 toastMainColor: "#B43939",
                 headline: `Uhh Ohh! ${error.name}`,
                 toastClosebuttonHoverColor: "#e66d6d",
@@ -169,7 +169,7 @@ const NewDeposit = () => {
             />
           </div>
         ),
-        { id:toastId.current }
+        { id: toastId.current }
       );
       setTimeout(() => {
         toast.dismiss(toastId.current);
@@ -183,7 +183,7 @@ const NewDeposit = () => {
             <div>
               <CustomToast
                 props={{
-                  t:toastId.current,
+                  t: toastId.current,
                   toastMainColor: "#268730",
                   headline: "Transaction Submitted",
                   transactionHash: data?.hash,
@@ -195,7 +195,7 @@ const NewDeposit = () => {
             </div>
           );
         },
-        { duration: Infinity,id: toastId.current }
+        { duration: Infinity, id: toastId.current }
       );
     },
   });
@@ -302,7 +302,7 @@ const NewDeposit = () => {
             </div>
           );
         },
-        { duration: Infinity, id: toastId.current }
+        { id: toastId.current }
       );
       write?.({
         args: [
@@ -317,9 +317,12 @@ const NewDeposit = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     // write?.({ args: [BigInt(amintAmnt), liquidationGains, BigInt(lockIn)] });
+
     amintApprove?.({
       args: [
-        cdsAddress[80001] as `0x${string}`,
+        chainId === 80001
+          ? (cdsAddress[80001] as `0x${string}`)
+          : (cdsAddress[11155111] as `0x${string}`),
         BigInt(parseEther(amintAmnt.toString())),
       ],
     });
@@ -331,7 +334,7 @@ const NewDeposit = () => {
       amintReset?.();
     }
   }, [cdsDepositSuccess]);
-  
+
   return (
     <div className="flex justify-between items-center mb-[30px]">
       <div className="flex flex-col gap-[15px] ">
@@ -527,13 +530,21 @@ const NewDeposit = () => {
                           ></Image>
                           <p>
                             {lockIn === "30" ? (
-                              <p className="min-[1440px]:text-base text-sm text-textHighlight">30 Days (~1 Month)</p>
+                              <p className="min-[1440px]:text-base text-sm text-textHighlight">
+                                30 Days (~1 Month)
+                              </p>
                             ) : lockIn === "60" ? (
-                              <p className="min-[1440px]:text-base text-sm text-textHighlight">60 Days (~2 Months)</p>
+                              <p className="min-[1440px]:text-base text-sm text-textHighlight">
+                                60 Days (~2 Months)
+                              </p>
                             ) : lockIn === "120" ? (
-                              <p className="min-[1440px]:text-base text-sm text-textHighlight">120 Days (~4 Months)</p>
+                              <p className="min-[1440px]:text-base text-sm text-textHighlight">
+                                120 Days (~4 Months)
+                              </p>
                             ) : lockIn === "180" ? (
-                              <p className="min-[1440px]:text-base text-sm text-textHighlight">180 Days (~6 Months)</p>
+                              <p className="min-[1440px]:text-base text-sm text-textHighlight">
+                                180 Days (~6 Months)
+                              </p>
                             ) : (
                               <></>
                             )}
