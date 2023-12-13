@@ -14,11 +14,10 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 import React, { useEffect, useRef, useState } from "react";
 import calculateTimeDifference from "../utils/calculateTimeDifference";
 import {
-  useAmintApprove,
+  cdsABI,
   useBorrowingContractGetApy,
   useBorrowingContractGetUsdValue,
   useCdsWithdraw,
-  useCdsWithdrawEvent,
 } from "@/abiAndHooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
@@ -28,6 +27,7 @@ import { parseEther } from "viem";
 import { formatDateFromUnixTimestamp } from "../utils/calculateNext30Days";
 import ConfirmNoticeCds from "./ConfirmNoticeCds";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
+import decodeEventLogsFromAbi from "../utils/decodeEventLogsFromAbi";
 
 const events = {
   withdrewAmint: "0",
@@ -109,21 +109,22 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       console.log(error);
       toast.custom(
         (t) => {
-          toastId.current=t;
+          toastId.current = t;
           return (
-          <div>
-            <CustomToast
-              key={2}
-              props={{
-                t,
-                toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.name}`,
-                toastClosebuttonHoverColor: "#e66d6d",
-                toastClosebuttonColor: "#C25757",
-              }}
-            />
-          </div>
-        )},
+            <div>
+              <CustomToast
+                key={2}
+                props={{
+                  t,
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! ${error.name}`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
+                }}
+              />
+            </div>
+          );
+        },
         { duration: 5000 }
       );
     },
@@ -153,26 +154,6 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       );
     },
   });
-  const unwatch = useCdsWithdrawEvent({
-    listener(log) {
-      console.log(log);
-      if (!!log) {
-        eventsValue.current = log[0].args.withdrewAmint
-          ? {
-              ...eventsValue.current,
-              withdrewAmint: log[0]?.args?.withdrewAmint.toString(),
-              withdrawETH: log[0]?.args?.withdrawETH
-                ? log[0]?.args?.withdrawETH.toString()
-                : "0",
-            }
-          : { ...eventsValue.current };
-        backendCDSWithdraw(address);
-      }
-      if (log[0].args) {
-        unwatch?.();
-      }
-    },
-  });
 
   const { mutate: backendCDSWithdraw } = useMutation({
     mutationFn: withdrawCDSFromBackend,
@@ -187,7 +168,24 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
   });
   useWaitForTransaction({
     hash: cdsWithdrawData?.hash,
-    onSuccess() {
+    confirmations:1,
+    onSuccess(data) {
+      const dataLogs =
+        chainId === 80001 ? data.logs[3].data : data.logs[3].data;
+      const { eventName, args } = decodeEventLogsFromAbi(
+        cdsABI,
+        ["0x02d30220fb33c212455a8cbb2cf068095e080a18a527044b34360e67a705addd"],
+        "Withdraw",
+        dataLogs
+      ) as {
+        eventName: string;
+        args: { withdrewAmint: bigint; withdrawETH: bigint };
+      };
+      eventsValue.current = {
+        withdrewAmint: args?.withdrewAmint.toString(),
+        withdrawETH: args?.withdrawETH.toString(),
+      }
+      backendCDSWithdraw(address);
       toast.custom(
         (t) => (
           <div>
@@ -305,7 +303,9 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
           <SheetTrigger>-</SheetTrigger>
         </TableCell>
       </TableRow>
-      <SheetContent className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen"}>
+      <SheetContent
+        className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen"}
+      >
         <div className="flex flex-col min-[1440px]:gap-6 gap-2">
           <div className="flex w-full justify-end">
             <SheetClose asChild>

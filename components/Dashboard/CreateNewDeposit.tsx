@@ -42,7 +42,7 @@ import {
 import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
 import { parseEther } from "viem";
 import {
-  useBorrowingContractDepositEvent,
+  borrowingContractABI,
   useBorrowingContractDepositTokens,
   useBorrowingContractGetLtv,
   useBorrowingContractRead,
@@ -50,6 +50,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import displayNumberWithPrecision from "@/app/utils/precision";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
+import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 
 const formSchema = z.object({
   collateral: z.string(),
@@ -97,24 +98,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       queryClient.invalidateQueries({ queryKey: ["deposits"] });
       handleRefetch();
       form.reset();
-      unwatch?.();
     },
     retry: 4,
-  });
-  const unwatch = useBorrowingContractDepositEvent({
-    listener(log) {
-      console.log(log);
-      if (!!log) {
-        normalizedAmount.current = log[0].args.normalizedAmount
-          ? log[0]?.args?.normalizedAmount.toString()
-          : "";
-
-        mutate(address);
-      }
-      if (log[0].args) {
-        unwatch?.();
-      }
-    },
   });
 
   function getTotalIndex(address: `0x${string}` | undefined) {
@@ -230,6 +215,17 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     hash: depositData?.hash,
     onSuccess(data) {
       console.log("transaction completed", depositData?.hash, data);
+      const dataLogs =
+        chainId === 80001 ? data.logs[4].data : data.logs[2].data;
+      const { eventName, args } = decodeEventLogsFromAbi(
+        borrowingContractABI,
+        ["0x3f7c04c09b19100060129256b7d82f055d0aa72cf17042fb3f2d41d1fffc0260"],
+        "Deposit",
+        dataLogs
+      ) as { eventName: string; args: { normalizedAmount: bigint } };
+      console.log(eventName, args?.normalizedAmount);
+      normalizedAmount.current = args?.normalizedAmount.toString();
+      mutate(address);
       toast.custom(
         () => (
           <CustomToast
@@ -290,7 +286,6 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
 
   useEffect(() => {
     return () => {
-      unwatch?.();
       depositReset?.();
     };
   }, []);

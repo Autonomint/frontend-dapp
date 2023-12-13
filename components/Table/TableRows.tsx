@@ -18,24 +18,23 @@ import ConfirmNotice from "../CustomUI/ConfirmNotice";
 import Note from "../CustomUI/Note";
 import SheetRow from "../CustomUI/SheetRow";
 import {
+  borrowingContractABI,
   borrowingContractAddress,
-  useAmintAllowance,
   useAmintApprove,
   useBorrowingContractCalculateCumulativeRate,
   useBorrowingContractLastCumulativeRate,
   useBorrowingContractRead,
   useBorrowingContractWithDraw,
-  useBorrowingContractWithdrawEvent,
-  usePrepareBorrowingContractWithDraw,
 } from "@/abiAndHooks";
 import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "../CustomUI/CustomToast";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { formatEther } from "viem";
 import displayNumberWithPrecision from "@/app/utils/precision";
 import { useWithdrawFromBackend } from "@/app/utils/backendHooks/useWithdrawFromBackend";
 import { calculate30DaysFromStoredTime } from "@/app/utils/calculateNext30Days";
+import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 
 const events = {
   borrowDebt: "",
@@ -233,7 +232,7 @@ const TableRows = ({
                 props={{
                   t: toastId.current,
                   toastMainColor: "#268730",
-                  headline: "Amint Approved,Confirm Final Withdrawal",
+                  headline: "Amint  is Approved,Please Confirm Final Withdrawal",
                   transactionHash: amintApproveData?.hash,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
@@ -309,9 +308,32 @@ const TableRows = ({
     isSuccess: borrowWithdrawtransactionSuccess,
   } = useWaitForTransaction({
     hash: borrowWithdrawData?.hash,
-    confirmations: 3,
+    confirmations: 1,
     onSuccess(data) {
       console.log("transaction completed", borrowWithdrawData?.hash, data);
+      const dataLogs =
+        chainId === 80001 ? data.logs[7].data : data.logs[6].data;
+      const { eventName, args } = decodeEventLogsFromAbi(
+        borrowingContractABI,
+        ["0x2dc3b614e32706dcf24286e69af4692f4b2c24fc339d659e80b26d49379b6914"],
+        "Withdraw",
+        dataLogs
+      ) as { eventName: string; args: { borrowDebt :bigint, withdrawAmount :bigint, noOfAbond :bigint } };
+      eventsValue.current= {
+        borrowDebt: args?.borrowDebt.toString(),
+        withdrawAmount: args?.withdrawAmount.toString(),
+        noOfAbond: args?.noOfAbond.toString(),
+      }
+      backendWithdraw?.({
+          address: address as `0x${string}`,
+          index: details.index,
+          chainId: chainId,
+          borrowDebt: eventsValue.current.borrowDebt,
+          withdrawTime: `${Date.now()}`,
+          withdrawAmount: eventsValue.current.withdrawAmount,
+          amountYetToWithdraw: eventsValue.current.withdrawAmount,
+          noOfAbond: eventsValue.current.noOfAbond,
+        });
       toast.custom(
         (t) => (
           <CustomToast
@@ -380,38 +402,6 @@ const TableRows = ({
   //     setSheetOpen(false);
   //   },
   // });
-  const unwatch = useBorrowingContractWithdrawEvent({
-    listener(log) {
-      console.log(log);
-      console.log("inside event listner index", details.index);
-      if (!!log) {
-        eventsValue.current =
-          log[0].args.borrowDebt &&
-          log[0].args.withdrawAmount &&
-          log[0].args.noOfAbond
-            ? {
-                ...eventsValue.current,
-                borrowDebt: log[0]?.args?.borrowDebt.toString(),
-                withdrawAmount: log[0]?.args?.withdrawAmount.toString(),
-                noOfAbond: log[0]?.args?.noOfAbond.toString(),
-              }
-            : { ...eventsValue.current };
-        backendWithdraw?.({
-          address: address as `0x${string}`,
-          index: details.index,
-          chainId: chainId,
-          borrowDebt: eventsValue.current.borrowDebt,
-          withdrawTime: `${Date.now()}`,
-          withdrawAmount: eventsValue.current.withdrawAmount,
-          amountYetToWithdraw: eventsValue.current.withdrawAmount,
-          noOfAbond: eventsValue.current.noOfAbond,
-        });
-      }
-      if (log[0].args) {
-        unwatch?.();
-      }
-    },
-  });
 
   function handleWithdrawalTime() {
     if (withdrawalTime === "DEPOSITED") {
@@ -486,12 +476,10 @@ const TableRows = ({
     setWithdrawalTime(details.status);
     if (backendWithdrawSuccess) {
       backendWithdrawReset?.();
-      unwatch?.();
     }
   }, [details]);
   useEffect(() => {
     return () => {
-      unwatch?.();
       backendWithdrawReset?.();
     };
   }, []);
