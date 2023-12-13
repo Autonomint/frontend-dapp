@@ -168,7 +168,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
   });
   useWaitForTransaction({
     hash: cdsWithdrawData?.hash,
-    confirmations:1,
+    confirmations: 1,
     onSuccess(data) {
       const dataLogs =
         chainId === 80001 ? data.logs[3].data : data.logs[3].data;
@@ -184,7 +184,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       eventsValue.current = {
         withdrewAmint: args?.withdrewAmint.toString(),
         withdrawETH: args?.withdrawETH.toString(),
-      }
+      };
       backendCDSWithdraw(address);
       toast.custom(
         (t) => (

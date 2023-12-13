@@ -153,6 +153,7 @@ const NewDeposit = () => {
     reset,
   } = useCdsDeposit({
     onError(error) {
+      console.log(error);
       toast.custom(
         (t) => (
           <div>
