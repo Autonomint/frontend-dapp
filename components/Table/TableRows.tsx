@@ -10,7 +10,7 @@ import {
 } from "../ui/sheet";
 import { TableCell, TableRow } from "../ui/table";
 import { Button } from "../ui/button";
-import { Cross2Icon } from "@radix-ui/react-icons";
+import { Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import payments from "@/app/assets/payments.svg";
 import pace from "@/app/assets/pace.svg";
@@ -35,6 +35,12 @@ import displayNumberWithPrecision from "@/app/utils/precision";
 import { useWithdrawFromBackend } from "@/app/utils/backendHooks/useWithdrawFromBackend";
 import { calculate30DaysFromStoredTime } from "@/app/utils/calculateNext30Days";
 import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 const events = {
   borrowDebt: "",
@@ -76,38 +82,56 @@ const TableRows = ({
     {
       headline: "Eth Deposited",
       value: "0.00123",
+      tooltip: false,
+      tooltipText: "",
     },
     {
       headline: "ETH Price at Deposit",
       value: "$1645.121",
+      tooltip: false,
+      tooltipText: "",
     },
     {
       headline: "Amint Amount minted",
       value: "1.234",
+      tooltip: true,
+      tooltipText: "80% of the total deposited amount",
     },
     {
       headline: "Total Amount (Amint minted + Interest Amount returned)",
       value: "-",
+      tooltip: false,
+      tooltipText: "",
     },
     {
       headline: "APR at Deposit",
       value: "5%",
+      tooltip: false,
+      tooltipText: "",
     },
     {
       headline: "Downside percentage at Deposit",
       value: "20%",
+      tooltip: false,
+      tooltipText: "",
     },
     {
       headline: "Liquidated?",
       value: "No",
+      tooltip: false,
+      tooltipText: "",
     },
     {
       headline: "Interest rate gained",
       value: "3%",
+      tooltip: false,
+      tooltipText: "",
     },
     {
       headline: "Abond Minted",
       value: "-",
+      tooltip: false,
+      tooltipText: "",
     },
   ];
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -553,11 +577,27 @@ const TableRows = ({
                   props={{
                     heading: detail.headline,
                     value: detail.value,
+                    showTooltip: detail.tooltip,
+                    tooltipText: detail.tooltipText,
                   }}
                 />
               ))}
               <div className="flex justify-between min-[1440px]:px-4 px-2 min-[1440px]:py-[10px] py-[5px] border-b border-lineGrey">
-                <p className="text-base text-textSecondary">Amount Protected</p>
+                <div className="flex gap-2">
+                  <p className="text-base text-textSecondary">
+                    Amount Protected
+                  </p>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <InfoCircledIcon className="h-4 w-4" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>upto 20% of the deposited amount value</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
                 {!amountView ? (
                   <Button
                     variant={"ghostOutline"}
