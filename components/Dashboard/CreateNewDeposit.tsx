@@ -46,11 +46,15 @@ import {
   useBorrowingContractDepositTokens,
   useBorrowingContractGetLtv,
   useBorrowingContractRead,
+  useCdsTotalCdsDepositedAmount,
+  useTreasuryTotalVolumeOfBorrowersAmountinUsd,
+  useTreasuryTotalVolumeOfBorrowersAmountinWei,
 } from "@/abiAndHooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import displayNumberWithPrecision from "@/app/utils/precision";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
+import { watch } from "fs";
 
 const formSchema = z.object({
   collateral: z.string(),
@@ -71,6 +75,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   const [amintToBeMinted, setAmintToBeMinted] = useState("0");
   const [downsideProtectionAmnt, setDownsideProtectionAmnt] = useState("0");
   const [open, setOpen] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const { address } = useAccount();
   const chainId = useChainId();
   // const timer = useRef<number>();
@@ -87,6 +92,11 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   });
   const strikePrice = form.watch("strikePrice");
   const { data: ltv } = useBorrowingContractGetLtv({ enabled: !!address });
+  const { data: totalVolumeOfBorrowersAmountinUsd } =
+    useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true });
+  const { data: totalCdsDepositedAmount } = useCdsTotalCdsDepositedAmount({
+    watch: true,
+  });
 
   const { mutate, reset: depositReset } = useMutation({
     mutationFn: storeToBackend,
@@ -247,10 +257,26 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       }, 3000);
     },
   });
+  useEffect(() => {
+    if (!write) {
+      setDisabled(true);
+    } else {
+      //check if we have both values or not
+      if (totalCdsDepositedAmount && totalVolumeOfBorrowersAmountinUsd) {
+        if (
+          totalCdsDepositedAmount <
+          (20n / 100n) * totalVolumeOfBorrowersAmountinUsd
+        ) {
+          setDisabled(true);
+        }
+      }
+    }
+  }, [totalCdsDepositedAmount, totalVolumeOfBorrowersAmountinUsd]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     // console.log("depositData", depositData);
+
     write?.();
     // mutate(address);
   }
@@ -476,7 +502,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                   type="submit"
                   variant={"primary"}
                   className="text-white"
-                  disabled={!write}
+                  disabled={disabled}
                 >
                   Confirm Deposit
                 </Button>
