@@ -113,6 +113,7 @@ const TableRows = ({
   const [sheetOpen, setSheetOpen] = useState(false);
   const [openConfirmNotice, setOpenConfirmNotice] = useState(false);
   const [amountView, setAmountView] = useState(false);
+  const totalAmintAmount = useRef<bigint>(BigInt(0));
   const [withdrawalTime, setWithdrawalTime] = useState(details.status);
   const [depositData, setDepositData] = useState(depositDetails);
   const chainId = useChainId();
@@ -210,7 +211,7 @@ const TableRows = ({
           borrowingContractAddress[
             chainId as keyof typeof borrowingContractAddress
           ] as `0x${string}`,
-          BigInt(details.normalizedAmount),
+          totalAmintAmount.current,
         ],
       });
     },
@@ -232,7 +233,8 @@ const TableRows = ({
                 props={{
                   t: toastId.current,
                   toastMainColor: "#268730",
-                  headline: "Amint  is Approved,Please Confirm Final Withdrawal",
+                  headline:
+                    "Amint  is Approved,Please Confirm Final Withdrawal",
                   transactionHash: amintApproveData?.hash,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
@@ -318,22 +320,25 @@ const TableRows = ({
         ["0x2dc3b614e32706dcf24286e69af4692f4b2c24fc339d659e80b26d49379b6914"],
         "Withdraw",
         dataLogs
-      ) as { eventName: string; args: { borrowDebt :bigint, withdrawAmount :bigint, noOfAbond :bigint } };
-      eventsValue.current= {
+      ) as {
+        eventName: string;
+        args: { borrowDebt: bigint; withdrawAmount: bigint; noOfAbond: bigint };
+      };
+      eventsValue.current = {
         borrowDebt: args?.borrowDebt.toString(),
         withdrawAmount: args?.withdrawAmount.toString(),
         noOfAbond: args?.noOfAbond.toString(),
-      }
+      };
       backendWithdraw?.({
-          address: address as `0x${string}`,
-          index: details.index,
-          chainId: chainId,
-          borrowDebt: eventsValue.current.borrowDebt,
-          withdrawTime: `${Date.now()}`,
-          withdrawAmount: eventsValue.current.withdrawAmount,
-          amountYetToWithdraw: eventsValue.current.withdrawAmount,
-          noOfAbond: eventsValue.current.noOfAbond,
-        });
+        address: address as `0x${string}`,
+        index: details.index,
+        chainId: chainId,
+        borrowDebt: eventsValue.current.borrowDebt,
+        withdrawTime: `${Date.now()}`,
+        withdrawAmount: eventsValue.current.withdrawAmount,
+        amountYetToWithdraw: eventsValue.current.withdrawAmount,
+        noOfAbond: eventsValue.current.noOfAbond,
+      });
       toast.custom(
         (t) => (
           <CustomToast
@@ -435,18 +440,20 @@ const TableRows = ({
     }
   }
   function handleDepositData() {
-    const totalAmintAmount =
+    const totalAmintAmnt =
       BigInt(
         BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
           (lastCumulativeRate ? lastCumulativeRate : BigInt(0))
       ) / BigInt(10 ** 27);
+    totalAmintAmount.current = totalAmintAmnt;
+
     if (details) {
       const updatedData = [...depositData];
       updatedData[0].value = details.depositedAmount;
       updatedData[1].value = `${details.ethPrice}`;
       updatedData[2].value = details.noOfAmintMinted;
       updatedData[3].value = displayNumberWithPrecision(
-        formatEther(totalAmintAmount)
+        formatEther(totalAmintAmnt)
       );
       updatedData[4].value = `${details.aprAtDeposit}%`;
       updatedData[5].value = `${details.downsideProtectionPercentage}%`;
@@ -570,7 +577,7 @@ const TableRows = ({
                 <ConfirmNotice
                   withdrawalTime={withdrawalTime}
                   handleWithdrawal={handleWithdrawalTime}
-                  amintToMint={BigInt(details.normalizedAmount)}
+                  amintToMint={totalAmintAmount.current}
                 />
               </>
             ) : (
