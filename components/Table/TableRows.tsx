@@ -137,6 +137,7 @@ const TableRows = ({
   const [sheetOpen, setSheetOpen] = useState(false);
   const [openConfirmNotice, setOpenConfirmNotice] = useState(false);
   const [amountView, setAmountView] = useState(false);
+  const [amountProtected, setAmountProtected] = useState<number>(0);
   const totalAmintAmount = useRef<bigint>(BigInt(0));
   const [withdrawalTime, setWithdrawalTime] = useState(details.status);
   const [depositData, setDepositData] = useState(depositDetails);
@@ -414,23 +415,6 @@ const TableRows = ({
     reset: backendWithdrawReset,
     isSuccess: backendWithdrawSuccess,
   } = useWithdrawFromBackend(handleRefetch);
-  // const { mutate: backendWithdraw,reset:backendWithdrawReset,isSuccess:backendWithdrawSuccess } = useMutation({
-  //   mutationFn: withdrawFromBackend,
-  //   onError(error, variables, context) {
-  //     console.log(error);
-  //   },
-  //   onSuccess(data, variables, context) {
-  //     queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
-  //   },
-  //   onSettled() {
-  //     queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
-  //     handleRefetch();
-  //     approveReset?.();
-  //     cumulativeReset?.();
-  //     borrowReset?.();
-  //     setSheetOpen(false);
-  //   },
-  // });
 
   function handleWithdrawalTime() {
     if (withdrawalTime === "DEPOSITED") {
@@ -501,6 +485,35 @@ const TableRows = ({
       setDepositData(updatedData);
     }
   }
+  const handleAmountProtected = () => {
+    //check if we have current ethPrice available or not
+    if (ethPrice) {
+      //if current ethPrice > deposited time ethPrice
+      if (parseFloat(ethPrice.toString()) / 100 > details.ethPrice) {
+        setAmountProtected(0);
+      }
+      //if current ethPrice < depositedethPrice
+      else if (parseFloat(ethPrice.toString()) / 100 < details.ethPrice) {
+        const amountProt =
+          parseFloat(details.depositedAmount) *
+          (details.ethPrice - parseFloat(ethPrice.toString()) / 100);
+        setAmountProtected(amountProt);
+      }
+      //if current ethprice < 0.8 of depositedethPrice
+      else if (
+        parseFloat(ethPrice.toString()) / 100 <=
+        0.8 * details.ethPrice
+      ) {
+        const amountProt =
+          0.2 * parseFloat(details.depositedAmount) * details.ethPrice;
+        setAmountProtected(amountProt);
+      }
+      setAmountView(!amountView);
+    } else {
+      setAmountView(!amountView);
+      setAmountProtected(0);
+    }
+  };
 
   useEffect(() => {
     handleDepositData();
@@ -603,12 +616,12 @@ const TableRows = ({
                     variant={"ghostOutline"}
                     size={"row"}
                     className="text-textHighlight font-medium text-xs leading-none"
-                    onClick={() => setAmountView(!amountView)}
+                    onClick={handleAmountProtected}
                   >
                     View
                   </Button>
                 ) : (
-                  <>{`3.42`}</>
+                  <>{amountProtected}</>
                 )}
               </div>
             </div>
