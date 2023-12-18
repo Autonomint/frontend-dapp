@@ -52,6 +52,43 @@ export const BorrowingABI = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: "uint128",
+        name: "liquidationIndex",
+        type: "uint128",
+      },
+      {
+        indexed: false,
+        internalType: "uint128",
+        name: "liquidationAmount",
+        type: "uint128",
+      },
+      {
+        indexed: false,
+        internalType: "uint128",
+        name: "cdsProfits",
+        type: "uint128",
+      },
+      {
+        indexed: false,
+        internalType: "uint128",
+        name: "ethAmount",
+        type: "uint128",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "availableLiquidationAmount",
+        type: "uint256",
+      },
+    ],
+    name: "Liquidate",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         internalType: "address",
         name: "previousOwner",
@@ -310,6 +347,13 @@ export const BorrowingABI = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "uint64", name: "_timeLimit", type: "uint64" }],
+    name: "setWithdrawTimeLimit",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "totalAmintSupply",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
@@ -387,6 +431,13 @@ export const BorrowingABI = [
     name: "withdrawFromCompoundProtocol",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdrawTimeLimit",
+    outputs: [{ internalType: "uint64", name: "", type: "uint64" }],
+    stateMutability: "view",
     type: "function",
   },
 ] as const;

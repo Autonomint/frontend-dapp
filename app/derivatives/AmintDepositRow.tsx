@@ -239,6 +239,38 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
 
     return result;
   }
+  async function calculateWithdrawAmount(
+    address: `0x${string}` | undefined,
+    index: number,
+    chainId: number,
+    ethPrice: bigint
+  ) {
+    let bodyValue = JSON.stringify({
+      address: address,
+      index: index,
+      chainId: chainId,
+      ethPrice: Number(ethPrice || 0),
+    });
+    console.log(bodyValue);
+    const response = await fetch(
+      `${BACKEND_API_URL}/withdraw/calculateWithdrawAmount`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: bodyValue,
+      }
+    );
+    const result = await response.json();
+    console.log(result);
+
+    if (!response.ok) {
+      throw new Error(result.message);
+    }
+
+    return result;
+  }
   function handleDepositData() {
     if (details) {
       const updatedData = [...depositData];

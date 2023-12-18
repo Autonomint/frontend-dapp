@@ -497,7 +497,10 @@ const TableRows = ({
         const amountProt =
           parseFloat(details.depositedAmount) *
           (details.ethPrice - parseFloat(ethPrice.toString()) / 100);
-        setAmountProtected(amountProt);
+        const amountProtPrecision = parseFloat(
+          displayNumberWithPrecision(amountProt.toString())
+        );
+        setAmountProtected(amountProtPrecision);
       }
       //if current ethprice < 0.8 of depositedethPrice
       else if (
@@ -506,7 +509,10 @@ const TableRows = ({
       ) {
         const amountProt =
           0.2 * parseFloat(details.depositedAmount) * details.ethPrice;
-        setAmountProtected(amountProt);
+        const amountProtPrecision = parseFloat(
+          displayNumberWithPrecision(amountProt.toString())
+        );
+        setAmountProtected(amountProtPrecision);
       }
       setAmountView(!amountView);
     } else {

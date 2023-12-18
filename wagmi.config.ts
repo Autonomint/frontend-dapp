@@ -2,7 +2,8 @@ import { defineConfig } from "@wagmi/cli";
 import { etherscan, react } from "@wagmi/cli/plugins";
 import { erc20ABI } from "wagmi";
 import { BorrowingABI } from "./constants/BorrowingAbi";
-import {ABOND_SEPOLIA, 
+import {
+  ABOND_SEPOLIA,
   ABOND_MATIC,
   AMINT_MATIC,
   AMINT_SEPOLIA,
@@ -12,12 +13,15 @@ import {ABOND_SEPOLIA,
   CDS_SEPOLIA,
   TREASURY_MATIC,
   TREASURY_SEPOLIA,
+  OPTIONS_MATIC,
+  OPTIONS_SEPOLIA,
 } from "./constants/Addresses";
 import * as chains from "wagmi/chains";
 import { AmintABI } from "./constants/AmintAbi";
 import { AbondABI } from "./constants/ABondAbi";
 import { CDSABI } from "./constants/CDSAbi";
 import { TreasuryAbi } from "./constants/TreasuryAbi";
+import { OPTIONSABI } from "./constants/OptionsAbi";
 
 export default defineConfig({
   out: "abiAndHooks.ts",
@@ -40,6 +44,14 @@ export default defineConfig({
       address: {
         [chains.polygonMumbai.id]: TREASURY_MATIC,
         [chains.sepolia.id]: TREASURY_SEPOLIA,
+      },
+    },
+    {
+      name: "Options",
+      abi: OPTIONSABI,
+      address: {
+        [chains.polygonMumbai.id]: OPTIONS_MATIC,
+        [chains.sepolia.id]: OPTIONS_SEPOLIA,
       },
     },
     {

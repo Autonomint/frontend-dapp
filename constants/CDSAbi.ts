@@ -3,6 +3,7 @@ export const CDSABI = [
     inputs: [
       { internalType: "address", name: "_trinity", type: "address" },
       { internalType: "address", name: "priceFeed", type: "address" },
+      { internalType: "address", name: "_usdt", type: "address" },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -21,6 +22,18 @@ export const CDSABI = [
         indexed: false,
         internalType: "uint128",
         name: "liquidationAmount",
+        type: "uint128",
+      },
+      {
+        indexed: false,
+        internalType: "uint128",
+        name: "normalizedAmount",
+        type: "uint128",
+      },
+      {
+        indexed: false,
+        internalType: "uint128",
+        name: "depositVal",
         type: "uint128",
       },
     ],
@@ -83,6 +96,13 @@ export const CDSABI = [
   },
   {
     inputs: [],
+    name: "amintLimit",
+    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "borrowing",
     outputs: [
       { internalType: "contract IBorrowing", name: "", type: "address" },
@@ -123,7 +143,8 @@ export const CDSABI = [
   },
   {
     inputs: [
-      { internalType: "uint128", name: "_amount", type: "uint128" },
+      { internalType: "uint128", name: "usdtAmount", type: "uint128" },
+      { internalType: "uint128", name: "amintAmount", type: "uint128" },
       { internalType: "bool", name: "_liquidate", type: "bool" },
       { internalType: "uint128", name: "_liquidationAmount", type: "uint128" },
     ],
@@ -237,8 +258,26 @@ export const CDSABI = [
     type: "function",
   },
   {
+    inputs: [
+      { internalType: "uint128", name: "_amintAmount", type: "uint128" },
+      { internalType: "uint64", name: "amintPrice", type: "uint64" },
+      { internalType: "uint64", name: "usdtPrice", type: "uint64" },
+    ],
+    name: "redeemUSDT",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint8", name: "percent", type: "uint8" }],
+    name: "setAmintLimit",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -253,6 +292,13 @@ export const CDSABI = [
   {
     inputs: [{ internalType: "address", name: "_treasury", type: "address" }],
     name: "setTreasury",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint64", name: "amount", type: "uint64" }],
+    name: "setUsdtLimit",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -341,6 +387,27 @@ export const CDSABI = [
     name: "updateTotalCdsDepositedAmount",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "usdt",
+    outputs: [{ internalType: "contract IERC20", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "usdtAmountDepositedTillNow",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "usdtLimit",
+    outputs: [{ internalType: "uint64", name: "", type: "uint64" }],
+    stateMutability: "view",
     type: "function",
   },
   {
