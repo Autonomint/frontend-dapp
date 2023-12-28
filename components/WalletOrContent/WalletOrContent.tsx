@@ -147,7 +147,7 @@ const WalletOrContent = () => {
   return (
     <>
       {isConnected ? (
-        <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full">
+        <div className="relative p-1 xl:p-6 sm:p-2 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full">
           {/* <div
             className={`absolute w-[1740px] rotate-[14deg] h-[1200px] z-0 opacity-30`}
           >
@@ -158,11 +158,11 @@ const WalletOrContent = () => {
               style={{ objectFit: "cover", opacity: 0.4 }}
             ></Image>
           </div> */}
-          <div className="flex gap-[30px] z-10">
+          <div className="flex flex-row gap-1 sm:gap-2 lg:gap-4 xl:gap-7 z-10 flex-wrap lg:flex-nowrap w-full justify-between items-center">
             {dashboardStats.map((item, index) => (
               <div
                 key={`index${item.heading}`}
-                className="flex border border-lineGrey  w-full"
+                className="flex border border-lineGrey w-full sm:w-[49%]"
               >
                 <DashboardStatsItem
                   props={{

@@ -23,7 +23,7 @@ const Profile = ({ props: { image, buttonText } }: Props) => {
           <div className="relative justify-center flex items-center">
             <NetworkSwitch />
           </div>
-          <div className="min-[1440px]:w-[5rem] min-[1440px]:h-[5rem] w-[3.5rem] h-[3.5rem]">
+          <div className="min-[1440px]:w-[5rem] min-[1440px]:h-[5rem] 2dppx:w-[3.5rem] 2dppx:h-[3.5rem] w-[3.5rem] h-[3.5rem]">
             <Image
               src={image}
               alt="user Profile"

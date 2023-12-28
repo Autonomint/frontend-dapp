@@ -163,9 +163,9 @@ const page = () => {
 
           <ProductList></ProductList>
           <Divider />
-          <div className="flex gap-[30px]">
+          <div className="flex flex-row gap-1 sm:gap-2 lg:gap-4 xl:gap-7 z-10 flex-wrap lg:flex-nowrap w-full justify-between items-center">
             {dashboardStats.map((item, index) => (
-              <div className="flex border border-lineGrey min-w-[150px] w-full">
+              <div className="flex border border-lineGrey w-full sm:w-[48%]">
                 <DashboardStatsItem
                   key={item.heading + index}
                   props={{

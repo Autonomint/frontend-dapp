@@ -50,11 +50,11 @@ const DashboardStatsItem = ({
   // console.log("returned data", depositorData);
 
   return (
-    <div className="p-4 min-[1440px]:gap-[20px] gap-2 flex flex-col justify-between">
-      <p className="text-textGrey font-normal min-[1440px]:text-[16px] text-sm whitespace-nowrap leading-none">
+    <div className="p-1 sm:p-2 lg:p-4 min-[1440px]:gap-[20px] 2dppx:gap-2 gap-1 lg:gap-2 flex flex-col justify-between w-full">
+      <p className="text-textGrey font-normal min-[1440px]:text-[16px] 2dppx:text-sm text-sm whitespace-nowrap leading-none">
         {heading}
       </p>
-      <p className="text-textGrey font-medium min-[1440px]:text-[32px] text-[24px] leading-none">
+      <p className="text-textGrey font-medium min-[1440px]:text-[32px] 2dppx:text-[24px] text-[24px] leading-none">
         {/* {value === "0" && index === 0
           ? depositorData?.error === "Not Found"
             ? "-"
@@ -71,7 +71,7 @@ const DashboardStatsItem = ({
         {value}
       </p>
       {showSubHeading && (
-        <p className="text-textGrey font-normal min-[1440px]:text-base leading-none text-sm">
+        <p className="text-textGrey font-normal min-[1440px]:text-base 2dppx:text-sm leading-none text-sm">
           {subheadingBefore}{" "}
           <span className="text-[#020202] font-medium">
             {/* {tokenAddress

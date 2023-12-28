@@ -41,15 +41,16 @@ const headerItems = [
 ];
 const headerItems2nd = [
   {
-    headline: "Total Value Locked",
+    headline: "TVL",
     value: "-",
   },
   {
-    headline: "dCDS Pooled Amount",
+    headline: "dCDS TVL",
     value: "-",
   },
   {
-    headline: "Downside Protection",
+    //downside protection
+    headline: "Secured",
     value: "-",
   },
 ];
@@ -105,8 +106,8 @@ const NavBar = () => {
   }, [currentApy, ltv, totalAmintSupply, totalValueLocked, ethPrice]);
 
   return (
-    <div className="bg-bgGrey flex flex-col min-[1440px]:pb-6">
-      <div className="flex px-4 py-5">
+    <div className="bg-bgGrey flex flex-col min-[1440px]:pb-6 2dppx:pb-1">
+      <div className="flex px-1 sm:px-2 py-3 xl:px-5 xl:py-5 lg:px-4 lg:py-4">
         {headerItems.map((item, index) => (
           <HeaderItems
             key={index}
@@ -119,7 +120,7 @@ const NavBar = () => {
         ))}
         <Button
           variant={"showMore"}
-          className="px-4 pb-4 py-0 flex flex-col gap-[10px] items-center h-full"
+          className="px-1 xl:px-4 sm:px-2 pb-1 xl:pb-4 py-0 flex flex-col gap-[10px] items-center h-full"
           onClick={() => {
             setShowMore(!showMore);
           }}
@@ -151,7 +152,7 @@ const NavBar = () => {
         </Button>
       </div>
       {showMore && (
-        <div className="flex px-4 py-5">
+        <div className="flex px-1 py-1 sm:px-2 sm:py-2 md:py-3 md:px-3 xl:px-5 xl:py-5 lg:px-4 lg:py-4">
           {headerItems2nd.map((item, index) => (
             <HeaderItems
               key={index}
@@ -162,7 +163,7 @@ const NavBar = () => {
               }}
             />
           ))}
-          {headerItems2nd.slice(0, 2).map((item, index) => (
+          {headerItems.slice(0, 2).map((item, index) => (
             <HeaderItems
               key={index}
               props={{
@@ -174,7 +175,7 @@ const NavBar = () => {
           ))}
           <Button
             variant={"showMore"}
-            className="px-4 pb-4 py-0 flex flex-col gap-[10px] items-center h-full opacity-0 cursor-default"
+            className="px-1 xl:px-4 sm:px-2 pb-1 xl:pb-4 py-0 flex flex-col gap-[10px] items-center h-full opacity-0 cursor-default"
           >
             <div className="w-[35px] h-[35px]">
               <Image

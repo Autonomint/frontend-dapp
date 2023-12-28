@@ -15,6 +15,8 @@ import {
   TREASURY_SEPOLIA,
   OPTIONS_MATIC,
   OPTIONS_SEPOLIA,
+  USDT_MATIC,
+  USDT_SEPOLIA,
 } from "./constants/Addresses";
 import * as chains from "wagmi/chains";
 import { AmintABI } from "./constants/AmintAbi";
@@ -22,20 +24,29 @@ import { AbondABI } from "./constants/ABondAbi";
 import { CDSABI } from "./constants/CDSAbi";
 import { TreasuryAbi } from "./constants/TreasuryAbi";
 import { OPTIONSABI } from "./constants/OptionsAbi";
+import { USDT_ABI } from "./constants/UsdtAbi";
 
 export default defineConfig({
   out: "abiAndHooks.ts",
   contracts: [
-    {
-      name: "erc20",
-      abi: erc20ABI,
-    },
+    // {
+    //   name: "erc20",
+    //   abi: erc20ABI,
+    // },
     {
       name: "BorrowingContract",
       abi: BorrowingABI,
       address: {
         [chains.polygonMumbai.id]: BORROWING_MATIC,
         [chains.sepolia.id]: BORROWING_SEPOLIA,
+      },
+    },
+    {
+      name: "USDTContract",
+      abi: USDT_ABI,
+      address: {
+        [chains.polygonMumbai.id]: USDT_MATIC,
+        [chains.sepolia.id]: USDT_SEPOLIA,
       },
     },
     {

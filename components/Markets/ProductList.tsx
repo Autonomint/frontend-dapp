@@ -9,7 +9,8 @@ import snx from "@/app/assets/snx.svg";
 
 const ProductList = () => {
   return (
-    <div className="flex gap-6 min-[1440px]:gap-3 items-center">
+    <div className="flex flex-row gap-6 min-[1440px]:gap-3 items-center 2dppx:gap-6 flex-wrap lg:flex-nowrap">
+      <div className="flex w-full lg:w-[58%] gap-6 min-[1440px]:gap-3 2dppx:gap-6">
       <p className="flex items-center gap-2 whitespace-nowrap">
         AMINT can be bought from <ArrowRightIcon width={16} height={16} />
       </p>
@@ -18,29 +19,33 @@ const ProductList = () => {
         className="flex gap-[10px] items-center justify-center w-full min-w-[150px]"
       >
         <Image src={uniswap} width={32} height={32} alt="uniswap"></Image>
-        <p className="min-[1440px]:text-base text-sm">Uniswap</p>
+        <p className="min-[1440px]:text-base 2dppx:text-sm text-sm">Uniswap</p>
       </Button>
       <Button
         variant={"secondary"}
         className="flex gap-[10px] items-center justify-center w-full min-w-[150px]"
       >
         <Image src={cake} width={32} height={32} alt="uniswap"></Image>
-        <p className="min-[1440px]:text-base text-sm">Pancake</p>
+        <p className="min-[1440px]:text-base 2dppx:text-sm text-sm">Pancake</p>
       </Button>
+      </div>
+      <div className="flex w-full lg:w-[38%] gap-6 min-[1440px]:gap-3 2dppx:gap-6">
       <Button
         variant={"secondary"}
         className="flex gap-[10px] items-center justify-center w-full min-w-[150px]"
       >
         <Image src={sushi} width={32} height={32} alt="uniswap"></Image>
-        <p className="min-[1440px]:text-base text-sm">Sushiswap</p>
+        <p className="min-[1440px]:text-base 2dppx:text-sm text-sm">Sushiswap</p>
       </Button>
+      
       <Button
         variant={"secondary"}
         className="flex gap-[10px] items-center justify-center w-full min-w-[150px]"
       >
         <Image src={snx} width={32} height={32} alt="uniswap"></Image>
-        <p className="min-[1440px]:text-base text-sm">Synthetix</p>
+        <p className="min-[1440px]:text-base 2dppx:text-sm text-sm">Synthetix</p>
       </Button>
+      </div>
     </div>
   );
 };

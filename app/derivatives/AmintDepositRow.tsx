@@ -338,7 +338,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       <SheetContent
         className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen"}
       >
-        <div className="flex flex-col min-[1440px]:gap-6 gap-2">
+        <div className="flex flex-col min-[1440px]:gap-6 2dppx:gap-2 gap-2">
           <div className="flex w-full justify-end">
             <SheetClose asChild>
               <Button
@@ -354,7 +354,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
             </SheetClose>
           </div>
           <SheetHeader>
-            <SheetTitle className="text-textPrimary font-medium min-[1440px]:text-4xl text-2xl tracking-[-1.8px]">
+            <SheetTitle className="text-textPrimary font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
               Deposit #1
             </SheetTitle>
           </SheetHeader>
@@ -368,8 +368,8 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
                 }}
               />
             ))}
-            <div className="flex justify-between min-[1440px]:px-4 px-2 min-[1440px]:py-[10px] py-[5px] border-b border-lineGrey">
-              <p className="min-[1440px]:text-base text-sm text-textSecondary">
+            <div className="flex justify-between min-[1440px]:px-4 2dppx:px-2 px-2 min-[1440px]:py-[10px] 2dppx:py-[5px] py-[5px] border-b border-lineGrey">
+              <p className="min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary">
                 Total Amount accured
               </p>
               {!amountView ? (
@@ -382,7 +382,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
                   View
                 </Button>
               ) : (
-                <p className=" min-[1440px]:text-base text-textHighlight font-medium text-sm leading-none">{`3.42`}</p>
+                <p className=" min-[1440px]:text-base 2dppx:text-sm text-textHighlight font-medium text-sm leading-none">{`3.42`}</p>
               )}
             </div>
           </div>

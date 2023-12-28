@@ -16,6 +16,11 @@ module.exports = {
       },
     },
     extend: {
+      screens: {
+        "2dppx": {
+          raw: "(min-width: 1440px) and (min-resolution: 2dppx)",
+        },
+      },
       colors: {
         bgGrey: "#F4F8FF",
         textGrey: "#3A3A3A",
@@ -23,12 +28,12 @@ module.exports = {
         lineGrey: "#C4C4C4",
         textPrimary: "#041A50",
         textSecondary: "#5B5B5B",
-        textHighlight:'#020202',
+        textHighlight: "#020202",
         borderBlue: "#00B2BF",
-        toastSuccess:'#268730',
-        toastSuccessClose:'#57C262',
-        toastError:'#B43939',
-        toastErrorClose:'#C25757'
+        toastSuccess: "#268730",
+        toastSuccessClose: "#57C262",
+        toastError: "#B43939",
+        toastErrorClose: "#C25757",
       },
       keyframes: {
         "accordion-down": {
