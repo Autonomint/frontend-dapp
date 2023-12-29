@@ -2,16 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## TechStack We are using
 
-Next-js
-Typescript
-React/Tanstack-Query
-TailwindCSS
-Wagmi and viem for blockchain Interactions
-wagmi-cli for custom hooks for blockchain
-Recharts for charts
-Sonner for toasts
-ShadCn Ui library
-React hook form ,zod and Radix-Ui which comes inbuilt in shadcn ui library
+| Technology | Purpose | |--------------------------|----------------------------------------------| | Next.js | Framework for building React applications | | TypeScript | Programming language for static type-checking | | React Query | Library for managing remote data | | Tailwind CSS | Utility-first CSS framework | | Wagmi | Blockchain interaction library | | view | Blockchain interaction library | | wagmi-cli | CLI tool for custom blockchain hooks | | Recharts | Library for creating charts | | Sonner | Library for displaying toasts | | ShadCn UI | UI library for React applications | | React Hook Form | Library for building forms with React | | Zod | Library for runtime type checking | | Radix-UI | UI library included in ShadCn UI |
 
 ## Setting Up
 
