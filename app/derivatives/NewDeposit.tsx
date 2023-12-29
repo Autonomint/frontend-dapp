@@ -485,6 +485,7 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
     });
   }
   //change schema based on the usdtDepositTillNow and usdtLimit
+  //This is not a good way to do it but it works and is used here because i lacked the knowledge to do this properly
   useEffect(() => {
     if (usdtAmountDepositedTillNow < usdtLimit) {
       const updatedSchema = z.object({
