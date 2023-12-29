@@ -109,16 +109,21 @@ const InitialformSchema = z.object({
 });
 
 const NewDeposit = () => {
+  // Define the initial state for the open variable for sheet opening and closing
   const [open, setOpen] = useState(false);
+  // Define the initial state for the tokensEnabled variable
   const [tokensEnabled, setTokensEnabled] = useState<TokensState>({
-    USDT: true,
-    COMP: false,
-    USDC: false,
+    USDT: true, // USDT token is initially enabled
+    COMP: false, // COMP token is initially disabled
+    USDC: false, // USDC token is initially disabled
   });
+  // state for depositVal variable which we will get from events while depositing
   const depositVal = useRef<bigint>(0n);
   const { address } = useAccount();
   const chainId = useChainId();
+  // managing toastId for custom toast
   const toastId = useRef<number | string>("");
+  // Define the initial state for the form schema
   const formSchema = useRef(InitialformSchema);
   const form = useForm<z.infer<typeof formSchema.current>>({
     resolver: zodResolver(formSchema.current),
@@ -132,14 +137,13 @@ const NewDeposit = () => {
     },
   });
   const queryClient = useQueryClient();
+  // watch the form values
   const [amintAmnt, lockIn, liquidationGains, usdtAmnt] = form.watch(
     [
       "AmintDepositAmount",
       "lockInPeriod",
       "liquidationGains",
       "USDTDepositAmount",
-      "COMPDepositAmount",
-      "USDCDepositAmount",
     ],
     {
       AmintDepositAmount: undefined,
@@ -148,26 +152,36 @@ const NewDeposit = () => {
       USDTDepositAmount: undefined,
     }
   );
-  const { data: ethPrice } = useBorrowingContractGetUsdValue({
+  // get eth price from Borrowing contract and store it in ethPrice and setting default value to 0n
+  const { data: ethPrice = 0n } = useBorrowingContractGetUsdValue({
     staleTime: 10 * 1000,
   });
-
+  // get usdt limit from CDS contract and store it in usdtLimit and setting default value to 0n
   const { data: usdtLimit = 0n } = useCdsUsdtLimit({ watch: true });
+  // get usdt amount deposited till now from CDS contract and store it in usdtAmountDepositedTillNow and setting default value to 0n
   const { data: usdtAmountDepositedTillNow = 0n } =
     useCdsUsdtAmountDepositedTillNow({ watch: true });
+  // get ratio from CDS contract and store it in ratio
   const { data: ratio } = useCdsAmintLimit({ staleTime: 60 * 1000 });
-  //usdt approval for matic and sepolia chain only
+  // usdt approval
   const {
-    data: usdtallowance,
+    data: usdtApproveData,
     write: usdtWrite,
     isSuccess: usdtApproved,
   } = useUsdtContractApprove();
+  // get total index from CDS contract and store it in totalCDSIndex
   const { data: totalCDSIndex } = useQuery({
     queryKey: ["totalCDSIndex"],
     queryFn: () => getCDSTotalIndex(address ? address : undefined),
     enabled: !!address,
     staleTime: 10 * 1000,
   });
+  /**
+   * Retrieves the total index from the CDS API for a given address.
+   *
+   * @param {`0x${string}` | undefined} address - The address to retrieve the total index for.
+   * @return {Promise} A promise that resolves to the JSON response from the API.
+   */
   function getCDSTotalIndex(address: `0x${string}` | undefined) {
     return fetch(`${BACKEND_API_URL}/cds/index/${chainId}/${address}`).then(
       (response) => response.json()
@@ -176,68 +190,92 @@ const NewDeposit = () => {
   const { mutate } = useMutation({
     mutationFn: storeToCDSBackend,
     onError(error) {
+      // Log any errors that occur during the mutation
       console.log(error);
     },
     onSettled() {
+      // Invalidate queries to update related data after the mutation is completed
       queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
       queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
+
+      // Reset form fields and state after the mutation is completed
       reset?.();
       amintReset?.();
       form.reset();
     },
   });
-  async function storeToCDSBackend(address: `0x${string}` | undefined) {
-    const liqAmnt =
-      (((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
+  /**
+ * Stores the data to the CDS backend.
+ *
+ * @param address - The address to store.
+ */
+async function storeToCDSBackend(address: `0x${string}` | undefined) {
+  // Calculate the liquidation amount based on amintAmnt and usdtAmnt for now i am just adding usdt and amint considering both as 18 decimals but as usdt is 6 decimals you will have to manage it yourself or ask abhishek sir
+  const liqAmnt =
+    (((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
 
-    const colType =
-      amintAmnt !== 0 && usdtAmnt !== 0
-        ? "AMINT&USDT"
-        : amintAmnt !== 0
-        ? "AMINT"
-        : usdtAmnt !== 0
-        ? "USDT"
-        : "NONE";
-    let bodyValue = JSON.stringify({
-      address: address,
-      index: totalCDSIndex ? totalCDSIndex + 1 : 1,
-      chainId: chainId,
-      depositedAmint: `${amintAmnt}`,
-      depositedUsdt: `${usdtAmnt}`,
-      collateralType: colType,
-      depositedTime: `${Date.now()}`,
-      ethPriceAtDeposit: Number(ethPrice ? ethPrice : 0) / 100,
-      aprAtDeposit: 5,
-      lockingPeriod: Number(lockIn),
-      optedForLiquidation: liquidationGains,
-      liquidationAmount: `${liqAmnt}`,
-      depositVal: depositVal.current,
-    });
-    console.log(bodyValue);
-    const response = await fetch(`${BACKEND_API_URL}/cds/depositAmint`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: bodyValue,
-    });
+  // Determine the collateral type based on amintAmnt and usdtAmnt
+  const colType =
+    amintAmnt !== 0 && usdtAmnt !== 0
+      ? "AMINT&USDT"
+      : amintAmnt !== 0
+      ? "AMINT"
+      : usdtAmnt !== 0
+      ? "USDT"
+      : "NONE";
 
-    const result = await response.json();
+  // Create the body value for the API request
+  let bodyValue = JSON.stringify({
+    address: address,
+    index: totalCDSIndex ? totalCDSIndex + 1 : 1,
+    chainId: chainId,
+    depositedAmint: `${amintAmnt}`,
+    depositedUsdt: `${usdtAmnt}`,
+    collateralType: colType,
+    depositedTime: `${Date.now()}`,
+    ethPriceAtDeposit: Number(ethPrice ? ethPrice : 0) / 100,
+    aprAtDeposit: 5,
+    lockingPeriod: Number(lockIn),
+    optedForLiquidation: liquidationGains,
+    liquidationAmount: `${liqAmnt}`,
+    depositVal: depositVal.current,
+  });
 
-    if (!response.ok) {
-      throw new Error(result.message);
-    }
+  // Log the body value for debugging purposes
+  console.log(bodyValue);
 
-    return result;
+  // Send the API request to the CDS backend
+  const response = await fetch(`${BACKEND_API_URL}/cds/depositAmint`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: bodyValue,
+  });
+
+  // Parse the response as JSON
+  const result = await response.json();
+
+  // If the response is not successful, throw an error with the result message
+  if (!response.ok) {
+    throw new Error(result.message);
   }
 
+  // Return the result
+  return result;
+}
+
+  // Use the useCdsDeposit hook to handle the CDS deposit functionality
   const {
     write,
     data: CdsDepositData,
     reset,
   } = useCdsDeposit({
-    onError(error) {
+    // Handle errors during the CDS deposit process
+    onError: (error) => {
       console.log(error);
+
+      // Show a custom toast notification for the error
       toast.custom(
         (t) => (
           <div>
@@ -255,12 +293,17 @@ const NewDeposit = () => {
         ),
         { id: toastId.current }
       );
+
+      // Dismiss the toast notification after 5 seconds
       setTimeout(() => {
         toast.dismiss(toastId.current);
       }, 5000);
     },
+    // Handle the successful completion of the CDS deposit process
     onSuccess: (data) => {
       console.log(data);
+
+      // Show a custom toast notification for the successful transaction
       toast.custom(
         (t) => {
           return (
@@ -280,16 +323,21 @@ const NewDeposit = () => {
             </div>
           );
         },
+        // Set the duration of the toast notification to be infinite
         { duration: Infinity, id: toastId.current }
       );
     },
   });
   const { isLoading, isSuccess: cdsDepositSuccess } = useWaitForTransaction({
+    //transaction hash to watch to check for success or error in this case we are watching for cdsdeposit transaction hash 
     hash: CdsDepositData?.hash,
+    // Callback function called when the transaction is successful
     onSuccess(data) {
+      // Show a custom toast notification
       toast.custom(
         (t) => (
           <div>
+            {/* CustomToast component */}
             <CustomToast
               props={{
                 t: toastId.current,
@@ -307,29 +355,37 @@ const NewDeposit = () => {
         ),
         { id: toastId.current }
       );
+      // Retrieve the relevant data from the transaction logs
       const dataLogs =
         chainId === 80001 ? data.logs[3].data : data.logs[2].data;
+      // Decode event logs using the provided ABI and event name
       const { eventName, args } = decodeEventLogsFromAbi(
         cdsABI,
+        //topic to decode event variables
         ["0x0a5985aa28fedd5d60e042a47ad0dcb83381febf41639cd599c154a7fee13ca6"],
         "Deposit",
         dataLogs
       ) as { eventName: string; args: { depositVal: bigint } };
       console.log(eventName, args?.depositVal);
+      // Update the deposit value
       depositVal.current = args?.depositVal;
+      //store data to backend
       mutate(address);
+      // Dismiss the toast notification after 5 seconds
       setTimeout(() => {
         toast.dismiss(toastId.current);
       }, 5000);
     },
   });
 
+  // Destructure the necessary values from the hook
   const {
-    isLoading: isApproveLoading,
-    write: amintApprove,
-    data: amintApproveData,
-    reset: amintReset,
+    isLoading: isApproveLoading,  // Flag to indicate if the approve request is loading
+    write: amintApprove,  // Function to initiate the approve request
+    data: amintApproveData,  // Data returned from the approve request
+    reset: amintReset,  // Function to reset the approve request state
   } = useAmintApprove({
+    // Handle error and show a custom toast notification
     onError(error) {
       toast.custom(
         (t) => {
@@ -351,8 +407,10 @@ const NewDeposit = () => {
         },
         { duration: 5000 }
       );
+      
       setOpen(false);
     },
+    // Handle success and show a custom toast notification
     onSuccess: (data) => {
       toast.custom(
         (t) => {
@@ -375,11 +433,15 @@ const NewDeposit = () => {
         },
         { duration: Infinity }
       );
+      //closing sheet so that user can click on the links from the toast
       setOpen(false);
     },
   });
   const { data: amintTransactionAllowed } = useWaitForTransaction({
+    // TODO: Add OnError Custom Toast
+    // look for approval transaction hash
     hash: amintApproveData?.hash,
+    // Display a custom toast notification
     onSuccess() {
       toast.custom(
         (t) => {
@@ -401,20 +463,18 @@ const NewDeposit = () => {
         },
         { id: toastId.current }
       );
-      // write?.({
-      //   args: [
-      //     BigInt(parseEther(amintAmnt.toString())),
-      //     BigInt(parseEther(((amintAmnt * 80) / 100).toString())),
-      //     liquidationGains,
-      //   ],
-      // });
     },
   });
-
+  /**
+   * Handles the form submission.
+   *
+   * @param {typeof formSchema.current} values - The values submitted in the form.
+   */
   function onSubmit(values: z.infer<typeof formSchema.current>) {
     console.log(values);
     const liqAmnt =
       (((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
+      // call the CdsDeposit function from blockchain with dynamic args
     write?.({
       args: [
         BigInt(usdtAmnt ? usdtAmnt : 0),
@@ -424,7 +484,7 @@ const NewDeposit = () => {
       ],
     });
   }
-
+  //change schema based on the usdtDepositTillNow and usdtLimit
   useEffect(() => {
     if (usdtAmountDepositedTillNow < usdtLimit) {
       const updatedSchema = z.object({
@@ -522,8 +582,11 @@ const NewDeposit = () => {
   }, [usdtLimit, usdtAmountDepositedTillNow]);
 
   useEffect(() => {
+    // Check if cdsDepositSuccess is true
     if (cdsDepositSuccess) {
+      // Call reset function if it exists
       reset?.();
+      // Call amintReset function if it exists
       amintReset?.();
     }
   }, [cdsDepositSuccess]);
@@ -539,6 +602,7 @@ const NewDeposit = () => {
         </p>
       </div>
       <div className="flex gap-[10px]">
+        {/* Currently we are not Using this button but later we might need this button so uncomment when needed */}
         {/* <Button variant={"outline"}>
           <p className="text-transparent font-semibold text-base text-center bg-clip-text bg-gradient-to-b from-[#808080] to-[#000] ">
             Withdraw Fees from All Deposits
@@ -980,7 +1044,7 @@ const NewDeposit = () => {
                     type="submit"
                     variant={"primary"}
                     className="text-white"
-                    //   disabled={!write}
+                    //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                     disabled={
                       usdtAmountDepositedTillNow < usdtLimit && !usdtApproved
                     }

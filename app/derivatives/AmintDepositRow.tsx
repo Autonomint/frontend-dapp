@@ -54,6 +54,7 @@ interface DepositDetail {
 }
 
 const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
+  // kept this inside because every row is going to have different state
   const depositDetails = [
     {
       headline: "AMINT Deposited",
@@ -88,25 +89,33 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       value: "Yes",
     },
   ];
+  // manage the sheet opening and closing state
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [amountView, setAmountView] = React.useState(false);
+  // manage the deposit details array
   const [depositData, setDepositData] = useState(depositDetails);
   const [status, setStatus] = useState(details.status);
+  // state for opening and closing confirmNotice
   const [openConfirmNotice, setOpenConfirmNotice] = useState(false);
+  // manage toastId for custom toast
   const toastId = useRef<string | number>("");
   const { address } = useAccount();
+  // get current chainId from wagmi useChainID hook
   const chainId = useChainId();
   const eventsValue = useRef(events);
   const queryClient = useQueryClient();
   const { data: ethPrice } = useBorrowingContractGetUsdValue({
-    staleTime: 10 * 1000,
+    staleTime: 10 * 1000, //refresh eth price after 10 seconds
   });
+  // get the current apy
   const { data: currentApy } = useBorrowingContractGetApy({
     enabled: !!address,
   });
   const { write: cdsWithdraw, data: cdsWithdrawData } = useCdsWithdraw({
+    // onError callback function
     onError(error) {
       console.log(error);
+      // Display custom toast with error message
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -128,9 +137,12 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
         { duration: 5000 }
       );
     },
+    // onSuccess callback function
     onSuccess(data) {
       console.log(data?.hash);
+      // Close the sheet
       setSheetOpen(false);
+      // Display custom toast with success message and transaction hash
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -145,6 +157,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
+                  spinner: true,
                 }}
               />
             </div>
@@ -155,40 +168,57 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
     },
   });
 
+  // Use the `mutate` function from the `useMutation` hook
   const { mutate: backendCDSWithdraw } = useMutation({
+    // Specify the mutation function
     mutationFn: withdrawCDSFromBackend,
+
+    // Handle any errors that occur during the mutation
     onError(error) {
       console.log(error);
       queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
     },
+
+    // Perform actions after the mutation is completed or rejected
     onSettled() {
+      // Invalidate the query for `dCDSdepositorsData`
       queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
+
+      // Invalidate the queries for `dCDSdeposits`
       queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
     },
   });
   useWaitForTransaction({
-    hash: cdsWithdrawData?.hash,
-    confirmations: 1,
+    hash: cdsWithdrawData?.hash, // The transaction hash to wait for
+    confirmations: 1, // Number of confirmations required for success
     onSuccess(data) {
       const dataLogs =
-        chainId === 80001 ? data.logs[3].data : data.logs[3].data;
+        chainId === 80001 ? data.logs[3].data : data.logs[3].data; // Get the transaction logs data
+
+      // Decode event logs using the provided ABI and event name
       const { eventName, args } = decodeEventLogsFromAbi(
-        cdsABI,
-        ["0x02d30220fb33c212455a8cbb2cf068095e080a18a527044b34360e67a705addd"],
-        "Withdraw",
-        dataLogs
+        cdsABI, // ABI of the contract
+        ["0x02d30220fb33c212455a8cbb2cf068095e080a18a527044b34360e67a705addd"], // Topics to decode event variables
+        "Withdraw", // Event name to filter
+        dataLogs // Data to decode
       ) as {
         eventName: string;
         args: { withdrewAmint: bigint; withdrawETH: bigint };
       };
+
+      // Update the current events value with the decoded values
       eventsValue.current = {
         withdrewAmint: args?.withdrewAmint.toString(),
         withdrawETH: args?.withdrawETH.toString(),
       };
-      backendCDSWithdraw(address);
+
+      backendCDSWithdraw(address); // Perform the backend CDS withdraw operation
+
+      // Show a custom toast notification
       toast.custom(
         (t) => (
           <div>
+            {/* CustomToast component */}
             <CustomToast
               props={{
                 t: toastId.current,
@@ -199,18 +229,30 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
                 linkLabel: "View Transaction",
                 toastClosebuttonHoverColor: "#90e398",
                 toastClosebuttonColor: "#57C262",
+                completed: true,
               }}
             />
           </div>
         ),
         { id: toastId.current }
       );
+
+      // Dismiss the toast notification after 5 seconds
       setTimeout(() => {
         toast.dismiss(toastId.current);
       }, 5000);
     },
   });
-  async function withdrawCDSFromBackend(address: `0x${string}` | undefined) {
+  /**
+   * Asynchronously withdraws CDS from the backend.
+   *
+   * @param {`0x${string}` | undefined} address - The address to withdraw CDS from.
+   * @return {Promise<any>} - A promise that resolves to the result of the withdrawal.
+   */
+  async function withdrawCDSFromBackend(
+    address: `0x${string}` | undefined
+  ): Promise<any> {
+    // Prepare the body value for the request
     let bodyValue = JSON.stringify({
       address: address,
       index: details.index,
@@ -222,7 +264,11 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       fees: parseEther("4").toString(),
       feesWithdrawn: parseEther("2").toString(),
     });
+
+    // Log the body value
     console.log(bodyValue);
+
+    // Send the request to the backend API
     const response = await fetch(`${BACKEND_API_URL}/cds/withdraw`, {
       method: "PATCH",
       headers: {
@@ -231,14 +277,20 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       body: bodyValue,
     });
 
+    // Parse the response JSON
     const result = await response.json();
 
+    // Check if the response is not OK and throw an error if so
     if (!response.ok) {
       throw new Error(result.message);
     }
 
+    // Return the result
     return result;
   }
+  //TODO: add a mutation hook to use this calculateWithdrawAmount before user tries to withdraw from CDS
+  //this function calculates the withdraw amount
+  //currently not using this anywhere as this is to be done after we have got the deposits working fully
   async function calculateWithdrawAmount(
     address: `0x${string}` | undefined,
     index: number,
@@ -271,37 +323,47 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
 
     return result;
   }
+  /**
+   * Updates the deposit data based on the provided details.
+   * If the details are available, it updates each value in the depositData array.
+   * If the details are not available, it sets each value in the depositData array to '-'.
+   */
   function handleDepositData() {
     if (details) {
       const updatedData = [...depositData];
-      updatedData[0].value = details.depositedAmint;
-      updatedData[1].value = `${details.ethPriceAtDeposit}`;
-      updatedData[2].value = formatDateFromUnixTimestamp(details.depositedTime);
-      updatedData[3].value = `${details.lockingPeriod} days`;
-      updatedData[4].value = calculateTimeDifference(details.depositedTime);
-      updatedData[5].value = `${details.aprAtDeposit}%`;
-      updatedData[6].value = `${details.aprAtDeposit}%`;
-      updatedData[7].value = details.optedForLiquidation ? "Yes" : "No";
-      setDepositData(updatedData);
+      updatedData[0].value = details.depositedAmint; // Update depositedAmint value
+      updatedData[1].value = `${details.ethPriceAtDeposit}`; // Update ethPriceAtDeposit value
+      updatedData[2].value = formatDateFromUnixTimestamp(details.depositedTime); // Update depositedTime value and format time in 'DD/MM/YYYY'
+      updatedData[3].value = `${details.lockingPeriod} days`; // Update lockingPeriod value
+      updatedData[4].value = calculateTimeDifference(details.depositedTime); // Update time difference value
+      updatedData[5].value = `${details.aprAtDeposit}%`; // Update aprAtDeposit value
+      updatedData[6].value = `${details.aprAtDeposit}%`; // Update aprAtDeposit value
+      updatedData[7].value = details.optedForLiquidation ? "Yes" : "No"; // Update optedForLiquidation value
+      setDepositData(updatedData); // Update the depositData state with updatedData
     } else {
       const updatedData = [...depositData];
-      updatedData[0].value = "-";
-      updatedData[1].value = "-";
-      updatedData[2].value = "-";
-      updatedData[3].value = "-";
-      updatedData[4].value = "-";
-      updatedData[5].value = "-";
-      updatedData[6].value = "-";
-      updatedData[7].value = "-";
-      setDepositData(updatedData);
+      // If details are not available, set each value in depositData to '-'
+      updatedData.forEach((data) => {
+        data.value = "-";
+      });
+      setDepositData(updatedData); // Update the depositData state with updatedData
     }
   }
+  /**
+   * Handles the withdrawal.
+   *
+   * @param {type} paramName - description of parameter
+   * @return {type} description of return value
+   */
   function handleWithdrawal() {
     cdsWithdraw?.({ args: [BigInt(details.index)] });
   }
 
   useEffect(() => {
+    // Call the handleDepositData function
     handleDepositData();
+    // Set the status to the value of details.status
+    // we are setting the status any time details change meaning when deposit is withdraw we want to change the status of it to withdrew and that is what this code is doing
     setStatus(details.status);
   }, [details]);
 
@@ -310,8 +372,11 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       key={details.id}
       open={sheetOpen}
       onOpenChange={() => {
+        // Toggle the sheetOpen state
         setSheetOpen(!sheetOpen);
+        // Reset the open confirm notice state
         setOpenConfirmNotice(false);
+        // Reset the amount view
         setAmountView(false);
       }}
     >
@@ -325,6 +390,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
         </TableCell>
         <TableCell className="text-textGrey">
           <SheetTrigger>
+            {/* Calculate the time difference */}
             {calculateTimeDifference(details.depositedTime)}
           </SheetTrigger>
         </TableCell>
@@ -355,14 +421,16 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
           </div>
           <SheetHeader>
             <SheetTitle className="text-textPrimary font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
-              Deposit #1
+              Deposit {`#${details.index}`}
             </SheetTitle>
           </SheetHeader>
           <div className="flex flex-col">
             {depositData.map((detail, index) => (
+              // Iterate over the depositData array and create a SheetRow for each element
               <SheetRow
                 key={index}
                 props={{
+                  // Pass the headline and value as props to the SheetRow component
                   heading: detail.headline,
                   value: detail.value,
                 }}
@@ -372,6 +440,8 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
               <p className="min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary">
                 Total Amount accured
               </p>
+              // If amountView is true, render the Button component or render
+              the amount value
               {!amountView ? (
                 <Button
                   variant={"ghostOutline"}
@@ -387,7 +457,9 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
             </div>
           </div>
           <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
+
           {openConfirmNotice ? (
+            // If openConfirmNotice is true, render the ConfirmNoticeCds component
             <>
               <ConfirmNoticeCds
                 handleWithdrawal={handleWithdrawal}
@@ -395,6 +467,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
               />
             </>
           ) : (
+            // If openConfirmNotice is false, render the Button component
             <Button
               variant={"primary"}
               className="text-white"

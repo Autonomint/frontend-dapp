@@ -1,17 +1,55 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## TechStack We are using
+
+Next-js
+Typescript
+React/Tanstack-Query
+TailwindCSS
+Wagmi and viem for blockchain Interactions
+wagmi-cli for custom hooks for blockchain
+Recharts for charts
+Sonner for toasts
+ShadCn Ui library
+React hook form ,zod and Radix-Ui which comes inbuilt in shadcn ui library
+
+## Setting Up
+
+see .env.example and create a .env file with your credentials
+
+## Setting Up Contracts Address and ABI
+
+Go to constants folder and open Addresses.ts file where you can change contract addresses
+and Abi of all these contracts are in the same fodler which u can change when ever there is change in your smart contracts abi
+
+## Setting Up Custom Hooks for smartContracts
+
+After You have Setup the Addresses and Abi you can now setup your custom hooks for smart contracts
+
+Open wagmi.config.ts file and add contracts with their name of custom hooks and their abi and chain Wise addresses
+
+After that is done run
+
+```bash
+npx wagmi generate
+```
+
+And You will get your newly created abiAndHooks.ts file as output in root directory with all the custom hooks for blockchain interactions
+
+For more information you can visit [Wagmi-CLI Docs](https://wagmi.sh/cli/getting-started)
+
 ## Getting Started
 
-First, run the development server:
+Now you have setup everything and we can continue with the project. We now need to first install dependencies with the command below
+
+```bash
+npm install --legacy-peer-deps
+```
+
+Then run the following
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

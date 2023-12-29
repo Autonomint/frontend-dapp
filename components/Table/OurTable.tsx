@@ -51,7 +51,9 @@ const DepositAndWithDrawTable = ({
         </TableRow>
       </TableHeader>
       <TableBody>
+        {/* if there is tableData map over it */}
         {tableData && tableData?.map((details, index) => (
+          // Iterate over each element in the tableData array
           <TableRows key={details.id} details={details} interest={3} handleRefetch={handleRefetch} />
         ))}
       </TableBody>

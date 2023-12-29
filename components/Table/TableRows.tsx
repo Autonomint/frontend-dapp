@@ -145,19 +145,26 @@ const TableRows = ({
   const toastId = useRef<string | number>("");
   const queryClient = useQueryClient();
   const { address } = useAccount();
+  // to store eventsValue we get from events while withdrawing
   const eventsValue = useRef(events);
+  // get eth price from BorrowingContract getUSDValue function
   const { data: ethPrice } = useBorrowingContractRead({
     functionName: "getUSDValue",
     staleTime: 10 * 1000,
   });
 
   const {
+    // Data for the cumulative rate
     data: cumulativeRate,
+    // Function to calculate the cumulative rate
     write: calculateCumulativeRate,
+    // Function to reset the cumulative rate
     reset: cumulativeReset,
   } = useBorrowingContractCalculateCumulativeRate({
+    // Error handling
     onError(error) {
       console.log(error);
+      // Show custom toast notification for error
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -179,7 +186,9 @@ const TableRows = ({
         { duration: 5000 }
       );
     },
+    // Success handling
     onSuccess(data, variables, context) {
+      // Show custom toast notification for success
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -197,46 +206,51 @@ const TableRows = ({
             />
           );
         },
+        // Set duration to Infinity for persistent toast
         { duration: Infinity }
       );
     },
+    // Settled handling
     onSettled() {
+      // Close the sheet
       setSheetOpen(false);
+      // Close the confirm notice
       setOpenConfirmNotice(false);
     },
   });
+  //get last cumulative rate from BorrowingContract using our custom useBorrowingContractLastCumulativeRate hook
   const { data: lastCumulativeRate } = useBorrowingContractLastCumulativeRate({
     watch: true,
   });
 
   const { isLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
-    hash: cumulativeRate?.hash,
-    confirmations: 3,
+    hash: cumulativeRate?.hash, // Transaction hash to wait for
+    confirmations: 3, // Number of confirmations required
     onSuccess(data) {
-      console.log("transaction completed", cumulativeRate?.hash, data);
+      console.log("transaction completed", cumulativeRate?.hash, data); // Log transaction completion data
       toast.custom(
         (t) => (
           <CustomToast
             props={{
-              t: toastId.current,
-              toastMainColor: "#268730",
+              t: toastId.current, // Toast ID
+              toastMainColor: "#268730", // Main color of the toast
               headline:
-                "Transaction Completed. Please Approve Amint to move Forward",
-              transactionHash: cumulativeRate?.hash,
-              linkLabel: "View Transaction",
-              toastClosebuttonHoverColor: "#90e398",
-              toastClosebuttonColor: "#57C262",
+                "Transaction Completed. Please Approve Amint to move Forward", // Headline of the toast
+              transactionHash: cumulativeRate?.hash, // Transaction hash to display
+              linkLabel: "View Transaction", // Label for transaction link
+              toastClosebuttonHoverColor: "#90e398", // Hover color of the close button
+              toastClosebuttonColor: "#57C262", // Color of the close button
             }}
           />
         ),
-        { id: toastId.current }
+        { id: toastId.current } // ID of the toast
       );
       amintApprove?.({
         args: [
           borrowingContractAddress[
             chainId as keyof typeof borrowingContractAddress
-          ] as `0x${string}`,
-          totalAmintAmount.current,
+          ] as `0x${string}`, // address of borrowing contract based on chainId
+          totalAmintAmount.current, // Total amint amount
         ],
       });
     },
@@ -247,9 +261,11 @@ const TableRows = ({
     write: amintApprove,
     reset: approveReset,
   } = useAmintApprove();
+  // Use the useWaitForTransaction hook to get the amint transaction status
   const { data: amintTransactionAllowed } = useWaitForTransaction({
-    hash: amintApproveData?.hash,
+    hash: amintApproveData?.hash, // Hash of the amint approval transaction
     onSuccess(data) {
+      // Show a custom toast when the transaction is successful
       toast.custom(
         (t) => {
           return (
@@ -258,8 +274,7 @@ const TableRows = ({
                 props={{
                   t: toastId.current,
                   toastMainColor: "#268730",
-                  headline:
-                    "Amint  is Approved,Please Confirm Final Withdrawal",
+                  headline: "Amint is Approved,Please Confirm Final Withdrawal",
                   transactionHash: amintApproveData?.hash,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
@@ -271,6 +286,8 @@ const TableRows = ({
         },
         { id: toastId.current }
       );
+
+      // Perform the borrow withdrawal after the transaction is successful
       borrowWithdraw?.({
         args: [
           address as `0x${string}`,
@@ -282,11 +299,12 @@ const TableRows = ({
     },
   });
   const {
-    write: borrowWithdraw,
-    reset: borrowReset,
-    data: borrowWithdrawData,
+    write: borrowWithdraw, // Function for borrowing withdrawal
+    reset: borrowReset, // Function for resetting borrowing
+    data: borrowWithdrawData, // Data for borrowing withdrawal
   } = useBorrowingContractWithDraw({
-    onSuccess(data, variables, context) {
+    onSuccess(data) {
+      // Success callback for borrowing withdrawal
       toast.custom(
         (t) => {
           return (
@@ -308,7 +326,8 @@ const TableRows = ({
         { id: toastId.current }
       );
     },
-    onError(error, variables, context) {
+    onError(error) {
+      // Error callback for borrowing withdrawal
       toast.custom(
         (t) => (
           <div>
@@ -326,22 +345,29 @@ const TableRows = ({
         { id: toastId.current }
       );
       setTimeout(() => {
+        // Dismiss the toast after 5 seconds
         toast.dismiss(toastId.current);
       }, 5000);
     },
   });
   const {
-    isLoading: borrowWithdrawisLoading,
-    isSuccess: borrowWithdrawtransactionSuccess,
+    isLoading: borrowWithdrawisLoading, // Flag indicating if the transaction for borrowing and withdrawing is loading
+    isSuccess: borrowWithdrawtransactionSuccess, // Flag indicating if the transaction for borrowing and withdrawing was successful
   } = useWaitForTransaction({
-    hash: borrowWithdrawData?.hash,
-    confirmations: 1,
+    hash: borrowWithdrawData?.hash, // Hash of the transaction for borrowing and withdrawing
+    confirmations: 1, // Number of confirmations required for the transaction
     onSuccess(data) {
+      // Callback function executed when the transaction is successful
       console.log("transaction completed", borrowWithdrawData?.hash, data);
+
+      // Get data logs based on the chain ID
       const dataLogs =
         chainId === 80001 ? data.logs[7].data : data.logs[6].data;
+
+      // Decode event logs from ABI
       const { eventName, args } = decodeEventLogsFromAbi(
         borrowingContractABI,
+        //topics to filter and decode event variables
         ["0x2dc3b614e32706dcf24286e69af4692f4b2c24fc339d659e80b26d49379b6914"],
         "Withdraw",
         dataLogs
@@ -349,11 +375,15 @@ const TableRows = ({
         eventName: string;
         args: { borrowDebt: bigint; withdrawAmount: bigint; noOfAbond: bigint };
       };
+
+      // Update current events value
       eventsValue.current = {
         borrowDebt: args?.borrowDebt.toString(),
         withdrawAmount: args?.withdrawAmount.toString(),
         noOfAbond: args?.noOfAbond.toString(),
       };
+
+      // Perform backend withdraw
       backendWithdraw?.({
         address: address as `0x${string}`,
         index: details.index,
@@ -364,6 +394,8 @@ const TableRows = ({
         amountYetToWithdraw: eventsValue.current.withdrawAmount,
         noOfAbond: eventsValue.current.noOfAbond,
       });
+
+      // Display custom toast for successful transaction
       toast.custom(
         (t) => (
           <CustomToast
@@ -380,14 +412,20 @@ const TableRows = ({
         ),
         { id: toastId.current }
       );
+
+      // Dismiss toast after 5 seconds
       setTimeout(() => {
         toast.dismiss(toastId.current);
       }, 5000);
+
+      // Reset approve, cumulative, and borrow values
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
     },
     onError(error) {
+      // Callback function executed when there is an error in the transaction
+      // Display custom toast for error
       toast.custom(
         (t) => (
           <div>
@@ -405,23 +443,34 @@ const TableRows = ({
         ),
         { duration: 5000, id: toastId.current }
       );
+
+      // Reset approve, cumulative, and borrow values
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
     },
   });
+  //using custom hook to mutate backend withdraw
   const {
     mutate: backendWithdraw,
     reset: backendWithdrawReset,
     isSuccess: backendWithdrawSuccess,
   } = useWithdrawFromBackend(handleRefetch);
 
+  /**
+   * Handles the withdrawal time based on the current value of withdrawalTime.
+   *
+   */
   function handleWithdrawalTime() {
     if (withdrawalTime === "DEPOSITED") {
       // write?.();
+      /*
+      Call calculateCumulativeRate function to calculate the cumulative rate before withdrawal and then we are calling approval function to approve the withdrawal and then finally we are withdrawing on success of approval
+      */
       calculateCumulativeRate?.();
       // setOpenConfirmNotice(false);
     } else if (withdrawalTime === "WITHDREW1") {
+      //TODO you have to manage second withdrawal it is not handled currently and simply shows a toast message
       toast.custom(
         (t) => (
           <div>
@@ -447,7 +496,13 @@ const TableRows = ({
       console.log(withdrawalTime);
     }
   }
+  /**
+   * Updates the deposit data based on the provided details.
+   * If the details are available, it updates each value in the depositData array.
+   * If the details are not available, it sets each value in the depositData array to '-'.
+   */
   function handleDepositData() {
+    // Calculate the totalAmintAmnt
     const totalAmintAmnt =
       BigInt(
         BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
@@ -456,6 +511,7 @@ const TableRows = ({
     totalAmintAmount.current = totalAmintAmnt;
 
     if (details) {
+      // If details are available, update each value in the depositData array
       const updatedData = [...depositData];
       updatedData[0].value = details.depositedAmount;
       updatedData[1].value = `${details.ethPrice}`;
@@ -472,6 +528,7 @@ const TableRows = ({
         : "-";
       setDepositData(updatedData);
     } else {
+      // If details are not available, set each value in the depositData array to '-'
       const updatedData = [...depositData];
       updatedData[0].value = "-";
       updatedData[1].value = "-";
@@ -523,16 +580,12 @@ const TableRows = ({
 
   useEffect(() => {
     handleDepositData();
+    //set latest status from backend
     setWithdrawalTime(details.status);
     if (backendWithdrawSuccess) {
       backendWithdrawReset?.();
     }
   }, [details]);
-  useEffect(() => {
-    return () => {
-      backendWithdrawReset?.();
-    };
-  }, []);
   return (
     <Sheet
       open={sheetOpen}

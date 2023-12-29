@@ -75,12 +75,15 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   const [amintToBeMinted, setAmintToBeMinted] = useState("0");
   const [downsideProtectionAmnt, setDownsideProtectionAmnt] = useState("0");
   const [open, setOpen] = useState(false);
+  // disabling the button if we don't have enough funds in CDS
   const [disabled, setDisabled] = useState(false);
   const { address } = useAccount();
   const chainId = useChainId();
   // const timer = useRef<number>();
   const queryClient = useQueryClient();
+  //we will get this normalizedAmount from events while depositing
   const normalizedAmount = useRef("");
+  // to manage the toastId
   const toastId = useRef<string | number>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -90,33 +93,55 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       strikePrice: 5,
     },
   });
+  // watch for the strikePrice in the form
   const strikePrice = form.watch("strikePrice");
+  // watch for the ltv from the borrowing Contract
   const { data: ltv } = useBorrowingContractGetLtv({ enabled: !!address });
+  // watch for the totalVolumeOfBorrowersAmountinUsd from the  treasury
   const { data: totalVolumeOfBorrowersAmountinUsd } =
     useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true });
   const { data: totalCdsDepositedAmount } = useCdsTotalCdsDepositedAmount({
     watch: true,
   });
 
+  // Perform a mutation and get the mutate and depositReset functions
   const { mutate, reset: depositReset } = useMutation({
+    // Specify the mutation function to be called
     mutationFn: storeToBackend,
+
+    // Handle any errors that occur during the mutation
     onError(error, variables, context) {
       console.log(error);
     },
+
+    // Perform actions after the mutation is completed or failed
     onSettled() {
+      // Invalidate the "depositorsData" and "deposits" queries in the query cache
       queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
       queryClient.invalidateQueries({ queryKey: ["deposits"] });
+
+      // Call the handleRefetch function to rerender the data in the table
       handleRefetch();
+
+      // Reset the form
       form.reset();
     },
+
+    // Retry the mutation up to 4 times if it fails
     retry: 4,
   });
-
+  /**
+   * Retrieves the total index for a given address.
+   *
+   * @param {`0x${string}` | undefined} address - The address to retrieve the total index for.
+   * @return {Promise<any>} A promise that resolves to the total index.
+   */
   function getTotalIndex(address: `0x${string}` | undefined) {
     return fetch(`${BACKEND_API_URL}/borrows/index/${chainId}/${address}`).then(
       (response) => response.json()
     );
   }
+  // Use the useQuery hook to fetch the total index
   const { data: totalIndex } = useQuery({
     queryKey: ["totalIndex"],
     queryFn: () => getTotalIndex(address ? address : undefined),
@@ -124,8 +149,16 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     staleTime: 10 * 1000,
   });
 
+  /**
+   * Stores data to the backend.
+   *
+   * @param address - The address to store.
+   * @returns The result from the backend.
+   */
   async function storeToBackend(address: `0x${string}` | undefined) {
+    // Log the total index
     console.log(totalIndex);
+    // Create the body value
     let bodyValue = JSON.stringify({
       address: address,
       collateralType: "ETH",
@@ -140,7 +173,10 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       strikePricePercent: strikePrice,
       normalizedAmount: normalizedAmount.current,
     });
+
+    // Log the body value
     console.log(bodyValue);
+    // Send a POST request to the backend API
     const response = await fetch(`${BACKEND_API_URL}/borrows/borrowAmint`, {
       method: "POST",
       headers: {
@@ -149,34 +185,40 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       body: bodyValue,
     });
 
+    // Parse the response as JSON
     const result = await response.json();
 
+    // If the response is not ok, throw an error with the result's message
     if (!response.ok) {
       throw new Error(result.message);
     }
-
+    // Return the result
     return result;
   }
 
+  // get  ethPrice using useContractRead hook
   const { data: ethPrice } = useBorrowingContractRead({
     functionName: "getUSDValue",
     staleTime: 10 * 1000,
   });
   const {
-    data: depositData,
-    write,
-    reset,
+    data: depositData, // Data received from the `useBorrowingContractDepositTokens` hook
+    write, // Function to initiate a write operation
+    reset, // Function to reset the state of the hook
   } = useBorrowingContractDepositTokens({
-    functionName: "depositTokens",
+    functionName: "depositTokens", // Name of the function to be called
     args: [
-      BigInt(ethPrice ? ethPrice : 0),
-      BigInt(Date.now()),
-      BigInt(ethPrice ? (ethPrice * (100n + BigInt(strikePrice))) / 100n : 0),
+      BigInt(ethPrice ? ethPrice : 0), // Argument 1: ethPrice (if available, otherwise 0)
+      BigInt(Date.now()), // Argument 2: Current timestamp
+      BigInt(
+        // Argument 3: Calculated value using ethPrice and strikePrice
+        ethPrice ? (ethPrice * (100n + BigInt(strikePrice))) / 100n : 0
+      ),
     ],
-    value: parseEther(form.watch("collateralAmount")?.toString()),
+    value: parseEther(form.watch("collateralAmount")?.toString()), // Value to be sent along with the transaction
     onError(error) {
-      setOpen(false);
-      console.log(error);
+      setOpen(false); // Close the modal
+      console.log(error); // Log the error to the console
       toast.custom(
         (t) => (
           <div>
@@ -192,12 +234,12 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
             />
           </div>
         ),
-        { duration: 5000 }
+        { duration: 5000 } // Toast duration: 5000 milliseconds
       );
     },
     onSuccess(data) {
-      setOpen(false);
-      console.log(data?.hash);
+      setOpen(false); // Close the modal
+      console.log(data?.hash); // Log the transaction hash to the console
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -217,25 +259,38 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
             </div>
           );
         },
-        { duration: Infinity }
+        { duration: Infinity } // Toast duration: Infinity (will remain visible until manually closed)
       );
     },
   });
   const { isLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
     hash: depositData?.hash,
     onSuccess(data) {
+      // Log transaction completion
       console.log("transaction completed", depositData?.hash, data);
+
+      // Get the data logs based on the chainId
       const dataLogs =
         chainId === 80001 ? data.logs[4].data : data.logs[2].data;
+
+      // Decode event logs from ABI
       const { eventName, args } = decodeEventLogsFromAbi(
         borrowingContractABI,
         ["0x3f7c04c09b19100060129256b7d82f055d0aa72cf17042fb3f2d41d1fffc0260"],
         "Deposit",
         dataLogs
       ) as { eventName: string; args: { normalizedAmount: bigint } };
+
+      // Log event name and normalized amount
       console.log(eventName, args?.normalizedAmount);
+
+      // Set the normalizedAmount value
       normalizedAmount.current = args?.normalizedAmount.toString();
+
+      // Call mutate function with the address to store things to backend
       mutate(address);
+
+      // Show custom toast
       toast.custom(
         () => (
           <CustomToast
@@ -252,11 +307,23 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
         ),
         { id: toastId.current }
       );
+
+      // Dismiss toast after 3 seconds
       setTimeout(() => {
         toast.dismiss(toastId.current);
       }, 3000);
     },
   });
+  /**
+   * useEffect hook that disables a deposit button based on certain conditions.
+   * It checks if `write` is false, and if so, sets `disabled` to true.
+   * Otherwise, it checks if both `totalCdsDepositedAmount` and `totalVolumeOfBorrowersAmountinUsd` have values.
+   * If so, it compares `totalCdsDepositedAmount` to a calculated percentage of `totalVolumeOfBorrowersAmountinUsd`.
+   * If `totalCdsDepositedAmount` is less than the calculated percentage, it sets `disabled` to true.
+   * @param {number} totalCdsDepositedAmount - The total amount of CDs deposited.
+   * @param {number} totalVolumeOfBorrowersAmountinUsd - The total volume of borrowers' amount in USD.
+   * @param {boolean} write - Flag indicating if the feature is enabled or disabled.
+   */
   useEffect(() => {
     if (!write) {
       setDisabled(true);
@@ -276,16 +343,22 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     // console.log("depositData", depositData);
-
+    //call blockchain write function to deposit
     write?.();
     // mutate(address);
   }
 
+  /**
+   * Handles the calculation and setting of the amint to be minted and downside protection amounts.
+   */
   const handleAmintToBeMinted = () => {
+    // Calculate the amint to be minted
     const amintToMint =
       (form.watch("collateralAmount") * Number(ethPrice) * 80) / 10000;
     const amint2Decimal = displayNumberWithPrecision(amintToMint.toString());
     setAmintToBeMinted(amint2Decimal);
+
+    // Calculate the downside protection amount
     const downsideProtection =
       (form.watch("collateralAmount") *
         Number(ethPrice) *
@@ -303,18 +376,13 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
 
   useEffect(() => {
     if (transactionSuccess) {
+      //reseting contract values after it is successfull
       reset();
     }
     // return () => {
     //   window.clearTimeout(timer.current);
     // };
   }, [transactionSuccess]);
-
-  useEffect(() => {
-    return () => {
-      depositReset?.();
-    };
-  }, []);
 
   return (
     <div className="flex justify-between items-center mb-[30px]">
@@ -451,11 +519,21 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                     )}
                   />
                   <div className="w-full flex justify-between min-[1440px]:mt-[10px] mt-2 2dppx:mt-2">
-                    <p className="2dppx:text-sm text-sm min-[1440px]:text-base">05</p>
-                    <p className="2dppx:text-sm text-sm min-[1440px]:text-base">10</p>
-                    <p className="2dppx:text-sm text-sm min-[1440px]:text-base">15</p>
-                    <p className="2dppx:text-sm text-sm min-[1440px]:text-base">20</p>
-                    <p className="2dppx:text-sm text-sm min-[1440px]:text-base">25</p>
+                    <p className="2dppx:text-sm text-sm min-[1440px]:text-base">
+                      05
+                    </p>
+                    <p className="2dppx:text-sm text-sm min-[1440px]:text-base">
+                      10
+                    </p>
+                    <p className="2dppx:text-sm text-sm min-[1440px]:text-base">
+                      15
+                    </p>
+                    <p className="2dppx:text-sm text-sm min-[1440px]:text-base">
+                      20
+                    </p>
+                    <p className="2dppx:text-sm text-sm min-[1440px]:text-base">
+                      25
+                    </p>
                   </div>
                 </div>
                 <div className="flex flex-col">

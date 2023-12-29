@@ -9,6 +9,7 @@ import { InjectedConnector } from "wagmi/connectors/injected";
 import { useConnect } from "wagmi";
 
 const ConnectWallet = () => {
+  //using useConnect from wagmi hooks
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
@@ -37,6 +38,7 @@ const ConnectWallet = () => {
             Dapp.
           </p>
         </div>
+        {/* connect with wallet onClick on connect wallet button */}
         <Button
           variant={"primary"}
           className="flex items-center justify-center gap-[5px]"

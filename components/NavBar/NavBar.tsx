@@ -56,30 +56,43 @@ const headerItems2nd = [
 ];
 
 const NavBar = () => {
+  //managing state for showMore button
   const [showMore, setShowMore] = useState(false);
+  //getting address of user from useAccount() wagmi hook
   const { address } = useAccount();
+  //getting totalAmintSupply from Borrowing Contract
   const { data: totalAmintSupply } = useBorrowingContractTotalAmintSupply({
     enabled: !!address,
   });
+  //getting currentApy from Borrowing Contract
   const { data: currentApy } = useBorrowingContractGetApy({
     enabled: !!address,
   });
+  //getting ltv from Borrowing Contract
   const { data: ltv } = useBorrowingContractGetLtv({
     enabled: !!address,
   });
+  //getting totalCdsAmount from CDS Contract
   const { data: totalCdsAmount } = useCdsTotalCdsDepositedAmount({
     enabled: !!address,
   });
+  //getting totalValueLocked from Treasury
   const { data: totalValueLocked } =
     useTreasuryTotalVolumeOfBorrowersAmountinWei({
       enabled: !!address,
     });
+  //getting ethPrice from Borrowing Contract
   const { data: ethPrice } = useBorrowingContractGetUsdValue({
     enabled: !!address,
   });
+  //managing state for headerItems and headerItems2nd
   const [updatedHeaderItems, setUpdatedHeaderItems] = useState(headerItems);
   const [updatedHeaderItems2nd, setUpdatedHeaderItems2nd] =
     useState(headerItems2nd);
+
+  /**
+   * Updates the header items based on the values of `totalAmintSupply`, `currentApy`, `ltv`, `totalCdsAmount`, `ethPrice`, and `totalValueLocked`.
+   */
   const handleNavItems = () => {
     if (totalAmintSupply && currentApy) {
       const updatedData = [...updatedHeaderItems];
@@ -101,6 +114,8 @@ const NavBar = () => {
       setUpdatedHeaderItems2nd(updatedData2nd);
     }
   };
+
+  //calling handleNavItems() every time the values of `totalAmintSupply`, `currentApy`, `ltv`, `totalCdsAmount`, `ethPrice`, and `totalValueLocked` changes
   useEffect(() => {
     handleNavItems();
   }, [currentApy, ltv, totalAmintSupply, totalValueLocked, ethPrice]);
