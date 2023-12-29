@@ -2,22 +2,31 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## TechStack We are using
 
-| Technology | Purpose | |--------------------------|----------------------------------------------| | Next.js | Framework for building React applications | | TypeScript | Programming language for static type-checking | | React Query | Library for managing remote data | | Tailwind CSS | Utility-first CSS framework | | Wagmi | Blockchain interaction library | | view | Blockchain interaction library | | wagmi-cli | CLI tool for custom blockchain hooks | | Recharts | Library for creating charts | | Sonner | Library for displaying toasts | | ShadCn UI | UI library for React applications | | React Hook Form | Library for building forms with React | | Zod | Library for runtime type checking | | Radix-UI | UI library included in ShadCn UI |
+* Next-js
+* Typescript
+* React/Tanstack-Query
+* TailwindCSS
+* Wagmi and viem for blockchain Interactions
+* wagmi-cli for custom hooks for blockchain
+* Recharts for charts
+* Sonner for toasts
+* ShadCn Ui library
+* React hook form ,zod and Radix-Ui which comes inbuilt in shadcn ui library
 
 ## Setting Up
 
-see .env.example and create a .env file with your credentials
+see ```.env.example``` and create a ``.env`` file with your credentials
 
 ## Setting Up Contracts Address and ABI
 
-Go to constants folder and open Addresses.ts file where you can change contract addresses
+Go to **constants** folder and open ```Addresses.ts``` file where you can change contract addresses
 and Abi of all these contracts are in the same fodler which u can change when ever there is change in your smart contracts abi
 
-## Setting Up Custom Hooks for smartContracts
+## Setting Up Custom Hooks for SmartContracts
 
-After You have Setup the Addresses and Abi you can now setup your custom hooks for smart contracts
+After You have Setup the Addresses and Abi you can now setup your custom hooks for smart contracts  
 
-Open wagmi.config.ts file and add contracts with their name of custom hooks and their abi and chain Wise addresses
+Open wagmi.config.ts file and add contracts with their name of custom hooks and their abi and chain Wise addresses  
 
 After that is done run
 
