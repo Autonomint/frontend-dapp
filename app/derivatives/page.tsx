@@ -66,6 +66,8 @@ const dasboardStatsItem = [
 const page = () => {
   // getting isConnected && address from useAccount() of wagmi
   const { isConnected, address } = useAccount();
+  console.log("isConnected", isConnected);
+  
   // getting chainId from useChainId() of wagmi
   const chainId = useChainId();
   // getting queryClient from useQueryClient() of tanstack/react-query
@@ -78,13 +80,14 @@ const page = () => {
    * @param {string} address - The address of the CDS depositor.
    * @return {Promise<any>} - A promise that resolves with the depositor data.
    */
-  function getCDSDepositorData(
+  async function getCDSDepositorData(
     address: `0x${string}` | undefined
   ): Promise<any> {
     return fetch(`${BACKEND_API_URL}/cds/${address}`).then((response) =>
       response.json()
     );
   }
+  
 
   // Define a variable to store the result of the query
   const { data: dCDSdepositorData, error: dCDSdepositorDataError } = useQuery({
@@ -96,19 +99,21 @@ const page = () => {
     // Enable the query only if the address value is truthy
     enabled: !!address,
   });
+
+
   /**
    * Retrieves the deposit details for a specific address.
    *
    * @param {`0x${string}` | undefined} address - The address to retrieve the deposit details for.
    * @return {Promise<DepositDetail[]>} A promise that resolves to an array of deposit details.
    */
-  function getDeposits(
+  async function getDeposits(
     address: `0x${string}` | undefined
   ): Promise<DepositDetail[]> {
-    return fetch(`${BACKEND_API_URL}/cds/${chainId}/${address}`).then(
-      (response) => response.json()
-    );
+    const response = await fetch(`${BACKEND_API_URL}/cds/${chainId}/${address}`);
+    return await response.json();
   }
+
   // Fetch and store deposits using react-query
   const { data: deposits, error: depositsError } = useQuery<DepositDetail[]>({
     // Set the query key to include chainId and address
@@ -121,6 +126,7 @@ const page = () => {
 
   function handleStatsItem() {
     // Check for error or 404 status code
+    
     if (dCDSdepositorDataError || dCDSdepositorData?.statusCode === 404) {
       // Set dashboard stats values to "-"
       const updatedStats = [...dashboardStats];
@@ -131,6 +137,7 @@ const page = () => {
       setDashboardStats(updatedStats);
       return;
     }
+
 
     // Update dashboard stats based on chainId
     if (dCDSdepositorData) {
@@ -159,7 +166,7 @@ const page = () => {
         updatedStats[2].value = "0";
         updatedStats[3].value = "0";
       }
-
+      
       setDashboardStats(updatedStats);
     } else {
       // Set dashboard stats values to "-"
@@ -199,9 +206,11 @@ const page = () => {
               style={{ objectFit: "cover", opacity: 0.4 }}
             ></Image>
           </div> */}
+
+
           <ProductList></ProductList>
           <Divider />
-          <div className="flex flex-row gap-1 sm:gap-2 lg:gap-4 xl:gap-7 z-10 flex-wrap lg:flex-nowrap w-full justify-between items-center">
+          <div className="z-10 flex flex-row flex-wrap items-center justify-between w-full gap-1 sm:gap-2 lg:gap-4 xl:gap-7 lg:flex-nowrap">
             {dashboardStats.map((item, index) => (
               // Iterate over the dashboardStats array
               <div className="flex border border-lineGrey w-full sm:w-[48%]">

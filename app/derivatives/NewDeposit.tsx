@@ -72,12 +72,20 @@ import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import { USDT_MATIC, USDT_SEPOLIA } from "@/constants/Addresses";
 import decodeEventLogsFromAbi from "../utils/decodeEventLogsFromAbi";
 
+
+
+
+
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 interface TokensState {
   USDT: Checked;
   COMP: Checked;
   USDC: Checked;
 }
+
+
+
+
 
 const InitialformSchema = z.object({
   AmintDepositAmount: z
@@ -108,6 +116,11 @@ const InitialformSchema = z.object({
   liquidationGains: z.boolean(),
 });
 
+
+
+
+
+
 const NewDeposit = () => {
   // Define the initial state for the open variable for sheet opening and closing
   const [open, setOpen] = useState(false);
@@ -136,6 +149,9 @@ const NewDeposit = () => {
       liquidationGains: false,
     },
   });
+
+
+
   const queryClient = useQueryClient();
   // watch the form values
   const [amintAmnt, lockIn, liquidationGains, usdtAmnt] = form.watch(
@@ -152,23 +168,35 @@ const NewDeposit = () => {
       USDTDepositAmount: undefined,
     }
   );
+
+
   // get eth price from Borrowing contract and store it in ethPrice and setting default value to 0n
   const { data: ethPrice = 0n } = useBorrowingContractGetUsdValue({
     staleTime: 10 * 1000,
   });
+
+
   // get usdt limit from CDS contract and store it in usdtLimit and setting default value to 0n
   const { data: usdtLimit = 0n } = useCdsUsdtLimit({ watch: true });
+
+
   // get usdt amount deposited till now from CDS contract and store it in usdtAmountDepositedTillNow and setting default value to 0n
   const { data: usdtAmountDepositedTillNow = 0n } =
     useCdsUsdtAmountDepositedTillNow({ watch: true });
-  // get ratio from CDS contract and store it in ratio
-  const { data: ratio } = useCdsAmintLimit({ staleTime: 60 * 1000 });
+
+    // get ratio from CDS contract and store it in ratio
+    const { data: ratio } = useCdsAmintLimit({ staleTime: 60 * 1000 });
+    
+
   // usdt approval
   const {
     data: usdtApproveData,
     write: usdtWrite,
     isSuccess: usdtApproved,
   } = useUsdtContractApprove();
+console.log("usdtApproveData",usdtApproveData,usdtApproved);
+
+
   // get total index from CDS contract and store it in totalCDSIndex
   const { data: totalCDSIndex } = useQuery({
     queryKey: ["totalCDSIndex"],
@@ -176,17 +204,21 @@ const NewDeposit = () => {
     enabled: !!address,
     staleTime: 10 * 1000,
   });
+
+
   /**
    * Retrieves the total index from the CDS API for a given address.
    *
    * @param {`0x${string}` | undefined} address - The address to retrieve the total index for.
    * @return {Promise} A promise that resolves to the JSON response from the API.
    */
-  function getCDSTotalIndex(address: `0x${string}` | undefined) {
+  async function getCDSTotalIndex(address: `0x${string}` | undefined): Promise<any> {
     return fetch(`${BACKEND_API_URL}/cds/index/${chainId}/${address}`).then(
       (response) => response.json()
     );
   }
+
+
   const { mutate } = useMutation({
     mutationFn: storeToCDSBackend,
     onError(error) {
@@ -204,76 +236,81 @@ const NewDeposit = () => {
       form.reset();
     },
   });
+
+
   /**
  * Stores the data to the CDS backend.
  *
  * @param address - The address to store.
  */
-async function storeToCDSBackend(address: `0x${string}` | undefined) {
-  // Calculate the liquidation amount based on amintAmnt and usdtAmnt for now i am just adding usdt and amint considering both as 18 decimals but as usdt is 6 decimals you will have to manage it yourself or ask abhishek sir
-  const liqAmnt =
-    (((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
+  async function storeToCDSBackend(address: `0x${string}` | undefined) {
+    // Calculate the liquidation amount based on amintAmnt and usdtAmnt for now i am just adding usdt and amint considering both as 18 decimals but as usdt is 6 decimals you will have to manage it yourself or ask abhishek sir
+    const liqAmnt =
+      (((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
 
-  // Determine the collateral type based on amintAmnt and usdtAmnt
-  const colType =
-    amintAmnt !== 0 && usdtAmnt !== 0
-      ? "AMINT&USDT"
-      : amintAmnt !== 0
-      ? "AMINT"
-      : usdtAmnt !== 0
-      ? "USDT"
-      : "NONE";
 
-  // Create the body value for the API request
-  let bodyValue = JSON.stringify({
-    address: address,
-    index: totalCDSIndex ? totalCDSIndex + 1 : 1,
-    chainId: chainId,
-    depositedAmint: `${amintAmnt}`,
-    depositedUsdt: `${usdtAmnt}`,
-    collateralType: colType,
-    depositedTime: `${Date.now()}`,
-    ethPriceAtDeposit: Number(ethPrice ? ethPrice : 0) / 100,
-    aprAtDeposit: 5,
-    lockingPeriod: Number(lockIn),
-    optedForLiquidation: liquidationGains,
-    liquidationAmount: `${liqAmnt}`,
-    depositVal: depositVal.current,
-  });
+  
+    // Determine the collateral type based on amintAmnt and usdtAmnt
+    const colType =
+      amintAmnt !== 0 && usdtAmnt !== 0
+        ? "AMINT&USDT"
+        : amintAmnt !== 0
+          ? "AMINT"
+          : usdtAmnt !== 0
+            ? "USDT"
+            : "NONE";
 
-  // Log the body value for debugging purposes
-  console.log(bodyValue);
+    // Create the body value for the API request
+    let bodyValue = JSON.stringify({
+      address: address,
+      index: totalCDSIndex ? totalCDSIndex + 1 : 1,
+      chainId: chainId,
+      depositedAmint: `${amintAmnt}`,
+      depositedUsdt: `${usdtAmnt}`,
+      collateralType: colType,
+      depositedTime: `${Date.now()}`,
+      ethPriceAtDeposit: Number(ethPrice ? ethPrice : 0) / 100,
+      aprAtDeposit: 5,
+      lockingPeriod: Number(lockIn),
+      optedForLiquidation: liquidationGains,
+      liquidationAmount: `${liqAmnt}`,
+      depositVal: depositVal.current,
+    });
 
-  // Send the API request to the CDS backend
-  const response = await fetch(`${BACKEND_API_URL}/cds/depositAmint`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: bodyValue,
-  });
+    // Log the body value for debugging purposes
+    console.log(bodyValue);
 
-  // Parse the response as JSON
-  const result = await response.json();
+    // Send the API request to the CDS backend
+    const response = await fetch(`${BACKEND_API_URL}/cds/depositAmint`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: bodyValue,
+    });
 
-  // If the response is not successful, throw an error with the result message
-  if (!response.ok) {
-    throw new Error(result.message);
+    // Parse the response as JSON
+    const result = await response.json();
+
+    // If the response is not successful, throw an error with the result message
+    if (!response.ok) {
+      throw new Error(result.message);
+    }
+
+    // Return the result
+    return result;
   }
 
-  // Return the result
-  return result;
-}
-
   // Use the useCdsDeposit hook to handle the CDS deposit functionality
+
   const {
-    write,
+    write:ConfirmDeposit,
     data: CdsDepositData,
     reset,
   } = useCdsDeposit({
     // Handle errors during the CDS deposit process
     onError: (error) => {
-      console.log(error);
+      console.log(error.name);
 
       // Show a custom toast notification for the error
       toast.custom(
@@ -328,8 +365,36 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
       );
     },
   });
+
+
+
+
   const { isLoading, isSuccess: cdsDepositSuccess } = useWaitForTransaction({
-    //transaction hash to watch to check for success or error in this case we are watching for cdsdeposit transaction hash 
+    //transaction hash to watch to check for success or error in this case we are watching for cdsdeposit transaction hash
+    onError(error) {
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                key={2}
+                props={{
+                  t,
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! ${error.name}`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 5000 }
+      );
+
+      setOpen(false);
+    }, 
     hash: CdsDepositData?.hash,
     // Callback function called when the transaction is successful
     onSuccess(data) {
@@ -355,10 +420,14 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
         ),
         { id: toastId.current }
       );
+
+
       // Retrieve the relevant data from the transaction logs
       const dataLogs =
         chainId === 80001 ? data.logs[3].data : data.logs[2].data;
       // Decode event logs using the provided ABI and event name
+
+
       const { eventName, args } = decodeEventLogsFromAbi(
         cdsABI,
         //topic to decode event variables
@@ -377,6 +446,8 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
       }, 5000);
     },
   });
+
+
 
   // Destructure the necessary values from the hook
   const {
@@ -407,9 +478,10 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
         },
         { duration: 5000 }
       );
-      
+
       setOpen(false);
     },
+
     // Handle success and show a custom toast notification
     onSuccess: (data) => {
       toast.custom(
@@ -437,8 +509,36 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
       setOpen(false);
     },
   });
+
+
+
+
   const { data: amintTransactionAllowed } = useWaitForTransaction({
     // TODO: Add OnError Custom Toast
+    onError(error) {
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                key={2}
+                props={{
+                  t,
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! ${error.name}`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 5000 }
+      );
+
+      setOpen(false);
+    },
     // look for approval transaction hash
     hash: amintApproveData?.hash,
     // Display a custom toast notification
@@ -465,28 +565,42 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
       );
     },
   });
+
+
+
+
+
   /**
    * Handles the form submission.
    *
    * @param {typeof formSchema.current} values - The values submitted in the form.
    */
   function onSubmit(values: z.infer<typeof formSchema.current>) {
-    console.log(values);
+
     const liqAmnt =
-      (((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
-      // call the CdsDeposit function from blockchain with dynamic args
-    write?.({
-      args: [
-        BigInt(usdtAmnt ? usdtAmnt : 0),
-        BigInt(amintAmnt ? amintAmnt : 0),
-        liquidationGains,
-        parseUnits(liqAmnt.toString(), 6),
-      ],
-    });
+    (  ((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
+    // call the CdsDeposit function from blockchain with dynamic args
+    try{
+      ConfirmDeposit?.({
+        args: [
+          BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(),6) : 0),
+          BigInt(amintAmnt ? parseUnits(amintAmnt.toString(),6) : 0),
+          liquidationGains,
+          parseUnits(liqAmnt.toString(),6),
+        ],
+      });
+    }catch(e){
+      console.log(e);
+    }
+
   }
+
+
+
   //change schema based on the usdtDepositTillNow and usdtLimit
   //This is not a good way to do it but it works and is used here because i lacked the knowledge to do this properly
   useEffect(() => {
+
     if (usdtAmountDepositedTillNow < usdtLimit) {
       const updatedSchema = z.object({
         AmintDepositAmount: z
@@ -582,6 +696,8 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
     }
   }, [usdtLimit, usdtAmountDepositedTillNow]);
 
+
+
   useEffect(() => {
     // Check if cdsDepositSuccess is true
     if (cdsDepositSuccess) {
@@ -592,6 +708,8 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
     }
   }, [cdsDepositSuccess]);
 
+
+  
   return (
     <div className="flex justify-between items-center mb-[30px]">
       <div className="flex flex-col gap-[15px] ">
@@ -603,13 +721,20 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
         </p>
       </div>
       <div className="flex gap-[10px]">
+
+
         {/* Currently we are not Using this button but later we might need this button so uncomment when needed */}
         {/* <Button variant={"outline"}>
           <p className="text-transparent font-semibold text-base text-center bg-clip-text bg-gradient-to-b from-[#808080] to-[#000] ">
             Withdraw Fees from All Deposits
           </p>
         </Button> */}
+
+
         <Dialog open={open} onOpenChange={setOpen}>
+
+
+
           <DialogTrigger asChild>
             <Button
               variant={"primary"}
@@ -627,17 +752,21 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
               </p>
             </Button>
           </DialogTrigger>
+
+
+
+
           <DialogContent className="w-[672px]">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} action="#">
-                <div className=" flex w-full justify-end">
+                <div className="flex justify-end w-full ">
                   <DialogClose asChild>
                     <Button
                       variant={"ghostOutline"}
                       size={"primary"}
                       className="flex gap-[10px] border border-borderGrey "
                     >
-                      <Cross2Icon className="h-4 w-4" />
+                      <Cross2Icon className="w-4 h-4" />
                       <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
                         Close
                       </p>
@@ -679,10 +808,10 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
                                   Deposit AMINT
                                 </label>
                               </div>
-                              <div className="absolute right-0 top-0 flex items-center h-full">
+                              <div className="absolute top-0 right-0 flex items-center h-full">
                                 <Button
                                   variant={"outline"}
-                                  className="rounded-r-md text-xs z-20"
+                                  className="z-20 text-xs rounded-r-md"
                                   disabled={
                                     usdtAmountDepositedTillNow < usdtLimit
                                       ? true
@@ -731,7 +860,9 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
                                     Deposit USDT
                                   </label>
                                 </div>
-                                <div className="absolute right-0 top-0 flex items-center justify-between h-full">
+
+                                <div className="absolute top-0 right-0 flex items-center justify-between h-full">
+    
                                   {usdtAmountDepositedTillNow > usdtLimit && (
                                     <div
                                       className="text-xs cursor-pointer"
@@ -803,19 +934,20 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
                                     </DropdownMenuContent>
                                   </DropdownMenu>
                                   <Button
+                                  type="button"
                                     variant={"outline"}
-                                    className="rounded-r-md text-xs z-20"
+                                    className="z-20 text-xs rounded-r-md"
                                     onClick={() => {
                                       usdtAmnt !== undefined
                                         ? usdtAmnt !== 0
                                           ? usdtWrite({
-                                              args: [
-                                                chainId === 80001
-                                                  ? (cdsAddress[80001] as `0x${string}`)
-                                                  : (cdsAddress[11155111] as `0x${string}`),
-                                                BigInt(usdtAmnt.toString()),
-                                              ],
-                                            })
+                                            args: [
+                                              chainId === 80001
+                                                ? (cdsAddress[80001] as `0x${string}`)
+                                                : (cdsAddress[11155111] as `0x${string}`),
+                                                BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(),6) : 0),
+                                            ],
+                                          })
                                           : null
                                         : null;
                                     }}
@@ -854,10 +986,10 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
                                       Deposit COMP
                                     </label>
                                   </div>
-                                  <div className="absolute right-0 top-0 flex items-center h-full">
+                                  <div className="absolute top-0 right-0 flex items-center h-full">
                                     <Button
                                       variant={"outline"}
-                                      className="rounded-r-md text-xs z-20"
+                                      className="z-20 text-xs rounded-r-md"
                                     >
                                       Approve
                                     </Button>
@@ -869,6 +1001,7 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
                           )}
                         />
                       )}
+
                       {tokensEnabled.USDC && (
                         <FormField
                           control={form.control}
@@ -894,10 +1027,10 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
                                       Deposit USDC
                                     </label>
                                   </div>
-                                  <div className="absolute right-0 top-0 flex items-center h-full">
+                                  <div className="absolute top-0 right-0 flex items-center h-full">
                                     <Button
                                       variant={"outline"}
-                                      className="rounded-r-md text-xs z-20"
+                                      className="z-20 text-xs rounded-r-md"
                                     >
                                       Approve
                                     </Button>
@@ -909,6 +1042,7 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
                           )}
                         />
                       )}
+
                     </div>
                   </div>
                   <div className="flex gap-[10px] items-center">
@@ -1041,6 +1175,7 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
                   ) : (
                     <></>
                   )}
+
                   <Button
                     type="submit"
                     variant={"primary"}
@@ -1063,3 +1198,4 @@ async function storeToCDSBackend(address: `0x${string}` | undefined) {
 };
 
 export default NewDeposit;
+

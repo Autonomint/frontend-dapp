@@ -17,6 +17,7 @@ import {
   OPTIONS_SEPOLIA,
   USDT_MATIC,
   USDT_SEPOLIA,
+  Quotor_Goerli
 } from "./constants/Addresses";
 import * as chains from "wagmi/chains";
 import { AmintABI } from "./constants/AmintAbi";
@@ -25,6 +26,8 @@ import { CDSABI } from "./constants/CDSAbi";
 import { TreasuryAbi } from "./constants/TreasuryAbi";
 import { OPTIONSABI } from "./constants/OptionsAbi";
 import { USDT_ABI } from "./constants/UsdtAbi";
+import { Quoter } from "./constants/QuoterAbi";
+import IUniswapV3PoolABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
 
 export default defineConfig({
   out: "abiAndHooks.ts",
@@ -33,6 +36,8 @@ export default defineConfig({
     //   name: "erc20",
     //   abi: erc20ABI,
     // },
+
+
     {
       name: "BorrowingContract",
       abi: BorrowingABI,
@@ -89,6 +94,13 @@ export default defineConfig({
         [chains.sepolia.id]: ABOND_SEPOLIA,
       },
     },
+    {
+      name: "Quoter",
+      abi: Quoter as any,
+      address: {
+        [chains.goerli.id]: Quotor_Goerli,
+      },
+    }
   ],
   plugins: [react()],
 });

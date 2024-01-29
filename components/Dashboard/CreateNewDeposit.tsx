@@ -417,14 +417,14 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
         <DialogContent className={"w-[672px]"}>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} action="#">
-              <div className="flex w-full justify-end">
+              <div className="flex justify-end w-full">
                 <DialogClose asChild>
                   <Button
                     variant={"ghostOutline"}
                     size={"primary"}
                     className="flex gap-[10px] border border-borderGrey "
                   >
-                    <Cross2Icon className="h-4 w-4" />
+                    <Cross2Icon className="w-4 h-4" />
                     <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
                       Close
                     </p>

@@ -21,7 +21,7 @@ const USDT_SEPOLIA: `0x${string}` =
   "0x7169D38820dfd117C3FA1f22a697dBA58d90BA06";
 const OPTIONS_SEPOLIA: `0x${string}` =
   "0xc2c72d998Fa5f2AD2db36cEE257303b2882deF6B";
-
+const Quotor_Goerli = '0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6';
 export {
   ABOND_MATIC,
   AMINT_MATIC,
@@ -37,4 +37,5 @@ export {
   OPTIONS_MATIC,
   OPTIONS_SEPOLIA,
   USDT_MATIC,
+  Quotor_Goerli
 };

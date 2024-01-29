@@ -54,6 +54,8 @@ interface DepositDetail {
 }
 
 const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
+
+
   // kept this inside because every row is going to have different state
   const depositDetails = [
     {
@@ -89,6 +91,8 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       value: "Yes",
     },
   ];
+
+
   // manage the sheet opening and closing state
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [amountView, setAmountView] = React.useState(false);
@@ -104,13 +108,20 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
   const chainId = useChainId();
   const eventsValue = useRef(events);
   const queryClient = useQueryClient();
+
+  
   const { data: ethPrice } = useBorrowingContractGetUsdValue({
     staleTime: 10 * 1000, //refresh eth price after 10 seconds
   });
+
+
   // get the current apy
   const { data: currentApy } = useBorrowingContractGetApy({
     enabled: !!address,
   });
+
+
+
   const { write: cdsWithdraw, data: cdsWithdrawData } = useCdsWithdraw({
     // onError callback function
     onError(error) {
@@ -188,6 +199,8 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
     },
   });
+
+
   useWaitForTransaction({
     hash: cdsWithdrawData?.hash, // The transaction hash to wait for
     confirmations: 1, // Number of confirmations required for success
@@ -405,14 +418,14 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
         className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen"}
       >
         <div className="flex flex-col min-[1440px]:gap-6 2dppx:gap-2 gap-2">
-          <div className="flex w-full justify-end">
+          <div className="flex justify-end w-full">
             <SheetClose asChild>
               <Button
                 variant={"ghostOutline"}
                 size={"primary"}
                 className="flex gap-[10px] border border-borderGrey"
               >
-                <Cross2Icon className="h-4 w-4" />
+                <Cross2Icon className="w-4 h-4" />
                 <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
                   Close
                 </p>
@@ -446,7 +459,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
                 <Button
                   variant={"ghostOutline"}
                   size={"row"}
-                  className="text-textHighlight font-medium text-xs leading-none"
+                  className="text-xs font-medium leading-none text-textHighlight"
                   onClick={() => setAmountView(!amountView)}
                 >
                   View

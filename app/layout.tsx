@@ -29,6 +29,7 @@ export default function RootLayout({
       <body className={`${inter.className} bg-bgGrey`}>
         {/* <div className="max-w-[1440px] mx-auto"> */}
         <main className="grid h-screen xl:grid-cols-[140px_1fr] grid-cols-[105px_1fr]">
+
           <QueryProvider>
             <WalletProvider>
               <SideBar />
@@ -42,6 +43,7 @@ export default function RootLayout({
               />
             </WalletProvider>
           </QueryProvider>
+
         </main>
         {/* </div> */}
         <Toaster

@@ -1575,6 +1575,107 @@ export const optionsConfig = {
 } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Quoter
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export const quoterABI = [
+  {
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+    inputs: [
+      { name: '_factory', internalType: 'address', type: 'address' },
+      { name: '_WETH9', internalType: 'address', type: 'address' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'WETH9',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'factory',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'path', internalType: 'bytes', type: 'bytes' },
+      { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'quoteExactInput',
+    outputs: [{ name: 'amountOut', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'tokenIn', internalType: 'address', type: 'address' },
+      { name: 'tokenOut', internalType: 'address', type: 'address' },
+      { name: 'fee', internalType: 'uint24', type: 'uint24' },
+      { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
+      { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
+    ],
+    name: 'quoteExactInputSingle',
+    outputs: [{ name: 'amountOut', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'path', internalType: 'bytes', type: 'bytes' },
+      { name: 'amountOut', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'quoteExactOutput',
+    outputs: [{ name: 'amountIn', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'tokenIn', internalType: 'address', type: 'address' },
+      { name: 'tokenOut', internalType: 'address', type: 'address' },
+      { name: 'fee', internalType: 'uint24', type: 'uint24' },
+      { name: 'amountOut', internalType: 'uint256', type: 'uint256' },
+      { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
+    ],
+    name: 'quoteExactOutputSingle',
+    outputs: [{ name: 'amountIn', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'amount0Delta', internalType: 'int256', type: 'int256' },
+      { name: 'amount1Delta', internalType: 'int256', type: 'int256' },
+      { name: 'path', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'uniswapV3SwapCallback',
+    outputs: [],
+  },
+] as const
+
+/**
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export const quoterAddress = {
+  5: '0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6',
+} as const
+
+/**
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export const quoterConfig = { address: quoterAddress, abi: quoterABI } as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Treasury
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -9380,6 +9481,375 @@ export function usePrepareOptionsDepositOption(
     functionName: 'depositOption',
     ...config,
   } as UsePrepareContractWriteConfig<typeof optionsABI, 'depositOption'>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link quoterABI}__.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function useQuoterRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof quoterABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>,
+    'abi' | 'address'
+  > & { chainId?: keyof typeof quoterAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    ...config,
+  } as UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"WETH9"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function useQuoterWeth9<
+  TFunctionName extends 'WETH9',
+  TSelectData = ReadContractResult<typeof quoterABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof quoterAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    functionName: 'WETH9',
+    ...config,
+  } as UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"factory"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function useQuoterFactory<
+  TFunctionName extends 'factory',
+  TSelectData = ReadContractResult<typeof quoterABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof quoterAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    functionName: 'factory',
+    ...config,
+  } as UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"uniswapV3SwapCallback"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function useQuoterUniswapV3SwapCallback<
+  TFunctionName extends 'uniswapV3SwapCallback',
+  TSelectData = ReadContractResult<typeof quoterABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof quoterAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    functionName: 'uniswapV3SwapCallback',
+    ...config,
+  } as UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link quoterABI}__.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function useQuoterWrite<
+  TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof quoterAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<typeof quoterABI, string>['request']['abi'],
+        TFunctionName,
+        TMode
+      > & { address?: Address; chainId?: TChainId }
+    : UseContractWriteConfig<typeof quoterABI, TFunctionName, TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+      } = {} as any,
+) {
+  return useContractWrite<typeof quoterABI, TFunctionName, TMode>({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactInput"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function useQuoterQuoteExactInput<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof quoterAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof quoterABI,
+          'quoteExactInput'
+        >['request']['abi'],
+        'quoteExactInput',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'quoteExactInput'
+      }
+    : UseContractWriteConfig<typeof quoterABI, 'quoteExactInput', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'quoteExactInput'
+      } = {} as any,
+) {
+  return useContractWrite<typeof quoterABI, 'quoteExactInput', TMode>({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    functionName: 'quoteExactInput',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactInputSingle"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function useQuoterQuoteExactInputSingle<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof quoterAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof quoterABI,
+          'quoteExactInputSingle'
+        >['request']['abi'],
+        'quoteExactInputSingle',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'quoteExactInputSingle'
+      }
+    : UseContractWriteConfig<
+        typeof quoterABI,
+        'quoteExactInputSingle',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'quoteExactInputSingle'
+      } = {} as any,
+) {
+  return useContractWrite<typeof quoterABI, 'quoteExactInputSingle', TMode>({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    functionName: 'quoteExactInputSingle',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactOutput"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function useQuoterQuoteExactOutput<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof quoterAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof quoterABI,
+          'quoteExactOutput'
+        >['request']['abi'],
+        'quoteExactOutput',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'quoteExactOutput'
+      }
+    : UseContractWriteConfig<typeof quoterABI, 'quoteExactOutput', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'quoteExactOutput'
+      } = {} as any,
+) {
+  return useContractWrite<typeof quoterABI, 'quoteExactOutput', TMode>({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    functionName: 'quoteExactOutput',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactOutputSingle"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function useQuoterQuoteExactOutputSingle<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof quoterAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof quoterABI,
+          'quoteExactOutputSingle'
+        >['request']['abi'],
+        'quoteExactOutputSingle',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'quoteExactOutputSingle'
+      }
+    : UseContractWriteConfig<
+        typeof quoterABI,
+        'quoteExactOutputSingle',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'quoteExactOutputSingle'
+      } = {} as any,
+) {
+  return useContractWrite<typeof quoterABI, 'quoteExactOutputSingle', TMode>({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    functionName: 'quoteExactOutputSingle',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link quoterABI}__.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function usePrepareQuoterWrite<TFunctionName extends string>(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof quoterABI, TFunctionName>,
+    'abi' | 'address'
+  > & { chainId?: keyof typeof quoterAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof quoterABI, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactInput"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function usePrepareQuoterQuoteExactInput(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactInput'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof quoterAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    functionName: 'quoteExactInput',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactInput'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactInputSingle"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function usePrepareQuoterQuoteExactInputSingle(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactInputSingle'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof quoterAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    functionName: 'quoteExactInputSingle',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactInputSingle'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactOutput"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function usePrepareQuoterQuoteExactOutput(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactOutput'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof quoterAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    functionName: 'quoteExactOutput',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactOutput'>)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactOutputSingle"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
+ */
+export function usePrepareQuoterQuoteExactOutputSingle(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactOutputSingle'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof quoterAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: quoterABI,
+    address: quoterAddress[5],
+    functionName: 'quoteExactOutputSingle',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof quoterABI,
+    'quoteExactOutputSingle'
+  >)
 }
 
 /**
