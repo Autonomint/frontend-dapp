@@ -29,10 +29,9 @@ import {
 import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "../CustomUI/CustomToast";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient,useMutation } from "@tanstack/react-query";
 import { formatEther } from "viem";
 import displayNumberWithPrecision from "@/app/utils/precision";
-import { useWithdrawFromBackend } from "@/app/utils/backendHooks/useWithdrawFromBackend";
 import { calculate30DaysFromStoredTime } from "@/app/utils/calculateNext30Days";
 import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 import {
@@ -41,6 +40,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { BACKEND_API_URL } from "@/constants/BackendUrl";
 
 const events = {
   borrowDebt: "",
@@ -69,6 +69,18 @@ interface TableData {
   noOfAbondMinted: string;
   status: "DEPOSITED" | "WITHDREW1" | "WITHDREW2" | "LIQUIDATED";
 }
+
+type withdrawData = {
+  address: `0x${string}` | undefined;
+  index: number;
+  chainId: number;
+  borrowDebt: string;
+  withdrawTime: string;
+  withdrawAmount: string;
+  amountYetToWithdraw: string;
+  noOfAbond: string;
+};
+
 const TableRows = ({
   details,
   interest,
@@ -294,6 +306,7 @@ const TableRows = ({
           BigInt(details.index),
           BigInt(ethPrice ? ethPrice : 0),
           BigInt(Date.now()),
+          4n
         ],
       });
     },
@@ -350,6 +363,8 @@ const TableRows = ({
       }, 5000);
     },
   });
+
+
   const {
     isLoading: borrowWithdrawisLoading, // Flag indicating if the transaction for borrowing and withdrawing is loading
     isSuccess: borrowWithdrawtransactionSuccess, // Flag indicating if the transaction for borrowing and withdrawing was successful
@@ -362,7 +377,7 @@ const TableRows = ({
 
       // Get data logs based on the chain ID
       const dataLogs =
-        chainId === 80001 ? data.logs[7].data : data.logs[6].data;
+        chainId === 5 ? data.logs[6].data : data.logs[6].data;
 
       // Decode event logs from ABI
       const { eventName, args } = decodeEventLogsFromAbi(
@@ -392,7 +407,7 @@ const TableRows = ({
         withdrawTime: `${Date.now()}`,
         withdrawAmount: eventsValue.current.withdrawAmount,
         amountYetToWithdraw: eventsValue.current.withdrawAmount,
-        noOfAbond: eventsValue.current.noOfAbond,
+        noOfAbond: eventsValue.current.noOfAbond
       });
 
       // Display custom toast for successful transaction
@@ -451,12 +466,47 @@ const TableRows = ({
     },
   });
   //using custom hook to mutate backend withdraw
-  const {
-    mutate: backendWithdraw,
-    reset: backendWithdrawReset,
-    isSuccess: backendWithdrawSuccess,
-  } = useWithdrawFromBackend(handleRefetch);
+  const { mutate: backendWithdraw } = useMutation({
+    // Specify the mutation function
+    mutationFn: withdrawFromBackend,
+  
+    // Handle any errors that occur during the mutation
+    onError(error: any) {
+      console.log(error);
+      queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
+    },
+  
+    // Perform actions after the mutation is completed or rejected
+    onSettled() {
+      // Invalidate the query for `dCDSdepositorsData`
+      queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
+      // Invalidate the queries for `dCDSdeposits`
+      queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
+    },
+  });
 
+  async function withdrawFromBackend(data: withdrawData) {
+    let bodyValue = JSON.stringify({
+      ...data,
+    });
+    console.log(bodyValue);
+    const response = await fetch(`${BACKEND_API_URL}/borrows/withdraw`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: bodyValue,
+    });
+  
+    const result = await response.json();
+  
+    if (!response.ok) {
+      throw new Error(result.message);
+    }
+  
+    return result;
+  }
+  
   /**
    * Handles the withdrawal time based on the current value of withdrawalTime.
    *
@@ -501,13 +551,17 @@ const TableRows = ({
    * If the details are available, it updates each value in the depositData array.
    * If the details are not available, it sets each value in the depositData array to '-'.
    */
+
   function handleDepositData() {
     // Calculate the totalAmintAmnt
+
     const totalAmintAmnt =
       BigInt(
         BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
           (lastCumulativeRate ? lastCumulativeRate : BigInt(0))
       ) / BigInt(10 ** 27);
+
+      console.log(details.normalizedAmount,lastCumulativeRate,totalAmintAmnt)
     totalAmintAmount.current = totalAmintAmnt;
 
     if (details) {
@@ -516,9 +570,7 @@ const TableRows = ({
       updatedData[0].value = details.depositedAmount;
       updatedData[1].value = `${details.ethPrice}`;
       updatedData[2].value = details.noOfAmintMinted;
-      updatedData[3].value = displayNumberWithPrecision(
-        formatEther(totalAmintAmnt)
-      );
+      updatedData[3].value = (parseFloat(totalAmintAmnt.toString())/10**6).toString();
       updatedData[4].value = `${details.aprAtDeposit}%`;
       updatedData[5].value = `${details.downsideProtectionPercentage}%`;
       updatedData[6].value = details.status === "LIQUIDATED" ? "Yes" : "No";
@@ -542,6 +594,8 @@ const TableRows = ({
       setDepositData(updatedData);
     }
   }
+
+
   const handleAmountProtected = () => {
     //check if we have current ethPrice available or not
     if (ethPrice) {
@@ -580,12 +634,10 @@ const TableRows = ({
 
   useEffect(() => {
     handleDepositData();
-    //set latest status from backend
     setWithdrawalTime(details.status);
-    if (backendWithdrawSuccess) {
-      backendWithdrawReset?.();
-    }
-  }, [details]);
+  }, [details,sheetOpen]);
+
+
   return (
     <Sheet
       open={sheetOpen}

@@ -1,5 +1,6 @@
+'use client'
 import Image, { StaticImageData } from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import toll from "@/app/assets/toll.svg";
 import dollar from "@/app/assets/local_atm.svg";
 import donut from "@/app/assets/donut_small.svg";
@@ -13,6 +14,8 @@ import Charts from "./Charts";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import RatioPieChart from "./RatioPieChart";
+import { useAmintTotalSupply, useBorrowingContractDepositTokens, useBorrowingContractLastTotalCdsPool, useCdsLastEthPrice, useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd } from "@/abiAndHooks";
+import { ethers } from "ethers";
 
 const amintValues = [
   {
@@ -29,6 +32,33 @@ const amintValues = [
     lastElement: true,
   },
 ];
+const lockedValues = [
+  {
+    value: "$2.03M",
+  },
+  {
+    value: "200K AMINT",
+  },
+  {
+    value: "1.2M",
+  }
+];
+const RatioValues = [
+  {
+
+    value: "0.25",
+  },
+  {
+    value: "2M AMINT",
+  },
+  {
+    value: "2.5M AMINT",
+  },
+  {
+    value: "+25%",
+  },
+];
+
 const abondValues = [
   {
     headline: "Price",
@@ -75,12 +105,45 @@ const chartData = [
     price: 0.9,
   },
 ];
+function formatNumber(num: number) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(2) + 'M';
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(2) + 'k';
+  } else {
+    return num.toString();
+  }
+}
 
 const page = () => {
+  const {data:totalStable} = useCdsTotalCdsDepositedAmount({ watch: true })
+  const {data:ethprice} = useCdsLastEthPrice({ watch: true })
+  const {data:ethLocked} = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
+  const {data:amitsupply} = useAmintTotalSupply({ watch: true })
+  useEffect(() => {
+      
+    handleStatsItem()
+
+
+  },[])
+  const handleStatsItem = () => {
+    console.log("returned data", formatNumber(Number(amitsupply)/ 10**6));
+    amintValues[1].value = amitsupply ? formatNumber(Number(amitsupply)/ 10**6) : "0";
+    amintValues[2].value = amitsupply ? formatNumber(Number(amitsupply)/ 10**6) : "0";
+
+    lockedValues[0].value = totalStable ? formatNumber(( Number(totalStable) / 10**6) + (Number(ethLocked) / 10**18)*Number(ethprice)/10**2): "0";
+    lockedValues[1].value = totalStable ? formatNumber( Number(totalStable) / 10**6) : "0";
+    lockedValues[2].value = totalStable ? formatNumber( (Number(ethLocked) / 10**18)*Number(ethprice)/10**2) : "0";
+
+    RatioValues[2].value = totalStable ? formatNumber(Number(totalStable) / 10**6) : "0";
+    
+  };
+
+
   return (
     <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden h-full">
       <div className="flex flex-col gap-6">
-        <div className="flex justify-between flex-1 gap-6 w-full">
+        <div className="flex justify-between flex-1 w-full gap-6">
           <DashboardCard headline="AMINT" data={amintValues} />
           <DashboardCard headline="ABOND" data={abondValues} />
         </div>
@@ -104,12 +167,12 @@ const page = () => {
                     <p className="font-medium text-4xl text-[#0F46E9]">25%</p>
                   </div>
                 </div>
-                <div className="h-full w-full">
+                <div className="w-full h-full">
                   <RatioPieChart />
                 </div>
               </div>
               <div className="p-4 w-[70%]">
-                <div className="flex justify-end items-center">
+                <div className="flex items-center justify-end">
                   <div className="flex gap-[10px] mr-5">
                     <Button
                       variant={"showMore"}
@@ -156,7 +219,7 @@ const page = () => {
                   </div>
                 </div>
                 <Charts chartData={chartData} height={180} />
-                <div className="flex justify-between items-center px-10 ">
+                <div className="flex items-center justify-between px-10 ">
                   <Button
                     variant={"secondary"}
                     size={"arrow"}
@@ -180,7 +243,7 @@ const page = () => {
         <div className="flex w-full rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
           <FeesComp />
           <div className="p-4 w-[70%] bg-white">
-            <div className="flex justify-end items-center">
+            <div className="flex items-center justify-end">
               <div className="flex gap-[10px] mr-5">
                 <Button
                   variant={"showMore"}
@@ -227,7 +290,7 @@ const page = () => {
               </div>
             </div>
             <Charts chartData={chartData} height={230} />
-            <div className="flex justify-between items-center px-10 ">
+            <div className="flex items-center justify-between px-10 ">
               <Button
                 variant={"secondary"}
                 size={"arrow"}
@@ -263,7 +326,7 @@ const page = () => {
           <HeaderItems
             props={{
               textHeadline: "Borrowing Fees",
-              textValue: "4%",
+              textValue: "5%",
               className: "",
               lastElement: false,
             }}
@@ -373,19 +436,19 @@ const page = () => {
           </div>
           <div className="py-[15px]">
             <div className="flex flex-col gap-5">
-              <p className="text-textGrey text-base font-normal leading-none">
+              <p className="text-base font-normal leading-none text-textGrey">
                 Total Value Locked
               </p>
-              <h3 className="font-medium text-[2rem] leading-none">2.03M</h3>
+              <h3 className="font-medium text-[2rem] leading-none">{lockedValues[0].value}</h3>
             </div>
           </div>
           <div className="py-[15px]">
             <div className="flex flex-col gap-5">
-              <p className="text-textGrey text-base font-normal leading-none">
+              <p className="text-base font-normal leading-none text-textGrey">
                 Total Stablecoins Locked
               </p>
               <h3 className="font-medium text-[2rem] leading-none">
-                200K AMINT
+              {lockedValues[1].value} AMINT
               </h3>
             </div>
           </div>
@@ -394,26 +457,26 @@ const page = () => {
           <AssetValueLocked
             img={eth}
             asset="Ethereum"
-            value="1.2M"
-            progress={55}
+            value={`${lockedValues[2].value}`}
+            progress={100}
           />
           <AssetValueLocked
             img={avax}
-            asset="Avalaunche"
-            value="500K"
-            progress={25}
+            asset="Avalanche"
+            value="---"
+            progress={0}
           />
           <AssetValueLocked
             img={mantle}
             asset="Mantle"
-            value="200K"
-            progress={15}
+            value="---"
+            progress={0}
           />
           <AssetValueLocked
             img={matic}
             asset="Polygon"
-            value="150K"
-            progress={5}
+            value="---"
+            progress={0}
           />
         </div>
       </div>
@@ -479,7 +542,7 @@ const page = () => {
           </div>
         </div>
         <div className="p-4 ">
-          <div className="flex justify-end items-center">
+          <div className="flex items-center justify-end">
             <div className="flex gap-[10px] mr-5">
               <Button
                 variant={"showMore"}
@@ -526,7 +589,7 @@ const page = () => {
             </div>
           </div>
           <Charts chartData={chartData} height={180} />
-          <div className="flex justify-between items-center px-10 ">
+          <div className="flex items-center justify-between px-10 ">
             <Button
               variant={"secondary"}
               size={"arrow"}

@@ -144,7 +144,7 @@ export const TreasuryAbi = [
     name: "aavePoolAddressProvider",
     outputs: [
       {
-        internalType: "contract IPoolAddressesProvider",
+        internalType: "contract ILendingPoolAddressesProvider",
         name: "",
         type: "address",
       },
@@ -156,6 +156,13 @@ export const TreasuryAbi = [
     inputs: [],
     name: "aaveWETH",
     outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "amint",
+    outputs: [{ internalType: "contract IAMINT", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -197,7 +204,7 @@ export const TreasuryAbi = [
       { internalType: "bool", name: "hasBorrowed", type: "bool" },
       { internalType: "bool", name: "hasDeposited", type: "bool" },
       { internalType: "uint64", name: "borrowerIndex", type: "uint64" },
-      { internalType: "uint128", name: "totalPTokens", type: "uint128" },
+      { internalType: "uint128", name: "totalAbondTokens", type: "uint128" },
     ],
     stateMutability: "view",
     type: "function",
@@ -213,6 +220,13 @@ export const TreasuryAbi = [
     inputs: [],
     name: "cEther",
     outputs: [{ internalType: "contract ICEther", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint64", name: "count", type: "uint64" }],
+    name: "calculateInterestForDepositAave",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -260,6 +274,13 @@ export const TreasuryAbi = [
   },
   {
     inputs: [],
+    name: "externalProtocolDepositCount",
+    outputs: [{ internalType: "uint64", name: "", type: "uint64" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "getBalanceInTreasury",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
@@ -277,6 +298,11 @@ export const TreasuryAbi = [
         components: [
           { internalType: "uint64", name: "depositedTime", type: "uint64" },
           { internalType: "uint128", name: "depositedAmount", type: "uint128" },
+          {
+            internalType: "uint128",
+            name: "depositedAmountUsdValue",
+            type: "uint128",
+          },
           {
             internalType: "uint64",
             name: "downsidePercentage",
@@ -303,8 +329,21 @@ export const TreasuryAbi = [
             type: "uint64",
           },
           { internalType: "uint64", name: "withdrawTime", type: "uint64" },
-          { internalType: "uint128", name: "pTokensAmount", type: "uint128" },
+          {
+            internalType: "uint128",
+            name: "aBondTokensAmount",
+            type: "uint128",
+          },
           { internalType: "uint64", name: "strikePrice", type: "uint64" },
+          { internalType: "uint128", name: "optionFees", type: "uint128" },
+          { internalType: "uint256", name: "burnedAmint", type: "uint256" },
+          {
+            internalType: "uint64",
+            name: "externalProtocolCount",
+            type: "uint64",
+          },
+          { internalType: "uint256", name: "discountedPrice", type: "uint256" },
+          { internalType: "uint128", name: "cTokensCredited", type: "uint128" },
         ],
         internalType: "struct Treasury.DepositDetails",
         name: "",
@@ -312,6 +351,23 @@ export const TreasuryAbi = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "depositor", type: "address" },
+      { internalType: "uint64", name: "index", type: "uint64" },
+    ],
+    name: "getInterestForCompoundDeposit",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "increaseExternalProtocolCount",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -338,6 +394,7 @@ export const TreasuryAbi = [
       { internalType: "uint256", name: "depositedAmount", type: "uint256" },
       { internalType: "uint256", name: "totalCreditedTokens", type: "uint256" },
       { internalType: "uint256", name: "depositedUsdValue", type: "uint256" },
+      { internalType: "uint256", name: "cumulativeRate", type: "uint256" },
     ],
     stateMutability: "view",
     type: "function",
@@ -359,6 +416,16 @@ export const TreasuryAbi = [
   {
     inputs: [],
     name: "totalInterest",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "depositor", type: "address" },
+      { internalType: "uint64", name: "index", type: "uint64" },
+    ],
+    name: "totalInterestFromExternalProtocol",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
@@ -402,15 +469,6 @@ export const TreasuryAbi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "trinity",
-    outputs: [
-      { internalType: "contract ITrinityToken", name: "", type: "address" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       { internalType: "address", name: "depositor", type: "address" },
       { internalType: "uint64", name: "index", type: "uint64" },
@@ -418,6 +476,11 @@ export const TreasuryAbi = [
         components: [
           { internalType: "uint64", name: "depositedTime", type: "uint64" },
           { internalType: "uint128", name: "depositedAmount", type: "uint128" },
+          {
+            internalType: "uint128",
+            name: "depositedAmountUsdValue",
+            type: "uint128",
+          },
           {
             internalType: "uint64",
             name: "downsidePercentage",
@@ -444,8 +507,21 @@ export const TreasuryAbi = [
             type: "uint64",
           },
           { internalType: "uint64", name: "withdrawTime", type: "uint64" },
-          { internalType: "uint128", name: "pTokensAmount", type: "uint128" },
+          {
+            internalType: "uint128",
+            name: "aBondTokensAmount",
+            type: "uint128",
+          },
           { internalType: "uint64", name: "strikePrice", type: "uint64" },
+          { internalType: "uint128", name: "optionFees", type: "uint128" },
+          { internalType: "uint256", name: "burnedAmint", type: "uint256" },
+          {
+            internalType: "uint64",
+            name: "externalProtocolCount",
+            type: "uint64",
+          },
+          { internalType: "uint256", name: "discountedPrice", type: "uint256" },
+          { internalType: "uint128", name: "cTokensCredited", type: "uint128" },
         ],
         internalType: "struct Treasury.DepositDetails",
         name: "depositDetail",
@@ -463,6 +539,26 @@ export const TreasuryAbi = [
       { internalType: "bool", name: "_bool", type: "bool" },
     ],
     name: "updateHasBorrowed",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "borrower", type: "address" },
+      { internalType: "uint128", name: "amount", type: "uint128" },
+    ],
+    name: "updateTotalAbondTokensDecrease",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "borrower", type: "address" },
+      { internalType: "uint128", name: "amount", type: "uint128" },
+    ],
+    name: "updateTotalAbondTokensIncrease",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -502,26 +598,6 @@ export const TreasuryAbi = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "address", name: "borrower", type: "address" },
-      { internalType: "uint128", name: "amount", type: "uint128" },
-    ],
-    name: "updateTotalPTokensDecrease",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "borrower", type: "address" },
-      { internalType: "uint128", name: "amount", type: "uint128" },
-    ],
-    name: "updateTotalPTokensIncrease",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "usdt",
     outputs: [{ internalType: "contract IERC20", name: "", type: "address" }],
@@ -555,10 +631,7 @@ export const TreasuryAbi = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "uint64", name: "index", type: "uint64" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
+    inputs: [{ internalType: "uint64", name: "index", type: "uint64" }],
     name: "withdrawFromAave",
     outputs: [],
     stateMutability: "nonpayable",

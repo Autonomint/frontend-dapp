@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import React, { useEffect, useState } from "react";
-import { useAccount, useChainId } from "wagmi";
+import { useAccount, useChainId,ConnectorData} from "wagmi";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import NewDeposit from "./NewDeposit";
 import AmintDepositRow from "./AmintDepositRow";
@@ -20,6 +20,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import displayNumberWithPrecision from "../utils/precision";
 import { formatEther } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
+// ...
+
 
 interface DepositDetail {
   id: string;
@@ -27,6 +29,7 @@ interface DepositDetail {
   index: number;
   chainId: number;
   depositedAmint: string;
+  depositedUsdt: string;
   depositedTime: string;
   ethPriceAtDeposit: number;
   aprAtDeposit: number;
@@ -42,7 +45,7 @@ interface DepositDetail {
 }
 const dasboardStatsItem = [
   {
-    heading: "Total AMINT Deposited",
+    heading: "Total AMINT / USDT Deposited",
     value: "1324.32",
     showSubHeading: false,
   },
@@ -65,9 +68,24 @@ const dasboardStatsItem = [
 
 const page = () => {
   // getting isConnected && address from useAccount() of wagmi
-  const { isConnected, address } = useAccount();
-  console.log("isConnected", isConnected);
-  
+  const { isConnected, address,connector:activeConnector} = useAccount();
+  useEffect(() => {
+    const handleConnectorUpdate = ({ account, chain }: ConnectorData) => {
+      window.location.reload();
+    };
+
+    if (activeConnector) {
+      activeConnector.on('change', handleConnectorUpdate);
+    }
+
+    return () => {
+      if (activeConnector) {
+        activeConnector.off('change', handleConnectorUpdate);
+      }
+    };
+  }, [activeConnector]);
+
+
   // getting chainId from useChainId() of wagmi
   const chainId = useChainId();
   // getting queryClient from useQueryClient() of tanstack/react-query
@@ -83,14 +101,14 @@ const page = () => {
   async function getCDSDepositorData(
     address: `0x${string}` | undefined
   ): Promise<any> {
-    return fetch(`${BACKEND_API_URL}/cds/${address}`).then((response) =>
+    return fetch(`${BACKEND_API_URL}/cds/totalDeposits/5/${address}`).then((response) =>
       response.json()
     );
   }
   
 
   // Define a variable to store the result of the query
-  const { data: dCDSdepositorData, error: dCDSdepositorDataError } = useQuery({
+  const { data: dCDSdepositorData, error: dCDSdepositorDataError,refetch: refetchCDSDepositorData } = useQuery({
     // Specify the query key, which consists of the "dCDSdepositorsData",
     // chainId, and address values
     queryKey: ["dCDSdepositorsData", chainId, address],
@@ -100,6 +118,9 @@ const page = () => {
     enabled: !!address,
   });
 
+  useEffect(() => {
+    refetchCDSDepositorData();
+  },[isConnected])
 
   /**
    * Retrieves the deposit details for a specific address.
@@ -124,6 +145,7 @@ const page = () => {
     enabled: !!address,
   });
 
+  console.log("deposits", deposits);
   function handleStatsItem() {
     // Check for error or 404 status code
     
@@ -142,15 +164,15 @@ const page = () => {
     // Update dashboard stats based on chainId
     if (dCDSdepositorData) {
       const updatedStats = [...dashboardStats];
-
-      if (chainId === 80001) {
+      console.log(dCDSdepositorData)
+      if (chainId === 5) {
         // Update values for Polygon chain
         updatedStats[0].value =
-          dCDSdepositorData.totalDepositedAmintInPolygon ?? "0";
-        updatedStats[1].value = dCDSdepositorData.totalIndexInPolygon ?? "0";
-        updatedStats[2].value = dCDSdepositorData.totalFeesInPolygon ?? "0";
+          (dCDSdepositorData.totalDepositedAmint=='NaN'?"0":dCDSdepositorData.totalDepositedAmint)+ " / " + (dCDSdepositorData.totalDepositedUsdt=="NaN"?"0":dCDSdepositorData.totalDepositedUsdt);
+        updatedStats[1].value = dCDSdepositorData.totalIndex ?? "0";
+        updatedStats[2].value = dCDSdepositorData.totalFees==null?'0':(parseFloat(dCDSdepositorData.totalFees)/10**18).toString();
         updatedStats[3].value =
-          dCDSdepositorData.totalFeesWithdrawnInPolygon ?? "0";
+        dCDSdepositorData.totalFeesWithdrawn == null?'0':(parseFloat(dCDSdepositorData.totalFeesWithdrawn)/10**18).toString() ;
       } else if (chainId === 11155111) {
         // Update values for Ethereum chain
         updatedStats[0].value =
@@ -236,8 +258,8 @@ const page = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-textGrey/0">Id</TableHead>
-                <TableHead className="text-textGrey">Amint Deposited</TableHead>
+                <TableHead className="text-textGrey">Id</TableHead>
+                <TableHead className="text-textGrey">Amint / Usdt Deposited</TableHead>
                 <TableHead className="text-textGrey">Deposited Time</TableHead>
                 <TableHead className="text-textGrey">Lock In period</TableHead>
                 <TableHead className="text-textGrey">Abond minted</TableHead>

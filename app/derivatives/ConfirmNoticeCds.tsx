@@ -6,9 +6,11 @@ import Divider from "@/components/CustomUI/Divider/Divider";
 const ConfirmNoticeCds = ({
   handleWithdrawal,
   amintToMint,
+  setLoding,
 }: {
   handleWithdrawal: VoidFunction;
   amintToMint: string;
+  setLoding: boolean;
 }) => {
   const [switchOn, setSwitchOn] = React.useState(false);
   return (
@@ -35,6 +37,7 @@ const ConfirmNoticeCds = ({
         variant={"primary"}
         className="text-white"
         onClick={handleWithdrawal}
+        disabled={setLoding}
       >
         Confirm Withdrawal
       </Button>

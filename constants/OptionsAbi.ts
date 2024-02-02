@@ -1,7 +1,46 @@
 export const OPTIONSABI = [
   {
-    inputs: [{ internalType: "uint8", name: "percent", type: "uint8" }],
-    name: "depositOption",
+    inputs: [
+      { internalType: "address", name: "_priceFeed", type: "address" },
+      { internalType: "address", name: "_treasuryAddress", type: "address" },
+      { internalType: "address", name: "_cdsAddress", type: "address" },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      { internalType: "uint128", name: "_ethPrice", type: "uint128" },
+      { internalType: "uint256", name: "_ethVolatility", type: "uint256" },
+      { internalType: "uint256", name: "_amount", type: "uint256" },
+      {
+        internalType: "enum Options.StrikePrice",
+        name: "_strikePrice",
+        type: "uint8",
+      },
+    ],
+    name: "calculateOptionPrice",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "calculateStandardDeviation",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getLatestPrice",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "updateDailyEMA",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

@@ -143,7 +143,7 @@ export const AbondABI = [
     inputs: [],
     name: "decimals",
     outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
-    stateMutability: "view",
+    stateMutability: "pure",
     type: "function",
   },
   {

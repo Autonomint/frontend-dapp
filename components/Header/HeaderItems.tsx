@@ -1,5 +1,12 @@
 import { cn } from "@/lib/utils";
 import React from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 interface Props {
   props: {
@@ -10,11 +17,13 @@ interface Props {
     className: string;
     lastElement?: boolean;
     textColor?: string;
+    showTooltip?: boolean;
+    tooltipText?: string;
   };
 }
 
 const HeaderItems = ({
-  props: { textHeadline, textValue, className, lastElement = false, textColor },
+  props: { textHeadline, textValue, className, lastElement = false, textColor, showTooltip, tooltipText},
 }: Props) => {
   return (
     <>
@@ -27,7 +36,20 @@ const HeaderItems = ({
         <div className="flex flex-col justify-center min-[1440px]:gap-[20px] 2dppx:gap-2 gap-2">
           <p className="text-textGrey min-[1440px]:text-base 2dppx:text-sm text-sm font-normal leading-none whitespace-nowrap">
             {textHeadline}
+            {showTooltip && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <InfoCircledIcon className="w-4 h-4 ml-2" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{tooltipText}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
           </p>
+          
           <h3
             style={{ color: textColor ? textColor : "" }}
             className="font-medium min-[1440px]:text-[2rem] 2dppx:text-2xl text-2xl leading-none"

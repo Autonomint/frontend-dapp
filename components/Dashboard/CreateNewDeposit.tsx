@@ -40,7 +40,8 @@ import {
   FormMessage,
 } from "../ui/form";
 import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
-import { parseEther } from "viem";
+import { parseEther, parseUnits } from "viem";
+
 import {
   borrowingContractABI,
   useBorrowingContractDepositTokens,
@@ -48,8 +49,8 @@ import {
   useBorrowingContractRead,
   useCdsTotalCdsDepositedAmount,
   useTreasuryTotalVolumeOfBorrowersAmountinUsd,
-  useTreasuryTotalVolumeOfBorrowersAmountinWei,
 } from "@/abiAndHooks";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import displayNumberWithPrecision from "@/app/utils/precision";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
@@ -72,9 +73,12 @@ const formSchema = z.object({
 });
 
 const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
-  const [amintToBeMinted, setAmintToBeMinted] = useState("0");
+
+
+  const [amintToBeMinted, setAmintToBeMinted] = useState('0');
   const [downsideProtectionAmnt, setDownsideProtectionAmnt] = useState("0");
   const [open, setOpen] = useState(false);
+  const [optionFees, setOptionFees] = useState(0);
   // disabling the button if we don't have enough funds in CDS
   const [disabled, setDisabled] = useState(false);
   const { address } = useAccount();
@@ -83,6 +87,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   const queryClient = useQueryClient();
   //we will get this normalizedAmount from events while depositing
   const normalizedAmount = useRef("");
+  const noOfAmintMinted = useRef("");
   // to manage the toastId
   const toastId = useRef<string | number>("");
   const form = useForm<z.infer<typeof formSchema>>({
@@ -93,6 +98,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       strikePrice: 5,
     },
   });
+
+
   // watch for the strikePrice in the form
   const strikePrice = form.watch("strikePrice");
   // watch for the ltv from the borrowing Contract
@@ -104,16 +111,15 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     watch: true,
   });
 
+
   // Perform a mutation and get the mutate and depositReset functions
   const { mutate, reset: depositReset } = useMutation({
     // Specify the mutation function to be called
     mutationFn: storeToBackend,
-
     // Handle any errors that occur during the mutation
     onError(error, variables, context) {
       console.log(error);
     },
-
     // Perform actions after the mutation is completed or failed
     onSettled() {
       // Invalidate the "depositorsData" and "deposits" queries in the query cache
@@ -126,10 +132,13 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       // Reset the form
       form.reset();
     },
-
     // Retry the mutation up to 4 times if it fails
     retry: 4,
   });
+
+
+
+
   /**
    * Retrieves the total index for a given address.
    *
@@ -141,6 +150,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       (response) => response.json()
     );
   }
+
+
   // Use the useQuery hook to fetch the total index
   const { data: totalIndex } = useQuery({
     queryKey: ["totalIndex"],
@@ -150,6 +161,20 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   });
 
   /**
+   * Retrieves the option fees for a given address.
+   *
+   * @param {`0x${string}` | undefined} address - The address to retrieve the option fees for.
+   * @return {Promise<any>} A promise that resolves to the option fees.
+   */
+  async function getOptionFees() {
+    const response = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/${parseUnits(form.getValues("collateralAmount").toString(), 18)}/${ethPrice}/${(strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4)}`);
+    const data = await response.json();
+    return data[1]?(data[1]/10**6):0;
+  }
+
+
+
+  /**
    * Stores data to the backend.
    *
    * @param address - The address to store.
@@ -157,7 +182,14 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
    */
   async function storeToBackend(address: `0x${string}` | undefined) {
     // Log the total index
-    console.log(totalIndex);
+    let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);
+    let strikePercent = strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4;
+    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/${colateralamount}/${ethPrice}/${strikePercent}`).then(
+      (res) => res.json()
+    )
+   
+   
+    
     // Create the body value
     let bodyValue = JSON.stringify({
       address: address,
@@ -169,9 +201,11 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       depositedAmount: `${form.watch("collateralAmount")}`,
       depositedTime: `${Date.now()}`,
       ethPrice: Number(ethPrice ? ethPrice : 0) / 100,
-      noOfAmintMinted: `${amintToBeMinted}`,
-      strikePricePercent: strikePrice,
+      noOfAmintMinted: `${noOfAmintMinted.current}`,
+      strikePrice: strikePrice,
+      strikePricePercent: strikePrice == 5 ? 'FIVE' : strikePrice == 10 ? 'TEN' : strikePrice == 15 ? 'FIFTEEN' : strikePrice == 20 ? 'TWENTY' : 'TWENTY_FIVE',
       normalizedAmount: normalizedAmount.current,
+      optionFees: data[1].toString(),
     });
 
     // Log the body value
@@ -196,26 +230,20 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     return result;
   }
 
+
   // get  ethPrice using useContractRead hook
   const { data: ethPrice } = useBorrowingContractRead({
     functionName: "getUSDValue",
     staleTime: 10 * 1000,
   });
+
+
   const {
     data: depositData, // Data received from the `useBorrowingContractDepositTokens` hook
     write, // Function to initiate a write operation
     reset, // Function to reset the state of the hook
   } = useBorrowingContractDepositTokens({
-    functionName: "depositTokens", // Name of the function to be called
-    args: [
-      BigInt(ethPrice ? ethPrice : 0), // Argument 1: ethPrice (if available, otherwise 0)
-      BigInt(Date.now()), // Argument 2: Current timestamp
-      BigInt(
-        // Argument 3: Calculated value using ethPrice and strikePrice
-        ethPrice ? (ethPrice * (100n + BigInt(strikePrice))) / 100n : 0
-      ),
-    ],
-    value: parseEther(form.watch("collateralAmount")?.toString()), // Value to be sent along with the transaction
+    // Value to be sent along with the transaction
     onError(error) {
       setOpen(false); // Close the modal
       console.log(error); // Log the error to the console
@@ -238,7 +266,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       );
     },
     onSuccess(data) {
-      setOpen(false); // Close the modal
+      form.reset(); // Reset the form
       console.log(data?.hash); // Log the transaction hash to the console
       toast.custom(
         (t) => {
@@ -263,6 +291,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       );
     },
   });
+
+
   const { isLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
     hash: depositData?.hash,
     onSuccess(data) {
@@ -270,8 +300,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       console.log("transaction completed", depositData?.hash, data);
 
       // Get the data logs based on the chainId
-      const dataLogs =
-        chainId === 80001 ? data.logs[4].data : data.logs[2].data;
+      const dataLogs = data.logs[15].data;
 
       // Decode event logs from ABI
       const { eventName, args } = decodeEventLogsFromAbi(
@@ -279,17 +308,17 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
         ["0x3f7c04c09b19100060129256b7d82f055d0aa72cf17042fb3f2d41d1fffc0260"],
         "Deposit",
         dataLogs
-      ) as { eventName: string; args: { normalizedAmount: bigint } };
+      ) as { eventName: string; args: { normalizedAmount: bigint, borrowAmount: bigint } };
 
       // Log event name and normalized amount
-      console.log(eventName, args?.normalizedAmount);
 
       // Set the normalizedAmount value
       normalizedAmount.current = args?.normalizedAmount.toString();
+      noOfAmintMinted.current = args?.borrowAmount.toString();
 
       // Call mutate function with the address to store things to backend
       mutate(address);
-
+      setOpen(false); 
       // Show custom toast
       toast.custom(
         () => (
@@ -314,6 +343,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       }, 3000);
     },
   });
+
+
   /**
    * useEffect hook that disables a deposit button based on certain conditions.
    * It checks if `write` is false, and if so, sets `disabled` to true.
@@ -340,23 +371,44 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     }
   }, [totalCdsDepositedAmount, totalVolumeOfBorrowersAmountinUsd]);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // console.log("depositData", depositData);
     //call blockchain write function to deposit
-    write?.();
-    // mutate(address);
+
+    let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);
+    let strikePercent = strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4;
+    console.log(ethPrice, colateralamount, strikePercent)
+    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/${colateralamount}/${ethPrice}/${strikePercent}`).then(
+      (res) => res.json()
+    )
+    console.log(data)
+    if (data[0] != undefined) {
+      write?.({
+        args: [
+          BigInt(ethPrice ? ethPrice : 0),
+          BigInt(new Date().getTime()),
+          strikePercent,
+          BigInt(BigInt(form.getValues("strikePrice")) * (ethPrice ? ethPrice : 0n)),
+          BigInt(data[0]),
+        ],
+        value: parseEther(form.getValues("collateralAmount").toString()),
+      });
+    } // mutate(address);
   }
 
   /**
    * Handles the calculation and setting of the amint to be minted and downside protection amounts.
    */
-  const handleAmintToBeMinted = () => {
+  const handleAmintToBeMinted = async() => {
     // Calculate the amint to be minted
+    const optionf = await getOptionFees();
+    setOptionFees(optionf);
     const amintToMint =
       (form.watch("collateralAmount") * Number(ethPrice) * 80) / 10000;
     const amint2Decimal = displayNumberWithPrecision(amintToMint.toString());
-    setAmintToBeMinted(amint2Decimal);
+    console.log(amint2Decimal, optionf)
+    setAmintToBeMinted((Number(amint2Decimal) - optionf).toFixed(2));
 
     // Calculate the downside protection amount
     const downsideProtection =
@@ -370,9 +422,22 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     setDownsideProtectionAmnt(downsideProtection2Decimal);
   };
 
+  /**
+   * Handles the calculation and setting of the eth volatility.
+   */
+
   useEffect(() => {
-    handleAmintToBeMinted();
-  }, [form.watch("collateralAmount")]);
+    if(form.getValues("collateralAmount")!=0){
+      form.clearErrors("collateralAmount");
+      handleAmintToBeMinted();
+    }
+    else{
+      form.setError("collateralAmount",{message:"value should be greater than 0.02 ETH or 0.02"});
+    }
+    
+  }, [form.watch("collateralAmount"),form.watch("strikePrice")]);
+
+
 
   useEffect(() => {
     if (transactionSuccess) {
@@ -464,6 +529,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="collateralAmount"
@@ -550,15 +616,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                       Options Fees
                     </p>
                     <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm">
-                      3%
-                    </p>
-                  </div>
-                  <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                    <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary">
-                      APY
-                    </p>
-                    <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm">
-                      5% ~ 0.00023 Amint
+                      {optionFees}
                     </p>
                   </div>
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
@@ -582,7 +640,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                   className="text-white"
                   disabled={disabled}
                 >
-                  Confirm Deposit
+                  {isLoading?"Depositing...":'Confirm Deposit'}
                 </Button>
               </div>
             </form>

@@ -70,12 +70,11 @@ const Swap = () => {
 
     return (
         <div className="flex justify-center align-middle ">
-
-            <div className='mt-20 border p-2 w-1/3 rounded-lg shadow-sm bg-white' >
-                <h1 className='m-2 text-xl text-[#00679F] font-bold'>Swap</h1>
+            <div className='w-full' >
+                
                 <div className='p-5 m-2 bg-[#F4F8FF] rounded-md shadow-sm flex flex-col' >
                     <label className='text-[12px] text-gray-700'>you pay</label>
-                    <div>
+                    <div className="flex justify-between">
                         <input className='border-none focus:outline-none bg-[#F4F8FF] text-xl' type="text" value={inputAmount} placeholder='Input Amount' onChange={handleInputChange} />
                         <select
                             className=' bg-[#F4F8FF] text-md p-3 border border-blue-500 rounded-md'
@@ -93,7 +92,7 @@ const Swap = () => {
 
                 <div className='p-5 m-2 bg-[#F4F8FF] rounded-md shadow-sm flex flex-col'>
                     <label className='text-[12px] text-gray-700'>you get</label>
-                    <div>
+                    <div  className="flex justify-between">
                         
                         <input className='border-none focus:outline-none bg-[#F4F8FF] text-xl' type="text" value={loader?"loading...": outputAmount} placeholder='Output Amount' readOnly />
                         <select

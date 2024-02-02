@@ -1,6 +1,4 @@
 import {
-  useNetwork,
-  useChainId,
   useContractRead,
   UseContractReadConfig,
   useContractWrite,
@@ -22,8 +20,7 @@ import {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export const abondABI = [
   { stateMutability: 'nonpayable', type: 'constructor', inputs: [] },
@@ -167,7 +164,7 @@ export const abondABI = [
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
   },
   {
-    stateMutability: 'view',
+    stateMutability: 'pure',
     type: 'function',
     inputs: [],
     name: 'decimals',
@@ -297,17 +294,14 @@ export const abondABI = [
 ] as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export const abondAddress = {
-  80001: '0x0763375b04a329E874443CbA630FE79e513FaF99',
-  11155111: '0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc',
+  5: '0x4cd9aA7E43B7FE8B378cF315771c4A536360b885',
 } as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export const abondConfig = { address: abondAddress, abi: abondABI } as const
 
@@ -316,8 +310,7 @@ export const abondConfig = { address: abondAddress, abi: abondABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export const amintABI = [
   { stateMutability: 'nonpayable', type: 'constructor', inputs: [] },
@@ -461,7 +454,7 @@ export const amintABI = [
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
   },
   {
-    stateMutability: 'view',
+    stateMutability: 'pure',
     type: 'function',
     inputs: [],
     name: 'decimals',
@@ -591,17 +584,14 @@ export const amintABI = [
 ] as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export const amintAddress = {
-  80001: '0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59',
-  11155111: '0x1347ED038461D00Df065B6F491b838999e84f6Cc',
+  5: '0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7',
 } as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export const amintConfig = { address: amintAddress, abi: amintABI } as const
 
@@ -610,8 +600,7 @@ export const amintConfig = { address: amintAddress, abi: amintABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export const borrowingContractABI = [
   {
@@ -620,8 +609,10 @@ export const borrowingContractABI = [
     inputs: [
       { name: '_tokenAddress', internalType: 'address', type: 'address' },
       { name: '_cds', internalType: 'address', type: 'address' },
-      { name: '_protocolToken', internalType: 'address', type: 'address' },
+      { name: '_abondToken', internalType: 'address', type: 'address' },
+      { name: '_multiSign', internalType: 'address', type: 'address' },
       { name: '_priceFeedAddress', internalType: 'address', type: 'address' },
+      { name: 'chainId', internalType: 'uint64', type: 'uint64' },
     ],
   },
   { type: 'error', inputs: [], name: 'Borrowing_DepositFailed' },
@@ -632,11 +623,11 @@ export const borrowingContractABI = [
     inputs: [],
     name: 'Borrowing_LiquidateEthTransferToCdsFailed',
   },
-  { type: 'error', inputs: [], name: 'Borrowing_MUSDMintFailed' },
+  { type: 'error', inputs: [], name: 'Borrowing_WithdrawAMINTTransferFailed' },
   { type: 'error', inputs: [], name: 'Borrowing_WithdrawBurnFailed' },
   { type: 'error', inputs: [], name: 'Borrowing_WithdrawEthTransferFailed' },
-  { type: 'error', inputs: [], name: 'Borrowing_WithdrawMUSDTransferFailed' },
-  { type: 'error', inputs: [], name: 'Borrowing_pTokenMintFailed' },
+  { type: 'error', inputs: [], name: 'Borrowing_abondMintFailed' },
+  { type: 'error', inputs: [], name: 'Borrowing_amintMintFailed' },
   {
     type: 'event',
     anonymous: false,
@@ -662,43 +653,6 @@ export const borrowingContractABI = [
       },
     ],
     name: 'Deposit',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'liquidationIndex',
-        internalType: 'uint128',
-        type: 'uint128',
-        indexed: false,
-      },
-      {
-        name: 'liquidationAmount',
-        internalType: 'uint128',
-        type: 'uint128',
-        indexed: false,
-      },
-      {
-        name: 'cdsProfits',
-        internalType: 'uint128',
-        type: 'uint128',
-        indexed: false,
-      },
-      {
-        name: 'ethAmount',
-        internalType: 'uint128',
-        type: 'uint128',
-        indexed: false,
-      },
-      {
-        name: 'availableLiquidationAmount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    name: 'Liquidate',
   },
   {
     type: 'event',
@@ -755,9 +709,23 @@ export const borrowingContractABI = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'Trinity',
+    name: 'DOMAIN_SEPARATOR',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'PERMIT_TYPEHASH',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'abond',
     outputs: [
-      { name: '', internalType: 'contract ITrinityToken', type: 'address' },
+      { name: '', internalType: 'contract IABONDToken', type: 'address' },
     ],
   },
   {
@@ -766,6 +734,13 @@ export const borrowingContractABI = [
     inputs: [],
     name: 'admin',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'amint',
+    outputs: [{ name: '', internalType: 'contract IAMINT', type: 'address' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -810,17 +785,16 @@ export const borrowingContractABI = [
     inputs: [
       { name: '_ethPrice', internalType: 'uint128', type: 'uint128' },
       { name: '_depositTime', internalType: 'uint64', type: 'uint64' },
+      {
+        name: '_strikePercent',
+        internalType: 'enum IOptions.StrikePrice',
+        type: 'uint8',
+      },
       { name: '_strikePrice', internalType: 'uint64', type: 'uint64' },
+      { name: '_volatility', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'depositTokens',
     outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'getAPY',
-    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
   },
   {
     stateMutability: 'view',
@@ -893,6 +867,22 @@ export const borrowingContractABI = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
+    name: 'multiSign',
+    outputs: [
+      { name: '', internalType: 'contract IMultiSign', type: 'address' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
     name: 'noOfLiquidations',
     outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
   },
@@ -913,6 +903,22 @@ export const borrowingContractABI = [
   {
     stateMutability: 'view',
     type: 'function',
+    inputs: [
+      { name: 'holder', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'allowedAmount', internalType: 'uint256', type: 'uint256' },
+      { name: 'allowed', internalType: 'bool', type: 'bool' },
+      { name: 'expiry', internalType: 'uint256', type: 'uint256' },
+      { name: 'v', internalType: 'uint8', type: 'uint8' },
+      { name: 'r', internalType: 'bytes32', type: 'bytes32' },
+      { name: 's', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'permit',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     inputs: [],
     name: 'priceFeedAddress',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
@@ -921,10 +927,8 @@ export const borrowingContractABI = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'protocolToken',
-    outputs: [
-      { name: '', internalType: 'contract IProtocolToken', type: 'address' },
-    ],
+    name: 'ratePerSec',
+    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -936,8 +940,8 @@ export const borrowingContractABI = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [{ name: '_apy', internalType: 'uint8', type: 'uint8' }],
-    name: 'setAPY',
+    inputs: [{ name: '_ratePerSec', internalType: 'uint128', type: 'uint128' }],
+    name: 'setAPR',
     outputs: [],
   },
   {
@@ -1020,6 +1024,13 @@ export const borrowingContractABI = [
     outputs: [],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'version',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
@@ -1027,6 +1038,7 @@ export const borrowingContractABI = [
       { name: '_index', internalType: 'uint64', type: 'uint64' },
       { name: '_ethPrice', internalType: 'uint64', type: 'uint64' },
       { name: '_withdrawTime', internalType: 'uint64', type: 'uint64' },
+      { name: '_bondRatio', internalType: 'uint64', type: 'uint64' },
     ],
     name: 'withDraw',
     outputs: [],
@@ -1034,10 +1046,7 @@ export const borrowingContractABI = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [
-      { name: 'index', internalType: 'uint64', type: 'uint64' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-    ],
+    inputs: [{ name: 'index', internalType: 'uint64', type: 'uint64' }],
     name: 'withdrawFromAaveProtocol',
     outputs: [],
   },
@@ -1058,17 +1067,14 @@ export const borrowingContractABI = [
 ] as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export const borrowingContractAddress = {
-  80001: '0x1A3D344b58303952EFbcF01b410d943852F0b0e6',
-  11155111: '0x2745155BB6d1f83f9477c0EA01a4b09e05571033',
+  5: '0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8',
 } as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export const borrowingContractConfig = {
   address: borrowingContractAddress,
@@ -1080,17 +1086,17 @@ export const borrowingContractConfig = {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export const cdsABI = [
   {
     stateMutability: 'nonpayable',
     type: 'constructor',
     inputs: [
-      { name: '_trinity', internalType: 'address', type: 'address' },
+      { name: '_amint', internalType: 'address', type: 'address' },
       { name: 'priceFeed', internalType: 'address', type: 'address' },
       { name: '_usdt', internalType: 'address', type: 'address' },
+      { name: '_multiSign', internalType: 'address', type: 'address' },
     ],
   },
   {
@@ -1174,10 +1180,8 @@ export const cdsABI = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'Trinity_token',
-    outputs: [
-      { name: '', internalType: 'contract ITrinityToken', type: 'address' },
-    ],
+    name: 'amint',
+    outputs: [{ name: '', internalType: 'contract IAMINT', type: 'address' }],
   },
   {
     stateMutability: 'view',
@@ -1263,7 +1267,7 @@ export const cdsABI = [
     outputs: [
       {
         name: '',
-        internalType: 'struct CDSTest.CdsAccountDetails',
+        internalType: 'struct CDS.CdsAccountDetails',
         type: 'tuple',
         components: [
           { name: 'depositedTime', internalType: 'uint64', type: 'uint64' },
@@ -1333,6 +1337,15 @@ export const cdsABI = [
         internalType: 'uint256',
         type: 'uint256',
       },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'multiSign',
+    outputs: [
+      { name: '', internalType: 'contract IMultiSign', type: 'address' },
     ],
   },
   {
@@ -1439,7 +1452,7 @@ export const cdsABI = [
       { name: 'index', internalType: 'uint128', type: 'uint128' },
       {
         name: 'liquidationData',
-        internalType: 'struct CDSTest.LiquidationInfo',
+        internalType: 'struct CDS.LiquidationInfo',
         type: 'tuple',
         components: [
           {
@@ -1513,17 +1526,14 @@ export const cdsABI = [
 ] as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export const cdsAddress = {
-  80001: '0xb9e7d1263aC519e57C97D375Eb6553F91886C384',
-  11155111: '0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2',
+  5: '0x301c0751e8671A60Eb22A2376F12E366F83BEeb2',
 } as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export const cdsConfig = { address: cdsAddress, abi: cdsABI } as const
 
@@ -1532,15 +1542,53 @@ export const cdsConfig = { address: cdsAddress, abi: cdsABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x82B32A3376C766754C09Fd4323D1166FE1FeAD3f)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xc2c72d998Fa5f2AD2db36cEE257303b2882deF6B)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
  */
 export const optionsABI = [
   {
     stateMutability: 'nonpayable',
+    type: 'constructor',
+    inputs: [
+      { name: '_priceFeed', internalType: 'address', type: 'address' },
+      { name: '_treasuryAddress', internalType: 'address', type: 'address' },
+      { name: '_cdsAddress', internalType: 'address', type: 'address' },
+    ],
+  },
+  {
+    stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'percent', internalType: 'uint8', type: 'uint8' }],
-    name: 'depositOption',
+    inputs: [
+      { name: '_ethPrice', internalType: 'uint128', type: 'uint128' },
+      { name: '_ethVolatility', internalType: 'uint256', type: 'uint256' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+      {
+        name: '_strikePrice',
+        internalType: 'enum Options.StrikePrice',
+        type: 'uint8',
+      },
+    ],
+    name: 'calculateOptionPrice',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'calculateStandardDeviation',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getLatestPrice',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'updateDailyEMA',
     outputs: [],
   },
   {
@@ -1557,17 +1605,14 @@ export const optionsABI = [
 ] as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x82B32A3376C766754C09Fd4323D1166FE1FeAD3f)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xc2c72d998Fa5f2AD2db36cEE257303b2882deF6B)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
  */
 export const optionsAddress = {
-  80001: '0x82B32A3376C766754C09Fd4323D1166FE1FeAD3f',
-  11155111: '0xc2c72d998Fa5f2AD2db36cEE257303b2882deF6B',
+  5: '0x780F7C24e3d940d04E65A7d7602D09B7cE310df1',
 } as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x82B32A3376C766754C09Fd4323D1166FE1FeAD3f)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xc2c72d998Fa5f2AD2db36cEE257303b2882deF6B)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
  */
 export const optionsConfig = {
   address: optionsAddress,
@@ -1680,8 +1725,7 @@ export const quoterConfig = { address: quoterAddress, abi: quoterABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export const treasuryABI = [
   {
@@ -1832,7 +1876,7 @@ export const treasuryABI = [
     outputs: [
       {
         name: '',
-        internalType: 'contract IPoolAddressesProvider',
+        internalType: 'contract ILendingPoolAddressesProvider',
         type: 'address',
       },
     ],
@@ -1843,6 +1887,13 @@ export const treasuryABI = [
     inputs: [],
     name: 'aaveWETH',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'amint',
+    outputs: [{ name: '', internalType: 'contract IAMINT', type: 'address' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -1884,7 +1935,7 @@ export const treasuryABI = [
       { name: 'hasBorrowed', internalType: 'bool', type: 'bool' },
       { name: 'hasDeposited', internalType: 'bool', type: 'bool' },
       { name: 'borrowerIndex', internalType: 'uint64', type: 'uint64' },
-      { name: 'totalPTokens', internalType: 'uint128', type: 'uint128' },
+      { name: 'totalAbondTokens', internalType: 'uint128', type: 'uint128' },
     ],
   },
   {
@@ -1900,6 +1951,13 @@ export const treasuryABI = [
     inputs: [],
     name: 'cEther',
     outputs: [{ name: '', internalType: 'contract ICEther', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'count', internalType: 'uint64', type: 'uint64' }],
+    name: 'calculateInterestForDepositAave',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
     stateMutability: 'view',
@@ -1947,6 +2005,13 @@ export const treasuryABI = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
+    name: 'externalProtocolDepositCount',
+    outputs: [{ name: '', internalType: 'uint64', type: 'uint64' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
     name: 'getBalanceInTreasury',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
@@ -1967,6 +2032,11 @@ export const treasuryABI = [
         components: [
           { name: 'depositedTime', internalType: 'uint64', type: 'uint64' },
           { name: 'depositedAmount', internalType: 'uint128', type: 'uint128' },
+          {
+            name: 'depositedAmountUsdValue',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
           {
             name: 'downsidePercentage',
             internalType: 'uint64',
@@ -1993,11 +2063,41 @@ export const treasuryABI = [
             type: 'uint64',
           },
           { name: 'withdrawTime', internalType: 'uint64', type: 'uint64' },
-          { name: 'pTokensAmount', internalType: 'uint128', type: 'uint128' },
+          {
+            name: 'aBondTokensAmount',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
           { name: 'strikePrice', internalType: 'uint64', type: 'uint64' },
+          { name: 'optionFees', internalType: 'uint128', type: 'uint128' },
+          { name: 'burnedAmint', internalType: 'uint256', type: 'uint256' },
+          {
+            name: 'externalProtocolCount',
+            internalType: 'uint64',
+            type: 'uint64',
+          },
+          { name: 'discountedPrice', internalType: 'uint256', type: 'uint256' },
+          { name: 'cTokensCredited', internalType: 'uint128', type: 'uint128' },
         ],
       },
     ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'depositor', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
+    ],
+    name: 'getInterestForCompoundDeposit',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'increaseExternalProtocolCount',
+    outputs: [],
   },
   {
     stateMutability: 'view',
@@ -2025,6 +2125,7 @@ export const treasuryABI = [
       { name: 'depositedAmount', internalType: 'uint256', type: 'uint256' },
       { name: 'totalCreditedTokens', internalType: 'uint256', type: 'uint256' },
       { name: 'depositedUsdValue', internalType: 'uint256', type: 'uint256' },
+      { name: 'cumulativeRate', internalType: 'uint256', type: 'uint256' },
     ],
   },
   {
@@ -2046,6 +2147,16 @@ export const treasuryABI = [
     type: 'function',
     inputs: [],
     name: 'totalInterest',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'depositor', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
+    ],
+    name: 'totalInterestFromExternalProtocol',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
@@ -2087,15 +2198,6 @@ export const treasuryABI = [
     outputs: [],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'trinity',
-    outputs: [
-      { name: '', internalType: 'contract ITrinityToken', type: 'address' },
-    ],
-  },
-  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
@@ -2108,6 +2210,11 @@ export const treasuryABI = [
         components: [
           { name: 'depositedTime', internalType: 'uint64', type: 'uint64' },
           { name: 'depositedAmount', internalType: 'uint128', type: 'uint128' },
+          {
+            name: 'depositedAmountUsdValue',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
           {
             name: 'downsidePercentage',
             internalType: 'uint64',
@@ -2134,8 +2241,21 @@ export const treasuryABI = [
             type: 'uint64',
           },
           { name: 'withdrawTime', internalType: 'uint64', type: 'uint64' },
-          { name: 'pTokensAmount', internalType: 'uint128', type: 'uint128' },
+          {
+            name: 'aBondTokensAmount',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
           { name: 'strikePrice', internalType: 'uint64', type: 'uint64' },
+          { name: 'optionFees', internalType: 'uint128', type: 'uint128' },
+          { name: 'burnedAmint', internalType: 'uint256', type: 'uint256' },
+          {
+            name: 'externalProtocolCount',
+            internalType: 'uint64',
+            type: 'uint64',
+          },
+          { name: 'discountedPrice', internalType: 'uint256', type: 'uint256' },
+          { name: 'cTokensCredited', internalType: 'uint128', type: 'uint128' },
         ],
       },
     ],
@@ -2150,6 +2270,26 @@ export const treasuryABI = [
       { name: '_bool', internalType: 'bool', type: 'bool' },
     ],
     name: 'updateHasBorrowed',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'borrower', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint128', type: 'uint128' },
+    ],
+    name: 'updateTotalAbondTokensDecrease',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'borrower', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint128', type: 'uint128' },
+    ],
+    name: 'updateTotalAbondTokensIncrease',
     outputs: [],
   },
   {
@@ -2184,26 +2324,6 @@ export const treasuryABI = [
     type: 'function',
     inputs: [{ name: '_amount', internalType: 'uint256', type: 'uint256' }],
     name: 'updateTotalInterestFromLiquidation',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'borrower', internalType: 'address', type: 'address' },
-      { name: 'amount', internalType: 'uint128', type: 'uint128' },
-    ],
-    name: 'updateTotalPTokensDecrease',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'borrower', internalType: 'address', type: 'address' },
-      { name: 'amount', internalType: 'uint128', type: 'uint128' },
-    ],
-    name: 'updateTotalPTokensIncrease',
     outputs: [],
   },
   {
@@ -2242,10 +2362,7 @@ export const treasuryABI = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [
-      { name: 'index', internalType: 'uint64', type: 'uint64' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-    ],
+    inputs: [{ name: 'index', internalType: 'uint64', type: 'uint64' }],
     name: 'withdrawFromAave',
     outputs: [],
   },
@@ -2270,17 +2387,14 @@ export const treasuryABI = [
 ] as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export const treasuryAddress = {
-  80001: '0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C',
-  11155111: '0x2d02bEE765f2A32ceE7eE5402533c469060d9190',
+  5: '0x25cBdB496F5E51238173fd46a9516494d57fE0E9',
 } as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export const treasuryConfig = {
   address: treasuryAddress,
@@ -2292,395 +2406,32 @@ export const treasuryConfig = {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export const usdtContractABI = [
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'name',
-    outputs: [{ name: '', type: 'string' }],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: '_upgradedAddress', type: 'address' }],
-    name: 'deprecate',
-    outputs: [],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: '_spender', type: 'address' },
-      { name: '_value', type: 'uint256' },
-    ],
-    name: 'approve',
-    outputs: [],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'deprecated',
-    outputs: [{ name: '', type: 'bool' }],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: '_evilUser', type: 'address' }],
-    name: 'addBlackList',
-    outputs: [],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'totalSupply',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: '_from', type: 'address' },
-      { name: '_to', type: 'address' },
-      { name: '_value', type: 'uint256' },
-    ],
-    name: 'transferFrom',
-    outputs: [],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'upgradedAddress',
-    outputs: [{ name: '', type: 'address' }],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: '', type: 'address' }],
-    name: 'balances',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'decimals',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'maximumFee',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [],
-    name: 'unpause',
-    outputs: [],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'receiver', type: 'address' },
-      { name: 'amount', type: 'uint256' },
-    ],
-    name: '_mint',
-    outputs: [],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: '_maker', type: 'address' }],
-    name: 'getBlackListStatus',
-    outputs: [{ name: '', type: 'bool' }],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: '', type: 'address' },
-      { name: '', type: 'address' },
-    ],
-    name: 'allowed',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'paused',
-    outputs: [{ name: '', type: 'bool' }],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'who', type: 'address' }],
-    name: 'balanceOf',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [],
-    name: 'pause',
-    outputs: [],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'getOwner',
-    outputs: [{ name: '', type: 'address' }],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'owner',
-    outputs: [{ name: '', type: 'address' }],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'symbol',
-    outputs: [{ name: '', type: 'string' }],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: '_to', type: 'address' },
-      { name: '_value', type: 'uint256' },
-    ],
-    name: 'transfer',
-    outputs: [],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'newBasisPoints', type: 'uint256' },
-      { name: 'newMaxFee', type: 'uint256' },
-    ],
-    name: 'setParams',
-    outputs: [],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: 'amount', type: 'uint256' }],
-    name: 'issue',
-    outputs: [],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: 'amount', type: 'uint256' }],
-    name: 'redeem',
-    outputs: [],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: '_owner', type: 'address' },
-      { name: '_spender', type: 'address' },
-    ],
-    name: 'allowance',
-    outputs: [{ name: 'remaining', type: 'uint256' }],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'basisPointsRate',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: '', type: 'address' }],
-    name: 'isBlackListed',
-    outputs: [{ name: '', type: 'bool' }],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: '_clearedUser', type: 'address' }],
-    name: 'removeBlackList',
-    outputs: [],
-  },
-  {
-    constant: true,
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'MAX_UINT',
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: 'newOwner', type: 'address' }],
-    name: 'transferOwnership',
-    outputs: [],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: '_blackListedUser', type: 'address' }],
-    name: 'destroyBlackFunds',
-    outputs: [],
-  },
-  {
-    constant: false,
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: 'amount', type: 'uint256' }],
-    name: '_giveMeATokens',
-    outputs: [],
-  },
-  {
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-    inputs: [
-      { name: '_initialSupply', type: 'uint256' },
-      { name: '_name', type: 'string' },
-      { name: '_symbol', type: 'string' },
-      { name: '_decimals', type: 'uint256' },
-    ],
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [{ name: 'amount', type: 'uint256', indexed: false }],
-    name: 'Issue',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [{ name: 'amount', type: 'uint256', indexed: false }],
-    name: 'Redeem',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [{ name: 'newAddress', type: 'address', indexed: false }],
-    name: 'Deprecate',
-  },
+  { stateMutability: 'nonpayable', type: 'constructor', inputs: [] },
   {
     type: 'event',
     anonymous: false,
     inputs: [
-      { name: 'feeBasisPoints', type: 'uint256', indexed: false },
-      { name: 'maxFee', type: 'uint256', indexed: false },
-    ],
-    name: 'Params',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: '_blackListedUser', type: 'address', indexed: false },
-      { name: '_balance', type: 'uint256', indexed: false },
-    ],
-    name: 'DestroyedBlackFunds',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [{ name: '_user', type: 'address', indexed: false }],
-    name: 'AddedBlackList',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [{ name: '_user', type: 'address', indexed: false }],
-    name: 'RemovedBlackList',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'owner', type: 'address', indexed: true },
-      { name: 'spender', type: 'address', indexed: true },
-      { name: 'value', type: 'uint256', indexed: false },
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'value',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
     ],
     name: 'Approval',
   },
@@ -2688,28 +2439,255 @@ export const usdtContractABI = [
     type: 'event',
     anonymous: false,
     inputs: [
-      { name: 'from', type: 'address', indexed: true },
-      { name: 'to', type: 'address', indexed: true },
-      { name: 'value', type: 'uint256', indexed: false },
+      {
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'Paused',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'value',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
     ],
     name: 'Transfer',
   },
-  { type: 'event', anonymous: false, inputs: [], name: 'Pause' },
-  { type: 'event', anonymous: false, inputs: [], name: 'Unpause' },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'Unpaused',
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'amount', internalType: 'uint256', type: 'uint256' }],
+    name: 'burn',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'burnFrom',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'burnFromUser',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'pure',
+    type: 'function',
+    inputs: [],
+    name: 'decimals',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'subtractedValue', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'decreaseAllowance',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'addedValue', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'increaseAllowance',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'mint',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'pause',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'paused',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'symbol',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'unpause',
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: '', internalType: 'address', type: 'address' }],
+    name: 'whitelist',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+  },
 ] as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export const usdtContractAddress = {
-  80001: '0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d',
-  11155111: '0x7169D38820dfd117C3FA1f22a697dBA58d90BA06',
+  5: '0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6',
 } as const
 
 /**
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export const usdtContractConfig = {
   address: usdtContractAddress,
@@ -2723,8 +2701,7 @@ export const usdtContractConfig = {
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondRead<
   TFunctionName extends string,
@@ -2735,12 +2712,9 @@ export function useAbondRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
 }
@@ -2748,8 +2722,7 @@ export function useAbondRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"allowance"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondAllowance<
   TFunctionName extends 'allowance',
@@ -2760,12 +2733,9 @@ export function useAbondAllowance<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'allowance',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -2774,8 +2744,7 @@ export function useAbondAllowance<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"balanceOf"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondBalanceOf<
   TFunctionName extends 'balanceOf',
@@ -2786,12 +2755,9 @@ export function useAbondBalanceOf<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'balanceOf',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -2800,8 +2766,7 @@ export function useAbondBalanceOf<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"decimals"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondDecimals<
   TFunctionName extends 'decimals',
@@ -2812,12 +2777,9 @@ export function useAbondDecimals<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'decimals',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -2826,8 +2788,7 @@ export function useAbondDecimals<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"name"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondName<
   TFunctionName extends 'name',
@@ -2838,12 +2799,9 @@ export function useAbondName<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'name',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -2852,8 +2810,7 @@ export function useAbondName<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondOwner<
   TFunctionName extends 'owner',
@@ -2864,12 +2821,9 @@ export function useAbondOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -2878,8 +2832,7 @@ export function useAbondOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"paused"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondPaused<
   TFunctionName extends 'paused',
@@ -2890,12 +2843,9 @@ export function useAbondPaused<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'paused',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -2904,8 +2854,7 @@ export function useAbondPaused<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"symbol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondSymbol<
   TFunctionName extends 'symbol',
@@ -2916,12 +2865,9 @@ export function useAbondSymbol<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'symbol',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -2930,8 +2876,7 @@ export function useAbondSymbol<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"totalSupply"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondTotalSupply<
   TFunctionName extends 'totalSupply',
@@ -2942,12 +2887,9 @@ export function useAbondTotalSupply<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'totalSupply',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -2956,8 +2898,7 @@ export function useAbondTotalSupply<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"whitelist"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondWhitelist<
   TFunctionName extends 'whitelist',
@@ -2968,12 +2909,9 @@ export function useAbondWhitelist<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'whitelist',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -2982,8 +2920,7 @@ export function useAbondWhitelist<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondWrite<
   TFunctionName extends string,
@@ -3002,12 +2939,9 @@ export function useAbondWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, TFunctionName, TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     ...config,
   } as any)
 }
@@ -3015,8 +2949,7 @@ export function useAbondWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"approve"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondApprove<
   TMode extends WriteContractMode = undefined,
@@ -3038,12 +2971,9 @@ export function useAbondApprove<
         functionName?: 'approve'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'approve', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'approve',
     ...config,
   } as any)
@@ -3052,8 +2982,7 @@ export function useAbondApprove<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burn"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondBurn<
   TMode extends WriteContractMode = undefined,
@@ -3072,12 +3001,9 @@ export function useAbondBurn<
         functionName?: 'burn'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'burn', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'burn',
     ...config,
   } as any)
@@ -3086,8 +3012,7 @@ export function useAbondBurn<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFrom"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondBurnFrom<
   TMode extends WriteContractMode = undefined,
@@ -3109,12 +3034,9 @@ export function useAbondBurnFrom<
         functionName?: 'burnFrom'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'burnFrom', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'burnFrom',
     ...config,
   } as any)
@@ -3123,8 +3045,7 @@ export function useAbondBurnFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondBurnFromUser<
   TMode extends WriteContractMode = undefined,
@@ -3150,12 +3071,9 @@ export function useAbondBurnFromUser<
         functionName?: 'burnFromUser'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'burnFromUser', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'burnFromUser',
     ...config,
   } as any)
@@ -3164,8 +3082,7 @@ export function useAbondBurnFromUser<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"decreaseAllowance"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondDecreaseAllowance<
   TMode extends WriteContractMode = undefined,
@@ -3191,12 +3108,9 @@ export function useAbondDecreaseAllowance<
         functionName?: 'decreaseAllowance'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'decreaseAllowance', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'decreaseAllowance',
     ...config,
   } as any)
@@ -3205,8 +3119,7 @@ export function useAbondDecreaseAllowance<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"increaseAllowance"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondIncreaseAllowance<
   TMode extends WriteContractMode = undefined,
@@ -3232,12 +3145,9 @@ export function useAbondIncreaseAllowance<
         functionName?: 'increaseAllowance'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'increaseAllowance', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'increaseAllowance',
     ...config,
   } as any)
@@ -3246,8 +3156,7 @@ export function useAbondIncreaseAllowance<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"mint"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondMint<
   TMode extends WriteContractMode = undefined,
@@ -3266,12 +3175,9 @@ export function useAbondMint<
         functionName?: 'mint'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'mint', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'mint',
     ...config,
   } as any)
@@ -3280,8 +3186,7 @@ export function useAbondMint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"pause"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondPause<
   TMode extends WriteContractMode = undefined,
@@ -3300,12 +3205,9 @@ export function useAbondPause<
         functionName?: 'pause'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'pause', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'pause',
     ...config,
   } as any)
@@ -3314,8 +3216,7 @@ export function useAbondPause<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -3341,12 +3242,9 @@ export function useAbondRenounceOwnership<
         functionName?: 'renounceOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'renounceOwnership', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'renounceOwnership',
     ...config,
   } as any)
@@ -3355,8 +3253,7 @@ export function useAbondRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transfer"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondTransfer<
   TMode extends WriteContractMode = undefined,
@@ -3378,12 +3275,9 @@ export function useAbondTransfer<
         functionName?: 'transfer'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'transfer', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'transfer',
     ...config,
   } as any)
@@ -3392,8 +3286,7 @@ export function useAbondTransfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferFrom"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondTransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -3419,12 +3312,9 @@ export function useAbondTransferFrom<
         functionName?: 'transferFrom'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'transferFrom', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'transferFrom',
     ...config,
   } as any)
@@ -3433,8 +3323,7 @@ export function useAbondTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -3460,12 +3349,9 @@ export function useAbondTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'transferOwnership', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'transferOwnership',
     ...config,
   } as any)
@@ -3474,8 +3360,7 @@ export function useAbondTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"unpause"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondUnpause<
   TMode extends WriteContractMode = undefined,
@@ -3497,12 +3382,9 @@ export function useAbondUnpause<
         functionName?: 'unpause'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'unpause', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'unpause',
     ...config,
   } as any)
@@ -3511,8 +3393,7 @@ export function useAbondUnpause<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondWrite<TFunctionName extends string>(
   config: Omit<
@@ -3520,12 +3401,9 @@ export function usePrepareAbondWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, TFunctionName>)
 }
@@ -3533,8 +3411,7 @@ export function usePrepareAbondWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"approve"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondApprove(
   config: Omit<
@@ -3542,12 +3419,9 @@ export function usePrepareAbondApprove(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'approve',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'approve'>)
@@ -3556,8 +3430,7 @@ export function usePrepareAbondApprove(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burn"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondBurn(
   config: Omit<
@@ -3565,12 +3438,9 @@ export function usePrepareAbondBurn(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'burn',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'burn'>)
@@ -3579,8 +3449,7 @@ export function usePrepareAbondBurn(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFrom"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondBurnFrom(
   config: Omit<
@@ -3588,12 +3457,9 @@ export function usePrepareAbondBurnFrom(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'burnFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'burnFrom'>)
@@ -3602,8 +3468,7 @@ export function usePrepareAbondBurnFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondBurnFromUser(
   config: Omit<
@@ -3611,12 +3476,9 @@ export function usePrepareAbondBurnFromUser(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'burnFromUser',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'burnFromUser'>)
@@ -3625,8 +3487,7 @@ export function usePrepareAbondBurnFromUser(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"decreaseAllowance"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondDecreaseAllowance(
   config: Omit<
@@ -3634,12 +3495,9 @@ export function usePrepareAbondDecreaseAllowance(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'decreaseAllowance',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'decreaseAllowance'>)
@@ -3648,8 +3506,7 @@ export function usePrepareAbondDecreaseAllowance(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"increaseAllowance"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondIncreaseAllowance(
   config: Omit<
@@ -3657,12 +3514,9 @@ export function usePrepareAbondIncreaseAllowance(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'increaseAllowance',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'increaseAllowance'>)
@@ -3671,8 +3525,7 @@ export function usePrepareAbondIncreaseAllowance(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"mint"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondMint(
   config: Omit<
@@ -3680,12 +3533,9 @@ export function usePrepareAbondMint(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'mint',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'mint'>)
@@ -3694,8 +3544,7 @@ export function usePrepareAbondMint(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"pause"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondPause(
   config: Omit<
@@ -3703,12 +3552,9 @@ export function usePrepareAbondPause(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'pause',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'pause'>)
@@ -3717,8 +3563,7 @@ export function usePrepareAbondPause(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondRenounceOwnership(
   config: Omit<
@@ -3726,12 +3571,9 @@ export function usePrepareAbondRenounceOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'renounceOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'renounceOwnership'>)
@@ -3740,8 +3582,7 @@ export function usePrepareAbondRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transfer"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondTransfer(
   config: Omit<
@@ -3749,12 +3590,9 @@ export function usePrepareAbondTransfer(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'transfer',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'transfer'>)
@@ -3763,8 +3601,7 @@ export function usePrepareAbondTransfer(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferFrom"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondTransferFrom(
   config: Omit<
@@ -3772,12 +3609,9 @@ export function usePrepareAbondTransferFrom(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'transferFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'transferFrom'>)
@@ -3786,8 +3620,7 @@ export function usePrepareAbondTransferFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondTransferOwnership(
   config: Omit<
@@ -3795,12 +3628,9 @@ export function usePrepareAbondTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'transferOwnership'>)
@@ -3809,8 +3639,7 @@ export function usePrepareAbondTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"unpause"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function usePrepareAbondUnpause(
   config: Omit<
@@ -3818,12 +3647,9 @@ export function usePrepareAbondUnpause(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     functionName: 'unpause',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'unpause'>)
@@ -3832,8 +3658,7 @@ export function usePrepareAbondUnpause(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondEvent<TEventName extends string>(
   config: Omit<
@@ -3841,12 +3666,9 @@ export function useAbondEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     ...config,
   } as UseContractEventConfig<typeof abondABI, TEventName>)
 }
@@ -3854,8 +3676,7 @@ export function useAbondEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Approval"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondApprovalEvent(
   config: Omit<
@@ -3863,12 +3684,9 @@ export function useAbondApprovalEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     eventName: 'Approval',
     ...config,
   } as UseContractEventConfig<typeof abondABI, 'Approval'>)
@@ -3877,8 +3695,7 @@ export function useAbondApprovalEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondOwnershipTransferredEvent(
   config: Omit<
@@ -3886,12 +3703,9 @@ export function useAbondOwnershipTransferredEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     eventName: 'OwnershipTransferred',
     ...config,
   } as UseContractEventConfig<typeof abondABI, 'OwnershipTransferred'>)
@@ -3900,8 +3714,7 @@ export function useAbondOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Paused"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondPausedEvent(
   config: Omit<
@@ -3909,12 +3722,9 @@ export function useAbondPausedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     eventName: 'Paused',
     ...config,
   } as UseContractEventConfig<typeof abondABI, 'Paused'>)
@@ -3923,8 +3733,7 @@ export function useAbondPausedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Transfer"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondTransferEvent(
   config: Omit<
@@ -3932,12 +3741,9 @@ export function useAbondTransferEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     eventName: 'Transfer',
     ...config,
   } as UseContractEventConfig<typeof abondABI, 'Transfer'>)
@@ -3946,8 +3752,7 @@ export function useAbondTransferEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Unpaused"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0763375b04a329E874443CbA630FE79e513FaF99)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xB65E9bb1D7cF59f73c102400c55A0CDbB6A562Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
  */
 export function useAbondUnpausedEvent(
   config: Omit<
@@ -3955,12 +3760,9 @@ export function useAbondUnpausedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[5],
     eventName: 'Unpaused',
     ...config,
   } as UseContractEventConfig<typeof abondABI, 'Unpaused'>)
@@ -3969,8 +3771,7 @@ export function useAbondUnpausedEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintRead<
   TFunctionName extends string,
@@ -3981,12 +3782,9 @@ export function useAmintRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
 }
@@ -3994,8 +3792,7 @@ export function useAmintRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"allowance"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintAllowance<
   TFunctionName extends 'allowance',
@@ -4006,12 +3803,9 @@ export function useAmintAllowance<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'allowance',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4020,8 +3814,7 @@ export function useAmintAllowance<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"balanceOf"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintBalanceOf<
   TFunctionName extends 'balanceOf',
@@ -4032,12 +3825,9 @@ export function useAmintBalanceOf<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'balanceOf',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4046,8 +3836,7 @@ export function useAmintBalanceOf<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"decimals"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintDecimals<
   TFunctionName extends 'decimals',
@@ -4058,12 +3847,9 @@ export function useAmintDecimals<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'decimals',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4072,8 +3858,7 @@ export function useAmintDecimals<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"name"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintName<
   TFunctionName extends 'name',
@@ -4084,12 +3869,9 @@ export function useAmintName<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'name',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4098,8 +3880,7 @@ export function useAmintName<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintOwner<
   TFunctionName extends 'owner',
@@ -4110,12 +3891,9 @@ export function useAmintOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4124,8 +3902,7 @@ export function useAmintOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"paused"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintPaused<
   TFunctionName extends 'paused',
@@ -4136,12 +3913,9 @@ export function useAmintPaused<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'paused',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4150,8 +3924,7 @@ export function useAmintPaused<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"symbol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintSymbol<
   TFunctionName extends 'symbol',
@@ -4162,12 +3935,9 @@ export function useAmintSymbol<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'symbol',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4176,8 +3946,7 @@ export function useAmintSymbol<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"totalSupply"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintTotalSupply<
   TFunctionName extends 'totalSupply',
@@ -4188,12 +3957,9 @@ export function useAmintTotalSupply<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'totalSupply',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4202,8 +3968,7 @@ export function useAmintTotalSupply<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"whitelist"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintWhitelist<
   TFunctionName extends 'whitelist',
@@ -4214,12 +3979,9 @@ export function useAmintWhitelist<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'whitelist',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4228,8 +3990,7 @@ export function useAmintWhitelist<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintWrite<
   TFunctionName extends string,
@@ -4248,12 +4009,9 @@ export function useAmintWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, TFunctionName, TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     ...config,
   } as any)
 }
@@ -4261,8 +4019,7 @@ export function useAmintWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"approve"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintApprove<
   TMode extends WriteContractMode = undefined,
@@ -4284,12 +4041,9 @@ export function useAmintApprove<
         functionName?: 'approve'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'approve', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'approve',
     ...config,
   } as any)
@@ -4298,8 +4052,7 @@ export function useAmintApprove<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burn"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintBurn<
   TMode extends WriteContractMode = undefined,
@@ -4318,12 +4071,9 @@ export function useAmintBurn<
         functionName?: 'burn'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'burn', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'burn',
     ...config,
   } as any)
@@ -4332,8 +4082,7 @@ export function useAmintBurn<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFrom"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintBurnFrom<
   TMode extends WriteContractMode = undefined,
@@ -4355,12 +4104,9 @@ export function useAmintBurnFrom<
         functionName?: 'burnFrom'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'burnFrom', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'burnFrom',
     ...config,
   } as any)
@@ -4369,8 +4115,7 @@ export function useAmintBurnFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintBurnFromUser<
   TMode extends WriteContractMode = undefined,
@@ -4396,12 +4141,9 @@ export function useAmintBurnFromUser<
         functionName?: 'burnFromUser'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'burnFromUser', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'burnFromUser',
     ...config,
   } as any)
@@ -4410,8 +4152,7 @@ export function useAmintBurnFromUser<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"decreaseAllowance"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintDecreaseAllowance<
   TMode extends WriteContractMode = undefined,
@@ -4437,12 +4178,9 @@ export function useAmintDecreaseAllowance<
         functionName?: 'decreaseAllowance'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'decreaseAllowance', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'decreaseAllowance',
     ...config,
   } as any)
@@ -4451,8 +4189,7 @@ export function useAmintDecreaseAllowance<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"increaseAllowance"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintIncreaseAllowance<
   TMode extends WriteContractMode = undefined,
@@ -4478,12 +4215,9 @@ export function useAmintIncreaseAllowance<
         functionName?: 'increaseAllowance'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'increaseAllowance', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'increaseAllowance',
     ...config,
   } as any)
@@ -4492,8 +4226,7 @@ export function useAmintIncreaseAllowance<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"mint"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintMint<
   TMode extends WriteContractMode = undefined,
@@ -4512,12 +4245,9 @@ export function useAmintMint<
         functionName?: 'mint'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'mint', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'mint',
     ...config,
   } as any)
@@ -4526,8 +4256,7 @@ export function useAmintMint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"pause"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintPause<
   TMode extends WriteContractMode = undefined,
@@ -4546,12 +4275,9 @@ export function useAmintPause<
         functionName?: 'pause'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'pause', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'pause',
     ...config,
   } as any)
@@ -4560,8 +4286,7 @@ export function useAmintPause<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -4587,12 +4312,9 @@ export function useAmintRenounceOwnership<
         functionName?: 'renounceOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'renounceOwnership', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'renounceOwnership',
     ...config,
   } as any)
@@ -4601,8 +4323,7 @@ export function useAmintRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transfer"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintTransfer<
   TMode extends WriteContractMode = undefined,
@@ -4624,12 +4345,9 @@ export function useAmintTransfer<
         functionName?: 'transfer'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'transfer', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'transfer',
     ...config,
   } as any)
@@ -4638,8 +4356,7 @@ export function useAmintTransfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferFrom"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintTransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -4665,12 +4382,9 @@ export function useAmintTransferFrom<
         functionName?: 'transferFrom'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'transferFrom', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'transferFrom',
     ...config,
   } as any)
@@ -4679,8 +4393,7 @@ export function useAmintTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -4706,12 +4419,9 @@ export function useAmintTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'transferOwnership', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'transferOwnership',
     ...config,
   } as any)
@@ -4720,8 +4430,7 @@ export function useAmintTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"unpause"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintUnpause<
   TMode extends WriteContractMode = undefined,
@@ -4743,12 +4452,9 @@ export function useAmintUnpause<
         functionName?: 'unpause'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'unpause', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'unpause',
     ...config,
   } as any)
@@ -4757,8 +4463,7 @@ export function useAmintUnpause<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintWrite<TFunctionName extends string>(
   config: Omit<
@@ -4766,12 +4471,9 @@ export function usePrepareAmintWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, TFunctionName>)
 }
@@ -4779,8 +4481,7 @@ export function usePrepareAmintWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"approve"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintApprove(
   config: Omit<
@@ -4788,12 +4489,9 @@ export function usePrepareAmintApprove(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'approve',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'approve'>)
@@ -4802,8 +4500,7 @@ export function usePrepareAmintApprove(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burn"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintBurn(
   config: Omit<
@@ -4811,12 +4508,9 @@ export function usePrepareAmintBurn(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'burn',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'burn'>)
@@ -4825,8 +4519,7 @@ export function usePrepareAmintBurn(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFrom"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintBurnFrom(
   config: Omit<
@@ -4834,12 +4527,9 @@ export function usePrepareAmintBurnFrom(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'burnFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'burnFrom'>)
@@ -4848,8 +4538,7 @@ export function usePrepareAmintBurnFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintBurnFromUser(
   config: Omit<
@@ -4857,12 +4546,9 @@ export function usePrepareAmintBurnFromUser(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'burnFromUser',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'burnFromUser'>)
@@ -4871,8 +4557,7 @@ export function usePrepareAmintBurnFromUser(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"decreaseAllowance"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintDecreaseAllowance(
   config: Omit<
@@ -4880,12 +4565,9 @@ export function usePrepareAmintDecreaseAllowance(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'decreaseAllowance',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'decreaseAllowance'>)
@@ -4894,8 +4576,7 @@ export function usePrepareAmintDecreaseAllowance(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"increaseAllowance"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintIncreaseAllowance(
   config: Omit<
@@ -4903,12 +4584,9 @@ export function usePrepareAmintIncreaseAllowance(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'increaseAllowance',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'increaseAllowance'>)
@@ -4917,8 +4595,7 @@ export function usePrepareAmintIncreaseAllowance(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"mint"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintMint(
   config: Omit<
@@ -4926,12 +4603,9 @@ export function usePrepareAmintMint(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'mint',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'mint'>)
@@ -4940,8 +4614,7 @@ export function usePrepareAmintMint(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"pause"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintPause(
   config: Omit<
@@ -4949,12 +4622,9 @@ export function usePrepareAmintPause(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'pause',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'pause'>)
@@ -4963,8 +4633,7 @@ export function usePrepareAmintPause(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintRenounceOwnership(
   config: Omit<
@@ -4972,12 +4641,9 @@ export function usePrepareAmintRenounceOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'renounceOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'renounceOwnership'>)
@@ -4986,8 +4652,7 @@ export function usePrepareAmintRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transfer"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintTransfer(
   config: Omit<
@@ -4995,12 +4660,9 @@ export function usePrepareAmintTransfer(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'transfer',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'transfer'>)
@@ -5009,8 +4671,7 @@ export function usePrepareAmintTransfer(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferFrom"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintTransferFrom(
   config: Omit<
@@ -5018,12 +4679,9 @@ export function usePrepareAmintTransferFrom(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'transferFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'transferFrom'>)
@@ -5032,8 +4690,7 @@ export function usePrepareAmintTransferFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintTransferOwnership(
   config: Omit<
@@ -5041,12 +4698,9 @@ export function usePrepareAmintTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'transferOwnership'>)
@@ -5055,8 +4709,7 @@ export function usePrepareAmintTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"unpause"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function usePrepareAmintUnpause(
   config: Omit<
@@ -5064,12 +4717,9 @@ export function usePrepareAmintUnpause(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     functionName: 'unpause',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'unpause'>)
@@ -5078,8 +4728,7 @@ export function usePrepareAmintUnpause(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintEvent<TEventName extends string>(
   config: Omit<
@@ -5087,12 +4736,9 @@ export function useAmintEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     ...config,
   } as UseContractEventConfig<typeof amintABI, TEventName>)
 }
@@ -5100,8 +4746,7 @@ export function useAmintEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Approval"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintApprovalEvent(
   config: Omit<
@@ -5109,12 +4754,9 @@ export function useAmintApprovalEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     eventName: 'Approval',
     ...config,
   } as UseContractEventConfig<typeof amintABI, 'Approval'>)
@@ -5123,8 +4765,7 @@ export function useAmintApprovalEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintOwnershipTransferredEvent(
   config: Omit<
@@ -5132,12 +4773,9 @@ export function useAmintOwnershipTransferredEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     eventName: 'OwnershipTransferred',
     ...config,
   } as UseContractEventConfig<typeof amintABI, 'OwnershipTransferred'>)
@@ -5146,8 +4784,7 @@ export function useAmintOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Paused"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintPausedEvent(
   config: Omit<
@@ -5155,12 +4792,9 @@ export function useAmintPausedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     eventName: 'Paused',
     ...config,
   } as UseContractEventConfig<typeof amintABI, 'Paused'>)
@@ -5169,8 +4803,7 @@ export function useAmintPausedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Transfer"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintTransferEvent(
   config: Omit<
@@ -5178,12 +4811,9 @@ export function useAmintTransferEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     eventName: 'Transfer',
     ...config,
   } as UseContractEventConfig<typeof amintABI, 'Transfer'>)
@@ -5192,8 +4822,7 @@ export function useAmintTransferEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Unpaused"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x80e513F3F190d914d4B1ED92F0078bbC1f67FC59)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1347ED038461D00Df065B6F491b838999e84f6Cc)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
  */
 export function useAmintUnpausedEvent(
   config: Omit<
@@ -5201,12 +4830,9 @@ export function useAmintUnpausedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[5],
     eventName: 'Unpaused',
     ...config,
   } as UseContractEventConfig<typeof amintABI, 'Unpaused'>)
@@ -5215,8 +4841,7 @@ export function useAmintUnpausedEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractRead<
   TFunctionName extends string,
@@ -5231,15 +4856,9 @@ export function useBorrowingContractRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     ...config,
   } as UseContractReadConfig<
     typeof borrowingContractABI,
@@ -5251,8 +4870,7 @@ export function useBorrowingContractRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"APY"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractApy<
   TFunctionName extends 'APY',
@@ -5267,15 +4885,9 @@ export function useBorrowingContractApy<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'APY',
     ...config,
   } as UseContractReadConfig<
@@ -5286,13 +4898,12 @@ export function useBorrowingContractApy<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"Trinity"`.
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"DOMAIN_SEPARATOR"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
-export function useBorrowingContractTrinity<
-  TFunctionName extends 'Trinity',
+export function useBorrowingContractDomainSeparator<
+  TFunctionName extends 'DOMAIN_SEPARATOR',
   TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
 >(
   config: Omit<
@@ -5304,16 +4915,70 @@ export function useBorrowingContractTrinity<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
-    functionName: 'Trinity',
+    address: borrowingContractAddress[5],
+    functionName: 'DOMAIN_SEPARATOR',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"PERMIT_TYPEHASH"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ */
+export function useBorrowingContractPermitTypehash<
+  TFunctionName extends 'PERMIT_TYPEHASH',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[5],
+    functionName: 'PERMIT_TYPEHASH',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"abond"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ */
+export function useBorrowingContractAbond<
+  TFunctionName extends 'abond',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[5],
+    functionName: 'abond',
     ...config,
   } as UseContractReadConfig<
     typeof borrowingContractABI,
@@ -5325,8 +4990,7 @@ export function useBorrowingContractTrinity<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"admin"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractAdmin<
   TFunctionName extends 'admin',
@@ -5341,16 +5005,40 @@ export function useBorrowingContractAdmin<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'admin',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"amint"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ */
+export function useBorrowingContractAmint<
+  TFunctionName extends 'amint',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[5],
+    functionName: 'amint',
     ...config,
   } as UseContractReadConfig<
     typeof borrowingContractABI,
@@ -5362,8 +5050,7 @@ export function useBorrowingContractAdmin<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"cds"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractCds<
   TFunctionName extends 'cds',
@@ -5378,15 +5065,9 @@ export function useBorrowingContractCds<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'cds',
     ...config,
   } as UseContractReadConfig<
@@ -5399,8 +5080,7 @@ export function useBorrowingContractCds<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"cdsAddress"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractCdsAddress<
   TFunctionName extends 'cdsAddress',
@@ -5415,53 +5095,10 @@ export function useBorrowingContractCdsAddress<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'cdsAddress',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getAPY"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
- */
-export function useBorrowingContractGetApy<
-  TFunctionName extends 'getAPY',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
-    functionName: 'getAPY',
     ...config,
   } as UseContractReadConfig<
     typeof borrowingContractABI,
@@ -5473,8 +5110,7 @@ export function useBorrowingContractGetApy<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getLTV"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractGetLtv<
   TFunctionName extends 'getLTV',
@@ -5489,15 +5125,9 @@ export function useBorrowingContractGetLtv<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'getLTV',
     ...config,
   } as UseContractReadConfig<
@@ -5510,8 +5140,7 @@ export function useBorrowingContractGetLtv<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getUSDValue"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractGetUsdValue<
   TFunctionName extends 'getUSDValue',
@@ -5526,15 +5155,9 @@ export function useBorrowingContractGetUsdValue<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'getUSDValue',
     ...config,
   } as UseContractReadConfig<
@@ -5547,8 +5170,7 @@ export function useBorrowingContractGetUsdValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastCDSPoolValue"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractLastCdsPoolValue<
   TFunctionName extends 'lastCDSPoolValue',
@@ -5563,15 +5185,9 @@ export function useBorrowingContractLastCdsPoolValue<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'lastCDSPoolValue',
     ...config,
   } as UseContractReadConfig<
@@ -5584,8 +5200,7 @@ export function useBorrowingContractLastCdsPoolValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastCumulativeRate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractLastCumulativeRate<
   TFunctionName extends 'lastCumulativeRate',
@@ -5600,15 +5215,9 @@ export function useBorrowingContractLastCumulativeRate<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'lastCumulativeRate',
     ...config,
   } as UseContractReadConfig<
@@ -5621,8 +5230,7 @@ export function useBorrowingContractLastCumulativeRate<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastEthVaultValue"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractLastEthVaultValue<
   TFunctionName extends 'lastEthVaultValue',
@@ -5637,15 +5245,9 @@ export function useBorrowingContractLastEthVaultValue<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'lastEthVaultValue',
     ...config,
   } as UseContractReadConfig<
@@ -5658,8 +5260,7 @@ export function useBorrowingContractLastEthVaultValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastEthprice"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractLastEthprice<
   TFunctionName extends 'lastEthprice',
@@ -5674,15 +5275,9 @@ export function useBorrowingContractLastEthprice<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'lastEthprice',
     ...config,
   } as UseContractReadConfig<
@@ -5695,8 +5290,7 @@ export function useBorrowingContractLastEthprice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastTotalCDSPool"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractLastTotalCdsPool<
   TFunctionName extends 'lastTotalCDSPool',
@@ -5711,16 +5305,70 @@ export function useBorrowingContractLastTotalCdsPool<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'lastTotalCDSPool',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"multiSign"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ */
+export function useBorrowingContractMultiSign<
+  TFunctionName extends 'multiSign',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[5],
+    functionName: 'multiSign',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"name"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ */
+export function useBorrowingContractName<
+  TFunctionName extends 'name',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[5],
+    functionName: 'name',
     ...config,
   } as UseContractReadConfig<
     typeof borrowingContractABI,
@@ -5732,8 +5380,7 @@ export function useBorrowingContractLastTotalCdsPool<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"noOfLiquidations"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractNoOfLiquidations<
   TFunctionName extends 'noOfLiquidations',
@@ -5748,15 +5395,9 @@ export function useBorrowingContractNoOfLiquidations<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'noOfLiquidations',
     ...config,
   } as UseContractReadConfig<
@@ -5769,8 +5410,7 @@ export function useBorrowingContractNoOfLiquidations<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"options"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractOptions<
   TFunctionName extends 'options',
@@ -5785,15 +5425,9 @@ export function useBorrowingContractOptions<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'options',
     ...config,
   } as UseContractReadConfig<
@@ -5806,8 +5440,7 @@ export function useBorrowingContractOptions<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractOwner<
   TFunctionName extends 'owner',
@@ -5822,16 +5455,40 @@ export function useBorrowingContractOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'owner',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"permit"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ */
+export function useBorrowingContractPermit<
+  TFunctionName extends 'permit',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[5],
+    functionName: 'permit',
     ...config,
   } as UseContractReadConfig<
     typeof borrowingContractABI,
@@ -5843,8 +5500,7 @@ export function useBorrowingContractOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"priceFeedAddress"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractPriceFeedAddress<
   TFunctionName extends 'priceFeedAddress',
@@ -5859,15 +5515,9 @@ export function useBorrowingContractPriceFeedAddress<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'priceFeedAddress',
     ...config,
   } as UseContractReadConfig<
@@ -5878,13 +5528,12 @@ export function useBorrowingContractPriceFeedAddress<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"protocolToken"`.
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"ratePerSec"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
-export function useBorrowingContractProtocolToken<
-  TFunctionName extends 'protocolToken',
+export function useBorrowingContractRatePerSec<
+  TFunctionName extends 'ratePerSec',
   TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
 >(
   config: Omit<
@@ -5896,16 +5545,10 @@ export function useBorrowingContractProtocolToken<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
-    functionName: 'protocolToken',
+    address: borrowingContractAddress[5],
+    functionName: 'ratePerSec',
     ...config,
   } as UseContractReadConfig<
     typeof borrowingContractABI,
@@ -5917,8 +5560,7 @@ export function useBorrowingContractProtocolToken<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"totalAmintSupply"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractTotalAmintSupply<
   TFunctionName extends 'totalAmintSupply',
@@ -5933,15 +5575,9 @@ export function useBorrowingContractTotalAmintSupply<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'totalAmintSupply',
     ...config,
   } as UseContractReadConfig<
@@ -5954,8 +5590,7 @@ export function useBorrowingContractTotalAmintSupply<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"totalDiracSupply"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractTotalDiracSupply<
   TFunctionName extends 'totalDiracSupply',
@@ -5970,15 +5605,9 @@ export function useBorrowingContractTotalDiracSupply<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'totalDiracSupply',
     ...config,
   } as UseContractReadConfig<
@@ -5991,8 +5620,7 @@ export function useBorrowingContractTotalDiracSupply<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"totalNormalizedAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractTotalNormalizedAmount<
   TFunctionName extends 'totalNormalizedAmount',
@@ -6007,15 +5635,9 @@ export function useBorrowingContractTotalNormalizedAmount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'totalNormalizedAmount',
     ...config,
   } as UseContractReadConfig<
@@ -6028,8 +5650,7 @@ export function useBorrowingContractTotalNormalizedAmount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"treasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractTreasury<
   TFunctionName extends 'treasury',
@@ -6044,15 +5665,9 @@ export function useBorrowingContractTreasury<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'treasury',
     ...config,
   } as UseContractReadConfig<
@@ -6065,8 +5680,7 @@ export function useBorrowingContractTreasury<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"treasuryAddress"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractTreasuryAddress<
   TFunctionName extends 'treasuryAddress',
@@ -6081,16 +5695,40 @@ export function useBorrowingContractTreasuryAddress<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'treasuryAddress',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"version"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ */
+export function useBorrowingContractVersion<
+  TFunctionName extends 'version',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[5],
+    functionName: 'version',
     ...config,
   } as UseContractReadConfig<
     typeof borrowingContractABI,
@@ -6102,8 +5740,7 @@ export function useBorrowingContractTreasuryAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawTimeLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractWithdrawTimeLimit<
   TFunctionName extends 'withdrawTimeLimit',
@@ -6118,15 +5755,9 @@ export function useBorrowingContractWithdrawTimeLimit<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'withdrawTimeLimit',
     ...config,
   } as UseContractReadConfig<
@@ -6139,8 +5770,7 @@ export function useBorrowingContractWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractWrite<
   TFunctionName extends string,
@@ -6166,15 +5796,9 @@ export function useBorrowingContractWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, TFunctionName, TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     ...config,
   } as any)
 }
@@ -6182,8 +5806,7 @@ export function useBorrowingContractWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractCalculateCumulativeRate<
   TMode extends WriteContractMode = undefined,
@@ -6213,19 +5836,13 @@ export function useBorrowingContractCalculateCumulativeRate<
         functionName?: 'calculateCumulativeRate'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'calculateCumulativeRate',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'calculateCumulativeRate',
     ...config,
   } as any)
@@ -6234,8 +5851,7 @@ export function useBorrowingContractCalculateCumulativeRate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositToAaveProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractDepositToAaveProtocol<
   TMode extends WriteContractMode = undefined,
@@ -6265,19 +5881,13 @@ export function useBorrowingContractDepositToAaveProtocol<
         functionName?: 'depositToAaveProtocol'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'depositToAaveProtocol',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'depositToAaveProtocol',
     ...config,
   } as any)
@@ -6286,8 +5896,7 @@ export function useBorrowingContractDepositToAaveProtocol<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositToCompoundProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractDepositToCompoundProtocol<
   TMode extends WriteContractMode = undefined,
@@ -6317,19 +5926,13 @@ export function useBorrowingContractDepositToCompoundProtocol<
         functionName?: 'depositToCompoundProtocol'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'depositToCompoundProtocol',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'depositToCompoundProtocol',
     ...config,
   } as any)
@@ -6338,8 +5941,7 @@ export function useBorrowingContractDepositToCompoundProtocol<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositTokens"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractDepositTokens<
   TMode extends WriteContractMode = undefined,
@@ -6369,15 +5971,9 @@ export function useBorrowingContractDepositTokens<
         functionName?: 'depositTokens'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'depositTokens', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'depositTokens',
     ...config,
   } as any)
@@ -6386,8 +5982,7 @@ export function useBorrowingContractDepositTokens<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"initializeTreasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractInitializeTreasury<
   TMode extends WriteContractMode = undefined,
@@ -6417,19 +6012,13 @@ export function useBorrowingContractInitializeTreasury<
         functionName?: 'initializeTreasury'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'initializeTreasury',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'initializeTreasury',
     ...config,
   } as any)
@@ -6438,8 +6027,7 @@ export function useBorrowingContractInitializeTreasury<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"liquidate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractLiquidate<
   TMode extends WriteContractMode = undefined,
@@ -6465,15 +6053,9 @@ export function useBorrowingContractLiquidate<
         functionName?: 'liquidate'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'liquidate', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'liquidate',
     ...config,
   } as any)
@@ -6482,8 +6064,7 @@ export function useBorrowingContractLiquidate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -6513,31 +6094,24 @@ export function useBorrowingContractRenounceOwnership<
         functionName?: 'renounceOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'renounceOwnership',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'renounceOwnership',
     ...config,
   } as any)
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAPY"`.
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAPR"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
-export function useBorrowingContractSetApy<
+export function useBorrowingContractSetApr<
   TMode extends WriteContractMode = undefined,
   TChainId extends number = keyof typeof borrowingContractAddress,
 >(
@@ -6545,28 +6119,22 @@ export function useBorrowingContractSetApy<
     ? UseContractWriteConfig<
         PrepareWriteContractResult<
           typeof borrowingContractABI,
-          'setAPY'
+          'setAPR'
         >['request']['abi'],
-        'setAPY',
+        'setAPR',
         TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'setAPY' }
-    : UseContractWriteConfig<typeof borrowingContractABI, 'setAPY', TMode> & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'setAPR' }
+    : UseContractWriteConfig<typeof borrowingContractABI, 'setAPR', TMode> & {
         abi?: never
         address?: never
         chainId?: TChainId
-        functionName?: 'setAPY'
+        functionName?: 'setAPR'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof borrowingContractABI, 'setAPY', TMode>({
+  return useContractWrite<typeof borrowingContractABI, 'setAPR', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
-    functionName: 'setAPY',
+    address: borrowingContractAddress[5],
+    functionName: 'setAPR',
     ...config,
   } as any)
 }
@@ -6574,8 +6142,7 @@ export function useBorrowingContractSetApy<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAdmin"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractSetAdmin<
   TMode extends WriteContractMode = undefined,
@@ -6597,15 +6164,9 @@ export function useBorrowingContractSetAdmin<
         functionName?: 'setAdmin'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'setAdmin', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'setAdmin',
     ...config,
   } as any)
@@ -6614,8 +6175,7 @@ export function useBorrowingContractSetAdmin<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setLTV"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractSetLtv<
   TMode extends WriteContractMode = undefined,
@@ -6637,15 +6197,9 @@ export function useBorrowingContractSetLtv<
         functionName?: 'setLTV'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'setLTV', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'setLTV',
     ...config,
   } as any)
@@ -6654,8 +6208,7 @@ export function useBorrowingContractSetLtv<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setOptions"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractSetOptions<
   TMode extends WriteContractMode = undefined,
@@ -6681,15 +6234,9 @@ export function useBorrowingContractSetOptions<
         functionName?: 'setOptions'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'setOptions', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'setOptions',
     ...config,
   } as any)
@@ -6698,8 +6245,7 @@ export function useBorrowingContractSetOptions<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractSetWithdrawTimeLimit<
   TMode extends WriteContractMode = undefined,
@@ -6729,19 +6275,13 @@ export function useBorrowingContractSetWithdrawTimeLimit<
         functionName?: 'setWithdrawTimeLimit'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'setWithdrawTimeLimit',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'setWithdrawTimeLimit',
     ...config,
   } as any)
@@ -6750,8 +6290,7 @@ export function useBorrowingContractSetWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -6781,19 +6320,13 @@ export function useBorrowingContractTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'transferOwnership',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'transferOwnership',
     ...config,
   } as any)
@@ -6802,8 +6335,7 @@ export function useBorrowingContractTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"updateLastEthVaultValue"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractUpdateLastEthVaultValue<
   TMode extends WriteContractMode = undefined,
@@ -6833,19 +6365,13 @@ export function useBorrowingContractUpdateLastEthVaultValue<
         functionName?: 'updateLastEthVaultValue'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'updateLastEthVaultValue',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'updateLastEthVaultValue',
     ...config,
   } as any)
@@ -6854,8 +6380,7 @@ export function useBorrowingContractUpdateLastEthVaultValue<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withDraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractWithDraw<
   TMode extends WriteContractMode = undefined,
@@ -6877,15 +6402,9 @@ export function useBorrowingContractWithDraw<
         functionName?: 'withDraw'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'withDraw', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'withDraw',
     ...config,
   } as any)
@@ -6894,8 +6413,7 @@ export function useBorrowingContractWithDraw<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawFromAaveProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractWithdrawFromAaveProtocol<
   TMode extends WriteContractMode = undefined,
@@ -6925,19 +6443,13 @@ export function useBorrowingContractWithdrawFromAaveProtocol<
         functionName?: 'withdrawFromAaveProtocol'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'withdrawFromAaveProtocol',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'withdrawFromAaveProtocol',
     ...config,
   } as any)
@@ -6946,8 +6458,7 @@ export function useBorrowingContractWithdrawFromAaveProtocol<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawFromCompoundProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractWithdrawFromCompoundProtocol<
   TMode extends WriteContractMode = undefined,
@@ -6977,19 +6488,13 @@ export function useBorrowingContractWithdrawFromCompoundProtocol<
         functionName?: 'withdrawFromCompoundProtocol'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'withdrawFromCompoundProtocol',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'withdrawFromCompoundProtocol',
     ...config,
   } as any)
@@ -6998,8 +6503,7 @@ export function useBorrowingContractWithdrawFromCompoundProtocol<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractWrite<TFunctionName extends string>(
   config: Omit<
@@ -7007,15 +6511,9 @@ export function usePrepareBorrowingContractWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     ...config,
   } as UsePrepareContractWriteConfig<
     typeof borrowingContractABI,
@@ -7026,8 +6524,7 @@ export function usePrepareBorrowingContractWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractCalculateCumulativeRate(
   config: Omit<
@@ -7038,15 +6535,9 @@ export function usePrepareBorrowingContractCalculateCumulativeRate(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'calculateCumulativeRate',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -7058,8 +6549,7 @@ export function usePrepareBorrowingContractCalculateCumulativeRate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositToAaveProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractDepositToAaveProtocol(
   config: Omit<
@@ -7070,15 +6560,9 @@ export function usePrepareBorrowingContractDepositToAaveProtocol(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'depositToAaveProtocol',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -7090,8 +6574,7 @@ export function usePrepareBorrowingContractDepositToAaveProtocol(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositToCompoundProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractDepositToCompoundProtocol(
   config: Omit<
@@ -7102,15 +6585,9 @@ export function usePrepareBorrowingContractDepositToCompoundProtocol(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'depositToCompoundProtocol',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -7122,8 +6599,7 @@ export function usePrepareBorrowingContractDepositToCompoundProtocol(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositTokens"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractDepositTokens(
   config: Omit<
@@ -7131,15 +6607,9 @@ export function usePrepareBorrowingContractDepositTokens(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'depositTokens',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -7151,8 +6621,7 @@ export function usePrepareBorrowingContractDepositTokens(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"initializeTreasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractInitializeTreasury(
   config: Omit<
@@ -7163,15 +6632,9 @@ export function usePrepareBorrowingContractInitializeTreasury(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'initializeTreasury',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -7183,8 +6646,7 @@ export function usePrepareBorrowingContractInitializeTreasury(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"liquidate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractLiquidate(
   config: Omit<
@@ -7192,15 +6654,9 @@ export function usePrepareBorrowingContractLiquidate(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'liquidate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'liquidate'>)
@@ -7209,8 +6665,7 @@ export function usePrepareBorrowingContractLiquidate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractRenounceOwnership(
   config: Omit<
@@ -7221,15 +6676,9 @@ export function usePrepareBorrowingContractRenounceOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'renounceOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -7239,36 +6688,28 @@ export function usePrepareBorrowingContractRenounceOwnership(
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAPY"`.
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAPR"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
-export function usePrepareBorrowingContractSetApy(
+export function usePrepareBorrowingContractSetApr(
   config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setAPY'>,
+    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setAPR'>,
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
-    functionName: 'setAPY',
+    address: borrowingContractAddress[5],
+    functionName: 'setAPR',
     ...config,
-  } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setAPY'>)
+  } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setAPR'>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAdmin"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractSetAdmin(
   config: Omit<
@@ -7276,15 +6717,9 @@ export function usePrepareBorrowingContractSetAdmin(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'setAdmin',
     ...config,
   } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setAdmin'>)
@@ -7293,8 +6728,7 @@ export function usePrepareBorrowingContractSetAdmin(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setLTV"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractSetLtv(
   config: Omit<
@@ -7302,15 +6736,9 @@ export function usePrepareBorrowingContractSetLtv(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'setLTV',
     ...config,
   } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setLTV'>)
@@ -7319,8 +6747,7 @@ export function usePrepareBorrowingContractSetLtv(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setOptions"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractSetOptions(
   config: Omit<
@@ -7328,15 +6755,9 @@ export function usePrepareBorrowingContractSetOptions(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'setOptions',
     ...config,
   } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setOptions'>)
@@ -7345,8 +6766,7 @@ export function usePrepareBorrowingContractSetOptions(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractSetWithdrawTimeLimit(
   config: Omit<
@@ -7357,15 +6777,9 @@ export function usePrepareBorrowingContractSetWithdrawTimeLimit(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'setWithdrawTimeLimit',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -7377,8 +6791,7 @@ export function usePrepareBorrowingContractSetWithdrawTimeLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractTransferOwnership(
   config: Omit<
@@ -7389,15 +6802,9 @@ export function usePrepareBorrowingContractTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -7409,8 +6816,7 @@ export function usePrepareBorrowingContractTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"updateLastEthVaultValue"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractUpdateLastEthVaultValue(
   config: Omit<
@@ -7421,15 +6827,9 @@ export function usePrepareBorrowingContractUpdateLastEthVaultValue(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'updateLastEthVaultValue',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -7441,8 +6841,7 @@ export function usePrepareBorrowingContractUpdateLastEthVaultValue(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withDraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractWithDraw(
   config: Omit<
@@ -7450,15 +6849,9 @@ export function usePrepareBorrowingContractWithDraw(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'withDraw',
     ...config,
   } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'withDraw'>)
@@ -7467,8 +6860,7 @@ export function usePrepareBorrowingContractWithDraw(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawFromAaveProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractWithdrawFromAaveProtocol(
   config: Omit<
@@ -7479,15 +6871,9 @@ export function usePrepareBorrowingContractWithdrawFromAaveProtocol(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'withdrawFromAaveProtocol',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -7499,8 +6885,7 @@ export function usePrepareBorrowingContractWithdrawFromAaveProtocol(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawFromCompoundProtocol"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function usePrepareBorrowingContractWithdrawFromCompoundProtocol(
   config: Omit<
@@ -7511,15 +6896,9 @@ export function usePrepareBorrowingContractWithdrawFromCompoundProtocol(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     functionName: 'withdrawFromCompoundProtocol',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -7531,8 +6910,7 @@ export function usePrepareBorrowingContractWithdrawFromCompoundProtocol(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractEvent<TEventName extends string>(
   config: Omit<
@@ -7540,15 +6918,9 @@ export function useBorrowingContractEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     ...config,
   } as UseContractEventConfig<typeof borrowingContractABI, TEventName>)
 }
@@ -7556,8 +6928,7 @@ export function useBorrowingContractEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Deposit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractDepositEvent(
   config: Omit<
@@ -7565,51 +6936,18 @@ export function useBorrowingContractDepositEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     eventName: 'Deposit',
     ...config,
   } as UseContractEventConfig<typeof borrowingContractABI, 'Deposit'>)
 }
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Liquidate"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
- */
-export function useBorrowingContractLiquidateEvent(
-  config: Omit<
-    UseContractEventConfig<typeof borrowingContractABI, 'Liquidate'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractEvent({
-    abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
-    eventName: 'Liquidate',
-    ...config,
-  } as UseContractEventConfig<typeof borrowingContractABI, 'Liquidate'>)
-}
-
-/**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractOwnershipTransferredEvent(
   config: Omit<
@@ -7617,15 +6955,9 @@ export function useBorrowingContractOwnershipTransferredEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     eventName: 'OwnershipTransferred',
     ...config,
   } as UseContractEventConfig<
@@ -7637,8 +6969,7 @@ export function useBorrowingContractOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Withdraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x1A3D344b58303952EFbcF01b410d943852F0b0e6)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2745155BB6d1f83f9477c0EA01a4b09e05571033)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
  */
 export function useBorrowingContractWithdrawEvent(
   config: Omit<
@@ -7646,15 +6977,9 @@ export function useBorrowingContractWithdrawEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[5],
     eventName: 'Withdraw',
     ...config,
   } as UseContractEventConfig<typeof borrowingContractABI, 'Withdraw'>)
@@ -7663,8 +6988,7 @@ export function useBorrowingContractWithdrawEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsRead<
   TFunctionName extends string,
@@ -7675,12 +6999,9 @@ export function useCdsRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
 }
@@ -7688,8 +7009,7 @@ export function useCdsRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"PRECISION"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsPrecision<
   TFunctionName extends 'PRECISION',
@@ -7700,25 +7020,21 @@ export function useCdsPrecision<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'PRECISION',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"Trinity_token"`.
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"amint"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
-export function useCdsTrinityToken<
-  TFunctionName extends 'Trinity_token',
+export function useCdsAmint<
+  TFunctionName extends 'amint',
   TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
 >(
   config: Omit<
@@ -7726,13 +7042,10 @@ export function useCdsTrinityToken<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
-    functionName: 'Trinity_token',
+    address: cdsAddress[5],
+    functionName: 'amint',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
 }
@@ -7740,8 +7053,7 @@ export function useCdsTrinityToken<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"amintLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsAmintLimit<
   TFunctionName extends 'amintLimit',
@@ -7752,12 +7064,9 @@ export function useCdsAmintLimit<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'amintLimit',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -7766,8 +7075,7 @@ export function useCdsAmintLimit<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"borrowing"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsBorrowing<
   TFunctionName extends 'borrowing',
@@ -7778,12 +7086,9 @@ export function useCdsBorrowing<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'borrowing',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -7792,8 +7097,7 @@ export function useCdsBorrowing<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"borrowingContract"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsBorrowingContract<
   TFunctionName extends 'borrowingContract',
@@ -7804,12 +7108,9 @@ export function useCdsBorrowingContract<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'borrowingContract',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -7818,8 +7119,7 @@ export function useCdsBorrowingContract<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cdsCount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsCdsCount<
   TFunctionName extends 'cdsCount',
@@ -7830,12 +7130,9 @@ export function useCdsCdsCount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'cdsCount',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -7844,8 +7141,7 @@ export function useCdsCdsCount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cdsDetails"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsCdsDetails<
   TFunctionName extends 'cdsDetails',
@@ -7856,12 +7152,9 @@ export function useCdsCdsDetails<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'cdsDetails',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -7870,8 +7163,7 @@ export function useCdsCdsDetails<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"ethVault"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsEthVault<
   TFunctionName extends 'ethVault',
@@ -7882,12 +7174,9 @@ export function useCdsEthVault<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'ethVault',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -7896,8 +7185,7 @@ export function useCdsEthVault<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"fallbackEthPrice"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsFallbackEthPrice<
   TFunctionName extends 'fallbackEthPrice',
@@ -7908,12 +7196,9 @@ export function useCdsFallbackEthPrice<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'fallbackEthPrice',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -7922,8 +7207,7 @@ export function useCdsFallbackEthPrice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"getCDSDepositDetails"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsGetCdsDepositDetails<
   TFunctionName extends 'getCDSDepositDetails',
@@ -7934,12 +7218,9 @@ export function useCdsGetCdsDepositDetails<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'getCDSDepositDetails',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -7948,8 +7229,7 @@ export function useCdsGetCdsDepositDetails<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"lastCumulativeRate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsLastCumulativeRate<
   TFunctionName extends 'lastCumulativeRate',
@@ -7960,12 +7240,9 @@ export function useCdsLastCumulativeRate<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'lastCumulativeRate',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -7974,8 +7251,7 @@ export function useCdsLastCumulativeRate<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"lastEthPrice"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsLastEthPrice<
   TFunctionName extends 'lastEthPrice',
@@ -7986,12 +7262,9 @@ export function useCdsLastEthPrice<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'lastEthPrice',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8000,8 +7273,7 @@ export function useCdsLastEthPrice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"liquidationIndexToInfo"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsLiquidationIndexToInfo<
   TFunctionName extends 'liquidationIndexToInfo',
@@ -8012,13 +7284,32 @@ export function useCdsLiquidationIndexToInfo<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'liquidationIndexToInfo',
+    ...config,
+  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"multiSign"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ */
+export function useCdsMultiSign<
+  TFunctionName extends 'multiSign',
+  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof cdsAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: cdsABI,
+    address: cdsAddress[5],
+    functionName: 'multiSign',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
 }
@@ -8026,8 +7317,7 @@ export function useCdsLiquidationIndexToInfo<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsOwner<
   TFunctionName extends 'owner',
@@ -8038,12 +7328,9 @@ export function useCdsOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8052,8 +7339,7 @@ export function useCdsOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalAvailableLiquidationAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsTotalAvailableLiquidationAmount<
   TFunctionName extends 'totalAvailableLiquidationAmount',
@@ -8064,12 +7350,9 @@ export function useCdsTotalAvailableLiquidationAmount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'totalAvailableLiquidationAmount',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8078,8 +7361,7 @@ export function useCdsTotalAvailableLiquidationAmount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalCdsDepositedAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsTotalCdsDepositedAmount<
   TFunctionName extends 'totalCdsDepositedAmount',
@@ -8090,12 +7372,9 @@ export function useCdsTotalCdsDepositedAmount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'totalCdsDepositedAmount',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8104,8 +7383,7 @@ export function useCdsTotalCdsDepositedAmount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"treasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsTreasury<
   TFunctionName extends 'treasury',
@@ -8116,12 +7394,9 @@ export function useCdsTreasury<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'treasury',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8130,8 +7405,7 @@ export function useCdsTreasury<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"treasuryAddress"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsTreasuryAddress<
   TFunctionName extends 'treasuryAddress',
@@ -8142,12 +7416,9 @@ export function useCdsTreasuryAddress<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'treasuryAddress',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8156,8 +7427,7 @@ export function useCdsTreasuryAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"usdt"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsUsdt<
   TFunctionName extends 'usdt',
@@ -8168,12 +7438,9 @@ export function useCdsUsdt<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'usdt',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8182,8 +7449,7 @@ export function useCdsUsdt<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"usdtAmountDepositedTillNow"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsUsdtAmountDepositedTillNow<
   TFunctionName extends 'usdtAmountDepositedTillNow',
@@ -8194,12 +7460,9 @@ export function useCdsUsdtAmountDepositedTillNow<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'usdtAmountDepositedTillNow',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8208,8 +7471,7 @@ export function useCdsUsdtAmountDepositedTillNow<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"usdtLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsUsdtLimit<
   TFunctionName extends 'usdtLimit',
@@ -8220,12 +7482,9 @@ export function useCdsUsdtLimit<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'usdtLimit',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8234,8 +7493,7 @@ export function useCdsUsdtLimit<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdrawTimeLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsWithdrawTimeLimit<
   TFunctionName extends 'withdrawTimeLimit',
@@ -8246,12 +7504,9 @@ export function useCdsWithdrawTimeLimit<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'withdrawTimeLimit',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8260,8 +7515,7 @@ export function useCdsWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsWrite<
   TFunctionName extends string,
@@ -8280,12 +7534,9 @@ export function useCdsWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, TFunctionName, TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     ...config,
   } as any)
 }
@@ -8293,8 +7544,7 @@ export function useCdsWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsCalculateCumulativeRate<
   TMode extends WriteContractMode = undefined,
@@ -8324,12 +7574,9 @@ export function useCdsCalculateCumulativeRate<
         functionName?: 'calculateCumulativeRate'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'calculateCumulativeRate', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'calculateCumulativeRate',
     ...config,
   } as any)
@@ -8338,8 +7585,7 @@ export function useCdsCalculateCumulativeRate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"deposit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsDeposit<
   TMode extends WriteContractMode = undefined,
@@ -8358,12 +7604,9 @@ export function useCdsDeposit<
         functionName?: 'deposit'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'deposit', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'deposit',
     ...config,
   } as any)
@@ -8372,8 +7615,7 @@ export function useCdsDeposit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"redeemUSDT"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsRedeemUsdt<
   TMode extends WriteContractMode = undefined,
@@ -8395,12 +7637,9 @@ export function useCdsRedeemUsdt<
         functionName?: 'redeemUSDT'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'redeemUSDT', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'redeemUSDT',
     ...config,
   } as any)
@@ -8409,8 +7648,7 @@ export function useCdsRedeemUsdt<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -8436,12 +7674,9 @@ export function useCdsRenounceOwnership<
         functionName?: 'renounceOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'renounceOwnership', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'renounceOwnership',
     ...config,
   } as any)
@@ -8450,8 +7685,7 @@ export function useCdsRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setAmintLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsSetAmintLimit<
   TMode extends WriteContractMode = undefined,
@@ -8477,12 +7711,9 @@ export function useCdsSetAmintLimit<
         functionName?: 'setAmintLimit'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'setAmintLimit', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'setAmintLimit',
     ...config,
   } as any)
@@ -8491,8 +7722,7 @@ export function useCdsSetAmintLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsSetBorrowingContract<
   TMode extends WriteContractMode = undefined,
@@ -8518,12 +7748,9 @@ export function useCdsSetBorrowingContract<
         functionName?: 'setBorrowingContract'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'setBorrowingContract', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'setBorrowingContract',
     ...config,
   } as any)
@@ -8532,8 +7759,7 @@ export function useCdsSetBorrowingContract<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setTreasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsSetTreasury<
   TMode extends WriteContractMode = undefined,
@@ -8559,12 +7785,9 @@ export function useCdsSetTreasury<
         functionName?: 'setTreasury'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'setTreasury', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'setTreasury',
     ...config,
   } as any)
@@ -8573,8 +7796,7 @@ export function useCdsSetTreasury<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setUsdtLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsSetUsdtLimit<
   TMode extends WriteContractMode = undefined,
@@ -8600,12 +7822,9 @@ export function useCdsSetUsdtLimit<
         functionName?: 'setUsdtLimit'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'setUsdtLimit', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'setUsdtLimit',
     ...config,
   } as any)
@@ -8614,8 +7833,7 @@ export function useCdsSetUsdtLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsSetWithdrawTimeLimit<
   TMode extends WriteContractMode = undefined,
@@ -8641,12 +7859,9 @@ export function useCdsSetWithdrawTimeLimit<
         functionName?: 'setWithdrawTimeLimit'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'setWithdrawTimeLimit', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'setWithdrawTimeLimit',
     ...config,
   } as any)
@@ -8655,8 +7870,7 @@ export function useCdsSetWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -8682,12 +7896,9 @@ export function useCdsTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'transferOwnership', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'transferOwnership',
     ...config,
   } as any)
@@ -8696,8 +7907,7 @@ export function useCdsTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateLiquidationInfo"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsUpdateLiquidationInfo<
   TMode extends WriteContractMode = undefined,
@@ -8723,12 +7933,9 @@ export function useCdsUpdateLiquidationInfo<
         functionName?: 'updateLiquidationInfo'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'updateLiquidationInfo', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'updateLiquidationInfo',
     ...config,
   } as any)
@@ -8737,8 +7944,7 @@ export function useCdsUpdateLiquidationInfo<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalAvailableLiquidationAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsUpdateTotalAvailableLiquidationAmount<
   TMode extends WriteContractMode = undefined,
@@ -8768,16 +7974,13 @@ export function useCdsUpdateTotalAvailableLiquidationAmount<
         functionName?: 'updateTotalAvailableLiquidationAmount'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof cdsABI,
     'updateTotalAvailableLiquidationAmount',
     TMode
   >({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'updateTotalAvailableLiquidationAmount',
     ...config,
   } as any)
@@ -8786,8 +7989,7 @@ export function useCdsUpdateTotalAvailableLiquidationAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsUpdateTotalCdsDepositedAmount<
   TMode extends WriteContractMode = undefined,
@@ -8817,16 +8019,13 @@ export function useCdsUpdateTotalCdsDepositedAmount<
         functionName?: 'updateTotalCdsDepositedAmount'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof cdsABI,
     'updateTotalCdsDepositedAmount',
     TMode
   >({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'updateTotalCdsDepositedAmount',
     ...config,
   } as any)
@@ -8835,8 +8034,7 @@ export function useCdsUpdateTotalCdsDepositedAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsWithdraw<
   TMode extends WriteContractMode = undefined,
@@ -8855,12 +8053,9 @@ export function useCdsWithdraw<
         functionName?: 'withdraw'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'withdraw', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'withdraw',
     ...config,
   } as any)
@@ -8869,8 +8064,7 @@ export function useCdsWithdraw<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsWrite<TFunctionName extends string>(
   config: Omit<
@@ -8878,12 +8072,9 @@ export function usePrepareCdsWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, TFunctionName>)
 }
@@ -8891,8 +8082,7 @@ export function usePrepareCdsWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsCalculateCumulativeRate(
   config: Omit<
@@ -8900,12 +8090,9 @@ export function usePrepareCdsCalculateCumulativeRate(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'calculateCumulativeRate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'calculateCumulativeRate'>)
@@ -8914,8 +8101,7 @@ export function usePrepareCdsCalculateCumulativeRate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"deposit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsDeposit(
   config: Omit<
@@ -8923,12 +8109,9 @@ export function usePrepareCdsDeposit(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'deposit',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'deposit'>)
@@ -8937,8 +8120,7 @@ export function usePrepareCdsDeposit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"redeemUSDT"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsRedeemUsdt(
   config: Omit<
@@ -8946,12 +8128,9 @@ export function usePrepareCdsRedeemUsdt(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'redeemUSDT',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'redeemUSDT'>)
@@ -8960,8 +8139,7 @@ export function usePrepareCdsRedeemUsdt(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsRenounceOwnership(
   config: Omit<
@@ -8969,12 +8147,9 @@ export function usePrepareCdsRenounceOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'renounceOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'renounceOwnership'>)
@@ -8983,8 +8158,7 @@ export function usePrepareCdsRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setAmintLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsSetAmintLimit(
   config: Omit<
@@ -8992,12 +8166,9 @@ export function usePrepareCdsSetAmintLimit(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'setAmintLimit',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'setAmintLimit'>)
@@ -9006,8 +8177,7 @@ export function usePrepareCdsSetAmintLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsSetBorrowingContract(
   config: Omit<
@@ -9015,12 +8185,9 @@ export function usePrepareCdsSetBorrowingContract(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'setBorrowingContract',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'setBorrowingContract'>)
@@ -9029,8 +8196,7 @@ export function usePrepareCdsSetBorrowingContract(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setTreasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsSetTreasury(
   config: Omit<
@@ -9038,12 +8204,9 @@ export function usePrepareCdsSetTreasury(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'setTreasury',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'setTreasury'>)
@@ -9052,8 +8215,7 @@ export function usePrepareCdsSetTreasury(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setUsdtLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsSetUsdtLimit(
   config: Omit<
@@ -9061,12 +8223,9 @@ export function usePrepareCdsSetUsdtLimit(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'setUsdtLimit',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'setUsdtLimit'>)
@@ -9075,8 +8234,7 @@ export function usePrepareCdsSetUsdtLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsSetWithdrawTimeLimit(
   config: Omit<
@@ -9084,12 +8242,9 @@ export function usePrepareCdsSetWithdrawTimeLimit(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'setWithdrawTimeLimit',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'setWithdrawTimeLimit'>)
@@ -9098,8 +8253,7 @@ export function usePrepareCdsSetWithdrawTimeLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsTransferOwnership(
   config: Omit<
@@ -9107,12 +8261,9 @@ export function usePrepareCdsTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'transferOwnership'>)
@@ -9121,8 +8272,7 @@ export function usePrepareCdsTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateLiquidationInfo"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsUpdateLiquidationInfo(
   config: Omit<
@@ -9130,12 +8280,9 @@ export function usePrepareCdsUpdateLiquidationInfo(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'updateLiquidationInfo',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'updateLiquidationInfo'>)
@@ -9144,8 +8291,7 @@ export function usePrepareCdsUpdateLiquidationInfo(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalAvailableLiquidationAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsUpdateTotalAvailableLiquidationAmount(
   config: Omit<
@@ -9156,12 +8302,9 @@ export function usePrepareCdsUpdateTotalAvailableLiquidationAmount(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'updateTotalAvailableLiquidationAmount',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -9173,8 +8316,7 @@ export function usePrepareCdsUpdateTotalAvailableLiquidationAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsUpdateTotalCdsDepositedAmount(
   config: Omit<
@@ -9185,12 +8327,9 @@ export function usePrepareCdsUpdateTotalCdsDepositedAmount(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'updateTotalCdsDepositedAmount',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -9202,8 +8341,7 @@ export function usePrepareCdsUpdateTotalCdsDepositedAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function usePrepareCdsWithdraw(
   config: Omit<
@@ -9211,12 +8349,9 @@ export function usePrepareCdsWithdraw(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     functionName: 'withdraw',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'withdraw'>)
@@ -9225,8 +8360,7 @@ export function usePrepareCdsWithdraw(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsEvent<TEventName extends string>(
   config: Omit<
@@ -9234,12 +8368,9 @@ export function useCdsEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     ...config,
   } as UseContractEventConfig<typeof cdsABI, TEventName>)
 }
@@ -9247,8 +8378,7 @@ export function useCdsEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Deposit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsDepositEvent(
   config: Omit<
@@ -9256,12 +8386,9 @@ export function useCdsDepositEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     eventName: 'Deposit',
     ...config,
   } as UseContractEventConfig<typeof cdsABI, 'Deposit'>)
@@ -9270,8 +8397,7 @@ export function useCdsDepositEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsOwnershipTransferredEvent(
   config: Omit<
@@ -9279,12 +8405,9 @@ export function useCdsOwnershipTransferredEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     eventName: 'OwnershipTransferred',
     ...config,
   } as UseContractEventConfig<typeof cdsABI, 'OwnershipTransferred'>)
@@ -9293,8 +8416,7 @@ export function useCdsOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Withdraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0xb9e7d1263aC519e57C97D375Eb6553F91886C384)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5CF2316F8a1d10B29B6a294Ef5445FAB0fd052A2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
  */
 export function useCdsWithdrawEvent(
   config: Omit<
@@ -9302,12 +8424,9 @@ export function useCdsWithdrawEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[5],
     eventName: 'Withdraw',
     ...config,
   } as UseContractEventConfig<typeof cdsABI, 'Withdraw'>)
@@ -9316,8 +8435,7 @@ export function useCdsWithdrawEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x82B32A3376C766754C09Fd4323D1166FE1FeAD3f)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xc2c72d998Fa5f2AD2db36cEE257303b2882deF6B)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
  */
 export function useOptionsRead<
   TFunctionName extends string,
@@ -9328,12 +8446,75 @@ export function useOptionsRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[5],
+    ...config,
+  } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"calculateOptionPrice"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ */
+export function useOptionsCalculateOptionPrice<
+  TFunctionName extends 'calculateOptionPrice',
+  TSelectData = ReadContractResult<typeof optionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof optionsAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: optionsABI,
+    address: optionsAddress[5],
+    functionName: 'calculateOptionPrice',
+    ...config,
+  } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"calculateStandardDeviation"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ */
+export function useOptionsCalculateStandardDeviation<
+  TFunctionName extends 'calculateStandardDeviation',
+  TSelectData = ReadContractResult<typeof optionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof optionsAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: optionsABI,
+    address: optionsAddress[5],
+    functionName: 'calculateStandardDeviation',
+    ...config,
+  } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"getLatestPrice"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ */
+export function useOptionsGetLatestPrice<
+  TFunctionName extends 'getLatestPrice',
+  TSelectData = ReadContractResult<typeof optionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof optionsAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: optionsABI,
+    address: optionsAddress[5],
+    functionName: 'getLatestPrice',
     ...config,
   } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
 }
@@ -9341,8 +8522,7 @@ export function useOptionsRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"withdrawOption"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x82B32A3376C766754C09Fd4323D1166FE1FeAD3f)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xc2c72d998Fa5f2AD2db36cEE257303b2882deF6B)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
  */
 export function useOptionsWithdrawOption<
   TFunctionName extends 'withdrawOption',
@@ -9353,12 +8533,9 @@ export function useOptionsWithdrawOption<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[5],
     functionName: 'withdrawOption',
     ...config,
   } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
@@ -9367,8 +8544,7 @@ export function useOptionsWithdrawOption<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x82B32A3376C766754C09Fd4323D1166FE1FeAD3f)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xc2c72d998Fa5f2AD2db36cEE257303b2882deF6B)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
  */
 export function useOptionsWrite<
   TFunctionName extends string,
@@ -9387,23 +8563,19 @@ export function useOptionsWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof optionsABI, TFunctionName, TMode>({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[5],
     ...config,
   } as any)
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"depositOption"`.
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"updateDailyEMA"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x82B32A3376C766754C09Fd4323D1166FE1FeAD3f)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xc2c72d998Fa5f2AD2db36cEE257303b2882deF6B)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
  */
-export function useOptionsDepositOption<
+export function useOptionsUpdateDailyEma<
   TMode extends WriteContractMode = undefined,
   TChainId extends number = keyof typeof optionsAddress,
 >(
@@ -9411,29 +8583,26 @@ export function useOptionsDepositOption<
     ? UseContractWriteConfig<
         PrepareWriteContractResult<
           typeof optionsABI,
-          'depositOption'
+          'updateDailyEMA'
         >['request']['abi'],
-        'depositOption',
+        'updateDailyEMA',
         TMode
       > & {
         address?: Address
         chainId?: TChainId
-        functionName?: 'depositOption'
+        functionName?: 'updateDailyEMA'
       }
-    : UseContractWriteConfig<typeof optionsABI, 'depositOption', TMode> & {
+    : UseContractWriteConfig<typeof optionsABI, 'updateDailyEMA', TMode> & {
         abi?: never
         address?: never
         chainId?: TChainId
-        functionName?: 'depositOption'
+        functionName?: 'updateDailyEMA'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof optionsABI, 'depositOption', TMode>({
+  return useContractWrite<typeof optionsABI, 'updateDailyEMA', TMode>({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
-    functionName: 'depositOption',
+    address: optionsAddress[5],
+    functionName: 'updateDailyEMA',
     ...config,
   } as any)
 }
@@ -9441,8 +8610,7 @@ export function useOptionsDepositOption<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x82B32A3376C766754C09Fd4323D1166FE1FeAD3f)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xc2c72d998Fa5f2AD2db36cEE257303b2882deF6B)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
  */
 export function usePrepareOptionsWrite<TFunctionName extends string>(
   config: Omit<
@@ -9450,37 +8618,30 @@ export function usePrepareOptionsWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[5],
     ...config,
   } as UsePrepareContractWriteConfig<typeof optionsABI, TFunctionName>)
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"depositOption"`.
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"updateDailyEMA"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x82B32A3376C766754C09Fd4323D1166FE1FeAD3f)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xc2c72d998Fa5f2AD2db36cEE257303b2882deF6B)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
  */
-export function usePrepareOptionsDepositOption(
+export function usePrepareOptionsUpdateDailyEma(
   config: Omit<
-    UsePrepareContractWriteConfig<typeof optionsABI, 'depositOption'>,
+    UsePrepareContractWriteConfig<typeof optionsABI, 'updateDailyEMA'>,
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
-    functionName: 'depositOption',
+    address: optionsAddress[5],
+    functionName: 'updateDailyEMA',
     ...config,
-  } as UsePrepareContractWriteConfig<typeof optionsABI, 'depositOption'>)
+  } as UsePrepareContractWriteConfig<typeof optionsABI, 'updateDailyEMA'>)
 }
 
 /**
@@ -9855,8 +9016,7 @@ export function usePrepareQuoterQuoteExactOutputSingle(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryRead<
   TFunctionName extends string,
@@ -9867,12 +9027,9 @@ export function useTreasuryRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
 }
@@ -9880,8 +9037,7 @@ export function useTreasuryRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aToken"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryAToken<
   TFunctionName extends 'aToken',
@@ -9892,12 +9048,9 @@ export function useTreasuryAToken<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'aToken',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -9906,8 +9059,7 @@ export function useTreasuryAToken<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aavePoolAddressProvider"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryAavePoolAddressProvider<
   TFunctionName extends 'aavePoolAddressProvider',
@@ -9918,12 +9070,9 @@ export function useTreasuryAavePoolAddressProvider<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'aavePoolAddressProvider',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -9932,8 +9081,7 @@ export function useTreasuryAavePoolAddressProvider<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aaveWETH"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryAaveWeth<
   TFunctionName extends 'aaveWETH',
@@ -9944,13 +9092,32 @@ export function useTreasuryAaveWeth<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'aaveWETH',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"amint"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ */
+export function useTreasuryAmint<
+  TFunctionName extends 'amint',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'amint',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
 }
@@ -9958,8 +9125,7 @@ export function useTreasuryAaveWeth<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrow"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryBorrow<
   TFunctionName extends 'borrow',
@@ -9970,12 +9136,9 @@ export function useTreasuryBorrow<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'borrow',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -9984,8 +9147,7 @@ export function useTreasuryBorrow<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrowing"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryBorrowing<
   TFunctionName extends 'borrowing',
@@ -9996,12 +9158,9 @@ export function useTreasuryBorrowing<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'borrowing',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -10010,8 +9169,7 @@ export function useTreasuryBorrowing<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrowingContract"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryBorrowingContract<
   TFunctionName extends 'borrowingContract',
@@ -10022,12 +9180,9 @@ export function useTreasuryBorrowingContract<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'borrowingContract',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -10036,8 +9191,7 @@ export function useTreasuryBorrowingContract<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"cEther"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryCEther<
   TFunctionName extends 'cEther',
@@ -10048,13 +9202,32 @@ export function useTreasuryCEther<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'cEther',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"calculateInterestForDepositAave"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ */
+export function useTreasuryCalculateInterestForDepositAave<
+  TFunctionName extends 'calculateInterestForDepositAave',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'calculateInterestForDepositAave',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
 }
@@ -10062,8 +9235,7 @@ export function useTreasuryCEther<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"cdsContract"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryCdsContract<
   TFunctionName extends 'cdsContract',
@@ -10074,12 +9246,9 @@ export function useTreasuryCdsContract<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'cdsContract',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -10088,8 +9257,7 @@ export function useTreasuryCdsContract<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"compoundAddress"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryCompoundAddress<
   TFunctionName extends 'compoundAddress',
@@ -10100,13 +9268,32 @@ export function useTreasuryCompoundAddress<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'compoundAddress',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"externalProtocolDepositCount"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ */
+export function useTreasuryExternalProtocolDepositCount<
+  TFunctionName extends 'externalProtocolDepositCount',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'externalProtocolDepositCount',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
 }
@@ -10114,8 +9301,7 @@ export function useTreasuryCompoundAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getBalanceInTreasury"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryGetBalanceInTreasury<
   TFunctionName extends 'getBalanceInTreasury',
@@ -10126,12 +9312,9 @@ export function useTreasuryGetBalanceInTreasury<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'getBalanceInTreasury',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -10140,8 +9323,7 @@ export function useTreasuryGetBalanceInTreasury<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getBorrowing"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryGetBorrowing<
   TFunctionName extends 'getBorrowing',
@@ -10152,12 +9334,9 @@ export function useTreasuryGetBorrowing<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'getBorrowing',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -10166,8 +9345,7 @@ export function useTreasuryGetBorrowing<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"noOfBorrowers"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryNoOfBorrowers<
   TFunctionName extends 'noOfBorrowers',
@@ -10178,12 +9356,9 @@ export function useTreasuryNoOfBorrowers<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'noOfBorrowers',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -10192,8 +9367,7 @@ export function useTreasuryNoOfBorrowers<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryOwner<
   TFunctionName extends 'owner',
@@ -10204,12 +9378,9 @@ export function useTreasuryOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -10218,8 +9389,7 @@ export function useTreasuryOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"protocolDeposit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryProtocolDeposit<
   TFunctionName extends 'protocolDeposit',
@@ -10230,12 +9400,9 @@ export function useTreasuryProtocolDeposit<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'protocolDeposit',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -10244,8 +9411,7 @@ export function useTreasuryProtocolDeposit<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalInterest"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryTotalInterest<
   TFunctionName extends 'totalInterest',
@@ -10256,13 +9422,32 @@ export function useTreasuryTotalInterest<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'totalInterest',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalInterestFromExternalProtocol"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ */
+export function useTreasuryTotalInterestFromExternalProtocol<
+  TFunctionName extends 'totalInterestFromExternalProtocol',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'totalInterestFromExternalProtocol',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
 }
@@ -10270,8 +9455,7 @@ export function useTreasuryTotalInterest<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalInterestFromLiquidation"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryTotalInterestFromLiquidation<
   TFunctionName extends 'totalInterestFromLiquidation',
@@ -10282,12 +9466,9 @@ export function useTreasuryTotalInterestFromLiquidation<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'totalInterestFromLiquidation',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -10296,8 +9477,7 @@ export function useTreasuryTotalInterestFromLiquidation<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalVolumeOfBorrowersAmountinUSD"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryTotalVolumeOfBorrowersAmountinUsd<
   TFunctionName extends 'totalVolumeOfBorrowersAmountinUSD',
@@ -10308,12 +9488,9 @@ export function useTreasuryTotalVolumeOfBorrowersAmountinUsd<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'totalVolumeOfBorrowersAmountinUSD',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -10322,8 +9499,7 @@ export function useTreasuryTotalVolumeOfBorrowersAmountinUsd<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalVolumeOfBorrowersAmountinWei"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryTotalVolumeOfBorrowersAmountinWei<
   TFunctionName extends 'totalVolumeOfBorrowersAmountinWei',
@@ -10334,39 +9510,10 @@ export function useTreasuryTotalVolumeOfBorrowersAmountinWei<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'totalVolumeOfBorrowersAmountinWei',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"trinity"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
- */
-export function useTreasuryTrinity<
-  TFunctionName extends 'trinity',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'trinity',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
 }
@@ -10374,8 +9521,7 @@ export function useTreasuryTrinity<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"usdt"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryUsdt<
   TFunctionName extends 'usdt',
@@ -10386,12 +9532,9 @@ export function useTreasuryUsdt<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'usdt',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -10400,8 +9543,7 @@ export function useTreasuryUsdt<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"wethGateway"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryWethGateway<
   TFunctionName extends 'wethGateway',
@@ -10412,12 +9554,9 @@ export function useTreasuryWethGateway<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'wethGateway',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -10426,8 +9565,7 @@ export function useTreasuryWethGateway<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryWrite<
   TFunctionName extends string,
@@ -10449,12 +9587,9 @@ export function useTreasuryWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, TFunctionName, TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     ...config,
   } as any)
 }
@@ -10462,8 +9597,7 @@ export function useTreasuryWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveAmint"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryApproveAmint<
   TMode extends WriteContractMode = undefined,
@@ -10489,12 +9623,9 @@ export function useTreasuryApproveAmint<
         functionName?: 'approveAmint'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'approveAmint', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'approveAmint',
     ...config,
   } as any)
@@ -10503,8 +9634,7 @@ export function useTreasuryApproveAmint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveUsdt"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryApproveUsdt<
   TMode extends WriteContractMode = undefined,
@@ -10530,12 +9660,9 @@ export function useTreasuryApproveUsdt<
         functionName?: 'approveUsdt'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'approveUsdt', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'approveUsdt',
     ...config,
   } as any)
@@ -10544,8 +9671,7 @@ export function useTreasuryApproveUsdt<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"deposit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryDeposit<
   TMode extends WriteContractMode = undefined,
@@ -10567,12 +9693,9 @@ export function useTreasuryDeposit<
         functionName?: 'deposit'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'deposit', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'deposit',
     ...config,
   } as any)
@@ -10581,8 +9704,7 @@ export function useTreasuryDeposit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"depositToAave"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryDepositToAave<
   TMode extends WriteContractMode = undefined,
@@ -10608,12 +9730,9 @@ export function useTreasuryDepositToAave<
         functionName?: 'depositToAave'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'depositToAave', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'depositToAave',
     ...config,
   } as any)
@@ -10622,8 +9741,7 @@ export function useTreasuryDepositToAave<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"depositToCompound"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryDepositToCompound<
   TMode extends WriteContractMode = undefined,
@@ -10649,13 +9767,100 @@ export function useTreasuryDepositToCompound<
         functionName?: 'depositToCompound'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'depositToCompound', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'depositToCompound',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getInterestForCompoundDeposit"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ */
+export function useTreasuryGetInterestForCompoundDeposit<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'getInterestForCompoundDeposit'
+        >['request']['abi'],
+        'getInterestForCompoundDeposit',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'getInterestForCompoundDeposit'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'getInterestForCompoundDeposit',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'getInterestForCompoundDeposit'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof treasuryABI,
+    'getInterestForCompoundDeposit',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'getInterestForCompoundDeposit',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"increaseExternalProtocolCount"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ */
+export function useTreasuryIncreaseExternalProtocolCount<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'increaseExternalProtocolCount'
+        >['request']['abi'],
+        'increaseExternalProtocolCount',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'increaseExternalProtocolCount'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'increaseExternalProtocolCount',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'increaseExternalProtocolCount'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof treasuryABI,
+    'increaseExternalProtocolCount',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'increaseExternalProtocolCount',
     ...config,
   } as any)
 }
@@ -10663,8 +9868,7 @@ export function useTreasuryDepositToCompound<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -10690,12 +9894,9 @@ export function useTreasuryRenounceOwnership<
         functionName?: 'renounceOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'renounceOwnership', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'renounceOwnership',
     ...config,
   } as any)
@@ -10704,8 +9905,7 @@ export function useTreasuryRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasurySetBorrowingContract<
   TMode extends WriteContractMode = undefined,
@@ -10735,12 +9935,9 @@ export function useTreasurySetBorrowingContract<
         functionName?: 'setBorrowingContract'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'setBorrowingContract', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'setBorrowingContract',
     ...config,
   } as any)
@@ -10749,8 +9946,7 @@ export function useTreasurySetBorrowingContract<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferEthToCdsLiquidators"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryTransferEthToCdsLiquidators<
   TMode extends WriteContractMode = undefined,
@@ -10780,16 +9976,13 @@ export function useTreasuryTransferEthToCdsLiquidators<
         functionName?: 'transferEthToCdsLiquidators'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof treasuryABI,
     'transferEthToCdsLiquidators',
     TMode
   >({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'transferEthToCdsLiquidators',
     ...config,
   } as any)
@@ -10798,8 +9991,7 @@ export function useTreasuryTransferEthToCdsLiquidators<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -10825,12 +10017,9 @@ export function useTreasuryTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'transferOwnership', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'transferOwnership',
     ...config,
   } as any)
@@ -10839,8 +10028,7 @@ export function useTreasuryTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateDepositDetails"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryUpdateDepositDetails<
   TMode extends WriteContractMode = undefined,
@@ -10870,12 +10058,9 @@ export function useTreasuryUpdateDepositDetails<
         functionName?: 'updateDepositDetails'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'updateDepositDetails', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'updateDepositDetails',
     ...config,
   } as any)
@@ -10884,8 +10069,7 @@ export function useTreasuryUpdateDepositDetails<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateHasBorrowed"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryUpdateHasBorrowed<
   TMode extends WriteContractMode = undefined,
@@ -10911,13 +10095,100 @@ export function useTreasuryUpdateHasBorrowed<
         functionName?: 'updateHasBorrowed'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'updateHasBorrowed', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'updateHasBorrowed',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalAbondTokensDecrease"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ */
+export function useTreasuryUpdateTotalAbondTokensDecrease<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateTotalAbondTokensDecrease'
+        >['request']['abi'],
+        'updateTotalAbondTokensDecrease',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateTotalAbondTokensDecrease'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'updateTotalAbondTokensDecrease',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateTotalAbondTokensDecrease'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof treasuryABI,
+    'updateTotalAbondTokensDecrease',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'updateTotalAbondTokensDecrease',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalAbondTokensIncrease"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ */
+export function useTreasuryUpdateTotalAbondTokensIncrease<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateTotalAbondTokensIncrease'
+        >['request']['abi'],
+        'updateTotalAbondTokensIncrease',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateTotalAbondTokensIncrease'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'updateTotalAbondTokensIncrease',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateTotalAbondTokensIncrease'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof treasuryABI,
+    'updateTotalAbondTokensIncrease',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'updateTotalAbondTokensIncrease',
     ...config,
   } as any)
 }
@@ -10925,8 +10196,7 @@ export function useTreasuryUpdateHasBorrowed<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalBorrowedAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryUpdateTotalBorrowedAmount<
   TMode extends WriteContractMode = undefined,
@@ -10956,16 +10226,13 @@ export function useTreasuryUpdateTotalBorrowedAmount<
         functionName?: 'updateTotalBorrowedAmount'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof treasuryABI,
     'updateTotalBorrowedAmount',
     TMode
   >({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'updateTotalBorrowedAmount',
     ...config,
   } as any)
@@ -10974,8 +10241,7 @@ export function useTreasuryUpdateTotalBorrowedAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalDepositedAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryUpdateTotalDepositedAmount<
   TMode extends WriteContractMode = undefined,
@@ -11005,16 +10271,13 @@ export function useTreasuryUpdateTotalDepositedAmount<
         functionName?: 'updateTotalDepositedAmount'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof treasuryABI,
     'updateTotalDepositedAmount',
     TMode
   >({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'updateTotalDepositedAmount',
     ...config,
   } as any)
@@ -11023,8 +10286,7 @@ export function useTreasuryUpdateTotalDepositedAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterest"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryUpdateTotalInterest<
   TMode extends WriteContractMode = undefined,
@@ -11054,12 +10316,9 @@ export function useTreasuryUpdateTotalInterest<
         functionName?: 'updateTotalInterest'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'updateTotalInterest', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'updateTotalInterest',
     ...config,
   } as any)
@@ -11068,8 +10327,7 @@ export function useTreasuryUpdateTotalInterest<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterestFromLiquidation"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryUpdateTotalInterestFromLiquidation<
   TMode extends WriteContractMode = undefined,
@@ -11099,115 +10357,14 @@ export function useTreasuryUpdateTotalInterestFromLiquidation<
         functionName?: 'updateTotalInterestFromLiquidation'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof treasuryABI,
     'updateTotalInterestFromLiquidation',
     TMode
   >({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'updateTotalInterestFromLiquidation',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalPTokensDecrease"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
- */
-export function useTreasuryUpdateTotalPTokensDecrease<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateTotalPTokensDecrease'
-        >['request']['abi'],
-        'updateTotalPTokensDecrease',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateTotalPTokensDecrease'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'updateTotalPTokensDecrease',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateTotalPTokensDecrease'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<
-    typeof treasuryABI,
-    'updateTotalPTokensDecrease',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'updateTotalPTokensDecrease',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalPTokensIncrease"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
- */
-export function useTreasuryUpdateTotalPTokensIncrease<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateTotalPTokensIncrease'
-        >['request']['abi'],
-        'updateTotalPTokensIncrease',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateTotalPTokensIncrease'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'updateTotalPTokensIncrease',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateTotalPTokensIncrease'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<
-    typeof treasuryABI,
-    'updateTotalPTokensIncrease',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'updateTotalPTokensIncrease',
     ...config,
   } as any)
 }
@@ -11215,8 +10372,7 @@ export function useTreasuryUpdateTotalPTokensIncrease<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryWithdraw<
   TMode extends WriteContractMode = undefined,
@@ -11238,12 +10394,9 @@ export function useTreasuryWithdraw<
         functionName?: 'withdraw'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'withdraw', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'withdraw',
     ...config,
   } as any)
@@ -11252,8 +10405,7 @@ export function useTreasuryWithdraw<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromAave"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryWithdrawFromAave<
   TMode extends WriteContractMode = undefined,
@@ -11279,12 +10431,9 @@ export function useTreasuryWithdrawFromAave<
         functionName?: 'withdrawFromAave'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'withdrawFromAave', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'withdrawFromAave',
     ...config,
   } as any)
@@ -11293,8 +10442,7 @@ export function useTreasuryWithdrawFromAave<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromCompound"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryWithdrawFromCompound<
   TMode extends WriteContractMode = undefined,
@@ -11324,12 +10472,9 @@ export function useTreasuryWithdrawFromCompound<
         functionName?: 'withdrawFromCompound'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'withdrawFromCompound', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'withdrawFromCompound',
     ...config,
   } as any)
@@ -11338,8 +10483,7 @@ export function useTreasuryWithdrawFromCompound<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawInterest"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryWithdrawInterest<
   TMode extends WriteContractMode = undefined,
@@ -11365,12 +10509,9 @@ export function useTreasuryWithdrawInterest<
         functionName?: 'withdrawInterest'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'withdrawInterest', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'withdrawInterest',
     ...config,
   } as any)
@@ -11379,8 +10520,7 @@ export function useTreasuryWithdrawInterest<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryWrite<TFunctionName extends string>(
   config: Omit<
@@ -11388,12 +10528,9 @@ export function usePrepareTreasuryWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, TFunctionName>)
 }
@@ -11401,8 +10538,7 @@ export function usePrepareTreasuryWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveAmint"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryApproveAmint(
   config: Omit<
@@ -11410,12 +10546,9 @@ export function usePrepareTreasuryApproveAmint(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'approveAmint',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'approveAmint'>)
@@ -11424,8 +10557,7 @@ export function usePrepareTreasuryApproveAmint(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveUsdt"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryApproveUsdt(
   config: Omit<
@@ -11433,12 +10565,9 @@ export function usePrepareTreasuryApproveUsdt(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'approveUsdt',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'approveUsdt'>)
@@ -11447,8 +10576,7 @@ export function usePrepareTreasuryApproveUsdt(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"deposit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryDeposit(
   config: Omit<
@@ -11456,12 +10584,9 @@ export function usePrepareTreasuryDeposit(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'deposit',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'deposit'>)
@@ -11470,8 +10595,7 @@ export function usePrepareTreasuryDeposit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"depositToAave"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryDepositToAave(
   config: Omit<
@@ -11479,12 +10603,9 @@ export function usePrepareTreasuryDepositToAave(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'depositToAave',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'depositToAave'>)
@@ -11493,8 +10614,7 @@ export function usePrepareTreasuryDepositToAave(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"depositToCompound"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryDepositToCompound(
   config: Omit<
@@ -11502,22 +10622,68 @@ export function usePrepareTreasuryDepositToCompound(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'depositToCompound',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'depositToCompound'>)
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getInterestForCompoundDeposit"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ */
+export function usePrepareTreasuryGetInterestForCompoundDeposit(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'getInterestForCompoundDeposit'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'getInterestForCompoundDeposit',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'getInterestForCompoundDeposit'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"increaseExternalProtocolCount"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ */
+export function usePrepareTreasuryIncreaseExternalProtocolCount(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'increaseExternalProtocolCount'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'increaseExternalProtocolCount',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'increaseExternalProtocolCount'
+  >)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryRenounceOwnership(
   config: Omit<
@@ -11525,12 +10691,9 @@ export function usePrepareTreasuryRenounceOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'renounceOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'renounceOwnership'>)
@@ -11539,8 +10702,7 @@ export function usePrepareTreasuryRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasurySetBorrowingContract(
   config: Omit<
@@ -11548,12 +10710,9 @@ export function usePrepareTreasurySetBorrowingContract(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'setBorrowingContract',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -11565,8 +10724,7 @@ export function usePrepareTreasurySetBorrowingContract(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferEthToCdsLiquidators"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryTransferEthToCdsLiquidators(
   config: Omit<
@@ -11577,12 +10735,9 @@ export function usePrepareTreasuryTransferEthToCdsLiquidators(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'transferEthToCdsLiquidators',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -11594,8 +10749,7 @@ export function usePrepareTreasuryTransferEthToCdsLiquidators(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryTransferOwnership(
   config: Omit<
@@ -11603,12 +10757,9 @@ export function usePrepareTreasuryTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'transferOwnership'>)
@@ -11617,8 +10768,7 @@ export function usePrepareTreasuryTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateDepositDetails"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryUpdateDepositDetails(
   config: Omit<
@@ -11626,12 +10776,9 @@ export function usePrepareTreasuryUpdateDepositDetails(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'updateDepositDetails',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -11643,8 +10790,7 @@ export function usePrepareTreasuryUpdateDepositDetails(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateHasBorrowed"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryUpdateHasBorrowed(
   config: Omit<
@@ -11652,22 +10798,68 @@ export function usePrepareTreasuryUpdateHasBorrowed(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'updateHasBorrowed',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'updateHasBorrowed'>)
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalAbondTokensDecrease"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ */
+export function usePrepareTreasuryUpdateTotalAbondTokensDecrease(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'updateTotalAbondTokensDecrease'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'updateTotalAbondTokensDecrease',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'updateTotalAbondTokensDecrease'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalAbondTokensIncrease"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ */
+export function usePrepareTreasuryUpdateTotalAbondTokensIncrease(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'updateTotalAbondTokensIncrease'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'updateTotalAbondTokensIncrease',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'updateTotalAbondTokensIncrease'
+  >)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalBorrowedAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryUpdateTotalBorrowedAmount(
   config: Omit<
@@ -11678,12 +10870,9 @@ export function usePrepareTreasuryUpdateTotalBorrowedAmount(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'updateTotalBorrowedAmount',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -11695,8 +10884,7 @@ export function usePrepareTreasuryUpdateTotalBorrowedAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalDepositedAmount"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryUpdateTotalDepositedAmount(
   config: Omit<
@@ -11707,12 +10895,9 @@ export function usePrepareTreasuryUpdateTotalDepositedAmount(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'updateTotalDepositedAmount',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -11724,8 +10909,7 @@ export function usePrepareTreasuryUpdateTotalDepositedAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterest"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryUpdateTotalInterest(
   config: Omit<
@@ -11733,12 +10917,9 @@ export function usePrepareTreasuryUpdateTotalInterest(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'updateTotalInterest',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'updateTotalInterest'>)
@@ -11747,8 +10928,7 @@ export function usePrepareTreasuryUpdateTotalInterest(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterestFromLiquidation"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryUpdateTotalInterestFromLiquidation(
   config: Omit<
@@ -11759,12 +10939,9 @@ export function usePrepareTreasuryUpdateTotalInterestFromLiquidation(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'updateTotalInterestFromLiquidation',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -11774,68 +10951,9 @@ export function usePrepareTreasuryUpdateTotalInterestFromLiquidation(
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalPTokensDecrease"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
- */
-export function usePrepareTreasuryUpdateTotalPTokensDecrease(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'updateTotalPTokensDecrease'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'updateTotalPTokensDecrease',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'updateTotalPTokensDecrease'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalPTokensIncrease"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
- */
-export function usePrepareTreasuryUpdateTotalPTokensIncrease(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'updateTotalPTokensIncrease'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'updateTotalPTokensIncrease',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'updateTotalPTokensIncrease'
-  >)
-}
-
-/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryWithdraw(
   config: Omit<
@@ -11843,12 +10961,9 @@ export function usePrepareTreasuryWithdraw(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'withdraw',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'withdraw'>)
@@ -11857,8 +10972,7 @@ export function usePrepareTreasuryWithdraw(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromAave"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryWithdrawFromAave(
   config: Omit<
@@ -11866,12 +10980,9 @@ export function usePrepareTreasuryWithdrawFromAave(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'withdrawFromAave',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawFromAave'>)
@@ -11880,8 +10991,7 @@ export function usePrepareTreasuryWithdrawFromAave(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromCompound"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryWithdrawFromCompound(
   config: Omit<
@@ -11889,12 +10999,9 @@ export function usePrepareTreasuryWithdrawFromCompound(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'withdrawFromCompound',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -11906,8 +11013,7 @@ export function usePrepareTreasuryWithdrawFromCompound(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawInterest"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function usePrepareTreasuryWithdrawInterest(
   config: Omit<
@@ -11915,12 +11021,9 @@ export function usePrepareTreasuryWithdrawInterest(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     functionName: 'withdrawInterest',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawInterest'>)
@@ -11929,8 +11032,7 @@ export function usePrepareTreasuryWithdrawInterest(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryEvent<TEventName extends string>(
   config: Omit<
@@ -11938,12 +11040,9 @@ export function useTreasuryEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, TEventName>)
 }
@@ -11951,8 +11050,7 @@ export function useTreasuryEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Deposit"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryDepositEvent(
   config: Omit<
@@ -11960,12 +11058,9 @@ export function useTreasuryDepositEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     eventName: 'Deposit',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'Deposit'>)
@@ -11974,8 +11069,7 @@ export function useTreasuryDepositEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"DepositToAave"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryDepositToAaveEvent(
   config: Omit<
@@ -11983,12 +11077,9 @@ export function useTreasuryDepositToAaveEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     eventName: 'DepositToAave',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'DepositToAave'>)
@@ -11997,8 +11088,7 @@ export function useTreasuryDepositToAaveEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"DepositToCompound"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryDepositToCompoundEvent(
   config: Omit<
@@ -12006,12 +11096,9 @@ export function useTreasuryDepositToCompoundEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     eventName: 'DepositToCompound',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'DepositToCompound'>)
@@ -12020,8 +11107,7 @@ export function useTreasuryDepositToCompoundEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryOwnershipTransferredEvent(
   config: Omit<
@@ -12029,12 +11115,9 @@ export function useTreasuryOwnershipTransferredEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     eventName: 'OwnershipTransferred',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'OwnershipTransferred'>)
@@ -12043,8 +11126,7 @@ export function useTreasuryOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Withdraw"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryWithdrawEvent(
   config: Omit<
@@ -12052,12 +11134,9 @@ export function useTreasuryWithdrawEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     eventName: 'Withdraw',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'Withdraw'>)
@@ -12066,8 +11145,7 @@ export function useTreasuryWithdrawEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"WithdrawFromAave"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryWithdrawFromAaveEvent(
   config: Omit<
@@ -12075,12 +11153,9 @@ export function useTreasuryWithdrawFromAaveEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     eventName: 'WithdrawFromAave',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'WithdrawFromAave'>)
@@ -12089,8 +11164,7 @@ export function useTreasuryWithdrawFromAaveEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"WithdrawFromCompound"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x6Efdb64eeb97d53ED3a32c92bcb918464f2a5F8C)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2d02bEE765f2A32ceE7eE5402533c469060d9190)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
  */
 export function useTreasuryWithdrawFromCompoundEvent(
   config: Omit<
@@ -12098,12 +11172,9 @@ export function useTreasuryWithdrawFromCompoundEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[5],
     eventName: 'WithdrawFromCompound',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'WithdrawFromCompound'>)
@@ -12112,8 +11183,7 @@ export function useTreasuryWithdrawFromCompoundEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function useUsdtContractRead<
   TFunctionName extends string,
@@ -12124,432 +11194,9 @@ export function useUsdtContractRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"name"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractName<
-  TFunctionName extends 'name',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'name',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"deprecated"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractDeprecated<
-  TFunctionName extends 'deprecated',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'deprecated',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"totalSupply"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractTotalSupply<
-  TFunctionName extends 'totalSupply',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'totalSupply',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"upgradedAddress"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractUpgradedAddress<
-  TFunctionName extends 'upgradedAddress',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'upgradedAddress',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"balances"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractBalances<
-  TFunctionName extends 'balances',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'balances',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"decimals"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractDecimals<
-  TFunctionName extends 'decimals',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'decimals',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"maximumFee"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractMaximumFee<
-  TFunctionName extends 'maximumFee',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'maximumFee',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"getBlackListStatus"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractGetBlackListStatus<
-  TFunctionName extends 'getBlackListStatus',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'getBlackListStatus',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"allowed"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractAllowed<
-  TFunctionName extends 'allowed',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'allowed',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"paused"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractPaused<
-  TFunctionName extends 'paused',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'paused',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"balanceOf"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractBalanceOf<
-  TFunctionName extends 'balanceOf',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"getOwner"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractGetOwner<
-  TFunctionName extends 'getOwner',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'getOwner',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"owner"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractOwner<
-  TFunctionName extends 'owner',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'owner',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"symbol"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractSymbol<
-  TFunctionName extends 'symbol',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'symbol',
+    address: usdtContractAddress[5],
     ...config,
   } as UseContractReadConfig<
     typeof usdtContractABI,
@@ -12561,8 +11208,7 @@ export function useUsdtContractSymbol<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"allowance"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function useUsdtContractAllowance<
   TFunctionName extends 'allowance',
@@ -12573,12 +11219,9 @@ export function useUsdtContractAllowance<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[5],
     functionName: 'allowance',
     ...config,
   } as UseContractReadConfig<
@@ -12589,13 +11232,12 @@ export function useUsdtContractAllowance<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"basisPointsRate"`.
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"balanceOf"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
-export function useUsdtContractBasisPointsRate<
-  TFunctionName extends 'basisPointsRate',
+export function useUsdtContractBalanceOf<
+  TFunctionName extends 'balanceOf',
   TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
 >(
   config: Omit<
@@ -12603,13 +11245,10 @@ export function useUsdtContractBasisPointsRate<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'basisPointsRate',
+    address: usdtContractAddress[5],
+    functionName: 'balanceOf',
     ...config,
   } as UseContractReadConfig<
     typeof usdtContractABI,
@@ -12619,13 +11258,12 @@ export function useUsdtContractBasisPointsRate<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"isBlackListed"`.
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"decimals"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
-export function useUsdtContractIsBlackListed<
-  TFunctionName extends 'isBlackListed',
+export function useUsdtContractDecimals<
+  TFunctionName extends 'decimals',
   TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
 >(
   config: Omit<
@@ -12633,13 +11271,10 @@ export function useUsdtContractIsBlackListed<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'isBlackListed',
+    address: usdtContractAddress[5],
+    functionName: 'decimals',
     ...config,
   } as UseContractReadConfig<
     typeof usdtContractABI,
@@ -12649,13 +11284,12 @@ export function useUsdtContractIsBlackListed<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"MAX_UINT"`.
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"name"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
-export function useUsdtContractMaxUint<
-  TFunctionName extends 'MAX_UINT',
+export function useUsdtContractName<
+  TFunctionName extends 'name',
   TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
 >(
   config: Omit<
@@ -12663,13 +11297,140 @@ export function useUsdtContractMaxUint<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'MAX_UINT',
+    address: usdtContractAddress[5],
+    functionName: 'name',
+    ...config,
+  } as UseContractReadConfig<
+    typeof usdtContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"owner"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractOwner<
+  TFunctionName extends 'owner',
+  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'owner',
+    ...config,
+  } as UseContractReadConfig<
+    typeof usdtContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"paused"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractPaused<
+  TFunctionName extends 'paused',
+  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'paused',
+    ...config,
+  } as UseContractReadConfig<
+    typeof usdtContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"symbol"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractSymbol<
+  TFunctionName extends 'symbol',
+  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'symbol',
+    ...config,
+  } as UseContractReadConfig<
+    typeof usdtContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"totalSupply"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractTotalSupply<
+  TFunctionName extends 'totalSupply',
+  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'totalSupply',
+    ...config,
+  } as UseContractReadConfig<
+    typeof usdtContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"whitelist"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractWhitelist<
+  TFunctionName extends 'whitelist',
+  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'whitelist',
     ...config,
   } as UseContractReadConfig<
     typeof usdtContractABI,
@@ -12681,8 +11442,7 @@ export function useUsdtContractMaxUint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function useUsdtContractWrite<
   TFunctionName extends string,
@@ -12704,49 +11464,9 @@ export function useUsdtContractWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, TFunctionName, TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"deprecate"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractDeprecate<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'deprecate'
-        >['request']['abi'],
-        'deprecate',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'deprecate' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'deprecate', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'deprecate'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof usdtContractABI, 'deprecate', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'deprecate',
+    address: usdtContractAddress[5],
     ...config,
   } as any)
 }
@@ -12754,8 +11474,7 @@ export function useUsdtContractDeprecate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"approve"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function useUsdtContractApprove<
   TMode extends WriteContractMode = undefined,
@@ -12777,24 +11496,20 @@ export function useUsdtContractApprove<
         functionName?: 'approve'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'approve', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[5],
     functionName: 'approve',
     ...config,
   } as any)
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"addBlackList"`.
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burn"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
-export function useUsdtContractAddBlackList<
+export function useUsdtContractBurn<
   TMode extends WriteContractMode = undefined,
   TChainId extends number = keyof typeof usdtContractAddress,
 >(
@@ -12802,29 +11517,314 @@ export function useUsdtContractAddBlackList<
     ? UseContractWriteConfig<
         PrepareWriteContractResult<
           typeof usdtContractABI,
-          'addBlackList'
+          'burn'
         >['request']['abi'],
-        'addBlackList',
+        'burn',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'burn' }
+    : UseContractWriteConfig<typeof usdtContractABI, 'burn', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'burn'
+      } = {} as any,
+) {
+  return useContractWrite<typeof usdtContractABI, 'burn', TMode>({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'burn',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFrom"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractBurnFrom<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof usdtContractAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof usdtContractABI,
+          'burnFrom'
+        >['request']['abi'],
+        'burnFrom',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'burnFrom' }
+    : UseContractWriteConfig<typeof usdtContractABI, 'burnFrom', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'burnFrom'
+      } = {} as any,
+) {
+  return useContractWrite<typeof usdtContractABI, 'burnFrom', TMode>({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'burnFrom',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFromUser"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractBurnFromUser<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof usdtContractAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof usdtContractABI,
+          'burnFromUser'
+        >['request']['abi'],
+        'burnFromUser',
         TMode
       > & {
         address?: Address
         chainId?: TChainId
-        functionName?: 'addBlackList'
+        functionName?: 'burnFromUser'
       }
-    : UseContractWriteConfig<typeof usdtContractABI, 'addBlackList', TMode> & {
+    : UseContractWriteConfig<typeof usdtContractABI, 'burnFromUser', TMode> & {
         abi?: never
         address?: never
         chainId?: TChainId
-        functionName?: 'addBlackList'
+        functionName?: 'burnFromUser'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof usdtContractABI, 'addBlackList', TMode>({
+  return useContractWrite<typeof usdtContractABI, 'burnFromUser', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'addBlackList',
+    address: usdtContractAddress[5],
+    functionName: 'burnFromUser',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"decreaseAllowance"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractDecreaseAllowance<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof usdtContractAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof usdtContractABI,
+          'decreaseAllowance'
+        >['request']['abi'],
+        'decreaseAllowance',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'decreaseAllowance'
+      }
+    : UseContractWriteConfig<
+        typeof usdtContractABI,
+        'decreaseAllowance',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'decreaseAllowance'
+      } = {} as any,
+) {
+  return useContractWrite<typeof usdtContractABI, 'decreaseAllowance', TMode>({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'decreaseAllowance',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"increaseAllowance"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractIncreaseAllowance<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof usdtContractAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof usdtContractABI,
+          'increaseAllowance'
+        >['request']['abi'],
+        'increaseAllowance',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'increaseAllowance'
+      }
+    : UseContractWriteConfig<
+        typeof usdtContractABI,
+        'increaseAllowance',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'increaseAllowance'
+      } = {} as any,
+) {
+  return useContractWrite<typeof usdtContractABI, 'increaseAllowance', TMode>({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'increaseAllowance',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"mint"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractMint<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof usdtContractAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof usdtContractABI,
+          'mint'
+        >['request']['abi'],
+        'mint',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'mint' }
+    : UseContractWriteConfig<typeof usdtContractABI, 'mint', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'mint'
+      } = {} as any,
+) {
+  return useContractWrite<typeof usdtContractABI, 'mint', TMode>({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'mint',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"pause"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractPause<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof usdtContractAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof usdtContractABI,
+          'pause'
+        >['request']['abi'],
+        'pause',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'pause' }
+    : UseContractWriteConfig<typeof usdtContractABI, 'pause', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'pause'
+      } = {} as any,
+) {
+  return useContractWrite<typeof usdtContractABI, 'pause', TMode>({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'pause',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"renounceOwnership"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractRenounceOwnership<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof usdtContractAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof usdtContractABI,
+          'renounceOwnership'
+        >['request']['abi'],
+        'renounceOwnership',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'renounceOwnership'
+      }
+    : UseContractWriteConfig<
+        typeof usdtContractABI,
+        'renounceOwnership',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'renounceOwnership'
+      } = {} as any,
+) {
+  return useContractWrite<typeof usdtContractABI, 'renounceOwnership', TMode>({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'renounceOwnership',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transfer"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractTransfer<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof usdtContractAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof usdtContractABI,
+          'transfer'
+        >['request']['abi'],
+        'transfer',
+        TMode
+      > & { address?: Address; chainId?: TChainId; functionName?: 'transfer' }
+    : UseContractWriteConfig<typeof usdtContractABI, 'transfer', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'transfer'
+      } = {} as any,
+) {
+  return useContractWrite<typeof usdtContractABI, 'transfer', TMode>({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'transfer',
     ...config,
   } as any)
 }
@@ -12832,8 +11832,7 @@ export function useUsdtContractAddBlackList<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferFrom"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function useUsdtContractTransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -12859,317 +11858,10 @@ export function useUsdtContractTransferFrom<
         functionName?: 'transferFrom'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'transferFrom', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[5],
     functionName: 'transferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"unpause"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractUnpause<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'unpause'
-        >['request']['abi'],
-        'unpause',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'unpause' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'unpause', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'unpause'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof usdtContractABI, 'unpause', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'unpause',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"_mint"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractMint<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          '_mint'
-        >['request']['abi'],
-        '_mint',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: '_mint' }
-    : UseContractWriteConfig<typeof usdtContractABI, '_mint', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: '_mint'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof usdtContractABI, '_mint', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: '_mint',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"pause"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractPause<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'pause'
-        >['request']['abi'],
-        'pause',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'pause' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'pause', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'pause'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof usdtContractABI, 'pause', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'pause',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transfer"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractTransfer<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'transfer'
-        >['request']['abi'],
-        'transfer',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'transfer' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'transfer', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transfer'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof usdtContractABI, 'transfer', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'transfer',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"setParams"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractSetParams<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'setParams'
-        >['request']['abi'],
-        'setParams',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'setParams' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'setParams', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setParams'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof usdtContractABI, 'setParams', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'setParams',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"issue"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractIssue<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'issue'
-        >['request']['abi'],
-        'issue',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'issue' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'issue', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'issue'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof usdtContractABI, 'issue', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'issue',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"redeem"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractRedeem<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'redeem'
-        >['request']['abi'],
-        'redeem',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'redeem' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'redeem', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'redeem'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof usdtContractABI, 'redeem', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'redeem',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"removeBlackList"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractRemoveBlackList<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'removeBlackList'
-        >['request']['abi'],
-        'removeBlackList',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'removeBlackList'
-      }
-    : UseContractWriteConfig<
-        typeof usdtContractABI,
-        'removeBlackList',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'removeBlackList'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof usdtContractABI, 'removeBlackList', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'removeBlackList',
     ...config,
   } as any)
 }
@@ -13177,8 +11869,7 @@ export function useUsdtContractRemoveBlackList<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function useUsdtContractTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -13208,24 +11899,20 @@ export function useUsdtContractTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'transferOwnership', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[5],
     functionName: 'transferOwnership',
     ...config,
   } as any)
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"destroyBlackFunds"`.
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"unpause"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
-export function useUsdtContractDestroyBlackFunds<
+export function useUsdtContractUnpause<
   TMode extends WriteContractMode = undefined,
   TChainId extends number = keyof typeof usdtContractAddress,
 >(
@@ -13233,78 +11920,22 @@ export function useUsdtContractDestroyBlackFunds<
     ? UseContractWriteConfig<
         PrepareWriteContractResult<
           typeof usdtContractABI,
-          'destroyBlackFunds'
+          'unpause'
         >['request']['abi'],
-        'destroyBlackFunds',
+        'unpause',
         TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'destroyBlackFunds'
-      }
-    : UseContractWriteConfig<
-        typeof usdtContractABI,
-        'destroyBlackFunds',
-        TMode
-      > & {
+      > & { address?: Address; chainId?: TChainId; functionName?: 'unpause' }
+    : UseContractWriteConfig<typeof usdtContractABI, 'unpause', TMode> & {
         abi?: never
         address?: never
         chainId?: TChainId
-        functionName?: 'destroyBlackFunds'
+        functionName?: 'unpause'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof usdtContractABI, 'destroyBlackFunds', TMode>({
+  return useContractWrite<typeof usdtContractABI, 'unpause', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'destroyBlackFunds',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"_giveMeATokens"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractGiveMeATokens<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          '_giveMeATokens'
-        >['request']['abi'],
-        '_giveMeATokens',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: '_giveMeATokens'
-      }
-    : UseContractWriteConfig<
-        typeof usdtContractABI,
-        '_giveMeATokens',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: '_giveMeATokens'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof usdtContractABI, '_giveMeATokens', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: '_giveMeATokens',
+    address: usdtContractAddress[5],
+    functionName: 'unpause',
     ...config,
   } as any)
 }
@@ -13312,8 +11943,7 @@ export function useUsdtContractGiveMeATokens<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function usePrepareUsdtContractWrite<TFunctionName extends string>(
   config: Omit<
@@ -13321,44 +11951,17 @@ export function usePrepareUsdtContractWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[5],
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, TFunctionName>)
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"deprecate"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function usePrepareUsdtContractDeprecate(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'deprecate'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'deprecate',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'deprecate'>)
-}
-
-/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"approve"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function usePrepareUsdtContractApprove(
   config: Omit<
@@ -13366,114 +11969,138 @@ export function usePrepareUsdtContractApprove(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[5],
     functionName: 'approve',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'approve'>)
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"addBlackList"`.
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burn"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
-export function usePrepareUsdtContractAddBlackList(
+export function usePrepareUsdtContractBurn(
   config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'addBlackList'>,
+    UsePrepareContractWriteConfig<typeof usdtContractABI, 'burn'>,
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'addBlackList',
+    address: usdtContractAddress[5],
+    functionName: 'burn',
     ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'addBlackList'>)
+  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'burn'>)
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferFrom"`.
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFrom"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
-export function usePrepareUsdtContractTransferFrom(
+export function usePrepareUsdtContractBurnFrom(
   config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'transferFrom'>,
+    UsePrepareContractWriteConfig<typeof usdtContractABI, 'burnFrom'>,
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'transferFrom',
+    address: usdtContractAddress[5],
+    functionName: 'burnFrom',
     ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'transferFrom'>)
+  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'burnFrom'>)
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"unpause"`.
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
-export function usePrepareUsdtContractUnpause(
+export function usePrepareUsdtContractBurnFromUser(
   config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'unpause'>,
+    UsePrepareContractWriteConfig<typeof usdtContractABI, 'burnFromUser'>,
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'unpause',
+    address: usdtContractAddress[5],
+    functionName: 'burnFromUser',
     ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'unpause'>)
+  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'burnFromUser'>)
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"_mint"`.
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"decreaseAllowance"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function usePrepareUsdtContractDecreaseAllowance(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof usdtContractABI, 'decreaseAllowance'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'decreaseAllowance',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof usdtContractABI,
+    'decreaseAllowance'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"increaseAllowance"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function usePrepareUsdtContractIncreaseAllowance(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof usdtContractABI, 'increaseAllowance'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'increaseAllowance',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof usdtContractABI,
+    'increaseAllowance'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"mint"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function usePrepareUsdtContractMint(
   config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, '_mint'>,
+    UsePrepareContractWriteConfig<typeof usdtContractABI, 'mint'>,
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: '_mint',
+    address: usdtContractAddress[5],
+    functionName: 'mint',
     ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, '_mint'>)
+  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'mint'>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"pause"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function usePrepareUsdtContractPause(
   config: Omit<
@@ -13481,22 +12108,40 @@ export function usePrepareUsdtContractPause(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[5],
     functionName: 'pause',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'pause'>)
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"renounceOwnership"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function usePrepareUsdtContractRenounceOwnership(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof usdtContractABI, 'renounceOwnership'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    functionName: 'renounceOwnership',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof usdtContractABI,
+    'renounceOwnership'
+  >)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transfer"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function usePrepareUsdtContractTransfer(
   config: Omit<
@@ -13504,114 +12149,37 @@ export function usePrepareUsdtContractTransfer(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[5],
     functionName: 'transfer',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'transfer'>)
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"setParams"`.
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferFrom"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
-export function usePrepareUsdtContractSetParams(
+export function usePrepareUsdtContractTransferFrom(
   config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'setParams'>,
+    UsePrepareContractWriteConfig<typeof usdtContractABI, 'transferFrom'>,
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'setParams',
+    address: usdtContractAddress[5],
+    functionName: 'transferFrom',
     ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'setParams'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"issue"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function usePrepareUsdtContractIssue(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'issue'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'issue',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'issue'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"redeem"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function usePrepareUsdtContractRedeem(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'redeem'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'redeem',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'redeem'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"removeBlackList"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function usePrepareUsdtContractRemoveBlackList(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'removeBlackList'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'removeBlackList',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'removeBlackList'>)
+  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'transferFrom'>)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function usePrepareUsdtContractTransferOwnership(
   config: Omit<
@@ -13619,12 +12187,9 @@ export function usePrepareUsdtContractTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[5],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -13634,59 +12199,28 @@ export function usePrepareUsdtContractTransferOwnership(
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"destroyBlackFunds"`.
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"unpause"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
-export function usePrepareUsdtContractDestroyBlackFunds(
+export function usePrepareUsdtContractUnpause(
   config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'destroyBlackFunds'>,
+    UsePrepareContractWriteConfig<typeof usdtContractABI, 'unpause'>,
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: 'destroyBlackFunds',
+    address: usdtContractAddress[5],
+    functionName: 'unpause',
     ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof usdtContractABI,
-    'destroyBlackFunds'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"_giveMeATokens"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function usePrepareUsdtContractGiveMeATokens(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, '_giveMeATokens'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    functionName: '_giveMeATokens',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, '_giveMeATokens'>)
+  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'unpause'>)
 }
 
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function useUsdtContractEvent<TEventName extends string>(
   config: Omit<
@@ -13694,182 +12228,17 @@ export function useUsdtContractEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[5],
     ...config,
   } as UseContractEventConfig<typeof usdtContractABI, TEventName>)
 }
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Issue"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractIssueEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'Issue'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    eventName: 'Issue',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'Issue'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Redeem"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractRedeemEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'Redeem'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    eventName: 'Redeem',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'Redeem'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Deprecate"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractDeprecateEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'Deprecate'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    eventName: 'Deprecate',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'Deprecate'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Params"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractParamsEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'Params'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    eventName: 'Params',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'Params'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"DestroyedBlackFunds"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractDestroyedBlackFundsEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'DestroyedBlackFunds'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    eventName: 'DestroyedBlackFunds',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'DestroyedBlackFunds'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"AddedBlackList"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractAddedBlackListEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'AddedBlackList'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    eventName: 'AddedBlackList',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'AddedBlackList'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"RemovedBlackList"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractRemovedBlackListEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'RemovedBlackList'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    eventName: 'RemovedBlackList',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'RemovedBlackList'>)
-}
-
-/**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Approval"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function useUsdtContractApprovalEvent(
   config: Omit<
@@ -13877,22 +12246,56 @@ export function useUsdtContractApprovalEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[5],
     eventName: 'Approval',
     ...config,
   } as UseContractEventConfig<typeof usdtContractABI, 'Approval'>)
 }
 
 /**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"OwnershipTransferred"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractOwnershipTransferredEvent(
+  config: Omit<
+    UseContractEventConfig<typeof usdtContractABI, 'OwnershipTransferred'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    eventName: 'OwnershipTransferred',
+    ...config,
+  } as UseContractEventConfig<typeof usdtContractABI, 'OwnershipTransferred'>)
+}
+
+/**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Paused"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ */
+export function useUsdtContractPausedEvent(
+  config: Omit<
+    UseContractEventConfig<typeof usdtContractABI, 'Paused'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: usdtContractABI,
+    address: usdtContractAddress[5],
+    eventName: 'Paused',
+    ...config,
+  } as UseContractEventConfig<typeof usdtContractABI, 'Paused'>)
+}
+
+/**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Transfer"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
 export function useUsdtContractTransferEvent(
   config: Omit<
@@ -13900,59 +12303,29 @@ export function useUsdtContractTransferEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[5],
     eventName: 'Transfer',
     ...config,
   } as UseContractEventConfig<typeof usdtContractABI, 'Transfer'>)
 }
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Pause"`.
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Unpaused"`.
  *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
  */
-export function useUsdtContractPauseEvent(
+export function useUsdtContractUnpausedEvent(
   config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'Pause'>,
+    UseContractEventConfig<typeof usdtContractABI, 'Unpaused'>,
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    eventName: 'Pause',
+    address: usdtContractAddress[5],
+    eventName: 'Unpaused',
     ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'Pause'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Unpause"`.
- *
- * - [__View Contract on Polygon Mumbai Polygon Scan__](https://mumbai.polygonscan.com/address/0x0756F780B89D65c7BBeaB65C0b7B94dE8e1d3a8d)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7169D38820dfd117C3FA1f22a697dBA58d90BA06)
- */
-export function useUsdtContractUnpauseEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'Unpause'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
-    eventName: 'Unpause',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'Unpause'>)
+  } as UseContractEventConfig<typeof usdtContractABI, 'Unpaused'>)
 }

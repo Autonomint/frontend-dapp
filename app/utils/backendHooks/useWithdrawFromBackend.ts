@@ -11,6 +11,7 @@ type withdrawData = {
   amountYetToWithdraw: string;
   noOfAbond: string;
 };
+
 async function withdrawFromBackend(data: withdrawData) {
   let bodyValue = JSON.stringify({
     ...data,
@@ -32,19 +33,5 @@ async function withdrawFromBackend(data: withdrawData) {
 
   return result;
 }
-export const useWithdrawFromBackend = (callback?: Function) => {
-  const queryClient = useQueryClient();
 
-  return useMutation<withdrawData, Error, withdrawData>(withdrawFromBackend, {
-    onSuccess(data, variables, context) {
-      queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
-      queryClient.invalidateQueries({ queryKey: ["deposits"] });
-    },
-    onError(error, variables, context) {
-      console.log(error);
-    },
-    onSettled(data) {
-      callback?.();
-    },
-  });
-};
+

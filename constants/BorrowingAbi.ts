@@ -3,8 +3,10 @@ export const BorrowingABI = [
     inputs: [
       { internalType: "address", name: "_tokenAddress", type: "address" },
       { internalType: "address", name: "_cds", type: "address" },
-      { internalType: "address", name: "_protocolToken", type: "address" },
+      { internalType: "address", name: "_abondToken", type: "address" },
+      { internalType: "address", name: "_multiSign", type: "address" },
       { internalType: "address", name: "_priceFeedAddress", type: "address" },
+      { internalType: "uint64", name: "chainId", type: "uint64" },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -17,11 +19,11 @@ export const BorrowingABI = [
     name: "Borrowing_LiquidateEthTransferToCdsFailed",
     type: "error",
   },
-  { inputs: [], name: "Borrowing_MUSDMintFailed", type: "error" },
+  { inputs: [], name: "Borrowing_WithdrawAMINTTransferFailed", type: "error" },
   { inputs: [], name: "Borrowing_WithdrawBurnFailed", type: "error" },
   { inputs: [], name: "Borrowing_WithdrawEthTransferFailed", type: "error" },
-  { inputs: [], name: "Borrowing_WithdrawMUSDTransferFailed", type: "error" },
-  { inputs: [], name: "Borrowing_pTokenMintFailed", type: "error" },
+  { inputs: [], name: "Borrowing_abondMintFailed", type: "error" },
+  { inputs: [], name: "Borrowing_amintMintFailed", type: "error" },
   {
     anonymous: false,
     inputs: [
@@ -46,43 +48,6 @@ export const BorrowingABI = [
       },
     ],
     name: "Deposit",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint128",
-        name: "liquidationIndex",
-        type: "uint128",
-      },
-      {
-        indexed: false,
-        internalType: "uint128",
-        name: "liquidationAmount",
-        type: "uint128",
-      },
-      {
-        indexed: false,
-        internalType: "uint128",
-        name: "cdsProfits",
-        type: "uint128",
-      },
-      {
-        indexed: false,
-        internalType: "uint128",
-        name: "ethAmount",
-        type: "uint128",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "availableLiquidationAmount",
-        type: "uint256",
-      },
-    ],
-    name: "Liquidate",
     type: "event",
   },
   {
@@ -138,9 +103,23 @@ export const BorrowingABI = [
   },
   {
     inputs: [],
-    name: "Trinity",
+    name: "DOMAIN_SEPARATOR",
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "PERMIT_TYPEHASH",
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "abond",
     outputs: [
-      { internalType: "contract ITrinityToken", name: "", type: "address" },
+      { internalType: "contract IABONDToken", name: "", type: "address" },
     ],
     stateMutability: "view",
     type: "function",
@@ -149,6 +128,13 @@ export const BorrowingABI = [
     inputs: [],
     name: "admin",
     outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "amint",
+    outputs: [{ internalType: "contract IAMINT", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -193,18 +179,17 @@ export const BorrowingABI = [
     inputs: [
       { internalType: "uint128", name: "_ethPrice", type: "uint128" },
       { internalType: "uint64", name: "_depositTime", type: "uint64" },
+      {
+        internalType: "enum IOptions.StrikePrice",
+        name: "_strikePercent",
+        type: "uint8",
+      },
       { internalType: "uint64", name: "_strikePrice", type: "uint64" },
+      { internalType: "uint256", name: "_volatility", type: "uint256" },
     ],
     name: "depositTokens",
     outputs: [],
     stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getAPY",
-    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -276,6 +261,22 @@ export const BorrowingABI = [
   },
   {
     inputs: [],
+    name: "multiSign",
+    outputs: [
+      { internalType: "contract IMultiSign", name: "", type: "address" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "name",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "noOfLiquidations",
     outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
     stateMutability: "view",
@@ -296,6 +297,22 @@ export const BorrowingABI = [
     type: "function",
   },
   {
+    inputs: [
+      { internalType: "address", name: "holder", type: "address" },
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "allowedAmount", type: "uint256" },
+      { internalType: "bool", name: "allowed", type: "bool" },
+      { internalType: "uint256", name: "expiry", type: "uint256" },
+      { internalType: "uint8", name: "v", type: "uint8" },
+      { internalType: "bytes32", name: "r", type: "bytes32" },
+      { internalType: "bytes32", name: "s", type: "bytes32" },
+    ],
+    name: "permit",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "priceFeedAddress",
     outputs: [{ internalType: "address", name: "", type: "address" }],
@@ -304,10 +321,8 @@ export const BorrowingABI = [
   },
   {
     inputs: [],
-    name: "protocolToken",
-    outputs: [
-      { internalType: "contract IProtocolToken", name: "", type: "address" },
-    ],
+    name: "ratePerSec",
+    outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
     stateMutability: "view",
     type: "function",
   },
@@ -319,8 +334,8 @@ export const BorrowingABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint8", name: "_apy", type: "uint8" }],
-    name: "setAPY",
+    inputs: [{ internalType: "uint128", name: "_ratePerSec", type: "uint128" }],
+    name: "setAPR",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -405,11 +420,19 @@ export const BorrowingABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "version",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "_toAddress", type: "address" },
       { internalType: "uint64", name: "_index", type: "uint64" },
       { internalType: "uint64", name: "_ethPrice", type: "uint64" },
       { internalType: "uint64", name: "_withdrawTime", type: "uint64" },
+      { internalType: "uint64", name: "_bondRatio", type: "uint64" },
     ],
     name: "withDraw",
     outputs: [],
@@ -417,10 +440,7 @@ export const BorrowingABI = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "uint64", name: "index", type: "uint64" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
+    inputs: [{ internalType: "uint64", name: "index", type: "uint64" }],
     name: "withdrawFromAaveProtocol",
     outputs: [],
     stateMutability: "nonpayable",

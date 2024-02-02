@@ -25,6 +25,7 @@ import * as z from "zod";
 import {
   CaretDownIcon,
   Cross2Icon,
+  FontRomanIcon,
   InfoCircledIcon,
   PlusIcon,
 } from "@radix-ui/react-icons";
@@ -69,7 +70,6 @@ import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
 import { parseEther, parseUnits } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
-import { USDT_MATIC, USDT_SEPOLIA } from "@/constants/Addresses";
 import decodeEventLogsFromAbi from "../utils/decodeEventLogsFromAbi";
 
 
@@ -184,9 +184,9 @@ const NewDeposit = () => {
   const { data: usdtAmountDepositedTillNow = 0n } =
     useCdsUsdtAmountDepositedTillNow({ watch: true });
 
-    // get ratio from CDS contract and store it in ratio
-    const { data: ratio } = useCdsAmintLimit({ staleTime: 60 * 1000 });
-    
+  // get ratio from CDS contract and store it in ratio
+  const { data: ratio } = useCdsAmintLimit({ staleTime: 60 * 1000 });
+
 
   // usdt approval
   const {
@@ -194,7 +194,7 @@ const NewDeposit = () => {
     write: usdtWrite,
     isSuccess: usdtApproved,
   } = useUsdtContractApprove();
-console.log("usdtApproveData",usdtApproveData,usdtApproved);
+  console.log("usdtApproveData", usdtApproveData, usdtApproved);
 
 
   // get total index from CDS contract and store it in totalCDSIndex
@@ -212,11 +212,14 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
    * @param {`0x${string}` | undefined} address - The address to retrieve the total index for.
    * @return {Promise} A promise that resolves to the JSON response from the API.
    */
+
+
   async function getCDSTotalIndex(address: `0x${string}` | undefined): Promise<any> {
     return fetch(`${BACKEND_API_URL}/cds/index/${chainId}/${address}`).then(
       (response) => response.json()
     );
   }
+  console.log("totalCDSIndex", totalCDSIndex)
 
 
   const { mutate } = useMutation({
@@ -244,19 +247,21 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
  * @param address - The address to store.
  */
   async function storeToCDSBackend(address: `0x${string}` | undefined) {
+    console.log("storeToCDSBackend", address)
     // Calculate the liquidation amount based on amintAmnt and usdtAmnt for now i am just adding usdt and amint considering both as 18 decimals but as usdt is 6 decimals you will have to manage it yourself or ask abhishek sir
     const liqAmnt =
       (((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
 
 
-  
+
     // Determine the collateral type based on amintAmnt and usdtAmnt
+    console.log("storeToCDSBackend", address)
     const colType =
-      amintAmnt !== 0 && usdtAmnt !== 0
+      (amintAmnt !== 0 && amintAmnt != undefined) && (usdtAmnt !== 0 && usdtAmnt != undefined)
         ? "AMINT&USDT"
-        : amintAmnt !== 0
+        : amintAmnt !== 0 && amintAmnt != undefined
           ? "AMINT"
-          : usdtAmnt !== 0
+          : usdtAmnt !== 0 && usdtAmnt != undefined
             ? "USDT"
             : "NONE";
 
@@ -265,7 +270,7 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
       address: address,
       index: totalCDSIndex ? totalCDSIndex + 1 : 1,
       chainId: chainId,
-      depositedAmint: `${amintAmnt}`,
+      depositedAmint: `${amintAmnt == undefined ? 0 : amintAmnt}`,
       depositedUsdt: `${usdtAmnt}`,
       collateralType: colType,
       depositedTime: `${Date.now()}`,
@@ -274,7 +279,7 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
       lockingPeriod: Number(lockIn),
       optedForLiquidation: liquidationGains,
       liquidationAmount: `${liqAmnt}`,
-      depositVal: depositVal.current,
+      depositVal: Number(depositVal.current),
     });
 
     // Log the body value for debugging purposes
@@ -304,9 +309,10 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
   // Use the useCdsDeposit hook to handle the CDS deposit functionality
 
   const {
-    write:ConfirmDeposit,
+    write: ConfirmDeposit,
     data: CdsDepositData,
     reset,
+    isLoading: isCdsDepositLoading
   } = useCdsDeposit({
     // Handle errors during the CDS deposit process
     onError: (error) => {
@@ -339,7 +345,6 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
     // Handle the successful completion of the CDS deposit process
     onSuccess: (data) => {
       console.log(data);
-
       // Show a custom toast notification for the successful transaction
       toast.custom(
         (t) => {
@@ -394,7 +399,7 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
       );
 
       setOpen(false);
-    }, 
+    },
     hash: CdsDepositData?.hash,
     // Callback function called when the transaction is successful
     onSuccess(data) {
@@ -422,11 +427,12 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
       );
 
 
+      console.log("data logs -------", data);
+
       // Retrieve the relevant data from the transaction logs
       const dataLogs =
-        chainId === 80001 ? data.logs[3].data : data.logs[2].data;
+        chainId === 5 ? data.logs[3].data : data.logs[2].data;
       // Decode event logs using the provided ABI and event name
-
 
       const { eventName, args } = decodeEventLogsFromAbi(
         cdsABI,
@@ -435,6 +441,7 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
         "Deposit",
         dataLogs
       ) as { eventName: string; args: { depositVal: bigint } };
+
       console.log(eventName, args?.depositVal);
       // Update the deposit value
       depositVal.current = args?.depositVal;
@@ -576,20 +583,44 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
    * @param {typeof formSchema.current} values - The values submitted in the form.
    */
   function onSubmit(values: z.infer<typeof formSchema.current>) {
-
+    if(usdtAmountDepositedTillNow>=usdtLimit){
+      if(amintAmnt==undefined || amintAmnt==0){
+        toast.custom(
+          (t) => {
+            toastId.current = t;
+            return (
+              <div>
+                <CustomToast
+                  key={2}
+                  props={{
+                    t,
+                    toastMainColor: "#B43939",
+                    headline: `Uhh Ohh! Amint Amount must be greater than 500`,
+                    toastClosebuttonHoverColor: "#e66d6d",
+                    toastClosebuttonColor: "#C25757",
+                  }}
+                />
+              </div>
+            );
+          },
+          { duration: 5000 }
+        );
+        return;
+      }
+    }
     const liqAmnt =
-    (  ((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
+      (((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
     // call the CdsDeposit function from blockchain with dynamic args
-    try{
+    try {
       ConfirmDeposit?.({
         args: [
-          BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(),6) : 0),
-          BigInt(amintAmnt ? parseUnits(amintAmnt.toString(),6) : 0),
+          BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
+          BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
           liquidationGains,
-          parseUnits(liqAmnt.toString(),6),
+          liquidationGains ? parseUnits(liqAmnt.toString(), 6) : 0n,
         ],
       });
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
 
@@ -708,8 +739,34 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
     }
   }, [cdsDepositSuccess]);
 
+  useEffect(() => {
+    let amint = form.watch("AmintDepositAmount") ?? 0;
+    let usdt = form.watch("USDTDepositAmount") ?? 0;
+    if(usdtAmountDepositedTillNow>=usdtLimit){
+        if(amint<500){
+        form.setError("AmintDepositAmount", {
+          type: "manual",
+          message: "Amint Amount must be greater than 500",
+        });
+      }
+      else{
+        form.clearErrors("AmintDepositAmount");
+      }
+      if(usdt>(((100/80)*amint)-amint)){
+        form.setError("USDTDepositAmount", {
+          type: "manual",
+          message: "USDT Amount must be less than or equal to 80% of Amint Amount",
+        });
+      }
+      else{
+        form.clearErrors("USDTDepositAmount");
+      }
+      
+    }
 
-  
+  },[form.watch("USDTDepositAmount"),form.watch("AmintDepositAmount")])
+
+
   return (
     <div className="flex justify-between items-center mb-[30px]">
       <div className="flex flex-col gap-[15px] ">
@@ -800,13 +857,16 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
                                   placeholder=""
                                   {...field}
                                   value={field.value ?? ""}
+                                  min={500}
                                 ></Input>
+                               
                                 <label
                                   htmlFor="amount_of_amint"
                                   className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                                 >
                                   Deposit AMINT
                                 </label>
+                
                               </div>
                               <div className="absolute top-0 right-0 flex items-center h-full">
                                 <Button
@@ -817,6 +877,18 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
                                       ? true
                                       : false
                                   }
+                                  onClick={() => {
+                                    amintAmnt !== undefined
+                                      ? amintAmnt !== 0
+                                        ? amintApprove({
+                                          args: [
+                                            (cdsAddress[5] as `0x${string}`),
+                                            BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
+                                          ],
+                                        })
+                                        : null
+                                      : null;
+                                  }}
                                 >
                                   Approve
                                 </Button>
@@ -827,6 +899,7 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
                         </FormItem>
                       )}
                     />
+                    
                     <PlusIcon width={16} height={16} />
                     <div className="flex flex-col w-[48%] gap-[10px]">
                       <FormField
@@ -862,12 +935,12 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
                                 </div>
 
                                 <div className="absolute top-0 right-0 flex items-center justify-between h-full">
-    
+
                                   {usdtAmountDepositedTillNow > usdtLimit && (
                                     <div
                                       className="text-xs cursor-pointer"
                                       onClick={() => {
-                                        form.setValue("USDTDepositAmount", 400);
+                                        form.setValue("USDTDepositAmount", (100/80*(form.getValues("AmintDepositAmount")??0) - (form.getValues("AmintDepositAmount")??0)));
                                       }}
                                     >
                                       Max
@@ -934,7 +1007,7 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
                                     </DropdownMenuContent>
                                   </DropdownMenu>
                                   <Button
-                                  type="button"
+                                    type="button"
                                     variant={"outline"}
                                     className="z-20 text-xs rounded-r-md"
                                     onClick={() => {
@@ -942,10 +1015,9 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
                                         ? usdtAmnt !== 0
                                           ? usdtWrite({
                                             args: [
-                                              chainId === 80001
-                                                ? (cdsAddress[80001] as `0x${string}`)
-                                                : (cdsAddress[11155111] as `0x${string}`),
-                                                BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(),6) : 0),
+
+                                              (cdsAddress[5] as `0x${string}`),
+                                              BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
                                             ],
                                           })
                                           : null
@@ -1112,7 +1184,7 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
                   />
 
                   <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
-                  {Boolean(amintAmnt) && Boolean(lockIn) ? (
+                  {(Boolean(amintAmnt) || Boolean(usdtAmnt)) && Boolean(lockIn) ? (
                     <div className="min-[144px]:px-[15px] px-[10px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee]">
                       <div className="min-[144px]:py-[15px] py-[10px] flex items-center justify-between border-b border-lineGrey">
                         <div className="flex gap-[10px] items-center">
@@ -1123,7 +1195,7 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
                             height={24}
                           />
                           <p className="min-[1440px]:text-base text-sm text-textHighlight 2dppx:text-xs">
-                            {amintAmnt} AMINT
+                            {amintAmnt == undefined ? 0 : amintAmnt} AMINT + {usdtAmnt == undefined ? 0 : usdtAmnt} USDT
                           </p>
                         </div>
                         <div className="flex gap-[10px]">
@@ -1182,10 +1254,10 @@ console.log("usdtApproveData",usdtApproveData,usdtApproved);
                     className="text-white"
                     //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                     disabled={
-                      usdtAmountDepositedTillNow < usdtLimit && !usdtApproved
+                      (usdtAmountDepositedTillNow < usdtLimit && !usdtApproved) || isCdsDepositLoading 
                     }
                   >
-                    Confirm Deposit
+                    {isCdsDepositLoading?'Depositing...':'Confirm Deposit'}
                   </Button>
                 </div>
               </form>

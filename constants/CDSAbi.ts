@@ -1,9 +1,10 @@
 export const CDSABI = [
   {
     inputs: [
-      { internalType: "address", name: "_trinity", type: "address" },
+      { internalType: "address", name: "_amint", type: "address" },
       { internalType: "address", name: "priceFeed", type: "address" },
       { internalType: "address", name: "_usdt", type: "address" },
+      { internalType: "address", name: "_multiSign", type: "address" },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -87,10 +88,8 @@ export const CDSABI = [
   },
   {
     inputs: [],
-    name: "Trinity_token",
-    outputs: [
-      { internalType: "contract ITrinityToken", name: "", type: "address" },
-    ],
+    name: "amint",
+    outputs: [{ internalType: "contract IAMINT", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -209,7 +208,7 @@ export const CDSABI = [
             type: "uint128",
           },
         ],
-        internalType: "struct CDSTest.CdsAccountDetails",
+        internalType: "struct CDS.CdsAccountDetails",
         name: "",
         type: "tuple",
       },
@@ -246,6 +245,15 @@ export const CDSABI = [
         name: "availableLiquidationAmount",
         type: "uint256",
       },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "multiSign",
+    outputs: [
+      { internalType: "contract IMultiSign", name: "", type: "address" },
     ],
     stateMutability: "view",
     type: "function",
@@ -365,7 +373,7 @@ export const CDSABI = [
             type: "uint256",
           },
         ],
-        internalType: "struct CDSTest.LiquidationInfo",
+        internalType: "struct CDS.LiquidationInfo",
         name: "liquidationData",
         type: "tuple",
       },

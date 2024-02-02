@@ -9,7 +9,7 @@ import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import Image from "next/image";
 
 import DepositAndWithDrawTable from "@/components/Table/OurTable";
-import { useAccount, useChainId } from "wagmi";
+import { useAccount, useChainId,ConnectorData } from "wagmi";
 import {
   abondAddress,
   amintAddress,
@@ -49,7 +49,7 @@ const dasboardStatsItem = [
 
 const WalletOrContent = () => {
   // destructure isConnected and address from useAccount hook of wagmi
-  const { isConnected, address } = useAccount();
+  const { isConnected, address,connector:activeConnector } = useAccount();
   const chainId = useChainId();
   const queryClient = useQueryClient();
   // manage dashboardStats items
@@ -61,6 +61,21 @@ const WalletOrContent = () => {
     functionName: "getUSDValue",
     staleTime: 10 * 1000,
   });
+  useEffect(() => {
+    const handleConnectorUpdate = ({ account, chain }: ConnectorData) => {
+      window.location.reload();
+    };
+
+    if (activeConnector) {
+      activeConnector.on('change', handleConnectorUpdate);
+    }
+
+    return () => {
+      if (activeConnector) {
+        activeConnector.off('change', handleConnectorUpdate);
+      }
+    };
+  }, [activeConnector]);
   /**
    * Retrieves the depositor data for a given address.
    *
@@ -68,7 +83,7 @@ const WalletOrContent = () => {
    * @return {Promise} A Promise that resolves to the depositor data.
    */
   function getDepositorData(address: `0x${string}` | undefined) {
-    return fetch(`${BACKEND_API_URL}/borrows/${address}`).then((response) =>
+    return fetch(`${BACKEND_API_URL}/borrows/totalDeposits/5/${address}`).then((response) =>
       response.json()
     );
   }
@@ -131,13 +146,13 @@ const WalletOrContent = () => {
     if (depositorData) {
       const updatedStats = [...dashboardStats];
       const ethPriceNow = ethPrice ? ethPrice : 0n;
-
+      console.log(depositorData);
       // Calculate and format the value for the first stat item
       updatedStats[0].value =
-        chainId === 80001
+        chainId === 5
           ? `$${parseFloat(
               (
-                (depositorData.totalDepositedAmountInPolygon *
+                (depositorData.totalDepositedAmount *
                   Number(ethPriceNow)) /
                 100
               ).toString()
@@ -152,21 +167,21 @@ const WalletOrContent = () => {
 
       // Update the value for the second stat item
       updatedStats[1].value =
-        chainId === 80001
-          ? parseFloat(depositorData.totalAmintInPolygon).toFixed(2)
-          : parseFloat(depositorData.totalAmintInEthereum).toFixed(2);
+        chainId === 5
+          ?( parseFloat(depositorData.totalAmint)/10**6).toFixed(2)
+          : parseFloat(depositorData.totalAmint).toFixed(2);
 
       // Update the value for the third stat item
       updatedStats[2].value =
-        chainId === 80001
-          ? parseFloat(depositorData.totalAbondInPolygon).toPrecision(2)
-          : parseFloat(depositorData.totalAbondInEthereum).toFixed(2);
+        chainId === 5
+          ? parseFloat(depositorData.totalAbond).toPrecision(2)
+          : parseFloat(depositorData.totalAbond).toFixed(2);
 
       // Update the subheading highlight based on the chainId
       updatedStats[0].subheadingHighlight =
-        chainId === 80001
-          ? depositorData.totalIndexInPolygon
-          : depositorData.totalIndexInEthereum;
+        chainId ===5
+          ? depositorData.totalIndex
+          : depositorData.totalIndex;
 
       setDashboardStats(updatedStats);
     } else {
@@ -206,7 +221,7 @@ const WalletOrContent = () => {
               style={{ objectFit: "cover", opacity: 0.4 }}
             ></Image>
           </div> */}
-          <div className="flex flex-row gap-1 sm:gap-2 lg:gap-4 xl:gap-7 z-10 flex-wrap lg:flex-nowrap w-full justify-between items-center">
+          <div className="z-10 flex flex-row flex-wrap items-center justify-between w-full gap-1 sm:gap-2 lg:gap-4 xl:gap-7 lg:flex-nowrap">
             {dashboardStats.map((item, index) => (
               // Render a div for each item in the dashboardStats array
               <div

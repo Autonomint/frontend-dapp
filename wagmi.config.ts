@@ -3,21 +3,15 @@ import { etherscan, react } from "@wagmi/cli/plugins";
 import { erc20ABI } from "wagmi";
 import { BorrowingABI } from "./constants/BorrowingAbi";
 import {
-  ABOND_SEPOLIA,
-  ABOND_MATIC,
-  AMINT_MATIC,
-  AMINT_SEPOLIA,
-  BORROWING_MATIC,
-  BORROWING_SEPOLIA,
-  CDS_MATIC,
-  CDS_SEPOLIA,
-  TREASURY_MATIC,
-  TREASURY_SEPOLIA,
-  OPTIONS_MATIC,
-  OPTIONS_SEPOLIA,
-  USDT_MATIC,
-  USDT_SEPOLIA,
-  Quotor_Goerli
+  Quotor_GOERLI,
+  AMINT_GOERLI,
+  ABOND_GOERLI,
+  USDT_GOERLI,
+  MULTISIGN_GOERLI,
+  CDS_GOERLI,
+  BORROWING_GOERLI,
+  TREASURY_GOERLI,
+  OPTIONS_GOERLI
 } from "./constants/Addresses";
 import * as chains from "wagmi/chains";
 import { AmintABI } from "./constants/AmintAbi";
@@ -27,6 +21,7 @@ import { TreasuryAbi } from "./constants/TreasuryAbi";
 import { OPTIONSABI } from "./constants/OptionsAbi";
 import { USDT_ABI } from "./constants/UsdtAbi";
 import { Quoter } from "./constants/QuoterAbi";
+
 import IUniswapV3PoolABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
 
 export default defineConfig({
@@ -42,63 +37,56 @@ export default defineConfig({
       name: "BorrowingContract",
       abi: BorrowingABI,
       address: {
-        [chains.polygonMumbai.id]: BORROWING_MATIC,
-        [chains.sepolia.id]: BORROWING_SEPOLIA,
+        [chains.goerli.id]: BORROWING_GOERLI,
       },
     },
     {
       name: "USDTContract",
       abi: USDT_ABI,
       address: {
-        [chains.polygonMumbai.id]: USDT_MATIC,
-        [chains.sepolia.id]: USDT_SEPOLIA,
+        [chains.goerli.id]: USDT_GOERLI,
       },
     },
     {
       name: "Treasury",
       abi: TreasuryAbi,
       address: {
-        [chains.polygonMumbai.id]: TREASURY_MATIC,
-        [chains.sepolia.id]: TREASURY_SEPOLIA,
+        [chains.goerli.id]: TREASURY_GOERLI,
       },
     },
     {
       name: "Options",
       abi: OPTIONSABI,
       address: {
-        [chains.polygonMumbai.id]: OPTIONS_MATIC,
-        [chains.sepolia.id]: OPTIONS_SEPOLIA,
+        [chains.goerli.id]: OPTIONS_GOERLI,
       },
     },
     {
       name: "CDS",
       abi: CDSABI,
       address: {
-        [chains.polygonMumbai.id]: CDS_MATIC,
-        [chains.sepolia.id]: CDS_SEPOLIA,
+        [chains.goerli.id]: CDS_GOERLI,
       },
     },
     {
       name: "AMINT",
       abi: AmintABI,
       address: {
-        [chains.polygonMumbai.id]: AMINT_MATIC,
-        [chains.sepolia.id]: AMINT_SEPOLIA,
+        [chains.goerli.id]: AMINT_GOERLI,
       },
     },
     {
       name: "ABOND",
       abi: AbondABI,
       address: {
-        [chains.polygonMumbai.id]: ABOND_MATIC,
-        [chains.sepolia.id]: ABOND_SEPOLIA,
+        [chains.goerli.id]: ABOND_GOERLI,
       },
     },
     {
       name: "Quoter",
       abi: Quoter as any,
       address: {
-        [chains.goerli.id]: Quotor_Goerli,
+        [chains.goerli.id]: Quotor_GOERLI,
       },
     }
   ],

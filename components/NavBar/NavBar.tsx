@@ -6,7 +6,6 @@ import dropdown from "@/app/assets/arrow_circle_down.svg";
 import dropup from "@/app/assets/arrow_circle_up.svg";
 import HeaderItems from "../Header/HeaderItems";
 import {
-  useBorrowingContractGetApy,
   useBorrowingContractGetLtv,
   useBorrowingContractGetUsdValue,
   useBorrowingContractTotalAmintSupply,
@@ -16,27 +15,44 @@ import {
 import { formatEther } from "viem";
 import displayNumberWithPrecision from "@/app/utils/precision";
 import { useAccount } from "wagmi";
+import { BACKEND_API_URL } from "@/constants/BackendUrl";
 
 const headerItems = [
   {
     headline: "AMINT Price",
     value: "$1.023",
+    tooltip: false,
+      tooltipText: "",
   },
   {
     headline: "ABOND Price",
     value: "$1.012",
+    tooltip: false,
+    tooltipText: "",
   },
   {
     headline: "AMINT Supply",
     value: "-",
+    tooltip: false,
+    tooltipText: "",
   },
   {
     headline: "Current APY",
     value: "-",
+    tooltip: false,
+    tooltipText: "",
+  },
+  {
+    headline: "Current APR",
+    value: "-",
+    tooltip: false,
+    tooltipText: "",
   },
   {
     headline: "Options Fees",
-    value: "3%",
+    value: "-",
+    tooltip: true,
+    tooltipText: "Option fees per eth",
   },
 ];
 const headerItems2nd = [
@@ -65,9 +81,9 @@ const NavBar = () => {
     enabled: !!address,
   });
   //getting currentApy from Borrowing Contract
-  const { data: currentApy } = useBorrowingContractGetApy({
-    enabled: !!address,
-  });
+  // const { data: currentApy } = useBorrowingContractGetApy({
+  //   enabled: !!address,
+  // });
   //getting ltv from Borrowing Contract
   const { data: ltv } = useBorrowingContractGetLtv({
     enabled: !!address,
@@ -88,18 +104,21 @@ const NavBar = () => {
   //managing state for headerItems and headerItems2nd
   const [updatedHeaderItems, setUpdatedHeaderItems] = useState(headerItems);
   const [updatedHeaderItems2nd, setUpdatedHeaderItems2nd] =
-    useState(headerItems2nd);
+  useState(headerItems2nd);
 
   /**
    * Updates the header items based on the values of `totalAmintSupply`, `currentApy`, `ltv`, `totalCdsAmount`, `ethPrice`, and `totalValueLocked`.
    */
-  const handleNavItems = () => {
-    if (totalAmintSupply && currentApy) {
+  const handleNavItems = async() => {
+    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/1000000000000000000/${ethPrice}/0`).then(
+      (res) => res.json()
+    )
+
+    if (totalAmintSupply) {
       const updatedData = [...updatedHeaderItems];
-      updatedData[2].value = `${displayNumberWithPrecision(
-        formatEther(totalAmintSupply)
-      )}`;
-      updatedData[3].value = `${currentApy}%`;
+      updatedData[2].value = `${(parseFloat(totalAmintSupply.toString()) / 10 ** 6).toFixed(4)}`;
+      updatedData[3].value = `${0}%`;
+      updatedData[5].value = `${data[1]==undefined?0:(parseFloat(data[1])/10**6).toFixed(2)}`;
       setUpdatedHeaderItems(updatedData);
     }
     if (ltv && totalCdsAmount && ethPrice && totalValueLocked) {
@@ -118,17 +137,19 @@ const NavBar = () => {
   //calling handleNavItems() every time the values of `totalAmintSupply`, `currentApy`, `ltv`, `totalCdsAmount`, `ethPrice`, and `totalValueLocked` changes
   useEffect(() => {
     handleNavItems();
-  }, [currentApy, ltv, totalAmintSupply, totalValueLocked, ethPrice]);
+  }, [0, ltv, totalAmintSupply, totalValueLocked, ethPrice]);
 
   return (
     <div className="bg-bgGrey flex flex-col min-[1440px]:pb-6 2dppx:pb-1">
-      <div className="flex px-1 sm:px-2 py-3 xl:px-5 xl:py-5 lg:px-4 lg:py-4">
+      <div className="flex px-1 py-3 sm:px-2 xl:px-5 xl:py-5 lg:px-4 lg:py-4">
         {headerItems.map((item, index) => (
           <HeaderItems
             key={index}
             props={{
               textHeadline: item.headline,
               textValue: item.value,
+              showTooltip: item.tooltip,
+              tooltipText: item.tooltipText,
               className: "",
             }}
           />

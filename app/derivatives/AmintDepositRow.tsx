@@ -15,7 +15,6 @@ import React, { useEffect, useRef, useState } from "react";
 import calculateTimeDifference from "../utils/calculateTimeDifference";
 import {
   cdsABI,
-  useBorrowingContractGetApy,
   useBorrowingContractGetUsdValue,
   useCdsWithdraw,
 } from "@/abiAndHooks";
@@ -40,6 +39,7 @@ interface DepositDetail {
   index: number;
   depositedAmint: string;
   depositedTime: string;
+  depositedUsdt: string;
   ethPriceAtDeposit: number;
   aprAtDeposit: number;
   lockingPeriod: number;
@@ -60,6 +60,10 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
   const depositDetails = [
     {
       headline: "AMINT Deposited",
+      value: "1200",
+    },
+    {
+      headline: "USDT Deposited",
       value: "1200",
     },
     {
@@ -116,13 +120,13 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
 
 
   // get the current apy
-  const { data: currentApy } = useBorrowingContractGetApy({
-    enabled: !!address,
-  });
+  // const { data: currentApy } = useBorrowingContractGetApy({
+  //   enabled: !!address,
+  // });
+  
 
 
-
-  const { write: cdsWithdraw, data: cdsWithdrawData } = useCdsWithdraw({
+  const { write: cdsWithdraw, data: cdsWithdrawData,isLoading } = useCdsWithdraw({
     // onError callback function
     onError(error) {
       console.log(error);
@@ -205,8 +209,9 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
     hash: cdsWithdrawData?.hash, // The transaction hash to wait for
     confirmations: 1, // Number of confirmations required for success
     onSuccess(data) {
+      
       const dataLogs =
-        chainId === 80001 ? data.logs[3].data : data.logs[3].data; // Get the transaction logs data
+        chainId === 5 ? data.logs[3].data : data.logs[3].data; // Get the transaction logs data
 
       // Decode event logs using the provided ABI and event name
       const { eventName, args } = decodeEventLogsFromAbi(
@@ -256,16 +261,20 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       }, 5000);
     },
   });
+
   /**
    * Asynchronously withdraws CDS from the backend.
    *
    * @param {`0x${string}` | undefined} address - The address to withdraw CDS from.
    * @return {Promise<any>} - A promise that resolves to the result of the withdrawal.
    */
+
   async function withdrawCDSFromBackend(
     address: `0x${string}` | undefined
   ): Promise<any> {
     // Prepare the body value for the request
+
+    console.log("Deposit Started")
     let bodyValue = JSON.stringify({
       address: address,
       index: details.index,
@@ -274,12 +283,11 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       withdrawAmount: eventsValue.current.withdrewAmint,
       withdrawEthAmount: eventsValue.current.withdrawETH,
       ethPriceAtWithdraw: Number(ethPrice || 0),
-      fees: parseEther("4").toString(),
-      feesWithdrawn: parseEther("2").toString(),
+      fees: '4000000',
+      feesWithdrawn: '2000000',
     });
-
     // Log the body value
-    console.log(bodyValue);
+    console.log("deposit",bodyValue);
 
     // Send the request to the backend API
     const response = await fetch(`${BACKEND_API_URL}/cds/withdraw`, {
@@ -289,9 +297,11 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       },
       body: bodyValue,
     });
-
     // Parse the response JSON
+    console.log("Deposit Response",response)
     const result = await response.json();
+    console.log("Deposit Response",result)
+    console.log("Deposit End")
 
     // Check if the response is not OK and throw an error if so
     if (!response.ok) {
@@ -301,41 +311,42 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
     // Return the result
     return result;
   }
+
   //TODO: add a mutation hook to use this calculateWithdrawAmount before user tries to withdraw from CDS
   //this function calculates the withdraw amount
   //currently not using this anywhere as this is to be done after we have got the deposits working fully
-  async function calculateWithdrawAmount(
-    address: `0x${string}` | undefined,
-    index: number,
-    chainId: number,
-    ethPrice: bigint
-  ) {
-    let bodyValue = JSON.stringify({
-      address: address,
-      index: index,
-      chainId: chainId,
-      ethPrice: Number(ethPrice || 0),
-    });
-    console.log(bodyValue);
-    const response = await fetch(
-      `${BACKEND_API_URL}/withdraw/calculateWithdrawAmount`,
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: bodyValue,
-      }
-    );
-    const result = await response.json();
-    console.log(result);
+  // async function calculateWithdrawAmount(
+  //   address: `0x${string}` | undefined,
+  //   index: number,
+  //   chainId: number,
+  //   ethPrice: bigint
+  // ) {
+  //   let bodyValue = JSON.stringify({
+  //     address: address,
+  //     index: index,
+  //     chainId: chainId,
+  //     ethPrice: Number(ethPrice || 0),
+  //   });
+  //   console.log(bodyValue);
+  //   const response = await fetch(
+  //     `${BACKEND_API_URL}/withdraw/calculateWithdrawAmount`,
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         "content-type": "application/json",
+  //       },
+  //       body: bodyValue,
+  //     }
+  //   );
+  //   const result = await response.json();
+  //   console.log(result);
 
-    if (!response.ok) {
-      throw new Error(result.message);
-    }
+  //   if (!response.ok) {
+  //     throw new Error(result.message);
+  //   }
 
-    return result;
-  }
+  //   return result;
+  // }
   /**
    * Updates the deposit data based on the provided details.
    * If the details are available, it updates each value in the depositData array.
@@ -344,14 +355,15 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
   function handleDepositData() {
     if (details) {
       const updatedData = [...depositData];
-      updatedData[0].value = details.depositedAmint; // Update depositedAmint value
-      updatedData[1].value = `${details.ethPriceAtDeposit}`; // Update ethPriceAtDeposit value
-      updatedData[2].value = formatDateFromUnixTimestamp(details.depositedTime); // Update depositedTime value and format time in 'DD/MM/YYYY'
-      updatedData[3].value = `${details.lockingPeriod} days`; // Update lockingPeriod value
-      updatedData[4].value = calculateTimeDifference(details.depositedTime); // Update time difference value
-      updatedData[5].value = `${details.aprAtDeposit}%`; // Update aprAtDeposit value
+      updatedData[0].value = details.depositedAmint=="undefined"?'0':details.depositedAmint  // Update depositedAmint value
+      updatedData[1].value = details.depositedUsdt=="undefined"?'0':details.depositedUsdt ; // Update depositedAmint value
+      updatedData[2].value = `${details.ethPriceAtDeposit}`; // Update ethPriceAtDeposit value
+      updatedData[3].value = formatDateFromUnixTimestamp(details.depositedTime); // Update depositedTime value and format time in 'DD/MM/YYYY'
+      updatedData[4].value = `${details.lockingPeriod} days`; // Update lockingPeriod value
+      updatedData[5].value = calculateTimeDifference(details.depositedTime); // Update time difference value
       updatedData[6].value = `${details.aprAtDeposit}%`; // Update aprAtDeposit value
-      updatedData[7].value = details.optedForLiquidation ? "Yes" : "No"; // Update optedForLiquidation value
+      updatedData[7].value = `${details.aprAtDeposit}%`; // Update aprAtDeposit value
+      updatedData[8].value = details.optedForLiquidation ? "Yes" : "No"; // Update optedForLiquidation value
       setDepositData(updatedData); // Update the depositData state with updatedData
     } else {
       const updatedData = [...depositData];
@@ -399,7 +411,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
       >
         <TableCell className="text-borderGrey">{`#${details.index}`}</TableCell>
         <TableCell className="text-textGrey">
-          <SheetTrigger>{details.depositedAmint}</SheetTrigger>
+          <SheetTrigger>{details.depositedAmint =="undefined" ? 0:details.depositedAmint} / {details.depositedUsdt=="undefined"?0:details.depositedUsdt}</SheetTrigger>
         </TableCell>
         <TableCell className="text-textGrey">
           <SheetTrigger>
@@ -453,8 +465,8 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
               <p className="min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary">
                 Total Amount accured
               </p>
-              // If amountView is true, render the Button component or render
-              the amount value
+              {/* // If amountView is true, render the Button component or render
+              the amount value */}
               {!amountView ? (
                 <Button
                   variant={"ghostOutline"}
@@ -476,7 +488,8 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
             <>
               <ConfirmNoticeCds
                 handleWithdrawal={handleWithdrawal}
-                amintToMint={details.depositedAmint}
+                amintToMint={details.depositedUsdt}
+                setLoding={isLoading}
               />
             </>
           ) : (

@@ -135,6 +135,7 @@ const useSwap = (fromTokenAddress: string, toTokenAddress: string) => {
         ethers.parseUnits(inputAmount.toString(), decimals),
         0
       )
+      console.log(quotedAmountOut)
       return toReadableAmount(quotedAmountOut, TokensOption[toTokenAddress][2])
     } catch (error) {
       console.log(error)
