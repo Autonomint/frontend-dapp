@@ -15,6 +15,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import RatioPieChart from "./RatioPieChart";
 import { useAbondTotalSupply, useAmintTotalSupply, useBorrowingContractDepositTokens, useBorrowingContractLastTotalCdsPool, useCdsLastEthPrice, useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd, useTreasuryTotalVolumeOfBorrowersAmountinWei } from "@/abiAndHooks";
 import { ethers, formatEther } from "ethers";
+import { BACKEND_API_URL } from "@/constants/BackendUrl";
 
 const amintValues = [
   {
@@ -80,7 +81,7 @@ const abondValues = [
   },
 ];
 
-const FeesValues =[
+const FeesValues = [
   {
 
     value: "0.25",
@@ -136,42 +137,49 @@ function formatNumber(num: number) {
 const page = () => {
 
   const [loading, setLoading] = React.useState(true);
-
+  const [feeOption, setFeeOption] = React.useState("option");
   const { data: totalStable } = useCdsTotalCdsDepositedAmount({ watch: true })
   const { data: ethPrice } = useCdsLastEthPrice({ watch: true })
   const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
   const { data: amintsupply } = useAmintTotalSupply({ watch: true })
   const { data: cdsPool } = useBorrowingContractLastTotalCdsPool({ watch: true })
   const { data: abondSupply } = useAbondTotalSupply({ watch: true });
-  const { data: totalValueLocked } = useTreasuryTotalVolumeOfBorrowersAmountinWei({watch: true});
+  const { data: totalValueLocked } = useTreasuryTotalVolumeOfBorrowersAmountinWei({ watch: true });
   useEffect(() => {
     handleStatsItem()
   }, [ethLocked])
 
-  const handleStatsItem = () => {
+  useEffect(() => {}, [feeOption])
+  const handleStatsItem = async () => {
     console.log(ethLocked, ethPrice, totalValueLocked, amintsupply, totalStable, abondSupply, cdsPool)
+    const ratioData = await fetch(`${BACKEND_API_URL}/borrows/ratio/5/${ethPrice}`).then(
+      (res) => res.json()
+    )
+    console.log(ratioData)
+    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/1000000000000000000/${ethPrice}/0`).then(
+      (res) => res.json()
+    )
     if (ethLocked && ethPrice && totalValueLocked && amintsupply && totalStable && cdsPool) {
       amintValues[1].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
       amintValues[2].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
-      
-      
+
+
       lockedValues[0].value = totalStable ? formatNumber((Number(totalStable) / 10 ** 6) + (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100))))) : "0";
       lockedValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
       lockedValues[2].value = totalStable ? formatNumber((Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100))))) : "0";
-      
-      
-      RatioValues[0].value =  "0.01";
+
+
+      RatioValues[0].value = ratioData == undefined ? "-" : (ratioData).toFixed(2);
       RatioValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
       RatioValues[2].value = cdsPool ? formatNumber(Number(formatEther(cdsPool))) : "0";
-      RatioValues[3].value =  (Number(formatEther(cdsPool))-(Number(totalStable) / 10 ** 6)).toFixed(2);
+      RatioValues[3].value = (Number(formatEther(cdsPool)) - (Number(totalStable) / 10 ** 6)).toFixed(2);
       const total = (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))) + (Number(totalStable) / 10 ** 6);
-      RatioValues[4].value = (((Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))) /total) * 100).toFixed(1);
-      RatioValues[5].value = (((Number(totalStable) / 10 ** 6) /total) * 100 ).toFixed(1);
-      console.log( RatioValues[4].value,  RatioValues[5].value)
+      RatioValues[4].value = (((Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))) / total) * 100).toFixed(1);
+      RatioValues[5].value = (((Number(totalStable) / 10 ** 6) / total) * 100).toFixed(1);
 
-      FeesValues[0].value = "5";
-      FeesValues[1].value = "4%";
-      FeesValues[2].value = (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))*0.20).toFixed(2);
+      FeesValues[0].value = `${data[1] == undefined ? 0 : (parseFloat(data[1]) / 10 ** 6).toFixed(2)}`;
+      FeesValues[1].value = `${data[1] == undefined ? 0 : (parseFloat(data[1]) / 10 ** 6).toFixed(2)}`;
+      FeesValues[2].value = (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100))) * 0.20).toFixed(2);
 
       abondValues[1].value = abondSupply ? formatNumber(Number(abondSupply) / 10 ** 6) : "0";
       setLoading(false)
@@ -182,47 +190,134 @@ const page = () => {
   return (
     <div className="relative min-h-[80vh] p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden h-full">
       {
-        loading?(<div className="w-full h-[80vh] flex justify-center items-center">
+        loading ? (<div className="w-full h-[80vh] flex justify-center items-center">
           <div role="status">
-    <svg aria-hidden="true" className="inline text-gray-200 w-14 h-14 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-    </svg>
-    <span className="sr-only">Loading...</span>
-</div>
+            <svg aria-hidden="true" className="inline text-gray-200 w-14 h-14 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+            </svg>
+            <span className="sr-only">Loading...</span>
+          </div>
 
-        </div>):(
-<div className="flex flex-col gap-6">
-        <div className="flex justify-between flex-1 w-full gap-6">
-          <DashboardCard headline="AMINT" data={amintValues} />
-          <DashboardCard headline="ABOND" data={abondValues} />
-        </div>
-        <div className="flex gap-6">
-          <ValueLocked />
-          <div className="flex flex-col w-[70%]">
-            <CollateralRatio />
-            <div className="flex w-full h-full">
-              <div className="flex h-full w-[350px] flex-col bg-[linear-gradient(270deg,#CDF3FF_0%,#D8FFEA_100%)] border-r border-solid border-lineGrey rounded-[10px] rounded-t-none rounded-br-none">
-                <div className="px-[50px] py-[25px] flex justify-between">
-                  <div className="flex flex-col">
-                    <h5 className="text-[#00773F] text-base font-normal">
-                      Collateral
-                    </h5>
-                    <p className="font-medium text-3xl text-[#00773F]">{RatioValues[4].value}%</p>
+        </div>) : (
+          <div className="flex flex-col gap-6">
+            <div className="flex justify-between flex-1 w-full gap-6">
+              <DashboardCard headline="AMINT" data={amintValues} />
+              <DashboardCard headline="ABOND" data={abondValues} />
+            </div>
+            <div className="flex gap-6">
+              <ValueLocked />
+              <div className="flex flex-col w-[70%]">
+                <CollateralRatio />
+                <div className="flex w-full h-full">
+                  <div className="flex h-full w-[350px] flex-col bg-[linear-gradient(270deg,#CDF3FF_0%,#D8FFEA_100%)] border-r border-solid border-lineGrey rounded-[10px] rounded-t-none rounded-br-none">
+                    <div className="px-[50px] py-[25px] flex justify-between">
+                      <div className="flex flex-col">
+                        <h5 className="text-[#00773F] text-base font-normal">
+                          Collateral
+                        </h5>
+                        <p className="font-medium text-3xl text-[#00773F]">{RatioValues[4].value}%</p>
+                      </div>
+                      <div className="flex flex-col">
+                        <h5 className="text-[#0F46E9] text-base font-normal">
+                          dCDS
+                        </h5>
+                        <p className="font-medium text-3xl text-[#0F46E9]">{RatioValues[5].value}%</p>
+                      </div>
+                    </div>
+                    <div className="w-full h-full">
+                      <RatioPieChart collaterals={RatioValues[4].value} dcds={RatioValues[5].value} />
+                    </div>
                   </div>
-                  <div className="flex flex-col">
-                    <h5 className="text-[#0F46E9] text-base font-normal">
-                      dCDS
-                    </h5>
-                    <p className="font-medium text-3xl text-[#0F46E9]">{RatioValues[5].value}%</p>
+                  <div className="p-4 w-[70%]">
+                    <div className="flex items-center justify-end">
+                      <div className="flex gap-[10px] mr-5">
+                        <Button
+                          variant={"showMore"}
+                          size={"timeline"}
+                          className="text-borderGrey"
+                        >
+                          All Time
+                        </Button>
+                        <Button
+                          variant={"showMore"}
+                          size={"timeline"}
+                          className="text-borderGrey"
+                        >
+                          1Y
+                        </Button>
+                        <Button
+                          variant={"showMore"}
+                          size={"timeline"}
+                          className="text-borderGrey"
+                        >
+                          6M
+                        </Button>
+                        <Button
+                          variant={"showMore"}
+                          size={"timeline"}
+                          className="text-borderGrey"
+                        >
+                          1M
+                        </Button>
+                        <Button
+                          variant={"showMore"}
+                          size={"timeline"}
+                          className="text-[#020202]  rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]"
+                        >
+                          10D
+                        </Button>
+                        <Button
+                          variant={"showMore"}
+                          size={"timeline"}
+                          className="text-borderGrey"
+                        >
+                          1D
+                        </Button>
+                      </div>
+                    </div>
+                    <Charts chartData={chartData} height={180} />
+                    <div className="flex items-center justify-between px-10 ">
+                      <Button
+                        variant={"secondary"}
+                        size={"arrow"}
+                        className="flex items-center bg-[#EEE] "
+                      >
+                        <ArrowLeftIcon width={12} height={9} />
+                      </Button>
+                      <p>Time</p>
+                      <Button
+                        variant={"secondary"}
+                        size={"arrow"}
+                        className="flex items-center bg-[#EEE]"
+                      >
+                        <ArrowRightIcon width={12} height={9} />
+                      </Button>
+                    </div>
                   </div>
-                </div>
-                <div className="w-full h-full">
-                  <RatioPieChart collaterals={RatioValues[4].value} dcds={RatioValues[5].value}  />
                 </div>
               </div>
-              <div className="p-4 w-[70%]">
+            </div>
+            <div className="flex w-full rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
+              <FeesComp />
+              <div className="p-4 w-[70%] bg-white">
+                  <div className="flex flex-col w-full max-w-sm bg-white ">
+                    <div className="relative flex items-center h-12 p-1 mx-8 mt-4 bg-[#EEEEEE] border rounded-[10px] shadow">
+                      <div className="flex justify-center w-full">
+                        <button onClick={()=>setFeeOption("option")}>Option Fees</button>
+                      </div>
+                      <div className="flex justify-center w-full">
+                        <button onClick={()=>setFeeOption("borrow")}>Borrowing Fees</button>
+                      </div>
+                      <span
+                        className={` bg-[#ffffff] border-[1px] border-[#C4C4C4] shadow text-gray-800 flex items-center justify-center w-1/2 rounded-[10px] h-10 transition-all top-[4px] absolute  ${feeOption=="borrow"?"left-[150px]":"left-1"} `}>
+                        {feeOption === "option" ? "Option Fees" : "Borrowing Fees"}
+                      </span>
+                    </div>
+                  </div>
                 <div className="flex items-center justify-end">
+
+
                   <div className="flex gap-[10px] mr-5">
                     <Button
                       variant={"showMore"}
@@ -268,7 +363,7 @@ const page = () => {
                     </Button>
                   </div>
                 </div>
-                <Charts chartData={chartData} height={180} />
+                <Charts chartData={chartData} height={230} />
                 <div className="flex items-center justify-between px-10 ">
                   <Button
                     variant={"secondary"}
@@ -289,82 +384,11 @@ const page = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex w-full rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
-          <FeesComp />
-          <div className="p-4 w-[70%] bg-white">
-            <div className="flex items-center justify-end">
-              <div className="flex gap-[10px] mr-5">
-                <Button
-                  variant={"showMore"}
-                  size={"timeline"}
-                  className="text-borderGrey"
-                >
-                  All Time
-                </Button>
-                <Button
-                  variant={"showMore"}
-                  size={"timeline"}
-                  className="text-borderGrey"
-                >
-                  1Y
-                </Button>
-                <Button
-                  variant={"showMore"}
-                  size={"timeline"}
-                  className="text-borderGrey"
-                >
-                  6M
-                </Button>
-                <Button
-                  variant={"showMore"}
-                  size={"timeline"}
-                  className="text-borderGrey"
-                >
-                  1M
-                </Button>
-                <Button
-                  variant={"showMore"}
-                  size={"timeline"}
-                  className="text-[#020202]  rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]"
-                >
-                  10D
-                </Button>
-                <Button
-                  variant={"showMore"}
-                  size={"timeline"}
-                  className="text-borderGrey"
-                >
-                  1D
-                </Button>
-              </div>
-            </div>
-            <Charts chartData={chartData} height={230} />
-            <div className="flex items-center justify-between px-10 ">
-              <Button
-                variant={"secondary"}
-                size={"arrow"}
-                className="flex items-center bg-[#EEE] "
-              >
-                <ArrowLeftIcon width={12} height={9} />
-              </Button>
-              <p>Time</p>
-              <Button
-                variant={"secondary"}
-                size={"arrow"}
-                className="flex items-center bg-[#EEE]"
-              >
-                <ArrowRightIcon width={12} height={9} />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
 
         )
       }
-      
-      
+
+
     </div>
   );
 
@@ -389,7 +413,7 @@ const page = () => {
           <HeaderItems
             props={{
               textHeadline: "Option Fee",
-              textValue: "4%",
+              textValue: `${FeesValues[0].value} AMINT`,
               className: "",
               lastElement: true,
             }}
@@ -399,7 +423,7 @@ const page = () => {
           <HeaderItems
             props={{
               textHeadline: "Total Collateral Protected",
-              textValue:  `${FeesValues[2].value} AMINT`,
+              textValue: `${FeesValues[2].value} AMINT`,
               className: "",
               lastElement: false,
             }}

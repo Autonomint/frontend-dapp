@@ -88,7 +88,7 @@ function formatNumber(num: number) {
   } else if (num >= 1000) {
     return (num / 1000).toFixed(2) + 'k';
   } else {
-    return num.toString();
+    return num.toFixed(2);
   }
 }
 
@@ -132,39 +132,35 @@ const NavBar = () => {
    * Updates the header items based on the values of `totalAmintSupply`, `currentApy`, `ltv`, `totalCdsAmount`, `ethPrice`, and `totalValueLocked`.
    */
   const handleNavItems = async () => {
-    // const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/1000000000000000000/${ethPrice}/0`).then(
-    //   (res) => res.json()
-    // ).catch((err) => console.log(err));
+    const data= await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/1000000000000000000/${ethPrice}/0`).then(
+      (res) => res.json()
+    )
    
     if (totalAmintSupply) {
       const updatedData = [...updatedHeaderItems];
       updatedData[2].value = `${formatNumber(Number(totalAmintSupply) / 10 ** 6)}`;
       updatedData[3].value = `${0}%`;
-      // updatedData[5].value = `${data[1] == undefined ? 0 : (parseFloat(data[1]) / 10 ** 6).toFixed(2)}`;
+      updatedData[5].value = `${data[1] == undefined ? 0 : (parseFloat(data[1]) / 10 ** 6).toFixed(2)}`;
       setUpdatedHeaderItems(updatedData);
     }
     if (ltv && totalCdsAmount && ethPrice && totalValueLocked) {
-      const updatedData2nd = [...updatedHeaderItems2nd];
-      updatedData2nd[0].value = `$${displayNumberWithPrecision(
-        formatEther((totalValueLocked * ethPrice) / BigInt(100))
-      )}`;
-      console.log(formatEther((totalValueLocked * ethPrice) / BigInt(100)))
-      updatedData2nd[1].value = `$${displayNumberWithPrecision(
+      const updatedData = [...updatedHeaderItems];
+      updatedData[6].value = `${formatNumber(Number(formatEther((totalValueLocked * ethPrice) / BigInt(100))))}`;
+      updatedData[7].value = `$${displayNumberWithPrecision(
         (Number(totalCdsAmount) / 10 ** 6).toString()
-      )}`;
-      updatedData2nd[2].value = `${100 - ltv}%`;
-      setUpdatedHeaderItems2nd(updatedData2nd);
+        )}`;
+        updatedData[8].value = `${100 - ltv}%`;
+        setUpdatedHeaderItems(updatedData);
     }
   };
 
   //calling handleNavItems() every time the values of `totalAmintSupply`, `currentApy`, `ltv`, `totalCdsAmount`, `ethPrice`, and `totalValueLocked` changes
   useEffect(() => {
     handleNavItems();
-  }, [0, ltv, totalAmintSupply, totalValueLocked, ethPrice]);
+  }, [ltv, totalAmintSupply, totalValueLocked, ethPrice]);
 
   return (
     <div className="flex w-[100%] h-[12vh] md:h-auto">
-
       <div className="flex w-full overflow-scroll scrollb md:hidden md:w-0 bg-bgGrey">
 
         <div className={`flex px-1 py-3 sm:px-2 xl:px-5 xl:py-5 lg:px-4 lg:py-4 `}>

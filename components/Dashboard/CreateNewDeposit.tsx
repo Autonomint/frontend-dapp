@@ -271,7 +271,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       );
     },
     onSuccess(data) {
-      form.reset(); // Reset the form
+      // form.reset(); // Reset the form
       console.log(data?.hash); // Log the transaction hash to the console
       toast.custom(
         (t) => {
@@ -617,7 +617,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                             <InfoCircledIcon className="w-4 h-4 ml-2" />
                           </TooltipTrigger>
                           <TooltipContent>
-                            <p>Option fees is included</p>
+                            <p>Option fees is excluded</p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>

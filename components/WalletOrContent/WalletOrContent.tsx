@@ -168,7 +168,7 @@ const WalletOrContent = () => {
       // Update the value for the second stat item
       updatedStats[1].value =
         chainId === 5
-          ?( parseFloat(depositorData.totalAmint)/10**6).toFixed(2)
+          ?( parseFloat(depositorData.totalAmint)).toFixed(2)
           : parseFloat(depositorData.totalAmint).toFixed(2);
 
       // Update the value for the third stat item
