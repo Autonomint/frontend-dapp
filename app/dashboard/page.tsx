@@ -539,7 +539,7 @@ const page = () => {
                 Total Assets Locked
               </p>
               <h3 className="font-medium text-[2rem] leading-none">
-                {lockedValues[1].value}
+                {lockedValues[2].value}
               </h3>
             </div>
           </div>
