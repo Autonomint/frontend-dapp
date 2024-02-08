@@ -3,7 +3,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { toast } from "sonner";
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 import addIcon from "@/app/assets/add_circle.svg";
 import {
   Dialog,
@@ -169,7 +174,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   async function getOptionFees() {
     const response = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/${parseUnits(form.getValues("collateralAmount").toString(), 18)}/${ethPrice}/${(strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4)}`);
     const data = await response.json();
-    return data[1]?(data[1]/10**6):0;
+    return data[1] ? (data[1] / 10 ** 6) : 0;
   }
 
 
@@ -187,9 +192,9 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/${colateralamount}/${ethPrice}/${strikePercent}`).then(
       (res) => res.json()
     )
-   
-   
-    
+
+
+
     // Create the body value
     let bodyValue = JSON.stringify({
       address: address,
@@ -318,7 +323,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
 
       // Call mutate function with the address to store things to backend
       mutate(address);
-      setOpen(false); 
+      setOpen(false);
       // Show custom toast
       toast.custom(
         () => (
@@ -400,7 +405,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   /**
    * Handles the calculation and setting of the amint to be minted and downside protection amounts.
    */
-  const handleAmintToBeMinted = async() => {
+  const handleAmintToBeMinted = async () => {
     // Calculate the amint to be minted
     const optionf = await getOptionFees();
     setOptionFees(optionf);
@@ -427,15 +432,15 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
    */
 
   useEffect(() => {
-    if(form.getValues("collateralAmount")!=0){
+    if (form.getValues("collateralAmount") != 0) {
       form.clearErrors("collateralAmount");
       handleAmintToBeMinted();
     }
-    else{
-      form.setError("collateralAmount",{message:"value should be greater than 0.02 ETH or 0.02"});
+    else {
+      form.setError("collateralAmount", { message: "value should be greater than 0.02 ETH or 0.02" });
     }
-    
-  }, [form.watch("collateralAmount"),form.watch("strikePrice")]);
+
+  }, [form.watch("collateralAmount"), form.watch("strikePrice")]);
 
 
 
@@ -606,6 +611,16 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
                     <p className=" min-[1440px]:text-base text-sm 2dppx:text-sm text-textSecondary">
                       Amount of Amint that will be minted
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <InfoCircledIcon className="w-4 h-4 ml-2" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Option fees is included</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </p>
                     <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm">
                       {amintToBeMinted}
@@ -640,7 +655,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                   className="text-white"
                   disabled={disabled}
                 >
-                  {isLoading?"Depositing...":'Confirm Deposit'}
+                  {isLoading ? "Depositing..." : 'Confirm Deposit'}
                 </Button>
               </div>
             </form>

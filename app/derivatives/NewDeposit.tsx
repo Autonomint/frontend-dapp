@@ -609,7 +609,7 @@ const NewDeposit = () => {
       }
     }
     const liqAmnt =
-      (((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
+      ((Number(amintAmnt ? amintAmnt : 0) + Number(usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
     // call the CdsDeposit function from blockchain with dynamic args
     try {
       ConfirmDeposit?.({
@@ -740,10 +740,11 @@ const NewDeposit = () => {
   }, [cdsDepositSuccess]);
 
   useEffect(() => {
+    console.log(usdtAmountDepositedTillNow>=usdtLimit)
     let amint = form.watch("AmintDepositAmount") ?? 0;
     let usdt = form.watch("USDTDepositAmount") ?? 0;
     if(usdtAmountDepositedTillNow>=usdtLimit){
-        if(amint<500){
+        if(form.getValues("AmintDepositAmount")!=undefined && amint<500){
         form.setError("AmintDepositAmount", {
           type: "manual",
           message: "Amint Amount must be greater than 500",

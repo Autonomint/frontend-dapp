@@ -305,8 +305,7 @@ const TableRows = ({
           address as `0x${string}`,
           BigInt(details.index),
           BigInt(ethPrice ? ethPrice : 0),
-          BigInt(Date.now()),
-          4n
+          BigInt(Date.now())
         ],
       });
     },
@@ -648,7 +647,7 @@ const TableRows = ({
       }}
     >
       <TableRow className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF]">
-        <TableCell className="text-borderGrey w-3">
+        <TableCell className="w-3 text-borderGrey">
           {`#${details.index}`}
         </TableCell>
         <TableCell className="text-textGrey">
@@ -675,14 +674,14 @@ const TableRows = ({
           className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen"}
         >
           <div className="flex flex-col min-[1440px]:gap-6 2dppx:gap-[10px] gap-[10px]">
-            <div className="flex w-full justify-end">
+            <div className="flex justify-end w-full">
               <SheetClose asChild>
                 <Button
                   variant={"ghostOutline"}
                   size={"primary"}
                   className="flex gap-[10px] border border-borderGrey"
                 >
-                  <Cross2Icon className="h-4 w-4" />
+                  <Cross2Icon className="w-4 h-4" />
                   <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
                     Close
                   </p>
@@ -714,7 +713,7 @@ const TableRows = ({
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
-                        <InfoCircledIcon className="h-4 w-4" />
+                        <InfoCircledIcon className="w-4 h-4" />
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>upto 20% of the deposited amount value</p>
@@ -726,7 +725,7 @@ const TableRows = ({
                   <Button
                     variant={"ghostOutline"}
                     size={"row"}
-                    className="text-textHighlight font-medium text-xs leading-none"
+                    className="text-xs font-medium leading-none text-textHighlight"
                     onClick={handleAmountProtected}
                   >
                     View
@@ -792,7 +791,7 @@ const TableRows = ({
                             Second Withdrawal time
                           </p>
                         </div>
-                        <p className="text-textHighlight font-medium text-base">
+                        <p className="text-base font-medium text-textHighlight">
                           {calculate30DaysFromStoredTime(details.withdrawTime1)}
                         </p>
                       </div>

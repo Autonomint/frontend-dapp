@@ -27,6 +27,11 @@ export const TreasuryAbi = [
     name: "Treasury_EthTransferToCdsLiquidatorFailed",
     type: "error",
   },
+  {
+    inputs: [],
+    name: "Treasury_WithdrawExternalProtocolInterestFailed",
+    type: "error",
+  },
   { inputs: [], name: "Treasury_ZeroDeposit", type: "error" },
   { inputs: [], name: "Treasury_ZeroWithdraw", type: "error" },
   {
@@ -161,6 +166,13 @@ export const TreasuryAbi = [
   },
   {
     inputs: [],
+    name: "abondAmintPool",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "amint",
     outputs: [{ internalType: "contract IAMINT", name: "", type: "address" }],
     stateMutability: "view",
@@ -224,13 +236,6 @@ export const TreasuryAbi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint64", name: "count", type: "uint64" }],
-    name: "calculateInterestForDepositAave",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "cdsContract",
     outputs: [{ internalType: "address", name: "", type: "address" }],
@@ -260,16 +265,9 @@ export const TreasuryAbi = [
   },
   {
     inputs: [],
-    name: "depositToAave",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "depositToCompound",
-    outputs: [],
-    stateMutability: "nonpayable",
+    name: "ethProfitsOfLiquidators",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -334,7 +332,7 @@ export const TreasuryAbi = [
             name: "aBondTokensAmount",
             type: "uint128",
           },
-          { internalType: "uint64", name: "strikePrice", type: "uint64" },
+          { internalType: "uint128", name: "strikePrice", type: "uint128" },
           { internalType: "uint128", name: "optionFees", type: "uint128" },
           { internalType: "uint256", name: "burnedAmint", type: "uint256" },
           {
@@ -354,20 +352,10 @@ export const TreasuryAbi = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "address", name: "depositor", type: "address" },
-      { internalType: "uint64", name: "index", type: "uint64" },
-    ],
-    name: "getInterestForCompoundDeposit",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
-    name: "increaseExternalProtocolCount",
-    outputs: [],
-    stateMutability: "nonpayable",
+    name: "interestFromExternalProtocolDuringLiquidation",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -421,16 +409,6 @@ export const TreasuryAbi = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "address", name: "depositor", type: "address" },
-      { internalType: "uint64", name: "index", type: "uint64" },
-    ],
-    name: "totalInterestFromExternalProtocol",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "totalInterestFromLiquidation",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
@@ -464,6 +442,16 @@ export const TreasuryAbi = [
   {
     inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
     name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "amount", type: "uint256" },
+      { internalType: "bool", name: "operation", type: "bool" },
+    ],
+    name: "updateAbondAmintPool",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -512,7 +500,7 @@ export const TreasuryAbi = [
             name: "aBondTokensAmount",
             type: "uint128",
           },
-          { internalType: "uint64", name: "strikePrice", type: "uint64" },
+          { internalType: "uint128", name: "strikePrice", type: "uint128" },
           { internalType: "uint128", name: "optionFees", type: "uint128" },
           { internalType: "uint256", name: "burnedAmint", type: "uint256" },
           {
@@ -535,10 +523,27 @@ export const TreasuryAbi = [
   },
   {
     inputs: [
+      { internalType: "uint256", name: "amount", type: "uint256" },
+      { internalType: "bool", name: "operation", type: "bool" },
+    ],
+    name: "updateEthProfitsOfLiquidators",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
       { internalType: "address", name: "borrower", type: "address" },
       { internalType: "bool", name: "_bool", type: "bool" },
     ],
     name: "updateHasBorrowed",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    name: "updateInterestFromExternalProtocol",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -623,7 +628,6 @@ export const TreasuryAbi = [
       { internalType: "address", name: "toAddress", type: "address" },
       { internalType: "uint256", name: "_amount", type: "uint256" },
       { internalType: "uint64", name: "index", type: "uint64" },
-      { internalType: "uint64", name: "_ethPrice", type: "uint64" },
     ],
     name: "withdraw",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
@@ -631,16 +635,32 @@ export const TreasuryAbi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint64", name: "index", type: "uint64" }],
-    name: "withdrawFromAave",
+    inputs: [
+      { internalType: "address", name: "toAddress", type: "address" },
+      { internalType: "uint128", name: "amount", type: "uint128" },
+    ],
+    name: "withdrawExternalProtocolInterest",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint64", name: "index", type: "uint64" }],
-    name: "withdrawFromCompound",
-    outputs: [],
+    inputs: [
+      { internalType: "address", name: "depositor", type: "address" },
+      { internalType: "uint64", name: "index", type: "uint64" },
+    ],
+    name: "withdrawFromAaveByUser",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "depositor", type: "address" },
+      { internalType: "uint64", name: "index", type: "uint64" },
+    ],
+    name: "withdrawFromCompoundByUser",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "nonpayable",
     type: "function",
   },

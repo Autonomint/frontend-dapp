@@ -19,18 +19,19 @@ interface Props {
     textColor?: string;
     showTooltip?: boolean;
     tooltipText?: string;
+    classNamediv?: string;
   };
 }
 
 const HeaderItems = ({
-  props: { textHeadline, textValue, className, lastElement = false, textColor, showTooltip, tooltipText},
+  props: { textHeadline, textValue, className, lastElement = false, textColor,classNamediv, showTooltip, tooltipText},
 }: Props) => {
   return (
     <>
       <div
         className={cn(
           `flex justify-between min-[1440px]:min-w-[164px] sm:min-w-[90px] 2dppx:w-full w-full`,
-          className
+          classNamediv
         )}
       >
         <div className="flex flex-col justify-center min-[1440px]:gap-[20px] 2dppx:gap-2 gap-2">

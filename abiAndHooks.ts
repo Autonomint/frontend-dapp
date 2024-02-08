@@ -20,7 +20,7 @@ import {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export const abondABI = [
   { stateMutability: 'nonpayable', type: 'constructor', inputs: [] },
@@ -294,14 +294,14 @@ export const abondABI = [
 ] as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export const abondAddress = {
-  5: '0x4cd9aA7E43B7FE8B378cF315771c4A536360b885',
+  5: '0x895A4BB74651848cC05040645dBf0b0576355BA1',
 } as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export const abondConfig = { address: abondAddress, abi: abondABI } as const
 
@@ -310,7 +310,7 @@ export const abondConfig = { address: abondAddress, abi: abondABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export const amintABI = [
   { stateMutability: 'nonpayable', type: 'constructor', inputs: [] },
@@ -584,14 +584,14 @@ export const amintABI = [
 ] as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export const amintAddress = {
-  5: '0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7',
+  5: '0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c',
 } as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export const amintConfig = { address: amintAddress, abi: amintABI } as const
 
@@ -600,7 +600,7 @@ export const amintConfig = { address: amintAddress, abi: amintABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export const borrowingContractABI = [
   {
@@ -653,6 +653,38 @@ export const borrowingContractABI = [
       },
     ],
     name: 'Deposit',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'index', internalType: 'uint64', type: 'uint64', indexed: false },
+      {
+        name: 'liquidationAmount',
+        internalType: 'uint128',
+        type: 'uint128',
+        indexed: false,
+      },
+      {
+        name: 'profits',
+        internalType: 'uint128',
+        type: 'uint128',
+        indexed: false,
+      },
+      {
+        name: 'ethAmount',
+        internalType: 'uint128',
+        type: 'uint128',
+        indexed: false,
+      },
+      {
+        name: 'availableLiquidationAmount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Liquidate',
   },
   {
     type: 'event',
@@ -732,13 +764,6 @@ export const borrowingContractABI = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'admin',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
     name: 'amint',
     outputs: [{ name: '', internalType: 'contract IAMINT', type: 'address' }],
   },
@@ -748,6 +773,16 @@ export const borrowingContractABI = [
     inputs: [],
     name: 'calculateCumulativeRate',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+      { name: 'currentEthPrice', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'calculateRatio',
+    outputs: [{ name: '', internalType: 'uint64', type: 'uint64' }],
   },
   {
     stateMutability: 'view',
@@ -764,20 +799,6 @@ export const borrowingContractABI = [
     inputs: [],
     name: 'cdsAddress',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [],
-    name: 'depositToAaveProtocol',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [],
-    name: 'depositToCompoundProtocol',
-    outputs: [],
   },
   {
     stateMutability: 'payable',
@@ -802,6 +823,13 @@ export const borrowingContractABI = [
     inputs: [],
     name: 'getLTV',
     outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'getLastEthVaultValue',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
     stateMutability: 'view',
@@ -903,22 +931,6 @@ export const borrowingContractABI = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [
-      { name: 'holder', internalType: 'address', type: 'address' },
-      { name: 'spender', internalType: 'address', type: 'address' },
-      { name: 'allowedAmount', internalType: 'uint256', type: 'uint256' },
-      { name: 'allowed', internalType: 'bool', type: 'bool' },
-      { name: 'expiry', internalType: 'uint256', type: 'uint256' },
-      { name: 'v', internalType: 'uint8', type: 'uint8' },
-      { name: 'r', internalType: 'bytes32', type: 'bytes32' },
-      { name: 's', internalType: 'bytes32', type: 'bytes32' },
-    ],
-    name: 'permit',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [],
     name: 'priceFeedAddress',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
@@ -954,6 +966,13 @@ export const borrowingContractABI = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    inputs: [{ name: '_bondRatio', internalType: 'uint64', type: 'uint64' }],
+    name: 'setBondRatio',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     inputs: [{ name: '_LTV', internalType: 'uint8', type: 'uint8' }],
     name: 'setLTV',
     outputs: [],
@@ -971,20 +990,6 @@ export const borrowingContractABI = [
     inputs: [{ name: '_timeLimit', internalType: 'uint64', type: 'uint64' }],
     name: 'setWithdrawTimeLimit',
     outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'totalAmintSupply',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'totalDiracSupply',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
     stateMutability: 'view',
@@ -1038,23 +1043,8 @@ export const borrowingContractABI = [
       { name: '_index', internalType: 'uint64', type: 'uint64' },
       { name: '_ethPrice', internalType: 'uint64', type: 'uint64' },
       { name: '_withdrawTime', internalType: 'uint64', type: 'uint64' },
-      { name: '_bondRatio', internalType: 'uint64', type: 'uint64' },
     ],
     name: 'withDraw',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: 'index', internalType: 'uint64', type: 'uint64' }],
-    name: 'withdrawFromAaveProtocol',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: 'index', internalType: 'uint64', type: 'uint64' }],
-    name: 'withdrawFromCompoundProtocol',
     outputs: [],
   },
   {
@@ -1067,14 +1057,14 @@ export const borrowingContractABI = [
 ] as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export const borrowingContractAddress = {
-  5: '0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8',
+  5: '0x504928a9c2BDb625CE285fc448e98111E2C96292',
 } as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export const borrowingContractConfig = {
   address: borrowingContractAddress,
@@ -1086,7 +1076,7 @@ export const borrowingContractConfig = {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export const cdsABI = [
   {
@@ -1207,6 +1197,13 @@ export const cdsABI = [
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'burnedAmintInRedeem',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'fees', internalType: 'uint128', type: 'uint128' }],
@@ -1229,6 +1226,20 @@ export const cdsABI = [
       { name: 'index', internalType: 'uint64', type: 'uint64' },
       { name: 'hasDeposited', internalType: 'bool', type: 'bool' },
     ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'cumulativeValue',
+    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'cumulativeValueSign',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -1281,6 +1292,7 @@ export const cdsABI = [
           { name: 'withdrawed', internalType: 'bool', type: 'bool' },
           { name: 'depositPrice', internalType: 'uint128', type: 'uint128' },
           { name: 'depositValue', internalType: 'uint128', type: 'uint128' },
+          { name: 'depositValueSign', internalType: 'bool', type: 'bool' },
           { name: 'optedLiquidation', internalType: 'bool', type: 'bool' },
           {
             name: 'InitialLiquidationAmount',
@@ -1420,7 +1432,14 @@ export const cdsABI = [
     type: 'function',
     inputs: [],
     name: 'totalCdsDepositedAmount',
-    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'totalCdsDepositedAmountWithOptionFees',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -1488,6 +1507,13 @@ export const cdsABI = [
     outputs: [],
   },
   {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: '_amount', internalType: 'uint128', type: 'uint128' }],
+    name: 'updateTotalCdsDepositedAmountWithOptionFees',
+    outputs: [],
+  },
+  {
     stateMutability: 'view',
     type: 'function',
     inputs: [],
@@ -1526,14 +1552,14 @@ export const cdsABI = [
 ] as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export const cdsAddress = {
-  5: '0x301c0751e8671A60Eb22A2376F12E366F83BEeb2',
+  5: '0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c',
 } as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export const cdsConfig = { address: cdsAddress, abi: cdsABI } as const
 
@@ -1542,7 +1568,7 @@ export const cdsConfig = { address: cdsAddress, abi: cdsABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAc7A5B24377822927438f887F2A4e994fe0c95A1)
  */
 export const optionsABI = [
   {
@@ -1552,6 +1578,7 @@ export const optionsABI = [
       { name: '_priceFeed', internalType: 'address', type: 'address' },
       { name: '_treasuryAddress', internalType: 'address', type: 'address' },
       { name: '_cdsAddress', internalType: 'address', type: 'address' },
+      { name: '_borrowingAddress', internalType: 'address', type: 'address' },
     ],
   },
   {
@@ -1592,7 +1619,7 @@ export const optionsABI = [
     outputs: [],
   },
   {
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
     inputs: [
       { name: 'depositedAmount', internalType: 'uint128', type: 'uint128' },
@@ -1605,14 +1632,14 @@ export const optionsABI = [
 ] as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAc7A5B24377822927438f887F2A4e994fe0c95A1)
  */
 export const optionsAddress = {
-  5: '0x780F7C24e3d940d04E65A7d7602D09B7cE310df1',
+  5: '0xAc7A5B24377822927438f887F2A4e994fe0c95A1',
 } as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAc7A5B24377822927438f887F2A4e994fe0c95A1)
  */
 export const optionsConfig = {
   address: optionsAddress,
@@ -1725,7 +1752,7 @@ export const quoterConfig = { address: quoterAddress, abi: quoterABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export const treasuryABI = [
   {
@@ -1755,6 +1782,11 @@ export const treasuryABI = [
     type: 'error',
     inputs: [],
     name: 'Treasury_EthTransferToCdsLiquidatorFailed',
+  },
+  {
+    type: 'error',
+    inputs: [],
+    name: 'Treasury_WithdrawExternalProtocolInterestFailed',
   },
   { type: 'error', inputs: [], name: 'Treasury_ZeroDeposit' },
   { type: 'error', inputs: [], name: 'Treasury_ZeroWithdraw' },
@@ -1892,6 +1924,13 @@ export const treasuryABI = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
+    name: 'abondAmintPool',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
     name: 'amint',
     outputs: [{ name: '', internalType: 'contract IAMINT', type: 'address' }],
   },
@@ -1955,13 +1994,6 @@ export const treasuryABI = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [{ name: 'count', internalType: 'uint64', type: 'uint64' }],
-    name: 'calculateInterestForDepositAave',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [],
     name: 'cdsContract',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
@@ -1988,18 +2020,11 @@ export const treasuryABI = [
     ],
   },
   {
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'depositToAave',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [],
-    name: 'depositToCompound',
-    outputs: [],
+    name: 'ethProfitsOfLiquidators',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
     stateMutability: 'view',
@@ -2068,7 +2093,7 @@ export const treasuryABI = [
             internalType: 'uint128',
             type: 'uint128',
           },
-          { name: 'strikePrice', internalType: 'uint64', type: 'uint64' },
+          { name: 'strikePrice', internalType: 'uint128', type: 'uint128' },
           { name: 'optionFees', internalType: 'uint128', type: 'uint128' },
           { name: 'burnedAmint', internalType: 'uint256', type: 'uint256' },
           {
@@ -2083,21 +2108,11 @@ export const treasuryABI = [
     ],
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'depositor', internalType: 'address', type: 'address' },
-      { name: 'index', internalType: 'uint64', type: 'uint64' },
-    ],
-    name: 'getInterestForCompoundDeposit',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'increaseExternalProtocolCount',
-    outputs: [],
+    name: 'interestFromExternalProtocolDuringLiquidation',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
     stateMutability: 'view',
@@ -2152,16 +2167,6 @@ export const treasuryABI = [
   {
     stateMutability: 'view',
     type: 'function',
-    inputs: [
-      { name: 'depositor', internalType: 'address', type: 'address' },
-      { name: 'index', internalType: 'uint64', type: 'uint64' },
-    ],
-    name: 'totalInterestFromExternalProtocol',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
     inputs: [],
     name: 'totalInterestFromLiquidation',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
@@ -2195,6 +2200,16 @@ export const treasuryABI = [
     type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+      { name: 'operation', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'updateAbondAmintPool',
     outputs: [],
   },
   {
@@ -2246,7 +2261,7 @@ export const treasuryABI = [
             internalType: 'uint128',
             type: 'uint128',
           },
-          { name: 'strikePrice', internalType: 'uint64', type: 'uint64' },
+          { name: 'strikePrice', internalType: 'uint128', type: 'uint128' },
           { name: 'optionFees', internalType: 'uint128', type: 'uint128' },
           { name: 'burnedAmint', internalType: 'uint256', type: 'uint256' },
           {
@@ -2266,10 +2281,27 @@ export const treasuryABI = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+      { name: 'operation', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'updateEthProfitsOfLiquidators',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
       { name: 'borrower', internalType: 'address', type: 'address' },
       { name: '_bool', internalType: 'bool', type: 'bool' },
     ],
     name: 'updateHasBorrowed',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [{ name: 'amount', internalType: 'uint256', type: 'uint256' }],
+    name: 'updateInterestFromExternalProtocol',
     outputs: [],
   },
   {
@@ -2354,7 +2386,6 @@ export const treasuryABI = [
       { name: 'toAddress', internalType: 'address', type: 'address' },
       { name: '_amount', internalType: 'uint256', type: 'uint256' },
       { name: 'index', internalType: 'uint64', type: 'uint64' },
-      { name: '_ethPrice', internalType: 'uint64', type: 'uint64' },
     ],
     name: 'withdraw',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
@@ -2362,16 +2393,32 @@ export const treasuryABI = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [{ name: 'index', internalType: 'uint64', type: 'uint64' }],
-    name: 'withdrawFromAave',
+    inputs: [
+      { name: 'toAddress', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint128', type: 'uint128' },
+    ],
+    name: 'withdrawExternalProtocolInterest',
     outputs: [],
   },
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [{ name: 'index', internalType: 'uint64', type: 'uint64' }],
-    name: 'withdrawFromCompound',
-    outputs: [],
+    inputs: [
+      { name: 'depositor', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
+    ],
+    name: 'withdrawFromAaveByUser',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'depositor', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
+    ],
+    name: 'withdrawFromCompoundByUser',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
     stateMutability: 'nonpayable',
@@ -2387,14 +2434,14 @@ export const treasuryABI = [
 ] as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export const treasuryAddress = {
-  5: '0x25cBdB496F5E51238173fd46a9516494d57fE0E9',
+  5: '0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7',
 } as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export const treasuryConfig = {
   address: treasuryAddress,
@@ -2406,7 +2453,7 @@ export const treasuryConfig = {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export const usdtContractABI = [
   { stateMutability: 'nonpayable', type: 'constructor', inputs: [] },
@@ -2680,14 +2727,14 @@ export const usdtContractABI = [
 ] as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export const usdtContractAddress = {
-  5: '0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6',
+  5: '0x92a66aFf583313848e9D75a36cB89ec696313245',
 } as const
 
 /**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export const usdtContractConfig = {
   address: usdtContractAddress,
@@ -2701,7 +2748,7 @@ export const usdtContractConfig = {
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondRead<
   TFunctionName extends string,
@@ -2722,7 +2769,7 @@ export function useAbondRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"allowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondAllowance<
   TFunctionName extends 'allowance',
@@ -2744,7 +2791,7 @@ export function useAbondAllowance<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"balanceOf"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondBalanceOf<
   TFunctionName extends 'balanceOf',
@@ -2766,7 +2813,7 @@ export function useAbondBalanceOf<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"decimals"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondDecimals<
   TFunctionName extends 'decimals',
@@ -2788,7 +2835,7 @@ export function useAbondDecimals<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"name"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondName<
   TFunctionName extends 'name',
@@ -2810,7 +2857,7 @@ export function useAbondName<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"owner"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondOwner<
   TFunctionName extends 'owner',
@@ -2832,7 +2879,7 @@ export function useAbondOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"paused"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondPaused<
   TFunctionName extends 'paused',
@@ -2854,7 +2901,7 @@ export function useAbondPaused<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"symbol"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondSymbol<
   TFunctionName extends 'symbol',
@@ -2876,7 +2923,7 @@ export function useAbondSymbol<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"totalSupply"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondTotalSupply<
   TFunctionName extends 'totalSupply',
@@ -2898,7 +2945,7 @@ export function useAbondTotalSupply<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"whitelist"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondWhitelist<
   TFunctionName extends 'whitelist',
@@ -2920,7 +2967,7 @@ export function useAbondWhitelist<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondWrite<
   TFunctionName extends string,
@@ -2949,7 +2996,7 @@ export function useAbondWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"approve"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondApprove<
   TMode extends WriteContractMode = undefined,
@@ -2982,7 +3029,7 @@ export function useAbondApprove<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burn"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondBurn<
   TMode extends WriteContractMode = undefined,
@@ -3012,7 +3059,7 @@ export function useAbondBurn<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFrom"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondBurnFrom<
   TMode extends WriteContractMode = undefined,
@@ -3045,7 +3092,7 @@ export function useAbondBurnFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondBurnFromUser<
   TMode extends WriteContractMode = undefined,
@@ -3082,7 +3129,7 @@ export function useAbondBurnFromUser<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"decreaseAllowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondDecreaseAllowance<
   TMode extends WriteContractMode = undefined,
@@ -3119,7 +3166,7 @@ export function useAbondDecreaseAllowance<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"increaseAllowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondIncreaseAllowance<
   TMode extends WriteContractMode = undefined,
@@ -3156,7 +3203,7 @@ export function useAbondIncreaseAllowance<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"mint"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondMint<
   TMode extends WriteContractMode = undefined,
@@ -3186,7 +3233,7 @@ export function useAbondMint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"pause"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondPause<
   TMode extends WriteContractMode = undefined,
@@ -3216,7 +3263,7 @@ export function useAbondPause<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -3253,7 +3300,7 @@ export function useAbondRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transfer"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondTransfer<
   TMode extends WriteContractMode = undefined,
@@ -3286,7 +3333,7 @@ export function useAbondTransfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferFrom"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondTransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -3323,7 +3370,7 @@ export function useAbondTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -3360,7 +3407,7 @@ export function useAbondTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"unpause"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondUnpause<
   TMode extends WriteContractMode = undefined,
@@ -3393,7 +3440,7 @@ export function useAbondUnpause<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondWrite<TFunctionName extends string>(
   config: Omit<
@@ -3411,7 +3458,7 @@ export function usePrepareAbondWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"approve"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondApprove(
   config: Omit<
@@ -3430,7 +3477,7 @@ export function usePrepareAbondApprove(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burn"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondBurn(
   config: Omit<
@@ -3449,7 +3496,7 @@ export function usePrepareAbondBurn(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFrom"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondBurnFrom(
   config: Omit<
@@ -3468,7 +3515,7 @@ export function usePrepareAbondBurnFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondBurnFromUser(
   config: Omit<
@@ -3487,7 +3534,7 @@ export function usePrepareAbondBurnFromUser(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"decreaseAllowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondDecreaseAllowance(
   config: Omit<
@@ -3506,7 +3553,7 @@ export function usePrepareAbondDecreaseAllowance(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"increaseAllowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondIncreaseAllowance(
   config: Omit<
@@ -3525,7 +3572,7 @@ export function usePrepareAbondIncreaseAllowance(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"mint"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondMint(
   config: Omit<
@@ -3544,7 +3591,7 @@ export function usePrepareAbondMint(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"pause"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondPause(
   config: Omit<
@@ -3563,7 +3610,7 @@ export function usePrepareAbondPause(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondRenounceOwnership(
   config: Omit<
@@ -3582,7 +3629,7 @@ export function usePrepareAbondRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transfer"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondTransfer(
   config: Omit<
@@ -3601,7 +3648,7 @@ export function usePrepareAbondTransfer(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferFrom"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondTransferFrom(
   config: Omit<
@@ -3620,7 +3667,7 @@ export function usePrepareAbondTransferFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondTransferOwnership(
   config: Omit<
@@ -3639,7 +3686,7 @@ export function usePrepareAbondTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"unpause"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function usePrepareAbondUnpause(
   config: Omit<
@@ -3658,7 +3705,7 @@ export function usePrepareAbondUnpause(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondEvent<TEventName extends string>(
   config: Omit<
@@ -3676,7 +3723,7 @@ export function useAbondEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Approval"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondApprovalEvent(
   config: Omit<
@@ -3695,7 +3742,7 @@ export function useAbondApprovalEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondOwnershipTransferredEvent(
   config: Omit<
@@ -3714,7 +3761,7 @@ export function useAbondOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Paused"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondPausedEvent(
   config: Omit<
@@ -3733,7 +3780,7 @@ export function useAbondPausedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Transfer"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondTransferEvent(
   config: Omit<
@@ -3752,7 +3799,7 @@ export function useAbondTransferEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Unpaused"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4cd9aA7E43B7FE8B378cF315771c4A536360b885)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x895A4BB74651848cC05040645dBf0b0576355BA1)
  */
 export function useAbondUnpausedEvent(
   config: Omit<
@@ -3771,7 +3818,7 @@ export function useAbondUnpausedEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintRead<
   TFunctionName extends string,
@@ -3792,7 +3839,7 @@ export function useAmintRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"allowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintAllowance<
   TFunctionName extends 'allowance',
@@ -3814,7 +3861,7 @@ export function useAmintAllowance<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"balanceOf"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintBalanceOf<
   TFunctionName extends 'balanceOf',
@@ -3836,7 +3883,7 @@ export function useAmintBalanceOf<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"decimals"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintDecimals<
   TFunctionName extends 'decimals',
@@ -3858,7 +3905,7 @@ export function useAmintDecimals<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"name"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintName<
   TFunctionName extends 'name',
@@ -3880,7 +3927,7 @@ export function useAmintName<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"owner"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintOwner<
   TFunctionName extends 'owner',
@@ -3902,7 +3949,7 @@ export function useAmintOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"paused"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintPaused<
   TFunctionName extends 'paused',
@@ -3924,7 +3971,7 @@ export function useAmintPaused<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"symbol"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintSymbol<
   TFunctionName extends 'symbol',
@@ -3946,7 +3993,7 @@ export function useAmintSymbol<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"totalSupply"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintTotalSupply<
   TFunctionName extends 'totalSupply',
@@ -3968,7 +4015,7 @@ export function useAmintTotalSupply<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"whitelist"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintWhitelist<
   TFunctionName extends 'whitelist',
@@ -3990,7 +4037,7 @@ export function useAmintWhitelist<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintWrite<
   TFunctionName extends string,
@@ -4019,7 +4066,7 @@ export function useAmintWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"approve"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintApprove<
   TMode extends WriteContractMode = undefined,
@@ -4052,7 +4099,7 @@ export function useAmintApprove<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burn"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintBurn<
   TMode extends WriteContractMode = undefined,
@@ -4082,7 +4129,7 @@ export function useAmintBurn<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFrom"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintBurnFrom<
   TMode extends WriteContractMode = undefined,
@@ -4115,7 +4162,7 @@ export function useAmintBurnFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintBurnFromUser<
   TMode extends WriteContractMode = undefined,
@@ -4152,7 +4199,7 @@ export function useAmintBurnFromUser<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"decreaseAllowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintDecreaseAllowance<
   TMode extends WriteContractMode = undefined,
@@ -4189,7 +4236,7 @@ export function useAmintDecreaseAllowance<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"increaseAllowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintIncreaseAllowance<
   TMode extends WriteContractMode = undefined,
@@ -4226,7 +4273,7 @@ export function useAmintIncreaseAllowance<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"mint"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintMint<
   TMode extends WriteContractMode = undefined,
@@ -4256,7 +4303,7 @@ export function useAmintMint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"pause"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintPause<
   TMode extends WriteContractMode = undefined,
@@ -4286,7 +4333,7 @@ export function useAmintPause<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -4323,7 +4370,7 @@ export function useAmintRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transfer"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintTransfer<
   TMode extends WriteContractMode = undefined,
@@ -4356,7 +4403,7 @@ export function useAmintTransfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferFrom"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintTransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -4393,7 +4440,7 @@ export function useAmintTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -4430,7 +4477,7 @@ export function useAmintTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"unpause"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintUnpause<
   TMode extends WriteContractMode = undefined,
@@ -4463,7 +4510,7 @@ export function useAmintUnpause<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintWrite<TFunctionName extends string>(
   config: Omit<
@@ -4481,7 +4528,7 @@ export function usePrepareAmintWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"approve"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintApprove(
   config: Omit<
@@ -4500,7 +4547,7 @@ export function usePrepareAmintApprove(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burn"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintBurn(
   config: Omit<
@@ -4519,7 +4566,7 @@ export function usePrepareAmintBurn(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFrom"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintBurnFrom(
   config: Omit<
@@ -4538,7 +4585,7 @@ export function usePrepareAmintBurnFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintBurnFromUser(
   config: Omit<
@@ -4557,7 +4604,7 @@ export function usePrepareAmintBurnFromUser(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"decreaseAllowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintDecreaseAllowance(
   config: Omit<
@@ -4576,7 +4623,7 @@ export function usePrepareAmintDecreaseAllowance(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"increaseAllowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintIncreaseAllowance(
   config: Omit<
@@ -4595,7 +4642,7 @@ export function usePrepareAmintIncreaseAllowance(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"mint"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintMint(
   config: Omit<
@@ -4614,7 +4661,7 @@ export function usePrepareAmintMint(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"pause"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintPause(
   config: Omit<
@@ -4633,7 +4680,7 @@ export function usePrepareAmintPause(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintRenounceOwnership(
   config: Omit<
@@ -4652,7 +4699,7 @@ export function usePrepareAmintRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transfer"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintTransfer(
   config: Omit<
@@ -4671,7 +4718,7 @@ export function usePrepareAmintTransfer(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferFrom"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintTransferFrom(
   config: Omit<
@@ -4690,7 +4737,7 @@ export function usePrepareAmintTransferFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintTransferOwnership(
   config: Omit<
@@ -4709,7 +4756,7 @@ export function usePrepareAmintTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"unpause"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function usePrepareAmintUnpause(
   config: Omit<
@@ -4728,7 +4775,7 @@ export function usePrepareAmintUnpause(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintEvent<TEventName extends string>(
   config: Omit<
@@ -4746,7 +4793,7 @@ export function useAmintEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Approval"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintApprovalEvent(
   config: Omit<
@@ -4765,7 +4812,7 @@ export function useAmintApprovalEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintOwnershipTransferredEvent(
   config: Omit<
@@ -4784,7 +4831,7 @@ export function useAmintOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Paused"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintPausedEvent(
   config: Omit<
@@ -4803,7 +4850,7 @@ export function useAmintPausedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Transfer"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintTransferEvent(
   config: Omit<
@@ -4822,7 +4869,7 @@ export function useAmintTransferEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Unpaused"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2d7Bf34aABccaCC2E83AdC5d0291537F23398af7)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb5cDCc26c8E6d08dFA4fcb7b01Da07b009ccfF5c)
  */
 export function useAmintUnpausedEvent(
   config: Omit<
@@ -4841,7 +4888,7 @@ export function useAmintUnpausedEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractRead<
   TFunctionName extends string,
@@ -4870,7 +4917,7 @@ export function useBorrowingContractRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"APY"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractApy<
   TFunctionName extends 'APY',
@@ -4900,7 +4947,7 @@ export function useBorrowingContractApy<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"DOMAIN_SEPARATOR"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractDomainSeparator<
   TFunctionName extends 'DOMAIN_SEPARATOR',
@@ -4930,7 +4977,7 @@ export function useBorrowingContractDomainSeparator<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"PERMIT_TYPEHASH"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractPermitTypehash<
   TFunctionName extends 'PERMIT_TYPEHASH',
@@ -4960,7 +5007,7 @@ export function useBorrowingContractPermitTypehash<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"abond"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractAbond<
   TFunctionName extends 'abond',
@@ -4988,39 +5035,9 @@ export function useBorrowingContractAbond<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"admin"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
- */
-export function useBorrowingContractAdmin<
-  TFunctionName extends 'admin',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[5],
-    functionName: 'admin',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"amint"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractAmint<
   TFunctionName extends 'amint',
@@ -5050,7 +5067,7 @@ export function useBorrowingContractAmint<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"cds"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractCds<
   TFunctionName extends 'cds',
@@ -5080,7 +5097,7 @@ export function useBorrowingContractCds<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"cdsAddress"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractCdsAddress<
   TFunctionName extends 'cdsAddress',
@@ -5110,7 +5127,7 @@ export function useBorrowingContractCdsAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getLTV"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractGetLtv<
   TFunctionName extends 'getLTV',
@@ -5138,9 +5155,39 @@ export function useBorrowingContractGetLtv<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getLastEthVaultValue"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
+ */
+export function useBorrowingContractGetLastEthVaultValue<
+  TFunctionName extends 'getLastEthVaultValue',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[5],
+    functionName: 'getLastEthVaultValue',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getUSDValue"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractGetUsdValue<
   TFunctionName extends 'getUSDValue',
@@ -5170,7 +5217,7 @@ export function useBorrowingContractGetUsdValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastCDSPoolValue"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractLastCdsPoolValue<
   TFunctionName extends 'lastCDSPoolValue',
@@ -5200,7 +5247,7 @@ export function useBorrowingContractLastCdsPoolValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastCumulativeRate"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractLastCumulativeRate<
   TFunctionName extends 'lastCumulativeRate',
@@ -5230,7 +5277,7 @@ export function useBorrowingContractLastCumulativeRate<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastEthVaultValue"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractLastEthVaultValue<
   TFunctionName extends 'lastEthVaultValue',
@@ -5260,7 +5307,7 @@ export function useBorrowingContractLastEthVaultValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastEthprice"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractLastEthprice<
   TFunctionName extends 'lastEthprice',
@@ -5290,7 +5337,7 @@ export function useBorrowingContractLastEthprice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastTotalCDSPool"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractLastTotalCdsPool<
   TFunctionName extends 'lastTotalCDSPool',
@@ -5320,7 +5367,7 @@ export function useBorrowingContractLastTotalCdsPool<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"multiSign"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractMultiSign<
   TFunctionName extends 'multiSign',
@@ -5350,7 +5397,7 @@ export function useBorrowingContractMultiSign<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"name"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractName<
   TFunctionName extends 'name',
@@ -5380,7 +5427,7 @@ export function useBorrowingContractName<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"noOfLiquidations"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractNoOfLiquidations<
   TFunctionName extends 'noOfLiquidations',
@@ -5410,7 +5457,7 @@ export function useBorrowingContractNoOfLiquidations<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"options"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractOptions<
   TFunctionName extends 'options',
@@ -5440,7 +5487,7 @@ export function useBorrowingContractOptions<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"owner"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractOwner<
   TFunctionName extends 'owner',
@@ -5468,39 +5515,9 @@ export function useBorrowingContractOwner<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"permit"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
- */
-export function useBorrowingContractPermit<
-  TFunctionName extends 'permit',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[5],
-    functionName: 'permit',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"priceFeedAddress"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractPriceFeedAddress<
   TFunctionName extends 'priceFeedAddress',
@@ -5530,7 +5547,7 @@ export function useBorrowingContractPriceFeedAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"ratePerSec"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractRatePerSec<
   TFunctionName extends 'ratePerSec',
@@ -5558,69 +5575,9 @@ export function useBorrowingContractRatePerSec<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"totalAmintSupply"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
- */
-export function useBorrowingContractTotalAmintSupply<
-  TFunctionName extends 'totalAmintSupply',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[5],
-    functionName: 'totalAmintSupply',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"totalDiracSupply"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
- */
-export function useBorrowingContractTotalDiracSupply<
-  TFunctionName extends 'totalDiracSupply',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[5],
-    functionName: 'totalDiracSupply',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"totalNormalizedAmount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractTotalNormalizedAmount<
   TFunctionName extends 'totalNormalizedAmount',
@@ -5650,7 +5607,7 @@ export function useBorrowingContractTotalNormalizedAmount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"treasury"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractTreasury<
   TFunctionName extends 'treasury',
@@ -5680,7 +5637,7 @@ export function useBorrowingContractTreasury<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"treasuryAddress"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractTreasuryAddress<
   TFunctionName extends 'treasuryAddress',
@@ -5710,7 +5667,7 @@ export function useBorrowingContractTreasuryAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"version"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractVersion<
   TFunctionName extends 'version',
@@ -5740,7 +5697,7 @@ export function useBorrowingContractVersion<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawTimeLimit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractWithdrawTimeLimit<
   TFunctionName extends 'withdrawTimeLimit',
@@ -5770,7 +5727,7 @@ export function useBorrowingContractWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractWrite<
   TFunctionName extends string,
@@ -5806,7 +5763,7 @@ export function useBorrowingContractWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractCalculateCumulativeRate<
   TMode extends WriteContractMode = undefined,
@@ -5849,11 +5806,11 @@ export function useBorrowingContractCalculateCumulativeRate<
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositToAaveProtocol"`.
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateRatio"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
-export function useBorrowingContractDepositToAaveProtocol<
+export function useBorrowingContractCalculateRatio<
   TMode extends WriteContractMode = undefined,
   TChainId extends number = keyof typeof borrowingContractAddress,
 >(
@@ -5861,87 +5818,40 @@ export function useBorrowingContractDepositToAaveProtocol<
     ? UseContractWriteConfig<
         PrepareWriteContractResult<
           typeof borrowingContractABI,
-          'depositToAaveProtocol'
+          'calculateRatio'
         >['request']['abi'],
-        'depositToAaveProtocol',
+        'calculateRatio',
         TMode
       > & {
         address?: Address
         chainId?: TChainId
-        functionName?: 'depositToAaveProtocol'
+        functionName?: 'calculateRatio'
       }
     : UseContractWriteConfig<
         typeof borrowingContractABI,
-        'depositToAaveProtocol',
+        'calculateRatio',
         TMode
       > & {
         abi?: never
         address?: never
         chainId?: TChainId
-        functionName?: 'depositToAaveProtocol'
+        functionName?: 'calculateRatio'
       } = {} as any,
 ) {
-  return useContractWrite<
-    typeof borrowingContractABI,
-    'depositToAaveProtocol',
-    TMode
-  >({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[5],
-    functionName: 'depositToAaveProtocol',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositToCompoundProtocol"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
- */
-export function useBorrowingContractDepositToCompoundProtocol<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'depositToCompoundProtocol'
-        >['request']['abi'],
-        'depositToCompoundProtocol',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'depositToCompoundProtocol'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'depositToCompoundProtocol',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'depositToCompoundProtocol'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof borrowingContractABI,
-    'depositToCompoundProtocol',
-    TMode
-  >({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[5],
-    functionName: 'depositToCompoundProtocol',
-    ...config,
-  } as any)
+  return useContractWrite<typeof borrowingContractABI, 'calculateRatio', TMode>(
+    {
+      abi: borrowingContractABI,
+      address: borrowingContractAddress[5],
+      functionName: 'calculateRatio',
+      ...config,
+    } as any,
+  )
 }
 
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositTokens"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractDepositTokens<
   TMode extends WriteContractMode = undefined,
@@ -5982,7 +5892,7 @@ export function useBorrowingContractDepositTokens<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"initializeTreasury"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractInitializeTreasury<
   TMode extends WriteContractMode = undefined,
@@ -6027,7 +5937,7 @@ export function useBorrowingContractInitializeTreasury<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"liquidate"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractLiquidate<
   TMode extends WriteContractMode = undefined,
@@ -6064,7 +5974,7 @@ export function useBorrowingContractLiquidate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -6109,7 +6019,7 @@ export function useBorrowingContractRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAPR"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractSetApr<
   TMode extends WriteContractMode = undefined,
@@ -6142,7 +6052,7 @@ export function useBorrowingContractSetApr<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAdmin"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractSetAdmin<
   TMode extends WriteContractMode = undefined,
@@ -6173,9 +6083,50 @@ export function useBorrowingContractSetAdmin<
 }
 
 /**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setBondRatio"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
+ */
+export function useBorrowingContractSetBondRatio<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof borrowingContractAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof borrowingContractABI,
+          'setBondRatio'
+        >['request']['abi'],
+        'setBondRatio',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'setBondRatio'
+      }
+    : UseContractWriteConfig<
+        typeof borrowingContractABI,
+        'setBondRatio',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'setBondRatio'
+      } = {} as any,
+) {
+  return useContractWrite<typeof borrowingContractABI, 'setBondRatio', TMode>({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[5],
+    functionName: 'setBondRatio',
+    ...config,
+  } as any)
+}
+
+/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setLTV"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractSetLtv<
   TMode extends WriteContractMode = undefined,
@@ -6208,7 +6159,7 @@ export function useBorrowingContractSetLtv<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setOptions"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractSetOptions<
   TMode extends WriteContractMode = undefined,
@@ -6245,7 +6196,7 @@ export function useBorrowingContractSetOptions<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractSetWithdrawTimeLimit<
   TMode extends WriteContractMode = undefined,
@@ -6290,7 +6241,7 @@ export function useBorrowingContractSetWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -6335,7 +6286,7 @@ export function useBorrowingContractTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"updateLastEthVaultValue"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractUpdateLastEthVaultValue<
   TMode extends WriteContractMode = undefined,
@@ -6380,7 +6331,7 @@ export function useBorrowingContractUpdateLastEthVaultValue<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withDraw"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractWithDraw<
   TMode extends WriteContractMode = undefined,
@@ -6411,99 +6362,9 @@ export function useBorrowingContractWithDraw<
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawFromAaveProtocol"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
- */
-export function useBorrowingContractWithdrawFromAaveProtocol<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'withdrawFromAaveProtocol'
-        >['request']['abi'],
-        'withdrawFromAaveProtocol',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'withdrawFromAaveProtocol'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'withdrawFromAaveProtocol',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'withdrawFromAaveProtocol'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof borrowingContractABI,
-    'withdrawFromAaveProtocol',
-    TMode
-  >({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[5],
-    functionName: 'withdrawFromAaveProtocol',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawFromCompoundProtocol"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
- */
-export function useBorrowingContractWithdrawFromCompoundProtocol<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'withdrawFromCompoundProtocol'
-        >['request']['abi'],
-        'withdrawFromCompoundProtocol',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'withdrawFromCompoundProtocol'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'withdrawFromCompoundProtocol',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'withdrawFromCompoundProtocol'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof borrowingContractABI,
-    'withdrawFromCompoundProtocol',
-    TMode
-  >({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[5],
-    functionName: 'withdrawFromCompoundProtocol',
-    ...config,
-  } as any)
-}
-
-/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractWrite<TFunctionName extends string>(
   config: Omit<
@@ -6524,7 +6385,7 @@ export function usePrepareBorrowingContractWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractCalculateCumulativeRate(
   config: Omit<
@@ -6547,15 +6408,15 @@ export function usePrepareBorrowingContractCalculateCumulativeRate(
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositToAaveProtocol"`.
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateRatio"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
-export function usePrepareBorrowingContractDepositToAaveProtocol(
+export function usePrepareBorrowingContractCalculateRatio(
   config: Omit<
     UsePrepareContractWriteConfig<
       typeof borrowingContractABI,
-      'depositToAaveProtocol'
+      'calculateRatio'
     >,
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
@@ -6563,43 +6424,18 @@ export function usePrepareBorrowingContractDepositToAaveProtocol(
   return usePrepareContractWrite({
     abi: borrowingContractABI,
     address: borrowingContractAddress[5],
-    functionName: 'depositToAaveProtocol',
+    functionName: 'calculateRatio',
     ...config,
   } as UsePrepareContractWriteConfig<
     typeof borrowingContractABI,
-    'depositToAaveProtocol'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositToCompoundProtocol"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
- */
-export function usePrepareBorrowingContractDepositToCompoundProtocol(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof borrowingContractABI,
-      'depositToCompoundProtocol'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[5],
-    functionName: 'depositToCompoundProtocol',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'depositToCompoundProtocol'
+    'calculateRatio'
   >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositTokens"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractDepositTokens(
   config: Omit<
@@ -6621,7 +6457,7 @@ export function usePrepareBorrowingContractDepositTokens(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"initializeTreasury"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractInitializeTreasury(
   config: Omit<
@@ -6646,7 +6482,7 @@ export function usePrepareBorrowingContractInitializeTreasury(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"liquidate"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractLiquidate(
   config: Omit<
@@ -6665,7 +6501,7 @@ export function usePrepareBorrowingContractLiquidate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractRenounceOwnership(
   config: Omit<
@@ -6690,7 +6526,7 @@ export function usePrepareBorrowingContractRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAPR"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractSetApr(
   config: Omit<
@@ -6709,7 +6545,7 @@ export function usePrepareBorrowingContractSetApr(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAdmin"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractSetAdmin(
   config: Omit<
@@ -6726,9 +6562,31 @@ export function usePrepareBorrowingContractSetAdmin(
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setBondRatio"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
+ */
+export function usePrepareBorrowingContractSetBondRatio(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setBondRatio'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[5],
+    functionName: 'setBondRatio',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof borrowingContractABI,
+    'setBondRatio'
+  >)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setLTV"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractSetLtv(
   config: Omit<
@@ -6747,7 +6605,7 @@ export function usePrepareBorrowingContractSetLtv(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setOptions"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractSetOptions(
   config: Omit<
@@ -6766,7 +6624,7 @@ export function usePrepareBorrowingContractSetOptions(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractSetWithdrawTimeLimit(
   config: Omit<
@@ -6791,7 +6649,7 @@ export function usePrepareBorrowingContractSetWithdrawTimeLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractTransferOwnership(
   config: Omit<
@@ -6816,7 +6674,7 @@ export function usePrepareBorrowingContractTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"updateLastEthVaultValue"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractUpdateLastEthVaultValue(
   config: Omit<
@@ -6841,7 +6699,7 @@ export function usePrepareBorrowingContractUpdateLastEthVaultValue(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withDraw"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function usePrepareBorrowingContractWithDraw(
   config: Omit<
@@ -6858,59 +6716,9 @@ export function usePrepareBorrowingContractWithDraw(
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawFromAaveProtocol"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
- */
-export function usePrepareBorrowingContractWithdrawFromAaveProtocol(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof borrowingContractABI,
-      'withdrawFromAaveProtocol'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[5],
-    functionName: 'withdrawFromAaveProtocol',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'withdrawFromAaveProtocol'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withdrawFromCompoundProtocol"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
- */
-export function usePrepareBorrowingContractWithdrawFromCompoundProtocol(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof borrowingContractABI,
-      'withdrawFromCompoundProtocol'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[5],
-    functionName: 'withdrawFromCompoundProtocol',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'withdrawFromCompoundProtocol'
-  >)
-}
-
-/**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractEvent<TEventName extends string>(
   config: Omit<
@@ -6928,7 +6736,7 @@ export function useBorrowingContractEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Deposit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractDepositEvent(
   config: Omit<
@@ -6945,9 +6753,28 @@ export function useBorrowingContractDepositEvent(
 }
 
 /**
+ * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Liquidate"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
+ */
+export function useBorrowingContractLiquidateEvent(
+  config: Omit<
+    UseContractEventConfig<typeof borrowingContractABI, 'Liquidate'>,
+    'abi' | 'address' | 'eventName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractEvent({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[5],
+    eventName: 'Liquidate',
+    ...config,
+  } as UseContractEventConfig<typeof borrowingContractABI, 'Liquidate'>)
+}
+
+/**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractOwnershipTransferredEvent(
   config: Omit<
@@ -6969,7 +6796,7 @@ export function useBorrowingContractOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Withdraw"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x60E1C4C9a093EC773FE1A492E60a92b8b3627cc8)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x504928a9c2BDb625CE285fc448e98111E2C96292)
  */
 export function useBorrowingContractWithdrawEvent(
   config: Omit<
@@ -6988,7 +6815,7 @@ export function useBorrowingContractWithdrawEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsRead<
   TFunctionName extends string,
@@ -7009,7 +6836,7 @@ export function useCdsRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"PRECISION"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsPrecision<
   TFunctionName extends 'PRECISION',
@@ -7031,7 +6858,7 @@ export function useCdsPrecision<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"amint"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsAmint<
   TFunctionName extends 'amint',
@@ -7053,7 +6880,7 @@ export function useCdsAmint<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"amintLimit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsAmintLimit<
   TFunctionName extends 'amintLimit',
@@ -7075,7 +6902,7 @@ export function useCdsAmintLimit<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"borrowing"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsBorrowing<
   TFunctionName extends 'borrowing',
@@ -7097,7 +6924,7 @@ export function useCdsBorrowing<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"borrowingContract"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsBorrowingContract<
   TFunctionName extends 'borrowingContract',
@@ -7117,9 +6944,31 @@ export function useCdsBorrowingContract<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"burnedAmintInRedeem"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
+ */
+export function useCdsBurnedAmintInRedeem<
+  TFunctionName extends 'burnedAmintInRedeem',
+  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof cdsAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: cdsABI,
+    address: cdsAddress[5],
+    functionName: 'burnedAmintInRedeem',
+    ...config,
+  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cdsCount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsCdsCount<
   TFunctionName extends 'cdsCount',
@@ -7141,7 +6990,7 @@ export function useCdsCdsCount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cdsDetails"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsCdsDetails<
   TFunctionName extends 'cdsDetails',
@@ -7161,9 +7010,53 @@ export function useCdsCdsDetails<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cumulativeValue"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
+ */
+export function useCdsCumulativeValue<
+  TFunctionName extends 'cumulativeValue',
+  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof cdsAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: cdsABI,
+    address: cdsAddress[5],
+    functionName: 'cumulativeValue',
+    ...config,
+  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cumulativeValueSign"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
+ */
+export function useCdsCumulativeValueSign<
+  TFunctionName extends 'cumulativeValueSign',
+  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof cdsAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: cdsABI,
+    address: cdsAddress[5],
+    functionName: 'cumulativeValueSign',
+    ...config,
+  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"ethVault"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsEthVault<
   TFunctionName extends 'ethVault',
@@ -7185,7 +7078,7 @@ export function useCdsEthVault<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"fallbackEthPrice"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsFallbackEthPrice<
   TFunctionName extends 'fallbackEthPrice',
@@ -7207,7 +7100,7 @@ export function useCdsFallbackEthPrice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"getCDSDepositDetails"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsGetCdsDepositDetails<
   TFunctionName extends 'getCDSDepositDetails',
@@ -7229,7 +7122,7 @@ export function useCdsGetCdsDepositDetails<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"lastCumulativeRate"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsLastCumulativeRate<
   TFunctionName extends 'lastCumulativeRate',
@@ -7251,7 +7144,7 @@ export function useCdsLastCumulativeRate<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"lastEthPrice"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsLastEthPrice<
   TFunctionName extends 'lastEthPrice',
@@ -7273,7 +7166,7 @@ export function useCdsLastEthPrice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"liquidationIndexToInfo"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsLiquidationIndexToInfo<
   TFunctionName extends 'liquidationIndexToInfo',
@@ -7295,7 +7188,7 @@ export function useCdsLiquidationIndexToInfo<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"multiSign"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsMultiSign<
   TFunctionName extends 'multiSign',
@@ -7317,7 +7210,7 @@ export function useCdsMultiSign<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"owner"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsOwner<
   TFunctionName extends 'owner',
@@ -7339,7 +7232,7 @@ export function useCdsOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalAvailableLiquidationAmount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsTotalAvailableLiquidationAmount<
   TFunctionName extends 'totalAvailableLiquidationAmount',
@@ -7361,7 +7254,7 @@ export function useCdsTotalAvailableLiquidationAmount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalCdsDepositedAmount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsTotalCdsDepositedAmount<
   TFunctionName extends 'totalCdsDepositedAmount',
@@ -7381,9 +7274,31 @@ export function useCdsTotalCdsDepositedAmount<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalCdsDepositedAmountWithOptionFees"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
+ */
+export function useCdsTotalCdsDepositedAmountWithOptionFees<
+  TFunctionName extends 'totalCdsDepositedAmountWithOptionFees',
+  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof cdsAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: cdsABI,
+    address: cdsAddress[5],
+    functionName: 'totalCdsDepositedAmountWithOptionFees',
+    ...config,
+  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"treasury"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsTreasury<
   TFunctionName extends 'treasury',
@@ -7405,7 +7320,7 @@ export function useCdsTreasury<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"treasuryAddress"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsTreasuryAddress<
   TFunctionName extends 'treasuryAddress',
@@ -7427,7 +7342,7 @@ export function useCdsTreasuryAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"usdt"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsUsdt<
   TFunctionName extends 'usdt',
@@ -7449,7 +7364,7 @@ export function useCdsUsdt<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"usdtAmountDepositedTillNow"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsUsdtAmountDepositedTillNow<
   TFunctionName extends 'usdtAmountDepositedTillNow',
@@ -7471,7 +7386,7 @@ export function useCdsUsdtAmountDepositedTillNow<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"usdtLimit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsUsdtLimit<
   TFunctionName extends 'usdtLimit',
@@ -7493,7 +7408,7 @@ export function useCdsUsdtLimit<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdrawTimeLimit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsWithdrawTimeLimit<
   TFunctionName extends 'withdrawTimeLimit',
@@ -7515,7 +7430,7 @@ export function useCdsWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsWrite<
   TFunctionName extends string,
@@ -7544,7 +7459,7 @@ export function useCdsWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsCalculateCumulativeRate<
   TMode extends WriteContractMode = undefined,
@@ -7585,7 +7500,7 @@ export function useCdsCalculateCumulativeRate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"deposit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsDeposit<
   TMode extends WriteContractMode = undefined,
@@ -7615,7 +7530,7 @@ export function useCdsDeposit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"redeemUSDT"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsRedeemUsdt<
   TMode extends WriteContractMode = undefined,
@@ -7648,7 +7563,7 @@ export function useCdsRedeemUsdt<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -7685,7 +7600,7 @@ export function useCdsRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setAmintLimit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsSetAmintLimit<
   TMode extends WriteContractMode = undefined,
@@ -7722,7 +7637,7 @@ export function useCdsSetAmintLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsSetBorrowingContract<
   TMode extends WriteContractMode = undefined,
@@ -7759,7 +7674,7 @@ export function useCdsSetBorrowingContract<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setTreasury"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsSetTreasury<
   TMode extends WriteContractMode = undefined,
@@ -7796,7 +7711,7 @@ export function useCdsSetTreasury<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setUsdtLimit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsSetUsdtLimit<
   TMode extends WriteContractMode = undefined,
@@ -7833,7 +7748,7 @@ export function useCdsSetUsdtLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsSetWithdrawTimeLimit<
   TMode extends WriteContractMode = undefined,
@@ -7870,7 +7785,7 @@ export function useCdsSetWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -7907,7 +7822,7 @@ export function useCdsTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateLiquidationInfo"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsUpdateLiquidationInfo<
   TMode extends WriteContractMode = undefined,
@@ -7944,7 +7859,7 @@ export function useCdsUpdateLiquidationInfo<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalAvailableLiquidationAmount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsUpdateTotalAvailableLiquidationAmount<
   TMode extends WriteContractMode = undefined,
@@ -7989,7 +7904,7 @@ export function useCdsUpdateTotalAvailableLiquidationAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsUpdateTotalCdsDepositedAmount<
   TMode extends WriteContractMode = undefined,
@@ -8032,9 +7947,54 @@ export function useCdsUpdateTotalCdsDepositedAmount<
 }
 
 /**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmountWithOptionFees"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
+ */
+export function useCdsUpdateTotalCdsDepositedAmountWithOptionFees<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof cdsAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof cdsABI,
+          'updateTotalCdsDepositedAmountWithOptionFees'
+        >['request']['abi'],
+        'updateTotalCdsDepositedAmountWithOptionFees',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateTotalCdsDepositedAmountWithOptionFees'
+      }
+    : UseContractWriteConfig<
+        typeof cdsABI,
+        'updateTotalCdsDepositedAmountWithOptionFees',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateTotalCdsDepositedAmountWithOptionFees'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof cdsABI,
+    'updateTotalCdsDepositedAmountWithOptionFees',
+    TMode
+  >({
+    abi: cdsABI,
+    address: cdsAddress[5],
+    functionName: 'updateTotalCdsDepositedAmountWithOptionFees',
+    ...config,
+  } as any)
+}
+
+/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdraw"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsWithdraw<
   TMode extends WriteContractMode = undefined,
@@ -8064,7 +8024,7 @@ export function useCdsWithdraw<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsWrite<TFunctionName extends string>(
   config: Omit<
@@ -8082,7 +8042,7 @@ export function usePrepareCdsWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsCalculateCumulativeRate(
   config: Omit<
@@ -8101,7 +8061,7 @@ export function usePrepareCdsCalculateCumulativeRate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"deposit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsDeposit(
   config: Omit<
@@ -8120,7 +8080,7 @@ export function usePrepareCdsDeposit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"redeemUSDT"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsRedeemUsdt(
   config: Omit<
@@ -8139,7 +8099,7 @@ export function usePrepareCdsRedeemUsdt(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsRenounceOwnership(
   config: Omit<
@@ -8158,7 +8118,7 @@ export function usePrepareCdsRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setAmintLimit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsSetAmintLimit(
   config: Omit<
@@ -8177,7 +8137,7 @@ export function usePrepareCdsSetAmintLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsSetBorrowingContract(
   config: Omit<
@@ -8196,7 +8156,7 @@ export function usePrepareCdsSetBorrowingContract(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setTreasury"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsSetTreasury(
   config: Omit<
@@ -8215,7 +8175,7 @@ export function usePrepareCdsSetTreasury(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setUsdtLimit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsSetUsdtLimit(
   config: Omit<
@@ -8234,7 +8194,7 @@ export function usePrepareCdsSetUsdtLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsSetWithdrawTimeLimit(
   config: Omit<
@@ -8253,7 +8213,7 @@ export function usePrepareCdsSetWithdrawTimeLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsTransferOwnership(
   config: Omit<
@@ -8272,7 +8232,7 @@ export function usePrepareCdsTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateLiquidationInfo"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsUpdateLiquidationInfo(
   config: Omit<
@@ -8291,7 +8251,7 @@ export function usePrepareCdsUpdateLiquidationInfo(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalAvailableLiquidationAmount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsUpdateTotalAvailableLiquidationAmount(
   config: Omit<
@@ -8316,7 +8276,7 @@ export function usePrepareCdsUpdateTotalAvailableLiquidationAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsUpdateTotalCdsDepositedAmount(
   config: Omit<
@@ -8339,9 +8299,34 @@ export function usePrepareCdsUpdateTotalCdsDepositedAmount(
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmountWithOptionFees"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
+ */
+export function usePrepareCdsUpdateTotalCdsDepositedAmountWithOptionFees(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof cdsABI,
+      'updateTotalCdsDepositedAmountWithOptionFees'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof cdsAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: cdsABI,
+    address: cdsAddress[5],
+    functionName: 'updateTotalCdsDepositedAmountWithOptionFees',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof cdsABI,
+    'updateTotalCdsDepositedAmountWithOptionFees'
+  >)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdraw"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function usePrepareCdsWithdraw(
   config: Omit<
@@ -8360,7 +8345,7 @@ export function usePrepareCdsWithdraw(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsEvent<TEventName extends string>(
   config: Omit<
@@ -8378,7 +8363,7 @@ export function useCdsEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Deposit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsDepositEvent(
   config: Omit<
@@ -8397,7 +8382,7 @@ export function useCdsDepositEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsOwnershipTransferredEvent(
   config: Omit<
@@ -8416,7 +8401,7 @@ export function useCdsOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Withdraw"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x301c0751e8671A60Eb22A2376F12E366F83BEeb2)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x5092cA24929bc31e5Bd7d7E18C3d0091fe896D7c)
  */
 export function useCdsWithdrawEvent(
   config: Omit<
@@ -8435,7 +8420,7 @@ export function useCdsWithdrawEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAc7A5B24377822927438f887F2A4e994fe0c95A1)
  */
 export function useOptionsRead<
   TFunctionName extends string,
@@ -8456,7 +8441,7 @@ export function useOptionsRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"calculateOptionPrice"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAc7A5B24377822927438f887F2A4e994fe0c95A1)
  */
 export function useOptionsCalculateOptionPrice<
   TFunctionName extends 'calculateOptionPrice',
@@ -8478,7 +8463,7 @@ export function useOptionsCalculateOptionPrice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"calculateStandardDeviation"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAc7A5B24377822927438f887F2A4e994fe0c95A1)
  */
 export function useOptionsCalculateStandardDeviation<
   TFunctionName extends 'calculateStandardDeviation',
@@ -8500,7 +8485,7 @@ export function useOptionsCalculateStandardDeviation<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"getLatestPrice"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAc7A5B24377822927438f887F2A4e994fe0c95A1)
  */
 export function useOptionsGetLatestPrice<
   TFunctionName extends 'getLatestPrice',
@@ -8522,7 +8507,7 @@ export function useOptionsGetLatestPrice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"withdrawOption"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAc7A5B24377822927438f887F2A4e994fe0c95A1)
  */
 export function useOptionsWithdrawOption<
   TFunctionName extends 'withdrawOption',
@@ -8544,7 +8529,7 @@ export function useOptionsWithdrawOption<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAc7A5B24377822927438f887F2A4e994fe0c95A1)
  */
 export function useOptionsWrite<
   TFunctionName extends string,
@@ -8573,7 +8558,7 @@ export function useOptionsWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"updateDailyEMA"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAc7A5B24377822927438f887F2A4e994fe0c95A1)
  */
 export function useOptionsUpdateDailyEma<
   TMode extends WriteContractMode = undefined,
@@ -8610,7 +8595,7 @@ export function useOptionsUpdateDailyEma<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAc7A5B24377822927438f887F2A4e994fe0c95A1)
  */
 export function usePrepareOptionsWrite<TFunctionName extends string>(
   config: Omit<
@@ -8628,7 +8613,7 @@ export function usePrepareOptionsWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"updateDailyEMA"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x780F7C24e3d940d04E65A7d7602D09B7cE310df1)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xAc7A5B24377822927438f887F2A4e994fe0c95A1)
  */
 export function usePrepareOptionsUpdateDailyEma(
   config: Omit<
@@ -9016,7 +9001,7 @@ export function usePrepareQuoterQuoteExactOutputSingle(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryRead<
   TFunctionName extends string,
@@ -9037,7 +9022,7 @@ export function useTreasuryRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aToken"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryAToken<
   TFunctionName extends 'aToken',
@@ -9059,7 +9044,7 @@ export function useTreasuryAToken<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aavePoolAddressProvider"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryAavePoolAddressProvider<
   TFunctionName extends 'aavePoolAddressProvider',
@@ -9081,7 +9066,7 @@ export function useTreasuryAavePoolAddressProvider<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aaveWETH"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryAaveWeth<
   TFunctionName extends 'aaveWETH',
@@ -9101,9 +9086,31 @@ export function useTreasuryAaveWeth<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"abondAmintPool"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
+ */
+export function useTreasuryAbondAmintPool<
+  TFunctionName extends 'abondAmintPool',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'abondAmintPool',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"amint"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryAmint<
   TFunctionName extends 'amint',
@@ -9125,7 +9132,7 @@ export function useTreasuryAmint<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrow"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryBorrow<
   TFunctionName extends 'borrow',
@@ -9147,7 +9154,7 @@ export function useTreasuryBorrow<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrowing"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryBorrowing<
   TFunctionName extends 'borrowing',
@@ -9169,7 +9176,7 @@ export function useTreasuryBorrowing<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrowingContract"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryBorrowingContract<
   TFunctionName extends 'borrowingContract',
@@ -9191,7 +9198,7 @@ export function useTreasuryBorrowingContract<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"cEther"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryCEther<
   TFunctionName extends 'cEther',
@@ -9211,31 +9218,9 @@ export function useTreasuryCEther<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"calculateInterestForDepositAave"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
- */
-export function useTreasuryCalculateInterestForDepositAave<
-  TFunctionName extends 'calculateInterestForDepositAave',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[5],
-    functionName: 'calculateInterestForDepositAave',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
-
-/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"cdsContract"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryCdsContract<
   TFunctionName extends 'cdsContract',
@@ -9257,7 +9242,7 @@ export function useTreasuryCdsContract<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"compoundAddress"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryCompoundAddress<
   TFunctionName extends 'compoundAddress',
@@ -9277,9 +9262,31 @@ export function useTreasuryCompoundAddress<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"ethProfitsOfLiquidators"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
+ */
+export function useTreasuryEthProfitsOfLiquidators<
+  TFunctionName extends 'ethProfitsOfLiquidators',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'ethProfitsOfLiquidators',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"externalProtocolDepositCount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryExternalProtocolDepositCount<
   TFunctionName extends 'externalProtocolDepositCount',
@@ -9301,7 +9308,7 @@ export function useTreasuryExternalProtocolDepositCount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getBalanceInTreasury"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryGetBalanceInTreasury<
   TFunctionName extends 'getBalanceInTreasury',
@@ -9323,7 +9330,7 @@ export function useTreasuryGetBalanceInTreasury<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getBorrowing"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryGetBorrowing<
   TFunctionName extends 'getBorrowing',
@@ -9343,9 +9350,31 @@ export function useTreasuryGetBorrowing<
 }
 
 /**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"interestFromExternalProtocolDuringLiquidation"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
+ */
+export function useTreasuryInterestFromExternalProtocolDuringLiquidation<
+  TFunctionName extends 'interestFromExternalProtocolDuringLiquidation',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'interestFromExternalProtocolDuringLiquidation',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"noOfBorrowers"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryNoOfBorrowers<
   TFunctionName extends 'noOfBorrowers',
@@ -9367,7 +9396,7 @@ export function useTreasuryNoOfBorrowers<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"owner"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryOwner<
   TFunctionName extends 'owner',
@@ -9389,7 +9418,7 @@ export function useTreasuryOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"protocolDeposit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryProtocolDeposit<
   TFunctionName extends 'protocolDeposit',
@@ -9411,7 +9440,7 @@ export function useTreasuryProtocolDeposit<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalInterest"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryTotalInterest<
   TFunctionName extends 'totalInterest',
@@ -9431,31 +9460,9 @@ export function useTreasuryTotalInterest<
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalInterestFromExternalProtocol"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
- */
-export function useTreasuryTotalInterestFromExternalProtocol<
-  TFunctionName extends 'totalInterestFromExternalProtocol',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[5],
-    functionName: 'totalInterestFromExternalProtocol',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
-
-/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalInterestFromLiquidation"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryTotalInterestFromLiquidation<
   TFunctionName extends 'totalInterestFromLiquidation',
@@ -9477,7 +9484,7 @@ export function useTreasuryTotalInterestFromLiquidation<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalVolumeOfBorrowersAmountinUSD"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryTotalVolumeOfBorrowersAmountinUsd<
   TFunctionName extends 'totalVolumeOfBorrowersAmountinUSD',
@@ -9499,7 +9506,7 @@ export function useTreasuryTotalVolumeOfBorrowersAmountinUsd<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalVolumeOfBorrowersAmountinWei"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryTotalVolumeOfBorrowersAmountinWei<
   TFunctionName extends 'totalVolumeOfBorrowersAmountinWei',
@@ -9521,7 +9528,7 @@ export function useTreasuryTotalVolumeOfBorrowersAmountinWei<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"usdt"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryUsdt<
   TFunctionName extends 'usdt',
@@ -9543,7 +9550,7 @@ export function useTreasuryUsdt<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"wethGateway"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryWethGateway<
   TFunctionName extends 'wethGateway',
@@ -9565,7 +9572,7 @@ export function useTreasuryWethGateway<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryWrite<
   TFunctionName extends string,
@@ -9597,7 +9604,7 @@ export function useTreasuryWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveAmint"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryApproveAmint<
   TMode extends WriteContractMode = undefined,
@@ -9634,7 +9641,7 @@ export function useTreasuryApproveAmint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveUsdt"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryApproveUsdt<
   TMode extends WriteContractMode = undefined,
@@ -9671,7 +9678,7 @@ export function useTreasuryApproveUsdt<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"deposit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryDeposit<
   TMode extends WriteContractMode = undefined,
@@ -9702,173 +9709,9 @@ export function useTreasuryDeposit<
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"depositToAave"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
- */
-export function useTreasuryDepositToAave<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'depositToAave'
-        >['request']['abi'],
-        'depositToAave',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'depositToAave'
-      }
-    : UseContractWriteConfig<typeof treasuryABI, 'depositToAave', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'depositToAave'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'depositToAave', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[5],
-    functionName: 'depositToAave',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"depositToCompound"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
- */
-export function useTreasuryDepositToCompound<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'depositToCompound'
-        >['request']['abi'],
-        'depositToCompound',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'depositToCompound'
-      }
-    : UseContractWriteConfig<typeof treasuryABI, 'depositToCompound', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'depositToCompound'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'depositToCompound', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[5],
-    functionName: 'depositToCompound',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getInterestForCompoundDeposit"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
- */
-export function useTreasuryGetInterestForCompoundDeposit<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'getInterestForCompoundDeposit'
-        >['request']['abi'],
-        'getInterestForCompoundDeposit',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'getInterestForCompoundDeposit'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'getInterestForCompoundDeposit',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'getInterestForCompoundDeposit'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof treasuryABI,
-    'getInterestForCompoundDeposit',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[5],
-    functionName: 'getInterestForCompoundDeposit',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"increaseExternalProtocolCount"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
- */
-export function useTreasuryIncreaseExternalProtocolCount<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'increaseExternalProtocolCount'
-        >['request']['abi'],
-        'increaseExternalProtocolCount',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'increaseExternalProtocolCount'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'increaseExternalProtocolCount',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'increaseExternalProtocolCount'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof treasuryABI,
-    'increaseExternalProtocolCount',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[5],
-    functionName: 'increaseExternalProtocolCount',
-    ...config,
-  } as any)
-}
-
-/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -9905,7 +9748,7 @@ export function useTreasuryRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasurySetBorrowingContract<
   TMode extends WriteContractMode = undefined,
@@ -9946,7 +9789,7 @@ export function useTreasurySetBorrowingContract<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferEthToCdsLiquidators"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryTransferEthToCdsLiquidators<
   TMode extends WriteContractMode = undefined,
@@ -9991,7 +9834,7 @@ export function useTreasuryTransferEthToCdsLiquidators<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -10026,9 +9869,50 @@ export function useTreasuryTransferOwnership<
 }
 
 /**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateAbondAmintPool"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
+ */
+export function useTreasuryUpdateAbondAmintPool<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateAbondAmintPool'
+        >['request']['abi'],
+        'updateAbondAmintPool',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateAbondAmintPool'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'updateAbondAmintPool',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateAbondAmintPool'
+      } = {} as any,
+) {
+  return useContractWrite<typeof treasuryABI, 'updateAbondAmintPool', TMode>({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'updateAbondAmintPool',
+    ...config,
+  } as any)
+}
+
+/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateDepositDetails"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryUpdateDepositDetails<
   TMode extends WriteContractMode = undefined,
@@ -10067,9 +9951,54 @@ export function useTreasuryUpdateDepositDetails<
 }
 
 /**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateEthProfitsOfLiquidators"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
+ */
+export function useTreasuryUpdateEthProfitsOfLiquidators<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateEthProfitsOfLiquidators'
+        >['request']['abi'],
+        'updateEthProfitsOfLiquidators',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateEthProfitsOfLiquidators'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'updateEthProfitsOfLiquidators',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateEthProfitsOfLiquidators'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof treasuryABI,
+    'updateEthProfitsOfLiquidators',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'updateEthProfitsOfLiquidators',
+    ...config,
+  } as any)
+}
+
+/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateHasBorrowed"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryUpdateHasBorrowed<
   TMode extends WriteContractMode = undefined,
@@ -10104,9 +10033,54 @@ export function useTreasuryUpdateHasBorrowed<
 }
 
 /**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateInterestFromExternalProtocol"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
+ */
+export function useTreasuryUpdateInterestFromExternalProtocol<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'updateInterestFromExternalProtocol'
+        >['request']['abi'],
+        'updateInterestFromExternalProtocol',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'updateInterestFromExternalProtocol'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'updateInterestFromExternalProtocol',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'updateInterestFromExternalProtocol'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof treasuryABI,
+    'updateInterestFromExternalProtocol',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'updateInterestFromExternalProtocol',
+    ...config,
+  } as any)
+}
+
+/**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalAbondTokensDecrease"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryUpdateTotalAbondTokensDecrease<
   TMode extends WriteContractMode = undefined,
@@ -10151,7 +10125,7 @@ export function useTreasuryUpdateTotalAbondTokensDecrease<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalAbondTokensIncrease"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryUpdateTotalAbondTokensIncrease<
   TMode extends WriteContractMode = undefined,
@@ -10196,7 +10170,7 @@ export function useTreasuryUpdateTotalAbondTokensIncrease<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalBorrowedAmount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryUpdateTotalBorrowedAmount<
   TMode extends WriteContractMode = undefined,
@@ -10241,7 +10215,7 @@ export function useTreasuryUpdateTotalBorrowedAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalDepositedAmount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryUpdateTotalDepositedAmount<
   TMode extends WriteContractMode = undefined,
@@ -10286,7 +10260,7 @@ export function useTreasuryUpdateTotalDepositedAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterest"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryUpdateTotalInterest<
   TMode extends WriteContractMode = undefined,
@@ -10327,7 +10301,7 @@ export function useTreasuryUpdateTotalInterest<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterestFromLiquidation"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryUpdateTotalInterestFromLiquidation<
   TMode extends WriteContractMode = undefined,
@@ -10372,7 +10346,7 @@ export function useTreasuryUpdateTotalInterestFromLiquidation<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdraw"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryWithdraw<
   TMode extends WriteContractMode = undefined,
@@ -10403,11 +10377,11 @@ export function useTreasuryWithdraw<
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromAave"`.
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawExternalProtocolInterest"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
-export function useTreasuryWithdrawFromAave<
+export function useTreasuryWithdrawExternalProtocolInterest<
   TMode extends WriteContractMode = undefined,
   TChainId extends number = keyof typeof treasuryAddress,
 >(
@@ -10415,36 +10389,44 @@ export function useTreasuryWithdrawFromAave<
     ? UseContractWriteConfig<
         PrepareWriteContractResult<
           typeof treasuryABI,
-          'withdrawFromAave'
+          'withdrawExternalProtocolInterest'
         >['request']['abi'],
-        'withdrawFromAave',
+        'withdrawExternalProtocolInterest',
         TMode
       > & {
         address?: Address
         chainId?: TChainId
-        functionName?: 'withdrawFromAave'
+        functionName?: 'withdrawExternalProtocolInterest'
       }
-    : UseContractWriteConfig<typeof treasuryABI, 'withdrawFromAave', TMode> & {
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'withdrawExternalProtocolInterest',
+        TMode
+      > & {
         abi?: never
         address?: never
         chainId?: TChainId
-        functionName?: 'withdrawFromAave'
+        functionName?: 'withdrawExternalProtocolInterest'
       } = {} as any,
 ) {
-  return useContractWrite<typeof treasuryABI, 'withdrawFromAave', TMode>({
+  return useContractWrite<
+    typeof treasuryABI,
+    'withdrawExternalProtocolInterest',
+    TMode
+  >({
     abi: treasuryABI,
     address: treasuryAddress[5],
-    functionName: 'withdrawFromAave',
+    functionName: 'withdrawExternalProtocolInterest',
     ...config,
   } as any)
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromCompound"`.
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromAaveByUser"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
-export function useTreasuryWithdrawFromCompound<
+export function useTreasuryWithdrawFromAaveByUser<
   TMode extends WriteContractMode = undefined,
   TChainId extends number = keyof typeof treasuryAddress,
 >(
@@ -10452,30 +10434,75 @@ export function useTreasuryWithdrawFromCompound<
     ? UseContractWriteConfig<
         PrepareWriteContractResult<
           typeof treasuryABI,
-          'withdrawFromCompound'
+          'withdrawFromAaveByUser'
         >['request']['abi'],
-        'withdrawFromCompound',
+        'withdrawFromAaveByUser',
         TMode
       > & {
         address?: Address
         chainId?: TChainId
-        functionName?: 'withdrawFromCompound'
+        functionName?: 'withdrawFromAaveByUser'
       }
     : UseContractWriteConfig<
         typeof treasuryABI,
-        'withdrawFromCompound',
+        'withdrawFromAaveByUser',
         TMode
       > & {
         abi?: never
         address?: never
         chainId?: TChainId
-        functionName?: 'withdrawFromCompound'
+        functionName?: 'withdrawFromAaveByUser'
       } = {} as any,
 ) {
-  return useContractWrite<typeof treasuryABI, 'withdrawFromCompound', TMode>({
+  return useContractWrite<typeof treasuryABI, 'withdrawFromAaveByUser', TMode>({
     abi: treasuryABI,
     address: treasuryAddress[5],
-    functionName: 'withdrawFromCompound',
+    functionName: 'withdrawFromAaveByUser',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromCompoundByUser"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
+ */
+export function useTreasuryWithdrawFromCompoundByUser<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof treasuryAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof treasuryABI,
+          'withdrawFromCompoundByUser'
+        >['request']['abi'],
+        'withdrawFromCompoundByUser',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'withdrawFromCompoundByUser'
+      }
+    : UseContractWriteConfig<
+        typeof treasuryABI,
+        'withdrawFromCompoundByUser',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'withdrawFromCompoundByUser'
+      } = {} as any,
+) {
+  return useContractWrite<
+    typeof treasuryABI,
+    'withdrawFromCompoundByUser',
+    TMode
+  >({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'withdrawFromCompoundByUser',
     ...config,
   } as any)
 }
@@ -10483,7 +10510,7 @@ export function useTreasuryWithdrawFromCompound<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawInterest"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryWithdrawInterest<
   TMode extends WriteContractMode = undefined,
@@ -10520,7 +10547,7 @@ export function useTreasuryWithdrawInterest<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryWrite<TFunctionName extends string>(
   config: Omit<
@@ -10538,7 +10565,7 @@ export function usePrepareTreasuryWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveAmint"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryApproveAmint(
   config: Omit<
@@ -10557,7 +10584,7 @@ export function usePrepareTreasuryApproveAmint(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveUsdt"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryApproveUsdt(
   config: Omit<
@@ -10576,7 +10603,7 @@ export function usePrepareTreasuryApproveUsdt(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"deposit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryDeposit(
   config: Omit<
@@ -10593,97 +10620,9 @@ export function usePrepareTreasuryDeposit(
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"depositToAave"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
- */
-export function usePrepareTreasuryDepositToAave(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'depositToAave'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[5],
-    functionName: 'depositToAave',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'depositToAave'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"depositToCompound"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
- */
-export function usePrepareTreasuryDepositToCompound(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'depositToCompound'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[5],
-    functionName: 'depositToCompound',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'depositToCompound'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getInterestForCompoundDeposit"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
- */
-export function usePrepareTreasuryGetInterestForCompoundDeposit(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'getInterestForCompoundDeposit'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[5],
-    functionName: 'getInterestForCompoundDeposit',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'getInterestForCompoundDeposit'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"increaseExternalProtocolCount"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
- */
-export function usePrepareTreasuryIncreaseExternalProtocolCount(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'increaseExternalProtocolCount'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[5],
-    functionName: 'increaseExternalProtocolCount',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'increaseExternalProtocolCount'
-  >)
-}
-
-/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryRenounceOwnership(
   config: Omit<
@@ -10702,7 +10641,7 @@ export function usePrepareTreasuryRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasurySetBorrowingContract(
   config: Omit<
@@ -10724,7 +10663,7 @@ export function usePrepareTreasurySetBorrowingContract(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferEthToCdsLiquidators"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryTransferEthToCdsLiquidators(
   config: Omit<
@@ -10749,7 +10688,7 @@ export function usePrepareTreasuryTransferEthToCdsLiquidators(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryTransferOwnership(
   config: Omit<
@@ -10766,9 +10705,31 @@ export function usePrepareTreasuryTransferOwnership(
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateAbondAmintPool"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
+ */
+export function usePrepareTreasuryUpdateAbondAmintPool(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'updateAbondAmintPool'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'updateAbondAmintPool',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'updateAbondAmintPool'
+  >)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateDepositDetails"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryUpdateDepositDetails(
   config: Omit<
@@ -10788,9 +10749,34 @@ export function usePrepareTreasuryUpdateDepositDetails(
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateEthProfitsOfLiquidators"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
+ */
+export function usePrepareTreasuryUpdateEthProfitsOfLiquidators(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'updateEthProfitsOfLiquidators'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'updateEthProfitsOfLiquidators',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'updateEthProfitsOfLiquidators'
+  >)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateHasBorrowed"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryUpdateHasBorrowed(
   config: Omit<
@@ -10807,9 +10793,34 @@ export function usePrepareTreasuryUpdateHasBorrowed(
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateInterestFromExternalProtocol"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
+ */
+export function usePrepareTreasuryUpdateInterestFromExternalProtocol(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'updateInterestFromExternalProtocol'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'updateInterestFromExternalProtocol',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'updateInterestFromExternalProtocol'
+  >)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalAbondTokensDecrease"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryUpdateTotalAbondTokensDecrease(
   config: Omit<
@@ -10834,7 +10845,7 @@ export function usePrepareTreasuryUpdateTotalAbondTokensDecrease(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalAbondTokensIncrease"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryUpdateTotalAbondTokensIncrease(
   config: Omit<
@@ -10859,7 +10870,7 @@ export function usePrepareTreasuryUpdateTotalAbondTokensIncrease(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalBorrowedAmount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryUpdateTotalBorrowedAmount(
   config: Omit<
@@ -10884,7 +10895,7 @@ export function usePrepareTreasuryUpdateTotalBorrowedAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalDepositedAmount"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryUpdateTotalDepositedAmount(
   config: Omit<
@@ -10909,7 +10920,7 @@ export function usePrepareTreasuryUpdateTotalDepositedAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterest"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryUpdateTotalInterest(
   config: Omit<
@@ -10928,7 +10939,7 @@ export function usePrepareTreasuryUpdateTotalInterest(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterestFromLiquidation"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryUpdateTotalInterestFromLiquidation(
   config: Omit<
@@ -10953,7 +10964,7 @@ export function usePrepareTreasuryUpdateTotalInterestFromLiquidation(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdraw"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryWithdraw(
   config: Omit<
@@ -10970,50 +10981,81 @@ export function usePrepareTreasuryWithdraw(
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromAave"`.
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawExternalProtocolInterest"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
-export function usePrepareTreasuryWithdrawFromAave(
+export function usePrepareTreasuryWithdrawExternalProtocolInterest(
   config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawFromAave'>,
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'withdrawExternalProtocolInterest'
+    >,
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
   return usePrepareContractWrite({
     abi: treasuryABI,
     address: treasuryAddress[5],
-    functionName: 'withdrawFromAave',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawFromAave'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromCompound"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
- */
-export function usePrepareTreasuryWithdrawFromCompound(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawFromCompound'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[5],
-    functionName: 'withdrawFromCompound',
+    functionName: 'withdrawExternalProtocolInterest',
     ...config,
   } as UsePrepareContractWriteConfig<
     typeof treasuryABI,
-    'withdrawFromCompound'
+    'withdrawExternalProtocolInterest'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromAaveByUser"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
+ */
+export function usePrepareTreasuryWithdrawFromAaveByUser(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawFromAaveByUser'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'withdrawFromAaveByUser',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'withdrawFromAaveByUser'
+  >)
+}
+
+/**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromCompoundByUser"`.
+ *
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
+ */
+export function usePrepareTreasuryWithdrawFromCompoundByUser(
+  config: Omit<
+    UsePrepareContractWriteConfig<
+      typeof treasuryABI,
+      'withdrawFromCompoundByUser'
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: treasuryABI,
+    address: treasuryAddress[5],
+    functionName: 'withdrawFromCompoundByUser',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof treasuryABI,
+    'withdrawFromCompoundByUser'
   >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawInterest"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function usePrepareTreasuryWithdrawInterest(
   config: Omit<
@@ -11032,7 +11074,7 @@ export function usePrepareTreasuryWithdrawInterest(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryEvent<TEventName extends string>(
   config: Omit<
@@ -11050,7 +11092,7 @@ export function useTreasuryEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Deposit"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryDepositEvent(
   config: Omit<
@@ -11069,7 +11111,7 @@ export function useTreasuryDepositEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"DepositToAave"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryDepositToAaveEvent(
   config: Omit<
@@ -11088,7 +11130,7 @@ export function useTreasuryDepositToAaveEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"DepositToCompound"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryDepositToCompoundEvent(
   config: Omit<
@@ -11107,7 +11149,7 @@ export function useTreasuryDepositToCompoundEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryOwnershipTransferredEvent(
   config: Omit<
@@ -11126,7 +11168,7 @@ export function useTreasuryOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Withdraw"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryWithdrawEvent(
   config: Omit<
@@ -11145,7 +11187,7 @@ export function useTreasuryWithdrawEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"WithdrawFromAave"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryWithdrawFromAaveEvent(
   config: Omit<
@@ -11164,7 +11206,7 @@ export function useTreasuryWithdrawFromAaveEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"WithdrawFromCompound"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x25cBdB496F5E51238173fd46a9516494d57fE0E9)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7564dceC10DF58E61D930Fd3F78462E356fb7aC7)
  */
 export function useTreasuryWithdrawFromCompoundEvent(
   config: Omit<
@@ -11183,7 +11225,7 @@ export function useTreasuryWithdrawFromCompoundEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractRead<
   TFunctionName extends string,
@@ -11208,7 +11250,7 @@ export function useUsdtContractRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"allowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractAllowance<
   TFunctionName extends 'allowance',
@@ -11234,7 +11276,7 @@ export function useUsdtContractAllowance<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"balanceOf"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractBalanceOf<
   TFunctionName extends 'balanceOf',
@@ -11260,7 +11302,7 @@ export function useUsdtContractBalanceOf<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"decimals"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractDecimals<
   TFunctionName extends 'decimals',
@@ -11286,7 +11328,7 @@ export function useUsdtContractDecimals<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"name"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractName<
   TFunctionName extends 'name',
@@ -11312,7 +11354,7 @@ export function useUsdtContractName<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"owner"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractOwner<
   TFunctionName extends 'owner',
@@ -11338,7 +11380,7 @@ export function useUsdtContractOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"paused"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractPaused<
   TFunctionName extends 'paused',
@@ -11364,7 +11406,7 @@ export function useUsdtContractPaused<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"symbol"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractSymbol<
   TFunctionName extends 'symbol',
@@ -11390,7 +11432,7 @@ export function useUsdtContractSymbol<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"totalSupply"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractTotalSupply<
   TFunctionName extends 'totalSupply',
@@ -11416,7 +11458,7 @@ export function useUsdtContractTotalSupply<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"whitelist"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractWhitelist<
   TFunctionName extends 'whitelist',
@@ -11442,7 +11484,7 @@ export function useUsdtContractWhitelist<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractWrite<
   TFunctionName extends string,
@@ -11474,7 +11516,7 @@ export function useUsdtContractWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"approve"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractApprove<
   TMode extends WriteContractMode = undefined,
@@ -11507,7 +11549,7 @@ export function useUsdtContractApprove<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burn"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractBurn<
   TMode extends WriteContractMode = undefined,
@@ -11540,7 +11582,7 @@ export function useUsdtContractBurn<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFrom"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractBurnFrom<
   TMode extends WriteContractMode = undefined,
@@ -11573,7 +11615,7 @@ export function useUsdtContractBurnFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractBurnFromUser<
   TMode extends WriteContractMode = undefined,
@@ -11610,7 +11652,7 @@ export function useUsdtContractBurnFromUser<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"decreaseAllowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractDecreaseAllowance<
   TMode extends WriteContractMode = undefined,
@@ -11651,7 +11693,7 @@ export function useUsdtContractDecreaseAllowance<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"increaseAllowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractIncreaseAllowance<
   TMode extends WriteContractMode = undefined,
@@ -11692,7 +11734,7 @@ export function useUsdtContractIncreaseAllowance<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"mint"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractMint<
   TMode extends WriteContractMode = undefined,
@@ -11725,7 +11767,7 @@ export function useUsdtContractMint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"pause"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractPause<
   TMode extends WriteContractMode = undefined,
@@ -11758,7 +11800,7 @@ export function useUsdtContractPause<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -11799,7 +11841,7 @@ export function useUsdtContractRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transfer"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractTransfer<
   TMode extends WriteContractMode = undefined,
@@ -11832,7 +11874,7 @@ export function useUsdtContractTransfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferFrom"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractTransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -11869,7 +11911,7 @@ export function useUsdtContractTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -11910,7 +11952,7 @@ export function useUsdtContractTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"unpause"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractUnpause<
   TMode extends WriteContractMode = undefined,
@@ -11943,7 +11985,7 @@ export function useUsdtContractUnpause<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractWrite<TFunctionName extends string>(
   config: Omit<
@@ -11961,7 +12003,7 @@ export function usePrepareUsdtContractWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"approve"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractApprove(
   config: Omit<
@@ -11980,7 +12022,7 @@ export function usePrepareUsdtContractApprove(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burn"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractBurn(
   config: Omit<
@@ -11999,7 +12041,7 @@ export function usePrepareUsdtContractBurn(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFrom"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractBurnFrom(
   config: Omit<
@@ -12018,7 +12060,7 @@ export function usePrepareUsdtContractBurnFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractBurnFromUser(
   config: Omit<
@@ -12037,7 +12079,7 @@ export function usePrepareUsdtContractBurnFromUser(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"decreaseAllowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractDecreaseAllowance(
   config: Omit<
@@ -12059,7 +12101,7 @@ export function usePrepareUsdtContractDecreaseAllowance(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"increaseAllowance"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractIncreaseAllowance(
   config: Omit<
@@ -12081,7 +12123,7 @@ export function usePrepareUsdtContractIncreaseAllowance(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"mint"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractMint(
   config: Omit<
@@ -12100,7 +12142,7 @@ export function usePrepareUsdtContractMint(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"pause"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractPause(
   config: Omit<
@@ -12119,7 +12161,7 @@ export function usePrepareUsdtContractPause(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractRenounceOwnership(
   config: Omit<
@@ -12141,7 +12183,7 @@ export function usePrepareUsdtContractRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transfer"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractTransfer(
   config: Omit<
@@ -12160,7 +12202,7 @@ export function usePrepareUsdtContractTransfer(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferFrom"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractTransferFrom(
   config: Omit<
@@ -12179,7 +12221,7 @@ export function usePrepareUsdtContractTransferFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractTransferOwnership(
   config: Omit<
@@ -12201,7 +12243,7 @@ export function usePrepareUsdtContractTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"unpause"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function usePrepareUsdtContractUnpause(
   config: Omit<
@@ -12220,7 +12262,7 @@ export function usePrepareUsdtContractUnpause(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractEvent<TEventName extends string>(
   config: Omit<
@@ -12238,7 +12280,7 @@ export function useUsdtContractEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Approval"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractApprovalEvent(
   config: Omit<
@@ -12257,7 +12299,7 @@ export function useUsdtContractApprovalEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractOwnershipTransferredEvent(
   config: Omit<
@@ -12276,7 +12318,7 @@ export function useUsdtContractOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Paused"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractPausedEvent(
   config: Omit<
@@ -12295,7 +12337,7 @@ export function useUsdtContractPausedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Transfer"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractTransferEvent(
   config: Omit<
@@ -12314,7 +12356,7 @@ export function useUsdtContractTransferEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Unpaused"`.
  *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x2D7b48a30A9f32B782Bba78Ff03143d4932399E6)
+ * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x92a66aFf583313848e9D75a36cB89ec696313245)
  */
 export function useUsdtContractUnpausedEvent(
   config: Omit<

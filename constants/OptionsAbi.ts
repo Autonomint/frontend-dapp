@@ -4,6 +4,7 @@ export const OPTIONSABI = [
       { internalType: "address", name: "_priceFeed", type: "address" },
       { internalType: "address", name: "_treasuryAddress", type: "address" },
       { internalType: "address", name: "_cdsAddress", type: "address" },
+      { internalType: "address", name: "_borrowingAddress", type: "address" },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -53,7 +54,7 @@ export const OPTIONSABI = [
     ],
     name: "withdrawOption",
     outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
-    stateMutability: "pure",
+    stateMutability: "view",
     type: "function",
   },
 ] as const;

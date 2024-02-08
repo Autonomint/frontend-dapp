@@ -117,6 +117,13 @@ export const CDSABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "burnedAmintInRedeem",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [{ internalType: "uint128", name: "fees", type: "uint128" }],
     name: "calculateCumulativeRate",
     outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
@@ -137,6 +144,20 @@ export const CDSABI = [
       { internalType: "uint64", name: "index", type: "uint64" },
       { internalType: "bool", name: "hasDeposited", type: "bool" },
     ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "cumulativeValue",
+    outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "cumulativeValueSign",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
@@ -186,6 +207,7 @@ export const CDSABI = [
           { internalType: "bool", name: "withdrawed", type: "bool" },
           { internalType: "uint128", name: "depositPrice", type: "uint128" },
           { internalType: "uint128", name: "depositValue", type: "uint128" },
+          { internalType: "bool", name: "depositValueSign", type: "bool" },
           { internalType: "bool", name: "optedLiquidation", type: "bool" },
           {
             internalType: "uint128",
@@ -328,7 +350,14 @@ export const CDSABI = [
   {
     inputs: [],
     name: "totalCdsDepositedAmount",
-    outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalCdsDepositedAmountWithOptionFees",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -393,6 +422,13 @@ export const CDSABI = [
   {
     inputs: [{ internalType: "uint128", name: "_amount", type: "uint128" }],
     name: "updateTotalCdsDepositedAmount",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint128", name: "_amount", type: "uint128" }],
+    name: "updateTotalCdsDepositedAmountWithOptionFees",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

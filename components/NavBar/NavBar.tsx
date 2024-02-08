@@ -8,7 +8,7 @@ import HeaderItems from "../Header/HeaderItems";
 import {
   useBorrowingContractGetLtv,
   useBorrowingContractGetUsdValue,
-  useBorrowingContractTotalAmintSupply,
+  useAmintTotalSupply,
   useCdsTotalCdsDepositedAmount,
   useTreasuryTotalVolumeOfBorrowersAmountinWei,
 } from "@/abiAndHooks";
@@ -22,7 +22,7 @@ const headerItems = [
     headline: "AMINT Price",
     value: "$1.023",
     tooltip: false,
-      tooltipText: "",
+    tooltipText: "",
   },
   {
     headline: "ABOND Price",
@@ -54,6 +54,18 @@ const headerItems = [
     tooltip: true,
     tooltipText: "Option fees per eth",
   },
+  {
+    headline: "TVL",
+    value: "-",
+  },
+  {
+    headline: "dCDS TVL",
+    value: "-",
+  },
+  {
+    headline: "Secured",
+    value: "-",
+  },
 ];
 const headerItems2nd = [
   {
@@ -65,11 +77,21 @@ const headerItems2nd = [
     value: "-",
   },
   {
-    //downside protection
     headline: "Secured",
     value: "-",
   },
 ];
+
+function formatNumber(num: number) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(2) + 'M';
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(2) + 'k';
+  } else {
+    return num.toString();
+  }
+}
+
 
 const NavBar = () => {
   //managing state for showMore button
@@ -77,8 +99,8 @@ const NavBar = () => {
   //getting address of user from useAccount() wagmi hook
   const { address } = useAccount();
   //getting totalAmintSupply from Borrowing Contract
-  const { data: totalAmintSupply } = useBorrowingContractTotalAmintSupply({
-    enabled: !!address,
+  const { data: totalAmintSupply } = useAmintTotalSupply({
+   watch: true, 
   });
   //getting currentApy from Borrowing Contract
   // const { data: currentApy } = useBorrowingContractGetApy({
@@ -104,21 +126,21 @@ const NavBar = () => {
   //managing state for headerItems and headerItems2nd
   const [updatedHeaderItems, setUpdatedHeaderItems] = useState(headerItems);
   const [updatedHeaderItems2nd, setUpdatedHeaderItems2nd] =
-  useState(headerItems2nd);
+    useState(headerItems2nd);
 
   /**
    * Updates the header items based on the values of `totalAmintSupply`, `currentApy`, `ltv`, `totalCdsAmount`, `ethPrice`, and `totalValueLocked`.
    */
-  const handleNavItems = async() => {
-    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/1000000000000000000/${ethPrice}/0`).then(
-      (res) => res.json()
-    )
-
+  const handleNavItems = async () => {
+    // const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/1000000000000000000/${ethPrice}/0`).then(
+    //   (res) => res.json()
+    // ).catch((err) => console.log(err));
+   
     if (totalAmintSupply) {
       const updatedData = [...updatedHeaderItems];
-      updatedData[2].value = `${(parseFloat(totalAmintSupply.toString()) / 10 ** 6).toFixed(4)}`;
+      updatedData[2].value = `${formatNumber(Number(totalAmintSupply) / 10 ** 6)}`;
       updatedData[3].value = `${0}%`;
-      updatedData[5].value = `${data[1]==undefined?0:(parseFloat(data[1])/10**6).toFixed(2)}`;
+      // updatedData[5].value = `${data[1] == undefined ? 0 : (parseFloat(data[1]) / 10 ** 6).toFixed(2)}`;
       setUpdatedHeaderItems(updatedData);
     }
     if (ltv && totalCdsAmount && ethPrice && totalValueLocked) {
@@ -126,8 +148,9 @@ const NavBar = () => {
       updatedData2nd[0].value = `$${displayNumberWithPrecision(
         formatEther((totalValueLocked * ethPrice) / BigInt(100))
       )}`;
+      console.log(formatEther((totalValueLocked * ethPrice) / BigInt(100)))
       updatedData2nd[1].value = `$${displayNumberWithPrecision(
-        formatEther(totalCdsAmount)
+        (Number(totalCdsAmount) / 10 ** 6).toString()
       )}`;
       updatedData2nd[2].value = `${100 - ltv}%`;
       setUpdatedHeaderItems2nd(updatedData2nd);
@@ -140,94 +163,85 @@ const NavBar = () => {
   }, [0, ltv, totalAmintSupply, totalValueLocked, ethPrice]);
 
   return (
-    <div className="bg-bgGrey flex flex-col min-[1440px]:pb-6 2dppx:pb-1">
-      <div className="flex px-1 py-3 sm:px-2 xl:px-5 xl:py-5 lg:px-4 lg:py-4">
-        {headerItems.map((item, index) => (
-          <HeaderItems
-            key={index}
-            props={{
-              textHeadline: item.headline,
-              textValue: item.value,
-              showTooltip: item.tooltip,
-              tooltipText: item.tooltipText,
-              className: "",
-            }}
-          />
-        ))}
-        <Button
-          variant={"showMore"}
-          className="px-1 xl:px-4 sm:px-2 pb-1 xl:pb-4 py-0 flex flex-col gap-[10px] items-center h-full"
-          onClick={() => {
-            setShowMore(!showMore);
-          }}
-        >
-          {!showMore ? (
-            <div className="w-[35px] h-[35px]">
-              <Image
-                src={dropdown}
-                alt="show more"
-                width={0}
-                height={0}
-                style={{ width: "100%", height: "100%" }}
-              />
-            </div>
-          ) : (
-            <div className="w-[35px] h-[35px]">
-              <Image
-                src={dropup}
-                alt="show more"
-                width={35}
-                height={35}
-                style={{ width: "100%", height: "100%" }}
-              />
-            </div>
-          )}
-          <p className="text-borderGrey text-base font-medium whitespace-nowrap min-w-[82.7px]">
-            {!showMore ? "Show More" : "Show Less"}
-          </p>
-        </Button>
-      </div>
-      {showMore && (
-        <div className="flex px-1 py-1 sm:px-2 sm:py-2 md:py-3 md:px-3 xl:px-5 xl:py-5 lg:px-4 lg:py-4">
-          {headerItems2nd.map((item, index) => (
+    <div className="flex w-[100%] h-[12vh] md:h-auto">
+
+      <div className="flex w-full overflow-scroll scrollb md:hidden md:w-0 bg-bgGrey">
+
+        <div className={`flex px-1 py-3 sm:px-2 xl:px-5 xl:py-5 lg:px-4 lg:py-4 `}>
+          {headerItems.map((item, index) => (
             <HeaderItems
               key={index}
               props={{
                 textHeadline: item.headline,
                 textValue: item.value,
+                showTooltip: item.tooltip,
+                tooltipText: item.tooltipText,
                 className: "",
+                classNamediv: "pr-4 mr-4 border-r border-lineGrey",
               }}
-            />
+              />
+         
           ))}
-          {headerItems.slice(0, 2).map((item, index) => (
+        </div>
+      </div>
+
+
+
+
+      <div className="hidden bg-bgGrey md:flex flex-col min-[1440px]:pb-6 2dppx:pb-1">
+        <div className={`flex  px-1 py-3 ${showMore?"h-[200px]":"h-[100px]"} w-full sm:px-2 xl:px-5 xl:py-5 lg:px-4 lg:py-4 flex-wrap`}>
+          {headerItems.map((item, index) => (
+            <div className="flex w-auto min-w-[100px] lg:min-w-[180px] h-[10vh] md:h-[90px] mx-2 pb-4">
             <HeaderItems
               key={index}
               props={{
                 textHeadline: item.headline,
                 textValue: item.value,
-                className: "opacity-0 cursor-default",
+                showTooltip: item.tooltip,
+                tooltipText: item.tooltipText,
+                className: "invisible",
+
               }}
-            />
-          ))}
-          <Button
-            variant={"showMore"}
-            className="px-1 xl:px-4 sm:px-2 pb-1 xl:pb-4 py-0 flex flex-col gap-[10px] items-center h-full opacity-0 cursor-default"
-          >
-            <div className="w-[35px] h-[35px]">
-              <Image
-                src={dropdown}
-                alt="show more"
-                width={0}
-                height={0}
-                style={{ width: "100%", height: "100%" }}
               />
-            </div>
-            <p className="text-borderGrey text-base font-medium whitespace-nowrap opacity-0 min-w-[82.7px]">
-              {!showMore ? "Show More" : "Show Less"}
-            </p>
-          </Button>
+              <span className="w-[2px] h-full bg-gray-300"></span>
+              </div>
+          ))}
         </div>
-      )}
+
+      </div>
+      <Button
+        variant={"showMore"}
+        className=" hidden px-1 xl:px-4 sm:px-2 pb-1 xl:pb-4  py-0 md:flex flex-col gap-[10px] items-center h-full"
+        onClick={() => {
+          setShowMore(!showMore);
+        }}
+      >
+        {!showMore ? (
+          <div className="w-[35px] h-[35px] mt-4">
+            <Image
+              src={dropdown}
+              alt="show more"
+              width={0}
+              height={0}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </div>
+        ) : (
+          <div className=" w-[35px] h-[35px] mt-4">
+            <Image
+              src={dropup}
+              alt="show more"
+              width={35}
+              height={35}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </div>
+        )}
+        <p className=" text-borderGrey text-base font-medium whitespace-nowrap min-w-[82.7px]">
+          {!showMore ? "Show More" : "Show Less"}
+        </p>
+      </Button>
+
     </div>
   );
 };

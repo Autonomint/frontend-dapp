@@ -5,7 +5,6 @@ import toll from "@/app/assets/toll.svg";
 import dollar from "@/app/assets/local_atm.svg";
 import donut from "@/app/assets/donut_small.svg";
 import eth from "@/app/assets/eth.svg";
-import avax from "@/app/assets/avax.svg";
 import mantle from "@/app/assets/mantle.svg";
 import matic from "@/app/assets/matic.svg";
 import money from "@/app/assets/send_money.svg";
@@ -14,8 +13,8 @@ import Charts from "./Charts";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import RatioPieChart from "./RatioPieChart";
-import { useAmintTotalSupply, useBorrowingContractDepositTokens, useBorrowingContractLastTotalCdsPool, useCdsLastEthPrice, useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd } from "@/abiAndHooks";
-import { ethers } from "ethers";
+import { useAbondTotalSupply, useAmintTotalSupply, useBorrowingContractDepositTokens, useBorrowingContractLastTotalCdsPool, useCdsLastEthPrice, useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd, useTreasuryTotalVolumeOfBorrowersAmountinWei } from "@/abiAndHooks";
+import { ethers, formatEther } from "ethers";
 
 const amintValues = [
   {
@@ -24,11 +23,11 @@ const amintValues = [
   },
   {
     headline: "Total Supply",
-    value: "1M",
+    value: "-",
   },
   {
     headline: "Total Market Cap",
-    value: "$1M",
+    value: "-",
     lastElement: true,
   },
 ];
@@ -57,23 +56,42 @@ const RatioValues = [
   {
     value: "+25%",
   },
+  {
+    value: "+25%",
+  },
+  {
+    value: "+25%",
+  },
 ];
 
 const abondValues = [
   {
     headline: "Price",
-    value: "$4",
+    value: "-",
   },
   {
     headline: "Total Supply",
-    value: "1K",
+    value: "-",
   },
   {
     headline: "Total Market Cap",
-    value: "$40K",
+    value: "-",
     lastElement: true,
   },
 ];
+
+const FeesValues =[
+  {
+
+    value: "0.25",
+  },
+  {
+    value: "2M AMINT",
+  },
+  {
+    value: "2.5M AMINT",
+  },
+]
 
 const chartData = [
   {
@@ -111,38 +129,70 @@ function formatNumber(num: number) {
   } else if (num >= 1000) {
     return (num / 1000).toFixed(2) + 'k';
   } else {
-    return num.toString();
+    return num.toFixed(2);
   }
 }
 
 const page = () => {
-  const {data:totalStable} = useCdsTotalCdsDepositedAmount({ watch: true })
-  const {data:ethprice} = useCdsLastEthPrice({ watch: true })
-  const {data:ethLocked} = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
-  const {data:amitsupply} = useAmintTotalSupply({ watch: true })
+
+  const [loading, setLoading] = React.useState(true);
+
+  const { data: totalStable } = useCdsTotalCdsDepositedAmount({ watch: true })
+  const { data: ethPrice } = useCdsLastEthPrice({ watch: true })
+  const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
+  const { data: amintsupply } = useAmintTotalSupply({ watch: true })
+  const { data: cdsPool } = useBorrowingContractLastTotalCdsPool({ watch: true })
+  const { data: abondSupply } = useAbondTotalSupply({ watch: true });
+  const { data: totalValueLocked } = useTreasuryTotalVolumeOfBorrowersAmountinWei({watch: true});
   useEffect(() => {
-      
     handleStatsItem()
+  }, [ethLocked])
 
-
-  },[])
   const handleStatsItem = () => {
-    console.log("returned data", formatNumber(Number(amitsupply)/ 10**6));
-    amintValues[1].value = amitsupply ? formatNumber(Number(amitsupply)/ 10**6) : "0";
-    amintValues[2].value = amitsupply ? formatNumber(Number(amitsupply)/ 10**6) : "0";
+    console.log(ethLocked, ethPrice, totalValueLocked, amintsupply, totalStable, abondSupply, cdsPool)
+    if (ethLocked && ethPrice && totalValueLocked && amintsupply && totalStable && cdsPool) {
+      amintValues[1].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
+      amintValues[2].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
+      
+      
+      lockedValues[0].value = totalStable ? formatNumber((Number(totalStable) / 10 ** 6) + (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100))))) : "0";
+      lockedValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
+      lockedValues[2].value = totalStable ? formatNumber((Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100))))) : "0";
+      
+      
+      RatioValues[0].value =  "0.01";
+      RatioValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
+      RatioValues[2].value = cdsPool ? formatNumber(Number(formatEther(cdsPool))) : "0";
+      RatioValues[3].value =  (Number(formatEther(cdsPool))-(Number(totalStable) / 10 ** 6)).toFixed(2);
+      const total = (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))) + (Number(totalStable) / 10 ** 6);
+      RatioValues[4].value = (((Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))) /total) * 100).toFixed(1);
+      RatioValues[5].value = (((Number(totalStable) / 10 ** 6) /total) * 100 ).toFixed(1);
+      console.log( RatioValues[4].value,  RatioValues[5].value)
 
-    lockedValues[0].value = totalStable ? formatNumber(( Number(totalStable) / 10**6) + (Number(ethLocked) / 10**18)*Number(ethprice)/10**2): "0";
-    lockedValues[1].value = totalStable ? formatNumber( Number(totalStable) / 10**6) : "0";
-    lockedValues[2].value = totalStable ? formatNumber( (Number(ethLocked) / 10**18)*Number(ethprice)/10**2) : "0";
+      FeesValues[0].value = "5";
+      FeesValues[1].value = "4%";
+      FeesValues[2].value = (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))*0.20).toFixed(2);
 
-    RatioValues[2].value = totalStable ? formatNumber(Number(totalStable) / 10**6) : "0";
-    
+      abondValues[1].value = abondSupply ? formatNumber(Number(abondSupply) / 10 ** 6) : "0";
+      setLoading(false)
+    }
   };
 
 
   return (
-    <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden h-full">
-      <div className="flex flex-col gap-6">
+    <div className="relative min-h-[80vh] p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden h-full">
+      {
+        loading?(<div className="w-full h-[80vh] flex justify-center items-center">
+          <div role="status">
+    <svg aria-hidden="true" className="inline text-gray-200 w-14 h-14 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+    </svg>
+    <span className="sr-only">Loading...</span>
+</div>
+
+        </div>):(
+<div className="flex flex-col gap-6">
         <div className="flex justify-between flex-1 w-full gap-6">
           <DashboardCard headline="AMINT" data={amintValues} />
           <DashboardCard headline="ABOND" data={abondValues} />
@@ -158,17 +208,17 @@ const page = () => {
                     <h5 className="text-[#00773F] text-base font-normal">
                       Collateral
                     </h5>
-                    <p className="font-medium text-4xl text-[#00773F]">75%</p>
+                    <p className="font-medium text-3xl text-[#00773F]">{RatioValues[4].value}%</p>
                   </div>
                   <div className="flex flex-col">
                     <h5 className="text-[#0F46E9] text-base font-normal">
                       dCDS
                     </h5>
-                    <p className="font-medium text-4xl text-[#0F46E9]">25%</p>
+                    <p className="font-medium text-3xl text-[#0F46E9]">{RatioValues[5].value}%</p>
                   </div>
                 </div>
                 <div className="w-full h-full">
-                  <RatioPieChart />
+                  <RatioPieChart collaterals={RatioValues[4].value} dcds={RatioValues[5].value}  />
                 </div>
               </div>
               <div className="p-4 w-[70%]">
@@ -310,6 +360,11 @@ const page = () => {
           </div>
         </div>
       </div>
+
+        )
+      }
+      
+      
     </div>
   );
 
@@ -344,7 +399,7 @@ const page = () => {
           <HeaderItems
             props={{
               textHeadline: "Total Collateral Protected",
-              textValue: "$30K",
+              textValue:  `${FeesValues[2].value} AMINT`,
               className: "",
               lastElement: false,
             }}
@@ -362,7 +417,7 @@ const page = () => {
           <HeaderItems
             props={{
               textHeadline: "Total ABOND Yield",
-              textValue: "$10K",
+              textValue: "-",
               className: "",
               lastElement: true,
             }}
@@ -386,7 +441,7 @@ const page = () => {
             <HeaderItems
               props={{
                 textHeadline: "Current Ratio",
-                textValue: "0.25",
+                textValue: `${RatioValues[0].value}%`,
                 className: "",
                 lastElement: false,
               }}
@@ -394,7 +449,7 @@ const page = () => {
             <HeaderItems
               props={{
                 textHeadline: "Total dCDS Pool value",
-                textValue: "2M AMINT",
+                textValue: `${RatioValues[1].value} AMINT`,
                 className: "",
                 lastElement: true,
               }}
@@ -404,7 +459,7 @@ const page = () => {
             <HeaderItems
               props={{
                 textHeadline: "Net Value of dCDS Pool",
-                textValue: "2.5M AMINT",
+                textValue: `${RatioValues[2].value} AMINT`,
                 className: "",
                 lastElement: false,
               }}
@@ -412,7 +467,7 @@ const page = () => {
             <HeaderItems
               props={{
                 textHeadline: "dCDS Profit/Loss",
-                textValue: "+25%",
+                textValue: `${RatioValues[3].value} AMINT`,
                 className: "",
                 lastElement: true,
                 textColor: "#00773F",
@@ -448,34 +503,38 @@ const page = () => {
                 Total Stablecoins Locked
               </p>
               <h3 className="font-medium text-[2rem] leading-none">
-              {lockedValues[1].value} AMINT
+                {lockedValues[1].value} AMINT
               </h3>
             </div>
           </div>
         </div>
         <div className="flex flex-col p-5 gap-[15px] bg-white rounded-lg">
+          <div className="py-[0px]">
+            <div className="flex flex-col gap-5">
+              <p className="text-base font-normal leading-none text-textGrey">
+                Total Assets Locked
+              </p>
+              <h3 className="font-medium text-[2rem] leading-none">
+                {lockedValues[1].value}
+              </h3>
+            </div>
+          </div>
           <AssetValueLocked
             img={eth}
-            asset="Ethereum"
+            asset="ETH-$"
             value={`${lockedValues[2].value}`}
             progress={100}
           />
           <AssetValueLocked
-            img={avax}
-            asset="Avalanche"
-            value="---"
-            progress={0}
-          />
-          <AssetValueLocked
             img={mantle}
-            asset="Mantle"
-            value="---"
+            asset="MTL-"
+            value="coming soon"
             progress={0}
           />
           <AssetValueLocked
             img={matic}
-            asset="Polygon"
-            value="---"
+            asset="MATIC-"
+            value="coming soon"
             progress={0}
           />
         </div>
@@ -504,7 +563,7 @@ const page = () => {
           ></div>
           <div className="flex bg-[#F5F5F5]  px-[15px] py-[10px]">
             <p className="font-normal text-base text-[#242424] z-10">
-              <span className="font-medium">{asset}</span>-${value}
+              <span className="font-medium">{asset}</span>{value}
             </p>
           </div>
         </div>

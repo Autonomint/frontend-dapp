@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 const COLORS = [
@@ -12,13 +12,22 @@ const COLORS2 = [
 ];
 
 const data = [
-  { name: "1", value: 75 },
-  { name: "2", value: 25 },
+  { name: "1", value: 0 },
+  { name: "2", value: 0 },
 ];
+interface RatioPieChartProps {
+  collaterals: string;
+  dcds: string;
+}
 
-const RatioPieChart = () => {
+const RatioPieChart:React.FC<RatioPieChartProps> = ({collaterals,dcds}) => {
+  console.log(collaterals,dcds)
+  useEffect(() => {
+    data[0].value = Number(collaterals);
+    data[1].value = Number(dcds);
+  }, [collaterals, dcds]);
   return (
-    <div className="w-full h-full relative">
+    <div className="relative w-full h-full">
       <ResponsiveContainer width={"100%"}>
         <PieChart margin={{ bottom: -157 }}>
           <defs>
@@ -48,7 +57,7 @@ const RatioPieChart = () => {
           </Pie>
         </PieChart>
       </ResponsiveContainer>
-      <div className="absolute w-full h-full top-0">
+      <div className="absolute top-0 w-full h-full">
         <ResponsiveContainer width={"100%"}>
           <PieChart margin={{ bottom: -157 }}>
             <defs>
