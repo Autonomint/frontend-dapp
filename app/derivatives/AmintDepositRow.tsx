@@ -156,7 +156,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
     onSuccess(data) {
       console.log(data?.hash);
       // Close the sheet
-      setSheetOpen(false);
+      // setSheetOpen(false);
       // Display custom toast with success message and transaction hash
       toast.custom(
         (t) => {

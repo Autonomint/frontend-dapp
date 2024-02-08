@@ -271,7 +271,7 @@ const NewDeposit = () => {
       index: totalCDSIndex ? totalCDSIndex + 1 : 1,
       chainId: chainId,
       depositedAmint: `${amintAmnt == undefined ? 0 : amintAmnt}`,
-      depositedUsdt: `${usdtAmnt}`,
+      depositedUsdt: `${usdtAmnt == undefined ? 0 : usdtAmnt}`,
       collateralType: colType,
       depositedTime: `${Date.now()}`,
       ethPriceAtDeposit: Number(ethPrice ? ethPrice : 0) / 100,
@@ -431,7 +431,7 @@ const NewDeposit = () => {
 
       // Retrieve the relevant data from the transaction logs
       const dataLogs =
-        chainId === 5 ? data.logs[3].data : data.logs[2].data;
+        chainId === 5 ? data.logs[2].data : data.logs[2].data;
       // Decode event logs using the provided ABI and event name
 
       const { eventName, args } = decodeEventLogsFromAbi(
@@ -486,7 +486,7 @@ const NewDeposit = () => {
         { duration: 5000 }
       );
 
-      setOpen(false);
+      // setOpen(false);
     },
 
     // Handle success and show a custom toast notification
@@ -513,7 +513,7 @@ const NewDeposit = () => {
         { duration: Infinity }
       );
       //closing sheet so that user can click on the links from the toast
-      setOpen(false);
+      // setOpen(false);
     },
   });
 
@@ -733,7 +733,7 @@ const NewDeposit = () => {
     // Check if cdsDepositSuccess is true
     if (cdsDepositSuccess) {
       // Call reset function if it exists
-      reset?.();
+      // reset?.();
       // Call amintReset function if it exists
       amintReset?.();
     }
