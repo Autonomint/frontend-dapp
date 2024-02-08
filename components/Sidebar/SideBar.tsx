@@ -36,7 +36,7 @@ const SideBar = () => {
   const segment = useSelectedLayoutSegment();
 
   return (
-    <nav className="h-full px-[10px] py-2 sm:py-[10px] lg:py-[20px] xl:py-[30px]  bg-bgGrey flex flex-col items-center justify-between">
+    <nav className="h-[100vh] px-[10px] py-2 sm:py-[10px] lg:py-[20px] xl:py-[30px]  bg-bgGrey flex flex-col items-center justify-between">
       <div className="flex flex-col items-center gap-[45px]">
         <Link href={"/"}>
         <div className="w-[3rem] h-[3rem]">
