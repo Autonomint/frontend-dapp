@@ -146,7 +146,7 @@ const WalletOrContent = () => {
     if (depositorData) {
       const updatedStats = [...dashboardStats];
       const ethPriceNow = ethPrice ? ethPrice : 0n;
-      console.log(depositorData);
+      console.log(depositorData , ethPriceNow);
       // Calculate and format the value for the first stat item
       updatedStats[0].value =
         chainId === 5

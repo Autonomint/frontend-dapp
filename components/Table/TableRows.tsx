@@ -79,6 +79,7 @@ type withdrawData = {
   withdrawAmount: string;
   amountYetToWithdraw: string;
   noOfAbond: string;
+  totalDebtAmount: string;
 };
 
 const TableRows = ({
@@ -389,13 +390,13 @@ const TableRows = ({
         eventName: string;
         args: { borrowDebt: bigint; withdrawAmount: bigint; noOfAbond: bigint };
       };
-
       // Update current events value
       eventsValue.current = {
         borrowDebt: args?.borrowDebt.toString(),
         withdrawAmount: args?.withdrawAmount.toString(),
         noOfAbond: args?.noOfAbond.toString(),
       };
+      console.log(eventsValue)
 
       // Perform backend withdraw
       backendWithdraw?.({
@@ -406,7 +407,8 @@ const TableRows = ({
         withdrawTime: `${Date.now()}`,
         withdrawAmount: eventsValue.current.withdrawAmount,
         amountYetToWithdraw: eventsValue.current.withdrawAmount,
-        noOfAbond: eventsValue.current.noOfAbond
+        noOfAbond: eventsValue.current.noOfAbond,
+        totalDebtAmount: eventsValue.current.borrowDebt,
       });
 
       // Display custom toast for successful transaction
