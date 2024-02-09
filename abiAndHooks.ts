@@ -768,7 +768,7 @@ export const borrowingContractABI = [
     outputs: [{ name: '', internalType: 'contract IAMINT', type: 'address' }],
   },
   {
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'calculateCumulativeRate',

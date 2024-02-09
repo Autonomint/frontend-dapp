@@ -3,15 +3,18 @@ import { Button } from "../ui/button";
 import { formatEther } from "viem";
 import displayNumberWithPrecision from "@/app/utils/precision";
 import calculateNext30Days from "@/app/utils/calculateNext30Days";
+import Spinner from "../ui/spinner";
 
 const ConfirmNotice = ({
   withdrawalTime,
   handleWithdrawal,
   amintToMint,
+  isLoading,
 }: {
   withdrawalTime: string;
   handleWithdrawal: VoidFunction;
   amintToMint: bigint;
+  isLoading: boolean;
 }) => {
   return (
     <div className="p-4 rounded-[6px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] flex flex-col min-[1440px]:gap-[15px] gap-2 2dppx:gap-2">
@@ -36,8 +39,9 @@ const ConfirmNotice = ({
         className="text-white"
         onClick={handleWithdrawal}
       >
-        Confirm Withdrawal for the{" "}
-        {withdrawalTime === "DEPOSITED" ? `First` : `Second`} time
+        {isLoading ? <Spinner/> : `Confirm Withdrawal for the
+        ${withdrawalTime === "DEPOSITED" ? `First` : `Second`} time`}
+        
       </Button>
     </div>
   );

@@ -1,4 +1,5 @@
-import React from "react";
+'use client';
+import React, { useEffect,useState } from "react";
 import {
   Table,
   TableBody,
@@ -6,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
+import Withdraw from "./Withdraw";
 import TableRows from "./TableRows";
 
 interface TableData {
@@ -38,6 +39,18 @@ const DepositAndWithDrawTable = ({
   tableData: TableData[];
   handleRefetch: Function;
 }) => {
+  const [sheetOpen, setSheetOpen] = useState<boolean>(false);
+  const [sheetDetails, setSheetDetails] = useState<TableData>();
+  const handleSheet = (details:TableData) => {
+    setSheetDetails(details)
+    setSheetOpen(true);
+  }
+  useEffect(() => {
+    if(tableData){
+      tableData.reverse();
+    }
+
+  }, [tableData]);
   return (
     <Table>
       <TableHeader>
@@ -54,9 +67,15 @@ const DepositAndWithDrawTable = ({
         {/* if there is tableData map over it */}
         {tableData && tableData?.map((details, index) => (
           // Iterate over each element in the tableData array
-          <TableRows key={details.id} details={details} interest={3} handleRefetch={handleRefetch} />
+          <TableRows key={details.id} onClick={()=>handleSheet(details)}  details={details} interest={3} handleRefetch={handleRefetch} />
         ))}
       </TableBody>
+      {
+         sheetDetails && <Withdraw
+          details={sheetDetails}
+          sheetOpen={sheetOpen}
+          handleSheetOpenChange={setSheetOpen} />
+        }
     </Table>
   );
 };

@@ -1,15 +1,23 @@
 "use client";
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-interface ChartData {
-  name: string;
-  price: number;
-}
 
-const Charts: React.FC<{ chartData: ChartData[],height?:number }> = ({ chartData,height=400 }) => {
+
+const Charts: React.FC<{ chartData: string[],height?:number }> = ({ chartData,height=400 }) => {
+  let currentDate = new Date();
+// Create a new array of objects with name and price properties:
+const data = chartData.map((price) => {
+  let name;
+
+  name = String(currentDate.getDate());
+
+  currentDate.setDate(currentDate.getDate() - 1);
+
+  return { name, price };
+});
   return (
     <ResponsiveContainer style={{marginLeft:"-20px"}} width="100%" height={height}>
-      <LineChart data={chartData}>
+      <LineChart data={data}>
         <Line
           style={{
             filter:

@@ -61,6 +61,7 @@ import displayNumberWithPrecision from "@/app/utils/precision";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 import { watch } from "fs";
+import Spinner from "../ui/spinner";
 
 const formSchema = z.object({
   collateral: z.string(),
@@ -244,6 +245,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
 
 
   const {
+    isLoading: isDepositsLoading,
     data: depositData, // Data received from the `useBorrowingContractDepositTokens` hook
     write, // Function to initiate a write operation
     reset, // Function to reset the state of the hook
@@ -298,7 +300,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   });
 
 
-  const { isLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
+  const { isLoading :isDepositHashsLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
     hash: depositData?.hash,
     onSuccess(data) {
       // Log transaction completion
@@ -470,6 +472,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
         onOpenChange={() => {
           setOpen(!open);
         }}
+        modal={true}
       >
         <DialogTrigger asChild>
           <Button
@@ -655,7 +658,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                   className="text-white"
                   disabled={disabled}
                 >
-                  {isLoading ? "Depositing..." : 'Confirm Deposit'}
+                  {isDepositsLoading || isDepositHashsLoading ? <Spinner/> : 'Confirm Deposit'}
                 </Button>
               </div>
             </form>

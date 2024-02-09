@@ -71,6 +71,7 @@ import CustomToast from "@/components/CustomUI/CustomToast";
 import { parseEther, parseUnits } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "../utils/decodeEventLogsFromAbi";
+import Spinner from "@/components/ui/spinner";
 
 
 
@@ -193,6 +194,7 @@ const NewDeposit = () => {
     data: usdtApproveData,
     write: usdtWrite,
     isSuccess: usdtApproved,
+    isLoading: usdtApproveLoading,
   } = useUsdtContractApprove();
   console.log("usdtApproveData", usdtApproveData, usdtApproved);
 
@@ -219,10 +221,8 @@ const NewDeposit = () => {
       (response) => response.json()
     );
   }
-  console.log("totalCDSIndex", totalCDSIndex)
 
-
-  const { mutate } = useMutation({
+  const { mutate ,isPending } = useMutation({
     mutationFn: storeToCDSBackend,
     onError(error) {
       // Log any errors that occur during the mutation
@@ -234,6 +234,7 @@ const NewDeposit = () => {
       queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
 
       // Reset form fields and state after the mutation is completed
+      setOpen(false);
       reset?.();
       amintReset?.();
       form.reset();
@@ -251,9 +252,6 @@ const NewDeposit = () => {
     // Calculate the liquidation amount based on amintAmnt and usdtAmnt for now i am just adding usdt and amint considering both as 18 decimals but as usdt is 6 decimals you will have to manage it yourself or ask abhishek sir
     const liqAmnt =
       (((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
-
-
-
     // Determine the collateral type based on amintAmnt and usdtAmnt
     console.log("storeToCDSBackend", address)
     const colType =
@@ -301,7 +299,6 @@ const NewDeposit = () => {
     if (!response.ok) {
       throw new Error(result.message);
     }
-
     // Return the result
     return result;
   }
@@ -316,8 +313,7 @@ const NewDeposit = () => {
   } = useCdsDeposit({
     // Handle errors during the CDS deposit process
     onError: (error) => {
-      console.log(error.name);
-
+      console.log(error.message);
       // Show a custom toast notification for the error
       toast.custom(
         (t) => (
@@ -327,14 +323,14 @@ const NewDeposit = () => {
               props={{
                 t: toastId.current,
                 toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.name}`,
+                headline: `Uhh Ohh! ${error.message.substring(0, 112)}`,
                 toastClosebuttonHoverColor: "#e66d6d",
                 toastClosebuttonColor: "#C25757",
               }}
             />
           </div>
         ),
-        { id: toastId.current }
+        { duration: Infinity, id: toastId.current }
       );
 
       // Dismiss the toast notification after 5 seconds
@@ -398,7 +394,6 @@ const NewDeposit = () => {
         { duration: 5000 }
       );
 
-      setOpen(false);
     },
     hash: CdsDepositData?.hash,
     // Callback function called when the transaction is successful
@@ -458,7 +453,7 @@ const NewDeposit = () => {
 
   // Destructure the necessary values from the hook
   const {
-    isLoading: isApproveLoading,  // Flag to indicate if the approve request is loading
+    isLoading: isAmintApproveLoading,  // Flag to indicate if the approve request is loading
     write: amintApprove,  // Function to initiate the approve request
     data: amintApproveData,  // Data returned from the approve request
     reset: amintReset,  // Function to reset the approve request state
@@ -544,7 +539,7 @@ const NewDeposit = () => {
         { duration: 5000 }
       );
 
-      setOpen(false);
+      // setOpen(false);
     },
     // look for approval transaction hash
     hash: amintApproveData?.hash,
@@ -788,11 +783,7 @@ const NewDeposit = () => {
           </p>
         </Button> */}
 
-
-        <Dialog open={open} onOpenChange={setOpen}>
-
-
-
+        <Dialog open={open || isLoading || isPending } onOpenChange={setOpen} modal={true}>
           <DialogTrigger asChild>
             <Button
               variant={"primary"}
@@ -871,6 +862,7 @@ const NewDeposit = () => {
                               </div>
                               <div className="absolute top-0 right-0 flex items-center h-full">
                                 <Button
+                                  type="button"
                                   variant={"outline"}
                                   className="z-20 text-xs rounded-r-md"
                                   disabled={
@@ -891,7 +883,10 @@ const NewDeposit = () => {
                                       : null;
                                   }}
                                 >
-                                  Approve
+                                  {isAmintApproveLoading? (
+                                    <Spinner className="w-5 h-5" />
+                                  ):("Approve")}
+                                  
                                 </Button>
                               </div>
                             </div>
@@ -1025,7 +1020,9 @@ const NewDeposit = () => {
                                         : null;
                                     }}
                                   >
-                                    Approve
+                                    {usdtApproveLoading ? (
+                                    <Spinner className="w-5 h-5" />
+                                  ):("Approve")}
                                   </Button>
                                 </div>
                               </div>
@@ -1258,7 +1255,7 @@ const NewDeposit = () => {
                       (usdtAmountDepositedTillNow < usdtLimit && !usdtApproved) || isCdsDepositLoading 
                     }
                   >
-                    {isCdsDepositLoading?'Depositing...':'Confirm Deposit'}
+                    {isCdsDepositLoading || isPending?<Spinner />:'Confirm Deposit'}
                   </Button>
                 </div>
               </form>

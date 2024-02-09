@@ -60,7 +60,7 @@ const ProductList = () => {
         </Dialog>
 
 
-        <Dialog open={open2} onOpenChange={setOpen2}>
+        <Dialog open={open2} onOpenChange={setOpen2} >
           <DialogContent className="w-[400px]">
             <div className="flex justify-end w-full ">
               <DialogClose asChild>

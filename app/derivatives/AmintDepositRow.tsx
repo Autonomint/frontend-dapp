@@ -141,7 +141,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
                 props={{
                   t,
                   toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
+                  headline: `Uhh Ohh! ${error.message}`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
                 }}
@@ -355,8 +355,9 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
   function handleDepositData() {
     if (details) {
       const updatedData = [...depositData];
-      updatedData[0].value = details.depositedAmint=="undefined"?'0':details.depositedAmint  // Update depositedAmint value
-      updatedData[1].value = details.depositedUsdt=="undefined"?'0':details.depositedUsdt ; // Update depositedAmint value
+      updatedData[0].value = details.depositedAmint=="undefined" || details.depositedAmint=="NaN" ? '0':details.depositedAmint  // Update depositedAmint value
+      updatedData[1].value = details.depositedUsdt=="undefined" || details.depositedUsdt=="NaN" ? '0':details.depositedUsdt ; // Update depositedAmint value
+      console.log(updatedData[1].value,updatedData[0].value)
       updatedData[2].value = `${details.ethPriceAtDeposit}`; // Update ethPriceAtDeposit value
       updatedData[3].value = formatDateFromUnixTimestamp(details.depositedTime); // Update depositedTime value and format time in 'DD/MM/YYYY'
       updatedData[4].value = `${details.lockingPeriod} days`; // Update lockingPeriod value
@@ -488,7 +489,7 @@ const AmintDepositRow = ({ details }: { details: DepositDetail }) => {
             <>
               <ConfirmNoticeCds
                 handleWithdrawal={handleWithdrawal}
-                amintToMint={details.depositedUsdt}
+                amintToMint={(Number(depositData[0].value) + Number(depositData[1].value)).toFixed(2)}
                 setLoding={isLoading}
               />
             </>

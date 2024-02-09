@@ -95,34 +95,8 @@ const FeesValues = [
 ]
 
 const chartData = [
-  {
-    name: "26",
-    price: 0.95,
-  },
-  {
-    name: "27",
-    price: 0.96,
-  },
-  {
-    name: "28",
-    price: 1.05,
-  },
-  {
-    name: "29",
-    price: 0.95,
-  },
-  {
-    name: "30",
-    price: 0.96,
-  },
-  {
-    name: "31",
-    price: 0.9,
-  },
-  {
-    name: "Nov",
-    price: 0.9,
-  },
+     '0.95',
+   ' 0.95',
 ];
 function formatNumber(num: number) {
   if (num >= 1000000) {
@@ -149,7 +123,6 @@ const page = () => {
     handleStatsItem()
   }, [ethLocked])
 
-  useEffect(() => {}, [feeOption])
   const handleStatsItem = async () => {
     console.log(ethLocked, ethPrice, totalValueLocked, amintsupply, totalStable, abondSupply, cdsPool)
     const ratioData = await fetch(`${BACKEND_API_URL}/borrows/ratio/5/${ethPrice}`).then(
@@ -494,7 +467,7 @@ const page = () => {
                 textValue: `${RatioValues[3].value} AMINT`,
                 className: "",
                 lastElement: true,
-                textColor: "#00773F",
+                textColor: `${Number(RatioValues[3].value) > 0 ? "#00773F" : "#FF0000"}`,
               }}
             />
           </div>
