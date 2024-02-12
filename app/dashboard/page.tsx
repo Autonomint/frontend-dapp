@@ -120,8 +120,10 @@ const page = () => {
   const { data: abondSupply } = useAbondTotalSupply({ watch: true });
   const { data: totalValueLocked } = useTreasuryTotalVolumeOfBorrowersAmountinWei({ watch: true });
   useEffect(() => {
+  }, [feeOption])
+  useEffect(() => {
     handleStatsItem()
-  }, [ethLocked])
+  }, [ethLocked,ethPrice])
 
   const handleStatsItem = async () => {
     console.log(ethLocked, ethPrice, totalValueLocked, amintsupply, totalStable, abondSupply, cdsPool)
@@ -183,7 +185,7 @@ const page = () => {
               <div className="flex flex-col w-[70%]">
                 <CollateralRatio />
                 <div className="flex w-full h-full">
-                  <div className="flex h-full w-[350px] flex-col bg-[linear-gradient(270deg,#CDF3FF_0%,#D8FFEA_100%)] border-r border-solid border-lineGrey rounded-[10px] rounded-t-none rounded-br-none">
+                  <div className="flex h-full min-w-[350px] flex-col bg-[linear-gradient(270deg,#CDF3FF_0%,#D8FFEA_100%)] border-r border-solid border-lineGrey rounded-[10px] rounded-t-none rounded-br-none">
                     <div className="px-[50px] py-[25px] flex justify-between">
                       <div className="flex flex-col">
                         <h5 className="text-[#00773F] text-base font-normal">
@@ -202,71 +204,9 @@ const page = () => {
                       <RatioPieChart collaterals={RatioValues[4].value} dcds={RatioValues[5].value} />
                     </div>
                   </div>
-                  <div className="p-4 w-[70%]">
-                    <div className="flex items-center justify-end">
-                      <div className="flex gap-[10px] mr-5">
-                        <Button
-                          variant={"showMore"}
-                          size={"timeline"}
-                          className="text-borderGrey"
-                        >
-                          All Time
-                        </Button>
-                        <Button
-                          variant={"showMore"}
-                          size={"timeline"}
-                          className="text-borderGrey"
-                        >
-                          1Y
-                        </Button>
-                        <Button
-                          variant={"showMore"}
-                          size={"timeline"}
-                          className="text-borderGrey"
-                        >
-                          6M
-                        </Button>
-                        <Button
-                          variant={"showMore"}
-                          size={"timeline"}
-                          className="text-borderGrey"
-                        >
-                          1M
-                        </Button>
-                        <Button
-                          variant={"showMore"}
-                          size={"timeline"}
-                          className="text-[#020202]  rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]"
-                        >
-                          10D
-                        </Button>
-                        <Button
-                          variant={"showMore"}
-                          size={"timeline"}
-                          className="text-borderGrey"
-                        >
-                          1D
-                        </Button>
-                      </div>
-                    </div>
-                    <Charts chartData={chartData} height={180} />
-                    <div className="flex items-center justify-between px-10 ">
-                      <Button
-                        variant={"secondary"}
-                        size={"arrow"}
-                        className="flex items-center bg-[#EEE] "
-                      >
-                        <ArrowLeftIcon width={12} height={9} />
-                      </Button>
-                      <p>Time</p>
-                      <Button
-                        variant={"secondary"}
-                        size={"arrow"}
-                        className="flex items-center bg-[#EEE]"
-                      >
-                        <ArrowRightIcon width={12} height={9} />
-                      </Button>
-                    </div>
+                  <div className="w-full">
+
+                  <Charts height={230} title={"ratio"} />
                   </div>
                 </div>
               </div>
@@ -288,72 +228,14 @@ const page = () => {
                       </span>
                     </div>
                   </div>
-                <div className="flex items-center justify-end">
+                {
+                  feeOption === "option" ? (
+                    <Charts height={230} title={"optionFees"} />
+                  ) : (
+                    <Charts height={230} title={"borrowingFees"} />
+                  )
+                }
 
-
-                  <div className="flex gap-[10px] mr-5">
-                    <Button
-                      variant={"showMore"}
-                      size={"timeline"}
-                      className="text-borderGrey"
-                    >
-                      All Time
-                    </Button>
-                    <Button
-                      variant={"showMore"}
-                      size={"timeline"}
-                      className="text-borderGrey"
-                    >
-                      1Y
-                    </Button>
-                    <Button
-                      variant={"showMore"}
-                      size={"timeline"}
-                      className="text-borderGrey"
-                    >
-                      6M
-                    </Button>
-                    <Button
-                      variant={"showMore"}
-                      size={"timeline"}
-                      className="text-borderGrey"
-                    >
-                      1M
-                    </Button>
-                    <Button
-                      variant={"showMore"}
-                      size={"timeline"}
-                      className="text-[#020202]  rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]"
-                    >
-                      10D
-                    </Button>
-                    <Button
-                      variant={"showMore"}
-                      size={"timeline"}
-                      className="text-borderGrey"
-                    >
-                      1D
-                    </Button>
-                  </div>
-                </div>
-                <Charts chartData={chartData} height={230} />
-                <div className="flex items-center justify-between px-10 ">
-                  <Button
-                    variant={"secondary"}
-                    size={"arrow"}
-                    className="flex items-center bg-[#EEE] "
-                  >
-                    <ArrowLeftIcon width={12} height={9} />
-                  </Button>
-                  <p>Time</p>
-                  <Button
-                    variant={"secondary"}
-                    size={"arrow"}
-                    className="flex items-center bg-[#EEE]"
-                  >
-                    <ArrowRightIcon width={12} height={9} />
-                  </Button>
-                </div>
               </div>
             </div>
           </div>
@@ -597,71 +479,8 @@ const page = () => {
             ))}
           </div>
         </div>
-        <div className="p-4 ">
-          <div className="flex items-center justify-end">
-            <div className="flex gap-[10px] mr-5">
-              <Button
-                variant={"showMore"}
-                size={"timeline"}
-                className="text-borderGrey"
-              >
-                All Time
-              </Button>
-              <Button
-                variant={"showMore"}
-                size={"timeline"}
-                className="text-borderGrey"
-              >
-                1Y
-              </Button>
-              <Button
-                variant={"showMore"}
-                size={"timeline"}
-                className="text-borderGrey"
-              >
-                6M
-              </Button>
-              <Button
-                variant={"showMore"}
-                size={"timeline"}
-                className="text-borderGrey"
-              >
-                1M
-              </Button>
-              <Button
-                variant={"showMore"}
-                size={"timeline"}
-                className="text-[#020202]  rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]"
-              >
-                10D
-              </Button>
-              <Button
-                variant={"showMore"}
-                size={"timeline"}
-                className="text-borderGrey"
-              >
-                1D
-              </Button>
-            </div>
-          </div>
-          <Charts chartData={chartData} height={180} />
-          <div className="flex items-center justify-between px-10 ">
-            <Button
-              variant={"secondary"}
-              size={"arrow"}
-              className="flex items-center bg-[#EEE] "
-            >
-              <ArrowLeftIcon width={12} height={9} />
-            </Button>
-            <p>Time</p>
-            <Button
-              variant={"secondary"}
-              size={"arrow"}
-              className="flex items-center bg-[#EEE]"
-            >
-              <ArrowRightIcon width={12} height={9} />
-            </Button>
-          </div>
+        <div className="">
+          <Charts  height={180} title={"ratio"} />
         </div>
       </div>
     );

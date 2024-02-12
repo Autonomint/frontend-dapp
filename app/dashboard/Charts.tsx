@@ -1,11 +1,26 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { BACKEND_API_URL } from "@/constants/BackendUrl";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import React from "react";
+import { useEffect } from "react";
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 
 
-const Charts: React.FC<{ chartData: string[],height?:number }> = ({ chartData,height=400 }) => {
+const Charts: React.FC<{ height?:number,title:string }> = ({ height=400,title }) => {
   let currentDate = new Date();
-// Create a new array of objects with name and price properties:
+  const [time, setTime] = React.useState("10");
+  const [chartData, setChartData] = React.useState<string[]>([]);
+  async function changeTime() {
+    const res = await fetch(`${BACKEND_API_URL}/borrows/chart/${title}/5/${time}/No`);
+    const data = await res.json();
+    setChartData(data)
+  }
+  useEffect (()=>{
+    changeTime()
+  },[time,title])
+
 const data = chartData.map((price) => {
   let name;
 
@@ -16,6 +31,59 @@ const data = chartData.map((price) => {
   return { name, price };
 });
   return (
+    <div className="p-4">
+                    <div className="flex items-center justify-end">
+                      <div className="flex gap-[10px] mr-5">
+                        <Button
+                          variant={"showMore"}
+                          size={"timeline"}
+                          className={` ${time==="720"?"text-[#020202] rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
+                          onClick={() => setTime("720")}
+                        >
+                          All Time
+                        </Button>
+                        <Button
+                          variant={"showMore"}
+                          size={"timeline"}
+                          className={` ${time==="365"?"text-[#020202] rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
+                          onClick={() => setTime("365")}
+                        >
+                          1Y
+                        </Button>
+                        <Button
+                          variant={"showMore"}
+                          size={"timeline"}
+                          className={` ${time==="180"?"text-[#020202] rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
+                          onClick={() => setTime("180")}
+                        >
+                          6M
+                        </Button>
+                        <Button
+                          variant={"showMore"}
+                          size={"timeline"}
+                          className={` ${time==="30"?"text-[#020202] rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
+                          onClick={() => setTime("30")}
+                        >
+                          1M
+                        </Button>
+                        <Button
+                          variant={"showMore"}
+                          size={"timeline"}
+                          className={` ${time==="10"?"text-[#020202] rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
+                          onClick={() => setTime("10")}
+                        >
+                          10D
+                        </Button>
+                        {/* <Button
+                          variant={"showMore"}
+                          size={"timeline"}
+                          className="text-borderGrey"
+                        >
+                          1D
+                        </Button> */}
+                      </div>
+                    </div>
+                    
     <ResponsiveContainer style={{marginLeft:"-20px"}} width="100%" height={height}>
       <LineChart data={data}>
         <Line
@@ -32,6 +100,24 @@ const data = chartData.map((price) => {
         <YAxis dataKey="price"/>
       </LineChart>
     </ResponsiveContainer>
+    <div className="flex items-center justify-between px-10 ">
+                      <Button
+                        variant={"secondary"}
+                        size={"arrow"}
+                        className="flex items-center bg-[#EEE] "
+                      >
+                        <ArrowLeftIcon width={12} height={9} />
+                      </Button>
+                      <p>Time</p>
+                      <Button
+                        variant={"secondary"}
+                        size={"arrow"}
+                        className="flex items-center bg-[#EEE]"
+                      >
+                        <ArrowRightIcon width={12} height={9} />
+                      </Button>
+                    </div>
+                  </div>
   );
 };
 

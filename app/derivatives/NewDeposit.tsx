@@ -931,8 +931,8 @@ const NewDeposit = () => {
                                 </div>
 
                                 <div className="absolute top-0 right-0 flex items-center justify-between h-full">
-
-                                  {usdtAmountDepositedTillNow > usdtLimit && (
+                                  
+                                  {usdtAmountDepositedTillNow >= usdtLimit && (
                                     <div
                                       className="text-xs cursor-pointer"
                                       onClick={() => {

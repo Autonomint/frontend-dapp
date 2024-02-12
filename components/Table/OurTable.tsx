@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import Withdraw from "./Withdraw";
 import TableRows from "./TableRows";
+import Spinner from "../CustomUI/Spinner";
 
 interface TableData {
   id: string;
@@ -22,7 +23,7 @@ interface TableData {
   normalizedAmount: string;
   strikePrice: number;
   downsideProtectionPercentage: number;
-  aprAtDeposit:number;
+  aprAtDeposit: number;
   withdrawTime1: string;
   withdrawTime2: string;
   withdrawAmount1: string;
@@ -41,15 +42,14 @@ const DepositAndWithDrawTable = ({
 }) => {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
   const [sheetDetails, setSheetDetails] = useState<TableData>();
-  const handleSheet = (details:TableData) => {
+  const handleSheet = (details: TableData) => {
     setSheetDetails(details)
     setSheetOpen(true);
   }
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    if(tableData){
-      tableData.reverse();
-    }
-
+    if(tableData) tableData.reverse();
+    setLoading(false);
   }, [tableData]);
   return (
     <Table>
@@ -63,19 +63,24 @@ const DepositAndWithDrawTable = ({
           <TableHead className="text-textGrey">Liquidated</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
-        {/* if there is tableData map over it */}
-        {tableData && tableData?.map((details, index) => (
-          // Iterate over each element in the tableData array
-          <TableRows key={details.id} onClick={()=>handleSheet(details)}  details={details} interest={3} handleRefetch={handleRefetch} />
-        ))}
-      </TableBody>
       {
-         sheetDetails && <Withdraw
+        loading ? <div><Spinner /></div> : (
+          <TableBody>
+            {/* if there is tableData map over it */}
+            {tableData && tableData?.map((details, index) => (
+              // Iterate over each element in the tableData array
+              <TableRows key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} handleRefetch={handleRefetch} />
+            ))}
+          </TableBody>
+        )
+      }
+
+      {
+        sheetDetails && <Withdraw
           details={sheetDetails}
           sheetOpen={sheetOpen}
           handleSheetOpenChange={setSheetOpen} />
-        }
+      }
     </Table>
   );
 };
