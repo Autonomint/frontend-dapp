@@ -616,7 +616,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                       Amount of Amint that will be minted
                       <TooltipProvider>
                         <Tooltip>
-                          <TooltipTrigger>
+                          <TooltipTrigger type="button">
                             <InfoCircledIcon className="w-4 h-4 ml-2" />
                           </TooltipTrigger>
                           <TooltipContent>

@@ -79,7 +79,9 @@ const DepositAndWithDrawTable = ({
         sheetDetails && <Withdraw
           details={sheetDetails}
           sheetOpen={sheetOpen}
-          handleSheetOpenChange={setSheetOpen} />
+          handleSheetOpenChange={setSheetOpen}
+          handleRefetch={handleRefetch}
+          />
       }
     </Table>
   );

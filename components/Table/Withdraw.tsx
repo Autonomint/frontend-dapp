@@ -89,10 +89,12 @@ const Withdraw = ({
     details,
     handleSheetOpenChange,
     sheetOpen,
+    handleRefetch
 }: {
     details: TableData;
     handleSheetOpenChange: (value: boolean) => void;
     sheetOpen: boolean;
+    handleRefetch:Function;
 }) => {
   const depositDetails = [
     {
@@ -233,7 +235,6 @@ const Withdraw = ({
   const { data: lastCumulativeRate } = useBorrowingContractLastCumulativeRate({
     watch: true,
   });
-  const { data: democumulative } = usePrepareBorrowingContractCalculateCumulativeRate();
   const { isLoading , isSuccess: transactionSuccess } = useWaitForTransaction({
     hash: cumulativeRate?.hash, // Transaction hash to wait for
     confirmations: 3, // Number of confirmations required
@@ -278,7 +279,7 @@ const Withdraw = ({
     reset: approveReset,
   } = useAmintApprove();
   // Use the useWaitForTransaction hook to get the amint transaction status
-  const { data: amintTransactionAllowed } = useWaitForTransaction({
+  const { data: amintTransactionAllowed ,isLoading:amintTransactionLoading } = useWaitForTransaction({
     hash: amintApproveData?.hash, // Hash of the amint approval transaction
     onSuccess(data) {
       // Show a custom toast when the transaction is successful
@@ -439,9 +440,11 @@ const Withdraw = ({
       }, 5000);
 
       // Reset approve, cumulative, and borrow values
+
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
+      handleSheetOpenChange(!sheetOpen)
     },
     onError(error) {
       // Callback function executed when there is an error in the transaction
@@ -468,6 +471,7 @@ const Withdraw = ({
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
+      handleSheetOpenChange(!sheetOpen)
     },
   });
   //using custom hook to mutate backend withdraw
@@ -487,6 +491,7 @@ const Withdraw = ({
       queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
       // Invalidate the queries for `dCDSdeposits`
       queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
+      handleRefetch()
     },
   });
 
@@ -726,7 +731,7 @@ const Withdraw = ({
                   withdrawalTime={withdrawalTime}
                   handleWithdrawal={handleWithdrawalTime}
                   amintToMint={totalAmintAmount.current}
-                  isLoading={isLoading || borrowWithdrawisLoadingone || cumulativeRateLoading || amintApproveLoading||borrowWithdrawisLoading||isPending}
+                  isLoading={isLoading || borrowWithdrawisLoadingone || cumulativeRateLoading || amintApproveLoading||borrowWithdrawisLoading||amintTransactionLoading||isPending}
                 />
               </>
             ) : (

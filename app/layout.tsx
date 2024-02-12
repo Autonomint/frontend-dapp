@@ -28,8 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-bgGrey`}>
         {/* <div className="max-w-[1440px] mx-auto"> */}
-        <main className="flex h-screen ">
-
+        <main className="flex h-auto ">
           <QueryProvider>
             <WalletProvider>
               <SideBar />

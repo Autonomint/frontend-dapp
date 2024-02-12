@@ -36,8 +36,8 @@ const SideBar = () => {
   const segment = useSelectedLayoutSegment();
 
   return (
-    <nav className="max-h-[100vh] px-[10px] py-2 sm:py-[10px] lg:py-[20px] xl:py-[30px]  bg-bgGrey flex flex-col items-center justify-between">
-      <div className="flex flex-col items-center gap-[45px]">
+    <nav className="h-[100vh] min-w-[20vh] max px-[10px] py-2 sm:py-[10px] lg:py-[20px] xl:py-[30px]  bg-bgGrey flex flex-col items-center justify-between">
+      <div className="flex flex-col items-center gap-[45px] fixed">
         <Link href={"/"}>
         <div className="w-[3rem] h-[3rem]">
           <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
@@ -66,13 +66,13 @@ const SideBar = () => {
             );
           })}
         </div>
-      </div>
       <Profile
         props={{
           image: metamask,
           buttonText: "Logout",
         }}
       />
+      </div>
     </nav>
   );
 };

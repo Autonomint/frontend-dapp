@@ -209,18 +209,8 @@ const WalletOrContent = () => {
   return (
     <>
       {isConnected ? (
-        <div className="relative p-1 xl:p-6 sm:p-2 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full">
-          {/* we are not using this code which is for the background pattern when the user is connected. Inquire with sir if you want to remove this */}
-          {/* <div
-            className={`absolute w-[1740px] rotate-[14deg] h-[1200px] z-0 opacity-30`}
-          >
-            <Image
-              src={heroPattern}
-              alt="grid bg"
-              className="w-full h-full"
-              style={{ objectFit: "cover", opacity: 0.4 }}
-            ></Image>
-          </div> */}
+        <div className="relative p-1 xl:p-6 sm:p-2 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full min-h-[82vh]">
+          
           <div className="z-10 flex flex-row flex-wrap items-center justify-between w-full gap-1 sm:gap-2 lg:gap-4 xl:gap-7 lg:flex-nowrap">
             {dashboardStats.map((item, index) => (
               // Render a div for each item in the dashboardStats array
