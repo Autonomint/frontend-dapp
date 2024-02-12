@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react'
 import useSwap from './getSwap';
+import Spinner from '../ui/spinner';
 
 type OptionValueType = { [key: string]: string };
 
@@ -93,8 +94,12 @@ const Swap = () => {
                 <div className='p-5 m-2 bg-[#F4F8FF] rounded-md shadow-sm flex flex-col'>
                     <label className='text-[12px] text-gray-700'>you get</label>
                     <div  className="flex justify-between">
-                        
-                        <input className='border-none focus:outline-none bg-[#F4F8FF] text-xl' type="text" value={loader?"loading...": outputAmount} placeholder='Output Amount' readOnly />
+                        {
+                            loader ? <Spinner /> :(
+                        <input className='border-none focus:outline-none bg-[#F4F8FF] text-xl' type="text" value={outputAmount} placeholder='Output Amount' readOnly />
+
+                            )
+                        }
                         <select
                             className='  bg-[#F4F8FF] text-md p-3 border border-blue-500 rounded-md'
                             value={selectOutputOption}

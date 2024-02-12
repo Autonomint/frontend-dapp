@@ -28,12 +28,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-bgGrey`}>
         {/* <div className="max-w-[1440px] mx-auto"> */}
-        <main className="grid h-screen xl:grid-cols-[140px_1fr] grid-cols-[105px_1fr]">
+        <main className="flex h-screen ">
 
           <QueryProvider>
             <WalletProvider>
               <SideBar />
-              <div className="h-full flex flex-col pb-1 lg:pb-4 xl:pb-6 pr-1 xl:pr-6 lg:pr-4">
+              <div className="h-full basis-[90%] flex flex-col pb-1 lg:pb-4 xl:pb-6 pr-1 xl:pr-6 lg:pr-4">
                 <NavBar />
                 {children}
               </div>

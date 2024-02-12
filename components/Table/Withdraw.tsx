@@ -564,8 +564,8 @@ const Withdraw = ({
     const totalAmintAmnt =
       BigInt(
         BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
-          (democumulative?.result ?? 0n)
-      ) / BigInt(10 ** 54);
+          (lastCumulativeRate ?? 0n)
+      ) / BigInt(10 ** 27);
 
     totalAmintAmount.current = totalAmintAmnt;
 
