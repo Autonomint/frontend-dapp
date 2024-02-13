@@ -131,7 +131,7 @@ const TableRows = ({
 
   return (
 
-      <TableRow onClick={()=>onClick()} className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF]">
+      <TableRow onClick={()=>onClick()} className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF] cursor-pointer">
         <TableCell className="w-3 text-borderGrey">
           {`#${details.index}`}
         </TableCell>

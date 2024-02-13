@@ -20,6 +20,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import displayNumberWithPrecision from "../utils/precision";
 import { formatEther } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
+import Withdraw from "./Withdraw";
 // ...
 
 
@@ -69,6 +70,16 @@ const dasboardStatsItem = [
 const page = () => {
   // getting isConnected && address from useAccount() of wagmi
   const { isConnected, address,connector:activeConnector} = useAccount();
+
+  // managing sheetOpen and sheetDetails
+  const [sheetOpen, setSheetOpen] = useState<boolean>(false);
+  const [sheetDetails, setSheetDetails] = useState<DepositDetail>();
+  const handleSheet = (details: DepositDetail) => {
+    setSheetDetails(details)
+    setSheetOpen(true);
+  }
+  const [shouldRefetch, setShouldRefetch] = useState(1);
+
   useEffect(() => {
     const handleConnectorUpdate = ({ account, chain }: ConnectorData) => {
       window.location.reload();
@@ -105,13 +116,15 @@ const page = () => {
       response.json()
     );
   }
-  
+  function handleRefetch() {
+    setShouldRefetch(shouldRefetch + 1);
+  }
 
   // Define a variable to store the result of the query
   const { data: dCDSdepositorData, error: dCDSdepositorDataError,refetch: refetchCDSDepositorData } = useQuery({
     // Specify the query key, which consists of the "dCDSdepositorsData",
     // chainId, and address values
-    queryKey: ["dCDSdepositorsData", chainId, address],
+    queryKey: ["dCDSdepositorsData", chainId, address,shouldRefetch],
     // Specify the query function to be executed
     queryFn: () => getCDSDepositorData(address ? address : undefined),
     // Enable the query only if the address value is truthy
@@ -273,11 +286,19 @@ const page = () => {
             */}
               {!depositsError
                 ? deposits?.map((details: DepositDetail) => (
-                    <AmintDepositRow key={details.id} details={details} />
+                    <AmintDepositRow key={details.id}  onClick={() => handleSheet(details)} details={details} />
                   ))
                 : null}
             </TableBody>
           </Table>
+          {
+        sheetDetails && <Withdraw
+          details={sheetDetails}
+          sheetOpen={sheetOpen}
+          handleSheetOpenChange={setSheetOpen}
+          handleRefetch={handleRefetch}
+          />
+      }
         </div>
       ) : (
         <ConnectWallet />

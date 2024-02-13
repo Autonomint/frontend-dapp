@@ -1,4 +1,5 @@
 "use client";
+// protocl tokens
 import React, { useEffect, useRef, useState } from "react";
 import {
   Sheet,
@@ -30,7 +31,7 @@ import {
 import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "../CustomUI/CustomToast";
-import { useQueryClient,useMutation } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { formatEther } from "viem";
 import displayNumberWithPrecision from "@/app/utils/precision";
 import { calculate30DaysFromStoredTime } from "@/app/utils/calculateNext30Days";
@@ -86,15 +87,15 @@ type withdrawData = {
 
 
 const Withdraw = ({
-    details,
-    handleSheetOpenChange,
-    sheetOpen,
-    handleRefetch
+  details,
+  handleSheetOpenChange,
+  sheetOpen,
+  handleRefetch
 }: {
-    details: TableData;
-    handleSheetOpenChange: (value: boolean) => void;
-    sheetOpen: boolean;
-    handleRefetch:Function;
+  details: TableData;
+  handleSheetOpenChange: (value: boolean) => void;
+  sheetOpen: boolean;
+  handleRefetch: Function;
 }) => {
   const depositDetails = [
     {
@@ -171,7 +172,6 @@ const Withdraw = ({
     staleTime: 10 * 1000,
   });
 
-
   const {
     isLoading: cumulativeRateLoading,
     // Data for the cumulative rate
@@ -235,7 +235,7 @@ const Withdraw = ({
   const { data: lastCumulativeRate } = useBorrowingContractLastCumulativeRate({
     watch: true,
   });
-  const { isLoading , isSuccess: transactionSuccess } = useWaitForTransaction({
+  const { isLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
     hash: cumulativeRate?.hash, // Transaction hash to wait for
     confirmations: 3, // Number of confirmations required
     onSuccess(data) {
@@ -261,11 +261,11 @@ const Withdraw = ({
       amintApprove?.({
         args: [
           borrowingContractAddress[
-            chainId as keyof typeof borrowingContractAddress
+          chainId as keyof typeof borrowingContractAddress
           ] as `0x${string}`, // address of borrowing contract based on chainId
           BigInt(
             BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
-              (lastCumulativeRate ?? 0n)
+            (lastCumulativeRate ?? 0n)
           ) / BigInt(10 ** 27), // Total amint amount
         ],
       });
@@ -279,14 +279,14 @@ const Withdraw = ({
     reset: approveReset,
   } = useAmintApprove();
   // Use the useWaitForTransaction hook to get the amint transaction status
-  const { data: amintTransactionAllowed ,isLoading:amintTransactionLoading } = useWaitForTransaction({
+  const { data: amintTransactionAllowed, isLoading: amintTransactionLoading } = useWaitForTransaction({
     hash: amintApproveData?.hash, // Hash of the amint approval transaction
     onSuccess(data) {
       // Show a custom toast when the transaction is successful
       toast.custom(
         (t) => {
           return (
-            <div> 
+            <div>
               <CustomToast
                 props={{
                   t: toastId.current,
@@ -475,16 +475,16 @@ const Withdraw = ({
     },
   });
   //using custom hook to mutate backend withdraw
-  const { mutate: backendWithdraw,isPending } = useMutation({
+  const { mutate: backendWithdraw, isPending } = useMutation({
     // Specify the mutation function
     mutationFn: withdrawFromBackend,
-  
+
     // Handle any errors that occur during the mutation
     onError(error: any) {
       console.log(error);
       queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
     },
-  
+
     // Perform actions after the mutation is completed or rejected
     onSettled() {
       // Invalidate the query for `dCDSdepositorsData`
@@ -507,16 +507,16 @@ const Withdraw = ({
       },
       body: bodyValue,
     });
-  
+
     const result = await response.json();
-  
+
     if (!response.ok) {
       throw new Error(result.message);
     }
-  
+
     return result;
   }
-  
+
   /**
    * Handles the withdrawal time based on the current value of withdrawalTime.
    *
@@ -569,7 +569,7 @@ const Withdraw = ({
     const totalAmintAmnt =
       BigInt(
         BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
-          (lastCumulativeRate ?? 0n)
+        (lastCumulativeRate ?? 0n)
       ) / BigInt(10 ** 27);
 
     totalAmintAmount.current = totalAmintAmnt;
@@ -577,10 +577,10 @@ const Withdraw = ({
     if (details) {
       // If details are available, update each value in the depositData array
       const updatedData = [...depositData];
-      updatedData[0].value = details.depositedAmount;
+      updatedData[0].value = details.depositedAmount + ` (${(Number(details.depositedAmount)*Number(details.ethPrice)).toFixed(2)} $) `;
       updatedData[1].value = `${details.ethPrice}`;
       updatedData[2].value = details.noOfAmintMinted;
-      updatedData[3].value = (parseFloat(totalAmintAmnt.toString())/10**6).toString();
+      updatedData[3].value = (parseFloat(totalAmintAmnt.toString()) / 10 ** 6).toString();
       updatedData[4].value = `${details.aprAtDeposit}%`;
       updatedData[5].value = `${details.downsideProtectionPercentage}%`;
       updatedData[6].value = details.status === "LIQUIDATED" ? "Yes" : "No";
@@ -629,6 +629,7 @@ const Withdraw = ({
         parseFloat(ethPrice.toString()) / 100 <=
         0.8 * details.ethPrice
       ) {
+        // 
         const amountProt =
           0.2 * parseFloat(details.depositedAmount) * details.ethPrice;
         const amountProtPrecision = parseFloat(
@@ -643,9 +644,16 @@ const Withdraw = ({
     }
   };
 
+
+  const SecondWithdrawalTime = () => {
+    const storedDate = new Date(parseInt(details.withdrawTime1));
+    return storedDate.getTime() + 30 * 24 * 60 * 60 * 1000;
+  }
+
   useEffect(() => {
     handleDepositData();
     setWithdrawalTime(details.status);
+    handleAmountProtected()
   }, [details]);
 
 
@@ -658,18 +666,18 @@ const Withdraw = ({
         setAmountView(false);
       }}
     >
-        {spinner? <Spinner/> : (
-            <SheetContent
+      {spinner ? <Spinner /> : (
+        <SheetContent
           className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen"}
         >
           <div className="flex flex-col min-[1440px]:gap-6 2dppx:gap-[10px] gap-[10px]">
             <div className="flex justify-end w-full">
-              <SheetClose onClick={() => {handleSheetOpenChange(!sheetOpen)}} asChild>
+              <SheetClose onClick={() => { handleSheetOpenChange(!sheetOpen) }} asChild>
                 <Button
                   variant={"ghostOutline"}
                   size={"primary"}
                   className="flex gap-[10px] border border-borderGrey"
-                  
+
                 >
                   <Cross2Icon className="w-4 h-4" />
                   <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
@@ -731,7 +739,7 @@ const Withdraw = ({
                   withdrawalTime={withdrawalTime}
                   handleWithdrawal={handleWithdrawalTime}
                   amintToMint={totalAmintAmount.current}
-                  isLoading={isLoading || borrowWithdrawisLoadingone || cumulativeRateLoading || amintApproveLoading||borrowWithdrawisLoading||amintTransactionLoading||isPending}
+                  isLoading={isLoading || borrowWithdrawisLoadingone || cumulativeRateLoading || amintApproveLoading || borrowWithdrawisLoading || amintTransactionLoading || isPending}
                 />
               </>
             ) : (
@@ -793,6 +801,7 @@ const Withdraw = ({
                       onClick={() => {
                         setOpenConfirmNotice(true);
                       }}
+                      disabled={SecondWithdrawalTime() < Date.now() ? false : true}
                     >
                       Withdraw for the second time
                     </Button>
@@ -810,9 +819,9 @@ const Withdraw = ({
             )}
           </div>
         </SheetContent>
-        )}
-        
-      
+      )}
+
+
     </Sheet>
   );
 };

@@ -14,7 +14,7 @@ const ConnectWallet = () => {
     connector: new InjectedConnector(),
   });
   return (
-    <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] w-full h-full flex flex-col gap-[30px] flex-1 items-center justify-center self-stretch overflow-hidden">
+    <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] w-full  flex flex-col gap-[30px] flex-1 items-center justify-center min-h-[80vh] self-stretch overflow-hidden">
       <div
         className={`absolute w-[1733.078px] rotate-[14deg] h-[1108.473px] z-0 rounded-xl shrink-0`}
       >
@@ -33,7 +33,7 @@ const ConnectWallet = () => {
           <p className="text-center font-medium text-5xl tracking-[-2.4px] text-textPrimary">
             Connect your wallet to get started
           </p>
-          <p className="text-center font-medium text-base text-textSecondary">
+          <p className="text-base font-medium text-center text-textSecondary">
             Connect with your wallet of choice to start get started with the
             Dapp.
           </p>

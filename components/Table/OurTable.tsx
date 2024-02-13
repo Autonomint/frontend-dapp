@@ -48,14 +48,14 @@ const DepositAndWithDrawTable = ({
   }
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    if(tableData) tableData.reverse();
+    if(tableData) tableData.sort((a, b) => a.index - b.index);;
     setLoading(false);
   }, [tableData]);
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="text-textGrey w-3 opacity-0">Id</TableHead>
+          <TableHead className="w-3 opacity-0 text-textGrey">Id</TableHead>
           <TableHead className="text-textGrey">ETH Deposited</TableHead>
           <TableHead className="text-textGrey">AMint minted</TableHead>
           <TableHead className="text-textGrey">Interest rate</TableHead>

@@ -19,8 +19,8 @@ const Profile = ({ props: { image, buttonText } }: Props) => {
   return (
     <>
       {isConnected && (
-        <div className="flex flex-col items-center gap-5">
-          <div className="relative justify-center flex items-center">
+        <div className="absolute flex flex-col items-center gap-5 bottom-14">
+          <div className="relative flex items-center justify-center">
             <NetworkSwitch />
           </div>
           <div className="min-[1440px]:w-[5rem] min-[1440px]:h-[5rem] 2dppx:w-[3.5rem] 2dppx:h-[3.5rem] w-[3.5rem] h-[3.5rem]">
@@ -30,7 +30,7 @@ const Profile = ({ props: { image, buttonText } }: Props) => {
               style={{ width: "100%", height: "100%" }}
             />
           </div>
-          <p className="text-center font-normal text-base text-textGrey">
+          <p className="text-base font-normal text-center text-textGrey">
             {truncateWeb3WalletAddress(address)}
             {/* {ensName ? ` (${ensName})` : null} */}
           </p>

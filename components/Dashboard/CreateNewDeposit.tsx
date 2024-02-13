@@ -649,8 +649,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                 <Note
                   note="Note: Only 50% of the amount is retrievable on initial
                   withdrawal. For 2nd 50% of amount, you will be getting
-                  Protocol tokens and your collateral can be withdrawn after a
-                  month by returning Protocol tokens."
+                  Amint and your collateral can be withdrawn after a
+                  month by returning Amint."
                 />
                 <Button
                   type="submit"

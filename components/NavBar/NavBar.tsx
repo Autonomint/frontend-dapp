@@ -135,6 +135,7 @@ const NavBar = () => {
     const data= await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/1000000000000000000/${ethPrice}/0`).then(
       (res) => res.json()
     )
+    console.log(data)
    
     if (totalAmintSupply) {
       const updatedData = [...updatedHeaderItems];
@@ -145,9 +146,10 @@ const NavBar = () => {
     }
     if (ltv && totalCdsAmount && ethPrice && totalValueLocked) {
       const updatedData = [...updatedHeaderItems];
-      updatedData[6].value = `${formatNumber(Number(formatEther((totalValueLocked * ethPrice) / BigInt(100))))}`;
-      updatedData[7].value = `$${displayNumberWithPrecision(
-        (Number(totalCdsAmount) / 10 ** 6).toString()
+      updatedData[6].value = `$${formatNumber(Number(formatEther((totalValueLocked * ethPrice) / BigInt(100))))}`;
+      console.log(totalValueLocked , ethPrice)
+      updatedData[7].value = `$${formatNumber(
+        (Number(totalCdsAmount) / 10 ** 6)
         )}`;
         updatedData[8].value = `${100 - ltv}%`;
         setUpdatedHeaderItems(updatedData);
@@ -162,7 +164,6 @@ const NavBar = () => {
   return (
     <div className="flex w-[100%] h-[12vh] md:h-auto">
       <div className="flex w-full overflow-scroll scrollb md:hidden md:w-0 bg-bgGrey">
-
         <div className={`flex px-1 py-3 sm:px-2 xl:px-5 xl:py-5 lg:px-4 lg:py-4 `}>
           {headerItems.map((item, index) => (
             <HeaderItems
@@ -176,12 +177,9 @@ const NavBar = () => {
                 classNamediv: "pr-4 mr-4 border-r border-lineGrey",
               }}
               />
-         
           ))}
         </div>
       </div>
-
-
 
 
       <div className="hidden bg-bgGrey md:flex flex-col min-[1440px]:pb-6 2dppx:pb-1">
@@ -196,14 +194,12 @@ const NavBar = () => {
                 showTooltip: item.tooltip,
                 tooltipText: item.tooltipText,
                 className: "invisible",
-
               }}
               />
               <span className="w-[2px] h-full bg-gray-300"></span>
               </div>
           ))}
         </div>
-
       </div>
       <Button
         variant={"showMore"}
