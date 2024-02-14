@@ -202,7 +202,7 @@ const WalletOrContent = () => {
     handleStatsItem();
     // Log the dashboard stats
     console.log(dashboardStats);
-  }, [depositorData, depositorDataError]);
+  }, [depositorData, depositorDataError,shouldRefetch]);
 
   return (
     <>

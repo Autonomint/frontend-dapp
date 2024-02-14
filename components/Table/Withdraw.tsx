@@ -654,7 +654,7 @@ const Withdraw = ({
     handleDepositData();
     setWithdrawalTime(details.status);
     handleAmountProtected()
-  }, [details]);
+  }, [details,sheetOpen]);
 
 
 
@@ -662,6 +662,7 @@ const Withdraw = ({
     <Sheet
       open={sheetOpen}
       onOpenChange={() => {
+        handleSheetOpenChange(!sheetOpen);
         setOpenConfirmNotice(false);
         setAmountView(false);
       }}

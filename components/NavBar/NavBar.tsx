@@ -63,7 +63,7 @@ const headerItems = [
     value: "-",
   },
   {
-    headline: "Secured",
+    headline: "Downside Protection",
     value: "-",
   },
 ];
@@ -77,7 +77,7 @@ const headerItems2nd = [
     value: "-",
   },
   {
-    headline: "Secured",
+    headline: "Downside Protection",
     value: "-",
   },
 ];

@@ -515,7 +515,7 @@ const NewDeposit = () => {
 
 
 
-  const { data: amintTransactionAllowed } = useWaitForTransaction({
+  const { data: amintTransactionAllowed ,isLoading:isAmintTransactionLoading } = useWaitForTransaction({
     // TODO: Add OnError Custom Toast
     onError(error) {
       toast.custom(
@@ -1255,7 +1255,7 @@ const NewDeposit = () => {
                       (usdtAmountDepositedTillNow < usdtLimit && !usdtApproved) || isCdsDepositLoading 
                     }
                   >
-                    {isCdsDepositLoading || isPending?<Spinner />:'Confirm Deposit'}
+                    {isCdsDepositLoading || isPending || isLoading ?<Spinner />:'Confirm Deposit'}
                   </Button>
                 </div>
               </form>

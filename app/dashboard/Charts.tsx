@@ -5,7 +5,14 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import React from "react";
 import { useEffect } from "react";
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { set } from "zod";
 
+const AmintData =[
+  "9.99","9.99","9.99","9.99","9.99","9.99","9.99","9.99","9.99","9.99","9.99"
+]
+const AbondData =[
+  "4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0",
+]
 
 
 const Charts: React.FC<{ height?:number,title:string }> = ({ height=400,title }) => {
@@ -13,23 +20,31 @@ const Charts: React.FC<{ height?:number,title:string }> = ({ height=400,title })
   const [time, setTime] = React.useState("10");
   const [chartData, setChartData] = React.useState<string[]>([]);
   async function changeTime() {
-    const res = await fetch(`${BACKEND_API_URL}/borrows/chart/${title}/5/${time}/No`);
-    const data = await res.json();
-    setChartData(data)
+    if(title==="AMINT"){
+      setChartData(AmintData)
+    }
+    else if(title==="ABOND"){
+      setChartData(AbondData)
+    }
+    else{
+      const res = await fetch(`${BACKEND_API_URL}/borrows/chart/${title}/5/${time}/No`);
+      const data = await res.json();
+      setChartData(data)
+    }
+
   }
   useEffect (()=>{
     changeTime()
   },[time,title])
-
 const data = chartData.map((price) => {
   let name;
 
-  name = String(currentDate.getDate());
+  name = String(currentDate.getDate() + 1) + "/" + String(currentDate.getMonth() + 1);
 
   currentDate.setDate(currentDate.getDate() - 1);
 
   return { name, price };
-});
+}).reverse();
   return (
     <div className="p-4">
                     <div className="flex items-center justify-end">
