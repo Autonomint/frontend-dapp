@@ -111,9 +111,10 @@ const WalletOrContent = () => {
   const { data: deposits, error: depositsError } = useQuery({
     queryKey: ["deposits", chainId, address, shouldRefetch],
     queryFn: (): Promise<any> => getDeposits(address ? address : undefined),
-    // Enable the query only if the user is connected
     enabled: !!address,
   });
+
+
 
   /**
    * Handles the refetch action.
@@ -202,7 +203,7 @@ const WalletOrContent = () => {
     handleStatsItem();
     // Log the dashboard stats
     console.log(dashboardStats);
-  }, [depositorData, depositorDataError,shouldRefetch]);
+  }, [depositorData, depositorDataError]);
 
   return (
     <>

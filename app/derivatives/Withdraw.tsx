@@ -52,6 +52,12 @@ interface DepositDetail {
     fees: string;
     status: "DEPOSITED" | "WITHDREW";
 }
+type calculateData = {
+    address: `0x${string}` | undefined;
+    index: number;
+    chainId: number;
+    ethPrice: bigint;
+  };
 
 const AmintDepositRow = ({ details, handleSheetOpenChange,
     sheetOpen,
@@ -236,7 +242,6 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
             };
 
             backendCDSWithdraw(address); // Perform the backend CDS withdraw operation
-
             // Show a custom toast notification
             toast.custom(
                 (t) => (
@@ -278,7 +283,6 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
         address: `0x${string}` | undefined
     ): Promise<any> {
         // Prepare the body value for the request
-
         console.log("Deposit Started")
         let bodyValue = JSON.stringify({
             address: address,
@@ -317,41 +321,52 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
         return result;
     }
 
-    //TODO: add a mutation hook to use this calculateWithdrawAmount before user tries to withdraw from CDS
-    //this function calculates the withdraw amount
-    //currently not using this anywhere as this is to be done after we have got the deposits working fully
-    // async function calculateWithdrawAmount(
-    //   address: `0x${string}` | undefined,
-    //   index: number,
-    //   chainId: number,
-    //   ethPrice: bigint
-    // ) {
-    //   let bodyValue = JSON.stringify({
-    //     address: address,
-    //     index: index,
-    //     chainId: chainId,
-    //     ethPrice: Number(ethPrice || 0),
-    //   });
-    //   console.log(bodyValue);
-    //   const response = await fetch(
-    //     `${BACKEND_API_URL}/withdraw/calculateWithdrawAmount`,
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "content-type": "application/json",
-    //       },
-    //       body: bodyValue,
-    //     }
-    //   );
-    //   const result = await response.json();
-    //   console.log(result);
 
-    //   if (!response.ok) {
-    //     throw new Error(result.message);
-    //   }
+    const { mutate: calculateBackendWithdraw,data:withdrawdata } = useMutation({
+        // Specify the mutation function
+        mutationFn: calculateWithdrawAmount,
 
-    //   return result;
-    // }
+        // Handle any errors that occur during the mutation
+        onError(error) {
+            console.log(error);
+            queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
+        },
+        // Perform actions after the mutation is completed or rejected
+        onSettled() {
+            // Invalidate the query for `dCDSdepositorsData`
+            queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
+
+            // Invalidate the queries for `dCDSdeposits`
+            queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
+        },
+    });
+
+
+    async function calculateWithdrawAmount(
+      data: calculateData
+    ) {
+      let bodyValue = JSON.stringify({
+        ...data,
+      });
+      console.log(bodyValue);
+      const response = await fetch(
+        `${BACKEND_API_URL}/withdraw/calculateWithdrawAmount`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: bodyValue,
+        }
+      );
+      const result = await response.json();
+      console.log(result);
+
+      if (!response.ok) {
+        throw new Error(result.message);
+      }
+      return result;
+    }
 
 
     /**
@@ -375,6 +390,13 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
             updatedData[7].value = `${details.aprAtDeposit}%`; // Update aprAtDeposit value
             updatedData[8].value = details.optedForLiquidation ? "Yes" : "No"; // Update optedForLiquidation value
             setDepositData(updatedData); // Update the depositData state with updatedData
+
+            calculateBackendWithdraw?.({
+                address: address as `0x${string}`,
+                index: details.index,
+                chainId: chainId,
+                ethPrice: ethPrice as bigint,
+            });
         } else {
             const updatedData = [...depositData];
             // If details are not available, set each value in depositData to '-'
@@ -385,7 +407,10 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
         }
     }
 
-
+    const WithdrawalTime = () => {
+        const storedDate = new Date(parseInt(details.depositedTime));
+        return storedDate.getTime() + 30 * 24 * 60 * 60 * 1000;
+      }
     /**
      * Handles the withdrawal.
      *
@@ -459,8 +484,6 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                             <p className="min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary">
                                 Total Amount accured
                             </p>
-                            {/* // If amountView is true, render the Button component or render
-              the amount value */}
                             {!amountView ? (
                                 <Button
                                     variant={"ghostOutline"}
@@ -484,6 +507,8 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                                 handleWithdrawal={handleWithdrawal}
                                 amintToMint={(Number(depositData[0].value) + Number(depositData[1].value)).toFixed(2)}
                                 setLoding={isLoading}
+                                withdrawdata={withdrawdata}
+                                optedForLiquidation={details.optedForLiquidation}
                             />
                         </>
                     ) : (
@@ -492,7 +517,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                             variant={"primary"}
                             className="text-white"
                             onClick={() => setOpenConfirmNotice(true)}
-                            disabled={status === "WITHDREW" ? true : false}
+                            disabled={(status === "WITHDREW" ? true : false) || (WithdrawalTime() > Date.now())}
                         >
                             Withdraw
                         </Button>
