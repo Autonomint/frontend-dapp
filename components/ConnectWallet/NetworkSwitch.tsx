@@ -24,26 +24,8 @@ const NetworkSwitch: React.FC<NetworkSwitchProps> = () => {
               "?"
             )
           }  
-          {/* {chain.id === 80001 ? (
-            <Image src={matic} width={24} height={24} alt="matic" />
-          ) : (
-            <Image src={sepolia} width={24} height={24} alt="sepolia" />
-          )} */}
         </div>
       )}
-      {/* {chain?.unsupported ? null : <p>Unsupported Network</p>} */}
-
-      {/* {chains.map((x) => (
-        <button
-          disabled={!switchNetwork || x.id === chain?.id}
-          key={x.id}
-          onClick={() => switchNetwork?.(x.id)}
-        >
-          {x.name}
-          {isLoading && pendingChainId === x.id && ' (switching)'}
-        </button>
-      ))} */}
-
       <div>{error && error.name}</div>
     </>
   );

@@ -13,7 +13,7 @@ const ConfirmNoticeCds = ({
   handleWithdrawal: VoidFunction;
   amintToMint: string;
   setLoding: boolean;
-  withdrawdata: [];
+  withdrawdata: number[];
   optedForLiquidation: boolean;
 }) => {
   const [switchOn, setSwitchOn] = React.useState(false);
@@ -22,9 +22,9 @@ const ConfirmNoticeCds = ({
         {optedForLiquidation ?(
           <div className="flex items-center justify-between w-full gap-5">
         <p className="min-[1440px]:text-base text-xs 2dppx:text-xs text-textGrey font-normal ">
-          Withdraw ETH accrued from Liquidation Gains Instead
+          Withdraw Amount + ETH accrued from Liquidation Gains
         </p>
-        <Switch onCheckedChange={() => setSwitchOn(!switchOn)} /> 
+        {/* <Switch onCheckedChange={() => setSwitchOn(!switchOn)} />  */}
       </div>
         ) :(
           <p className="min-[1440px]:text-base text-xs 2dppx:text-xs text-textGrey font-normal ">
@@ -41,7 +41,7 @@ const ConfirmNoticeCds = ({
             Amount
           </p>
           <p className="text-[#020202] font-medium min-[1440px]:text-[32px] 2dppx:text-2xl text-2xl leading-none">
-            {switchOn ? `0.002 ETH` : `${amintToMint} AMINT`}
+            {optedForLiquidation ? `${withdrawdata[0]/10**6} AMINT + ${withdrawdata.length==2?withdrawdata[2]:"0" } ETH`: `${withdrawdata[0]/10**6} AMINT` }
           </p>
         </div>
       </div>

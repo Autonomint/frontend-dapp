@@ -56,7 +56,7 @@ type calculateData = {
     address: `0x${string}` | undefined;
     index: number;
     chainId: number;
-    ethPrice: bigint;
+    ethPrice: string;
   };
 
 const AmintDepositRow = ({ details, handleSheetOpenChange,
@@ -322,10 +322,11 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
     }
 
 
+
+
     const { mutate: calculateBackendWithdraw,data:withdrawdata } = useMutation({
         // Specify the mutation function
         mutationFn: calculateWithdrawAmount,
-
         // Handle any errors that occur during the mutation
         onError(error) {
             console.log(error);
@@ -340,17 +341,19 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
             queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
         },
     });
-
+    console.log(withdrawdata)
 
     async function calculateWithdrawAmount(
       data: calculateData
     ) {
+
+        console.log("1step",data)
       let bodyValue = JSON.stringify({
         ...data,
       });
       console.log(bodyValue);
       const response = await fetch(
-        `${BACKEND_API_URL}/withdraw/calculateWithdrawAmount`,
+        `${BACKEND_API_URL}/cds/withdraw/calculateWithdrawAmount`,
         {
           method: "POST",
           headers: {
@@ -368,13 +371,11 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
       return result;
     }
 
-
     /**
      * Updates the deposit data based on the provided details.
      * If the details are available, it updates each value in the depositData array.
      * If the details are not available, it sets each value in the depositData array to '-'.
      */
-
 
     function handleDepositData() {
         if (details) {
@@ -390,12 +391,12 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
             updatedData[7].value = `${details.aprAtDeposit}%`; // Update aprAtDeposit value
             updatedData[8].value = details.optedForLiquidation ? "Yes" : "No"; // Update optedForLiquidation value
             setDepositData(updatedData); // Update the depositData state with updatedData
-
+            
             calculateBackendWithdraw?.({
                 address: address as `0x${string}`,
                 index: details.index,
                 chainId: chainId,
-                ethPrice: ethPrice as bigint,
+                ethPrice: (Number(ethPrice??0n)/100).toFixed(2)
             });
         } else {
             const updatedData = [...depositData];
@@ -429,7 +430,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
         // Set the status to the value of details.status
         // we are setting the status any time details change meaning when deposit is withdraw we want to change the status of it to withdrew and that is what this code is doing
         setStatus(details.status);
-    }, [details]);
+    }, [details,sheetOpen]);
 
     return (
         <Sheet
@@ -507,12 +508,13 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                                 handleWithdrawal={handleWithdrawal}
                                 amintToMint={(Number(depositData[0].value) + Number(depositData[1].value)).toFixed(2)}
                                 setLoding={isLoading}
-                                withdrawdata={withdrawdata}
+                                withdrawdata={withdrawdata??[0]}
                                 optedForLiquidation={details.optedForLiquidation}
                             />
                         </>
                     ) : (
                         // If openConfirmNotice is false, render the Button component
+                        // || (WithdrawalTime() > Date.now())
                         <Button
                             variant={"primary"}
                             className="text-white"
