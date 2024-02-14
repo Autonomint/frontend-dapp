@@ -146,7 +146,6 @@ const WalletOrContent = () => {
     if (depositorData) {
       const updatedStats = [...dashboardStats];
       const ethPriceNow = ethPrice ? ethPrice : 0n;
-      console.log(depositorData , ethPriceNow);
       // Calculate and format the value for the first stat item
       updatedStats[0].value =
         chainId === 5
@@ -193,7 +192,6 @@ const WalletOrContent = () => {
       updatedStats[0].subheadingHighlight = "-";
     }
 
-    console.log("returned data", depositorData);
   }
 
   useEffect(() => {

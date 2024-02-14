@@ -50,7 +50,7 @@ const DepositAndWithDrawTable = ({
   useEffect(() => {
     if(tableData) tableData.sort((a, b) => a.index - b.index);;
     setLoading(false);
-  }, [tableData]);
+  }, [tableData, handleRefetch]);
   return (
     <Table>
       <TableHeader>
@@ -69,7 +69,7 @@ const DepositAndWithDrawTable = ({
             {/* if there is tableData map over it */}
             {tableData && tableData?.map((details, index) => (
               // Iterate over each element in the tableData array
-              <TableRows key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} handleRefetch={handleRefetch} />
+              <TableRows  key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} handleRefetch={handleRefetch} />
             ))}
           </TableBody>
         )

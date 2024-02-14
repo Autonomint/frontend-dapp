@@ -70,11 +70,14 @@ const CustomToast = ({
               {`Tx Hash: ${truncateWeb3WalletAddress(transactionHash)}`}
               <Link
                 href={
-                  chainId === 80001
+                  chainId === 5
+                    ? `https://goerli.etherscan.io/tx/${transactionHash}`
+                    : chainId === 80001
                     ? `https://mumbai.polygonscan.com/tx/${transactionHash}`
                     : chainId === 11155111
                     ? `https://sepolia.etherscan.io/tx/${transactionHash}`
                     : "Network Not yet Supported please switch to mumbai or sepolia"
+
                 }
                 target="_blank"
                 className="flex items-center gap-1 z-[999]"
