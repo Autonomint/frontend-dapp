@@ -738,7 +738,7 @@ const Withdraw = ({
                 <ConfirmNotice
                   withdrawalTime={withdrawalTime}
                   handleWithdrawal={handleWithdrawalTime}
-                  amintToMint={totalAmintAmount.current}
+                  amintToMint={withdrawalTime === "DEPOSITED" ? Number(totalAmintAmount.current) : Number(details.depositedAmount)/2}
                   isLoading={isLoading || borrowWithdrawisLoadingone || cumulativeRateLoading || amintApproveLoading || borrowWithdrawisLoading || amintTransactionLoading || isPending}
                 />
               </>

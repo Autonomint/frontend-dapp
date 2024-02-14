@@ -13,7 +13,7 @@ const ConfirmNotice = ({
 }: {
   withdrawalTime: string;
   handleWithdrawal: VoidFunction;
-  amintToMint: bigint;
+  amintToMint: number;
   isLoading: boolean;
 }) => {
   return (
@@ -24,14 +24,16 @@ const ConfirmNotice = ({
             Amount to be returned back
           </p>
           <p className="text-[#020202] font-medium min-[1440px]:text-[32px] 2dppx:text-2xl text-2xl leading-none">
-            
-            {(parseFloat(amintToMint.toString())/10**6).toString()} AMINT
+          {withdrawalTime === "DEPOSITED"
+            ? `${(parseFloat(amintToMint.toString())/10**6).toString()} AMINT`
+            : `~${amintToMint.toString()} ETH`}
+          
           </p>
         </div>
         <p className="min-[1440px]:text-base text-sm 2dppx:text-sm text-textHighlight  leading-none">
           {withdrawalTime === "DEPOSITED"
             ? `Second time withdrawal date will be ${calculateNext30Days()}`
-            : `After second time withdrawal, this asset will be fully liquidated.`}
+            : ""}
         </p>
       </div>
       <Button
