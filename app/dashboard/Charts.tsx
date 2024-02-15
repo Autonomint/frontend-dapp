@@ -27,9 +27,15 @@ const Charts: React.FC<{ height?:number,title:string }> = ({ height=400,title })
       setChartData(AbondData)
     }
     else{
+      try {
       const res = await fetch(`${BACKEND_API_URL}/borrows/chart/${title}/5/${time}/No`);
+      console.log(res)
       const data = await res.json();
       setChartData(data)
+      } catch (error) {
+        console.log(error)
+        setChartData(AmintData)
+      }
     }
 
   }

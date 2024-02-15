@@ -79,8 +79,6 @@ const formSchema = z.object({
 });
 
 const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
-
-
   const [amintToBeMinted, setAmintToBeMinted] = useState('0');
   const [downsideProtectionAmnt, setDownsideProtectionAmnt] = useState("0");
   const [open, setOpen] = useState(false);
@@ -175,6 +173,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   async function getOptionFees() {
     const response = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/${parseUnits(form.getValues("collateralAmount").toString(), 18)}/${ethPrice}/${(strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4)}`);
     const data = await response.json();
+    console.log(data)
     return data[1] ? (data[1] / 10 ** 6) : 0;
   }
 
@@ -318,7 +317,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       ) as { eventName: string; args: { normalizedAmount: bigint, borrowAmount: bigint } };
 
       // Log event name and normalized amount
-
+console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toString())
       // Set the normalizedAmount value
       normalizedAmount.current = args?.normalizedAmount.toString();
       noOfAmintMinted.current = args?.borrowAmount.toString();

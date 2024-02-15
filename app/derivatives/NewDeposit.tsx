@@ -191,17 +191,72 @@ const NewDeposit = () => {
 
   // usdt approval
   const {
+    isLoading: usdtApproveLoading,
     data: usdtApproveData,
     write: usdtWrite,
     isSuccess: usdtApproved,
-    isLoading: usdtApproveLoading,
-  } = useUsdtContractApprove();
+  } = useUsdtContractApprove(
+    {
+      // Handle error and show a custom toast notification
+      onError(error) {
+        toast.custom(
+          (t) => {
+            toastId.current = t;
+            return (
+              <div>
+                <CustomToast
+                  key={2}
+                  props={{
+                    t,
+                    toastMainColor: "#B43939",
+                    headline: `Uhh Ohh! ${error.name}`,
+                    toastClosebuttonHoverColor: "#e66d6d",
+                    toastClosebuttonColor: "#C25757",
+                  }}
+                />
+              </div>
+            );
+          },
+          { duration: 5000 }
+        );
+  
+        // setOpen(false);
+      },
+  
+      // Handle success and show a custom toast notification
+      onSuccess: (data) => {
+        toast.custom(
+          (t) => {
+            toastId.current = t;
+            return (
+              <div>
+                <CustomToast
+                  props={{
+                    t,
+                    toastMainColor: "#268730",
+                    headline: "Transaction Submitted",
+                    transactionHash: data?.hash,
+                    linkLabel: "View Transaction",
+                    toastClosebuttonHoverColor: "#90e398",
+                    toastClosebuttonColor: "#57C262",
+                  }}
+                />
+              </div>
+            );
+          },
+          { duration: Infinity }
+        );
+        //closing sheet so that user can click on the links from the toast
+        // setOpen(false);
+      },
+    }
+  );
   console.log("usdtApproveData", usdtApproveData, usdtApproved);
 
 
   // get total index from CDS contract and store it in totalCDSIndex
   const { data: totalCDSIndex } = useQuery({
-    queryKey: ["totalCDSIndex"],
+    queryKey: ["totalCDSIndex",open],
     queryFn: () => getCDSTotalIndex(address ? address : undefined),
     enabled: !!address,
     staleTime: 10 * 1000,
@@ -299,6 +354,8 @@ const NewDeposit = () => {
     if (!response.ok) {
       throw new Error(result.message);
     }
+    
+    form.reset();
     // Return the result
     return result;
   }
@@ -727,9 +784,6 @@ const NewDeposit = () => {
   useEffect(() => {
     // Check if cdsDepositSuccess is true
     if (cdsDepositSuccess) {
-      // Call reset function if it exists
-      // reset?.();
-      // Call amintReset function if it exists
       amintReset?.();
     }
   }, [cdsDepositSuccess]);
@@ -1115,14 +1169,14 @@ const NewDeposit = () => {
 
                     </div>
                   </div>
-                  <div className="flex gap-[10px] items-center">
+                    <div className="flex gap-[10px] items-center">
                     <div className="flex items-center ml-[4px]">
                       <InfoCircledIcon width={18} height={18} />
                     </div>
                     <p className="min-[1440px]:text-base 2dppx:text-xs text-sm font-normal text-textGrey text-center leading-none">
-                      Minimum Amint Amount is{" "}
+                      Minimum {usdtAmountDepositedTillNow < usdtLimit ? "USDT":"AMINT" } Amount is{" "}
                       <span className="font-medium text-textHighlight">
-                        500 AMINT
+                        500 {usdtAmountDepositedTillNow < usdtLimit ? "USDT":"AMINT" }
                       </span>
                     </p>
                   </div>

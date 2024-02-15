@@ -54,7 +54,7 @@ const SideBar = () => {
     }
   }, []);
   return (
-    <nav className="h-[100vh] min-w-[20vh] max px-[10px] py-2 sm:py-[10px] lg:py-[20px] xl:py-[30px]  bg-bgGrey flex flex-col items-center justify-between">
+    <nav className="h-[100vh] basis-[10%] px-[10px] py-2 sm:py-[10px] lg:py-[20px] xl:py-[30px]  bg-bgGrey flex flex-col items-center justify-between">
       <div className="flex flex-col items-center gap-[45px] fixed h-[100vh]">
         <Link href={"/"}>
           <div className="w-[3rem] h-[3rem]">

@@ -1,13 +1,36 @@
 export const CDSABI = [
   {
+    inputs: [{ internalType: "address", name: "target", type: "address" }],
+    name: "AddressEmptyCode",
+    type: "error",
+  },
+  {
     inputs: [
-      { internalType: "address", name: "_amint", type: "address" },
-      { internalType: "address", name: "priceFeed", type: "address" },
-      { internalType: "address", name: "_usdt", type: "address" },
-      { internalType: "address", name: "_multiSign", type: "address" },
+      { internalType: "address", name: "implementation", type: "address" },
     ],
-    stateMutability: "nonpayable",
-    type: "constructor",
+    name: "ERC1967InvalidImplementation",
+    type: "error",
+  },
+  { inputs: [], name: "ERC1967NonPayable", type: "error" },
+  { inputs: [], name: "FailedInnerCall", type: "error" },
+  { inputs: [], name: "InvalidInitialization", type: "error" },
+  { inputs: [], name: "NotInitializing", type: "error" },
+  {
+    inputs: [{ internalType: "address", name: "owner", type: "address" }],
+    name: "OwnableInvalidOwner",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "OwnableUnauthorizedAccount",
+    type: "error",
+  },
+  { inputs: [], name: "ReentrancyGuardReentrantCall", type: "error" },
+  { inputs: [], name: "UUPSUnauthorizedCallContext", type: "error" },
+  {
+    inputs: [{ internalType: "bytes32", name: "slot", type: "bytes32" }],
+    name: "UUPSUnsupportedProxiableUUID",
+    type: "error",
   },
   {
     anonymous: false,
@@ -45,6 +68,19 @@ export const CDSABI = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: "uint64",
+        name: "version",
+        type: "uint64",
+      },
+    ],
+    name: "Initialized",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         internalType: "address",
         name: "previousOwner",
@@ -58,6 +94,19 @@ export const CDSABI = [
       },
     ],
     name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "implementation",
+        type: "address",
+      },
+    ],
+    name: "Upgraded",
     type: "event",
   },
   {
@@ -83,6 +132,13 @@ export const CDSABI = [
     inputs: [],
     name: "PRECISION",
     outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "UPGRADE_INTERFACE_VERSION",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
     stateMutability: "view",
     type: "function",
   },
@@ -126,7 +182,7 @@ export const CDSABI = [
   {
     inputs: [{ internalType: "uint128", name: "fees", type: "uint128" }],
     name: "calculateCumulativeRate",
-    outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
+    outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
@@ -175,13 +231,6 @@ export const CDSABI = [
   },
   {
     inputs: [],
-    name: "ethVault",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "fallbackEthPrice",
     outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
     stateMutability: "view",
@@ -189,54 +238,14 @@ export const CDSABI = [
   },
   {
     inputs: [
-      { internalType: "address", name: "depositor", type: "address" },
-      { internalType: "uint64", name: "index", type: "uint64" },
+      { internalType: "address", name: "_amint", type: "address" },
+      { internalType: "address", name: "priceFeed", type: "address" },
+      { internalType: "address", name: "_usdt", type: "address" },
+      { internalType: "address", name: "_multiSign", type: "address" },
     ],
-    name: "getCDSDepositDetails",
-    outputs: [
-      {
-        components: [
-          { internalType: "uint64", name: "depositedTime", type: "uint64" },
-          { internalType: "uint128", name: "depositedAmount", type: "uint128" },
-          { internalType: "uint64", name: "withdrawedTime", type: "uint64" },
-          {
-            internalType: "uint128",
-            name: "withdrawedAmount",
-            type: "uint128",
-          },
-          { internalType: "bool", name: "withdrawed", type: "bool" },
-          { internalType: "uint128", name: "depositPrice", type: "uint128" },
-          { internalType: "uint128", name: "depositValue", type: "uint128" },
-          { internalType: "bool", name: "depositValueSign", type: "bool" },
-          { internalType: "bool", name: "optedLiquidation", type: "bool" },
-          {
-            internalType: "uint128",
-            name: "InitialLiquidationAmount",
-            type: "uint128",
-          },
-          {
-            internalType: "uint128",
-            name: "liquidationAmount",
-            type: "uint128",
-          },
-          {
-            internalType: "uint128",
-            name: "liquidationindex",
-            type: "uint128",
-          },
-          {
-            internalType: "uint128",
-            name: "normalizedAmount",
-            type: "uint128",
-          },
-        ],
-        internalType: "struct CDS.CdsAccountDetails",
-        name: "",
-        type: "tuple",
-      },
-      { internalType: "uint64", name: "", type: "uint64" },
-    ],
-    stateMutability: "view",
+    name: "initialize",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -288,6 +297,13 @@ export const CDSABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "proxiableUUID",
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "uint128", name: "_amintAmount", type: "uint128" },
       { internalType: "uint64", name: "amintPrice", type: "uint64" },
@@ -301,6 +317,13 @@ export const CDSABI = [
   {
     inputs: [],
     name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_admin", type: "address" }],
+    name: "setAdmin",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -434,6 +457,16 @@ export const CDSABI = [
     type: "function",
   },
   {
+    inputs: [
+      { internalType: "address", name: "newImplementation", type: "address" },
+      { internalType: "bytes", name: "data", type: "bytes" },
+    ],
+    name: "upgradeToAndCall",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "usdt",
     outputs: [{ internalType: "contract IERC20", name: "", type: "address" }],
@@ -468,5 +501,4 @@ export const CDSABI = [
     stateMutability: "view",
     type: "function",
   },
-  { stateMutability: "payable", type: "receive" },
 ] as const;

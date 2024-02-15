@@ -13,7 +13,7 @@ import Charts from "./Charts";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import RatioPieChart from "./RatioPieChart";
-import { useAbondTotalSupply, useAmintTotalSupply, useBorrowingContractDepositTokens, useBorrowingContractGetUsdValue, useBorrowingContractLastTotalCdsPool, useCdsLastEthPrice, useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd, useTreasuryTotalVolumeOfBorrowersAmountinWei } from "@/abiAndHooks";
+import { useAbondTotalSupply, useAmintTotalSupply, useBorrowingContractDepositTokens, useBorrowingContractGetUsdValue, useBorrowingContractLastCdsPoolValue, useCdsLastEthPrice, useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd, useTreasuryTotalVolumeOfBorrowersAmountinWei } from "@/abiAndHooks";
 import { ethers, formatEther } from "ethers";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 
@@ -116,10 +116,10 @@ const page = () => {
   const { data: ethPrice } = useBorrowingContractGetUsdValue({ watch: true })
   const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
   const { data: amintsupply } = useAmintTotalSupply({ watch: true })
-  const { data: cdsPool } = useBorrowingContractLastTotalCdsPool({ watch: true })
+  const { data: cdsPool } = useBorrowingContractLastCdsPoolValue({ watch: true })
   const { data: abondSupply } = useAbondTotalSupply({ watch: true });
   const { data: totalValueLocked } = useTreasuryTotalVolumeOfBorrowersAmountinWei({ watch: true });
-
+  console.log(totalValueLocked, ethPrice, ethLocked, totalStable, amintsupply, cdsPool)
   useEffect(() => {
   }, [feeOption])
   useEffect(() => {
@@ -131,11 +131,10 @@ const page = () => {
     const ratioData = await fetch(`${BACKEND_API_URL}/borrows/ratio/5/${ethPrice}`).then(
       (res) => res.json()
     )
-    console.log(ratioData)
+    
     const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/1000000000000000000/${ethPrice}/0`).then(
       (res) => res.json()
     )
-    console.log(data)
     if (ethLocked && ethPrice && totalValueLocked && amintsupply && totalStable && cdsPool) {
       amintValues[1].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
       amintValues[2].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
@@ -149,8 +148,8 @@ const page = () => {
       RatioValues[0].value = ratioData == undefined ? "-" : (ratioData).toFixed(2);
       RatioValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
 
-      RatioValues[2].value = totalValueLocked ? formatNumber(Number(formatEther(cdsPool))) : "0";
-      RatioValues[3].value = (Number(formatEther(cdsPool)) - (Number(totalStable) / 10 ** 6)).toFixed(2);
+      RatioValues[2].value = cdsPool ? formatNumber(Number(cdsPool/BigInt(10**6))) : "0";
+      RatioValues[3].value = (Number(cdsPool/BigInt(10**6)) - (Number(totalStable) / 10 ** 6)).toFixed(2);
       const total = (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))) + (Number(totalStable) / 10 ** 6);
       RatioValues[4].value = (((Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))) / total) * 100).toFixed(1);
       RatioValues[5].value = (((Number(totalStable) / 10 ** 6) / total) * 100).toFixed(1);

@@ -382,7 +382,7 @@ const Withdraw = ({
 
       // Get data logs based on the chain ID
       const dataLogs =
-        chainId === 5 ? data.logs[6].data : data.logs[6].data;
+        chainId === 5 ? data.logs[4].data : data.logs[6].data;
 
       // Decode event logs from ABI
       const { eventName, args } = decodeEventLogsFromAbi(
@@ -665,6 +665,7 @@ const Withdraw = ({
         handleSheetOpenChange(!sheetOpen);
         setOpenConfirmNotice(false);
         setAmountView(false);
+        handleRefetch()
       }}
     >
       {spinner ? <Spinner /> : (

@@ -1,15 +1,8 @@
 export const BorrowingABI = [
   {
-    inputs: [
-      { internalType: "address", name: "_tokenAddress", type: "address" },
-      { internalType: "address", name: "_cds", type: "address" },
-      { internalType: "address", name: "_abondToken", type: "address" },
-      { internalType: "address", name: "_multiSign", type: "address" },
-      { internalType: "address", name: "_priceFeedAddress", type: "address" },
-      { internalType: "uint64", name: "chainId", type: "uint64" },
-    ],
-    stateMutability: "nonpayable",
-    type: "constructor",
+    inputs: [{ internalType: "address", name: "target", type: "address" }],
+    name: "AddressEmptyCode",
+    type: "error",
   },
   { inputs: [], name: "Borrowing_DepositFailed", type: "error" },
   { inputs: [], name: "Borrowing_GettingETHPriceFailed", type: "error" },
@@ -24,6 +17,34 @@ export const BorrowingABI = [
   { inputs: [], name: "Borrowing_WithdrawEthTransferFailed", type: "error" },
   { inputs: [], name: "Borrowing_abondMintFailed", type: "error" },
   { inputs: [], name: "Borrowing_amintMintFailed", type: "error" },
+  {
+    inputs: [
+      { internalType: "address", name: "implementation", type: "address" },
+    ],
+    name: "ERC1967InvalidImplementation",
+    type: "error",
+  },
+  { inputs: [], name: "ERC1967NonPayable", type: "error" },
+  { inputs: [], name: "FailedInnerCall", type: "error" },
+  { inputs: [], name: "InvalidInitialization", type: "error" },
+  { inputs: [], name: "NotInitializing", type: "error" },
+  {
+    inputs: [{ internalType: "address", name: "owner", type: "address" }],
+    name: "OwnableInvalidOwner",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "OwnableUnauthorizedAccount",
+    type: "error",
+  },
+  { inputs: [], name: "ReentrancyGuardReentrantCall", type: "error" },
+  { inputs: [], name: "UUPSUnauthorizedCallContext", type: "error" },
+  {
+    inputs: [{ internalType: "bytes32", name: "slot", type: "bytes32" }],
+    name: "UUPSUnsupportedProxiableUUID",
+    type: "error",
+  },
   {
     anonymous: false,
     inputs: [
@@ -48,6 +69,19 @@ export const BorrowingABI = [
       },
     ],
     name: "Deposit",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint64",
+        name: "version",
+        type: "uint64",
+      },
+    ],
+    name: "Initialized",
     type: "event",
   },
   {
@@ -105,6 +139,19 @@ export const BorrowingABI = [
     anonymous: false,
     inputs: [
       {
+        indexed: true,
+        internalType: "address",
+        name: "implementation",
+        type: "address",
+      },
+    ],
+    name: "Upgraded",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: false,
         internalType: "uint256",
         name: "borrowDebt",
@@ -144,6 +191,13 @@ export const BorrowingABI = [
     inputs: [],
     name: "PERMIT_TYPEHASH",
     outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "UPGRADE_INTERFACE_VERSION",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
     stateMutability: "view",
     type: "function",
   },
@@ -235,8 +289,15 @@ export const BorrowingABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "_treasury", type: "address" }],
-    name: "initializeTreasury",
+    inputs: [
+      { internalType: "address", name: "_tokenAddress", type: "address" },
+      { internalType: "address", name: "_cds", type: "address" },
+      { internalType: "address", name: "_abondToken", type: "address" },
+      { internalType: "address", name: "_multiSign", type: "address" },
+      { internalType: "address", name: "_priceFeedAddress", type: "address" },
+      { internalType: "uint64", name: "chainId", type: "uint64" },
+    ],
+    name: "initialize",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -258,20 +319,6 @@ export const BorrowingABI = [
   {
     inputs: [],
     name: "lastEthVaultValue",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "lastEthprice",
-    outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "lastTotalCDSPool",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
@@ -333,6 +380,13 @@ export const BorrowingABI = [
   },
   {
     inputs: [],
+    name: "proxiableUUID",
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "ratePerSec",
     outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
     stateMutability: "view",
@@ -376,6 +430,13 @@ export const BorrowingABI = [
   {
     inputs: [{ internalType: "address", name: "_options", type: "address" }],
     name: "setOptions",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_treasury", type: "address" }],
+    name: "setTreasury",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -425,6 +486,16 @@ export const BorrowingABI = [
     type: "function",
   },
   {
+    inputs: [
+      { internalType: "address", name: "newImplementation", type: "address" },
+      { internalType: "bytes", name: "data", type: "bytes" },
+    ],
+    name: "upgradeToAndCall",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "version",
     outputs: [{ internalType: "string", name: "", type: "string" }],
@@ -441,13 +512,6 @@ export const BorrowingABI = [
     name: "withDraw",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "withdrawTimeLimit",
-    outputs: [{ internalType: "uint64", name: "", type: "uint64" }],
-    stateMutability: "view",
     type: "function",
   },
 ] as const;

@@ -174,7 +174,7 @@ const NavBar = () => {
                 showTooltip: item.tooltip,
                 tooltipText: item.tooltipText,
                 className: "",
-                classNamediv: "pr-4 mr-4 border-r border-lineGrey",
+                classNamediv: "pr-4 mr-4 border-r border-lineGrey w-[140px]",
               }}
               />
           ))}
@@ -185,7 +185,7 @@ const NavBar = () => {
       <div className="hidden bg-bgGrey md:flex flex-col min-[1440px]:pb-6 2dppx:pb-1">
         <div className={`flex  px-1 py-3 ${showMore?"h-[200px]":"h-[100px]"} w-full sm:px-2 xl:px-5 xl:py-5 lg:px-4 lg:py-4 flex-wrap`}>
           {headerItems.map((item, index) => (
-            <div className="flex w-auto min-w-[100px] lg:min-w-[180px] h-[10vh] md:h-[90px] mx-2 pb-4">
+            <div className="flex w-auto min-w-[80px] lg:min-w-[120px] xl:min-w-[180px] h-[10vh] md:h-[90px] mx-2 pb-4">
             <HeaderItems
               key={index}
               props={{
@@ -194,6 +194,7 @@ const NavBar = () => {
                 showTooltip: item.tooltip,
                 tooltipText: item.tooltipText,
                 className: "invisible",
+
               }}
               />
               <span className="w-[2px] h-full bg-gray-300"></span>

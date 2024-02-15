@@ -50,7 +50,7 @@ const DepositAndWithDrawTable = ({
   useEffect(() => {
     if(tableData) tableData.sort((a, b) => a.index - b.index);;
     setLoading(false);
-  }, [tableData, handleRefetch]);
+  }, [tableData, sheetOpen]);
   return (
     <Table>
       <TableHeader>
