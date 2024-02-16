@@ -475,6 +475,7 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
       >
         <DialogTrigger asChild>
           <Button
+          type="button"
             variant={"primary"}
             size={"full"}
             className="flex gap-[10px] items-center justify-center"

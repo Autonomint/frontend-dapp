@@ -118,12 +118,6 @@ const WalletOrContent = () => {
     queryFn: (): Promise<any> => getDeposits(address ? address : undefined),
     enabled: !!address,
   });
-  useEffect(() => {
-    
-  }, [shouldRefetch]);
-
-
-
   /**
    * Handles the refetch action.
    *

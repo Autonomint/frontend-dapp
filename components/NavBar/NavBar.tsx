@@ -142,7 +142,7 @@ const NavBar = () => {
     if (totalAmintSupply) {
       const updatedData = [...updatedHeaderItems];
       updatedData[2].value = `${formatNumber(Number(totalAmintSupply) / 10 ** 6)}`;
-      updatedData[3].value = `${5}%`;
+      updatedData[4].value = `${5}%`;
       updatedData[5].value = `${data[1] == undefined ? 0 : (parseFloat(data[1]) / 10 ** 6).toFixed(2)}`;
       setUpdatedHeaderItems(updatedData);
     }

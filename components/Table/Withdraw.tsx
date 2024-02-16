@@ -235,6 +235,7 @@ const Withdraw = ({
   const { data: lastCumulativeRate } = useBorrowingContractLastCumulativeRate({
     watch: true,
   });
+  const {data:DemeCummulativeRate} = usePrepareBorrowingContractCalculateCumulativeRate();
   const { isLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
     hash: cumulativeRate?.hash, // Transaction hash to wait for
     confirmations: 3, // Number of confirmations required
@@ -266,7 +267,7 @@ const Withdraw = ({
           BigInt(
             BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
             (lastCumulativeRate ?? 0n)
-          ) / BigInt(10 ** 27), // Total amint amount
+          ) / BigInt(10 ** 27)+1000000n, // Total amint amount
         ],
       });
     },
