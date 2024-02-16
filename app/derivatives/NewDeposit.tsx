@@ -837,12 +837,13 @@ const NewDeposit = () => {
           </p>
         </Button> */}
 
-        <Dialog open={open || isLoading || isPending } onOpenChange={setOpen} modal={true}>
+        <Dialog open={open || isLoading || isPending }  modal={true}>
           <DialogTrigger asChild>
             <Button
               variant={"primary"}
               size={"full"}
               className="flex gap-[10px] items-center justify-center"
+              onClick={()=>setOpen(!open)}
             >
               <Image
                 src={addIcon}
@@ -868,6 +869,8 @@ const NewDeposit = () => {
                       variant={"ghostOutline"}
                       size={"primary"}
                       className="flex gap-[10px] border border-borderGrey "
+                      onClick={()=>setOpen(!open)}
+
                     >
                       <Cross2Icon className="w-4 h-4" />
                       <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">

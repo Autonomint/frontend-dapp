@@ -36,7 +36,7 @@ const CustomToast = ({
 }: Props) => {
   const chainId = useChainId();
   return (
-    <div className="flex fixed rounded z-[999]">
+    <div className="fixed flex rounded pointer-events-auto z-max">
       <div
         style={{ background: toastMainColor }}
         className={`flex gap-[10px] text-white items-center rounded`}

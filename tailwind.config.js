@@ -16,6 +16,9 @@ module.exports = {
       },
     },
     extend: {
+      zIndex: {
+        'max': 999999,
+      },
       screens: {
         "2dppx": {
           raw: "(min-width: 1440px) and (min-resolution: 2dppx)",

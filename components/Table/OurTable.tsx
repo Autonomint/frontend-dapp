@@ -57,7 +57,7 @@ const DepositAndWithDrawTable = ({
         <TableRow>
           <TableHead className="w-3 opacity-0 text-textGrey">Id</TableHead>
           <TableHead className="text-textGrey">ETH Deposited</TableHead>
-          <TableHead className="text-textGrey">AMint minted</TableHead>
+          <TableHead className="text-textGrey">Amint minted</TableHead>
           <TableHead className="text-textGrey">Interest rate</TableHead>
           <TableHead className="text-textGrey">Abond minted</TableHead>
           <TableHead className="text-textGrey">Liquidated</TableHead>

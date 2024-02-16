@@ -8,7 +8,7 @@ import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "rec
 import { set } from "zod";
 
 const AmintData =[
-  "9.99","9.99","9.99","9.99","9.99","9.99","9.99","9.99","9.99","9.99","9.99"
+ "1","1","1","1","1","1","1","1","1","1","1","1","1"
 ]
 const AbondData =[
   "4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0",
@@ -37,7 +37,6 @@ const Charts: React.FC<{ height?:number,title:string }> = ({ height=400,title })
         setChartData(AmintData)
       }
     }
-
   }
   useEffect (()=>{
     changeTime()

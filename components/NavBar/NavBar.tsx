@@ -20,13 +20,13 @@ import { BACKEND_API_URL } from "@/constants/BackendUrl";
 const headerItems = [
   {
     headline: "AMINT Price",
-    value: "$1.023",
+    value: "$1.000",
     tooltip: false,
     tooltipText: "",
   },
   {
     headline: "ABOND Price",
-    value: "$1.012",
+    value: "$4.000",
     tooltip: false,
     tooltipText: "",
   },
@@ -57,6 +57,8 @@ const headerItems = [
   {
     headline: "TVL",
     value: "-",
+    tooltip: true,
+    tooltipText: "Borrowing TVL",
   },
   {
     headline: "dCDS TVL",
@@ -140,7 +142,7 @@ const NavBar = () => {
     if (totalAmintSupply) {
       const updatedData = [...updatedHeaderItems];
       updatedData[2].value = `${formatNumber(Number(totalAmintSupply) / 10 ** 6)}`;
-      updatedData[3].value = `${0}%`;
+      updatedData[3].value = `${5}%`;
       updatedData[5].value = `${data[1] == undefined ? 0 : (parseFloat(data[1]) / 10 ** 6).toFixed(2)}`;
       setUpdatedHeaderItems(updatedData);
     }

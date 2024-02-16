@@ -481,7 +481,7 @@ const page = () => {
           </div>
         </div>
         <div className="">
-          <Charts  height={180} title={"AMINT"} />
+          <Charts  height={180} title={headline} />
         </div>
       </div>
     );

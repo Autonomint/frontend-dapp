@@ -157,7 +157,7 @@ const Withdraw = ({
   const [amountView, setAmountView] = useState(false);
   const [amountProtected, setAmountProtected] = useState<number>(0);
   const totalAmintAmount = useRef<bigint>(BigInt(0));
-  const [withdrawalTime, setWithdrawalTime] = useState(details.status);
+  // const [withdrawalTime, setWithdrawalTime] = useState(details.status);
   const [depositData, setDepositData] = useState(depositDetails);
   const chainId = useChainId();
   const toastId = useRef<string | number>("");
@@ -492,6 +492,8 @@ const Withdraw = ({
       // Invalidate the queries for `dCDSdeposits`
       queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
       handleRefetch()
+      setOpenConfirmNotice(false);
+
     },
   });
 
@@ -522,7 +524,7 @@ const Withdraw = ({
    *
    */
   function handleWithdrawalTime() {
-    if (withdrawalTime === "DEPOSITED") {
+    if (details.status === "DEPOSITED") {
       // write?.();
       /*
       Call calculateCumulativeRate function to calculate the cumulative rate before withdrawal and then we are calling approval function to approve the withdrawal and then finally we are withdrawing on success of approval
@@ -530,7 +532,7 @@ const Withdraw = ({
 
       calculateCumulativeRate?.();
       // setOpenConfirmNotice(false);
-    } else if (withdrawalTime === "WITHDREW1") {
+    } else if (details.status === "WITHDREW1") {
       //TODO you have to manage second withdrawal it is not handled currently and simply shows a toast message
       toast.custom(
         (t) => (
@@ -554,7 +556,9 @@ const Withdraw = ({
       handleSheetOpenChange(false)
     } else {
       // setWithdrawalTime("WITHDREW2");
-      console.log(withdrawalTime);
+      console.log(details.status);
+      handleSheetOpenChange(false)
+
     }
   }
   /**
@@ -652,8 +656,8 @@ const Withdraw = ({
 
   useEffect(() => {
     handleDepositData();
-    setWithdrawalTime(details.status);
     handleAmountProtected()
+    setOpenConfirmNotice(false);
   }, [details,sheetOpen]);
 
 
@@ -662,15 +666,13 @@ const Withdraw = ({
     <Sheet
       open={sheetOpen}
       onOpenChange={() => {
-        handleSheetOpenChange(!sheetOpen);
-        setOpenConfirmNotice(false);
         setAmountView(false);
-        handleRefetch()
+        // handleRefetch()
       }}
     >
       {spinner ? <Spinner /> : (
         <SheetContent
-          className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen"}
+          className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen "}
         >
           <div className="flex flex-col min-[1440px]:gap-6 2dppx:gap-[10px] gap-[10px]">
             <div className="flex justify-end w-full">
@@ -679,7 +681,7 @@ const Withdraw = ({
                   variant={"ghostOutline"}
                   size={"primary"}
                   className="flex gap-[10px] border border-borderGrey"
-
+                  onClick={()=>handleSheetOpenChange(!sheetOpen)}
                 >
                   <Cross2Icon className="w-4 h-4" />
                   <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
@@ -738,15 +740,15 @@ const Withdraw = ({
             {openConfirmNotice ? (
               <>
                 <ConfirmNotice
-                  withdrawalTime={withdrawalTime}
+                  withdrawalTime={details.status}
                   handleWithdrawal={handleWithdrawalTime}
-                  amintToMint={withdrawalTime === "DEPOSITED" ? Number(totalAmintAmount.current) : Number(details.depositedAmount)/2}
+                  amintToMint={details.status === "DEPOSITED" ? Number(totalAmintAmount.current) : Number(details.depositedAmount)/2}
                   isLoading={isLoading || borrowWithdrawisLoadingone || cumulativeRateLoading || amintApproveLoading || borrowWithdrawisLoading || amintTransactionLoading || isPending}
                 />
               </>
             ) : (
               <>
-                {withdrawalTime === "DEPOSITED" ? (
+                {details.status === "DEPOSITED" ? (
                   <Button
                     variant={"primary"}
                     className="text-white"
@@ -756,7 +758,7 @@ const Withdraw = ({
                   >
                     Withdraw for the first time
                   </Button>
-                ) : withdrawalTime === "WITHDREW1" ? (
+                ) : details.status === "WITHDREW1" ? (
                   <>
                     <div className="px-[15px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee]">
                       <div className="py-[15px] flex items-center justify-between border-b border-lineGrey">
@@ -822,8 +824,6 @@ const Withdraw = ({
           </div>
         </SheetContent>
       )}
-
-
     </Sheet>
   );
 };

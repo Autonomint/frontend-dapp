@@ -469,7 +469,7 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
       <Dialog
         open={open}
         onOpenChange={() => {
-          setOpen(!open);
+          
         }}
         modal={true}
       >
@@ -478,6 +478,7 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
             variant={"primary"}
             size={"full"}
             className="flex gap-[10px] items-center justify-center"
+          onClick={()=>setOpen(!open)}
           >
             <Image src={addIcon} alt="add icon" width={24} height={24}></Image>
             <p className="text-white bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] text-transparent font-semibold text-base">
@@ -495,6 +496,7 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
                     variant={"ghostOutline"}
                     size={"primary"}
                     className="flex gap-[10px] border border-borderGrey "
+                    onClick={()=>setOpen(!open)}
                   >
                     <Cross2Icon className="w-4 h-4" />
                     <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">

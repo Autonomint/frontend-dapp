@@ -61,6 +61,7 @@ const WalletOrContent = () => {
     functionName: "getUSDValue",
     staleTime: 10 * 1000,
   });
+
   useEffect(() => {
     const handleConnectorUpdate = ({ account, chain }: ConnectorData) => {
       window.location.reload();
@@ -76,6 +77,7 @@ const WalletOrContent = () => {
       }
     };
   }, [activeConnector]);
+
   /**
    * Retrieves the depositor data for a given address.
    *
@@ -87,7 +89,9 @@ const WalletOrContent = () => {
       response.json()
     );
   }
+
   // Fetch depositor data using the useQuery hook
+
   const {
     data: depositorData, // the fetched depositor data
     error: depositorDataError, // any error that occurred during the fetch
@@ -96,6 +100,7 @@ const WalletOrContent = () => {
     queryFn: () => getDepositorData(address ? address : undefined),
     enabled: !!address, // enable the query only if user is connected and we have a address
   });
+
   /**
    * Retrieves deposits for a given address.
    *
@@ -113,6 +118,9 @@ const WalletOrContent = () => {
     queryFn: (): Promise<any> => getDeposits(address ? address : undefined),
     enabled: !!address,
   });
+  useEffect(() => {
+    
+  }, [shouldRefetch]);
 
 
 

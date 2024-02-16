@@ -438,9 +438,9 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
             open={sheetOpen}
             onOpenChange={() => {
                 // Toggle the sheetOpen state
-                handleSheetOpenChange(!sheetOpen);
+                
                 // Reset the open confirm notice state
-                setOpenConfirmNotice(false);
+                // setOpenConfirmNotice(false);
                 // Reset the amount view
                 setAmountView(false);
             }}
@@ -456,6 +456,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                                 variant={"ghostOutline"}
                                 size={"primary"}
                                 className="flex gap-[10px] border border-borderGrey"
+                                onClick={()=>handleSheetOpenChange(!sheetOpen)}
                             >
                                 <Cross2Icon className="w-4 h-4" />
                                 <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
