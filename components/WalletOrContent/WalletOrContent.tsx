@@ -19,6 +19,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import displayNumberWithPrecision from "@/app/utils/precision";
 import { formatEther } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
+import { error } from "console";
 
 const dasboardStatsItem = [
   {
@@ -85,9 +86,9 @@ const WalletOrContent = () => {
    * @return {Promise} A Promise that resolves to the depositor data.
    */
   function getDepositorData(address: `0x${string}` | undefined) {
-    return fetch(`${BACKEND_API_URL}/borrows/totalDeposits/5/${address}`).then((response) =>
+    return fetch(`${BACKEND_API_URL}/borrows/totalDeposits/${chainId}/${address}`).then((response) =>
       response.json()
-    );
+    )
   }
 
   // Fetch depositor data using the useQuery hook
@@ -151,7 +152,7 @@ const WalletOrContent = () => {
       const ethPriceNow = ethPrice ? ethPrice : 0n;
       // Calculate and format the value for the first stat item
       updatedStats[0].value =
-        chainId === 5
+        chainId === 5 || chainId === 11155111
           ? `$${parseFloat(
               (
                 (depositorData.totalDepositedAmount *
@@ -166,22 +167,22 @@ const WalletOrContent = () => {
                 100
               ).toString()
             ).toFixed(2)}`;
-
+                  console.log(updatedStats[0].value)
       // Update the value for the second stat item
       updatedStats[1].value =
-        chainId === 5
+        chainId === 5 || chainId === 11155111
           ?( parseFloat(depositorData.totalAmint)).toFixed(2)
           : parseFloat(depositorData.totalAmint).toFixed(2);
 
       // Update the value for the third stat item
       updatedStats[2].value =
-        chainId === 5
+        chainId === 5 || chainId === 11155111
           ? parseFloat(depositorData.totalAbond).toPrecision(2)
           : parseFloat(depositorData.totalAbond).toFixed(2);
 
       // Update the subheading highlight based on the chainId
       updatedStats[0].subheadingHighlight =
-        chainId ===5
+        chainId ===5 || chainId === 11155111
           ? depositorData.totalIndex
           : depositorData.totalIndex;
 
@@ -210,14 +211,14 @@ const WalletOrContent = () => {
   return (
     <>
       {isConnected ? (
-        <div className="relative p-1 xl:p-6 sm:p-2 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full min-h-[82vh]">
+        <div className="relative p-2 xl:p-6 sm:p-2 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full min-h-[90vh] md:min-h-[82vh]">
           
-          <div className="z-10 flex flex-row flex-wrap items-center justify-between w-full gap-1 sm:gap-2 lg:gap-4 xl:gap-7 lg:flex-nowrap">
+          <div className="z-10 flex flex-row flex-wrap items-center justify-between w-full gap-1 mt-3 sm:gap-2 lg:gap-4 xl:gap-7 lg:flex-nowrap">
             {dashboardStats.map((item, index) => (
               // Render a div for each item in the dashboardStats array
               <div
                 key={`index${item.heading}`}
-                className="flex border border-lineGrey w-full sm:w-[49%]"
+                className="flex border border-lineGrey w-full my-1 sm:w-[49%]"
               >
                 <DashboardStatsItem
                   props={{
@@ -238,10 +239,13 @@ const WalletOrContent = () => {
           {/* Deposit Component */}
           <CreateNewDeposit handleRefetch={handleRefetch} />
           {/* Table Component */}
+          <div className="mb-10 overflow-x-scroll md:overflow-x-auto">
+
           <DepositAndWithDrawTable
             tableData={deposits}
             handleRefetch={handleRefetch}
-          />
+            />
+            </div>
         </div>
       ) : (
         <ConnectWallet />

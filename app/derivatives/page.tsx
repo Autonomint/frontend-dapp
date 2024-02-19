@@ -112,7 +112,7 @@ const page = () => {
   async function getCDSDepositorData(
     address: `0x${string}` | undefined
   ): Promise<any> {
-    return fetch(`${BACKEND_API_URL}/cds/totalDeposits/5/${address}`).then((response) =>
+    return fetch(`${BACKEND_API_URL}/cds/totalDeposits/${chainId}/${address}`).then((response) =>
       response.json()
     );
   }
@@ -178,7 +178,7 @@ const page = () => {
     if (dCDSdepositorData) {
       const updatedStats = [...dashboardStats];
       console.log(dCDSdepositorData)
-      if (chainId === 5) {
+      if (chainId === 5 || chainId === 11155111 ) {
         // Update values for Polygon chain
         updatedStats[0].value =
           (dCDSdepositorData.totalDepositedAmint=='NaN'?"0":dCDSdepositorData.totalDepositedAmint)+ " / " + (dCDSdepositorData.totalDepositedUsdt=="NaN"?"0":dCDSdepositorData.totalDepositedUsdt);
@@ -231,18 +231,7 @@ const page = () => {
       {/* Main area */}
       {/* Check if wallet is connected and render dashboard otherwise render connect wallet Component */}
       {isConnected ? (
-        <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-[82vh]">
-          {/* removed code for the grid pattern of background */}
-          {/* <div className={`absolute w-[1740px] rotate-[14deg] h-[1200px] z-0`}>
-            <Image
-              src={heroPattern}
-              alt="grid bg"
-              className="w-full h-full"
-              style={{ objectFit: "cover", opacity: 0.4 }}
-            ></Image>
-          </div> */}
-
-
+        <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
           <ProductList></ProductList>
           <Divider />
           <div className="z-10 flex flex-row flex-wrap items-center justify-between w-full gap-1 sm:gap-2 lg:gap-4 xl:gap-7 lg:flex-nowrap">
@@ -268,6 +257,8 @@ const page = () => {
           {/* // New deposit section */}
           <NewDeposit />
           {/* // Deposits table section */}
+          <div className="min-h-[20vh] overflow-x-scroll md:overflow-x-auto">
+
           <Table>
             <TableHeader>
               <TableRow>
@@ -291,14 +282,15 @@ const page = () => {
                 : null}
             </TableBody>
           </Table>
+          </div>
           {
-        sheetDetails && <Withdraw
-          details={sheetDetails}
-          sheetOpen={sheetOpen}
-          handleSheetOpenChange={setSheetOpen}
-          handleRefetch={handleRefetch}
-          />
-      }
+            sheetDetails && <Withdraw
+            details={sheetDetails}
+            sheetOpen={sheetOpen}
+            handleSheetOpenChange={setSheetOpen}
+            handleRefetch={handleRefetch}
+            />
+          }
         </div>
       ) : (
         <ConnectWallet />

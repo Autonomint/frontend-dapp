@@ -5,6 +5,7 @@ import Image from "next/image";
 import dropdown from "@/app/assets/arrow_circle_down.svg";
 import dropup from "@/app/assets/arrow_circle_up.svg";
 import HeaderItems from "../Header/HeaderItems";
+import logo from "@/app/assets/logo.svg";
 import {
   useBorrowingContractGetLtv,
   useBorrowingContractGetUsdValue,
@@ -14,8 +15,9 @@ import {
 } from "@/abiAndHooks";
 import { formatEther } from "viem";
 import displayNumberWithPrecision from "@/app/utils/precision";
-import { useAccount } from "wagmi";
+import { useAccount, useChainId } from "wagmi";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
+import Link from "next/link";
 
 const headerItems = [
   {
@@ -96,6 +98,7 @@ function formatNumber(num: number) {
 
 
 const NavBar = () => {
+  const chainId = useChainId();
   //managing state for showMore button
   const [showMore, setShowMore] = useState(false);
   //getting address of user from useAccount() wagmi hook
@@ -134,10 +137,10 @@ const NavBar = () => {
    * Updates the header items based on the values of `totalAmintSupply`, `currentApy`, `ltv`, `totalCdsAmount`, `ethPrice`, and `totalValueLocked`.
    */
   const handleNavItems = async () => {
-    const data= await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/1000000000000000000/${ethPrice}/0`).then(
+    const data= await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/1000000000000000000/${ethPrice}/0`).then(
       (res) => res.json()
     )
-    console.log(data)
+    console.log(totalAmintSupply)
    
     if (totalAmintSupply) {
       const updatedData = [...updatedHeaderItems];
@@ -164,23 +167,13 @@ const NavBar = () => {
   }, [ltv, totalAmintSupply, totalValueLocked, ethPrice]);
 
   return (
-    <div className="flex w-[100%] h-[12vh] md:h-auto">
+    <div className="flex w-[100%] h-[6vh] md:h-auto">
       <div className="flex w-full overflow-scroll scrollb md:hidden md:w-0 bg-bgGrey">
-        <div className={`flex px-1 py-3 sm:px-2 xl:px-5 xl:py-5 lg:px-4 lg:py-4 `}>
-          {headerItems.map((item, index) => (
-            <HeaderItems
-              key={index}
-              props={{
-                textHeadline: item.headline,
-                textValue: item.value,
-                showTooltip: item.tooltip,
-                tooltipText: item.tooltipText,
-                className: "",
-                classNamediv: "pr-4 mr-4 border-r border-lineGrey w-[140px]",
-              }}
-              />
-          ))}
-        </div>
+      <Link href={"/"}>
+          <div className="w-[3rem] h-[3rem]">
+            <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
+          </div>
+        </Link>
       </div>
 
 
@@ -196,7 +189,6 @@ const NavBar = () => {
                 showTooltip: item.tooltip,
                 tooltipText: item.tooltipText,
                 className: "invisible",
-
               }}
               />
               <span className="w-[2px] h-full bg-gray-300"></span>
@@ -206,7 +198,7 @@ const NavBar = () => {
       </div>
       <Button
         variant={"showMore"}
-        className=" hidden px-1 xl:px-4 sm:px-2 pb-1 xl:pb-4  py-0 md:flex flex-col gap-[10px] items-center h-full"
+        className=" hidden 3xl:hidden my-1 px-1 xl:px-4 sm:px-2 pb-1 xl:pb-4  py-0 md:flex flex-col gap-[10px] items-center h-full"
         onClick={() => {
           setShowMore(!showMore);
         }}

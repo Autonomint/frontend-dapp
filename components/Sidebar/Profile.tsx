@@ -23,14 +23,14 @@ const Profile = ({ props: { image, buttonText } }: Props) => {
           <div className="relative flex items-center justify-center">
             <NetworkSwitch />
           </div>
-          <div className="min-[1440px]:w-[5rem] min-[1440px]:h-[5rem] 2dppx:w-[3.5rem] 2dppx:h-[3.5rem] w-[3.5rem] h-[3.5rem]">
+          <div className="min-[1440px]:w-[5rem] min-[1440px]:h-[5rem] 2dppx:w-[3.5rem] 2dppx:h-[3.5rem] w-[3rem] h-[3rem]">
             <Image
               src={image}
               alt="user Profile"
               style={{ width: "100%", height: "100%" }}
             />
           </div>
-          <p className="text-base font-normal text-center text-textGrey">
+          <p className="hidden font-normal text-center text-textGrey md:flex">
             {truncateWeb3WalletAddress(address)}
             {/* {ensName ? ` (${ensName})` : null} */}
           </p>

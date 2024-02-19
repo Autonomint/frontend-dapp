@@ -17,7 +17,7 @@ const NetworkSwitch: React.FC<NetworkSwitchProps> = () => {
       {chain && (
         <div className="absolute top-[11px] right-[-48px] h-[24px] w-[24px]">
           {
-            chain.id === 5 ? (
+            chain.id === 5 || chain.id === 11155111 ? (
               <Image src={sepolia} width={24} height={24} alt="sepolia" />
             ) : (
               // <Image src={sepolia} width={24} height={24} alt="sepolia" />

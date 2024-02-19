@@ -331,7 +331,7 @@ const NewDeposit = () => {
       aprAtDeposit: 5,
       lockingPeriod: Number(lockIn),
       optedForLiquidation: liquidationGains,
-      liquidationAmount: `${liqAmnt}`,
+      liquidationAmount: `${liquidationGains?liqAmnt:'0'}`,
       depositVal: Number(depositVal.current),
     });
 
@@ -789,7 +789,7 @@ const NewDeposit = () => {
   }, [cdsDepositSuccess]);
 
   useEffect(() => {
-    console.log(usdtAmountDepositedTillNow>=usdtLimit)
+    console.log(usdtAmountDepositedTillNow,usdtLimit)
     let amint = form.watch("AmintDepositAmount") ?? 0;
     let usdt = form.watch("USDTDepositAmount") ?? 0;
     if(usdtAmountDepositedTillNow>=usdtLimit){
@@ -842,7 +842,7 @@ const NewDeposit = () => {
             <Button
               variant={"primary"}
               size={"full"}
-              className="flex gap-[10px] items-center justify-center"
+              className="flex gap-[10px] items-center justify-center min-w-[150px]"
               onClick={()=>setOpen(!open)}
             >
               <Image
@@ -851,7 +851,7 @@ const NewDeposit = () => {
                 width={24}
                 height={24}
               ></Image>
-              <p className="text-white bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] text-transparent font-semibold text-base">
+              <p className="text-white bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] text-transparent font-semibold text-[11px] md:text-base">
                 New Deposit
               </p>
             </Button>

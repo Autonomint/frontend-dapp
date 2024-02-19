@@ -13,6 +13,7 @@ module.exports = {
       padding: "2rem",
       screens: {
         "2xl": "1440px",
+       
       },
     },
     extend: {
@@ -23,6 +24,7 @@ module.exports = {
         "2dppx": {
           raw: "(min-width: 1440px) and (min-resolution: 2dppx)",
         },
+        "3xl": "1980px",
       },
       colors: {
         bgGrey: "#F4F8FF",

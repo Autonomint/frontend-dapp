@@ -152,7 +152,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   function getTotalIndex(address: `0x${string}` | undefined) {
     return fetch(`${BACKEND_API_URL}/borrows/index/${chainId}/${address}`).then(
       (response) => response.json()
-    );
+    )
   }
 
 
@@ -163,7 +163,6 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     enabled: !!address,
     staleTime: 10 * 1000,
   });
-
   /**
    * Retrieves the option fees for a given address.
    *
@@ -171,7 +170,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
    * @return {Promise<any>} A promise that resolves to the option fees.
    */
   async function getOptionFees() {
-    const response = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/${parseUnits(form.getValues("collateralAmount").toString(), 18)}/${ethPrice}/${(strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4)}`);
+    const response = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${parseUnits(form.getValues("collateralAmount").toString(), 18)}/${ethPrice}/${(strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4)}`);
     const data = await response.json();
     console.log(data)
     return data[1] ? (data[1] / 10 ** 6) : 0;
@@ -189,7 +188,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     // Log the total index
     let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);
     let strikePercent = strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4;
-    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/${colateralamount}/${ethPrice}/${strikePercent}`).then(
+    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${colateralamount}/${ethPrice}/${strikePercent}`).then(
       (res) => res.json()
     )
 
@@ -306,7 +305,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       console.log("transaction completed", depositData?.hash, data);
 
       // Get the data logs based on the chainId
-      const dataLogs = data.logs[15].data;
+      const dataLogs = chainId ===5 ?data.logs[15].data:data.logs[9].data;
 
       // Decode event logs from ABI
       const { eventName, args } = decodeEventLogsFromAbi(
@@ -385,7 +384,7 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
     let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);
     let strikePercent = strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4;
     console.log(ethPrice, colateralamount, strikePercent)
-    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/${colateralamount}/${ethPrice}/${strikePercent}`).then(
+    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${colateralamount}/${ethPrice}/${strikePercent}`).then(
       (res) => res.json()
     )
     console.log(data)
@@ -482,8 +481,8 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
           onClick={()=>setOpen(!open)}
           >
             <Image src={addIcon} alt="add icon" width={24} height={24}></Image>
-            <p className="text-white bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] text-transparent font-semibold text-base">
-              Create a New Deposit
+            <p className="text-white bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] text-transparent font-semibold text-[11px] md:text-base">
+              New Deposit
             </p>
           </Button>
         </DialogTrigger>

@@ -16,6 +16,8 @@ import RatioPieChart from "./RatioPieChart";
 import { useAbondTotalSupply, useAmintTotalSupply, useBorrowingContractDepositTokens, useBorrowingContractGetUsdValue, useBorrowingContractLastCdsPoolValue, useCdsLastEthPrice, useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd, useTreasuryTotalVolumeOfBorrowersAmountinWei } from "@/abiAndHooks";
 import { ethers, formatEther } from "ethers";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
+import { useChainId,useAccount } from "wagmi";
+import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 
 const amintValues = [
   {
@@ -109,7 +111,8 @@ function formatNumber(num: number) {
 }
 
 const page = () => {
-
+  const { isConnected} = useAccount();
+  const chainId = useChainId();
   const [loading, setLoading] = React.useState(true);
   const [feeOption, setFeeOption] = React.useState("option");
   const { data: totalStable } = useCdsTotalCdsDepositedAmount({ watch: true })
@@ -119,22 +122,25 @@ const page = () => {
   const { data: cdsPool } = useBorrowingContractLastCdsPoolValue({ watch: true })
   const { data: abondSupply } = useAbondTotalSupply({ watch: true });
   const { data: totalValueLocked } = useTreasuryTotalVolumeOfBorrowersAmountinWei({ watch: true });
-  console.log(totalValueLocked, ethPrice, ethLocked, totalStable, amintsupply, cdsPool)
   useEffect(() => {
   }, [feeOption])
   useEffect(() => {
     handleStatsItem()
   }, [ethLocked,ethPrice])
-
+  
   const handleStatsItem = async () => {
     
-    const ratioData = await fetch(`${BACKEND_API_URL}/borrows/ratio/5/${ethPrice}`).then(
+    console.log(totalValueLocked, ethPrice, ethLocked, totalStable, amintsupply, cdsPool)
+    const ratioData = await fetch(`${BACKEND_API_URL}/borrows/ratio/${chainId}/${ethPrice}`).then(
       (res) => res.json()
     )
+    console.log(ratioData)
     
-    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/5/1000000000000000000/${ethPrice}/0`).then(
+    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/1000000000000000000/${ethPrice}/0`).then(
       (res) => res.json()
     )
+    console.log(data)
+
     if (ethLocked && ethPrice && totalValueLocked && amintsupply && totalStable && cdsPool) {
       amintValues[1].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
       amintValues[2].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
@@ -165,8 +171,11 @@ const page = () => {
 
 
   return (
+    !isConnected ?<ConnectWallet/>:
     <div className="relative min-h-[80vh] p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden h-full">
+
       {
+         
         loading ? (<div className="w-full h-[80vh] flex justify-center items-center">
           <div role="status">
             <svg aria-hidden="true" className="inline text-gray-200 w-14 h-14 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

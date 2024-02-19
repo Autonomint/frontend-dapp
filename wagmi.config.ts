@@ -11,7 +11,15 @@ import {
   CDS_GOERLI,
   BORROWING_GOERLI,
   TREASURY_GOERLI,
-  OPTIONS_GOERLI
+  OPTIONS_GOERLI,
+  PROXY_ABOND_ADDRESS,
+  PROXY_AMINT_ADDRESS,
+  PROXY_BORROWING_ADDRESS,
+  PROXY_CDS_ADDRESS,
+  PROXY_MULTISIGN_ADDRESS,
+  PROXY_OPTIONS_ADDRESS,
+  PROXY_TESTUSDT_ADDRESS,
+  PROXY_TREASURY_ADDRESS
 } from "./constants/Addresses";
 import * as chains from "wagmi/chains";
 import { AmintABI } from "./constants/AmintAbi";
@@ -22,7 +30,6 @@ import { OPTIONSABI } from "./constants/OptionsAbi";
 import { USDT_ABI } from "./constants/UsdtAbi";
 import { Quoter } from "./constants/QuoterAbi";
 
-import IUniswapV3PoolABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
 
 export default defineConfig({
   out: "abiAndHooks.ts",
@@ -38,6 +45,8 @@ export default defineConfig({
       abi: BorrowingABI,
       address: {
         [chains.goerli.id]: BORROWING_GOERLI,
+        [chains.sepolia.id]: PROXY_BORROWING_ADDRESS,
+
       },
     },
     {
@@ -45,6 +54,7 @@ export default defineConfig({
       abi: USDT_ABI,
       address: {
         [chains.goerli.id]: USDT_GOERLI,
+        [chains.sepolia.id]: PROXY_TESTUSDT_ADDRESS,
       },
     },
     {
@@ -52,6 +62,7 @@ export default defineConfig({
       abi: TreasuryAbi,
       address: {
         [chains.goerli.id]: TREASURY_GOERLI,
+        [chains.sepolia.id]: PROXY_TREASURY_ADDRESS,
       },
     },
     {
@@ -59,6 +70,7 @@ export default defineConfig({
       abi: OPTIONSABI,
       address: {
         [chains.goerli.id]: OPTIONS_GOERLI,
+        [chains.sepolia.id]: PROXY_OPTIONS_ADDRESS,
       },
     },
     {
@@ -66,6 +78,7 @@ export default defineConfig({
       abi: CDSABI,
       address: {
         [chains.goerli.id]: CDS_GOERLI,
+        [chains.sepolia.id]: PROXY_CDS_ADDRESS,
       },
     },
     {
@@ -73,6 +86,7 @@ export default defineConfig({
       abi: AmintABI,
       address: {
         [chains.goerli.id]: AMINT_GOERLI,
+        [chains.sepolia.id]: PROXY_AMINT_ADDRESS,
       },
     },
     {
@@ -80,6 +94,7 @@ export default defineConfig({
       abi: AbondABI,
       address: {
         [chains.goerli.id]: ABOND_GOERLI,
+        [chains.sepolia.id]: PROXY_ABOND_ADDRESS,
       },
     },
     {
