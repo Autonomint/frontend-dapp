@@ -126,7 +126,7 @@ const page = () => {
   }, [feeOption])
   useEffect(() => {
     handleStatsItem()
-  }, [ethLocked,ethPrice])
+  }, [totalValueLocked, ethPrice, ethLocked, totalStable, amintsupply, cdsPool])
   
   const handleStatsItem = async () => {
     
@@ -172,7 +172,7 @@ const page = () => {
 
   return (
     !isConnected ?<ConnectWallet/>:
-    <div className="relative min-h-[80vh] p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden h-full">
+    <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
 
       {
          
@@ -187,15 +187,15 @@ const page = () => {
 
         </div>) : (
           <div className="flex flex-col gap-6">
-            <div className="flex justify-between flex-1 w-full gap-6">
+            <div className="flex justify-between flex-col md:flex-row flex-1 w-full gap-6">
               <DashboardCard headline="AMINT" data={amintValues} />
               <DashboardCard headline="ABOND" data={abondValues} />
             </div>
-            <div className="flex gap-6">
+            <div className="flex flex-col md:flex-row gap-6">
               <ValueLocked />
-              <div className="flex flex-col w-[70%]">
+              <div className="flex flex-col w-full md:w-[70%]">
                 <CollateralRatio />
-                <div className="flex w-full h-full">
+                <div className="flex flex-col md:flex-row w-full h-full">
                   <div className="flex h-full min-w-[350px] flex-col bg-[linear-gradient(270deg,#CDF3FF_0%,#D8FFEA_100%)] border-r border-solid border-lineGrey rounded-[10px] rounded-t-none rounded-br-none">
                     <div className="px-[50px] py-[25px] flex justify-between">
                       <div className="flex flex-col">
@@ -222,11 +222,11 @@ const page = () => {
                 </div>
               </div>
             </div>
-            <div className="flex w-full rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
+            <div className="flex flex-col md:flex-row w-full rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
               <FeesComp />
-              <div className="p-4 w-[70%] bg-white">
-                  <div className="flex flex-col w-full max-w-sm bg-white ">
-                    <div className="relative flex items-center h-12 p-1 mx-8 mt-4 bg-[#EEEEEE] border rounded-[10px] shadow">
+              <div className="p-4 w-full md:w-[70%] bg-white">
+                  <div className="flex flex-col w-full md:max-w-sm bg-white ">
+                    <div className="relative flex items-center h-12 w-full p-1 mx-0 md:mx-8 mt-4 bg-[#EEEEEE] border rounded-[10px] shadow">
                       <div className="flex justify-center w-full">
                         <button onClick={()=>setFeeOption("option")}>Option Fees</button>
                       </div>
@@ -259,14 +259,14 @@ const page = () => {
 
   function FeesComp() {
     return (
-      <div className="flex flex-col gap-[10px] p-5 mr-2 w-[40%]">
+      <div className="flex flex-col gap-[10px] p-5 mr-2 w-full md:w-[40%]">
         <div className="flex gap-[10px] flex-start w-full">
           <Image src={money} alt="money" width={35} height={35}></Image>
           <h2 className="text-textPrimary font-normal text-[32px] leading-none">
             Fees
           </h2>
         </div>
-        <div className="flex py-[15px]">
+        <div className="flex py-[15px] ">
           <HeaderItems
             props={{
               textHeadline: "Borrowing Fees",
@@ -284,7 +284,7 @@ const page = () => {
             }}
           />
         </div>
-        <div className="flex py-[15px]">
+        <div className="flex py-[15px] flex-wrap gap-5 md:flex-nowrap md:gap-0">
           <HeaderItems
             props={{
               textHeadline: "Total Collateral Protected",
@@ -370,7 +370,7 @@ const page = () => {
 
   function ValueLocked() {
     return (
-      <div className="flex max-w-[30%] w-full flex-col justify-between rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
+      <div className="flex md:max-w-[30%] w-full flex-col justify-between rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
         <div className="flex flex-col gap-[10px] p-5">
           <div className="flex gap-[10px] flex-start w-full">
             <Image src={dollar} alt="atm local" width={35} height={35}></Image>
@@ -467,8 +467,8 @@ const page = () => {
     data: { headline: string; value: string; lastElement?: boolean }[];
   }) {
     return (
-      <div className="flex flex-col w-[50%] border border-lineGrey rounded-lg">
-        <div className="flex flex-col p-5 gap-[10px] bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)] rounded-lg border border-lineGrey shadow-[0_4px_8px_0px_rgba(0,0,0,0.1)]">
+      <div className="flex flex-col w-full md:w-[50%] border border-lineGrey rounded-lg">
+        <div className="flex flex-col p-3 md:p-5 gap-[10px] bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)] rounded-lg border border-lineGrey shadow-[0_4px_8px_0px_rgba(0,0,0,0.1)]">
           <div className="flex flex-start w-full gap-[10px]">
             <Image src={toll} alt="toll" width={35} height={35}></Image>
             <h2 className="text-textPrimary font-normal text-[32px] leading-none">

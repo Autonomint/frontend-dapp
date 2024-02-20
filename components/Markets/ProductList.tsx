@@ -20,7 +20,7 @@ const ProductList = () => {
   const [open2, setOpen2] = React.useState(false);
   return (
     <div className="flex flex-row gap-6 min-[1440px]:gap-3 items-center 2dppx:gap-6 flex-wrap lg:flex-nowrap">
-      <div className="flex w-full lg:w-[58%] gap-6 min-[1440px]:gap-3 2dppx:gap-6">
+      <div className="flex w-full overflow-x-auto lg:w-[58%] gap-6 min-[1440px]:gap-3 2dppx:gap-6">
         <p className="flex items-center gap-2 whitespace-nowrap">
           AMINT can be bought from <ArrowRightIcon width={16} height={16} />
         </p>

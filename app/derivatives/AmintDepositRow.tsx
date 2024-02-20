@@ -74,7 +74,7 @@ const AmintDepositRow = ({ details ,onClick}: { details: DepositDetail ,onClick:
       <TableRow
       onClick={()=>onClick()}
         key={details.id}
-        className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF]"
+        className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF] cursor-pointer"
       >
         <TableCell className="text-borderGrey">{`#${details.index}`}</TableCell>
         <TableCell className="text-textGrey">
