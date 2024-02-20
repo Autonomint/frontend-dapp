@@ -354,7 +354,7 @@ const Withdraw = ({
               props={{
                 t: toastId.current,
                 toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.name}`,
+                headline: `Uhh Ohh! ${error.message}`,
                 toastClosebuttonHoverColor: "#e66d6d",
                 toastClosebuttonColor: "#C25757",
               }}

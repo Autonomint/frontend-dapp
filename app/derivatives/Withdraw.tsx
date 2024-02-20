@@ -7,9 +7,7 @@ import {
     SheetContent,
     SheetHeader,
     SheetTitle,
-    SheetTrigger,
 } from "@/components/ui/sheet";
-import { TableCell, TableRow } from "@/components/ui/table";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import React, { useEffect, useRef, useState } from "react";
 import calculateTimeDifference from "../utils/calculateTimeDifference";

@@ -378,16 +378,14 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // console.log("depositData", depositData);
-    //call blockchain write function to deposit
-
+    console.log("depositData", depositData);
     let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);
     let strikePercent = strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4;
     console.log(ethPrice, colateralamount, strikePercent)
     const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${colateralamount}/${ethPrice}/${strikePercent}`).then(
       (res) => res.json()
     )
-    console.log(data)
+    // console.log(data)
     if (data[0] != undefined) {
       write?.({
         args: [
@@ -657,7 +655,7 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
                   type="submit"
                   variant={"primary"}
                   className="text-white"
-                  disabled={disabled}
+                  disabled={isDepositsLoading || isDepositHashsLoading || disabled}
                 >
                   {isDepositsLoading || isDepositHashsLoading ? <Spinner/> : 'Confirm Deposit'}
                 </Button>
