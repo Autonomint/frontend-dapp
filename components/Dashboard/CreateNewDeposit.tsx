@@ -382,17 +382,18 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
     let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);
     let strikePercent = strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4;
     console.log(ethPrice, colateralamount, strikePercent)
+    console.log( BigInt(Math.floor((1 + form.getValues("strikePrice") / 100) * Number(ethPrice ? ethPrice : 0))) )
     const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${colateralamount}/${ethPrice}/${strikePercent}`).then(
       (res) => res.json()
     )
-    // console.log(data)
+    
     if (data[0] != undefined) {
       write?.({
         args: [
           BigInt(ethPrice ? ethPrice : 0),
           BigInt(new Date().getTime()),
           strikePercent,
-          BigInt(BigInt(form.getValues("strikePrice")) * (ethPrice ? ethPrice : 0n)),
+          BigInt(Math.floor((1 + form.getValues("strikePrice") / 100) * Number(ethPrice ? ethPrice : 0))),
           BigInt(data[0]),
         ],
         value: parseEther(form.getValues("collateralAmount").toString()),
