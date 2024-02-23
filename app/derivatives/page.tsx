@@ -257,7 +257,7 @@ const page = () => {
           {/* // New deposit section */}
           <NewDeposit />
           {/* // Deposits table section */}
-          <div className="min-h-[20vh] overflow-x-scroll md:overflow-x-auto">
+          <div className="mb-10 overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto">
 
           <Table>
             <TableHeader>

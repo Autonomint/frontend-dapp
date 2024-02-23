@@ -240,7 +240,7 @@ const WalletOrContent = () => {
           {/* Deposit Component */}
           <CreateNewDeposit handleRefetch={handleRefetch} />
           {/* Table Component */}
-          <div className="mb-10 overflow-x-scroll md:overflow-x-auto">
+          <div className="mb-10 overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto">
 
           <DepositAndWithDrawTable
             tableData={deposits}

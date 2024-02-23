@@ -45,6 +45,7 @@ import {
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import { set } from "zod";
 import Spinner from "../CustomUI/Spinner";
+import TransactionLoader from "../CustomUI/transaction";
 const events = {
   borrowDebt: "",
   withdrawAmount: "",
@@ -117,7 +118,7 @@ const Withdraw = ({
       tooltipText: "80% of the total deposited amount",
     },
     {
-      headline: "Total Amount (Amint minted + Interest Amount returned)",
+      headline: "Total Amount (Amint minted + Interest)",
       value: "-",
       tooltip: false,
       tooltipText: "",
@@ -174,6 +175,7 @@ const Withdraw = ({
 
   const {
     isLoading: cumulativeRateLoading,
+    isError: cumulativeRateError,
     // Data for the cumulative rate
     data: cumulativeRate,
     // Function to calculate the cumulative rate
@@ -184,6 +186,7 @@ const Withdraw = ({
     // Error handling
     onError(error) {
       console.log(error);
+      cumulativeReset?.();
       // Show custom toast notification for error
       toast.custom(
         (t) => {
@@ -235,8 +238,7 @@ const Withdraw = ({
   const { data: lastCumulativeRate } = useBorrowingContractLastCumulativeRate({
     watch: true,
   });
-  const {data:DemeCummulativeRate} = usePrepareBorrowingContractCalculateCumulativeRate();
-  const { isLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
+  const { isLoading: ispendingCumulative, isSuccess: cumulativeRateSuccess } = useWaitForTransaction({
     hash: cumulativeRate?.hash, // Transaction hash to wait for
     confirmations: 3, // Number of confirmations required
     onSuccess(data) {
@@ -267,7 +269,7 @@ const Withdraw = ({
           BigInt(
             BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
             (lastCumulativeRate ?? 0n)
-          ) / BigInt(10 ** 27)+1000000n, // Total amint amount
+          ) / BigInt(10 ** 27) + 1000000n, // Total amint amount
         ],
       });
     },
@@ -275,6 +277,8 @@ const Withdraw = ({
 
   const {
     isLoading: amintApproveLoading,
+    isSuccess: amintApproveSuccess,
+    isError: amintApproveError,
     data: amintApproveData,
     write: amintApprove,
     reset: approveReset,
@@ -304,7 +308,6 @@ const Withdraw = ({
         },
         { id: toastId.current }
       );
-
       // Perform the borrow withdrawal after the transaction is successful
       borrowWithdraw?.({
         args: [
@@ -347,6 +350,8 @@ const Withdraw = ({
     },
     onError(error) {
       // Error callback for borrowing withdrawal
+      approveReset?.();
+
       toast.custom(
         (t) => (
           <div>
@@ -373,7 +378,9 @@ const Withdraw = ({
 
   const {
     isLoading: borrowWithdrawisLoading, // Flag indicating if the transaction for borrowing and withdrawing is loading
-    isSuccess: borrowWithdrawtransactionSuccess, // Flag indicating if the transaction for borrowing and withdrawing was successful
+    isSuccess: borrowWithdrawtransactionSuccess,
+    isError: borrowWithdrawtransactionError,
+    // Flag indicating if the transaction for borrowing and withdrawing was successful
   } = useWaitForTransaction({
     hash: borrowWithdrawData?.hash, // Hash of the transaction for borrowing and withdrawing
     confirmations: 1, // Number of confirmations required for the transaction
@@ -476,7 +483,7 @@ const Withdraw = ({
     },
   });
   //using custom hook to mutate backend withdraw
-  const { mutate: backendWithdraw, isPending } = useMutation({
+  const { mutate: backendWithdraw, isPending ,isSuccess:backendWithdrawSuccess } = useMutation({
     // Specify the mutation function
     mutationFn: withdrawFromBackend,
 
@@ -525,6 +532,10 @@ const Withdraw = ({
    *
    */
   function handleWithdrawalTime() {
+    setOpenConfirmNotice(false)
+    cumulativeReset?.();
+    approveReset?.();
+    borrowReset?.();
     if (details.status === "DEPOSITED") {
       // write?.();
       /*
@@ -582,7 +593,7 @@ const Withdraw = ({
     if (details) {
       // If details are available, update each value in the depositData array
       const updatedData = [...depositData];
-      updatedData[0].value = details.depositedAmount + ` (${(Number(details.depositedAmount)*Number(details.ethPrice)).toFixed(2)} $) `;
+      updatedData[0].value = details.depositedAmount + ` (${(Number(details.depositedAmount) * Number(details.ethPrice)).toFixed(2)} $) `;
       updatedData[1].value = `${details.ethPrice}`;
       updatedData[2].value = details.noOfAmintMinted;
       updatedData[3].value = (parseFloat(totalAmintAmnt.toString()) / 10 ** 6).toString();
@@ -656,10 +667,12 @@ const Withdraw = ({
   }
 
   useEffect(() => {
+
+
     handleDepositData();
     handleAmountProtected()
     setOpenConfirmNotice(false);
-  }, [details,sheetOpen]);
+  }, [details, sheetOpen]);
 
 
 
@@ -673,7 +686,7 @@ const Withdraw = ({
     >
       {spinner ? <Spinner /> : (
         <SheetContent
-          className={" w-full md:w-auto lg:max-w-screen-lg overflow-y-scroll max-h-screen "}
+          className={" w-full md:w-1/3 lg:max-w-screen-lg overflow-y-scroll max-h-screen "}
         >
           <div className="flex flex-col min-[1440px]:gap-6 2dppx:gap-[10px] gap-[10px]">
             <div className="flex justify-end w-full">
@@ -682,7 +695,7 @@ const Withdraw = ({
                   variant={"ghostOutline"}
                   size={"primary"}
                   className="flex gap-[10px] border border-borderGrey"
-                  onClick={()=>handleSheetOpenChange(!sheetOpen)}
+                  onClick={() => handleSheetOpenChange(!sheetOpen)}
                 >
                   <Cross2Icon className="w-4 h-4" />
                   <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
@@ -743,88 +756,121 @@ const Withdraw = ({
                 <ConfirmNotice
                   withdrawalTime={details.status}
                   handleWithdrawal={handleWithdrawalTime}
-                  amintToMint={details.status === "DEPOSITED" ? Number(totalAmintAmount.current) : Number(details.depositedAmount)/2}
-                  isLoading={isLoading || borrowWithdrawisLoadingone || cumulativeRateLoading || amintApproveLoading || borrowWithdrawisLoading || amintTransactionLoading || isPending}
+                  amintToMint={details.status === "DEPOSITED" ? Number(totalAmintAmount.current) : Number(details.depositedAmount) / 2}
+                  isLoading={ispendingCumulative || borrowWithdrawisLoadingone || cumulativeRateLoading || amintApproveLoading || borrowWithdrawisLoading || amintTransactionLoading || isPending}
                 />
               </>
-            ) : (
-              <>
-                {details.status === "DEPOSITED" ? (
-                  <Button
-                    variant={"primary"}
-                    className="text-white"
-                    onClick={() => {
-                      setOpenConfirmNotice(true);
-                    }}
-                  >
-                    Withdraw for the first time
-                  </Button>
-                ) : details.status === "WITHDREW1" ? (
-                  <>
-                    <div className="px-[15px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee]">
-                      <div className="py-[15px] flex items-center justify-between border-b border-lineGrey">
-                        <div className="flex gap-[10px] items-center">
-                          <Image
-                            src={payments}
-                            alt="payment"
-                            width={24}
-                            height={24}
-                          />
-                          <p className="text-base text-textSecondary">
-                            First time withdrawed amount
-                          </p>
-                        </div>
+            ) :
+              (
+                ispendingCumulative || borrowWithdrawisLoadingone || cumulativeRateLoading || amintApproveLoading || borrowWithdrawisLoading || amintTransactionLoading || isPending
+              ) ? (
+                <div className="flex flex-col items-center justify-center gap-2">
 
-                        <p>
-                          {parseFloat(
-                            details.withdrawAmount1
-                              ? details.withdrawAmount1
-                              : "0"
-                          ).toFixed(4)}
-                        </p>
-                      </div>
-                      <div className="py-[15px] flex items-center justify-between">
-                        <div className="flex gap-[10px] items-center">
-                          <Image
-                            src={pace}
-                            alt="time left"
-                            width={24}
-                            height={24}
-                          />
-                          <p className="text-base text-textSecondary">
-                            Second Withdrawal time
-                          </p>
-                        </div>
-                        <p className="text-base font-medium text-textHighlight">
-                          {calculate30DaysFromStoredTime(details.withdrawTime1)}
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      variant={"primary"}
-                      className="text-white"
-                      onClick={() => {
-                        setOpenConfirmNotice(true);
-                      }}
-                      disabled={SecondWithdrawalTime() < Date.now() ? false : true}
-                    >
-                      Withdraw for the second time
-                    </Button>
-                  </>
-                ) : (
+                  <TransactionLoader
+                    heading={"Calculate Interest #1"}
+                    subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
+                    value={"0.00123"}
+                    status={cumulativeRateLoading ? "Loading" :(!cumulativeRateError && ispendingCumulative)?"Progress"  : cumulativeRateSuccess ? "Completed" : cumulativeRateError ? "Failed" : "Pending"}
+                    className={`${cumulativeRateLoading || (!cumulativeRateError && ispendingCumulative) ? "w-[100%] px-6 py-6" : "bg-gray-100"} `}
+                  />
+                  <TransactionLoader
+                    heading={"Approve Amint #2"}
+                    subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
+                    value={"0.00123"}
+                    status={amintApproveLoading ? "Loading" : ( !amintApproveError && amintTransactionLoading) ? "Progress" : amintApproveSuccess ? "Completed" : amintApproveError ? "Failed" : "Pending"}
+                    className={`${amintApproveLoading || ( !amintApproveError && amintTransactionLoading) ? "w-[100%] px-6 py-6" : "bg-gray-100"} `}
+
+                  />
+                  <TransactionLoader
+                    heading={"withdraw #3"}
+                    subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
+                    value={"0.00123"}
+                    status={borrowWithdrawisLoadingone || borrowWithdrawisLoading ? "Loading" :( !borrowWithdrawtransactionError && isPending)? "Progress" : borrowWithdrawtransactionSuccess && backendWithdrawSuccess ? "Completed" : borrowWithdrawtransactionError ? "Failed" : "Pending"}
+                    className={`${borrowWithdrawisLoadingone || borrowWithdrawisLoading || (!borrowWithdrawtransactionError && isPending)? "w-[100%] px-6 py-6" : "bg-gray-100"} `}
+                  />
+                </div>
+              ) :
+
+                (
                   <>
-                    {details.status === "LIQUIDATED" ? (
-                      <Note note="position is already liquidated" />
+                    {details.status === "DEPOSITED" ? (
+                      <Button
+                        variant={"primary"}
+                        className="text-white"
+                        onClick={() => {
+                          setOpenConfirmNotice(true);
+                        }}
+                      >
+                        Withdraw for the first time
+                      </Button>
+                    ) : details.status === "WITHDREW1" ? (
+                      <>
+                        <div className="px-[15px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee]">
+                          <div className="py-[15px] flex items-center justify-between border-b border-lineGrey">
+                            <div className="flex gap-[10px] items-center">
+                              <Image
+                                src={payments}
+                                alt="payment"
+                                width={24}
+                                height={24}
+                              />
+                              <p className="text-base text-textSecondary">
+                                First time withdrawed amount
+                              </p>
+                            </div>
+
+                            <p>
+                              {parseFloat(
+                                details.withdrawAmount1
+                                  ? details.withdrawAmount1
+                                  : "0"
+                              ).toFixed(4)}
+                            </p>
+                          </div>
+                          <div className="py-[15px] flex items-center justify-between">
+                            <div className="flex gap-[10px] items-center">
+                              <Image
+                                src={pace}
+                                alt="time left"
+                                width={24}
+                                height={24}
+                              />
+                              <p className="text-base text-textSecondary">
+                                Second Withdrawal time
+                              </p>
+                            </div>
+                            <p className="text-base font-medium text-textHighlight">
+                              {calculate30DaysFromStoredTime(details.withdrawTime1)}
+                            </p>
+                          </div>
+                        </div>
+                        <Button
+                          variant={"primary"}
+                          className="text-white"
+                          onClick={() => {
+                            setOpenConfirmNotice(true);
+                          }}
+                          disabled={SecondWithdrawalTime() < Date.now() ? false : true}
+                        >
+                          Withdraw for the second time
+                        </Button>
+                      </>
                     ) : (
-                      <Note note="amount fully withdrawn" />
+                      <>
+                        {details.status === "LIQUIDATED" ? (
+                          <Note note="position is already liquidated" />
+                        ) : (
+                          <Note note="amount fully withdrawn" />
+                        )}
+                      </>
                     )}
                   </>
                 )}
-              </>
-            )}
+
           </div>
         </SheetContent>
       )}
+
     </Sheet>
   );
 };
