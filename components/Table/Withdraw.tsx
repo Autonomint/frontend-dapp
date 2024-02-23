@@ -769,14 +769,12 @@ const Withdraw = ({
                   <TransactionLoader
                     heading={"Calculate Interest #1"}
                     subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
-                    value={"0.00123"}
                     status={cumulativeRateLoading ? "Loading" :(!cumulativeRateError && ispendingCumulative)?"Progress"  : cumulativeRateSuccess ? "Completed" : cumulativeRateError ? "Failed" : "Pending"}
                     className={`${cumulativeRateLoading || (!cumulativeRateError && ispendingCumulative) ? "w-[100%] px-6 py-6" : "bg-gray-100"} `}
                   />
                   <TransactionLoader
                     heading={"Approve Amint #2"}
                     subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
-                    value={"0.00123"}
                     status={amintApproveLoading ? "Loading" : ( !amintApproveError && amintTransactionLoading) ? "Progress" : amintApproveSuccess ? "Completed" : amintApproveError ? "Failed" : "Pending"}
                     className={`${amintApproveLoading || ( !amintApproveError && amintTransactionLoading) ? "w-[100%] px-6 py-6" : "bg-gray-100"} `}
 
@@ -784,7 +782,6 @@ const Withdraw = ({
                   <TransactionLoader
                     heading={"withdraw #3"}
                     subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
-                    value={"0.00123"}
                     status={borrowWithdrawisLoadingone || borrowWithdrawisLoading ? "Loading" :( !borrowWithdrawtransactionError && isPending)? "Progress" : borrowWithdrawtransactionSuccess && backendWithdrawSuccess ? "Completed" : borrowWithdrawtransactionError ? "Failed" : "Pending"}
                     className={`${borrowWithdrawisLoadingone || borrowWithdrawisLoading || (!borrowWithdrawtransactionError && isPending)? "w-[100%] px-6 py-6" : "bg-gray-100"} `}
                   />

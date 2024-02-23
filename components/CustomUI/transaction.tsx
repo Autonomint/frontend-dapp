@@ -15,12 +15,11 @@ enum TransactionType {
 interface TransactionProps {
     heading: string;
     subheadingBefore?: string;
-    value: string;
     status?: string;
     className?: string;
 }
 
-const TransactionLoader: React.FC<TransactionProps> = ({ heading, subheadingBefore, value, status, className }) => {
+const TransactionLoader: React.FC<TransactionProps> = ({ heading, subheadingBefore, status, className }) => {
     const [progress, setProgress] = useState(0);
     const [taskDone, setTaskDone] = useState(false);
     useEffect(() => {
@@ -56,14 +55,14 @@ const TransactionLoader: React.FC<TransactionProps> = ({ heading, subheadingBefo
                     ) : status === TransactionType.Completed ? (
                         <Image src={checkcircle} width={24} height={24} alt="uniswap" />
                     ) : status === TransactionType.Loading || status === TransactionType.InProgress ? (
-                        <Spinner className="" />
+                        <Spinner className="w-14 h-14" />
                     ) : status === TransactionType.Failed ? (
                         <Cross1Icon />
                     ) : null
                 }
             </div>
             <div className="ml-4">
-                <h1 className="text-base font-medium ">{heading}</h1>
+                <h1 className={`font-medium  ${status === TransactionType.Loading || status === TransactionType.InProgress ?"text-xl":"text-base" }`}>{heading}</h1>
                 <h2 className="ml-1 text-[14px] text-gray-500"> {status}
                 {
                 (status === TransactionType.InProgress) && !taskDone ?
