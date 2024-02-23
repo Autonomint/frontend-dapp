@@ -53,7 +53,7 @@ const HeaderItems = ({
           
           <h3
             style={{ color: textColor ? textColor : "" }}
-            className="font-medium min-[1440px]:text-[2rem] 2dppx:text-2xl text-2xl leading-none"
+            className="font-medium min-[1440px]:text-[2rem] 2dppx:text-2xl text-xl md:text-2xl leading-none"
           >
             {textValue}
           </h3>
@@ -65,7 +65,7 @@ const HeaderItems = ({
           `${
             lastElement
               ? ""
-              : "w-[1px] h-full bg-lineGrey  2dppx:mx-6 mx-[2px] md:mx-1 xl:mx-3"
+              : "w-[1px]  bg-lineGrey  2dppx:mx-6 mx-[2px] md:mx-1 xl:mx-3"
           }`,
           className
         )}

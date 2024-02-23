@@ -145,7 +145,7 @@ const page = () => {
     address: `0x${string}` | undefined
   ): Promise<DepositDetail[]> {
     const response = await fetch(`${BACKEND_API_URL}/cds/${chainId}/${address}`);
-    return await response.json();
+    return await response.json().then((data) => data.sort((a: any, b: any) => a.index - b.index));;
   }
 
   // Fetch and store deposits using react-query

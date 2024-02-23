@@ -44,7 +44,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
+import { useAccount, useBalance, useChainId, useWaitForTransaction } from "wagmi";
 import { parseEther, parseUnits } from "viem";
 
 import {
@@ -102,7 +102,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       strikePrice: 5,
     },
   });
-
+  const ethBalance = useBalance({ address:address})
 
   // watch for the strikePrice in the form
   const strikePrice = form.watch("strikePrice");
@@ -267,7 +267,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
             />
           </div>
         ),
-        { duration: 5000 } // Toast duration: 5000 milliseconds
+        { duration: 10000 } // Toast duration: 5000 milliseconds
       );
     },
     onSuccess(data) {
@@ -298,14 +298,14 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   });
 
 
-  const { isLoading :isDepositHashsLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
+  const { isLoading: isDepositHashsLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
     hash: depositData?.hash,
     onSuccess(data) {
       // Log transaction completion
       console.log("transaction completed", depositData?.hash, data);
 
       // Get the data logs based on the chainId
-      const dataLogs = chainId ===5 ?data.logs[15].data:data.logs[9].data;
+      const dataLogs = chainId === 5 ? data.logs[15].data : data.logs[9].data;
 
       // Decode event logs from ABI
       const { eventName, args } = decodeEventLogsFromAbi(
@@ -316,7 +316,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       ) as { eventName: string; args: { normalizedAmount: bigint, borrowAmount: bigint } };
 
       // Log event name and normalized amount
-console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toString())
+      console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toString())
       // Set the normalizedAmount value
       normalizedAmount.current = args?.normalizedAmount.toString();
       noOfAmintMinted.current = args?.borrowAmount.toString();
@@ -382,11 +382,11 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
     let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);
     let strikePercent = strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4;
     console.log(ethPrice, colateralamount, strikePercent)
-    console.log( BigInt(Math.floor((1 + form.getValues("strikePrice") / 100) * Number(ethPrice ? ethPrice : 0))) )
+    console.log(BigInt(Math.floor((1 + form.getValues("strikePrice") / 100) * Number(ethPrice ? ethPrice : 0))))
     const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${colateralamount}/${ethPrice}/${strikePercent}`).then(
       (res) => res.json()
     )
-    
+
     if (data[0] != undefined) {
       write?.({
         args: [
@@ -400,6 +400,7 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
       });
     } // mutate(address);
   }
+
 
   /**
    * Handles the calculation and setting of the amint to be minted and downside protection amounts.
@@ -467,17 +468,17 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
       <Dialog
         open={open}
         onOpenChange={() => {
-          
+
         }}
         modal={true}
       >
         <DialogTrigger asChild>
           <Button
-          type="button"
+            type="button"
             variant={"primary"}
             size={"full"}
             className="flex gap-[10px] items-center justify-center"
-          onClick={()=>setOpen(!open)}
+            onClick={() => setOpen(!open)}
           >
             <Image src={addIcon} alt="add icon" width={24} height={24}></Image>
             <p className="text-white bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] text-transparent font-semibold text-[11px] md:text-base">
@@ -486,7 +487,7 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
           </Button>
         </DialogTrigger>
 
-        <DialogContent className={"w-[672px]"}>
+        <DialogContent className={"max-w-[672px]"}>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} action="#">
               <div className="flex justify-end w-full">
@@ -495,7 +496,7 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
                     variant={"ghostOutline"}
                     size={"primary"}
                     className="flex gap-[10px] border border-borderGrey "
-                    onClick={()=>setOpen(!open)}
+                    onClick={() => setOpen(!open)}
                   >
                     <Cross2Icon className="w-4 h-4" />
                     <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
@@ -542,7 +543,7 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
                   control={form.control}
                   name="collateralAmount"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="relative">
                       <FormControl>
                         <Input
                           type="number"
@@ -551,20 +552,24 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
                           placeholder="Collateral Amount"
                           {...field}
                           value={Boolean(field.value) ? field.value : ""}
+                          
                         ></Input>
                       </FormControl>
+                     <span className="relative md:absolute md:right-1 block text-right text-[12px]">Balance:  {(Number(ethBalance.data?.formatted)).toFixed(4)} ETH</span> 
                       <FormMessage />
                     </FormItem>
                   )}
                 />
                 <div className="px-[6px] flex gap-[10px] items-center">
                   <InfoCircledIcon width={18} height={18} />
-                  <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm font-normal text-textGrey text-center">
+                  <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm font-normal text-textGrey ">
                     Minimum Collateral Amount is{" "}
                     <span className="font-medium text-textHighlight">
                       0.02 ETH
                     </span>
                   </p>
+
+                    
                 </div>
                 <div className="pt-[4px] px-[6px]">
                   <FormField
@@ -658,7 +663,7 @@ console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toS
                   className="text-white"
                   disabled={isDepositsLoading || isDepositHashsLoading || disabled}
                 >
-                  {isDepositsLoading || isDepositHashsLoading ? <Spinner/> : 'Confirm Deposit'}
+                  {isDepositsLoading || isDepositHashsLoading ? <Spinner /> : 'Confirm Deposit'}
                 </Button>
               </div>
             </form>

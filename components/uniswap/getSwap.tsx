@@ -5,7 +5,8 @@ import useClient from './etherAdapter'
 import { JsonRpcSigner } from 'ethers'
 import ISwapRouterArtifact from '@uniswap/v3-periphery/artifacts/contracts/interfaces/ISwapRouter.sol/ISwapRouter.json';
 import IUniswapV3PoolArtifact from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
-import Quoter from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
+// import Quoter from '@uniswap/v2-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.jsn'
+import { Quoter } from "@/constants/QuoterAbi";
 import { toReadableAmount, fromReadableAmount } from './conversion'
 import GeneralArtifact from '@/constants/GeneralArtifacts.json';
 import { QUOTER_CONTRACT_ADDRESS, ROUTER_ADDRESS, POOL_FACTORY_CONTRACT_ADDRESS, TokensOption } from './constant';
@@ -38,23 +39,23 @@ function createBrowserExtensionProvider(): ethers.BrowserProvider | null {
   }
 }
 
-const getPoolImmutables = async (poolContract: Contract) => {
-  if (!poolContract)
-    throw new Error('Pool contract has not been initialized');
-  console.log(poolContract)
-  const [token0, token1, fee] = await Promise.all([
-    poolContract.token0(),
-    poolContract.token1(),
-    poolContract.fee(),
-  ]);
+// const getPoolImmutables = async (poolContract: Contract) => {
+//   if (!poolContract)
+//     throw new Error('Pool contract has not been initialized');
+//   console.log(poolContract)
+//   const [token0, token1, fee] = await Promise.all([
+//     poolContract.token0(),
+//     poolContract.token1(),
+//     poolContract.fee(),
+//   ]);
 
-  const immutables: Immutables = {
-    token0,
-    token1,
-    fee,
-  };
-  return immutables;
-};
+//   const immutables: Immutables = {
+//     token0,
+//     token1,
+//     fee,
+//   };
+//   return immutables;
+// };
 
 const useFromToken = (fromTokenAddress: string, signer: Signer) => {
   const FromTokenContract = new ethers.Contract(
@@ -121,19 +122,19 @@ const useSwap = (fromTokenAddress: string, toTokenAddress: string) => {
 
     const quoterContract = new ethers.Contract(
       QUOTER_CONTRACT_ADDRESS,
-      Quoter.abi,
+      Quoter,
       provider
     )
-    const poolConstants = await getPoolImmutables(poolContract);
+    // const poolConstants = await getPoolImmutables(poolContract);
     const decimals = TokensOption[fromTokenAddress][2];
-
+      console.log(quoterContract)
     try {
-      const quotedAmountOut = await quoterContract.quoteExactInputSingle.staticCall(
-        poolConstants.token0,
-        poolConstants.token1,
-        poolConstants.fee,
+      const quotedAmountOut = await quoterContract.quoteExactInputSingle.staticCall([
+        fromTokenAddress,
+        toTokenAddress,
         ethers.parseUnits(inputAmount.toString(), decimals),
-        0
+        3000,
+        0]
       )
       console.log(quotedAmountOut)
       return toReadableAmount(quotedAmountOut, TokensOption[toTokenAddress][2])
@@ -154,12 +155,11 @@ const useSwap = (fromTokenAddress: string, toTokenAddress: string) => {
 
     try {
       await approve(ROUTER_ADDRESS, inputAmount, address as string);
-      const immutables = await getPoolImmutables(poolContract);
-      const parsedAmount = ethers.parseUnits(inputAmount.toString(), TokensOption[immutables.token0][2] as number);
+      const parsedAmount = ethers.parseUnits(inputAmount.toString(), TokensOption[toTokenAddress][2] as number);
       const params = {
         tokenIn: fromTokenAddress,
         tokenOut: toTokenAddress,
-        fee: immutables.fee,
+        fee: 3000,
         recipient: address,
         deadline: Math.floor(Date.now() / 1000) + 60 * 10,
         amountIn: parsedAmount,

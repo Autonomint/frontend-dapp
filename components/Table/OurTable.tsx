@@ -46,11 +46,7 @@ const DepositAndWithDrawTable = ({
     setSheetDetails(details)
     setSheetOpen(true);
   }
-  const [loading, setLoading] = useState<boolean>(true);
-  useEffect(() => {
-    if(tableData) tableData.sort((a, b) => a.index - b.index);;
-    setLoading(false);
-  }, [tableData, sheetOpen]);
+
   return (
     <Table>
       <TableHeader>
@@ -63,8 +59,7 @@ const DepositAndWithDrawTable = ({
           <TableHead className="text-textGrey">Liquidated</TableHead>
         </TableRow>
       </TableHeader>
-      {
-        loading ? <div><Spinner /></div> : (
+
           <TableBody>
             {/* if there is tableData map over it */}
             {tableData && tableData?.map((details, index) => (
@@ -72,8 +67,8 @@ const DepositAndWithDrawTable = ({
               <TableRows  key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} handleRefetch={handleRefetch} />
             ))}
           </TableBody>
-        )
-      }
+        
+      
 
       {
         sheetDetails && <Withdraw

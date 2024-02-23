@@ -10,14 +10,13 @@ import matic from "@/app/assets/matic.svg";
 import money from "@/app/assets/send_money.svg";
 import HeaderItems from "@/components/Header/HeaderItems";
 import Charts from "./Charts";
-import { Button } from "@/components/ui/button";
-import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import RatioPieChart from "./RatioPieChart";
-import { useAbondTotalSupply, useAmintTotalSupply, useBorrowingContractDepositTokens, useBorrowingContractGetUsdValue, useBorrowingContractLastCdsPoolValue, useCdsLastEthPrice, useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd, useTreasuryTotalVolumeOfBorrowersAmountinWei } from "@/abiAndHooks";
+import { useAbondTotalSupply, useAmintTotalSupply, useBorrowingContractGetUsdValue, useBorrowingContractLastCdsPoolValue, useCdsLastEthPrice, useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd, useTreasuryTotalVolumeOfBorrowersAmountinWei } from "@/abiAndHooks";
 import { ethers, formatEther } from "ethers";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import { useChainId,useAccount } from "wagmi";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
+import { useQueries,useQuery } from "@tanstack/react-query";
 
 const amintValues = [
   {
@@ -116,32 +115,33 @@ const page = () => {
   const [loading, setLoading] = React.useState(true);
   const [feeOption, setFeeOption] = React.useState("option");
   const { data: totalStable } = useCdsTotalCdsDepositedAmount({ watch: true })
-  const { data: ethPrice } = useBorrowingContractGetUsdValue({ watch: true })
+  const { data: ethPrice} = useBorrowingContractGetUsdValue({ watch: true })
   const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
   const { data: amintsupply } = useAmintTotalSupply({ watch: true })
   const { data: cdsPool } = useBorrowingContractLastCdsPoolValue({ watch: true })
-  const { data: abondSupply } = useAbondTotalSupply({ watch: true });
+  const { data: abondSupply} = useAbondTotalSupply({ watch: true });
   const { data: totalValueLocked } = useTreasuryTotalVolumeOfBorrowersAmountinWei({ watch: true });
+  const {data:ratioData} = useQuery({
+    queryKey: ["ratioData"],
+    queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/ratio/11155111/${ethPrice}`).then((res) => res.json()),
+    staleTime:Infinity,
+  })
+  const {data:feeOptions} = useQuery({
+    queryKey: ['optionFees'],
+    queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/optionFees/11155111/1000000000000000000/${ethPrice}/0`).then((res) => res.json()),
+    staleTime:Infinity
+  })
+
+
   useEffect(() => {
   }, [feeOption])
   useEffect(() => {
     handleStatsItem()
-  }, [totalValueLocked, ethPrice, ethLocked, totalStable, amintsupply, cdsPool])
+  }, [ ethLocked, ethPrice, totalValueLocked, amintsupply, totalStable, cdsPool, ratioData, feeOptions, abondSupply])
   
   const handleStatsItem = async () => {
-    
-    console.log(totalValueLocked, ethPrice, ethLocked, totalStable, amintsupply, cdsPool)
-    const ratioData = await fetch(`${BACKEND_API_URL}/borrows/ratio/${chainId}/${ethPrice}`).then(
-      (res) => res.json()
-    )
-    console.log(ratioData)
-    
-    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/1000000000000000000/${ethPrice}/0`).then(
-      (res) => res.json()
-    )
-    console.log(data)
-
-    if (ethLocked && ethPrice && totalValueLocked && amintsupply && totalStable && cdsPool) {
+    console.log(ethLocked, ethPrice, totalValueLocked, amintsupply, totalStable, cdsPool, abondSupply, ratioData, feeOptions)
+    if (ethLocked && ethPrice && totalValueLocked && amintsupply && totalStable && cdsPool && ratioData && feeOptions && abondSupply) {
       amintValues[1].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
       amintValues[2].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
 
@@ -153,15 +153,14 @@ const page = () => {
 
       RatioValues[0].value = ratioData == undefined ? "-" : (ratioData).toFixed(2);
       RatioValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
-
       RatioValues[2].value = cdsPool ? formatNumber(Number(cdsPool/BigInt(10**6))) : "0";
       RatioValues[3].value = (Number(cdsPool/BigInt(10**6)) - (Number(totalStable) / 10 ** 6)).toFixed(2);
       const total = (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))) + (Number(totalStable) / 10 ** 6);
       RatioValues[4].value = (((Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))) / total) * 100).toFixed(1);
       RatioValues[5].value = (((Number(totalStable) / 10 ** 6) / total) * 100).toFixed(1);
 
-      FeesValues[0].value = `${data[1] == undefined ? 0 : (parseFloat(data[1]) / 10 ** 6).toFixed(2)}`;
-      FeesValues[1].value = `${data[1] == undefined ? 0 : (parseFloat(data[1]) / 10 ** 6).toFixed(2)}`;
+      FeesValues[0].value = `${feeOptions[1] == undefined ? 0 : (parseFloat(feeOptions[1]) / 10 ** 6).toFixed(2)}`;
+      FeesValues[1].value = `${feeOptions[1] == undefined ? 0 : (parseFloat(feeOptions[1]) / 10 ** 6).toFixed(2)}`;
       FeesValues[2].value = (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100))) * 0.20).toFixed(2);
 
       abondValues[1].value = abondSupply ? formatNumber(Number(abondSupply) / 10 ** 6) : "0";
@@ -172,7 +171,7 @@ const page = () => {
 
   return (
     !isConnected ?<ConnectWallet/>:
-    <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
+    <div className="relative py-6 px-2 md:px-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
 
       {
          
@@ -187,16 +186,16 @@ const page = () => {
 
         </div>) : (
           <div className="flex flex-col gap-6">
-            <div className="flex justify-between flex-col md:flex-row flex-1 w-full gap-6">
+            <div className="flex flex-col justify-between flex-1 w-full gap-6 md:flex-row">
               <DashboardCard headline="AMINT" data={amintValues} />
               <DashboardCard headline="ABOND" data={abondValues} />
             </div>
-            <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex flex-col gap-6 md:flex-row">
               <ValueLocked />
-              <div className="flex flex-col w-full md:w-[70%]">
+              <div className="flex flex-col w-full md:w-[60%] lg:w-[70%]">
                 <CollateralRatio />
-                <div className="flex flex-col md:flex-row w-full h-full">
-                  <div className="flex h-full min-w-[350px] flex-col bg-[linear-gradient(270deg,#CDF3FF_0%,#D8FFEA_100%)] border-r border-solid border-lineGrey rounded-[10px] rounded-t-none rounded-br-none">
+                <div className="flex flex-col w-full h-full lg:flex-row">
+                  <div className="flex h-full min-w-[300px] flex-col bg-[linear-gradient(270deg,#CDF3FF_0%,#D8FFEA_100%)] border-r border-solid border-lineGrey rounded-[10px] rounded-t-none rounded-br-none">
                     <div className="px-[50px] py-[25px] flex justify-between">
                       <div className="flex flex-col">
                         <h5 className="text-[#00773F] text-base font-normal">
@@ -211,7 +210,7 @@ const page = () => {
                         <p className="font-medium text-3xl text-[#0F46E9]">{RatioValues[5].value}%</p>
                       </div>
                     </div>
-                    <div className="w-full h-full">
+                    <div className="w-full lg:h-full h-40">
                       <RatioPieChart collaterals={RatioValues[4].value} dcds={RatioValues[5].value} />
                     </div>
                   </div>
@@ -225,8 +224,8 @@ const page = () => {
             <div className="flex flex-col md:flex-row w-full rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
               <FeesComp />
               <div className="p-4 w-full md:w-[70%] bg-white">
-                  <div className="flex flex-col w-full md:max-w-sm bg-white ">
-                    <div className="relative flex items-center h-12 w-full p-1 mx-0 md:mx-8 mt-4 bg-[#EEEEEE] border rounded-[10px] shadow">
+                  <div className="flex flex-col w-full bg-white md:max-w-sm ">
+                    <div className="relative flex items-center h-12 w-full p-1 mx-0 lg:mx-8 mt-4 bg-[#EEEEEE] border rounded-[10px] shadow">
                       <div className="flex justify-center w-full">
                         <button onClick={()=>setFeeOption("option")}>Option Fees</button>
                       </div>
@@ -234,7 +233,7 @@ const page = () => {
                         <button onClick={()=>setFeeOption("borrow")}>Borrowing Fees</button>
                       </div>
                       <span
-                        className={` bg-[#ffffff] border-[1px] border-[#C4C4C4] shadow text-gray-800 flex items-center justify-center w-1/2 rounded-[10px] h-10 transition-all top-[4px] absolute  ${feeOption=="borrow"?"left-[150px]":"left-1"} `}>
+                        className={` bg-[#ffffff] border-[1px] border-[#C4C4C4] shadow text-gray-800 flex items-center justify-center w-1/2 rounded-[10px] h-10 transition-all top-[4px] absolute  ${feeOption=="borrow"?"right-1":"right-none"} `}>
                         {feeOption === "option" ? "Option Fees" : "Borrowing Fees"}
                       </span>
                     </div>
@@ -262,11 +261,11 @@ const page = () => {
       <div className="flex flex-col gap-[10px] p-5 mr-2 w-full md:w-[40%]">
         <div className="flex gap-[10px] flex-start w-full">
           <Image src={money} alt="money" width={35} height={35}></Image>
-          <h2 className="text-textPrimary font-normal text-[32px] leading-none">
+          <h2 className="text-textPrimary font-normal mt-1 md:mt-0 text-[24px] md:text-[32px] leading-none">
             Fees
           </h2>
         </div>
-        <div className="flex py-[15px] ">
+        <div className="flex py-[15px] md:flex-wrap lg:flex-nowrap">
           <HeaderItems
             props={{
               textHeadline: "Borrowing Fees",
@@ -284,7 +283,7 @@ const page = () => {
             }}
           />
         </div>
-        <div className="flex py-[15px] flex-wrap gap-5 md:flex-nowrap md:gap-0">
+        <div className="flex lg:py-[15px] py-[5px]  gap-2 md:flex-wrap lg:flex-nowrap md:gap-0">
           <HeaderItems
             props={{
               textHeadline: "Total Collateral Protected",
@@ -295,14 +294,14 @@ const page = () => {
           />
           <HeaderItems
             props={{
-              textHeadline: "Total Upside Gained per ETH",
+              textHeadline: "Total Upside Gained",
               textValue: "15%",
               className: "",
               lastElement: true,
             }}
           />
         </div>
-        <div className="flex flex-start py-[15px]">
+        <div className="flex flex-start lg:py-[15px] py-[5px]">
           <HeaderItems
             props={{
               textHeadline: "Total ABOND Yield",
@@ -322,7 +321,7 @@ const page = () => {
         <div className="flex flex-col gap-[10px] p-5">
           <div className="flex gap-[10px] flex-start w-full">
             <Image src={donut} alt="atm local" width={35} height={35}></Image>
-            <h2 className="text-textPrimary font-normal text-[32px] leading-none">
+            <h2 className="text-textPrimary font-normal mt-1 md:mt-0 text-[24px] md:text-[32px] leading-none">
               Ratio of Collaterals
             </h2>
           </div>
@@ -347,7 +346,7 @@ const page = () => {
           <div className="flex py-[15px]">
             <HeaderItems
               props={{
-                textHeadline: "Net Value of dCDS Pool",
+                textHeadline: "Net dCDS Pool Value",
                 textValue: `${RatioValues[2].value} AMINT`,
                 className: "",
                 lastElement: false,
@@ -370,11 +369,11 @@ const page = () => {
 
   function ValueLocked() {
     return (
-      <div className="flex md:max-w-[30%] w-full flex-col justify-between rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
+      <div className="flex md:w-[40%] lg:max-w-[30%] w-full flex-col justify-between rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)]">
         <div className="flex flex-col gap-[10px] p-5">
           <div className="flex gap-[10px] flex-start w-full">
             <Image src={dollar} alt="atm local" width={35} height={35}></Image>
-            <h2 className="text-textPrimary font-normal text-[32px] leading-none">
+            <h2 className="text-textPrimary font-normal mt-1 md:mt-0 text-[24px] md:text-[32px] leading-none">
               Value Locked
             </h2>
           </div>
@@ -383,7 +382,7 @@ const page = () => {
               <p className="text-base font-normal leading-none text-textGrey">
                 Total Value Locked
               </p>
-              <h3 className="font-medium text-[2rem] leading-none">{lockedValues[0].value}</h3>
+              <h3 className="font-medium text-[24px] md:text-[2rem] leading-none">{lockedValues[0].value}</h3>
             </div>
           </div>
           <div className="py-[15px]">
@@ -391,7 +390,7 @@ const page = () => {
               <p className="text-base font-normal leading-none text-textGrey">
                 Total Stablecoins Locked
               </p>
-              <h3 className="font-medium text-[2rem] leading-none">
+              <h3 className="font-medium text-[24px] md:text-[2rem] leading-none">
                 {lockedValues[1].value} AMINT
               </h3>
             </div>
@@ -403,7 +402,7 @@ const page = () => {
               <p className="text-base font-normal leading-none text-textGrey">
                 Total Assets Locked
               </p>
-              <h3 className="font-medium text-[2rem] leading-none">
+              <h3 className="font-medium text-[24px] md:text-[2rem] leading-none">
                 {lockedValues[2].value}
               </h3>
             </div>
@@ -471,7 +470,7 @@ const page = () => {
         <div className="flex flex-col p-3 md:p-5 gap-[10px] bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)] rounded-lg border border-lineGrey shadow-[0_4px_8px_0px_rgba(0,0,0,0.1)]">
           <div className="flex flex-start w-full gap-[10px]">
             <Image src={toll} alt="toll" width={35} height={35}></Image>
-            <h2 className="text-textPrimary font-normal text-[32px] leading-none">
+            <h2 className="text-textPrimary font-normal mt-1 md:mt-0 text-[24px] md:text-[32px] leading-none">
               {headline}
             </h2>
           </div>
@@ -482,7 +481,7 @@ const page = () => {
                 props={{
                   textHeadline: item.headline,
                   textValue: item.value,
-                  className: "",
+                  className: " ",
                   lastElement: item.lastElement,
                 }}
               />

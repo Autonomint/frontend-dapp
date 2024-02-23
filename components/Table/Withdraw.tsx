@@ -673,7 +673,7 @@ const Withdraw = ({
     >
       {spinner ? <Spinner /> : (
         <SheetContent
-          className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen "}
+          className={" w-full md:w-auto lg:max-w-screen-lg overflow-y-scroll max-h-screen "}
         >
           <div className="flex flex-col min-[1440px]:gap-6 2dppx:gap-[10px] gap-[10px]">
             <div className="flex justify-end w-full">

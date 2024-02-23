@@ -110,8 +110,7 @@ const WalletOrContent = () => {
    */
   function getDeposits(address: `0x${string}` | undefined) {
     return fetch(`${BACKEND_API_URL}/borrows/${chainId}/${address}`).then(
-      (response) => response.json()
-    );
+      (response) => response.json().then((data) => data.sort((a: any, b: any) => a.index - b.index)));
   }
   // Use the useQuery hook to fetch the data
   const { data: deposits, error: depositsError } = useQuery({
@@ -119,6 +118,7 @@ const WalletOrContent = () => {
     queryFn: (): Promise<any> => getDeposits(address ? address : undefined),
     enabled: !!address,
   });
+  console.log("deposits", deposits);
   /**
    * Handles the refetch action.
    *
@@ -151,6 +151,7 @@ const WalletOrContent = () => {
       const updatedStats = [...dashboardStats];
       const ethPriceNow = ethPrice ? ethPrice : 0n;
       // Calculate and format the value for the first stat item
+
       updatedStats[0].value =
         chainId === 5 || chainId === 11155111
           ? `$${parseFloat(
@@ -177,7 +178,7 @@ const WalletOrContent = () => {
       // Update the value for the third stat item
       updatedStats[2].value =
         chainId === 5 || chainId === 11155111
-          ? parseFloat(depositorData.totalAbond).toPrecision(2)
+          ? parseFloat(depositorData.totalAbond).toFixed(2)
           : parseFloat(depositorData.totalAbond).toFixed(2);
 
       // Update the subheading highlight based on the chainId

@@ -167,8 +167,8 @@ const NavBar = () => {
   }, [ltv, totalAmintSupply, totalValueLocked, ethPrice]);
 
   return (
-    <div className="flex w-[100%] h-[6vh] md:h-auto">
-      <div className="flex w-full overflow-scroll scrollb md:hidden md:w-0 bg-bgGrey">
+    <div className="flex w-[100%] h-[7vh] md:h-auto">
+      <div className="flex w-full scrollb md:hidden md:w-0 bg-bgGrey">
       <Link href={"/"}>
           <div className="w-[3rem] h-[3rem]">
             <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />

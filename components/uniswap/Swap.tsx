@@ -22,7 +22,7 @@ const Swap = () => {
     const [outputAmount, setOutputAmount] = useState(0);
     const [loader, setLoader] = useState(false);
     const options = ['WETH', 'USDC'];
-    const optionValue: OptionValueType = { 'WETH': '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6', 'USDC': '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984' };
+    const optionValue: OptionValueType = { 'WETH': '0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14', 'USDC': '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984' };
 
     const [selectedInputOption, setselectedInputOption] = useState(options[0]);
     const [selectOutputOption, setSelectOutputOption] = useState(options[1]);

@@ -65,14 +65,14 @@ import {
   useUsdtContractApprove,
 } from "@/abiAndHooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
+import { useAccount, useBalance, useChainId, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
 import { parseEther, parseUnits } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "../utils/decodeEventLogsFromAbi";
 import Spinner from "@/components/ui/spinner";
-
+import { PROXY_AMINT_ADDRESS,PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
 
 
 
@@ -170,6 +170,17 @@ const NewDeposit = () => {
     }
   );
 
+  const { data: amintbal } = useBalance({
+    address: PROXY_AMINT_ADDRESS ? address : undefined,
+    token: PROXY_AMINT_ADDRESS ? PROXY_AMINT_ADDRESS : undefined,
+    watch: true,
+  });
+
+  const { data: usdtbal } = useBalance({
+    address: PROXY_TESTUSDT_ADDRESS ? address : undefined,
+    token: PROXY_TESTUSDT_ADDRESS ? PROXY_TESTUSDT_ADDRESS : undefined,
+    watch: true,
+  });
 
   // get eth price from Borrowing contract and store it in ethPrice and setting default value to 0n
   const { data: ethPrice = 0n } = useBorrowingContractGetUsdValue({
@@ -860,7 +871,7 @@ const NewDeposit = () => {
 
 
 
-          <DialogContent className="w-[672px]">
+          <DialogContent className="max-w-[672px]">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} action="#">
                 <div className="flex justify-end w-full ">
@@ -886,15 +897,16 @@ const NewDeposit = () => {
                   </DialogTitle>
                 </DialogHeader>
                 <div className="flex flex-col min-[1440px]:pt-[30px] 2dppx:pt-[15px] pt-[15px] min-[1440px]:gap-[20px] 2dppx:gap-[10px] min-[1280px]:gap-[16px] gap-[10px]">
-                  <div className="flex gap-[10px] items-center w-full justify-between ">
+                  <div className="flex flex-col md:flex-row gap-[10px] items-center w-full justify-between ">
                     <FormField
                       control={form.control}
                       disabled={
                         usdtAmountDepositedTillNow < usdtLimit ? true : false
                       }
+                      
                       name="AmintDepositAmount"
                       render={({ field }) => (
-                        <FormItem className="w-[48%]">
+                        <FormItem className="w-full md:w-[48%]">
                           <FormControl>
                             <div className="relative">
                               <div className="relative">
@@ -948,13 +960,14 @@ const NewDeposit = () => {
                               </div>
                             </div>
                           </FormControl>
+                              <span className=" block text-[10px] text-right mr-1">bal. {amintbal?.formatted.slice(0, 8)} AMINT</span>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                     
                     <PlusIcon width={16} height={16} />
-                    <div className="flex flex-col w-[48%] gap-[10px]">
+                    <div className="flex flex-col  w-full  md:w-[48%] gap-[10px]">
                       <FormField
                         control={form.control}
                         name="USDTDepositAmount"
@@ -1084,7 +1097,9 @@ const NewDeposit = () => {
                                 </div>
                               </div>
                             </FormControl>
+                            <span className=" block text-[10px] text-right mr-1">bal. {usdtbal?.formatted.slice(0, 8)} USDT</span>
                             <FormMessage />
+                            
                           </FormItem>
                         )}
                       />
