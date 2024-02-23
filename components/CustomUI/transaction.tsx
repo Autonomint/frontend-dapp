@@ -51,24 +51,24 @@ const TransactionLoader: React.FC<TransactionProps> = ({ heading, subheadingBefo
             <div className="flex items-center justify-center mx-2">
                 {
                     status === TransactionType.Pending ? (
-                        <Image src={hourglass} width={24} height={24} alt="uniswap" />
+                        <Image src={hourglass} width={22} height={22} alt="uniswap" />
                     ) : status === TransactionType.Completed ? (
-                        <Image src={checkcircle} width={24} height={24} alt="uniswap" />
+                        <Image src={checkcircle} width={22} height={22} alt="uniswap" />
                     ) : status === TransactionType.Loading || status === TransactionType.InProgress ? (
-                        <Spinner className="w-14 h-14" />
+                        <Spinner className="w-10 h-10" />
                     ) : status === TransactionType.Failed ? (
                         <Cross1Icon />
                     ) : null
                 }
             </div>
             <div className="ml-4">
-                <h1 className={`font-medium  ${status === TransactionType.Loading || status === TransactionType.InProgress ?"text-xl":"text-base" }`}>{heading}</h1>
-                <h2 className="ml-1 text-[14px] text-gray-500"> {status}
+                <h1 className={`font-medium  ${status === TransactionType.Loading || status === TransactionType.InProgress ?"text-base":"text-[14px]" }`}>{heading}</h1>
+                <h2 className="ml-1 text-[12px] text-gray-500"> {status}
                 {
                 (status === TransactionType.InProgress) && !taskDone ?
-                    <span className="text-[14px] text-gray-500"> {progress}%</span>
+                    <span className="text-[12px] text-gray-500"> {progress}%</span>
                     :(status === TransactionType.InProgress)?
-                    <span className="text-[14px] text-gray-500"> taking longer than usual.</span>
+                    <span className="text-[12px] text-gray-500"> taking longer than usual.</span>
                     :""
                 }
                 </h2>

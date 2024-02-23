@@ -770,20 +770,20 @@ const Withdraw = ({
                     heading={"Calculate Interest #1"}
                     subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
                     status={cumulativeRateLoading ? "Loading" :(!cumulativeRateError && ispendingCumulative)?"Progress"  : cumulativeRateSuccess ? "Completed" : cumulativeRateError ? "Failed" : "Pending"}
-                    className={`${cumulativeRateLoading || (!cumulativeRateError && ispendingCumulative) ? "w-[100%] px-6 py-6" : "bg-gray-100"} `}
+                    className={`${cumulativeRateLoading || (!cumulativeRateError && ispendingCumulative) ? "w-[100%] px-3 py-3" : "bg-gray-100"} `}
                   />
                   <TransactionLoader
                     heading={"Approve Amint #2"}
                     subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
                     status={amintApproveLoading ? "Loading" : ( !amintApproveError && amintTransactionLoading) ? "Progress" : amintApproveSuccess ? "Completed" : amintApproveError ? "Failed" : "Pending"}
-                    className={`${amintApproveLoading || ( !amintApproveError && amintTransactionLoading) ? "w-[100%] px-6 py-6" : "bg-gray-100"} `}
+                    className={`${amintApproveLoading || ( !amintApproveError && amintTransactionLoading) ? "w-[100%] px-3 py-3" : "bg-gray-100"} `}
 
                   />
                   <TransactionLoader
-                    heading={"withdraw #3"}
+                    heading={"Withdraw #3"}
                     subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
                     status={borrowWithdrawisLoadingone || borrowWithdrawisLoading ? "Loading" :( !borrowWithdrawtransactionError && isPending)? "Progress" : borrowWithdrawtransactionSuccess && backendWithdrawSuccess ? "Completed" : borrowWithdrawtransactionError ? "Failed" : "Pending"}
-                    className={`${borrowWithdrawisLoadingone || borrowWithdrawisLoading || (!borrowWithdrawtransactionError && isPending)? "w-[100%] px-6 py-6" : "bg-gray-100"} `}
+                    className={`${borrowWithdrawisLoadingone || borrowWithdrawisLoading || (!borrowWithdrawtransactionError && isPending)? "w-[100%] px-3 py-3" : "bg-gray-100"} `}
                   />
                 </div>
               ) :
