@@ -64,6 +64,12 @@ import {
   usePrepareCdsDeposit,
   useUsdtContractApprove,
 } from "@/abiAndHooks";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAccount, useBalance, useChainId, useWaitForTransaction } from "wagmi";
 import { toast } from "sonner";
@@ -72,8 +78,7 @@ import { parseEther, parseUnits } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "../utils/decodeEventLogsFromAbi";
 import Spinner from "@/components/ui/spinner";
-import { PROXY_AMINT_ADDRESS,PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
-
+import { PROXY_AMINT_ADDRESS, PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
 
 
 
@@ -150,6 +155,37 @@ const NewDeposit = () => {
       liquidationGains: false,
     },
   });
+
+  const onWatchAssetAmintClick = async () => {
+    const result = await (window as any).ethereum?.request({
+      method: "wallet_watchAsset",
+      params: {
+        type: "ERC20",
+        options: {
+          address: PROXY_AMINT_ADDRESS,
+          decimals: 6,
+          name: "AMINT",
+          symbol: "AMINT"
+        }
+      }
+    });
+    console.log({ result });
+  };
+  const onWatchAssetUsdtClick = async () => {
+    const result = await (window as any).ethereum?.request({
+      method: "wallet_watchAsset",
+      params: {
+        type: "ERC20",
+        options: {
+          address: PROXY_TESTUSDT_ADDRESS,
+          decimals: 6,
+          name: "TUSDT",
+          symbol: "TUSDT"
+        }
+      }
+    });
+    console.log({ result });
+  };
 
 
 
@@ -230,10 +266,10 @@ const NewDeposit = () => {
           },
           { duration: 5000 }
         );
-  
+
         // setOpen(false);
       },
-  
+
       // Handle success and show a custom toast notification
       onSuccess: (data) => {
         toast.custom(
@@ -267,7 +303,7 @@ const NewDeposit = () => {
 
   // get total index from CDS contract and store it in totalCDSIndex
   const { data: totalCDSIndex } = useQuery({
-    queryKey: ["totalCDSIndex",open],
+    queryKey: ["totalCDSIndex", open],
     queryFn: () => getCDSTotalIndex(address ? address : undefined),
     enabled: !!address,
     staleTime: 10 * 1000,
@@ -288,7 +324,7 @@ const NewDeposit = () => {
     );
   }
 
-  const { mutate ,isPending } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: storeToCDSBackend,
     onError(error) {
       // Log any errors that occur during the mutation
@@ -342,7 +378,7 @@ const NewDeposit = () => {
       aprAtDeposit: 5,
       lockingPeriod: Number(lockIn),
       optedForLiquidation: liquidationGains,
-      liquidationAmount: `${liquidationGains?liqAmnt:'0'}`,
+      liquidationAmount: `${liquidationGains ? liqAmnt : '0'}`,
       depositVal: Number(depositVal.current),
     });
 
@@ -365,7 +401,7 @@ const NewDeposit = () => {
     if (!response.ok) {
       throw new Error(result.message);
     }
-    
+
     form.reset();
     // Return the result
     return result;
@@ -583,7 +619,7 @@ const NewDeposit = () => {
 
 
 
-  const { data: amintTransactionAllowed ,isLoading:isAmintTransactionLoading } = useWaitForTransaction({
+  const { data: amintTransactionAllowed, isLoading: isAmintTransactionLoading } = useWaitForTransaction({
     // TODO: Add OnError Custom Toast
     onError(error) {
       toast.custom(
@@ -646,8 +682,8 @@ const NewDeposit = () => {
    * @param {typeof formSchema.current} values - The values submitted in the form.
    */
   function onSubmit(values: z.infer<typeof formSchema.current>) {
-    if(usdtAmountDepositedTillNow>=usdtLimit){
-      if(amintAmnt==undefined || amintAmnt==0){
+    if (usdtAmountDepositedTillNow >= usdtLimit) {
+      if (amintAmnt == undefined || amintAmnt == 0) {
         toast.custom(
           (t) => {
             toastId.current = t;
@@ -800,32 +836,32 @@ const NewDeposit = () => {
   }, [cdsDepositSuccess]);
 
   useEffect(() => {
-    console.log(usdtAmountDepositedTillNow,usdtLimit)
+    console.log(usdtAmountDepositedTillNow, usdtLimit)
     let amint = form.watch("AmintDepositAmount") ?? 0;
     let usdt = form.watch("USDTDepositAmount") ?? 0;
-    if(usdtAmountDepositedTillNow>=usdtLimit){
-        if(form.getValues("AmintDepositAmount")!=undefined && amint<500){
+    if (usdtAmountDepositedTillNow >= usdtLimit) {
+      if (form.getValues("AmintDepositAmount") != undefined && amint < 500) {
         form.setError("AmintDepositAmount", {
           type: "manual",
           message: "Amint Amount must be greater than 500",
         });
       }
-      else{
+      else {
         form.clearErrors("AmintDepositAmount");
       }
-      if(usdt>(((100/80)*amint)-amint)){
+      if (usdt > (((100 / 80) * amint) - amint)) {
         form.setError("USDTDepositAmount", {
           type: "manual",
           message: "USDT Amount must be less than or equal to 80% of Amint Amount",
         });
       }
-      else{
+      else {
         form.clearErrors("USDTDepositAmount");
       }
-      
+
     }
 
-  },[form.watch("USDTDepositAmount"),form.watch("AmintDepositAmount")])
+  }, [form.watch("USDTDepositAmount"), form.watch("AmintDepositAmount")])
 
 
   return (
@@ -848,13 +884,13 @@ const NewDeposit = () => {
           </p>
         </Button> */}
 
-        <Dialog open={open || isLoading || isPending }  modal={true}>
+        <Dialog open={open || isLoading || isPending} modal={true}>
           <DialogTrigger asChild>
             <Button
               variant={"primary"}
               size={"full"}
               className="flex gap-[10px] items-center justify-center min-w-[150px]"
-              onClick={()=>setOpen(!open)}
+              onClick={() => setOpen(!open)}
             >
               <Image
                 src={addIcon}
@@ -880,7 +916,7 @@ const NewDeposit = () => {
                       variant={"ghostOutline"}
                       size={"primary"}
                       className="flex gap-[10px] border border-borderGrey "
-                      onClick={()=>setOpen(!open)}
+                      onClick={() => setOpen(!open)}
 
                     >
                       <Cross2Icon className="w-4 h-4" />
@@ -896,17 +932,21 @@ const NewDeposit = () => {
                     Make a New Deposit
                   </DialogTitle>
                 </DialogHeader>
-                <div className="flex flex-col min-[1440px]:pt-[30px] 2dppx:pt-[15px] pt-[15px] min-[1440px]:gap-[20px] 2dppx:gap-[10px] min-[1280px]:gap-[16px] gap-[10px]">
+                <div className="flex flex-col min-[1440px]:pt-[10px] 2dppx:pt-[15px] pt-[10px] min-[1440px]:gap-[20px] 2dppx:gap-[10px] min-[1280px]:gap-[16px] gap-[10px]">
                   <div className="flex flex-col md:flex-row gap-[10px] items-center w-full justify-between ">
                     <FormField
                       control={form.control}
                       disabled={
                         usdtAmountDepositedTillNow < usdtLimit ? true : false
                       }
-                      
+
                       name="AmintDepositAmount"
                       render={({ field }) => (
                         <FormItem className="w-full md:w-[48%]">
+                          <div className="flex items-center justify-end gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
+                            <a type="button" onClick={onWatchAssetAmintClick} className="m-0 text-[12px] underline rounded-md ">Add AMINT</a>
+                          </div>
                           <FormControl>
                             <div className="relative">
                               <div className="relative">
@@ -920,14 +960,14 @@ const NewDeposit = () => {
                                   value={field.value ?? ""}
                                   min={500}
                                 ></Input>
-                               
+
                                 <label
                                   htmlFor="amount_of_amint"
                                   className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                                 >
                                   Deposit AMINT
                                 </label>
-                
+
                               </div>
                               <div className="absolute top-0 right-0 flex items-center h-full">
                                 <Button
@@ -952,22 +992,31 @@ const NewDeposit = () => {
                                       : null;
                                   }}
                                 >
-                                  {isAmintApproveLoading? (
+                                  {isAmintApproveLoading ? (
                                     <Spinner className="w-5 h-5" />
-                                  ):("Approve")}
-                                  
+                                  ) : ("Approve")}
+
                                 </Button>
                               </div>
                             </div>
                           </FormControl>
-                              <span className=" block text-[10px] text-right mr-1">bal. {amintbal?.formatted.slice(0, 8)} AMINT</span>
+                          <span className=" block text-[10px] text-right mr-1">bal. {amintbal?.formatted.slice(0, 8)} AMINT</span>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                    
+
                     <PlusIcon width={16} height={16} />
                     <div className="flex flex-col  w-full  md:w-[48%] gap-[10px]">
+                    <div className="flex items-center justify-end gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
+
+                      <a type="button" onClick={onWatchAssetUsdtClick} className="m-0 text-[12px] underline ">Add TUSDT</a>
+
+                      <a href={`https://sepolia.etherscan.io/address/${PROXY_TESTUSDT_ADDRESS}`}  className="m-0 text-[12px] underline " target="_blank">
+                        Mint TUSDT
+                      </a>
+                      </div>
                       <FormField
                         control={form.control}
                         name="USDTDepositAmount"
@@ -1001,12 +1050,12 @@ const NewDeposit = () => {
                                 </div>
 
                                 <div className="absolute top-0 right-0 flex items-center justify-between h-full">
-                                  
+
                                   {usdtAmountDepositedTillNow >= usdtLimit && (
                                     <div
                                       className="text-xs cursor-pointer"
                                       onClick={() => {
-                                        form.setValue("USDTDepositAmount", (100/80*(form.getValues("AmintDepositAmount")??0) - (form.getValues("AmintDepositAmount")??0)));
+                                        form.setValue("USDTDepositAmount", (100 / 80 * (form.getValues("AmintDepositAmount") ?? 0) - (form.getValues("AmintDepositAmount") ?? 0)));
                                       }}
                                     >
                                       Max
@@ -1091,15 +1140,15 @@ const NewDeposit = () => {
                                     }}
                                   >
                                     {usdtApproveLoading ? (
-                                    <Spinner className="w-5 h-5" />
-                                  ):("Approve")}
+                                      <Spinner className="w-5 h-5" />
+                                    ) : ("Approve")}
                                   </Button>
                                 </div>
                               </div>
                             </FormControl>
                             <span className=" block text-[10px] text-right mr-1">bal. {usdtbal?.formatted.slice(0, 8)} USDT</span>
                             <FormMessage />
-                            
+
                           </FormItem>
                         )}
                       />
@@ -1187,14 +1236,14 @@ const NewDeposit = () => {
 
                     </div>
                   </div>
-                    <div className="flex gap-[10px] items-center">
+                  <div className="flex gap-[10px] items-center">
                     <div className="flex items-center ml-[4px]">
                       <InfoCircledIcon width={18} height={18} />
                     </div>
                     <p className="min-[1440px]:text-base 2dppx:text-xs text-sm font-normal text-textGrey text-center leading-none">
-                      Minimum {usdtAmountDepositedTillNow < usdtLimit ? "USDT":"AMINT" } Amount is{" "}
+                      Minimum {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"} Amount is{" "}
                       <span className="font-medium text-textHighlight">
-                        500 {usdtAmountDepositedTillNow < usdtLimit ? "USDT":"AMINT" }
+                        500 {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"}
                       </span>
                     </p>
                   </div>
@@ -1318,16 +1367,17 @@ const NewDeposit = () => {
                     <></>
                   )}
 
+
                   <Button
                     type="submit"
                     variant={"primary"}
                     className="text-white"
                     //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                     disabled={
-                      (usdtAmountDepositedTillNow < usdtLimit && !usdtApproved) || isCdsDepositLoading 
+                      (usdtAmountDepositedTillNow < usdtLimit && !usdtApproved) || isCdsDepositLoading
                     }
                   >
-                    {isCdsDepositLoading || isPending || isLoading ?<Spinner />:'Confirm Deposit'}
+                    {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}
                   </Button>
                 </div>
               </form>

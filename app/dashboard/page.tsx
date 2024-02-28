@@ -149,7 +149,8 @@ const page = () => {
       lockedValues[0].value = totalStable ? formatNumber((Number(totalStable) / 10 ** 6) + (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100))))) : "0";
       lockedValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
       lockedValues[2].value = totalStable ? formatNumber(Number(formatEther((totalValueLocked * ethPrice) / BigInt(100)))) : "0";
-      console.log(totalValueLocked , ethPrice)
+
+      console.log(Number(formatEther((totalValueLocked * ethPrice) / BigInt(100))),Number(cdsPool/BigInt(10**6)) )
 
       RatioValues[0].value = ratioData == undefined ? "-" : (ratioData).toFixed(2);
       RatioValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
@@ -210,7 +211,7 @@ const page = () => {
                         <p className="font-medium text-3xl text-[#0F46E9]">{RatioValues[5].value}%</p>
                       </div>
                     </div>
-                    <div className="w-full lg:h-full h-40">
+                    <div className="w-full h-40 lg:h-full">
                       <RatioPieChart collaterals={RatioValues[4].value} dcds={RatioValues[5].value} />
                     </div>
                   </div>

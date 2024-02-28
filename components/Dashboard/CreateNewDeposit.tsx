@@ -140,6 +140,21 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     retry: 4,
   });
 
+  const onWatchAssetAmintClick = async () => {
+    const result = await (window as any).ethereum?.request({
+      method: "wallet_watchAsset",
+      params: {
+        type: "ERC20",
+        options: {
+          address: PROXY_AMINT_ADDRESS,
+          decimals: 6,
+          name: "AMINT",
+          symbol: "AMINT"
+        }
+      }
+    });
+    console.log({ result });
+  };
 
 
 
@@ -511,6 +526,10 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                   Make a New Deposit
                 </DialogTitle>
               </DialogHeader>
+              <div className="flex items-center justify-end gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
+                            <a type="button" onClick={onWatchAssetAmintClick} className="m-0 text-[12px] underline rounded-md ">Add AMINT</a>
+                          </div>
               <div className="flex flex-col min-[1440px]:pt-[30px] pt-[15px] min-[1440px]:gap-[20px] min-[1280px]:gap-[16px] 2dppx:gap-[10px] gap-[10px]">
                 <FormField
                   control={form.control}

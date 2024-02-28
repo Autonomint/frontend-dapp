@@ -18,11 +18,14 @@ import displayNumberWithPrecision from "@/app/utils/precision";
 import { useAccount, useChainId } from "wagmi";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import Link from "next/link";
+import JSBI from 'jsbi'
+import { TickMath, FullMath } from '@uniswap/v3-sdk'
+import { useContractRead } from "wagmi";import { Pool_Abi } from "@/constants/Pool";
 
 const headerItems = [
   {
     headline: "AMINT Price",
-    value: "$1.000",
+    value: "-",
     tooltip: false,
     tooltipText: "",
   },
@@ -112,6 +115,9 @@ const NavBar = () => {
   //   enabled: !!address,
   // });
   //getting ltv from Borrowing Contract
+ 
+
+
   const { data: ltv } = useBorrowingContractGetLtv({
     enabled: !!address,
   });
@@ -128,6 +134,31 @@ const NavBar = () => {
   const { data: ethPrice } = useBorrowingContractGetUsdValue({
     enabled: !!address,
   });
+  const { data, isError, isLoading } =  useContractRead({
+    address: '0x09732eef05D41773c3fFF7385E30D35605111f8F',
+    abi: Pool_Abi,
+    functionName: 'slot0',
+    chainId: 11155111,
+  })
+  function getAmintPrice() {
+    if(!isLoading && data != undefined && ethPrice != undefined){
+      const inputAmount = 1;
+      const baseTokenDecimals = 6;
+      const quoteTokenDecimals = 18;
+      const sqrtRatioX96 = TickMath.getSqrtRatioAtTick(data[1])
+      const ratioX192 = JSBI.multiply(sqrtRatioX96, sqrtRatioX96)
+      
+      const baseAmount = JSBI.BigInt( inputAmount * (10 ** baseTokenDecimals))
+      
+      const shift = JSBI.leftShift( JSBI.BigInt(1), JSBI.BigInt(192))
+      
+      const quoteAmount = FullMath.mulDivRoundingUp(ratioX192, baseAmount, shift)
+      return formatNumber((Number(quoteAmount.toString()) / (10**quoteTokenDecimals)) *Number(ethPrice/BigInt(100)));
+      
+    }
+  }
+
+
   //managing state for headerItems and headerItems2nd
   const [updatedHeaderItems, setUpdatedHeaderItems] = useState(headerItems);
   const [updatedHeaderItems2nd, setUpdatedHeaderItems2nd] =
@@ -141,9 +172,12 @@ const NavBar = () => {
       (res) => res.json()
     )
     console.log(totalAmintSupply)
+    console.log("find" ,!isLoading)
    
-    if (totalAmintSupply) {
+    if (totalAmintSupply && !isLoading) {
+      console.log("find" ,isLoading)
       const updatedData = [...updatedHeaderItems];
+      updatedData[0].value = `$${getAmintPrice()}`;
       updatedData[2].value = `${formatNumber(Number(totalAmintSupply) / 10 ** 6)}`;
       updatedData[4].value = `${5}%`;
       updatedData[5].value = `${data[1] == undefined ? 0 : (parseFloat(data[1]) / 10 ** 6).toFixed(2)}`;

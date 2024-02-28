@@ -30,7 +30,7 @@ const Charts: React.FC<{ height?:number,title:string }> = ({ height=400,title })
       try {
       const res = await fetch(`${BACKEND_API_URL}/borrows/chart/${title}/11155111/${time}/No`);
       const data = await res.json();
-      console.log(title,data)
+      data.reverse()
       setChartData(data)
       } catch (error) {
         console.log(error)
