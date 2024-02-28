@@ -62,6 +62,7 @@ import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 import { watch } from "fs";
 import Spinner from "../ui/spinner";
+import { PROXY_AMINT_ADDRESS } from "@/constants/Addresses";
 
 const formSchema = z.object({
   collateral: z.string(),

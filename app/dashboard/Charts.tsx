@@ -13,6 +13,9 @@ const AmintData =[
 const AbondData =[
   "4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0","4.0",
 ]
+const BorrowData =[
+  "5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5","5"
+]
 
 
 const Charts: React.FC<{ height?:number,title:string }> = ({ height=400,title }) => {
@@ -25,6 +28,9 @@ const Charts: React.FC<{ height?:number,title:string }> = ({ height=400,title })
     }
     else if(title==="ABOND"){
       setChartData(AbondData)
+    }
+    else if(title==="borrowingFees"){
+      setChartData(BorrowData)
     }
     else{
       try {
