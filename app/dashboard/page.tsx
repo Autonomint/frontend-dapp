@@ -69,7 +69,7 @@ const RatioValues = [
 const abondValues = [
   {
     headline: "Price",
-    value: "-",
+    value: "$4",
   },
   {
     headline: "Total Supply",
