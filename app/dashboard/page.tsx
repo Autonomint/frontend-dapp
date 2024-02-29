@@ -146,9 +146,9 @@ const page = () => {
       amintValues[2].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
 
 
-      lockedValues[0].value = totalStable ? formatNumber((Number(totalStable) / 10 ** 6) + (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100))))) : "0";
+      lockedValues[0].value = totalStable ? formatNumber((Number(totalStable) / 10 ** 6) + (Number(formatEther(ethLocked / BigInt(100))))) : "0";
       lockedValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
-      lockedValues[2].value = totalStable ? formatNumber(Number(formatEther((totalValueLocked * ethPrice) / BigInt(100)))) : "0";
+      lockedValues[2].value = totalStable ? formatNumber(Number(formatEther((ethLocked ) / BigInt(100)))) : "0";
 
       console.log(Number(formatEther((totalValueLocked * ethPrice) / BigInt(100))),Number(cdsPool/BigInt(10**6)) )
 
@@ -156,8 +156,8 @@ const page = () => {
       RatioValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
       RatioValues[2].value = cdsPool ? formatNumber(Number(cdsPool/BigInt(10**6))) : "0";
       RatioValues[3].value = (Number(cdsPool/BigInt(10**6)) - (Number(totalStable) / 10 ** 6)).toFixed(2);
-      const total = (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))) + (Number(totalStable) / 10 ** 6);
-      RatioValues[4].value = (((Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100)))) / total) * 100).toFixed(1);
+      const total = (Number(formatEther(ethLocked / BigInt(100)))) + (Number(totalStable) / 10 ** 6);
+      RatioValues[4].value = (((Number(formatEther(ethLocked/ BigInt(100)))) / total) * 100).toFixed(1);
       RatioValues[5].value = (((Number(totalStable) / 10 ** 6) / total) * 100).toFixed(1);
 
       FeesValues[0].value = `${feeOptions[1] == undefined ? 0 : (parseFloat(feeOptions[1]) / 10 ** 6).toFixed(2)}`;
