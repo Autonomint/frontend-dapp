@@ -298,6 +298,61 @@ const NewDeposit = () => {
       },
     }
   );
+
+  const { data: usdtTransactionAllowed, isLoading: usdtTransactionLoading } = useWaitForTransaction({
+    // TODO: Add OnError Custom Toast
+    onError(error) {
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                key={2}
+                props={{
+                  t,
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! ${error.name}`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 5000 }
+      );
+
+      // setOpen(false);
+    },
+    // look for approval transaction hash
+    hash: usdtApproveData?.hash,
+    // Display a custom toast notification
+    onSuccess() {
+      toast.custom(
+        (t) => {
+          return (
+            <div>
+              <CustomToast
+                props={{
+                  t,
+                  toastMainColor: "#268730",
+                  headline: "Amint Approved,Plz Confirm Deposit Now",
+                  transactionHash: amintApproveData?.hash,
+                  linkLabel: "View Transaction",
+                  toastClosebuttonHoverColor: "#90e398",
+                  toastClosebuttonColor: "#57C262",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 5000 }
+      );
+    },
+  });
+
+
   console.log("usdtApproveData", usdtApproveData, usdtApproved);
 
 
@@ -530,7 +585,7 @@ const NewDeposit = () => {
 
       // Retrieve the relevant data from the transaction logs
       const dataLogs =
-        chainId === 5 ? data.logs[2].data : data.logs[2].data;
+        chainId === 5 ? data.logs[data.logs.length-1].data : data.logs[data.logs.length-1].data;
       // Decode event logs using the provided ABI and event name
 
       const { eventName, args } = decodeEventLogsFromAbi(
@@ -561,6 +616,7 @@ const NewDeposit = () => {
     write: amintApprove,  // Function to initiate the approve request
     data: amintApproveData,  // Data returned from the approve request
     reset: amintReset,  // Function to reset the approve request state
+    isSuccess: amintApproved,  // Flag to indicate if the approve request is successful
   } = useAmintApprove({
     // Handle error and show a custom toast notification
     onError(error) {
@@ -609,7 +665,7 @@ const NewDeposit = () => {
             </div>
           );
         },
-        { duration: Infinity }
+        { duration: 5000 }
       );
       //closing sheet so that user can click on the links from the toast
       // setOpen(false);
@@ -667,7 +723,7 @@ const NewDeposit = () => {
             </div>
           );
         },
-        { id: toastId.current }
+        { duration: 5000 }
       );
     },
   });
@@ -992,7 +1048,7 @@ const NewDeposit = () => {
                                       : null;
                                   }}
                                 >
-                                  {isAmintApproveLoading ? (
+                                  {isAmintApproveLoading || isAmintTransactionLoading ? (
                                     <Spinner className="w-5 h-5" />
                                   ) : ("Approve")}
 
@@ -1139,7 +1195,7 @@ const NewDeposit = () => {
                                         : null;
                                     }}
                                   >
-                                    {usdtApproveLoading ? (
+                                    {usdtApproveLoading || usdtTransactionLoading ? (
                                       <Spinner className="w-5 h-5" />
                                     ) : ("Approve")}
                                   </Button>
@@ -1374,7 +1430,7 @@ const NewDeposit = () => {
                     className="text-white"
                     //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                     disabled={
-                      (usdtAmountDepositedTillNow < usdtLimit && !usdtApproved) || isCdsDepositLoading
+                      !amintApproved || (usdtAmountDepositedTillNow < usdtLimit && !usdtApproved) || isCdsDepositLoading
                     }
                   >
                     {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}

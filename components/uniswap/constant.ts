@@ -5,7 +5,7 @@ export const TokensOption:TokenOptionType = {
   "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": [
     11155111,
     "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
-    6,
+    18,
     "USDC",
     "USD//C"
   ],
