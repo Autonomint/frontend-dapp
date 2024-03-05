@@ -10,7 +10,7 @@ import Profile from "./Profile";
 import metamask from "@/app/assets/metamask.svg";
 import { useSelectedLayoutSegment } from "next/navigation";
 import Link from "next/link";
-import { useChainId, useSwitchNetwork } from "wagmi";
+import { useAccount, useChainId, useSwitchNetwork } from "wagmi";
 import {
   Dialog,
   DialogClose,
@@ -41,19 +41,27 @@ const navItemsList = [
     href: "dashboard",
     targetSegment: "dashboard",
   },
+  // {
+  //   image: dashboard,
+  //   label: "Redeem",
+  //   href: "redeem",
+  //   targetSegment: "redeem",
+  // },
 ];
 const SideBar = () => {
   const segment = useSelectedLayoutSegment();
   const chainId = useChainId();
   const [open, setOpen] = React.useState(false);
   const [openMenu, setOpenMenu] = React.useState(false);
-  const { chains, error, isLoading, pendingChainId, switchNetwork } =
-    useSwitchNetwork();
+  const {switchNetwork } = useSwitchNetwork();
+  const {isConnected} = useAccount()
+
   useEffect(() => {
-    if (chainId != 5 && chainId != 11155111) {
+    if (isConnected && chainId != 11155111) {
       setOpen(true)
     }
-  }, []);
+  }, [isConnected]);
+  
   return (
     <nav className="h-[100vh] md:min-w-[120px] basis-0 md:basis-[15%] xl:basis-[10%] md:px-[10px] py-2 sm:py-[10px] lg:py-[20px] xl:py-[30px]  bg-bgGrey flex flex-col items-center justify-between">
       <button onClick={()=>setOpenMenu(true)} className=" absolute top-1 right-2 w-[2.5rem] h-[2.5rem] rounded-md border p-2 md:hidden">
@@ -111,17 +119,15 @@ const SideBar = () => {
             <div>
               <Button
                 variant={"primary"}
-                onClick={() => switchNetwork && switchNetwork(5)}
+                onClick={() => switchNetwork && switchNetwork(11155111)}
                 className="px-5 py-3 text-white"
               >
-                Switch to Goerli
+                Switch to Sepolia
               </Button>
             </div>
           </DialogContent>
 
         </Dialog>
-
-
       </div>
     </nav>
   );

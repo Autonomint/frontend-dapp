@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import useSwap from './getSwap';
 import Spinner from '../ui/spinner';
-
+import swap_horiz from '@/app/assets/swap_horiz.svg'
+import Image from 'next/image';
 type OptionValueType = { [key: string]: string };
 
 function debounce<T extends (...args: any[]) => void>(func: T, delay: number) {
@@ -49,7 +50,7 @@ const Swap = () => {
     const computeQuote = debounce(async () => {
 
         const quote = await quotecall(parseFloat(inputAmount));
-        setOutputAmount(parseFloat(quote));
+        // setOutputAmount(parseFloat(quote));
         setLoader(false);
     }, 1000)
 
@@ -70,13 +71,13 @@ const Swap = () => {
     }
 
     return (
-        <div className="flex justify-center align-middle ">
-            <div className='w-full' >
-                
-                <div className='p-5 m-2 bg-[#F4F8FF] rounded-md shadow-sm flex flex-col' >
-                    <label className='text-[12px] text-gray-700'>you pay</label>
-                    <div className="flex justify-between">
-                        <input className='border-none focus:outline-none bg-[#F4F8FF] text-xl' type="text" value={inputAmount} placeholder='Input Amount' onChange={handleInputChange} />
+        <div className="justify-center align-middle ">
+            <div className='flex w-full ' >
+
+                <div className='flex flex-col w-full gap-2 p-5 rounded-md shadow-sm' >
+                    <label className='text-[12px] text-gray-700'>From :</label>
+                    <div className="flex flex-col justify-between gap-5">
+                        <input className='p-2 text-xl border-2 rounded-md' type="text" value={inputAmount} placeholder='Input Amount' onChange={handleInputChange} />
                         <select
                             className=' bg-[#F4F8FF] text-md p-3 border border-blue-500 rounded-md'
                             value={selectedInputOption}
@@ -90,13 +91,18 @@ const Swap = () => {
                         </select>
                     </div>
                 </div>
+                <div className='flex items-center'>
+                    <div className='flex items-center justify-center w-12 h-12 '>
+                        <Image src={swap_horiz} alt='swap' />
+                    </div>
+                </div>
 
-                <div className='p-5 m-2 bg-[#F4F8FF] rounded-md shadow-sm flex flex-col'>
-                    <label className='text-[12px] text-gray-700'>you get</label>
-                    <div  className="flex justify-between">
+                <div className='flex flex-col w-full gap-2 p-5 rounded-md shadow-sm'>
+                    <label className='text-[12px] text-gray-700'>To :</label>
+                    <div className="flex flex-col justify-between gap-5">
                         {
-                            loader ? <Spinner /> :(
-                        <input className='border-none focus:outline-none bg-[#F4F8FF] text-xl' type="text" value={outputAmount} placeholder='Output Amount' readOnly />
+                            loader ? <Spinner /> : (
+                                <input className='p-2 text-xl border-2 rounded-md ' type="text" value={outputAmount} placeholder='Output Amount' readOnly />
 
                             )
                         }
@@ -114,13 +120,13 @@ const Swap = () => {
                     </div>
                 </div>
 
-                <div className='flex justify-center'>
+            </div>
+            <div className='flex justify-center w-full'>
 
-                    <button className='w-[200px] m-3 p-3 border rounded-full text-white' style={{ backgroundImage: 'linear-gradient(180deg, #00679F 0%, #041A50 100%)' }} onClick={computeSwap}>
-                        <p className='font-bold'>Swap</p>
-                    </button>
+                <button className='w-full p-3 m-3 text-white border rounded-full ' style={{ backgroundImage: 'linear-gradient(180deg, #00679F 0%, #041A50 100%)' }} onClick={computeSwap}>
+                    <p className='font-bold'>Swap</p>
+                </button>
 
-                </div>
             </div>
         </div>
     )

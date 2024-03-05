@@ -57,6 +57,15 @@ type calculateData = {
     ethPrice: string;
   };
 
+
+//   usdt present in the pool
+//  amint present in the pool
+// eth price at deposit
+// bucket design for the deposit
+// 
+// adress colateral ration usdt eth amount redeem time
+// amint abound redeem 
+// amint - usdt && abond - eth
 const AmintDepositRow = ({ details, handleSheetOpenChange,
     sheetOpen,
     handleRefetch }: {

@@ -140,21 +140,15 @@ const NavBar = () => {
     functionName: 'slot0',
     chainId: 11155111,
   })
+
   function getAmintPrice() {
-    if(!isLoading && data != undefined && ethPrice != undefined){
-      const inputAmount = 1;
-      const baseTokenDecimals = 6;
-      const quoteTokenDecimals = 18;
-      const sqrtRatioX96 = TickMath.getSqrtRatioAtTick(data[1])
-      const ratioX192 = JSBI.multiply(sqrtRatioX96, sqrtRatioX96)
-      
-      const baseAmount = JSBI.BigInt( inputAmount * (10 ** baseTokenDecimals))
-      
-      const shift = JSBI.leftShift( JSBI.BigInt(1), JSBI.BigInt(192))
-      
-      const quoteAmount = FullMath.mulDivRoundingUp(ratioX192, baseAmount, shift)
-      return formatNumber((Number(quoteAmount.toString()) / (10**quoteTokenDecimals)) *Number(ethPrice/BigInt(100)));
-      
+    if(!isLoading && data != undefined ){
+      const Decimal0 = 6;
+      const Decimal1 = 18;
+      const sqrtPriceX96 = Number(data[0]);
+      const buyOneOfToken0 = ((sqrtPriceX96 / 2**96)**2) / (Number((10**Decimal1 / 10**Decimal0).toFixed(Decimal1)));
+      const buyOneOfToken1 = Number((1 / Number(buyOneOfToken0))).toFixed(Decimal0);
+      return formatNumber(Number(buyOneOfToken0) * Number(buyOneOfToken1));
     }
   }
 

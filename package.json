@@ -26,6 +26,7 @@
     "@uniswap/sdk-core": "^4.0.10",
     "@uniswap/smart-order-router": "^3.21.0",
     "@uniswap/v3-sdk": "^3.10.2",
+    "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "d3-shape": "^3.2.0",

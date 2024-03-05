@@ -166,6 +166,8 @@ const useSwap = (fromTokenAddress: string, toTokenAddress: string) => {
         amountOutMinimum: 0,
         sqrtPriceLimitX96: 0
       };
+      
+      console.log(params)
 
       const txn = await routerContract.exactInputSingle.populateTransaction(params);
       const signedTxn = await browserExtensionProvider?.send('eth_sendTransaction', [{ ...txn, from: address }]);
