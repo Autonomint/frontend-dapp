@@ -230,7 +230,7 @@ const page = () => {
     <>
       {/* Main area */}
       {/* Check if wallet is connected and render dashboard otherwise render connect wallet Component */}
-      {isConnected ? (
+      {isConnected? (
         <div className="relative p-6 rounded-[10px] bg-white  dark:bg-slate-950 dark:border shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
           <ProductList></ProductList>
           <Divider />
