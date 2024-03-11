@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image';
 import serverMaintananace from '@/app/assets/serverMaintanance.png';
-const page=()=> {
+const ServerStatus=()=> {
   return (
     <div className="relative p-6  rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
         <div className='flex flex-col items-center justify-center text-center align-middle'>
@@ -14,4 +14,4 @@ const page=()=> {
     </div>
   )
 }
-export default page;
+export default ServerStatus;

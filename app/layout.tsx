@@ -9,6 +9,7 @@ import WalletProvider from "@/providers/WalletProvider";
 import NavBar from "@/components/NavBar/NavBar";
 import QueryProvider from "@/providers/QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ServerStatus from "@/components/server_status/ServerStatus";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -34,7 +35,8 @@ export default function RootLayout({
                 <SideBar />
                 <div className="h-full w-full basis-full md:basis-[90%] px-1 mx-0  flex flex-col lg:pb-4 xl:pb-6  xl:pr-6 lg:pr-4">
                   <NavBar />
-                  {children}
+                  <ServerStatus/>
+                  {/* {children} */}
                 </div>
                 <ReactQueryDevtools
                   buttonPosition="top-left"
