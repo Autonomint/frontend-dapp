@@ -31,7 +31,7 @@ const headerItems = [
   },
   {
     headline: "ABOND Price",
-    value: "$4.000",
+    value: "-",
     tooltip: false,
     tooltipText: "",
   },
@@ -191,7 +191,7 @@ const NavBar = () => {
 
   //calling handleNavItems() every time the values of `totalAmintSupply`, `currentApy`, `ltv`, `totalCdsAmount`, `ethPrice`, and `totalValueLocked` changes
   useEffect(() => {
-    handleNavItems();
+    // handleNavItems();
   }, [ltv, totalAmintSupply, totalValueLocked, ethPrice]);
 
   return (
