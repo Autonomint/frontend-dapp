@@ -9,7 +9,6 @@ import WalletProvider from "@/providers/WalletProvider";
 import NavBar from "@/components/NavBar/NavBar";
 import QueryProvider from "@/providers/QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ThemeProvider } from "@/components/ThemeProvider/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -31,12 +30,7 @@ export default function RootLayout({
         <main className="relative flex w-full h-auto md:left-0">
           <QueryProvider>
             <WalletProvider>
-            {/* <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          > */}
+
                 <SideBar />
                 <div className="h-full w-full basis-full md:basis-[90%] px-1 mx-0  flex flex-col lg:pb-4 xl:pb-6  xl:pr-6 lg:pr-4">
                   <NavBar />
@@ -46,7 +40,6 @@ export default function RootLayout({
                   buttonPosition="top-left"
                   initialIsOpen={false}
                   />
-                  {/* </ThemeProvider> */}
             </WalletProvider>
           </QueryProvider>
 
