@@ -14,7 +14,7 @@ const ConnectWallet = () => {
     connector: new InjectedConnector(),
   });
   return (
-    <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] w-full  flex flex-col gap-[30px] flex-1 items-center justify-center min-h-[90vh] md:min-h-[80vh] self-stretch overflow-hidden">
+    <div className="relative p-6 rounded-[10px] bg-white dark:bg-slate-950 dark:border shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] w-full  flex flex-col gap-[30px] flex-1 items-center justify-center min-h-[90vh] md:min-h-[80vh] self-stretch overflow-hidden">
       <div
         className={`absolute w-[1733.078px] rotate-[14deg] h-[1108.473px] z-0 rounded-xl shrink-0`}
       >

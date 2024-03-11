@@ -212,7 +212,7 @@ const WalletOrContent = () => {
   return (
     <>
       {isConnected ? (
-        <div className="relative p-2 xl:p-6 sm:p-2 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full min-h-[90vh] md:min-h-[82vh]">
+        <div className="relative p-2 xl:p-6 sm:p-2 rounded-[10px] bg-white  dark:bg-slate-950 dark:border shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full min-h-[90vh] md:min-h-[82vh]">
           
           <div className="z-10 flex flex-row flex-wrap items-center justify-between w-full gap-1 mt-3 sm:gap-2 lg:gap-4 xl:gap-7 lg:flex-nowrap">
             {dashboardStats.map((item, index) => (

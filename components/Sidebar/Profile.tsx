@@ -14,8 +14,8 @@ interface Props {
 }
 
 const Profile = ({ props: { image, buttonText } }: Props) => {
-  // const {resolvedTheme,theme, setTheme} = useTheme();
-  // console.log("theme",theme);
+  const {resolvedTheme,theme, setTheme} = useTheme();
+  console.log("theme",theme);
   const { address, isConnected } = useAccount();
   // const { data: ensName } = useEnsName({ address });
   const { disconnect } = useDisconnect();
@@ -24,7 +24,7 @@ const Profile = ({ props: { image, buttonText } }: Props) => {
       {isConnected && (
         <div className="absolute flex flex-col items-center gap-5 bottom-14">
           <div>
-            {/* <Button onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}>{theme=="light"?"light":"dark"}</Button> */}
+            <Button onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}>{theme=="light"?"light":"dark"}</Button>
           </div>
           <div className="relative flex items-center justify-center">
             <NetworkSwitch />

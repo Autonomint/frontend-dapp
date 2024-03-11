@@ -8,6 +8,7 @@ import WalletProvider from "@/providers/WalletProvider";
 import NavBar from "@/components/NavBar/NavBar";
 import QueryProvider from "@/providers/QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ThemeProvider } from "@/providers/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,9 +24,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-bgGrey`}>
+            <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+      <body className={`${inter.className} bg-bgGrey dark:bg-slate-950/80`}>
         {/* <div className="max-w-[1440px] mx-auto"> */}
-        <main className="relative flex w-full h-auto md:left-0">
+        <main className="relative flex w-full h-auto md:left-0 ">
           <QueryProvider>
             <WalletProvider>
               <SideBar />
@@ -49,8 +56,9 @@ export default function RootLayout({
           closeButton={true}
           position="top-center"
           toastOptions={{ style: { zIndex: 999,left:"-30%" } }}
-        />
+          />
       </body>
+          </ThemeProvider>
     </html>
   );
 }

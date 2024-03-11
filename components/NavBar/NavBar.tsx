@@ -196,7 +196,7 @@ const NavBar = () => {
 
   return (
     <div className="flex w-[100%] h-[7vh] md:h-auto">
-      <div className="flex w-full scrollb md:hidden md:w-0 bg-bgGrey">
+      <div className="flex w-full scrollb md:hidden md:w-0 bg-bgGrey dark:bg-slate-950/80">
       <Link href={"/"}>
           <div className="w-[3rem] h-[3rem]">
             <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
@@ -205,7 +205,7 @@ const NavBar = () => {
       </div>
 
 
-      <div className="hidden bg-bgGrey md:flex flex-col min-[1440px]:pb-6 2dppx:pb-1">
+      <div className="hidden bg-bgGrey  dark:bg-slate-950/80 md:flex flex-col min-[1440px]:pb-6 2dppx:pb-1">
         <div className={`flex  px-1 py-3 ${showMore?"h-[200px]":"h-[100px]"} w-full sm:px-2 xl:px-5 xl:py-5 lg:px-4 lg:py-4 flex-wrap`}>
           {headerItems.map((item, index) => (
             <div className="flex w-auto min-w-[80px] lg:min-w-[120px] xl:min-w-[180px] h-[10vh] md:h-[90px] mx-2 pb-4">
