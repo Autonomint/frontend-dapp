@@ -41,12 +41,12 @@ const navItemsList = [
     href: "dashboard",
     targetSegment: "dashboard",
   },
-  // {
-  //   image: dashboard,
-  //   label: "Redeem",
-  //   href: "redeem",
-  //   targetSegment: "redeem",
-  // },
+  {
+    image: dashboard,
+    label: "Redeem",
+    href: "redeem",
+    targetSegment: "redeem",
+  },
 ];
 const SideBar = () => {
   const segment = useSelectedLayoutSegment();

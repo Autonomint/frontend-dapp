@@ -7,9 +7,9 @@ import wallets from "@/app/assets/wallet icons.svg";
 import linkIcon from "@/app/assets/link.svg";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { useConnect } from "wagmi";
-
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 const ConnectWallet = () => {
-  //using useConnect from wagmi hooks
+  const { open } = useWeb3Modal()
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
@@ -21,8 +21,7 @@ const ConnectWallet = () => {
         <Image
           src={heroPattern}
           alt="grid bg"
-          className="w-full h-full"
-          style={{ objectFit: "cover", opacity: 1 }}
+          className="w-full h-full"          style={{ objectFit: "cover", opacity: 1 }}
         ></Image>
       </div>
 
@@ -42,7 +41,7 @@ const ConnectWallet = () => {
         <Button
           variant={"primary"}
           className="flex items-center justify-center gap-[5px]"
-          onClick={() => connect()}
+          onClick={() => open()}
         >
           <p className="text-white bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] text-transparent font-semibold text-base">
             Connect Wallet

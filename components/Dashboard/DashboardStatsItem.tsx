@@ -11,7 +11,7 @@ interface Props {
     subheadingAfter?: string;
     showSubHeading: boolean;
     tokenAddress?: {
-      5: `0x${string}`;
+      11155111: `0x${string}`;
     };
   };
 }

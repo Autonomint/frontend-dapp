@@ -2,15 +2,12 @@ import { Button } from "@/components/ui/button";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import HeaderItems from "@/components/Header/HeaderItems";
 import SideBar from "@/components/Sidebar/SideBar";
-import Image from "next/image";
 import { Toaster } from "sonner";
 import WalletProvider from "@/providers/WalletProvider";
 import NavBar from "@/components/NavBar/NavBar";
 import QueryProvider from "@/providers/QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

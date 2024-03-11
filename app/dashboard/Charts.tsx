@@ -24,9 +24,9 @@ const Charts: React.FC<{ height?:number,title:string }> = ({ height=400,title })
   const [chartData, setChartData] = React.useState<string[]>([]);
   async function changeTime() {
     if(title==="AMINT"){
-      setChartData(AmintData)
+      title = "amintPrice"
     }
-    else if(title==="ABOND"){
+    if(title==="ABOND"){
       setChartData(AbondData)
     }
     else if(title==="borrowingFees"){
@@ -35,6 +35,7 @@ const Charts: React.FC<{ height?:number,title:string }> = ({ height=400,title })
     else{
       try {
       const res = await fetch(`${BACKEND_API_URL}/borrows/chart/${title}/11155111/${time}/No`);
+      console.log("data chart : ", res)
       const data = await res.json();
       data.reverse()
       setChartData(data)
