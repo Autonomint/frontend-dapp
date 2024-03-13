@@ -3,9 +3,7 @@ import { PropsWithChildren } from "react";
 import {
   WagmiConfig,
   configureChains,
-  createConfig,
-  createStorage,
-  sepolia,
+
 } from "wagmi";
 import { polygonMumbai } from "@wagmi/core/chains";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
@@ -14,6 +12,7 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { infuraProvider } from "wagmi/providers/infura";
 import { goerli } from "@wagmi/core/chains";
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
+import { sepolia } from 'viem/chains'
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [goerli,sepolia, polygonMumbai],
   [
@@ -29,28 +28,17 @@ if (!projectId) throw new Error('Project ID is not defined')
 const metadata = {
   name: 'Web3Modal',
   description: 'Web3Modal Example',
-  url: 'http://localhost:3000', // origin must match your domain & subdomain
+  url: 'https://www.dev.testnet.app.autonomint.com/', // origin must match your domain & subdomain
   icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
-// export const noopStorage: any = {
-//   getItem: (key) => "",
-//   setItem: (key, value) => null,
-//   removeItem: (key) => null,
-// };
 
-// const storage = createStorage({
-//   storage: noopStorage,
-// });
-const config = defaultWagmiConfig({
+export const config = defaultWagmiConfig({
   chains: [sepolia],
   projectId, // required
   metadata, 
 
 });
-createWeb3Modal({
-  wagmiConfig: config,
-  projectId,
-})
+
 
 const WalletProvider = ({ children }: PropsWithChildren) => {
   return <WagmiConfig config={config}>{children}</WagmiConfig>;

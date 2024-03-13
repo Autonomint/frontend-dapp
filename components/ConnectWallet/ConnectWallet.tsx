@@ -7,12 +7,18 @@ import wallets from "@/app/assets/wallet icons.svg";
 import linkIcon from "@/app/assets/link.svg";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { useConnect } from "wagmi";
-import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { useWeb3Modal ,createWeb3Modal } from '@web3modal/wagmi/react'
+import { config,projectId } from "@/providers/WalletProvider";
 const ConnectWallet = () => {
-  const { open } = useWeb3Modal()
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
+  createWeb3Modal({
+    wagmiConfig: config,
+    projectId,
+    enableAnalytics: true,
+  })
+  const { open, close } = useWeb3Modal()
+    const onConnect = ()=>{
+      open()
+    }
   return (
     <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] w-full  flex flex-col gap-[30px] overflow-hidden flex-1 items-center justify-center min-h-[90vh] md:min-h-[80vh] self-stretch overflow-hidden">
       <div
@@ -41,7 +47,7 @@ const ConnectWallet = () => {
         <Button
           variant={"primary"}
           className="flex items-center justify-center gap-[5px]"
-          onClick={() => open()}
+          onClick={onConnect}
         >
           <p className="text-white bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] text-transparent font-semibold text-base">
             Connect Wallet
