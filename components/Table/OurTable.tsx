@@ -51,12 +51,12 @@ const DepositAndWithDrawTable = ({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-3 opacity-0 text-textGrey">Id</TableHead>
-          <TableHead className="text-textGrey">ETH Deposited</TableHead>
-          <TableHead className="text-textGrey">Amint minted</TableHead>
-          <TableHead className="text-textGrey">Interest rate</TableHead>
-          <TableHead className="text-textGrey">Abond minted</TableHead>
-          <TableHead className="text-textGrey">Liquidated</TableHead>
+          <TableHead className="w-3 opacity-1 text-textGrey dark:text-[#C4C4C4]">Id</TableHead>
+          <TableHead className="text-textGrey dark:text-[#C4C4C4]">ETH Deposited</TableHead>
+          <TableHead className="text-textGrey dark:text-[#C4C4C4]">Amint minted</TableHead>
+          <TableHead className="text-textGrey dark:text-[#C4C4C4]">Interest rate</TableHead>
+          <TableHead className="text-textGrey dark:text-[#C4C4C4]">Abond minted</TableHead>
+          <TableHead className="text-textGrey dark:text-[#C4C4C4]">Liquidated</TableHead>
         </TableRow>
       </TableHeader>
 
@@ -68,8 +68,6 @@ const DepositAndWithDrawTable = ({
             ))}
           </TableBody>
         
-      
-
       {
         sheetDetails && <Withdraw
           details={sheetDetails}

@@ -35,7 +35,7 @@ const HeaderItems = ({
         )}
       >
         <div className="flex flex-col justify-center min-[1440px]:gap-[20px] 2dppx:gap-2 gap-2">
-          <p className="text-textGrey min-[1440px]:text-base 2dppx:text-sm text-sm font-normal leading-none whitespace-nowrap">
+          <p className="text-textGrey dark:text-[#DEDEDE] min-[1440px]:text-base 2dppx:text-sm text-sm font-normal leading-none whitespace-nowrap">
             {textHeadline}
             {showTooltip && (
           <TooltipProvider>
@@ -53,7 +53,7 @@ const HeaderItems = ({
           
           <h3
             style={{ color: textColor ? textColor : "" }}
-            className="font-medium min-[1440px]:text-[2rem] 2dppx:text-2xl text-xl md:text-2xl leading-none"
+            className="font-medium min-[1440px]:text-[2rem] dark:text-[#DEDEDE] 2dppx:text-2xl text-xl md:text-2xl leading-none"
           >
             {textValue}
           </h3>
@@ -65,7 +65,7 @@ const HeaderItems = ({
           `${
             lastElement
               ? ""
-              : "w-[1px]  bg-lineGrey  2dppx:mx-6 mx-[2px] md:mx-1 xl:mx-3"
+              : "w-[1px]  bg-lineGrey dark:bg-[#5B5B5B]  2dppx:mx-6 mx-[2px] md:mx-1 xl:mx-3"
           }`,
           className
         )}

@@ -29,7 +29,7 @@ const ProductList = () => {
           
           <Button 
            variant={"secondary"}
-          className="flex gap-[10px] items-center justify-center w-full min-w-[150px"
+          className="flex gap-[10px] items-center justify-center w-full min-w-[150px] dark:border dark:border-[#5B5B5B]  dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)]"
             onClick={() => window.open("https://app.uniswap.org/swap", "_blank")}
           >
             <Image src={uniswap} width={32} height={32} alt="uniswap"></Image>
@@ -76,7 +76,7 @@ const ProductList = () => {
 
           <Button
             variant={"secondary"}
-            className="flex gap-[10px] items-center justify-center w-full min-w-[150px]"
+            className="flex gap-[10px] items-center justify-center w-full min-w-[150px] dark:border dark:border-[#5B5B5B] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)]"
             onClick={() => setOpen2(true)}
           >
             <Image src={cake} width={32} height={32} alt="uniswap"></Image>
@@ -84,7 +84,7 @@ const ProductList = () => {
           </Button>
           <Button
             variant={"secondary"}
-            className="flex gap-[10px] items-center justify-center w-full min-w-[150px]"
+            className="flex gap-[10px] items-center justify-center w-full min-w-[150px] dark:border dark:border-[#5B5B5B] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)]"
             onClick={() => setOpen2(true)}
           >
             <Image src={sushi} width={32} height={32} alt="uniswap"></Image>
@@ -93,7 +93,7 @@ const ProductList = () => {
 
           <Button
             variant={"secondary"}
-            className="flex gap-[10px] items-center justify-center w-full min-w-[150px]"
+            className="flex gap-[10px] items-center justify-center w-full min-w-[150px] dark:border dark:border-[#5B5B5B] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)]"
             onClick={() => setOpen2(true)}
           >
             <Image src={snx} width={32} height={32} alt="uniswap"></Image>

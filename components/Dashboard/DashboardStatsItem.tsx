@@ -40,17 +40,17 @@ const DashboardStatsItem = ({
 
 
   return (
-    <div className="p-2 sm:p-2 lg:p-4 min-[1440px]:gap-[20px] 2dppx:gap-2 gap-3 md:gap-1 lg:gap-2 flex flex-col justify-between w-full">
-      <p className="text-textGrey font-normal min-[1440px]:text-[16px] 2dppx:text-sm text-sm whitespace-nowrap leading-none">
+    <div className="p-2 sm:p-2 lg:p-4 min-[1440px]:gap-[20px] 2dppx:gap-2 gap-3 md:gap-1 lg:gap-2 flex flex-col justify-between w-full ">
+      <p className="text-textGrey dark:text-[#DEDEDE] font-normal min-[1440px]:text-[16px] 2dppx:text-sm text-sm whitespace-nowrap leading-none">
         {heading}
       </p>
-      <p className="text-textGrey font-medium min-[1440px]:text-[32px] 2dppx:text-[24px] text-[24px] leading-none">
+      <p className="text-textGrey dark:text-[#DEDEDE] font-medium min-[1440px]:text-[32px] 2dppx:text-[24px] text-[24px] leading-none">
         {value}
       </p>
       {showSubHeading && (
-        <p className="text-textGrey font-normal min-[1440px]:text-base 2dppx:text-sm leading-none text-sm">
+        <p className="text-textGrey dark:text-[#DEDEDE] font-normal min-[1440px]:text-base 2dppx:text-sm leading-none text-sm">
           {subheadingBefore}{" "}
-          <span className="text-[#020202] font-medium"> 
+          <span className="text-[#020202] dark:text-[#ffff] font-medium"> 
             {tokenAddress ? data?.formatted.slice(0, 8) : subheadingHighlight}
           </span>{" "}
           {subheadingAfter}

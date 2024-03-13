@@ -923,10 +923,10 @@ const NewDeposit = () => {
   return (
     <div className="flex justify-between items-center mb-[30px]">
       <div className="flex flex-col gap-[15px] ">
-        <h2 className="text-textPrimary font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
+        <h2 className="text-textPrimary dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
           Your Deposits
         </h2>
-        <p className="text-textSecondary text-sm min-[1440px]:text-base 2dppx:text-xs">
+        <p className="text-textSecondary dark:text-[#EEEEEE]  text-sm min-[1440px]:text-base 2dppx:text-xs">
           A list of all the deposits you have made.
         </p>
       </div>
@@ -984,7 +984,7 @@ const NewDeposit = () => {
                 </div>
 
                 <DialogHeader className="flex items-start">
-                  <DialogTitle className="text-textPrimary font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl tracking-[-1.8px]">
+                  <DialogTitle className="text-textPrimary dark:text-[#90AFFF] font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl tracking-[-1.8px]">
                     Make a New Deposit
                   </DialogTitle>
                 </DialogHeader>
@@ -1019,7 +1019,7 @@ const NewDeposit = () => {
 
                                 <label
                                   htmlFor="amount_of_amint"
-                                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                                 >
                                   Deposit AMINT
                                 </label>
@@ -1099,7 +1099,7 @@ const NewDeposit = () => {
                                   ></Input>
                                   <label
                                     htmlFor="amount_of_usdt"
-                                    className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                                    className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                                   >
                                     Deposit USDT
                                   </label>
@@ -1122,12 +1122,12 @@ const NewDeposit = () => {
                                       <Button
                                         variant="ghost"
                                         size="timeline"
-                                        className="z-20 bg-white"
+                                        className="z-20 bg-white dark:bg-[#0F0F0F]"
                                       >
                                         <CaretDownIcon width={24} height={24} />
                                       </Button>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent className="w-56">
+                                    <DropdownMenuContent className="w-56 dark:bg-[#0F0F0F]">
                                       <DropdownMenuLabel>
                                         Tokens
                                       </DropdownMenuLabel>
@@ -1296,9 +1296,9 @@ const NewDeposit = () => {
                     <div className="flex items-center ml-[4px]">
                       <InfoCircledIcon width={18} height={18} />
                     </div>
-                    <p className="min-[1440px]:text-base 2dppx:text-xs text-sm font-normal text-textGrey text-center leading-none">
+                    <p className="min-[1440px]:text-base 2dppx:text-xs text-sm font-normal text-textGrey  dark:text-[#9E9E9E] text-center leading-none">
                       Minimum {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"} Amount is{" "}
-                      <span className="font-medium text-textHighlight">
+                      <span className="font-medium text-textHighlight dark:text-[#ffff]">
                         500 {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"}
                       </span>
                     </p>
@@ -1317,8 +1317,8 @@ const NewDeposit = () => {
                               <SelectValue placeholder="Choose a Lock-In Period" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent>
-                            <SelectGroup>
+                          <SelectContent className="dark:bg-[#0F0F0F]">
+                            <SelectGroup className="dark:bg-[#0F0F0F]">
                               <SelectLabel>Lock-In Period</SelectLabel>
                               <SelectItem value="30">30 Days</SelectItem>
                               <SelectItem value="60">
@@ -1347,10 +1347,11 @@ const NewDeposit = () => {
                           <Checkbox
                             checked={field.value}
                             onCheckedChange={field.onChange}
+                            className="dark:bg-[#0F0F0F] dark:border-[#3A3A3A] dark:text-white"
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
-                          <FormLabel className="text-textGrey">
+                          <FormLabel className="text-textGrey dark:text-white">
                             Opt in for liquidation gains
                           </FormLabel>
                         </div>

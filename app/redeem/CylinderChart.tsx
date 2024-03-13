@@ -2,7 +2,7 @@ import React from 'react'
 import eth from "@/app/assets/eth.svg";
 import usdt from "@/app/assets/tether-usdt.svg";
 import Image from 'next/image';
-import { formatEther } from 'ethers';
+import RatioPieChart from './RatioPieChart';
 function formatNumber(num: number) {
     if (num >= 1000000) {
         return (num / 1000000).toFixed(2) + 'M';
@@ -22,74 +22,63 @@ const CylinderChart: React.FC<{ type?: string, value: number }> = ({ type, value
             break;
         }
     }
-    // 
+    console.log(TVL, limit)
     const percentage = (TVL / limit);
     return (
-        <div className='flex gap-8 p-2 '>
-            <div className='flex items-center '>
-                <div className='flex flex-col gap-1 p-4 border border-lineGrey shadow-md w-[160px] rounded-lg'>
-
-                    <div className='flex items-center gap-2 text-sm'>
-                        <span>Apy :</span> <span>0</span>
-                    </div>
-                    <div className='flex items-center gap-2 text-sm'>
-                        <span>TVL :</span> <span>$ {formatNumber(TVL)}</span>
-                    </div>
-                    <div className='flex items-center gap-2 text-sm'>
-                        <span>Limit :</span> <span>$ {formatNumber(limit)}</span>
-                    </div>
-                    <div className='flex items-center gap-2 text-sm'>
-                        <span>Position :</span> <span>0</span>
-                    </div>
-                    <div className='flex items-center gap-2 text-sm'>
-                        <span>Loked :</span> <span>0</span>
-                    </div>
-                    <div className='flex items-center gap-2 text-sm'>
-                        <span>Unlocked :</span> <span>0</span>
-                    </div>
-
-
+        <div className='flex w-full h-full border  border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] dark:border-[#5B5B5B] rounded-lg shadow-lg overflow-hidden'>
+            <div className='basis-[60%] p-4 '>
+                <div className='flex gap-2 text-2xl'>
+                    <Image src={type === 'usdt' ? usdt : eth} alt="usdt" width={35} height={35} /> {type === 'usdt' ? 'USDT' : 'ETH'}
                 </div>
-            </div>
-            <div className='relative group'>
-                <div className='absolute min-w-[120px] z-50 p-2 border rounded-md -right-32 border-lineGrey text-sm top-10 bg-white shadow-lg
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300
-                ' >
-
-                    <p><span>Apy :</span> <span>0</span></p>
-                    <p><span>TVL :</span> <span>{formatNumber(TVL)}</span></p>
-                    <p><span>Limit :</span> <span>{formatNumber(limit)}</span></p>
-                    <p><span>Position :</span> <span>0</span></p>
-                </div>
-
-
-
-                <div className='relative m-0 w-[200px]'>
-                    <div className="
-                relative w-[200px] h-[300px] border-solid bg-[#D4F5FF] rounded-[93px/40px] overflow-hidden mx-auto my-0
-                hover:bg-[#c5f1ff] hover:transition-all hover:duration-300
-                before:content-[''] before:absolute before:top-0 before:left-0 before:w-[200px] before:h-[93px] before:rounded-[100px/50px] before:bg-[#c8effb]
-                
-                ">
-                        <div style={{ height: 300 * percentage < 93 ? 93 + 300 * percentage : 300 * percentage }} className={`
-                absolute left-0 bottom-0 w-[200px]  rounded-[100px/50px] bg-[#007AFF] 
-                hover:bg-[rgba(0,81,255,0.9)] hover:transition-all hover:duration-300
-                before:content-[''] before:absolute before:top-0 before:left-0 before:w-[200px] before:h-[93px] before:rounded-[100px/50px] before:bg-[rgba(0,81,255,0.30)]
-                after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-[200px] after:h-[93px] after:rounded-[100px/50px] after:bg-[rgba(0,81,255,0.30)]
-                `}>
-
-                    <span className='absolute bottom-10 left-[80px]'>{type == "eth" ? <Image src={eth} width={35} alt='' /> : <Image src={usdt} width={35} alt='' />}</span>
-                </div>
-
+                <div className='grid grid-cols-3 gap-5 p-2 mt-2 '>
+                    <div >
+                        <p className='text-[#3A3A3A] text-sm mb-1 dark:text-[#EEEEEE]'>APY</p>
+                        <p className='text-xl font-medium'>0.00%</p>
                     </div>
-
-
+                    <div>
+                        <p className='text-[#3A3A3A] text-sm mb-1 dark:text-[#EEEEEE]'>Withdraw Fee</p>
+                        <p className='text-xl font-medium'>0.00%</p>
+                    </div>
+                    <div>
+                        <p className='text-[#3A3A3A] text-sm mb-1 dark:text-[#EEEEEE]'>Withdraw Fee</p>
+                        <p className='text-xl font-medium'>0.00%</p>
+                    </div>
+                    <div>
+                        <p className='text-[#3A3A3A] text-sm mb-1 dark:text-[#EEEEEE]'>Limit</p>
+                        <p className='text-xl font-medium'>0.00%</p>
+                    </div>
+                    <div>
+                        <p className='text-[#3A3A3A] text-sm mb-1 dark:text-[#EEEEEE]'>Collateral</p>
+                        <p className='text-xl font-medium'>0.00%</p>
+                    </div>
+                    <div>
+                        <p className='text-[#3A3A3A] text-sm mb-1 dark:text-[#EEEEEE]'>APY</p>
+                        <p className='text-xl font-medium'>0.00%</p>
+                    </div>
                 </div>
-
-
 
             </div>
-
+            <div className="basis-[40%] ">
+                  <div className="flex pt-4 w-full h-full flex-col bg-[linear-gradient(270deg,#CDF3FF_0%,#D8FFEA_100%)] dark:bg-none dark:bg-[#141414]  rounded-[10px] rounded-t-none rounded-br-none">
+                    <div className="px-[20px]  flex justify-between">
+                      <div className="flex flex-col gap-2">
+                        <h5 className="text-[#00773F] text-sm font-normal">
+                          Current TVL
+                        </h5>
+                        <p className="font-medium text-2xl text-[#00773F]">${formatNumber(TVL)}</p>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <h5 className="text-[#242424] text-sm font-normal dark:text-[#9E9E9E]">
+                          Target TVL
+                        </h5>
+                        <p className="font-medium text-2xl text-[#5B5B5B] dark:text-[#9E9E9E]">${formatNumber(limit)}</p>
+                      </div>
+                    </div>
+                    <div className="w-full h-full ">
+                      <RatioPieChart collaterals={TVL.toFixed(2)} dcds={(limit-TVL).toString()} />
+                    </div>
+                  </div>
+                </div>
 
         </div>
     )

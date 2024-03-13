@@ -128,26 +128,25 @@ const TableRows = ({
     handleDepositData();
   }, [details]);
 
-
   return (
 
-      <TableRow onClick={()=>onClick()} className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF] cursor-pointer">
-        <TableCell className="w-3 text-borderGrey">
+      <TableRow onClick={()=>onClick()} className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer">
+        <TableCell className="w-3 text-borderGrey dark:text-[#EEEEEE]">
           {`#${details.index}`}
         </TableCell>
-        <TableCell className="text-textGrey">
+        <TableCell className="text-textGrey  dark:text-[#EEEEEE]">
           {details.depositedAmount}
         </TableCell>
-        <TableCell className="text-textGrey">
+        <TableCell className="text-textGrey dark:text-[#EEEEEE]">
           {details.noOfAmintMinted}
         </TableCell>
-        <TableCell className="text-textGrey">
+        <TableCell className="text-textGrey dark:text-[#EEEEEE]">
           {interest}%
         </TableCell>
-        <TableCell className="text-textGrey">
+        <TableCell className="text-textGrey dark:text-[#EEEEEE]">
             {details.noOfAbondMinted === null ? "-" : details.noOfAbondMinted}
         </TableCell>
-        <TableCell className="text-textGrey">
+        <TableCell className="text-textGrey dark:text-[#EEEEEE]">
             {details.status === "LIQUIDATED" ? "Yes" : "No"}
         </TableCell>
 

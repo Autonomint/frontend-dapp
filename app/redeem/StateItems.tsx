@@ -31,9 +31,9 @@ const StatItem = ({
 
 
     return (
-        <div className='w-full p-4 border rounded-lg border-lineGrey'>
-            <p className='font-medium'>{heading} Balance</p>
-            <p>{tokenAddress ? data?.formatted.slice(0, 8) : '-'}</p>
+        <div className='w-full p-4 border rounded-md border-lineGrey dark:border-[#5B5B5B]'>
+            <p className='text-sm'>{heading} Balance</p>
+            <p className="text-xl font-medium">{tokenAddress ? data?.formatted.slice(0, 8) : '-'}</p>
         </div>
     );
 };

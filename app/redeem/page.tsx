@@ -44,8 +44,9 @@ const page = () => {
   const {data:usdtLoked} = useCdsUsdtAmountDepositedTillNow({watch:true});
   return (
     <>
+
       {isConnected ? (
-        <div className="relative p-6  rounded-[10px] bg-white dark:bg-slate-950 dark:border shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
+        <div className="relative p-6  rounded-[10px] bg-white dark:bg-[#0F0F0F] dark:shadow-none shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
 
           <div className='flex gap-6'>
               {
@@ -57,35 +58,23 @@ const page = () => {
               }
           </div>
           <Divider />
-          <div className='flex gap-4'>
+          <div>
+            <div className='text-2xl text-[#041A50] font-medium dark:text-[#90AFFF] '>Collateral Pool</div>
+            <div className='text-sm text-[#5B5B5B] dark:text-[#EEEEEE] '>A list of all locked assests int the Asset Pool</div>
+          </div>
+          <div className='flex gap-4 mt-4'>
 
 
-            <div className='border rounded-lg basis-1/2 border-lineGrey'>
            
-              <div className="flex flex-col w-[250px] bg-white md:max-w-sm ">
-                <div className="relative flex items-center h-12 w-full p-1 mx-0 lg:mx-8 mt-4 bg-slate-50 border rounded-[10px] shadow">
-                  <div className="flex justify-center w-full">
-                    <button onClick={() => setOption("eth")}>ETH</button>
-                  </div>
-                  <div className="flex justify-center w-full">
-                    <button onClick={() => setOption("usdt")}>USDT</button>
-                  </div>
-                  <span
-                    className={` bg-[#ffffff] border-[1px] border-[#C4C4C4] shadow text-gray-800 flex items-center justify-center w-1/2 rounded-[10px] h-10 transition-all top-[4px] absolute  ${Option == "usdt" ? "right-1" : "right-none"} `}>
-                    {Option === "eth" ? "ETH" : "USDT"}
-                  </span>
-                  
-                </div>
+              <div className='flex flex-col items-center justify-center gap-4 basis-2/3'>
+                
+                <CylinderChart type={"eth"} value={Number(formatEther(ethLocked?? 0n))/100} /> 
+                <CylinderChart type={"usdt"} value={Number(usdtLoked)/(10**6)} />
+                
               </div>
+              <Divider className='w-[1px] h-auto m-0' />
 
-              <div className='flex items-center justify-center pt-4'>
-                {
-                  Option === "eth" ? <CylinderChart type={Option} value={Number(formatEther(ethLocked?? 0n))/100} /> : <CylinderChart type={Option} value={Number(usdtLoked)/(10**6)} />
-                }
-              </div>
-            </div>
-
-            <div className='border rounded-lg basis-1/2 border-lineGrey'>
+            <div className='border rounded-lg shadow-lg basis-1/3 border-lineGrey'>
               <Redeem />
             </div>
           </div>

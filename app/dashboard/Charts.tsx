@@ -64,7 +64,7 @@ const data = chartData.map((value) => {
                         <Button
                           variant={"showMore"}
                           size={"timeline"}
-                          className={` ${time==="720"?"text-[#020202] rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
+                          className={` ${time==="720"?"text-[#020202] rounded-[4px] border border-[#004795] dark:border-[#C4C4C4]  dark:bg-none dark:text-borderGrey bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
                           onClick={() => setTime("720")}
                         >
                           All Time
@@ -72,7 +72,7 @@ const data = chartData.map((value) => {
                         <Button
                           variant={"showMore"}
                           size={"timeline"}
-                          className={` ${time==="365"?"text-[#020202] rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
+                          className={` ${time==="365"?"text-[#020202] rounded-[4px] border border-[#004795] dark:border-[#C4C4C4]  dark:bg-none dark:text-borderGrey bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
                           onClick={() => setTime("365")}
                         >
                           1Y
@@ -80,7 +80,7 @@ const data = chartData.map((value) => {
                         <Button
                           variant={"showMore"}
                           size={"timeline"}
-                          className={` ${time==="180"?"text-[#020202] rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
+                          className={` ${time==="180"?"text-[#020202] rounded-[4px] border border-[#004795] dark:border-[#C4C4C4]  dark:bg-none dark:text-borderGrey bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
                           onClick={() => setTime("180")}
                         >
                           6M
@@ -88,7 +88,7 @@ const data = chartData.map((value) => {
                         <Button
                           variant={"showMore"}
                           size={"timeline"}
-                          className={` ${time==="30"?"text-[#020202] rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
+                          className={` ${time==="30"?"text-[#020202] rounded-[4px] border border-[#004795] dark:border-[#C4C4C4]  dark:bg-none dark:text-borderGrey bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
                           onClick={() => setTime("30")}
                         >
                           1M
@@ -96,7 +96,7 @@ const data = chartData.map((value) => {
                         <Button
                           variant={"showMore"}
                           size={"timeline"}
-                          className={` ${time==="10"?"text-[#020202] rounded-[4px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
+                          className={` ${time==="10"?"text-[#020202] rounded-[4px] border border-[#004795] dark:border-[#C4C4C4]  dark:bg-none dark:text-borderGrey bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)]":"text-borderGrey"} `}
                           onClick={() => setTime("10")}
                         >
                           10D
@@ -112,7 +112,7 @@ const data = chartData.map((value) => {
                     </div>
                     
     <ResponsiveContainer style={{marginLeft:"-20px"}} width="100%" height={height}>
-      <LineChart data={data}>
+      <LineChart data={data} >
         <Line
           style={{
             filter:
@@ -122,7 +122,7 @@ const data = chartData.map((value) => {
           dataKey="value"
           stroke="#041A50"
         />
-        <Tooltip />
+        <Tooltip labelClassName="dark:text-borderGrey" />
         <XAxis dataKey="name" />
         <YAxis dataKey="value"/>
       </LineChart>

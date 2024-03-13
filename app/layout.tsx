@@ -30,11 +30,12 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-      <body className={`${inter.className} bg-bgGrey dark:bg-slate-950/80`}>
+      <body className={`${inter.className} bg-bgGrey dark:bg-[#020202]`}>
         {/* <div className="max-w-[1440px] mx-auto"> */}
         <main className="relative flex w-full h-auto md:left-0 ">
           <QueryProvider>
             <WalletProvider>
+
               <SideBar />
               <div className="h-full w-full basis-full md:basis-[90%] px-1 mx-0  flex flex-col lg:pb-4 xl:pb-6  xl:pr-6 lg:pr-4">
                 <NavBar />

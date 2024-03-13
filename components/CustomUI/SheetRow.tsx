@@ -22,14 +22,14 @@ const SheetRow = ({
   return (
     <div className="flex justify-between min-[1440px]:px-4 2dppx:px-2 px-2 min-[1440px]:py-[10px] 2dppx:py-[5px] py-[5px] border-b border-lineGrey">
       <div className="flex gap-2">
-        <p className="min-[1440px]:text-base text-sm 2dppx:text-sm text-textSecondary">
+        <p className="min-[1440px]:text-base text-sm 2dppx:text-sm text-textSecondary dark:text-[#C4C4C4]">
           {heading}
         </p>
         {showTooltip && (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <InfoCircledIcon className="h-4 w-4" />
+                <InfoCircledIcon className="w-4 h-4" />
               </TooltipTrigger>
               <TooltipContent>
                 <p>{tooltipText}</p>
@@ -38,7 +38,7 @@ const SheetRow = ({
           </TooltipProvider>
         )}
       </div>
-      <p className="min-[1440px]:text-base text-sm 2dppx:text-sm text-textHighlight font-medium ">
+      <p className="min-[1440px]:text-base text-sm 2dppx:text-sm text-textHighlight font-medium dark:text-[#ffff] ">
         {value}
       </p>
     </div>

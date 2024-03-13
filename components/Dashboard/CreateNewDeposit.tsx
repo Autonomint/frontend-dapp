@@ -473,10 +473,10 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   return (
     <div className="flex justify-between items-center mb-[30px]">
       <div className="flex flex-col gap-[8px] min-[1440px]:gap-[15px] 2dppx:gap-[8px]">
-        <h2 className="text-textPrimary leading-none font-medium text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-3xl">
+        <h2 className="text-textPrimary dark:text-[#90AFFF] leading-none font-medium text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-3xl">
           Your Deposits
         </h2>
-        <p className="text-textSecondary leading-none 2dppx:text-sm text-sm min-[1440px]:text-base">
+        <p className="text-textSecondary dark:text-[#EEEEEE] leading-none 2dppx:text-sm text-sm min-[1440px]:text-base">
           A list of all the deposits you have made.
         </p>
       </div>
@@ -576,15 +576,15 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                         ></Input>
                       </FormControl>
                      <span className="relative md:absolute md:right-1 block text-right text-[12px]">Balance:  {(Number(ethBalance.data?.formatted)).toFixed(4)} ETH</span> 
-                      <FormMessage />
+                      <FormMessage className="dark:text-[#B43939]" />
                     </FormItem>
                   )}
                 />
                 <div className="px-[6px] flex gap-[10px] items-center">
                   <InfoCircledIcon width={18} height={18} />
-                  <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm font-normal text-textGrey ">
+                  <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm font-normal text-textGrey dark:text-[#DEDEDE] ">
                     Minimum Collateral Amount is{" "}
-                    <span className="font-medium text-textHighlight">
+                    <span className="font-medium text-textHighlight dark:text-[#ffff]">
                       0.02 ETH
                     </span>
                   </p>
@@ -598,7 +598,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                     render={({ field: { value, onChange } }) => (
                       <FormItem>
                         <FormLabel className="min-[1440px]:mb-[10px] 2dppx:mb-1 mb-1">
-                          <p className="min-[1440px]:text-base 2dppx:text-sm text-sm font-normal text-textGrey min-[1440px]:mb-4 2dppx:mb-3 mb-3">
+                          <p className="min-[1440px]:text-base 2dppx:text-sm text-sm font-normal text-textGrey min-[1440px]:mb-4 2dppx:mb-3 mb-3 dark:text-[#DEDEDE]">
                             Select Strike Price for call options.
                           </p>
                         </FormLabel>
@@ -637,7 +637,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                 </div>
                 <div className="flex flex-col">
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                    <p className=" min-[1440px]:text-base text-sm 2dppx:text-sm text-textSecondary">
+                    <p className=" min-[1440px]:text-base text-sm 2dppx:text-sm text-textSecondary dark:text-[#9E9E9E]">
                       Amount of Amint that will be minted
                       <TooltipProvider>
                         <Tooltip>
@@ -650,23 +650,23 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                         </Tooltip>
                       </TooltipProvider>
                     </p>
-                    <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm">
+                    <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
                       {amintToBeMinted}
                     </p>
                   </div>
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                    <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary">
+                    <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary dark:text-[#9E9E9E]">
                       Options Fees
                     </p>
-                    <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm">
+                    <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
                       {optionFees}
                     </p>
                   </div>
                   <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                    <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary">
+                    <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary dark:text-[#9E9E9E]">
                       Downside Protection Amount
                     </p>
-                    <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm">
+                    <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
                       {downsideProtectionAmnt}
                     </p>
                   </div>
