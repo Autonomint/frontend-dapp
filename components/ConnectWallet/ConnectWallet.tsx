@@ -7,6 +7,7 @@ import wallets from "@/app/assets/wallet icons.svg";
 import linkIcon from "@/app/assets/link.svg";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { useConnect } from "wagmi";
+
 import { useWeb3Modal ,createWeb3Modal } from '@web3modal/wagmi/react'
 import { config,projectId } from "@/providers/WalletProvider";
 const ConnectWallet = () => {

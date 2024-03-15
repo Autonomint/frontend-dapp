@@ -39,6 +39,11 @@ export const config = defaultWagmiConfig({
 
 });
 
+// createWeb3Modal({
+//   wagmiConfig: config,
+//   projectId,
+//   enableAnalytics: true,
+// })
 
 const WalletProvider = ({ children }: PropsWithChildren) => {
   return <WagmiConfig config={config}>{children}</WagmiConfig>;

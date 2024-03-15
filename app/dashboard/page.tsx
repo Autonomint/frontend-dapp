@@ -111,6 +111,7 @@ function formatNumber(num: number) {
 }
 
 const page = () => {
+  // connected wallet
   const { isConnected} = useAccount();
   const chainId = useChainId();
   const [loading, setLoading] = React.useState(true);
@@ -121,12 +122,14 @@ const page = () => {
   const { data: amintsupply } = useAmintTotalSupply({ watch: true })
   const { data: cdsPool } = useBorrowingContractLastCdsPoolValue({ watch: true })
   const { data: abondSupply} = useAbondTotalSupply({ watch: true });
-  const { data: totalValueLocked } = useTreasuryTotalVolumeOfBorrowersAmountinWei({ watch: true });
+  // get ratio data
   const {data:ratioData} = useQuery({
     queryKey: ["ratioData"],
     queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/ratio/11155111/${ethPrice}`).then((res) => res.json()),
     staleTime:Infinity,
   })
+
+  // get fees data
   const {data:feeOptions} = useQuery({
     queryKey: ['optionFees'],
     queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/optionFees/11155111/1000000000000000000/${ethPrice}/0`).then((res) => res.json()),
@@ -138,21 +141,23 @@ const page = () => {
   }, [feeOption])
   useEffect(() => {
     handleStatsItem()
-  }, [ ethLocked, ethPrice, totalValueLocked, amintsupply, totalStable, cdsPool, ratioData, feeOptions, abondSupply])
+  }, [ ethLocked, ethPrice, amintsupply, totalStable, cdsPool, ratioData, feeOptions, abondSupply])
   
   const handleStatsItem = async () => {
-    console.log(ethLocked, ethPrice, totalValueLocked, amintsupply, totalStable, cdsPool, abondSupply, ratioData, feeOptions)
-    if (ethLocked && ethPrice && totalValueLocked && amintsupply && totalStable && cdsPool && ratioData && feeOptions && abondSupply) {
+    console.log(ethLocked, ethPrice, amintsupply, totalStable, cdsPool, abondSupply, ratioData, feeOptions)
+    
+    // check if all data is available
+    if (ethLocked && ethPrice  && amintsupply && totalStable && cdsPool && ratioData && feeOptions && abondSupply) {
       amintValues[1].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
       amintValues[2].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
 
-
+      
+      // locked values
       lockedValues[0].value = totalStable ? formatNumber((Number(totalStable) / 10 ** 6) + (Number(formatEther(ethLocked / BigInt(100))))) : "0";
       lockedValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
       lockedValues[2].value = totalStable ? formatNumber(Number(formatEther((ethLocked ) / BigInt(100)))) : "0";
 
-      console.log(Number(formatEther((totalValueLocked * ethPrice) / BigInt(100))),Number(cdsPool/BigInt(10**6)) )
-
+      // ratio values
       RatioValues[0].value = ratioData == undefined ? "-" : (ratioData).toFixed(2);
       RatioValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
       RatioValues[2].value = cdsPool ? formatNumber(Number(cdsPool/BigInt(10**6))) : "0";
@@ -161,9 +166,10 @@ const page = () => {
       RatioValues[4].value = (((Number(formatEther(ethLocked/ BigInt(100)))) / total) * 100).toFixed(1);
       RatioValues[5].value = (((Number(totalStable) / 10 ** 6) / total) * 100).toFixed(1);
 
+      // fees values
       FeesValues[0].value = `${feeOptions[1] == undefined ? 0 : (parseFloat(feeOptions[1]) / 10 ** 6).toFixed(2)}`;
       FeesValues[1].value = `${feeOptions[1] == undefined ? 0 : (parseFloat(feeOptions[1]) / 10 ** 6).toFixed(2)}`;
-      FeesValues[2].value = (Number(formatEther((totalValueLocked * (ethPrice)) / BigInt(100))) * 0.20).toFixed(2);
+      FeesValues[2].value = formatNumber(Number(formatEther((ethLocked) / BigInt(100))) * 0.20);
 
       abondValues[1].value = abondSupply ? formatNumber(Number(abondSupply) / 10 ** 6) : "0";
       setLoading(false)
@@ -200,16 +206,16 @@ const page = () => {
                   <div className="flex h-full min-w-[300px] flex-col bg-[linear-gradient(270deg,#CDF3FF_0%,#D8FFEA_100%)] border-r border-solid border-lineGrey rounded-[10px] rounded-t-none rounded-br-none dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] dark:border-[#5B5B5B]">
                     <div className="px-[50px] py-[25px] flex justify-between">
                       <div className="flex flex-col">
-                        <h5 className="text-[#00773F] text-base font-normal">
+                        <h5 className="text-[#00773F] dark:text-[#2cc873] text-base font-normal">
                           Collateral
                         </h5>
-                        <p className="font-medium text-3xl text-[#00773F]">{RatioValues[4].value}%</p>
+                        <p className="font-medium text-3xl text-[#00773F] dark:text-[#2cc873]">{RatioValues[4].value}%</p>
                       </div>
                       <div className="flex flex-col">
-                        <h5 className="text-[#0F46E9] text-base font-normal">
+                        <h5 className="text-[#0F46E9] text-base font-normal dark:text-[#2688ff]">
                           dCDS
                         </h5>
-                        <p className="font-medium text-3xl text-[#0F46E9]">{RatioValues[5].value}%</p>
+                        <p className="font-medium text-3xl text-[#0F46E9] dark:text-[#2688ff]">{RatioValues[5].value}%</p>
                       </div>
                     </div>
                     <div className="w-full h-40 lg:h-full">
@@ -258,6 +264,8 @@ const page = () => {
     </div>
   );
 
+
+  // 
   function FeesComp() {
     return (
       <div className="flex flex-col gap-[10px] p-5 mr-2 w-full md:w-[40%]">

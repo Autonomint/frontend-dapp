@@ -945,7 +945,7 @@ const NewDeposit = () => {
             <Button
               variant={"primary"}
               size={"full"}
-              className="flex gap-[10px] items-center justify-center min-w-[150px]"
+              className="flex gap-[10px] items-center justify-center min-w-[150px]  "
               onClick={() => setOpen(!open)}
             >
               <Image
@@ -976,7 +976,7 @@ const NewDeposit = () => {
 
                     >
                       <Cross2Icon className="w-4 h-4" />
-                      <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
+                      <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] dark:text-[#EEEEEE]  font-semibold text-base">
                         Close
                       </p>
                     </Button>

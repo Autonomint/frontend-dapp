@@ -20,7 +20,7 @@ const Profile = ({ props: { image, buttonText } }: Props) => {
   return (
     <>
       {isConnected && (
-        <div className="absolute flex flex-col items-center gap-3 bottom-14">
+        <div className="flex flex-col items-center gap-3  bottom-14">
         
           <div className="relative flex items-center justify-center">
             <NetworkSwitch />

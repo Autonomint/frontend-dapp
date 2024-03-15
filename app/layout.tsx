@@ -4,13 +4,16 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import SideBar from "@/components/Sidebar/SideBar";
 import { Toaster } from "sonner";
-import WalletProvider from "@/providers/WalletProvider";
+// import WalletProvider from "@/providers/WalletProvider";
 import NavBar from "@/components/NavBar/NavBar";
 import QueryProvider from "@/providers/QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ThemeProvider } from "@/providers/theme-provider";
-
-import { config, projectId } from "@/providers/WalletProvider";
+import dynamic from 'next/dynamic'
+ 
+const WalletProvider = dynamic(() => import('@/providers/WalletProvider'), {
+  ssr: false,
+})
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

@@ -12,6 +12,7 @@ import {
   useAmintTotalSupply,
   useCdsTotalCdsDepositedAmount,
   useTreasuryTotalVolumeOfBorrowersAmountinWei,
+  useTreasuryTotalVolumeOfBorrowersAmountinUsd,
 } from "@/abiAndHooks";
 import { formatEther } from "viem";
 import displayNumberWithPrecision from "@/app/utils/precision";
@@ -127,7 +128,7 @@ const NavBar = () => {
   });
   //getting totalValueLocked from Treasury
   const { data: totalValueLocked } =
-    useTreasuryTotalVolumeOfBorrowersAmountinWei({
+  useTreasuryTotalVolumeOfBorrowersAmountinUsd({
       enabled: !!address,
     });
   //getting ethPrice from Borrowing Contract
@@ -179,7 +180,7 @@ const NavBar = () => {
     }
     if (ltv && totalCdsAmount && ethPrice && totalValueLocked) {
       const updatedData = [...updatedHeaderItems];
-      updatedData[6].value = `$${formatNumber(Number(formatEther((totalValueLocked * ethPrice) / BigInt(100))))}`;
+      updatedData[6].value = `$${formatNumber(Number(formatEther((totalValueLocked) / BigInt(100))))}`;
       console.log(totalValueLocked , ethPrice)
       updatedData[7].value = `$${formatNumber(
         (Number(totalCdsAmount) / 10 ** 6)

@@ -12,7 +12,7 @@ function formatNumber(num: number) {
         return num.toFixed(2);
     }
 }
-const CylinderChart: React.FC<{ type?: string, value: number }> = ({ type, value }) => {
+const PoolInfo: React.FC<{ type?: string, value: number }> = ({ type, value }) => {
     const limitArray = [100000, 1000000, 10000000, 100000000]
     const TVL = value
     let limit = limitArray[0];
@@ -87,6 +87,5 @@ const CylinderChart: React.FC<{ type?: string, value: number }> = ({ type, value
 
 
 
-export default CylinderChart;
-
+export default PoolInfo;
 
