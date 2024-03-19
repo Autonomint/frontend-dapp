@@ -171,7 +171,7 @@ const page = () => {
       FeesValues[1].value = `${feeOptions[1] == undefined ? 0 : (parseFloat(feeOptions[1]) / 10 ** 6).toFixed(2)}`;
       FeesValues[2].value = formatNumber(Number(formatEther((ethLocked) / BigInt(100))) * 0.20);
 
-      abondValues[1].value = abondSupply ? formatNumber(Number(abondSupply) / 10 ** 6) : "0";
+      abondValues[1].value = abondSupply ? formatNumber(Number(abondSupply) / 10 ** 18) : "0";
       setLoading(false)
     }
   };

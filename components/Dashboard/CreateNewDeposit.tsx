@@ -173,8 +173,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
 
 
   // Use the useQuery hook to fetch the total index
-  const { data: totalIndex } = useQuery({
-    queryKey: ["totalIndex"],
+  const { data: totalIndex,refetch } = useQuery({
+    queryKey: ["totalIndex","deposits"],
     queryFn: () => getTotalIndex(address ? address : undefined),
     enabled: !!address,
     staleTime: 10 * 1000,
@@ -393,11 +393,9 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("depositData", depositData);
+    refetch();
     let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);
     let strikePercent = strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4;
-    console.log(ethPrice, colateralamount, strikePercent)
-    console.log(BigInt(Math.floor((1 + form.getValues("strikePrice") / 100) * Number(ethPrice ? ethPrice : 0))))
     const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${colateralamount}/${ethPrice}/${strikePercent}`).then(
       (res) => res.json()
     )

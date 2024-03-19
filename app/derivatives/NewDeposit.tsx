@@ -1362,7 +1362,7 @@ const NewDeposit = () => {
 
                   <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
                   {(Boolean(amintAmnt) || Boolean(usdtAmnt)) && Boolean(lockIn) ? (
-                    <div className="min-[144px]:px-[15px] px-[10px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee]">
+                    <div className="min-[144px]:px-[15px] px-[10px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee] dark:bg-none dark:bg-[#0F0F0F]">
                       <div className="min-[144px]:py-[15px] py-[10px] flex items-center justify-between border-b border-lineGrey">
                         <div className="flex gap-[10px] items-center">
                           <Image
@@ -1371,7 +1371,7 @@ const NewDeposit = () => {
                             width={24}
                             height={24}
                           />
-                          <p className="min-[1440px]:text-base text-sm text-textHighlight 2dppx:text-xs">
+                          <p className="min-[1440px]:text-base text-sm text-textHighlight 2dppx:text-xs dark:text-[#EEEEEE]">
                             {amintAmnt == undefined ? 0 : amintAmnt} AMINT + {usdtAmnt == undefined ? 0 : usdtAmnt} USDT
                           </p>
                         </div>
@@ -1384,19 +1384,19 @@ const NewDeposit = () => {
                           ></Image>
                           <p>
                             {lockIn === "30" ? (
-                              <p className="min-[1440px]:text-base text-sm text-textHighlight">
+                              <p className="min-[1440px]:text-base text-sm text-textHighlight dark:text-[#EEEEEE]">
                                 30 Days (~1 Month)
                               </p>
                             ) : lockIn === "60" ? (
-                              <p className="min-[1440px]:text-base 2dppx:text-xs text-sm text-textHighlight">
+                              <p className="min-[1440px]:text-base 2dppx:text-xs text-sm text-textHighlight dark:text-[#EEEEEE] ">
                                 60 Days (~2 Months)
                               </p>
                             ) : lockIn === "120" ? (
-                              <p className="min-[1440px]:text-base 2dppx:text-xs text-sm text-textHighlight">
+                              <p className="min-[1440px]:text-base 2dppx:text-xs text-sm text-textHighlight dark:text-[#EEEEEE]">
                                 120 Days (~4 Months)
                               </p>
                             ) : lockIn === "180" ? (
-                              <p className="min-[1440px]:text-base 2dppx:text-xs text-sm text-textHighlight">
+                              <p className="min-[1440px]:text-base 2dppx:text-xs text-sm text-textHighlight dark:text-[#EEEEEE]">
                                 180 Days (~6 Months)
                               </p>
                             ) : (
@@ -1413,10 +1413,10 @@ const NewDeposit = () => {
                             width={24}
                             height={24}
                           />
-                          <p className="min-[1440px]:text-base text-sm text-[#242424] 2dppx:text-sm">
+                          <p className="min-[1440px]:text-base text-sm text-[#242424] 2dppx:text-sm dark:text-[#EEEEEE]">
                             Expected APR can range from{" "}
-                            <span className="text-textHighlight"> ~5%</span> to{" "}
-                            <span className="text-textHighlight">~200%</span>
+                            <span className="text-textHighlight dark:text-white"> ~5%</span> to{" "}
+                            <span className="text-textHighlight dark:text-white">~200%</span>
                           </p>
                         </div>
                       </div>
@@ -1435,7 +1435,7 @@ const NewDeposit = () => {
                       (usdtAmountDepositedTillNow > usdtLimit && !amintApproved ) || !usdtApproved || isCdsDepositLoading
                     }
                   >
-                    {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'} {(usdtAmountDepositedTillNow > usdtLimit && !amintApproved ) || !usdtApproved || isCdsDepositLoading  ? " (Approve First)" : ""}
+                    {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'} 
                   </Button>
                 </div>
               </form>
