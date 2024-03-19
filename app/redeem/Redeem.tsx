@@ -17,7 +17,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { useCdsRedeemUsdt,useBorrowingContractRedeemYields,useAmintApprove,useAbondApprove ,cdsAddress} from '@/abiAndHooks';
+import { useCdsRedeemUsdt,useBorrowingContractRedeemYields,useAmintApprove,useAbondApprove ,cdsAddress,borrowingContractAddress} from '@/abiAndHooks';
 import { Input } from "@/components/ui/input";
 import { Button } from '@/components/ui/button';
 import Note from '@/components/CustomUI/Note';
@@ -171,7 +171,7 @@ export default function Redeem() {
                 props={{
                   t,
                   toastMainColor: "#268730",
-                  headline: "Amint Approved,Plz Confirm Deposit Now",
+                  headline: "Amint Approved,Plz confirm the transaction to redeem USDT",
                   transactionHash: amintApproveData?.hash,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
@@ -194,7 +194,7 @@ export default function Redeem() {
         reset: resetUsdt,
         isLoading: isRedeemUsdt
       } = useCdsRedeemUsdt({
-        // Handle errors during the CDS deposit process
+        // Handle errors during the process
         onError: (error) => {
           // console.log(error.message);
           console.log("MESSAGE",error.cause);
@@ -222,7 +222,7 @@ export default function Redeem() {
             toast.dismiss(toastId.current);
           }, 5000);
         },
-        // Handle the successful completion of the CDS deposit process
+        // Handle the successful completion of the process
         onSuccess: (data) => {
           console.log(data);
           // Show a custom toast notification for the successful transaction
@@ -246,6 +246,57 @@ export default function Redeem() {
             },
             // Set the duration of the toast notification to be infinite
             { duration: 10000, id: toastId.current }
+          );
+        },
+      });
+
+      const { data: redeemdataUsdt , isLoading: isRedeemUsdtTransactionLoading } = useWaitForTransaction({
+        // TODO: Add OnError Custom Toast
+        onError(error) {
+          toast.custom(
+            (t) => {
+              toastId.current = t;
+              return (
+                <div>
+                  <CustomToast
+                    key={2}
+                    props={{
+                      t,
+                      toastMainColor: "#B43939",
+                      headline: `Uhh Ohh! ${error.name}`,
+                      toastClosebuttonHoverColor: "#e66d6d",
+                      toastClosebuttonColor: "#C25757",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: 5000 }
+          );
+        },
+        // look for approval transaction hash
+        hash: redeemUsdtData?.hash,
+        // Display a custom toast notification
+        onSuccess() {
+          toast.custom(
+            (t) => {
+              return (
+                <div>
+                  <CustomToast
+                    props={{
+                      t,
+                      toastMainColor: "#268730",
+                      headline: "Transaction Completed",
+                      transactionHash: redeemUsdtData?.hash,
+                      linkLabel: "View Transaction",
+                      toastClosebuttonHoverColor: "#90e398",
+                      toastClosebuttonColor: "#57C262",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: 5000 }
           );
         },
       });
@@ -360,7 +411,7 @@ export default function Redeem() {
                     props={{
                       t,
                       toastMainColor: "#268730",
-                      headline: "Amint Approved,Plz Confirm Deposit Now",
+                      headline: "Abond Approved,Plz confirm the transaction to redeem ETH",
                       transactionHash: amintApproveData?.hash,
                       linkLabel: "View Transaction",
                       toastClosebuttonHoverColor: "#90e398",
@@ -379,7 +430,8 @@ export default function Redeem() {
         write: redeemEth,
         data: redeemEthData,
         reset: resetEth,
-        isLoading: isRedeemEthLoading
+        isLoading: isRedeemEthLoading,
+
       } = useBorrowingContractRedeemYields({
         // Handle errors during the CDS deposit process
         onError: (error) => {
@@ -436,6 +488,58 @@ export default function Redeem() {
           );
         },
       });
+
+
+      const { data: redeemdataEth, isLoading: isRedeemEthTransactionLoading } = useWaitForTransaction({
+        // TODO: Add OnError Custom Toast
+        onError(error) {
+          toast.custom(
+            (t) => {
+              toastId.current = t;
+              return (
+                <div>
+                  <CustomToast
+                    key={2}
+                    props={{
+                      t,
+                      toastMainColor: "#B43939",
+                      headline: `Uhh Ohh! ${error.name}`,
+                      toastClosebuttonHoverColor: "#e66d6d",
+                      toastClosebuttonColor: "#C25757",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: 5000 }
+          );
+        },
+        // look for approval transaction hash
+        hash: redeemEthData?.hash,
+        // Display a custom toast notification
+        onSuccess() {
+          toast.custom(
+            (t) => {
+              return (
+                <div>
+                  <CustomToast
+                    props={{
+                      t,
+                      toastMainColor: "#268730",
+                      headline: "Transaction Completed",
+                      transactionHash: redeemEthData?.hash,
+                      linkLabel: "View Transaction",
+                      toastClosebuttonHoverColor: "#90e398",
+                      toastClosebuttonColor: "#57C262",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: 5000 }
+          );
+        },
+      });
     
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -455,7 +559,7 @@ export default function Redeem() {
            abondApproveWrite({
             args: [
 
-              (cdsAddress[11155111] as `0x${string}`),
+              (borrowingContractAddress[11155111] as `0x${string}`),
               BigInt(values.collateralAmount * 10**18),
             ],
           })
@@ -582,9 +686,9 @@ export default function Redeem() {
                         type="submit"
                         variant={"primary"}
                         className="text-white"
-                        disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading  || abondApproveLoading || isAmintTransactionLoading || isAbondTransactionLoading}
+                        disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading  || abondApproveLoading || isAmintTransactionLoading || isAbondTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading}
                     >
-                        { isRedeemUsdt || isRedeemEthLoading ||amintApproveLoading  || abondApproveLoading|| isAmintTransactionLoading || isAbondTransactionLoading ? <Spinner/> : "Redeem" }
+                        { isRedeemUsdt || isRedeemEthLoading ||amintApproveLoading  || abondApproveLoading|| isAmintTransactionLoading || isAbondTransactionLoading || isRedeemUsdtTransactionLoading ||isRedeemEthTransactionLoading ? <Spinner/> : "Redeem" }
                     </Button>
                 </form>
             </Form>
