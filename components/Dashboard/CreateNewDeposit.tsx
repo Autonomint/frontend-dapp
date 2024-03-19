@@ -62,7 +62,7 @@ import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 import { watch } from "fs";
 import Spinner from "../ui/spinner";
-import { PROXY_AMINT_ADDRESS } from "@/constants/Addresses";
+import { DEV_PROXY_AMINT_ADDRESS } from "@/constants/Addresses";
 
 const formSchema = z.object({
   collateral: z.string(),
@@ -147,7 +147,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       params: {
         type: "ERC20",
         options: {
-          address: PROXY_AMINT_ADDRESS,
+          address: DEV_PROXY_AMINT_ADDRESS,
           decimals: 6,
           name: "AMINT",
           symbol: "AMINT"
@@ -276,7 +276,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
               props={{
                 t,
                 toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.name}`,
+                headline: `Uhh Ohh! ${error.cause}`,
                 toastClosebuttonHoverColor: "#e66d6d",
                 toastClosebuttonColor: "#C25757",
               }}
@@ -313,22 +313,21 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     },
   });
 
-
+  
   const { isLoading: isDepositHashsLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
     hash: depositData?.hash,
     onSuccess(data) {
       // Log transaction completion
       console.log("transaction completed", depositData?.hash, data);
-
       // Get the data logs based on the chainId
-      const dataLogs = chainId === 5 ? data.logs[15].data : data.logs[9].data;
+      const dataLogs = data.logs[data.logs.length-1]
 
       // Decode event logs from ABI
       const { eventName, args } = decodeEventLogsFromAbi(
         borrowingContractABI,
-        ["0x3f7c04c09b19100060129256b7d82f055d0aa72cf17042fb3f2d41d1fffc0260"],
+        dataLogs.topics,
         "Deposit",
-        dataLogs
+        dataLogs.data
       ) as { eventName: string; args: { normalizedAmount: bigint, borrowAmount: bigint } };
 
       // Log event name and normalized amount
@@ -406,8 +405,6 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     if (data[0] != undefined) {
       write?.({
         args: [
-          BigInt(ethPrice ? ethPrice : 0),
-          BigInt(new Date().getTime()),
           strikePercent,
           BigInt(Math.floor((1 + form.getValues("strikePrice") / 100) * Number(ethPrice ? ethPrice : 0))),
           BigInt(data[0]),
@@ -417,10 +414,10 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     } // mutate(address);
   }
 
-
   /**
    * Handles the calculation and setting of the amint to be minted and downside protection amounts.
-   */
+  */
+
   const handleAmintToBeMinted = async () => {
     // Calculate the amint to be minted
     const optionf = await getOptionFees();
@@ -484,7 +481,6 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       <Dialog
         open={open}
         onOpenChange={() => {
-
         }}
         modal={true}
       >

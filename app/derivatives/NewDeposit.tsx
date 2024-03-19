@@ -78,7 +78,7 @@ import { parseEther, parseUnits } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "../utils/decodeEventLogsFromAbi";
 import Spinner from "@/components/ui/spinner";
-import { PROXY_AMINT_ADDRESS, PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
+import { DEV_PROXY_AMINT_ADDRESS, DEV_PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
 
 
 
@@ -162,7 +162,7 @@ const NewDeposit = () => {
       params: {
         type: "ERC20",
         options: {
-          address: PROXY_AMINT_ADDRESS,
+          address: DEV_PROXY_AMINT_ADDRESS,
           decimals: 6,
           name: "AMINT",
           symbol: "AMINT"
@@ -177,7 +177,7 @@ const NewDeposit = () => {
       params: {
         type: "ERC20",
         options: {
-          address: PROXY_TESTUSDT_ADDRESS,
+          address: DEV_PROXY_TESTUSDT_ADDRESS,
           decimals: 6,
           name: "TUSDT",
           symbol: "TUSDT"
@@ -207,14 +207,14 @@ const NewDeposit = () => {
   );
 
   const { data: amintbal } = useBalance({
-    address: PROXY_AMINT_ADDRESS ? address : undefined,
-    token: PROXY_AMINT_ADDRESS ? PROXY_AMINT_ADDRESS : undefined,
+    address: DEV_PROXY_AMINT_ADDRESS ? address : undefined,
+    token: DEV_PROXY_AMINT_ADDRESS ? DEV_PROXY_AMINT_ADDRESS : undefined,
     watch: true,
   });
 
   const { data: usdtbal } = useBalance({
-    address: PROXY_TESTUSDT_ADDRESS ? address : undefined,
-    token: PROXY_TESTUSDT_ADDRESS ? PROXY_TESTUSDT_ADDRESS : undefined,
+    address: DEV_PROXY_TESTUSDT_ADDRESS ? address : undefined,
+    token: DEV_PROXY_TESTUSDT_ADDRESS ? DEV_PROXY_TESTUSDT_ADDRESS : undefined,
     watch: true,
   });
 
@@ -472,7 +472,8 @@ const NewDeposit = () => {
   } = useCdsDeposit({
     // Handle errors during the CDS deposit process
     onError: (error) => {
-      console.log(error.message);
+      // console.log(error.message);
+      console.log("MESSAGE",error.cause);
       // Show a custom toast notification for the error
       toast.custom(
         (t) => (
@@ -482,7 +483,7 @@ const NewDeposit = () => {
               props={{
                 t: toastId.current,
                 toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.message.substring(0, 112)}`,
+                headline: `Uhh Ohh! ${error.cause}`,
                 toastClosebuttonHoverColor: "#e66d6d",
                 toastClosebuttonColor: "#C25757",
               }}
@@ -587,11 +588,11 @@ const NewDeposit = () => {
       const dataLogs =
         chainId === 5 ? data.logs[data.logs.length-1].data : data.logs[data.logs.length-1].data;
       // Decode event logs using the provided ABI and event name
-
+              console.log("data logs -------", data.logs[data.logs.length-1].topics);
       const { eventName, args } = decodeEventLogsFromAbi(
         cdsABI,
         //topic to decode event variables
-        ["0x0a5985aa28fedd5d60e042a47ad0dcb83381febf41639cd599c154a7fee13ca6"],
+        data.logs[data.logs.length-1].topics ?? [],
         "Deposit",
         dataLogs
       ) as { eventName: string; args: { depositVal: bigint } };
@@ -999,7 +1000,7 @@ const NewDeposit = () => {
                       name="AmintDepositAmount"
                       render={({ field }) => (
                         <FormItem className="w-full md:w-[48%]">
-                          <div className="flex items-center justify-end gap-2">
+                          <div className="flex items-center justify-end gap-2 cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
                             <a type="button" onClick={onWatchAssetAmintClick} className="m-0 text-[12px] underline rounded-md ">Add AMINT</a>
                           </div>
@@ -1040,7 +1041,7 @@ const NewDeposit = () => {
                                       ? amintAmnt !== 0
                                         ? amintApprove({
                                           args: [
-                                            (cdsAddress[5] as `0x${string}`),
+                                            (cdsAddress[11155111] as `0x${string}`),
                                             BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
                                           ],
                                         })
@@ -1065,11 +1066,11 @@ const NewDeposit = () => {
                     <PlusIcon width={16} height={16} />
                     <div className="flex flex-col  w-full  md:w-[48%] gap-[10px]">
                     <div className="flex items-center justify-end gap-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="cursor-pointer" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
 
-                      <a type="button" onClick={onWatchAssetUsdtClick} className="m-0 text-[12px] underline ">Add TUSDT</a>
+                      <a type="button" onClick={onWatchAssetUsdtClick} className="m-0 text-[12px] underline cursor-pointer ">Add TUSDT</a>
 
-                      <a href={`https://sepolia.etherscan.io/address/${PROXY_TESTUSDT_ADDRESS}`}  className="m-0 text-[12px] underline " target="_blank">
+                      <a href={`https://sepolia.etherscan.io/address/${DEV_PROXY_TESTUSDT_ADDRESS}`}  className="m-0 text-[12px] underline " target="_blank">
                         Mint TUSDT
                       </a>
                       </div>
@@ -1187,7 +1188,7 @@ const NewDeposit = () => {
                                           ? usdtWrite({
                                             args: [
 
-                                              (cdsAddress[5] as `0x${string}`),
+                                              (cdsAddress[11155111] as `0x${string}`),
                                               BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
                                             ],
                                           })
@@ -1431,10 +1432,10 @@ const NewDeposit = () => {
                     className="text-white"
                     //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                     disabled={
-                      !amintApproved || (usdtAmountDepositedTillNow < usdtLimit && !usdtApproved) || isCdsDepositLoading
+                      (usdtAmountDepositedTillNow > usdtLimit && !amintApproved ) || !usdtApproved || isCdsDepositLoading
                     }
                   >
-                    {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}
+                    {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'} {(usdtAmountDepositedTillNow > usdtLimit && !amintApproved ) || !usdtApproved || isCdsDepositLoading  ? " (Approve First)" : ""}
                   </Button>
                 </div>
               </form>

@@ -313,8 +313,6 @@ const Withdraw = ({
         args: [
           address as `0x${string}`,
           BigInt(details.index),
-          BigInt(ethPrice ? ethPrice : 0),
-          BigInt(Date.now())
         ],
       });
     },

@@ -7,6 +7,7 @@ import darkmoon from "@/app/assets/darkmoon.svg";
 import sunlight from "@/app/assets/sunlight.svg";
 import dashboard from "@/app/assets/dashboard.svg";
 import derivatives from "@/app/assets/toll.svg";
+import mintmark from "@/app/assets/mintmark.svg";
 import NavItems from "./NavItems";
 import Profile from "./Profile";
 import metamask from "@/app/assets/metamask.svg";
@@ -44,7 +45,7 @@ const navItemsList = [
     targetSegment: "dashboard",
   },
   {
-    image: dashboard,
+    image: mintmark,
     label: "Redeem",
     href: "redeem",
     targetSegment: "redeem",
@@ -53,25 +54,18 @@ const navItemsList = [
 const SideBar = () => {
   const segment = useSelectedLayoutSegment();
   const chainId = useChainId();
-  const [open, setOpen] = React.useState(false);
   const [openMenu, setOpenMenu] = React.useState(false);
-  const { switchNetwork } = useSwitchNetwork();
   const { resolvedTheme, theme, setTheme } = useTheme();
   console.log("theme", theme);
   const { isConnected } = useAccount()
 
-  useEffect(() => {
-    if (isConnected && chainId != 11155111) {
-      setOpen(true)
-    }
-  }, [isConnected]);
 
   return (
     <nav className="h-[100vh] md:min-w-[120px] basis-0 md:basis-[15%] xl:basis-[10%] md:px-[10px] py-2 sm:py-[10px] lg:py-[20px] xl:py-[30px]  bg-bgGrey dark:bg-[#020202] flex flex-col items-center justify-between">
       <button onClick={() => setOpenMenu(true)} className=" absolute top-1 right-2 w-[2.5rem] h-[2.5rem] rounded-md border p-2 md:hidden">
         <svg width="auto" height="auto" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 3C1.22386 3 1 3.22386 1 3.5C1 3.77614 1.22386 4 1.5 4H13.5C13.7761 4 14 3.77614 14 3.5C14 3.22386 13.7761 3 13.5 3H1.5ZM1 7.5C1 7.22386 1.22386 7 1.5 7H13.5C13.7761 7 14 7.22386 14 7.5C14 7.77614 13.7761 8 13.5 8H1.5C1.22386 8 1 7.77614 1 7.5ZM1 11.5C1 11.2239 1.22386 11 1.5 11H13.5C13.7761 11 14 11.2239 14 11.5C14 11.7761 13.7761 12 13.5 12H1.5C1.22386 12 1 11.7761 1 11.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
       </button>
-      <div className={`bg-white  dark:bg-[#020202] border  min-w-[120px] flex flex-col items-center gap-[45px] right-0 fixed md:relative lg:fixed h-[100vh] top-0 px-2 z-50 md:z-0 ${!openMenu ? "right-[-180px] " : ""} md:right-auto md:bg-bgGrey md:border-none `}>
+      <div className={`bg-white  dark:bg-[#020202] border  min-w-[120px] flex flex-col items-center gap-[45px] right-0 fixed md:relative lg:fixed h-[100vh] pb-5 top-0 px-2 z-50 md:z-0 ${!openMenu ? "right-[-180px] " : ""} md:right-auto md:bg-bgGrey md:border-none `}>
         <Link href={"/"}>
           <div className="w-[3rem] h-[3rem] mt-8 hidden md:block ">
             <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
@@ -106,46 +100,28 @@ const SideBar = () => {
             );
           })}
           <div>
-       
+
             <label className="relative inline-flex items-center cursor-pointer ">
               <input type="checkbox" value="" className="sr-only peer" onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")} checked={resolvedTheme === "dark" ? true : false} />
               <div className="relative w-10 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#3e61baa2]"></div>
 
-            <div className="absolute  dark:right-[1px] ">
-              {resolvedTheme === "light" ? <Image src={sunlight} width={25} alt=""/> : <Image src={darkmoon}  width={15} alt=""/>}
-            </div>
+              <div className="absolute  dark:right-[1px] ">
+                {resolvedTheme === "light" ? <Image src={sunlight} width={25} alt="" /> : <Image src={darkmoon} width={15} alt="" />}
+              </div>
             </label>
           </div>
         </div>
-        <div className="flex flex-col justify-end h-full mb-6">
+        <div className="flex flex-col justify-end h-full mb-5 ">
 
-        <Profile
-          props={{
-            image: metamask,
-            buttonText: "Logout",
-          }}
+          <Profile
+            props={{
+              image: metamask,
+              buttonText: "Logout",
+            }}
           />
-          </div>
+        </div>
 
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent style={{ width: "300px", textAlign: "center", padding: "5vh" }} >
-            <DialogHeader className="flex items-start">
-              <DialogTitle className="text-textPrimary text-center font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl tracking-[-1.8px]">
-                Unsupported Network
-              </DialogTitle>
-            </DialogHeader>
-            <div>
-              <Button
-                variant={"primary"}
-                onClick={() => switchNetwork && switchNetwork(11155111)}
-                className="px-5 py-3 text-white"
-              >
-                Switch to Sepolia
-              </Button>
-            </div>
-          </DialogContent>
-
-        </Dialog>
+ 
       </div>
     </nav>
   );

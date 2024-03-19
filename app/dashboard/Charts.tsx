@@ -58,7 +58,7 @@ const data = chartData.map((value) => {
   return { name, value };
 }).reverse();
   return (
-    <div className="p-4">
+    <div className="p-4 dark:bg-[#020202]">
                     <div className="flex items-center justify-end">
                       <div className="flex gap-[10px] mr-5">
                         <Button

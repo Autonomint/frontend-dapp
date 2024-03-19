@@ -231,7 +231,7 @@ const page = () => {
             </div>
             <div className="flex flex-col md:flex-row w-full rounded-lg border border-lineGrey bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] dark:border-[#5B5B5B]">
               <FeesComp />
-              <div className="p-4 w-full md:w-[70%] bg-white dark:bg-[#141414]">
+              <div className="p-4 w-full md:w-[70%] bg-white dark:bg-[#020202]">
                   <div className="flex flex-col w-full bg-white md:max-w-sm dark:bg-[#141414] ">
                     <div className="relative flex items-center h-12 w-full p-1 mx-0 lg:mx-8 mt-4 bg-[#EEEEEE] dark:bg-[#0f0f0f] border dark:border-[#5B5B5B] rounded-[10px] shadow">
                       <div className="flex justify-center w-full">
@@ -498,7 +498,7 @@ const page = () => {
             ))}
           </div>
         </div>
-        <div className="">
+        <div className="overflow-hidden">
           <Charts  height={180} title={headline} />
         </div>
       </div>
