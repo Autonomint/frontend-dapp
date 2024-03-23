@@ -20,6 +20,9 @@ module.exports = {
       zIndex: {
         'max': 999999,
       },
+      spacing: {
+        'thumb-size': '12px', // Custom size for the thumb
+      },
       screens: {
         "2dppx": {
           raw: "(min-width: 1440px) and (min-resolution: 2dppx)",
@@ -57,5 +60,24 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),
+  function ({ addUtilities }) {
+    const newUtilities = {
+      '.range-thumb': {
+        // Use the custom spacing utility for the thumb size
+        '--thumb-size': 'var(--tw-spacing-thumb-size)',
+        // Apply the custom size to the thumb
+        '&::-webkit-slider-thumb': {
+          height: 'var(--thumb-size)',
+          width: 'var(--thumb-size)',
+        },
+        '&::-moz-range-thumb': {
+          height: 'var(--thumb-size)',
+          width: 'var(--thumb-size)',
+        },
+      },
+    }
+    addUtilities(newUtilities)
+  },
+],
 };

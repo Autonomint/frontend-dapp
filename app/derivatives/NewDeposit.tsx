@@ -79,6 +79,7 @@ import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "../utils/decodeEventLogsFromAbi";
 import Spinner from "@/components/ui/spinner";
 import { DEV_PROXY_AMINT_ADDRESS, DEV_PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
+import GradientContainer from "./GradientContainer";
 
 
 
@@ -130,6 +131,12 @@ const InitialformSchema = z.object({
 const NewDeposit = () => {
   // Define the initial state for the open variable for sheet opening and closing
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<number>(0);
+  const maxValue = 100; // Adjust based on your value range
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(Number(event.target.value)); // Convert input value to a number
+  };
   // Define the initial state for the tokensEnabled variable
   const [tokensEnabled, setTokensEnabled] = useState<TokensState>({
     USDT: true, // USDT token is initially enabled
@@ -205,6 +212,7 @@ const NewDeposit = () => {
       USDTDepositAmount: undefined,
     }
   );
+
 
   const { data: amintbal } = useBalance({
     address: DEV_PROXY_AMINT_ADDRESS ? address : undefined,
@@ -473,7 +481,7 @@ const NewDeposit = () => {
     // Handle errors during the CDS deposit process
     onError: (error) => {
       // console.log(error.message);
-      console.log("MESSAGE",error.cause);
+      console.log("MESSAGE", error.cause);
       // Show a custom toast notification for the error
       toast.custom(
         (t) => (
@@ -586,13 +594,13 @@ const NewDeposit = () => {
 
       // Retrieve the relevant data from the transaction logs
       const dataLogs =
-        chainId === 5 ? data.logs[data.logs.length-1].data : data.logs[data.logs.length-1].data;
+        chainId === 5 ? data.logs[data.logs.length - 1].data : data.logs[data.logs.length - 1].data;
       // Decode event logs using the provided ABI and event name
-              console.log("data logs -------", data.logs[data.logs.length-1].topics);
+      console.log("data logs -------", data.logs[data.logs.length - 1].topics);
       const { eventName, args } = decodeEventLogsFromAbi(
         cdsABI,
         //topic to decode event variables
-        data.logs[data.logs.length-1].topics ?? [],
+        data.logs[data.logs.length - 1].topics ?? [],
         "Deposit",
         dataLogs
       ) as { eventName: string; args: { depositVal: bigint } };
@@ -1065,14 +1073,14 @@ const NewDeposit = () => {
 
                     <PlusIcon width={16} height={16} />
                     <div className="flex flex-col  w-full  md:w-[48%] gap-[10px]">
-                    <div className="flex items-center justify-end gap-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="cursor-pointer" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
+                      <div className="flex items-center justify-end gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="cursor-pointer" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
 
-                      <a type="button" onClick={onWatchAssetUsdtClick} className="m-0 text-[12px] underline cursor-pointer ">Add TUSDT</a>
+                        <a type="button" onClick={onWatchAssetUsdtClick} className="m-0 text-[12px] underline cursor-pointer ">Add TUSDT</a>
 
-                      <a href={`https://sepolia.etherscan.io/address/${DEV_PROXY_TESTUSDT_ADDRESS}`}  className="m-0 text-[12px] underline " target="_blank">
-                        Mint TUSDT
-                      </a>
+                        <a href={`https://sepolia.etherscan.io/address/${DEV_PROXY_TESTUSDT_ADDRESS}`} className="m-0 text-[12px] underline " target="_blank">
+                          Mint TUSDT
+                        </a>
                       </div>
                       <FormField
                         control={form.control}
@@ -1293,74 +1301,84 @@ const NewDeposit = () => {
 
                     </div>
                   </div>
-                  <div className="flex gap-[10px] items-center">
-                    <div className="flex items-center ml-[4px]">
-                      <InfoCircledIcon width={18} height={18} />
-                    </div>
-                    <p className="min-[1440px]:text-base 2dppx:text-xs text-sm font-normal text-textGrey  dark:text-[#9E9E9E] text-center leading-none">
-                      Minimum {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"} Amount is{" "}
-                      <span className="font-medium text-textHighlight dark:text-[#ffff]">
-                        500 {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"}
-                      </span>
-                    </p>
-                  </div>
-                  <FormField
-                    control={form.control}
-                    name="lockInPeriod"
-                    render={({ field }) => (
-                      <FormItem>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Choose a Lock-In Period" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className="dark:bg-[#0F0F0F]">
-                            <SelectGroup className="dark:bg-[#0F0F0F]">
-                              <SelectLabel>Lock-In Period</SelectLabel>
-                              <SelectItem value="30">30 Days</SelectItem>
-                              <SelectItem value="60">
-                                60 Days (~2 Months)
-                              </SelectItem>
-                              <SelectItem value="120">
-                                120 Days (~4 Months)
-                              </SelectItem>
-                              <SelectItem value="180">
-                                180 Days (~6 Months)
-                              </SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
+                  <div className="flex w-full">
+                    <div className="flex flex-col w-full gap-4 ">
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="liquidationGains"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md p-2 min-[1440px]:p-4 2dppx:p-2">
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                            className="dark:bg-[#0F0F0F] dark:border-[#3A3A3A] dark:text-white"
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-textGrey dark:text-white">
-                            Opt in for liquidation gains
-                          </FormLabel>
+                      <div className="flex gap-[10px] items-center">
+                        <div className="flex items-center ml-[4px]">
+                          <InfoCircledIcon width={18} height={18} />
                         </div>
-                      </FormItem>
-                    )}
-                  />
+                        <p className="min-[1440px]:text-base 2dppx:text-xs text-sm font-normal text-textGrey  dark:text-[#9E9E9E] text-center leading-none">
+                          Minimum {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"} Amount is{" "}
+                          <span className="font-medium text-textHighlight dark:text-[#ffff]">
+                            500 {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"}
+                          </span>
+                        </p>
+                      </div>
+                      <FormField
+                        control={form.control}
+                        name="lockInPeriod"
+                        render={({ field }) => (
+                          <FormItem>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Choose a Lock-In Period" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent className="dark:bg-[#0F0F0F]">
+                                <SelectGroup className="dark:bg-[#0F0F0F]">
+                                  <SelectLabel>Lock-In Period</SelectLabel>
+                                  <SelectItem value="30">30 Days</SelectItem>
+                                  <SelectItem value="60">
+                                    60 Days (~2 Months)
+                                  </SelectItem>
+                                  <SelectItem value="120">
+                                    120 Days (~4 Months)
+                                  </SelectItem>
+                                  <SelectItem value="180">
+                                    180 Days (~6 Months)
+                                  </SelectItem>
+                                </SelectGroup>
+                              </SelectContent>
+                            </Select>
 
-                  <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="liquidationGains"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md p-2 min-[1440px]:p-4 2dppx:p-2">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                                className="dark:bg-[#0F0F0F] dark:border-[#3A3A3A] dark:text-white"
+                              />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                              <FormLabel className="text-textGrey dark:text-white">
+                                Opt in for liquidation gains
+                              </FormLabel>
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+                      <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
+                    </div>
+                    {/* <div className="py-2 ml-4 border rounded-lg shadow-lg basis-1/2">
+                      <div className="text-textPrimary dark:text-[#90AFFF] font-medium px-2">PNL Simulation</div>
+                      <GradientContainer />
+                    </div> */}
+
+                  </div>
+                  
                   {(Boolean(amintAmnt) || Boolean(usdtAmnt)) && Boolean(lockIn) ? (
                     <div className="min-[144px]:px-[15px] px-[10px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee] dark:bg-none dark:bg-[#0F0F0F]">
                       <div className="min-[144px]:py-[15px] py-[10px] flex items-center justify-between border-b border-lineGrey">
@@ -1426,16 +1444,17 @@ const NewDeposit = () => {
                   )}
 
 
+
                   <Button
                     type="submit"
                     variant={"primary"}
                     className="text-white"
                     //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                     disabled={
-                      (usdtAmountDepositedTillNow > usdtLimit && !amintApproved ) || !usdtApproved || isCdsDepositLoading
+                      (usdtAmountDepositedTillNow > usdtLimit && !amintApproved) || !usdtApproved || isCdsDepositLoading
                     }
                   >
-                    {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'} 
+                    {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}
                   </Button>
                 </div>
               </form>

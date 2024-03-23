@@ -17,7 +17,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { useCdsRedeemUsdt,useBorrowingContractRedeemYields,useAmintApprove,useAbondApprove ,cdsAddress,borrowingContractAddress} from '@/abiAndHooks';
+import { useCdsRedeemUsdt,useBorrowingContractRedeemYields,useAmintApprove,useAbondApprove,cdsAddress,borrowingContractAddress,useBorrowingContractGetAbondYields, abondAddress, amintAddress} from '@/abiAndHooks';
 import { Input } from "@/components/ui/input";
 import { Button } from '@/components/ui/button';
 import Note from '@/components/CustomUI/Note';
@@ -26,11 +26,22 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
-import { useAccount,useWaitForTransaction } from 'wagmi';
+import { useAccount,useWaitForTransaction,useBalance, useChainId } from 'wagmi';
 import Spinner from '@/components/ui/spinner';
+import { formatEther } from 'viem';
 const formSchema = z.object({
     inputCollateral: z.string(),
     collateralAmount: z
+        .number()
+        .positive({ message: "Value must be positive" })
+        .or(z.string())
+        .pipe(
+            z.coerce
+                .number()
+                .positive({ message: "Value must be positive" })
+                .min(0.02)
+        ),
+        outputCollateralAmount: z
         .number()
         .positive({ message: "Value must be positive" })
         .or(z.string())
@@ -57,9 +68,24 @@ export default function Redeem() {
             inputCollateral: undefined,
             collateralAmount: 0,
             outputCollateral: undefined,
+            outputCollateralAmount:0
         },
     });
-
+    const chainId = useChainId();
+    const { data:abondbalance } = useBalance({
+      address: abondAddress ? accountAddress : undefined,
+      token: abondAddress
+          ? abondAddress[chainId as keyof typeof abondAddress]
+          : undefined,
+      watch: true,
+  });
+  const { data:amintbalance } = useBalance({
+    address: amintAddress ? accountAddress : undefined,
+    token: amintAddress
+        ? amintAddress[chainId as keyof typeof amintAddress]
+        : undefined,
+    watch: true,
+});
   const toastId = useRef<string | number>("");
 
   const {
@@ -300,8 +326,37 @@ export default function Redeem() {
           );
         },
       });
-
+      const {data:outputData,refetch } = useBorrowingContractGetAbondYields({ args: [ accountAddress as `0x${string}` ,BigInt(Number(form.getValues("collateralAmount")) * 10**18)] }); 
       
+      useEffect(() => {
+        if(form.getValues("inputCollateral") === 'abond' && form.getValues("collateralAmount") > 0){
+          console.log(abondbalance?.formatted)
+
+          if(form.getValues("collateralAmount")> Number(abondbalance?.formatted.slice(0, 8))){
+            form.setError("collateralAmount",{message:"Insufficient Balance"});
+          }
+          else{
+
+            form.clearErrors("collateralAmount");
+            refetch();
+            if(outputData) form.setValue("outputCollateralAmount",Number(formatEther(outputData[0])));
+          }
+        }
+        else if( form.getValues("inputCollateral") === 'amint' && form.getValues("collateralAmount") > 0){
+          console.log(amintbalance?.formatted)
+          if(form.getValues("collateralAmount")> Number(amintbalance?.formatted.slice(0, 9))){
+            form.setError("collateralAmount",{message:"Insufficient Balance"});
+          }
+          else{
+            form.clearErrors("collateralAmount");
+            form.setValue("outputCollateralAmount",Number(form.getValues("collateralAmount")));
+          }
+        }
+        else{
+          form.setValue("outputCollateralAmount",0);
+        }
+      }, [form.watch("collateralAmount")]);
+
 
 
       const {
@@ -425,6 +480,8 @@ export default function Redeem() {
           );
         },
       });
+
+
     
       const {
         write: redeemEth,
@@ -556,13 +613,13 @@ export default function Redeem() {
 
         } else if (values.inputCollateral === 'abond') {
             console.log('redeem eth');
-           abondApproveWrite({
-            args: [
+            abondApproveWrite({
+              args: [
 
-              (borrowingContractAddress[11155111] as `0x${string}`),
-              BigInt(values.collateralAmount * 10**18),
-            ],
-          })
+                (borrowingContractAddress[11155111] as `0x${string}`),
+                BigInt(values.collateralAmount * 10**18),
+              ],
+            })
         }
     }
 
@@ -578,8 +635,9 @@ export default function Redeem() {
                     <FormField
                         control={form.control}
                         name="inputCollateral"
+                        
                         render={() => (
-                            <FormItem>
+                            <FormItem className='relative'>
                                 <Controller
                                     control={form.control}
                                     name="inputCollateral"
@@ -595,10 +653,13 @@ export default function Redeem() {
 
                                             }}
                                             value={field.value}
+                                            
                                         >
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Choose a Collateral" />
+                                          <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral")?"":"Input Type"}</label>
+                                          
+                                            <FormControl >
+                                                <SelectTrigger >
+                                                    <SelectValue  placeholder="Choose a Collateral" />
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
@@ -608,6 +669,7 @@ export default function Redeem() {
                                                     <SelectItem value="abond">ABOND</SelectItem>
                                                 </SelectGroup>
                                             </SelectContent>
+                                            
                                         </Select>
                                     )}
                                 />
@@ -621,6 +683,8 @@ export default function Redeem() {
                         name="collateralAmount"
                         render={({ field }) => (
                             <FormItem className="relative">
+<label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount")?"":"Input Amount"}</label>
+
                                 <FormControl>
                                     <Input
                                         type="number"
@@ -630,7 +694,9 @@ export default function Redeem() {
                                         {...field}
                                         value={Boolean(field.value) ? field.value : ""}
 
+
                                     ></Input>
+                                    
                                 </FormControl>
                                 <FormMessage className="dark:text-[#B43939]" />
                             </FormItem>
@@ -641,7 +707,7 @@ export default function Redeem() {
                         control={form.control}
                         name="outputCollateral"
                         render={() => (
-                            <FormItem>
+                            <FormItem className="relative">
                                 <Controller
                                     control={form.control}
                                     name="outputCollateral"
@@ -658,6 +724,8 @@ export default function Redeem() {
                                             }}
                                             value={field.value}
                                         >
+                                          <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400'>{!form.getValues("outputCollateral")?"":"Output Type"}</label>
+
                                             <FormControl>
                                                 <SelectTrigger>
                                                     <SelectValue placeholder="Choose a Collateral" />
@@ -677,6 +745,29 @@ export default function Redeem() {
                             </FormItem>
                         )}
                     />
+                        <FormField
+                        control={form.control}
+                        name="outputCollateralAmount"
+                        render={({ field }) => (
+                            <FormItem className="relative">
+                                          <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400'>{!form.getValues("outputCollateralAmount")?"":"Output Amount"}</label>
+
+                                <FormControl>
+                                    <Input
+                                        type="number"
+                                        min={0.02}
+                                        step={0.01}
+                                        placeholder="Output Amount"
+                                        {...field}
+                                        value={Boolean(field.value) ? field.value : ""}
+                                        disabled = {true}
+
+                                    ></Input>
+                                </FormControl>
+                                <FormMessage className="dark:text-[#B43939]" />
+                            </FormItem>
+                        )}
+                    />
 
 
                     <Note
@@ -686,9 +777,9 @@ export default function Redeem() {
                         type="submit"
                         variant={"primary"}
                         className="text-white"
-                        disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading  || abondApproveLoading || isAmintTransactionLoading || isAbondTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading}
+                        disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading  ||abondApproveLoading||isAbondTransactionLoading||  isAmintTransactionLoading ||  isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading}
                     >
-                        { isRedeemUsdt || isRedeemEthLoading ||amintApproveLoading  || abondApproveLoading|| isAmintTransactionLoading || isAbondTransactionLoading || isRedeemUsdtTransactionLoading ||isRedeemEthTransactionLoading ? <Spinner/> : "Redeem" }
+                        { isRedeemUsdt || isRedeemEthLoading ||amintApproveLoading ||abondApproveLoading||isAbondTransactionLoading|| isAmintTransactionLoading ||  isRedeemUsdtTransactionLoading ||isRedeemEthTransactionLoading ? <Spinner/> : "Redeem" }
                     </Button>
                 </form>
             </Form>

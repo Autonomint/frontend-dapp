@@ -17,10 +17,9 @@ import dynamic from 'next/dynamic'
 import eth from "@/app/assets/eth.svg";
 import usdt from "@/app/assets/tether-usdt.svg";
 import Image from 'next/image';
+import RatioPieChart from './RatioPieChart';
+import HeaderItems from '@/components/Header/HeaderItems';
 
-const RatioPieChart = dynamic(() => import('./RatioPieChart'), {
-  ssr: false,
-})
 const dasboardStatsItem = [
   {
     heading: "USDT",
@@ -122,31 +121,22 @@ const page = () => {
                         <div className='flex gap-2 text-2xl'>
                             <Image src={item.type === 'usdt' ? usdt : eth} alt="usdt" width={35} height={35} /> {item.type === 'usdt' ? 'USDT' : 'ETH'}
                         </div>
-                        <div className='grid grid-cols-3 gap-5 p-2 mt-2 '>
-                            <div >
-                                <p className='text-[#3A3A3A] text-sm mb-1 dark:text-[#EEEEEE]'>APY</p>
-                                <p className='text-xl font-medium'>0.00%</p>
-                            </div>
-                            <div>
-                                <p className='text-[#3A3A3A] text-sm mb-1 dark:text-[#EEEEEE]'>Withdraw Fee</p>
-                                <p className='text-xl font-medium'>0.00%</p>
-                            </div>
-                            <div>
-                                <p className='text-[#3A3A3A] text-sm mb-1 dark:text-[#EEEEEE]'>Withdraw Fee</p>
-                                <p className='text-xl font-medium'>0.00%</p>
-                            </div>
-                            <div>
-                                <p className='text-[#3A3A3A] text-sm mb-1 dark:text-[#EEEEEE]'>Limit</p>
-                                <p className='text-xl font-medium'>0.00%</p>
-                            </div>
-                            <div>
-                                <p className='text-[#3A3A3A] text-sm mb-1 dark:text-[#EEEEEE]'>Collateral</p>
-                                <p className='text-xl font-medium'>0.00%</p>
-                            </div>
-                            <div>
-                                <p className='text-[#3A3A3A] text-sm mb-1 dark:text-[#EEEEEE]'>APY</p>
-                                <p className='text-xl font-medium'>0.00%</p>
-                            </div>
+                        <div className='flex px-4 py-5 '>
+                        <HeaderItems
+                props={{
+                  textHeadline: "Withdraw Fee",
+                  textValue:"2.00%",
+                  className: " ",
+                }}
+              />  <HeaderItems
+                props={{
+                  textHeadline: "Redemption Time",
+                  textValue:"-",
+                  className: " ",
+                }}
+              />
+                         
+                            
                         </div>
         
         
@@ -161,10 +151,10 @@ const page = () => {
                                 <p className="font-medium text-2xl text-[#47D58C]">${formatNumber(item.value)}</p>
                               </div>
                               <div className="flex flex-col gap-2">
-                                <h5 className="text-[#C4C4C4] text-sm font-normal dark:text-[#EEEEEE]">
+                                <h5 className="text-[#545454] text-sm font-normal dark:text-[#EEEEEE]">
                                   Target TVL
                                 </h5>
-                                <p className="font-medium text-2xl text-[#EEEEEE] dark:text-[#EEEEEE]">${formatNumber(item.limit)}</p>
+                                <p className="font-medium text-2xl text-[#545454] dark:text-[#EEEEEE]">${formatNumber(item.limit)}</p>
                               </div>
                             </div>
                             <div className="h-full ">

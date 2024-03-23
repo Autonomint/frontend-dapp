@@ -1148,6 +1148,20 @@ export const borrowingContractABI = [
   {
     stateMutability: 'view',
     type: 'function',
+    inputs: [
+      { name: 'user', internalType: 'address', type: 'address' },
+      { name: 'aBondAmount', internalType: 'uint128', type: 'uint128' },
+    ],
+    name: 'getAbondYields',
+    outputs: [
+      { name: '', internalType: 'uint128', type: 'uint128' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     inputs: [],
     name: 'getLTV',
     outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
@@ -6155,6 +6169,36 @@ export function useBorrowingContractEthValueRemainingInWithdraw<
     abi: borrowingContractABI,
     address: borrowingContractAddress[11155111],
     functionName: 'ethValueRemainingInWithdraw',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getAbondYields"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ */
+export function useBorrowingContractGetAbondYields<
+  TFunctionName extends 'getAbondYields',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[11155111],
+    functionName: 'getAbondYields',
     ...config,
   } as UseContractReadConfig<
     typeof borrowingContractABI,

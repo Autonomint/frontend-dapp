@@ -280,6 +280,20 @@ export const BorrowingABI = [
     type: "function",
   },
   {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      { internalType: "uint128", name: "aBondAmount", type: "uint128" },
+    ],
+    name: "getAbondYields",
+    outputs: [
+      { internalType: "uint128", name: "", type: "uint128" },
+      { internalType: "uint256", name: "", type: "uint256" },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "getLTV",
     outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
