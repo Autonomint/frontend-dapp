@@ -34,7 +34,7 @@ import Link from "next/link";
 import CustomToast from "../CustomUI/CustomToast";
 import Note from "../CustomUI/Note";
 import * as z from "zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -468,70 +468,93 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
   }, [transactionSuccess]);
 
   return (
-    <div className="flex justify-between items-center mb-[30px]">
-      <div className="flex flex-col gap-[8px] min-[1440px]:gap-[15px] 2dppx:gap-[8px]">
-        <h2 className="text-textPrimary dark:text-[#90AFFF] leading-none font-medium text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-3xl">
-          Your Deposits
-        </h2>
-        <p className="text-textSecondary dark:text-[#EEEEEE] leading-none 2dppx:text-sm text-sm min-[1440px]:text-base">
-          A list of all the deposits you have made.
-        </p>
-      </div>
+    <div className="flex items-center justify-between ">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} action="#">
+          <div className="flex items-center justify-end gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
+            <a type="button" onClick={onWatchAssetAmintClick} className="m-0 text-[12px] underline rounded-md ">Add USDa</a>
+          </div>
+          <div className="flex flex-col ">
+            <div className="flex flex-col basis-1/2 min-[1440px]:pt-[30px] pt-[10px] min-[1440px]:gap-[20px] min-[1280px]:gap-[16px] 2dppx:gap-[10px] gap-[10px]">
+              <div className='relative  dark:bg-[#020202]'>
+                <FormField
+                  control={form.control}
+                  name="collateralAmount"
+                  render={({ field }) => (
+                    <FormItem className="relative ">
+                      {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
 
-      <Dialog
-        open={open}
-        onOpenChange={() => {
-        }}
-        modal={true}
-      >
-        <DialogTrigger asChild>
-          <Button
-            type="button"
-            variant={"primary"}
-            size={"full"}
-            className="flex gap-[10px] items-center justify-center"
-            onClick={() => setOpen(!open)}
-          >
-            <Image src={addIcon} alt="add icon" width={24} height={24}></Image>
-            <p className="text-white bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] text-transparent font-semibold text-[11px] md:text-base">
-              New Deposit
-            </p>
-          </Button>
-        </DialogTrigger>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          step="any"
+                          placeholder="Input Amount"
+                          {...field}
+                          value={Boolean(field.value) ? field.value : ""}
+                          className='py-10 rounded-xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
+                          style={{
+                            appearance: 'textfield',
+                            MozAppearance: 'textfield',
+                            WebkitAppearance: 'none',
+                            margin: 0
+                          }}
+                        ></Input>
 
-        <DialogContent className={"max-w-[672px]"}>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} action="#">
-              <div className="flex justify-end w-full">
-                <DialogClose asChild>
-                  <Button
-                    variant={"ghostOutline"}
-                    size={"primary"}
-                    className="flex gap-[10px] border border-borderGrey "
-                    onClick={() => setOpen(!open)}
-                  >
-                    <Cross2Icon className="w-4 h-4" />
-                    <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] dark:text-[#EEEEEE] font-semibold text-base">
-                      Close
-                    </p>
-                  </Button>
-                </DialogClose>
+                      </FormControl>
+                      <FormMessage className="dark:text-[#B43939]" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+
+                  control={form.control}
+                  name="collateral"
+
+                  render={() => (
+                    <FormItem className='absolute top-[20%] right-2  basis-2/5 dark:bg-[#020202] w-28'>
+                      <Controller
+                        control={form.control}
+                        name="collateral"
+                        render={({ field }) => (
+                          <Select
+                            onValueChange={(value) => {
+                              form.setValue("collateralAmount", 0);
+                              if (value === 'amint') {
+                                form.setValue('collateral', 'usdt');
+                              } else if (value === 'abond') {
+                                form.setValue('collateral', 'eth');
+                              }
+                              field.onChange(value)
+
+                            }}
+                            value={field.value}
+                          >
+                            <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateral") ? "" : "Input Type"}</label>
+
+                            <FormControl >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>Collateral</SelectLabel>
+                                <SelectItem value="eth">ETH</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+
+                          </Select>
+                        )}
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
 
-              <DialogHeader className="flex items-start">
-                <DialogTitle className="text-textPrimary font-medium min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl tracking-[-1.8px] leading-none ">
-                  Make a New Deposit
-                </DialogTitle>
-              </DialogHeader>
-              <div className="flex items-center justify-end gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
-                <a type="button" onClick={onWatchAssetAmintClick} className="m-0 text-[12px] underline rounded-md ">Add AMINT</a>
-              </div>
-              <div className="flex ">
 
-
-                <div className="flex flex-col basis-1/2 min-[1440px]:pt-[30px] pt-[15px] min-[1440px]:gap-[20px] min-[1280px]:gap-[16px] 2dppx:gap-[10px] gap-[10px]">
-                  <FormField
+              {/* <FormField
                     control={form.control}
                     name="collateral"
                     render={({ field }) => (
@@ -578,129 +601,97 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                         <FormMessage className="dark:text-[#B43939] text-[10px]" />
                       </FormItem>
                     )}
-                  />
+                  /> */}
 
 
-                  <div className="px-[6px] pt-2 mt-4 flex gap-[10px] items-center">
-                    <InfoCircledIcon width={18} height={18} />
-                    <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm font-normal text-textGrey dark:text-[#DEDEDE] ">
-                      Minimum Collateral Amount is{" "}
-                      <span className="font-medium text-textHighlight dark:text-[#ffff]">
-                        0.02 ETH
-                      </span>
-                    </p>
+              <div className="px-[1px] flex gap-[10px] items-center">
+                <InfoCircledIcon width={18} height={18} />
+                <p className=" min-[1440px]:text-base 2dppx:text-sm text-[13px] font-normal text-textGrey dark:text-[#DEDEDE] ">
+                  Minimum Collateral Amount is{" "}
+                  <span className="font-medium text-textHighlight dark:text-[#ffff]">
+                    0.02 ETH
+                  </span>
+                </p>
+              </div>
 
+              
 
-                  </div>
-
-                  <div className="flex flex-col">
-                    <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                      <p className=" min-[1440px]:text-base text-sm 2dppx:text-sm text-textSecondary dark:text-[#9E9E9E]">
-                        Amount of Amint that will be minted
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger type="button">
-                              <InfoCircledIcon className="w-4 h-4 ml-2" />
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Option fees is excluded</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </p>
-                      <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
-                        {amintToBeMinted}
-                      </p>
-                    </div>
-                    <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                      <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary dark:text-[#9E9E9E]">
-                        Options Fees
-                      </p>
-                      <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
-                        {optionFees}
-                      </p>
-                    </div>
-                    <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                      <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary dark:text-[#9E9E9E]">
-                        Downside Protection Amount
-                      </p>
-                      <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
-                        {downsideProtectionAmnt}
-                      </p>
-                    </div>
-                  </div>
-                  <Note
-                    note="Note: Only 50% of the amount is retrievable on initial
-                  withdrawal. For 2nd 50% of amount, you will be getting
-                  Amint and your collateral can be withdrawn after a
-                  month by returning Amint."
-                  />
-                  <Button
-                    type="submit"
-                    variant={"primary"}
-                    className="text-white"
-                    disabled={isDepositsLoading || isDepositHashsLoading || disabled}
-                  >
-                    {isDepositsLoading || isDepositHashsLoading ? <Spinner /> : 'Confirm Deposit'}
-                  </Button>
+              <div className="flex flex-col gap-2">
+                <div className="text-sm text-textGrey dark:text-[#DEDEDE] ">
+                Select upside given
                 </div>
-                {/* <Divider className='w-[1px] h-auto mx-4' /> */}
+                <div className="flex gap-4">
+                  <div onClick={()=>form.setValue("strikePrice",5)} className={`p-1 ${form.getValues("strikePrice")==5?"border-blue-400 text-blue-400":"dark:border-[#DEDEDE] text-textGrey dark:text-[#DEDEDE]"} text-sm border w-[3rem] text-center rounded-md cursor-pointer `}>5%</div>
+                  <div onClick={()=>form.setValue("strikePrice",10)} className={`p-1 ${form.getValues("strikePrice")==10?"border-blue-400 text-blue-400":"dark:border-[#DEDEDE] text-textGrey dark:text-[#DEDEDE]"} text-sm border w-[3rem] text-center rounded-md cursor-pointer `}>10%</div>
+                </div>
+              </div>
 
-                <div className="flex flex-col h-full py-4 mt-4 ml-4 border rounded-lg shadow-md basis-1/2">
-                  <div className="px-2 ">
-                    <FormField
-                      control={form.control}
-                      name="strikePrice"
-                      render={({ field: { value, onChange } }) => (
-                        <FormItem>
-                          <FormLabel className="min-[1440px]:mb-[10px] 2dppx:mb-1 mb-1">
-                            <p className=" min-[1440px]:text-sm 2dppx:text-sm text-sm font-medium text-textGrey min-[1440px]:mb-4 2dppx:mb-3 mb-3 dark:text-[#DEDEDE]">
-                              Select Strike Price for call options.
-                            </p>
-                          </FormLabel>
-                          <FormControl>
-                            <Slider
-                              defaultValue={[value]}
-                              onValueChange={(vals) => {
-                                setChartStrikePrice(vals[0]==5?1:vals[0]==10?2:vals[0]==15?3:vals[0]==20?4:5);
-                                onChange(vals[0]);
-                              }}
-                              min={5}
-                              step={5}
-                              max={25}
-                              className="mb-[10px]"
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <div className="w-full flex justify-between min-[1440px]:mt-[10px] mt-2 2dppx:mt-2">
-                      <p className=" text-[12px]">
-                        05
-                      </p>
-                      <p className="text-[12px]">
-                        10
-                      </p>
-                      <p className="text-[12px]">
-                        15
-                      </p>
-                      <p className="text-[12px]">
-                        20
-                      </p>
-                      <p className="text-[12px]">
-                        25
-                      </p>
-                    </div>
-                  </div>
-                  <div className="justify-end h-full py-4 pr-2 mt-5">
-                    <PnlChart currentPrice={Number((ethPrice??0n)/100n)} collateralAmount ={form.getValues("collateralAmount")} strikePrice ={chartstikePrice} />
+              <div className="flex flex-col">
+                {/* <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
+                  <p className=" min-[1440px]:text-base text-sm 2dppx:text-sm text-textSecondary dark:text-[#9E9E9E]">
+                    Amount of Amint that will be minted
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger type="button">
+                          <InfoCircledIcon className="w-4 h-4 ml-2" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Option fees is excluded</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </p>
+                  <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
+                    {amintToBeMinted}
+                  </p>
+                </div> */}
+                <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
+                  <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary dark:text-[#9E9E9E]">
+                    Options Fees
+                  </p>
+                  <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
+                    {optionFees}
+                  </p>
+                </div>
+                <div className="flex justify-between px-4 py-[10px] border-lineGrey">
+                  <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary dark:text-[#9E9E9E]">
+                    Downside Protection Amount
+                  </p>
+                  <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
+                    {downsideProtectionAmnt}
+                  </p>
+                </div>
+              </div>
+
+              <div className='relative rounded-xl dark:bg-[#020202] border  py-5 px-2'>
+                <div>
+                  <div className='text-sm text-textGrey font-medium dark:text-[#FFFF] flex justify-between'>
+                    <div className='p-1 mt-2 basis-3/5'>{amintToBeMinted}</div>
+                    <div className='w-24 p-2 px-3 mr-1 text-center border rounded-lg '>USDa</div>
                   </div>
                 </div>
               </div>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
+
+
+              <Note
+                note="Note: Only 50% of the amount is retrievable on initial
+                  withdrawal. For 2nd 50% of amount, you will be getting
+                  Amint and your collateral can be withdrawn after a
+                  month by returning Amint."
+              />
+              <Button
+                type="submit"
+                variant={"primary"}
+                className="text-white"
+                disabled={isDepositsLoading || isDepositHashsLoading || disabled}
+              >
+                {isDepositsLoading || isDepositHashsLoading ? <Spinner /> : 'Confirm Deposit'}
+              </Button>
+            </div>
+            {/* <Divider className='w-[1px] h-auto mx-4' /> */}
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };

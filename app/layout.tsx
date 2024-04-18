@@ -42,8 +42,8 @@ export default function RootLayout({
             <WalletProvider>
               <QueryProvider>
 
-                <SideBar />
-                <div className="h-full w-full basis-full md:basis-[90%] px-1 mx-0  flex flex-col lg:pb-4 xl:pb-6  xl:pr-6 lg:pr-4">
+                {/* <SideBar /> */}
+                <div className="flex flex-col w-full h-full mx-0 basis-full ">
                   <NavBar />
                   {children}
                 </div>

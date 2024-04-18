@@ -60,13 +60,11 @@ const DepositAndWithDrawTable = ({
         </TableRow>
       </TableHeader>
 
-          <TableBody>
-            {/* if there is tableData map over it */}
-            {tableData && tableData?.map((details, index) => (
-              // Iterate over each element in the tableData array
-              <TableRows  key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} handleRefetch={handleRefetch} />
-            ))}
-          </TableBody>
+      <TableBody>
+        {tableData && tableData?.map((details, index) => (
+          <TableRows key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} handleRefetch={handleRefetch} />
+        ))}
+      </TableBody>
         
       {
         sheetDetails && <Withdraw
@@ -74,7 +72,7 @@ const DepositAndWithDrawTable = ({
           sheetOpen={sheetOpen}
           handleSheetOpenChange={setSheetOpen}
           handleRefetch={handleRefetch}
-          />
+        />
       }
     </Table>
   );

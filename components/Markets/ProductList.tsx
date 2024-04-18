@@ -1,5 +1,5 @@
-import { ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
 import React from "react";
+import { ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import uniswap from "@/app/assets/uni.svg";
@@ -20,12 +20,12 @@ const ProductList = () => {
   const [open2, setOpen2] = React.useState(false);
   return (
     <div className="flex flex-row gap-6 min-[1440px]:gap-3 items-center 2dppx:gap-6 flex-wrap lg:flex-nowrap">
-      <div className="flex flex-col md:flex-row w-full overflow-x-hidden lg:w-[100%] gap-6 min-[1440px]:gap-3 2dppx:gap-6">
-        <p className="flex items-center gap-2 basis-1/5 whitespace-nowrap">
+      <div className="flex flex-col  w-full overflow-x-hidden lg:w-[100%] gap-6 min-[1440px]:gap-3 2dppx:gap-6">
+        <p className="flex items-center gap-2 font-semibold basis-1/5 whitespace-nowrap">
           AMINT can be bought from <ArrowRightIcon width={16} height={16} />
         </p>
 
-        <div className="flex basis-4/5 min-w-[10rem] gap-2 overflow-x-scroll lg:overflow-auto lg:gap-5">
+        <div className="flex flex-wrap  min-w-[10rem] gap-2 overflow-x-scroll lg:overflow-auto lg:gap-5">
           
           <Button 
            variant={"secondary"}

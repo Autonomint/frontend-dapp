@@ -9,7 +9,7 @@ import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import Image from "next/image";
 
 import DepositAndWithDrawTable from "@/components/Table/OurTable";
-import { useAccount, useChainId,ConnectorData } from "wagmi";
+import { useAccount, useChainId, ConnectorData } from "wagmi";
 import {
   abondAddress,
   amintAddress,
@@ -20,6 +20,16 @@ import displayNumberWithPrecision from "@/app/utils/precision";
 import { formatEther } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import { error } from "console";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { Button } from "../ui/button";
 
 const dasboardStatsItem = [
   {
@@ -50,9 +60,10 @@ const dasboardStatsItem = [
 
 const WalletOrContent = () => {
   // destructure isConnected and address from useAccount hook of wagmi
-  const { isConnected, address,connector:activeConnector } = useAccount();
+  const { isConnected, address, connector: activeConnector } = useAccount();
   const chainId = useChainId();
   const queryClient = useQueryClient();
+  const [open2, setOpen2] = React.useState(false);
   // manage dashboardStats items
   const [dashboardStats, setDashboardStats] = useState(dasboardStatsItem);
   // manage refetching
@@ -155,24 +166,24 @@ const WalletOrContent = () => {
       updatedStats[0].value =
         chainId === 5 || chainId === 11155111
           ? `$${parseFloat(
-              (
-                (depositorData.totalDepositedAmount *
-                  Number(ethPriceNow)) /
-                100
-              ).toString()
-            ).toFixed(2)}`
+            (
+              (depositorData.totalDepositedAmount *
+                Number(ethPriceNow)) /
+              100
+            ).toString()
+          ).toFixed(2)}`
           : `$${parseFloat(
-              (
-                (depositorData.totalDepositedAmountInEthereum *
-                  Number(ethPriceNow)) /
-                100
-              ).toString()
-            ).toFixed(2)}`;
-                  console.log(updatedStats[0].value)
+            (
+              (depositorData.totalDepositedAmountInEthereum *
+                Number(ethPriceNow)) /
+              100
+            ).toString()
+          ).toFixed(2)}`;
+      console.log(updatedStats[0].value)
       // Update the value for the second stat item
       updatedStats[1].value =
         chainId === 5 || chainId === 11155111
-          ?( parseFloat(depositorData.totalAmint)).toFixed(2)
+          ? (parseFloat(depositorData.totalAmint)).toFixed(2)
           : parseFloat(depositorData.totalAmint).toFixed(2);
 
       // Update the value for the third stat item
@@ -183,7 +194,7 @@ const WalletOrContent = () => {
 
       // Update the subheading highlight based on the chainId
       updatedStats[0].subheadingHighlight =
-        chainId ===5 || chainId === 11155111
+        chainId === 5 || chainId === 11155111
           ? depositorData.totalIndex
           : depositorData.totalIndex;
 
@@ -212,41 +223,55 @@ const WalletOrContent = () => {
   return (
     <>
       {isConnected ? (
-        <div className="relative p-2 xl:p-6 sm:p-2 rounded-[10px] bg-white  dark:bg-[#141414] dark:shadow-none  shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden h-full min-h-[90vh] md:min-h-[82vh]">
-          
-          <div className="z-10 flex flex-row flex-wrap items-center justify-between w-full gap-1 mt-3 sm:gap-2 lg:gap-4 xl:gap-7 lg:flex-nowrap">
-            {dashboardStats.map((item, index) => (
-              // Render a div for each item in the dashboardStats array
-              <div
-                key={`index${item.heading}`}
-                className="flex border border-lineGrey dark:border-[#5B5B5B] rounded-lg w-full my-1 sm:w-[49%]"
-              >
-                <DashboardStatsItem
-                  props={{
-                    // Pass the heading, value, and other props to the DashboardStatsItem component
-                    heading: item.heading,
-                    value: item.value,
-                    showSubHeading: true,
-                    subheadingBefore: item.subheadingBefore,
-                    subheadingHighlight: item.subheadingHighlight,
-                    subheadingAfter: item.subheadingAfter,
-                    tokenAddress: item.tokenAddress,
-                  }}
+        <div className="relative p-2 sm:p-2 rounded-[10px] bg-white  dark:bg-[#141414] dark:shadow-none flex flex-col self-stretch overflow-hidden h-full ">
+
+          <CreateNewDeposit handleRefetch={handleRefetch} />
+          <div className="flex justify-end my-2">
+            <Button variant={"ghostOutline"}
+              size={"primary"}
+              className="border border-borderGrey" onClick={() => setOpen2(!open2)} >Open Positions</Button>
+
+          </div>
+          {/* Table Component */}
+
+          <Dialog open={open2} onOpenChange={setOpen2} >
+            <DialogContent className="max-w-[800px] pb-5">
+              <div className="flex justify-end w-full ">
+                <DialogClose asChild>
+                  <Button
+                    variant={"ghostOutline"}
+                    size={"primary"}
+                    className="flex gap-[10px] border border-borderGrey "
+                  >
+                    <Cross2Icon className="w-4 h-4" />
+                    <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
+                      Close
+                    </p>
+                  </Button>
+                </DialogClose>
+              </div>
+              <DialogHeader className="flex items-start">
+                <DialogTitle className="text-textPrimary  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl ">
+                  <div className="flex flex-col gap-[10px] ">
+                    <h2 className="text-textPrimary dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
+                      Your Deposits
+                    </h2>
+                    <p className="text-textSecondary dark:text-[#EEEEEE]  text-sm min-[1440px]:text-base 2dppx:text-xs">
+                      A list of all the deposits you have made.
+                    </p>
+                  </div>
+                </DialogTitle>
+              </DialogHeader>
+              <div className=" overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto">
+
+                <DepositAndWithDrawTable
+                  tableData={deposits}
+                  handleRefetch={handleRefetch}
                 />
               </div>
-            ))}
-          </div>
-          <Divider />
-          {/* Deposit Component */}
-          <CreateNewDeposit handleRefetch={handleRefetch} />
-          {/* Table Component */}
-          <div className="mb-10 overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto">
+            </DialogContent>
+          </Dialog>
 
-          <DepositAndWithDrawTable
-            tableData={deposits}
-            handleRefetch={handleRefetch}
-            />
-            </div>
         </div>
       ) : (
         <ConnectWallet />
