@@ -182,13 +182,13 @@ export default function LeaderTable() {
         if (sortField) {
           sorted.sort((a, b) => (a[sortField] > b[sortField]) ? 1 : -1);
         }
-      
+    //  
         setSortedData(sorted.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage));
       }, [tableData, currentPage, sortField]);
     return (
         <div>
             <div>
-                <div className='p-1 bg-white border'>
+                <div className='p-1 bg-white dark:bg-[#141414] border rounded-lg'>
                     <Table>
                         <TableHeader>
                             <TableRow className='bg-[linear-gradient(180deg,_#00679F_0%,#041A50_100%)] dark:bg-none dark:bg-[#1a1a1a]'>
@@ -205,7 +205,15 @@ export default function LeaderTable() {
                         <TableBody>
                             {
                                 sortedData.map((data, index) => (
-                                    <TableRow key={index} className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer">
+                                    <TableRow key={index} className={
+                                        ` ${index === 0 ? 'bg-[#84ff9c] dark:bg-[#71e889]' :
+                                        index === 1 ? 'bg-[#99fdad] dark:bg-[#71e889]':
+                                        index === 2 ? 'bg-[#b5ffc4] dark:bg-[#71e889]':
+                                        index === 3 ? 'bg-[#d6ffdf] dark:bg-[#71e889]':
+                                        index === 4 ? 'bg-[#f1fff4] dark:bg-[#71e889]':
+                                         'bg-[#F7FAFC] dark:bg-[#1a1a1a] dark:bg-[#1a1a1a]'}
+                                        hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer`
+                                        }>
                                         <TableCell className="w-3 text-borderGrey dark:text-[#EEEEEE]">
                                             {data.sno}
                                         </TableCell>

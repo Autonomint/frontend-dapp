@@ -120,7 +120,6 @@ const InitialformSchema = z.object({
     .or(z.string())
     .pipe(z.coerce.number().gte(0, { message: "Value must be greater than 0" }))
     .optional(),
-  CollateralType: z.string(),
   lockInPeriod: z.string(),
   liquidationGains: z.boolean(),
 });
@@ -130,7 +129,11 @@ const InitialformSchema = z.object({
 
 
 
-const NewDeposit = () => {
+const NewDeposit = ({
+openDeposits
+}: {
+  openDeposits: Function;
+})=> {
   // Define the initial state for the open variable for sheet opening and closing
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<number>(0);
@@ -139,7 +142,8 @@ const NewDeposit = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(Number(event.target.value)); // Convert input value to a number
   };
-  const [inputTypes, setInputTypes] = useState([1]);
+
+
   // Define the initial state for the tokensEnabled variable
   const [tokensEnabled, setTokensEnabled] = useState<TokensState>({
     USDT: true, // USDT token is initially enabled
@@ -161,7 +165,6 @@ const NewDeposit = () => {
       USDTDepositAmount: undefined,
       COMPDepositAmount: undefined,
       USDCDepositAmount: undefined,
-      CollateralType: "usdt",
       lockInPeriod: undefined,
       liquidationGains: false,
     },
@@ -361,6 +364,17 @@ const NewDeposit = () => {
         },
         { duration: 5000 }
       );
+      const liqAmnt =
+        ((Number(amintAmnt ? amintAmnt : 0) + Number(usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
+      ConfirmDeposit?.({
+        args: [
+          BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
+          BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
+          liquidationGains,
+          liquidationGains ? parseUnits(liqAmnt.toString(), 6) : 0n,
+        ],
+      });
+
     },
   });
 
@@ -404,6 +418,7 @@ const NewDeposit = () => {
 
       // Reset form fields and state after the mutation is completed
       setOpen(false);
+      openDeposits(true);
       reset?.();
       amintReset?.();
       form.reset();
@@ -682,6 +697,7 @@ const NewDeposit = () => {
       );
       //closing sheet so that user can click on the links from the toast
       // setOpen(false);
+
     },
   });
 
@@ -738,6 +754,27 @@ const NewDeposit = () => {
         },
         { duration: 5000 }
       );
+
+      if (form.getValues("USDCDepositAmount") && (usdtAmnt ?? 0) > 0) {
+        usdtWrite({
+          args: [
+            (cdsAddress[11155111] as `0x${string}`),
+            BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
+          ],
+        })
+      }
+      else {
+        const liqAmnt =
+          ((Number(amintAmnt ? amintAmnt : 0) + Number(usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
+        ConfirmDeposit?.({
+          args: [
+            BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
+            BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
+            liquidationGains,
+            liquidationGains ? parseUnits(liqAmnt.toString(), 6) : 0n,
+          ],
+        });
+      }
     },
   });
 
@@ -775,22 +812,25 @@ const NewDeposit = () => {
         );
         return;
       }
+      else{
+        amintApprove({
+          args: [
+            (cdsAddress[11155111] as `0x${string}`),
+            BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
+          ],
+        })
+      }
     }
-    const liqAmnt =
-      ((Number(amintAmnt ? amintAmnt : 0) + Number(usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
-    // call the CdsDeposit function from blockchain with dynamic args
-    try {
-      ConfirmDeposit?.({
+    else{
+      usdtWrite({
         args: [
+          (cdsAddress[11155111] as `0x${string}`),
           BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
-          BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
-          liquidationGains,
-          liquidationGains ? parseUnits(liqAmnt.toString(), 6) : 0n,
         ],
-      });
-    } catch (e) {
-      console.log(e);
+      })
     }
+
+
 
   }
 
@@ -932,6 +972,8 @@ const NewDeposit = () => {
 
   }, [form.watch("USDTDepositAmount"), form.watch("AmintDepositAmount")])
 
+  const [inputTypes, setInputTypes] = useState([1]);
+  const inputOptions = ["AmintDepositAmount", "USDTDepositAmount"];
 
   return (
     <div className="flex items-center justify-between">
@@ -958,164 +1000,82 @@ const NewDeposit = () => {
 
             <div className="flex flex-col min-[1440px]:pt-[10px] 2dppx:pt-[15px] pt-[10px] min-[1440px]:gap-[20px] 2dppx:gap-[10px] min-[1280px]:gap-[16px] gap-[10px]">
               <div className="flex flex-col md:flex-row gap-[10px] items-center w-full justify-between ">
-                <div className="flex w-full">
-                  <div className="flex flex-wrap w-full gap-2">
-                  {
-                    inputTypes.map((inputType, index) => (
-                      <div className={`relative min-w-40 max-w-full ${inputTypes.length==1?"w-full":""} dark:bg-[#020202]`}>
+                {
+                  usdtAmountDepositedTillNow < usdtLimit ? ("") : (
+                    <div>
                       <FormField
                         control={form.control}
+                        disabled={
+                          usdtAmountDepositedTillNow < usdtLimit ? true : false
+                        }
+
                         name="AmintDepositAmount"
                         render={({ field }) => (
-                          <FormItem className="relative ">
-                            {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
-  
+                          <FormItem className={`${usdtAmountDepositedTillNow < usdtLimit ? "invisible w-full md:w-[48%]" : ""}  `}>
                             <FormControl>
-                              <Input
-                                type="number"
-                                step="any"
-                                placeholder="Input Amount"
-                                {...field}
-                                value={Boolean(field.value) ? field.value : ""}
-                                className='py-10 rounded-xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
-                                style={{
-                                  appearance: 'textfield',
-                                  MozAppearance: 'textfield',
-                                  WebkitAppearance: 'none',
-                                  margin: 0
-                                }}
-                              ></Input>
-  
-                            </FormControl>
-                            <FormMessage className="dark:text-[#B43939]" />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-  
-                        control={form.control}
-                        name="CollateralType"
-                        render={() => (
-                          <FormItem className='absolute top-[20%] right-2  basis-2/5 dark:bg-[#020202] w-24'>
-                            <Controller
-                              control={form.control}
-                              name="CollateralType"
-                              render={({ field }) => (
-                                <Select
-                                  onValueChange={(value) => {
-                                    form.setValue("AmintDepositAmount", 0);
-                                    if (value === 'amint') {
-                                      form.setValue('CollateralType', 'usdt');
-                                    } else if (value === 'abond') {
-                                      form.setValue('CollateralType', 'eth');
+                              <div className="relative">
+                                <div className="relative">
+                                  <Input
+                                    inputMode="numeric"
+                                    pattern="[0-9]*"
+                                    type="text"
+                                    className="lock px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-0 peer"
+                                    placeholder=""
+                                    {...field}
+                                    value={field.value ?? ""}
+                                    min={500}
+                                  ></Input>
+
+                                  <label
+                                    htmlFor="amount_of_amint"
+                                    className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                                  >
+                                    Deposit AMINT
+                                  </label>
+
+                                </div>
+                                <div className="absolute top-0 right-0 flex items-center h-full">
+                                  <Button
+                                    type="button"
+                                    variant={"outline"}
+                                    className="z-20 text-xs rounded-r-md"
+                                    disabled={
+                                      usdtAmountDepositedTillNow < usdtLimit
+                                        ? true
+                                        : false
                                     }
-                                    field.onChange(value)
-  
-                                  }}
-                                  value={field.value}
-                                >
-                                  <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("CollateralType") ? "" : "Input Type"}</label>
-                                  <label onClick={() => {console.log(index,inputTypes); setInputTypes(inputTypes.filter(num => num !== inputType))}} className=" border border-gray-600 rounded-full bg-white dark:bg-[#141414] absolute -right-1 -top-[7px]"> <Cross2Icon/></label>
-                                  <FormControl >
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Select" />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent>
-                                    <SelectGroup>
-                                      <SelectLabel>Collateral</SelectLabel>
-                                      <SelectItem value="amint">USDa</SelectItem>
-                                      <SelectItem value="usdt">USDT</SelectItem>
-                                    </SelectGroup>
-                                  </SelectContent>
-  
-                                </Select>
-                              )}
-                            />
+                                    onClick={() => {
+                                      amintAmnt !== undefined
+                                        ? amintAmnt !== 0
+                                          ? amintApprove({
+                                            args: [
+                                              (cdsAddress[11155111] as `0x${string}`),
+                                              BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
+                                            ],
+                                          })
+                                          : null
+                                        : null;
+                                    }}
+                                  >
+                                    {isAmintApproveLoading || isAmintTransactionLoading ? (
+                                      <Spinner className="w-5 h-5" />
+                                    ) : ("Approve")}
+
+                                  </Button>
+                                </div>
+                              </div>
+                            </FormControl>
+                            <span className=" block text-[10px] text-right mr-1">bal. {amintbal?.formatted.slice(0, 8)} AMINT</span>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
+                      <PlusIcon className={`${usdtAmountDepositedTillNow < usdtLimit ? "" : ""}`} width={16} height={16} />
                     </div>
-                    )) 
-                  }
-                 
-                  </div>
-                  
-                  <div onClick={()=>setInputTypes([...inputTypes, inputTypes.length + 1])} className="relative right-0 h-full p-2 ml-1 border rounded-full cursor-pointer top-5">
-                    <PlusIcon width={16} height={16} />
-                  </div>
-                </div>
-                {/* <FormField
-                  control={form.control}
-                  disabled={
-                    usdtAmountDepositedTillNow < usdtLimit ? true : false
-                  }
+                  )
+                }
 
-                  name="AmintDepositAmount"
-                  render={({ field }) => (
-                    <FormItem className="w-full md:w-[48%]">
-                      <FormControl>
-                        <div className="relative">
-                          <div className="relative">
-                            <Input
-                              inputMode="numeric"
-                              pattern="[0-9]*"
-                              type="text"
-                              className="lock px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-0 peer"
-                              placeholder=""
-                              {...field}
-                              value={field.value ?? ""}
-                              min={500}
-                            ></Input>
-
-                            <label
-                              htmlFor="amount_of_amint"
-                              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
-                            >
-                              Deposit AMINT
-                            </label>
-
-                          </div>
-                          <div className="absolute top-0 right-0 flex items-center h-full">
-                            <Button
-                              type="button"
-                              variant={"outline"}
-                              className="z-20 text-xs rounded-r-md"
-                              disabled={
-                                usdtAmountDepositedTillNow < usdtLimit
-                                  ? true
-                                  : false
-                              }
-                              onClick={() => {
-                                amintAmnt !== undefined
-                                  ? amintAmnt !== 0
-                                    ? amintApprove({
-                                      args: [
-                                        (cdsAddress[11155111] as `0x${string}`),
-                                        BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
-                                      ],
-                                    })
-                                    : null
-                                  : null;
-                              }}
-                            >
-                              {isAmintApproveLoading || isAmintTransactionLoading ? (
-                                <Spinner className="w-5 h-5" />
-                              ) : ("Approve")}
-
-                            </Button>
-                          </div>
-                        </div>
-                      </FormControl>
-                      <span className=" block text-[10px] text-right mr-1">bal. {amintbal?.formatted.slice(0, 8)} AMINT</span>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <PlusIcon width={16} height={16} />
-                <div className="flex flex-col  w-full  md:w-[48%] gap-[10px]">
+                <div className="flex flex-col  w-full  gap-[10px]">
 
                   <FormField
                     control={form.control}
@@ -1129,7 +1089,7 @@ const NewDeposit = () => {
                                 inputMode="numeric"
                                 pattern="[0-9]*"
                                 type="text"
-                                className="lock px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-0 peer"
+                                className="w-full px-2 py-8 text-sm text-gray-900 lock dark:text-white focus:outline-none focus:ring-0 peer"
                                 disabled={!tokensEnabled.USDT}
                                 placeholder=""
                                 {...field}
@@ -1161,7 +1121,7 @@ const NewDeposit = () => {
                                   Max
                                 </div>
                               )}
-                              <DropdownMenu>
+                              {/* <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                   <Button
                                     variant="ghost"
@@ -1220,8 +1180,8 @@ const NewDeposit = () => {
                                     USDC
                                   </DropdownMenuCheckboxItem>
                                 </DropdownMenuContent>
-                              </DropdownMenu>
-                              <Button
+                              </DropdownMenu> */}
+                              {/* <Button
                                 type="button"
                                 variant={"outline"}
                                 className="z-20 text-xs rounded-r-md"
@@ -1242,7 +1202,7 @@ const NewDeposit = () => {
                                 {usdtApproveLoading || usdtTransactionLoading ? (
                                   <Spinner className="w-5 h-5" />
                                 ) : ("Approve")}
-                              </Button>
+                              </Button> */}
                             </div>
                           </div>
                         </FormControl>
@@ -1334,7 +1294,7 @@ const NewDeposit = () => {
                     />
                   )}
 
-                </div> */}
+                </div>
               </div>
               <div className="flex w-full">
                 <div className="flex flex-col w-full gap-4 ">
@@ -1481,7 +1441,7 @@ const NewDeposit = () => {
                 className="text-white"
                 //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                 disabled={
-                  (usdtAmountDepositedTillNow > usdtLimit && !amintApproved) || !usdtApproved || isCdsDepositLoading
+                  (usdtAmountDepositedTillNow > usdtLimit) || isCdsDepositLoading || isPending || isLoading
                 }
               >
                 {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}

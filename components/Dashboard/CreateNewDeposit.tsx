@@ -476,8 +476,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
             <a type="button" onClick={onWatchAssetAmintClick} className="m-0 text-[12px] underline rounded-md ">Add USDa</a>
           </div>
           <div className="flex flex-col ">
-            <div className="flex flex-col basis-1/2 min-[1440px]:pt-[30px] pt-[10px] min-[1440px]:gap-[20px] min-[1280px]:gap-[16px] 2dppx:gap-[10px] gap-[10px]">
-              <div className='relative  dark:bg-[#020202]'>
+            <div className="flex  flex-col basis-1/2 min-[1440px]:pt-[30px] pt-[10px] min-[1440px]:gap-[20px] min-[1280px]:gap-[16px] 2dppx:gap-[10px] gap-[10px]">
+              <div className='relative   dark:bg-[#020202]'>
                 <FormField
                   control={form.control}
                   name="collateralAmount"
@@ -492,7 +492,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                           placeholder="Input Amount"
                           {...field}
                           value={Boolean(field.value) ? field.value : ""}
-                          className='py-10 rounded-xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
+                          className='py-10 border-gray-400 rounded-xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
                           style={{
                             appearance: 'textfield',
                             MozAppearance: 'textfield',
@@ -502,7 +502,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                         ></Input>
 
                       </FormControl>
-                      <FormMessage className="dark:text-[#B43939]" />
+                      <FormMessage className="dark:text-[#B43939] absolute  bottom-1 left-2" />
                     </FormItem>
                   )}
                 />
@@ -547,10 +547,13 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                           </Select>
                         )}
                       />
-                      <FormMessage />
+
+                      {/* <FormMessage /> */}
                     </FormItem>
                   )}
                 />
+                  <span className="top-7  text-gray-400 font-semibold relative md:absolute  right-32 block text-right text-[0.7rem]"> <span className="text-xl">(</span> <span className="text-sm">={(Number(ethPrice)/100 *Number(form.getValues("collateralAmount"))).toFixed(2)} </span> usdt <span className="text-xl">)</span></span>
+                  <span className="-bottom-5 font-semibold relative md:absolute md:right-1 block text-right text-[0.7rem]">Balance:  {(Number(ethBalance.data?.formatted)).toFixed(4)} ETH</span>
               </div>
 
 
@@ -663,7 +666,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                 </div>
               </div>
 
-              <div className='relative rounded-xl dark:bg-[#020202] border  py-5 px-2'>
+              <div className='relative rounded-xl dark:bg-[#020202] border border-gray-400  py-5 px-2'>
                 <div>
                   <div className='text-sm text-textGrey font-medium dark:text-[#FFFF] flex justify-between'>
                     <div className='p-1 mt-2 basis-3/5'>{amintToBeMinted}</div>
