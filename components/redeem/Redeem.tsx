@@ -622,7 +622,7 @@ export default function Redeem() {
   }
 
   return (
-    <div className="justify-center align-middle dark:bg-[#141414] ">
+    <div className="justify-center  align-middle dark:bg-[#141414] ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full gap-4 ' action="#">
           <div className='  relative  rounded-xl dark:bg-[#020202]'>
@@ -640,7 +640,7 @@ export default function Redeem() {
                       placeholder="Input Amount"
                       {...field}
                       value={Boolean(field.value) ? field.value : ""}
-                      className='py-12 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
+                      className='py-12 bg-white [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
                       style={{ 
                         appearance: 'textfield',
                         MozAppearance: 'textfield',
@@ -703,7 +703,7 @@ export default function Redeem() {
           </div>
 
 
-          <div className='relative rounded-xl dark:bg-[#020202] border  py-8 px-2'>
+          <div className='relative rounded-xl bg-white dark:bg-[#020202] border  py-8 px-2'>
             <div>
               {
                 form.getValues("inputCollateral") === 'amint' ? (

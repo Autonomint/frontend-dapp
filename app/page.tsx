@@ -37,8 +37,8 @@ export default function Home() {
     <>
       {/* Main area */}
       {/* <WalletOrContent/> */}
-      <div className="h-[90vh] ">
-        <div className="w-[550px]  bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] dark:bg-none dark:bg-[#141414] shadow-lg border pb-4  mx-auto mt-10 rounded-lg px-4">
+      <div className="h-auto pb-10 mt-16">
+        <div className="w-[400px] border-[3px] sm:w-[500px] 2xl:w-[600px] 3xl:w-[800px]  bg-[#C1D4FF] mission-shadow dark:bg-none dark:bg-[#141414] shadow-lg border-blue-800 pb-4  mx-auto mt-10 rounded-lg px-4">
           <div className="flex justify-center">
           <div className="">
             <div className="border-b border-gray-200 dark:border-gray-700">
@@ -62,29 +62,25 @@ export default function Home() {
             </div>
           </div>
           </div>
-          <div>
+          <div className="mt-2">
             {
               selectedTab=="mint"?
               <WalletOrContent/>:selectedTab=="dcds"? <Dcds/>:selectedTab=="redeem"?<RedeemPage/>:""
-                
             }
-           
           </div>
         </div>
-        <div className="absolute flex gap-5 bottom-5 left-10">
+        <div className="relative flex gap-5 mt-4 ml-5">
           {/* <div onClick={()=>setOpen2(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] border-2 border-gray-400 rounded-md cursor-pointer">
           Key Highlights
           </div> */}
           <div onClick={()=>setOpen2(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-yellow-200 border-2 border-orange-400 rounded-md cursor-pointer">
               ? FAQs
           </div>
-        </div>
-        <div className="absolute flex gap-5 bottom-5 right-10">
           <div onClick={()=>setOpenGetstart(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] border-2 border-gray-400 rounded-md cursor-pointer">
           Get Started
           </div>
-        
         </div>
+
 
         <Dialog open={open2} onOpenChange={setOpen2} >
             <DialogContent className="max-w-[800px]  pb-5">
@@ -102,14 +98,7 @@ export default function Home() {
                   </Button>
                 </DialogClose>
               </div>
-              {/* <DialogHeader className="flex items-start">
-                <DialogTitle className="text-textPrimary  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-2xl text-xl ">
-
-                <h1>Key Highlights</h1>
-                </DialogTitle>
-              </DialogHeader> */}
-              <Faq/>
-
+              <Faq type={selectedTab}/>
             </DialogContent>
           </Dialog>
 
@@ -131,7 +120,7 @@ export default function Home() {
               </div>
               <DialogHeader className="flex items-start">
                 <DialogTitle className="text-textPrimary  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-2xl text-xl ">
-
+              su
                 <h1>Acuire ETH and Collateral</h1>
                 </DialogTitle>
               </DialogHeader>
@@ -150,11 +139,11 @@ export default function Home() {
           </Dialog>
 
 
-          <div className="absolute top-60 left-14">
+          <div className="absolute invisible lg:visible xl:w-44 2xl:w-60 md:left-0 top-60 left-14">
             <Image src={bgEth} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
           </div>
-          <div className="absolute top-60 right-14">
-            <Image src={bgBtc} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
+          <div className="absolute invisible lg:visible xl:w-44 2xl:w-60 md:right-0 top-60 right-14">
+            <Image src={bgBtc} alt="autonomint-dapp" className="z-0" style={{ width: "100%", height: "100%" }} />
           </div>
       </div>
     </>

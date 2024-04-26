@@ -29,12 +29,16 @@ const TableRows = ({
   details,
   interest,
   handleRefetch,
-  onClick
+  onClick,
+  isnewtxn,
+  islasttxn
 }: {
   details: TableData;
   interest?: number;
   handleRefetch: Function;
   onClick: Function;
+  isnewtxn?: boolean;
+  islasttxn?: boolean;
 }) => {
   const depositDetails = [
     {
@@ -127,10 +131,12 @@ const TableRows = ({
   useEffect(() => {
     handleDepositData();
   }, [details]);
+  console.log("isnewtxn",isnewtxn)
+  console.log("islasttxn",islasttxn)
 
   return (
 
-      <TableRow onClick={()=>onClick()} className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer">
+      <TableRow onClick={()=>onClick()} className={` ${islasttxn && isnewtxn ? "bg-[#57c262]":""} hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer`}>
         <TableCell className="w-3 text-borderGrey dark:text-[#EEEEEE]">
           {`#${details.index}`}
         </TableCell>

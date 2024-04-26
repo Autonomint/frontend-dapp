@@ -130,9 +130,10 @@ const InitialformSchema = z.object({
 
 
 const NewDeposit = ({
-openDeposits
+
+handleRefetch
 }: {
-  openDeposits: Function;
+  handleRefetch: Function;
 })=> {
   // Define the initial state for the open variable for sheet opening and closing
   const [open, setOpen] = useState(false);
@@ -418,7 +419,7 @@ openDeposits
 
       // Reset form fields and state after the mutation is completed
       setOpen(false);
-      openDeposits(true);
+      handleRefetch()
       reset?.();
       amintReset?.();
       form.reset();
@@ -976,13 +977,13 @@ openDeposits
   const inputOptions = ["AmintDepositAmount", "USDTDepositAmount"];
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between ">
 
-      <div className="flex gap-[10px]">
+      <div className="flex w-full gap-[10px]">
 
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} action="#">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full" action="#">
             {/* <div className="flex justify-between w-full mt-4 ">
               <div onClick={()=>setOpenmarket(!openmarket)} className="px-3 py-1 text-[13px] font-semibold text-white bg-yellow-600 border rounded-md cursor-pointer">
                 Buy USDa &gt;
@@ -998,7 +999,7 @@ openDeposits
               </div>
             </div> */}
 
-            <div className="flex flex-col min-[1440px]:pt-[10px] 2dppx:pt-[15px] pt-[10px] min-[1440px]:gap-[20px] 2dppx:gap-[10px] min-[1280px]:gap-[16px] gap-[10px]">
+            <div className="flex w-full flex-col min-[1440px]:pt-[10px] 2dppx:pt-[15px] pt-[10px] min-[1440px]:gap-[20px] 2dppx:gap-[10px] min-[1280px]:gap-[16px] gap-[10px]">
               <div className="flex flex-col md:flex-row gap-[10px] items-center w-full justify-between ">
                 {
                   usdtAmountDepositedTillNow < usdtLimit ? ("") : (
@@ -1019,7 +1020,7 @@ openDeposits
                                     inputMode="numeric"
                                     pattern="[0-9]*"
                                     type="text"
-                                    className="lock px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-0 peer"
+                                    className="lock bg-white px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-0 peer"
                                     placeholder=""
                                     {...field}
                                     value={field.value ?? ""}
@@ -1089,7 +1090,7 @@ openDeposits
                                 inputMode="numeric"
                                 pattern="[0-9]*"
                                 type="text"
-                                className="w-full px-2 py-8 text-sm text-gray-900 lock dark:text-white focus:outline-none focus:ring-0 peer"
+                                className="w-full px-2 py-10 text-sm text-gray-900 bg-white border lock dark:text-white focus:outline-none focus:ring-0 peer"
                                 disabled={!tokensEnabled.USDT}
                                 placeholder=""
                                 {...field}
@@ -1318,13 +1319,16 @@ openDeposits
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
+                          
                         >
-                          <FormControl>
+                          <FormControl
+                           className="bg-white dark:bg-[#0F0F0F] dark:border-[#3A3A3A] dark:text-white"
+                          >
                             <SelectTrigger>
                               <SelectValue placeholder="Choose a Lock-In Period" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent className="dark:bg-[#0F0F0F]">
+                          <SelectContent className="dark:bg-[#0F0F0F]  bg-white">
                             <SelectGroup className="dark:bg-[#0F0F0F]">
                               <SelectLabel>Lock-In Period</SelectLabel>
                               <SelectItem value="30">30 Days</SelectItem>

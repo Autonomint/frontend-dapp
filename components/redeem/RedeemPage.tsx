@@ -114,21 +114,20 @@ const RedeemPage = () => {
 
   return (
     <>
-      <div className="relative rounded-[10px] p-2 mt-4 bg-white dark:bg-[#0F0F0F]flex flex-col self-stretch overflow-hidden ">
-
-        <div className='flex flex-col gap-4 dark:bg-[#141414]'>
-          <div className='flex justify-center'>
-            <div className='  w-full max-w-[600px] border-lineGrey '>
+    {
+      !isConnected ? <ConnectWallet /> :(
+        <div className="relative rounded-[10px] p-2 mt-4  dark:bg-[#0F0F0F]flex flex-col self-stretch overflow-hidden ">
+        <div className='flex flex-col w-full gap-4 dark:bg-[#141414]'>
+          <div className='w-full '>
+            <div className='w-full border-lineGrey'>
               <Redeem />
             </div>
           </div>
-          
           <div className="flex justify-end mb-4 dark:bg-[#141414]">
             <Button variant={"ghostOutline"}
               size={"primary"}
               className="border border-borderGrey" onClick={() => setOpen2(!open2)} >Open Positions</Button>
           </div>
-
           <Dialog open={open2} onOpenChange={setOpen2} >
             <DialogContent className="max-w-[800px] pb-5">
               <div className="flex justify-end w-full ">
@@ -147,7 +146,6 @@ const RedeemPage = () => {
               </div>
               <DialogHeader className="flex items-start">
                 <DialogTitle className="">
-
                   <div>
                     <div className='text-2xl text-[#041A50] font-medium dark:text-[#90AFFF] '>Collateral Pool</div>
                     <div className='text-sm text-[#5B5B5B] dark:text-[#EEEEEE] '>A list of all locked assests int the Asset Pool</div>
@@ -196,7 +194,6 @@ const RedeemPage = () => {
                               </div>
                             </div>
                             <div className="h-full ">
-
                               <RatioPieChart key={index} value1={(item.value / item.limit * 100).toFixed(2)} value2={((item.limit - item.value) / item.limit * 100).toFixed(2)} />
                             </div>
                           </div>
@@ -205,15 +202,14 @@ const RedeemPage = () => {
                     )
                   })
                 }
-
               </div>
             </DialogContent>
           </Dialog>
-
-
-
         </div>
       </div>
+      )
+    }
+
 
     </>
   )

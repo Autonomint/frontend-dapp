@@ -36,9 +36,11 @@ interface TableData {
 const DepositAndWithDrawTable = ({
   tableData,
   handleRefetch,
+  newtxn
 }: {
   tableData: TableData[];
   handleRefetch: Function;
+  newtxn?: boolean;
 }) => {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
   const [sheetDetails, setSheetDetails] = useState<TableData>();
@@ -61,9 +63,10 @@ const DepositAndWithDrawTable = ({
       </TableHeader>
 
       <TableBody>
-        {tableData && tableData?.map((details, index) => (
-          <TableRows key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} handleRefetch={handleRefetch} />
-        ))}
+        {tableData && tableData?.map((details, index) => {
+          console.log(tableData.length-1, index)
+          return <TableRows isnewtxn={newtxn} islasttxn= {tableData.length-1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} handleRefetch={handleRefetch} />
+})}
       </TableBody>
         
       {

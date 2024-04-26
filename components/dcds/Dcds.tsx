@@ -85,6 +85,7 @@ const Dcds = () => {
     setSheetDetails(details)
     setSheetOpen(true);
   }
+  const [newtxn, setNewtxn] = useState(false);
   const [shouldRefetch, setShouldRefetch] = useState(1);
 
   useEffect(() => {
@@ -125,6 +126,9 @@ const Dcds = () => {
   }
   function handleRefetch() {
     setShouldRefetch(shouldRefetch + 1);
+    setOpen2(true);
+    setNewtxn(true);
+
   }
 
   // Define a variable to store the result of the query
@@ -235,9 +239,11 @@ const Dcds = () => {
 
   return (
     <>
-      <div className="relative rounded-[10px] px-2 bg-white  dark:bg-[#141414] dark:shadow-none  flex flex-col self-stretch overflow-hidden ">
+    {
+      !isConnected ? <ConnectWallet/>:(
+        <div className="relative w-full rounded-[10px] px-2   dark:bg-[#141414] dark:shadow-none  flex flex-col self-stretch overflow-hidden ">
 
-        <NewDeposit />
+        <NewDeposit handleRefetch={handleRefetch} />
         <div className="flex justify-end my-2">
           <Button
             variant={"ghostOutline"}
@@ -248,7 +254,7 @@ const Dcds = () => {
 
 
         <Dialog open={open2} onOpenChange={setOpen2} >
-          <DialogContent className="pb-5">
+          <DialogContent className="pb-2">
             <div className="flex justify-end w-full ">
               <DialogClose asChild>
                 <Button
@@ -257,9 +263,6 @@ const Dcds = () => {
                   className="flex gap-[10px] border border-borderGrey "
                 >
                   <Cross2Icon className="w-4 h-4" />
-                  <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
-                    Close
-                  </p>
                 </Button>
               </DialogClose>
             </div>
@@ -288,8 +291,8 @@ const Dcds = () => {
                   </TableHeader>
                   <TableBody>
                     {!depositsError
-                      ? deposits?.map((details: DepositDetail) => (
-                        <AmintDepositRow key={details.id} onClick={() => handleSheet(details)} details={details} />
+                      ? deposits?.map((details: DepositDetail,index) => (
+                        <AmintDepositRow isnewtxn={newtxn} islasttxn= {deposits.length-1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} />
                       ))
                       : null}
                   </TableBody>
@@ -309,7 +312,8 @@ const Dcds = () => {
           />
         }
       </div>
-
+      )
+    }
     </>
   );
 };

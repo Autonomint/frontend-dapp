@@ -395,6 +395,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("clicked")
     refetch();
     let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);
     let strikePercent = strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4;
@@ -463,7 +464,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       reset();
     }
     // return () => {
-    //   window.clearTimeout(timer.current);
+    //   window.clearTimeout(timer.current); 
     // };
   }, [transactionSuccess]);
 
@@ -471,9 +472,20 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
     <div className="flex items-center justify-between ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} action="#">
-          <div className="flex items-center justify-end gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
-            <a type="button" onClick={onWatchAssetAmintClick} className="m-0 text-[12px] underline rounded-md ">Add USDa</a>
+          <div className="flex justify-between">
+            <div className="px-[1px] flex gap-[10px] items-center">
+              <InfoCircledIcon width={18} height={18} />
+              <p className=" min-[1440px]:text-base 2dppx:text-sm text-[13px] font-normal text-textGrey dark:text-[#DEDEDE] ">
+                Minimum Collateral Amount is{" "}
+                <span className="font-medium text-textHighlight dark:text-[#ffff]">
+                  0.02 ETH
+                </span>
+              </p>
+            </div>
+            <div className="flex items-center justify-end gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
+              <a type="button" onClick={onWatchAssetAmintClick} className="m-0 text-[12px] underline rounded-md ">Add USDa</a>
+            </div>
           </div>
           <div className="flex flex-col ">
             <div className="flex  flex-col basis-1/2 min-[1440px]:pt-[30px] pt-[10px] min-[1440px]:gap-[20px] min-[1280px]:gap-[16px] 2dppx:gap-[10px] gap-[10px]">
@@ -483,7 +495,6 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                   name="collateralAmount"
                   render={({ field }) => (
                     <FormItem className="relative ">
-                      {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
 
                       <FormControl>
                         <Input
@@ -492,27 +503,27 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                           placeholder="Input Amount"
                           {...field}
                           value={Boolean(field.value) ? field.value : ""}
-                          className='py-10 border-gray-400 rounded-xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
+                          className='py-10 bg-white dark:bg-[#020202] border-gray-400 rounded-xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
                           style={{
                             appearance: 'textfield',
                             MozAppearance: 'textfield',
                             WebkitAppearance: 'none',
                             margin: 0
                           }}
+                          // disabled={form.getValues("collateral")==undefined}
                         ></Input>
 
                       </FormControl>
-                      <FormMessage className="dark:text-[#B43939] absolute  bottom-1 left-2" />
+                      <FormMessage className="dark:text-[#ff6d6d] absolute -bottom-5 left-2" />
                     </FormItem>
                   )}
                 />
                 <FormField
-
                   control={form.control}
                   name="collateral"
 
                   render={() => (
-                    <FormItem className='absolute top-[20%] right-2  basis-2/5 dark:bg-[#020202] w-28'>
+                    <FormItem className='absolute top-[25%] right-2  basis-2/5 dark:bg-[#020202] w-28'>
                       <Controller
                         control={form.control}
                         name="collateral"
@@ -528,9 +539,10 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                               field.onChange(value)
 
                             }}
+                            
                             value={field.value}
                           >
-                            <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateral") ? "" : "Input Type"}</label>
+                            {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateral") ? "" : "Input Type"}</label> */}
 
                             <FormControl >
                               <SelectTrigger>
@@ -552,8 +564,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                     </FormItem>
                   )}
                 />
-                  <span className="top-7  text-gray-400 font-semibold relative md:absolute  right-32 block text-right text-[0.7rem]"> <span className="text-xl">(</span> <span className="text-sm">={(Number(ethPrice)/100 *Number(form.getValues("collateralAmount"))).toFixed(2)} </span> usdt <span className="text-xl">)</span></span>
-                  <span className="-bottom-5 font-semibold relative md:absolute md:right-1 block text-right text-[0.7rem]">Balance:  {(Number(ethBalance.data?.formatted)).toFixed(4)} ETH</span>
+                <span className="top-7  text-gray-400 font-semibold relative md:absolute  right-32 block text-right text-[0.7rem]"> <span className="text-xl">(</span> <span className="text-sm">={(Number(ethPrice) / 100 * Number(form.getValues("collateralAmount"))).toFixed(2)} </span> usdt <span className="text-xl">)</span></span>
+                <span className="-bottom-5 text-textHighlight relative md:absolute md:right-1 block text-right text-[0.7rem]">Balance:  {(Number(ethBalance.data?.formatted)).toFixed(4)} ETH</span>
               </div>
 
 
@@ -607,25 +619,25 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                   /> */}
 
 
-              <div className="px-[1px] flex gap-[10px] items-center">
-                <InfoCircledIcon width={18} height={18} />
-                <p className=" min-[1440px]:text-base 2dppx:text-sm text-[13px] font-normal text-textGrey dark:text-[#DEDEDE] ">
-                  Minimum Collateral Amount is{" "}
-                  <span className="font-medium text-textHighlight dark:text-[#ffff]">
-                    0.02 ETH
-                  </span>
-                </p>
-              </div>
 
-              
 
-              <div className="flex flex-col gap-2">
-                <div className="text-sm text-textGrey dark:text-[#DEDEDE] ">
-                Select upside given
+
+
+              <div className="flex items-center gap-2 mt-4">
+                <div className="text-sm ml-2 text-textHighlight dark:text-[#DEDEDE] ">
+                  Surrender upside price :
                 </div>
                 <div className="flex gap-4">
-                  <div onClick={()=>form.setValue("strikePrice",5)} className={`p-1 ${form.getValues("strikePrice")==5?"border-blue-400 text-blue-400":"dark:border-[#DEDEDE] text-textGrey dark:text-[#DEDEDE]"} text-sm border w-[3rem] text-center rounded-md cursor-pointer `}>5%</div>
-                  <div onClick={()=>form.setValue("strikePrice",10)} className={`p-1 ${form.getValues("strikePrice")==10?"border-blue-400 text-blue-400":"dark:border-[#DEDEDE] text-textGrey dark:text-[#DEDEDE]"} text-sm border w-[3rem] text-center rounded-md cursor-pointer `}>10%</div>
+                  <div onClick={() => form.setValue("strikePrice", 5)} className={`p-[1px] ${form.getValues("strikePrice") == 5 ? "border-blue-800 text-blue-800" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"}  text-[14px] border-2  w-[2.5rem] text-center rounded-md cursor-pointer `}>5%</div>
+                  <div onClick={() => form.setValue("strikePrice", 10)} className={`p-[1px] ${form.getValues("strikePrice") == 10 ? "border-blue-800 text-blue-800" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"} text-[14px] border-2 w-[2.5rem] text-center rounded-md cursor-pointer `}>10%</div>
+                </div>
+              </div>
+              <div className='relative rounded-xl dark:bg-[#020202] border bg-white border-gray-600  py-5 px-2'>
+                <div>
+                  <div className='text-sm text-textGrey font-medium dark:text-[#FFFF] flex justify-between'>
+                    <div className='p-1 mt-2 basis-3/5'>{amintToBeMinted}</div>
+                    <div className='w-24 p-2 px-3 mr-1 text-center border rounded-lg '>USDa</div>
+                  </div>
                 </div>
               </div>
 
@@ -648,30 +660,26 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                     {amintToBeMinted}
                   </p>
                 </div> */}
+
+
                 <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                  <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary dark:text-[#9E9E9E]">
+                  <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-red-600 dark:text-[#9E9E9E]">
                     Options Fees
                   </p>
                   <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
                     {optionFees}
                   </p>
                 </div>
-                <div className="flex justify-between px-4 py-[10px] border-lineGrey">
-                  <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary dark:text-[#9E9E9E]">
+                <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
+                  <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textHighlight dark:text-[#9E9E9E]">
                     Downside Protection Amount
                   </p>
                   <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
-                    {downsideProtectionAmnt}
+                    {downsideProtectionAmnt} (+{ltv}% LTV)
                   </p>
                 </div>
-              </div>
-
-              <div className='relative rounded-xl dark:bg-[#020202] border border-gray-400  py-5 px-2'>
-                <div>
-                  <div className='text-sm text-textGrey font-medium dark:text-[#FFFF] flex justify-between'>
-                    <div className='p-1 mt-2 basis-3/5'>{amintToBeMinted}</div>
-                    <div className='w-24 p-2 px-3 mr-1 text-center border rounded-lg '>USDa</div>
-                  </div>
+                <div className="flex justify-between px-4 py-[10px] border-lineGrey">
+                
                 </div>
               </div>
 

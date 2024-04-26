@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/dialog";
 import { ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
+import { set } from "react-hook-form";
 
 const dasboardStatsItem = [
   {
@@ -68,6 +69,7 @@ const WalletOrContent = () => {
   const [dashboardStats, setDashboardStats] = useState(dasboardStatsItem);
   // manage refetching
   const [shouldRefetch, setShouldRefetch] = useState(1);
+  const [newtxn,setnewtxn]=useState(false)
   // get ethPrice from use Borrowing Contract using wagmi useContractRead Hook
   const { data: ethPrice } = useBorrowingContractRead({
     functionName: "getUSDValue",
@@ -137,6 +139,8 @@ const WalletOrContent = () => {
    */
   function handleRefetch() {
     setShouldRefetch(shouldRefetch + 1);
+    setOpen2(true);
+    setnewtxn(true)
   }
   /**
    * Handles the stats item.
@@ -223,7 +227,7 @@ const WalletOrContent = () => {
   return (
     <>
       {isConnected ? (
-        <div className="relative p-2 sm:p-2 rounded-[10px] bg-white  dark:bg-[#141414] dark:shadow-none flex flex-col self-stretch overflow-hidden h-full ">
+        <div className="relative p-2 sm:p-2 rounded-[10px] dark:bg-[#141414] dark:shadow-none flex flex-col self-stretch overflow-hidden h-full ">
 
           <CreateNewDeposit handleRefetch={handleRefetch} />
           <div className="flex justify-end my-2">
@@ -267,6 +271,7 @@ const WalletOrContent = () => {
                 <DepositAndWithDrawTable
                   tableData={deposits}
                   handleRefetch={handleRefetch}
+                  newtxn ={newtxn}
                 />
               </div>
             </DialogContent>
