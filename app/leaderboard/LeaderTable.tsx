@@ -37,11 +37,12 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
     }, [data, currentPage, sortField]);
     return (
         <div>
-            <div className='border min-h-[50vh]  rounded-md shadow-md '>
+             
+            <div className='border dark:border-gray-500 min-h-[50vh]  rounded-md shadow-sm '>
                 <div className=' dark:bg-[#141414]  rounded-lg overflow-hidden'>
                     <Table>
                         <TableHeader>
-                            <TableRow className='bg-[#5981ff] hover:bg-[#5981ff] dark:bg-none dark:bg-[#1a1a1a]'>
+                            <TableRow className='bg-[linear-gradient(to_right,#23e988,#13d1b6)] dark:bg-none hover:bg-[#5981ff] dark:bg-[#1a1a1a]'>
                                 <TableHead className="w-3 opacity-1 text-white dark:text-[#C4C4C4]">Rank</TableHead>
                                 <TableHead className="text-white dark:text-[#C4C4C4]">Address</TableHead>
                                 {
@@ -54,10 +55,10 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
                                 }
                             </TableRow>
                         </TableHeader>
-                        <TableBody>
+                        <TableBody className=''>
                             {
                                 sortedData.map((data, index) => (
-                                    <TableRow key={index} className={` hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer`
+                                    <TableRow key={index} className={` hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]   dark:border cursor-pointer`
                                     }>
                                         <TableCell className={
                                         ` ${index === 0 ? 'text-[#40e862] dark:text-[#71e889] text-[1.25rem] font-bold ' :
@@ -98,13 +99,13 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
             <div className='mt-4'>
                    
                              
-                   <button className='px-2 py-1 mr-2 text-sm border-2 border-blue-200 rounded-md' onClick={() => {
+                   <button className='px-4 py-2 mr-2 text-sm border border-gray-300 rounded-sm dark:border-gray-500' onClick={() => {
            setCurrentPage(currentPage - 1);
        }} disabled={currentPage === 1}> &lt; Previous</button>
 
-       <button className='px-2 py-1 mr-2 text-sm border-2 border-blue-200 rounded-md' >{currentPage}</button>
+       <button className='px-4 py-2 mr-2 text-sm border border-gray-300 rounded-sm dark:border-gray-500' >{currentPage}</button>
 
-       <button className='px-2 py-1 mr-2 text-sm border-2 border-blue-200 rounded-md' onClick={() => {
+       <button className='px-4 py-2 mr-2 text-sm border border-gray-300 rounded-sm dark:border-gray-500' onClick={() => {
            setCurrentPage(currentPage + 1);
        }} disabled={currentPage === Math.ceil(data.length / itemsPerPage)}>Next &gt;</button>
        

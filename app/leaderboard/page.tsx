@@ -42,8 +42,22 @@ export default function page() {
       });
     return (
         <div className='px-10 mt-5'>
-            <div className='w-full p-4 mt-20 overflow-hidden border-2 rounded-lg shadow-md '>
-                <h1 className='mb-2 text-3xl font-bold text-textPrimary dark:text-white'>Leaderboard</h1>
+            <div className='w-full mt-20 overflow-hidden border-1 dark:border-none'>
+                <div className='bg-white dark:bg-[#141414] rounded-lg flex mb-5 gap-10 px-10 py-8 shadow-sm'>
+                        <div className='flex flex-col gap-2 pr-5 border-r-2'>
+                            <div >Total number of borrowers</div>
+                            <div className='text-3xl font-semibold'>1000</div>
+                        </div>
+                        <div className='flex flex-col gap-2 pr-5 border-r-2'>
+                        <div >Total number of dcds depositors</div>
+                            <div className='text-3xl font-semibold'>1000</div>
+                        </div>
+                        <div className='flex flex-col gap-2 '>
+                        <div >Total Value Locked (TVL) </div>
+                            <div className='text-3xl font-semibold'>1000</div>
+                        </div>
+                </div>
+                {/* <h1 className='mb-2 text-3xl font-bold text-textPrimary dark:text-white'>Leaderboard</h1> */}
                 {/* <div className='w-[350px] mb-2'>
                     <ul className="overflow-hidden text-sm font-medium text-center text-gray-500 shadow rounded-xl sm:flex dark:divide-gray-700 dark:text-gray-400">
                         <li onClick={()=>setSelectedTab("borrow")} className="w-full focus-within:z-10">
@@ -54,15 +68,15 @@ export default function page() {
                         </li>
                     </ul>
                 </div> */}
-                <div className='flex w-full gap-5'>
-                    <div className='w-full dark:bg-none '>
-                        <div className='my-2 text-lg font-bold text-center'>
+                <div className='flex w-full gap-5  p-4 bg-white rounded-lg  dark:bg-[#141414] shadow-sm'>
+                    <div className='w-full dark:bg-none'>
+                        <div className='my-2 text-xl font-bold text-center'>
                             Borrow
                         </div>
                         <LeaderTable tableType='borrow' data={borrowdeposits ?? []}/>
                     </div>
                     <div className='w-full dark:bg-none '>
-                        <div className='my-2 text-lg font-bold text-center'>
+                        <div className='my-2 text-xl font-bold text-center'>
                             dCDS
                         </div>
                         <LeaderTable tableType='cds' data={cdsdeposits ?? []}/>

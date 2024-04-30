@@ -36,7 +36,7 @@ export default function RootLayout({
         enableSystem
         disableTransitionOnChange
       >
-        <body className={`${inter.className} bg-bgGrey dark:bg-[#020202]`}>
+        <body className={`${inter.className} bg-[linear-gradient(145deg,#f3f5f7_20%,#ecf2f8_100%)] dark:bg-none dark:bg-[#020202]`}>
           {/* <div className="max-w-[1440px] mx-auto"> */}
           <main className="relative flex w-full h-auto md:left-0 ">
             <WalletProvider>

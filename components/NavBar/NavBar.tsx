@@ -83,8 +83,9 @@ const NavBar = () => {
     <div className="fixed z-50 w-full top-5">
 
 
-    <div className="flex w-5/6 rounded-lg  mx-auto h-16  bg-[linear-gradient(260deg,#5981ff_5.00%,#00b564_95.00%)] dark:bg-none dark:bg-[#1a1a1a] shadow-[0px_2px_4px 0px_rgba(0,0,0,0.25)] shadow-lg z-10">
-      <div className="flex items-center gap-2 ml-4 ">
+
+    <div className="flex w-5/6 rounded-lg  mx-auto h-16  bg-[linear-gradient(180deg,#00679F_0%,#041A50_100%)] dark:bg-none dark:bg-[#1a1a1a] shadow-[0px_2px_4px 0px_rgba(0,0,0,0.25)] shadow-lg z-10">
+      <div className="flex items-center gap-2 ml-4">
         <div className="w-[3rem] h-[3rem]">
           <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
         </div>
@@ -216,10 +217,10 @@ const NavBar = () => {
 
         ) : ("")
       }
-
+{/* number of borrower , no  of dcds user , tvl */}
 {
         open2 ? (
-          <div className=" fixed flex flex-col gap-4 w-auto dark:bg-[#141414] right-36 top-24 border bg-white px-2 py-4 rounded-lg shadow-xl">
+          <div className=" fixed flex flex-col gap-4 w-auto dark:bg-[#141414] right-36 top-[5.5rem] border bg-white px-4 py-4 rounded-lg shadow-xl">
             <div className="flex items-center justify-end w-full">
               <button onClick={()=>setOpen2(!open2)} className="p-1 border border-black rounded-full dark:white"><Cross2Icon className="w-4 h-4"/></button>
             </div>
@@ -228,13 +229,13 @@ const NavBar = () => {
             {address}
           </div>
           <div className="flex gap-2 text-sm rounded-md">
-            <Button className="w-full text-white bg-blue-500 rounded-sm cursor-pointer " >Change</Button>
-            <Button className="w-full text-white bg-red-500 rounded-sm cursor-pointer" onClick={() => disconnect()}>Disconnect</Button>
+            <Button className="w-full text-white bg-blue-500 rounded-md cursor-pointer " >Change</Button>
+            <Button className="w-full text-white bg-red-500 rounded-md cursor-pointer" onClick={() => disconnect()}>Disconnect</Button>
           </div>
           <div className="p-3 text-sm underline border border-gray-500 rounded-md">
             <a href={`https://sepolia.etherscan.io/address/${address}`} >View All Wallets Transactions </a>
           </div>
-          <div className="flex justify-between p-3 text-sm border border-gray-500 rounded-md"><div>Verify Joseon ID</div><div>Learn More</div></div>
+          <div className="flex justify-between p-3 text-sm border border-gray-500 rounded-md"><div>Verify Joseon ID</div><div className="underline">Learn More</div></div>
           <div className="flex justify-center p-3 text-sm border border-gray-500 rounded-md ">
             <div className="flex justify-between w-1/2 ">
 

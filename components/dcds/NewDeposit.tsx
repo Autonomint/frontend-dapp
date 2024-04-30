@@ -1090,7 +1090,7 @@ handleRefetch
                                 inputMode="numeric"
                                 pattern="[0-9]*"
                                 type="text"
-                                className="w-full px-2 py-10 text-sm text-gray-900 bg-white border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                                className="w-full px-2 py-10 text-sm text-gray-900 bg-[#f3f5f7] dark:bg-[#0f0f0f] border-[rgb(247,247,255)] border lock dark:text-white focus:outline-none focus:ring-0 peer"
                                 disabled={!tokensEnabled.USDT}
                                 placeholder=""
                                 {...field}

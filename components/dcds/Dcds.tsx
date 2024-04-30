@@ -281,7 +281,7 @@ const Dcds = () => {
 
                 <Table>
                   <TableHeader>
-                    <TableRow>
+                    <TableRow className="bg-gray-200 hover:bg-gray-200">
                       <TableHead className="text-textGrey dark:text-[#C4C4C4]">Id</TableHead>
                       <TableHead className="text-textGrey dark:text-[#C4C4C4]">Amint / Usdt Deposited</TableHead>
                       <TableHead className="text-textGrey dark:text-[#C4C4C4]">Deposited Time</TableHead>

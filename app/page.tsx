@@ -33,28 +33,29 @@ export default function Home() {
   }, []);
 
 
+
   return (
     <>
       {/* Main area */}
       {/* <WalletOrContent/> */}
       <div className="h-auto pb-10 mt-16">
-        <div className="w-[400px] border-[3px] sm:w-[500px] 2xl:w-[600px] 3xl:w-[800px]  bg-[#C1D4FF] mission-shadow dark:bg-none dark:bg-[#141414] shadow-lg border-blue-800 pb-4  mx-auto mt-10 rounded-lg px-4">
+        <div className="w-[400px] border sm:w-[500px] 2xl:w-[600px] 3xl:w-[800px] dark:border-none  bg-[#ffff] mission-shadow dark:bg-none dark:bg-[#141414] shadow-lg  pb-4  mx-auto mt-10 rounded-lg px-4">
           <div className="flex justify-center">
           <div className="">
             <div className="border-b border-gray-200 dark:border-gray-700">
               <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
                 <li className="me-2">
-                  <a href="#" onClick={()=>setSelectedTab("mint")} className={`inline-flex items-center justify-center p-4  rounded-t-lg ${selectedTab=="mint"?"text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 ":"border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"} `}>
+                  <a href="#" onClick={()=>setSelectedTab("mint")} className={`inline-flex items-center justify-center p-4 text-lg rounded-t-lg ${selectedTab=="mint"?"text-[#90AFFF] border-b-2 border-[#90AFFF] rounded-t-lg active dark:text-[#90AFFF] dark:border-[#90AFFF]":"border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"} `}>
                     Mint & Borrow
                   </a>
                 </li>
                 <li className="me-2">
-                  <a href="#" onClick={()=>setSelectedTab("dcds")} className={`inline-flex items-center justify-center p-4 ${selectedTab=="dcds"?"text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 ":"border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"} `} aria-current="page">
+                  <a href="#" onClick={()=>setSelectedTab("dcds")} className={`inline-flex items-center justify-center p-4 text-lg  ${selectedTab=="dcds"?"text-[#90AFFF] border-b-2 border-[#90AFFF] rounded-t-lg active dark:text-[#90AFFF] dark:border-[#90AFFF] ":"border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"} `} aria-current="page">
                    dCDS
                   </a>
                 </li>
                 <li className="me-2">
-                  <a href="#" onClick={()=>setSelectedTab("redeem")} className={`inline-flex items-center justify-center p-4 ${selectedTab=="redeem"?"text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 ":"border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"} `}>
+                  <a href="#" onClick={()=>setSelectedTab("redeem")} className={`inline-flex items-center justify-center p-4 text-lg  ${selectedTab=="redeem"?"text-[#90AFFF] border-b-2 border-[#90AFFF] rounded-t-lg active dark:text-[#90AFFF] dark:border-[#90AFFF] ":"border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"} `}>
                     Redeem
                   </a>
                 </li>
@@ -62,7 +63,7 @@ export default function Home() {
             </div>
           </div>
           </div>
-          <div className="mt-2">
+          <div className="mt-4">
             {
               selectedTab=="mint"?
               <WalletOrContent/>:selectedTab=="dcds"? <Dcds/>:selectedTab=="redeem"?<RedeemPage/>:""
@@ -73,7 +74,7 @@ export default function Home() {
           {/* <div onClick={()=>setOpen2(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] border-2 border-gray-400 rounded-md cursor-pointer">
           Key Highlights
           </div> */}
-          <div onClick={()=>setOpen2(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-yellow-200 border-2 border-orange-400 rounded-md cursor-pointer">
+          <div onClick={()=>setOpen2(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[#fffdd7] border-2 border-orange-400 rounded-md cursor-pointer">
               ? FAQs
           </div>
           <div onClick={()=>setOpenGetstart(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] border-2 border-gray-400 rounded-md cursor-pointer">

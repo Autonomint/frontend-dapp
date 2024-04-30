@@ -640,7 +640,7 @@ export default function Redeem() {
                       placeholder="Input Amount"
                       {...field}
                       value={Boolean(field.value) ? field.value : ""}
-                      className='py-12 bg-white [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
+                      className='py-12 bg-[#f3f5f7] dark:bg-[#020202] border-[rgb(247,247,255)] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
                       style={{ 
                         appearance: 'textfield',
                         MozAppearance: 'textfield',
@@ -660,7 +660,7 @@ export default function Redeem() {
               name="inputCollateral"
 
               render={() => (
-                <FormItem className='absolute top-[25%] right-2  basis-2/5 dark:bg-[#020202] w-28'>
+                <FormItem className='absolute top-[25%]  right-2  basis-2/5 dark:bg-[#020202] w-28'>
                   <Controller
                     control={form.control}
                     name="inputCollateral"
@@ -676,11 +676,12 @@ export default function Redeem() {
                           field.onChange(value)
 
                         }}
+                        
                         value={field.value}
                       >
-                        <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label>
+                        {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
 
-                        <FormControl >
+                        <FormControl className='bg-white dark:bg-[#020202]' >
                           <SelectTrigger>
                             <SelectValue  placeholder="Select" />
                           </SelectTrigger>
@@ -703,7 +704,7 @@ export default function Redeem() {
           </div>
 
 
-          <div className='relative rounded-xl bg-white dark:bg-[#020202] border  py-8 px-2'>
+          <div className='relative rounded-xl bg-[#f3f5f7] border-[rgb(247,247,255)] dark:border-gray-800 dark:bg-[#020202] border  py-8 px-2'>
             <div>
               {
                 form.getValues("inputCollateral") === 'amint' ? (

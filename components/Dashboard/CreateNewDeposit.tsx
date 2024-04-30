@@ -65,6 +65,7 @@ import Spinner from "../ui/spinner";
 import { DEV_PROXY_AMINT_ADDRESS } from "@/constants/Addresses";
 import PnlChart from "./PnlChart";
 import Divider from "../CustomUI/Divider/Divider";
+import LoanPieChart from "./LoanPieChart";
 
 const formSchema = z.object({
   collateral: z.string(),
@@ -503,14 +504,14 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                           placeholder="Input Amount"
                           {...field}
                           value={Boolean(field.value) ? field.value : ""}
-                          className='py-10 bg-white dark:bg-[#020202] border-gray-400 rounded-xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
+                          className='py-10 bg-[#f3f5f7] border-[rgb(247,247,255)]  dark:bg-[#020202] rounded-md [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
                           style={{
                             appearance: 'textfield',
                             MozAppearance: 'textfield',
                             WebkitAppearance: 'none',
                             margin: 0
                           }}
-                          // disabled={form.getValues("collateral")==undefined}
+                        // disabled={form.getValues("collateral")==undefined}
                         ></Input>
 
                       </FormControl>
@@ -523,7 +524,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                   name="collateral"
 
                   render={() => (
-                    <FormItem className='absolute top-[25%] right-2  basis-2/5 dark:bg-[#020202] w-28'>
+                    <FormItem className='absolute top-[30%] right-2 bg-white  basis-2/5 dark:bg-[#020202] w-28'>
                       <Controller
                         control={form.control}
                         name="collateral"
@@ -539,12 +540,12 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                               field.onChange(value)
 
                             }}
-                            
+
                             value={field.value}
                           >
                             {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateral") ? "" : "Input Type"}</label> */}
 
-                            <FormControl >
+                            <FormControl className="" >
                               <SelectTrigger>
                                 <SelectValue placeholder="Select" />
                               </SelectTrigger>
@@ -628,21 +629,20 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                   Surrender upside price :
                 </div>
                 <div className="flex gap-4">
-                  <div onClick={() => form.setValue("strikePrice", 5)} className={`p-[1px] ${form.getValues("strikePrice") == 5 ? "border-blue-800 text-blue-800" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"}  text-[14px] border-2  w-[2.5rem] text-center rounded-md cursor-pointer `}>5%</div>
-                  <div onClick={() => form.setValue("strikePrice", 10)} className={`p-[1px] ${form.getValues("strikePrice") == 10 ? "border-blue-800 text-blue-800" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"} text-[14px] border-2 w-[2.5rem] text-center rounded-md cursor-pointer `}>10%</div>
+                  <div onClick={() => form.setValue("strikePrice", 5)} className={`p-[1px] ${form.getValues("strikePrice") == 5 ? "border-blue-500 text-blue-500" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"}  text-[14px] border  w-[2.5rem] text-center rounded-md cursor-pointer `}>5%</div>
+                  <div onClick={() => form.setValue("strikePrice", 10)} className={`p-[1px] ${form.getValues("strikePrice") == 10 ? "border-blue-500 text-blue-500" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"} text-[14px] border w-[2.5rem] text-center rounded-md cursor-pointer `}>10%</div>
                 </div>
               </div>
-              <div className='relative rounded-xl dark:bg-[#020202] border bg-white border-gray-600  py-5 px-2'>
+              <div className='relative rounded-xl bg-[#f3f5f7] dark:bg-[#020202] border-[rgb(247,247,255)] border dark:border-gray-800  py-5 px-2'>
                 <div>
                   <div className='text-sm text-textGrey font-medium dark:text-[#FFFF] flex justify-between'>
                     <div className='p-1 mt-2 basis-3/5'>{amintToBeMinted}</div>
-                    <div className='w-24 p-2 px-3 mr-1 text-center border rounded-lg '>USDa</div>
+                    <div className='w-24 p-2 px-3 mr-1 text-center border rounded-lg dark:border-gray-800 '>USDa</div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col">
-                {/* <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
+              {/* <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
                   <p className=" min-[1440px]:text-base text-sm 2dppx:text-sm text-textSecondary dark:text-[#9E9E9E]">
                     Amount of Amint that will be minted
                     <TooltipProvider>
@@ -660,6 +660,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                     {amintToBeMinted}
                   </p>
                 </div> */}
+              {/* <div className="flex flex-col">
+
 
 
                 <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
@@ -670,17 +672,45 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                     {optionFees}
                   </p>
                 </div>
-                <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
+                <div className="px-4 py-[10px] border-b border-lineGrey">
+                  <div className="flex justify-between ">
                   <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textHighlight dark:text-[#9E9E9E]">
                     Downside Protection Amount
                   </p>
                   <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
-                    {downsideProtectionAmnt} (+{ltv}% LTV)
+                    {downsideProtectionAmnt} +({ltv}% LTV)
                   </p>
+                  
+                  </div>
+                  <div>
+                 
+
+                    
+                  </div>
                 </div>
                 <div className="flex justify-between px-4 py-[10px] border-lineGrey">
                 
                 </div>
+              </div> */}
+              <div className="container flex px-0 py-2 mx-auto ">
+                <div className="p-4 w-full h-36 border bg-[linear-gradient(to_bottom,#f6f6f6_0%,white_100%)] dark:bg-none shadow-sm">
+                  <h2 className="mb-2  text-gray-600 text-md dark:text-[#DEDEDE]">Borrow Details:</h2>
+                  <div className="flex items-center justify-between">
+                    <div className="">
+                      <p className="text-sm text-gray-600 dark:text-[#DEDEDE]">Deposit: {(Number(ethPrice) / 100 * Number(form.getValues("collateralAmount"))).toFixed(2)}</p>
+                      <p className="text-sm text-[#ff6d6d]">Option Fee 2%: {optionFees.toFixed(2)}</p>
+                      <p className="text-sm text-[#007AFF]">Loan to Value (LTV) 80%: {amintToBeMinted}</p>
+                      <p className="text-sm text-[#00b564]">Downside Protection 20%: {downsideProtectionAmnt}</p>
+                    </div>
+                  
+                  </div>
+                </div>
+                <div className="box-border relative flex items-center w-full border h-36 ">
+                      <div className="relative h-24 left-11 bottom-5">
+                        <LoanPieChart />
+                      </div>
+                      <div className="absolute w-full mt-2 font-bold text-center text-blue-600 bottom-4 ">100% LTV</div>
+                    </div>
               </div>
 
 

@@ -179,7 +179,7 @@ const page = () => {
 
   return (
     !isConnected ?<ConnectWallet/>:
-    <div className="relative py-6 px-2 md:px-6 rounded-[10px] dark:bg-[#141414] dark:shadow-none bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
+    <div className="relative py-6 px-2 mt-24 md:px-6 rounded-[10px] dark:bg-[#141414] dark:shadow-none bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
 
       {
          
