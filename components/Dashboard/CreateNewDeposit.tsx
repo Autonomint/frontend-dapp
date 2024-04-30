@@ -692,8 +692,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                 
                 </div>
               </div> */}
-              <div className="container flex px-0 py-2 mx-auto ">
-                <div className="p-4 w-full h-36 border bg-[linear-gradient(to_bottom,#f6f6f6_0%,white_100%)] dark:bg-none shadow-sm">
+              <div className="container flex px-0 mx-auto border rounded-md dark:border-gray-700 ">
+                <div className="p-4 w-full h-36 dark:border-gray-700 border-r bg-[linear-gradient(to_bottom,#f6f6f6_0%,white_100%)] dark:bg-none shadow-sm">
                   <h2 className="mb-2  text-gray-600 text-md dark:text-[#DEDEDE]">Borrow Details:</h2>
                   <div className="flex items-center justify-between">
                     <div className="">
@@ -702,16 +702,20 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                       <p className="text-sm text-[#007AFF]">Loan to Value (LTV) 80%: {amintToBeMinted}</p>
                       <p className="text-sm text-[#00b564]">Downside Protection 20%: {downsideProtectionAmnt}</p>
                     </div>
-                  
+
                   </div>
                 </div>
-                <div className="box-border relative flex items-center w-full border h-36 ">
-                      <div className="relative h-24 left-11 bottom-5">
-                        <LoanPieChart />
-                      </div>
-                      <div className="absolute w-full mt-2 font-bold text-center text-blue-600 bottom-4 ">100% LTV</div>
-                    </div>
+                <div className="relative w-full ">
+                  <div  className="absolute left-3 h-36 w-60 ">
+                    <LoanPieChart />
+                  </div>
+
+                  <div className="w-full mt-2 font-bold text-center text-blue-600 bottom-4">100% LTV</div>
+                </div>
+                {/* <div className="box-border relative flex items-center w-full border h-36 ">
+                    </div> */}
               </div>
+
 
 
               <Note
