@@ -131,10 +131,10 @@ const InitialformSchema = z.object({
 
 const NewDeposit = ({
 
-handleRefetch
+  handleRefetch
 }: {
   handleRefetch: Function;
-})=> {
+}) => {
   // Define the initial state for the open variable for sheet opening and closing
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<number>(0);
@@ -813,7 +813,7 @@ handleRefetch
         );
         return;
       }
-      else{
+      else {
         amintApprove({
           args: [
             (cdsAddress[11155111] as `0x${string}`),
@@ -822,7 +822,7 @@ handleRefetch
         })
       }
     }
-    else{
+    else {
       usdtWrite({
         args: [
           (cdsAddress[11155111] as `0x${string}`),
@@ -1090,7 +1090,7 @@ handleRefetch
                                 inputMode="numeric"
                                 pattern="[0-9]*"
                                 type="text"
-                                className="w-full px-2 py-10 text-sm text-gray-900 bg-[#f3f5f7] dark:bg-[#0f0f0f] border-[rgb(247,247,255)] border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                                className="w-full px-2 py-10 text-sm text-gray-900 bg-[#f3f5f7] dark:bg-[#0f0f0f] border-[#00B655] dark:border-[#00B655]  border-2 lock dark:text-white focus:outline-none focus:ring-0 peer"
                                 disabled={!tokensEnabled.USDT}
                                 placeholder=""
                                 {...field}
@@ -1104,7 +1104,7 @@ handleRefetch
                               ></Input>
                               <label
                                 htmlFor="amount_of_usdt"
-                                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#f3f5f7] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                               >
                                 Deposit USDT
                               </label>
@@ -1122,6 +1122,7 @@ handleRefetch
                                   Max
                                 </div>
                               )}
+
                               {/* <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                   <Button
@@ -1319,10 +1320,10 @@ handleRefetch
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
-                          
+
                         >
                           <FormControl
-                           className="bg-white dark:bg-[#0F0F0F] dark:border-[#3A3A3A] dark:text-white"
+                            className="bg-white dark:bg-[#0F0F0F] dark:border-[#3A3A3A] dark:text-white"
                           >
                             <SelectTrigger>
                               <SelectValue placeholder="Choose a Lock-In Period" />

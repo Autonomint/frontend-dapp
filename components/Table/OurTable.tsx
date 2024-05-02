@@ -52,7 +52,7 @@ const DepositAndWithDrawTable = ({
   return (
     <Table>
       <TableHeader>
-        <TableRow className="bg-gray-200 hover:bg-gray-200">
+        <TableRow className="bg-gray-200 hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-900">
           <TableHead className="w-3 opacity-1 text-textGrey dark:text-[#C4C4C4]">Id</TableHead>
           <TableHead className="text-textGrey dark:text-[#C4C4C4]">ETH Deposited</TableHead>
           <TableHead className="text-textGrey dark:text-[#C4C4C4]">Amint minted</TableHead>

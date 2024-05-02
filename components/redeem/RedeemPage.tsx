@@ -126,7 +126,7 @@ const RedeemPage = () => {
           <div className="flex justify-end mb-4 dark:bg-[#141414]">
             <Button variant={"ghostOutline"}
               size={"primary"}
-              className="border border-borderGrey" onClick={() => setOpen2(!open2)} >Open Positions</Button>
+              className="border border-borderGrey" onClick={() => setOpen2(!open2)} >Redeemable Assests</Button>
           </div>
           <Dialog open={open2} onOpenChange={setOpen2} >
             <DialogContent className="max-w-[800px] pb-5">

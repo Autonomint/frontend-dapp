@@ -5,7 +5,7 @@ import {
   configureChains,
 
 } from "wagmi";
-import { polygonMumbai } from "@wagmi/core/chains";
+import { polygonMumbai,optimismSepolia,bscTestnet} from "@wagmi/core/chains";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { publicProvider } from "wagmi/providers/public";
 import { alchemyProvider } from "wagmi/providers/alchemy";
@@ -14,7 +14,7 @@ import { goerli } from "@wagmi/core/chains";
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 import { sepolia } from 'viem/chains'
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [goerli,sepolia, polygonMumbai],
+  [goerli,sepolia, polygonMumbai,optimismSepolia,bscTestnet],
   [
     // alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API as string }),
     infuraProvider({ apiKey:"db13973dc7f54cbab913af8ebc58e376" }),

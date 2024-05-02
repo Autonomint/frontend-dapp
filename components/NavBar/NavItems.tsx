@@ -18,7 +18,7 @@ const NavItems = ({ props: { image, label } }: Props) => {
           alt="Deposit and withdraw"
         />
       </div> */}
-      <p className="text-[14px] text-center text-[#ffff] dark:text-[#ffff]">{label}</p>
+      <p className="text-[14px] text-center text-[#00000] dark:text-[#ffff]">{label}</p>
     </div>
   );
 };

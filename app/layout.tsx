@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ThemeProvider } from "@/providers/theme-provider";
 import dynamic from 'next/dynamic'
 import CheckNetwork from "@/components/ConnectWallet/CheckNetwork";
+import WaitlistBanner from "@/components/Banner/WaitlistBanner";
 
 const WalletProvider = dynamic(() => import('@/providers/WalletProvider'), {
   ssr: false,
@@ -44,6 +45,7 @@ export default function RootLayout({
 
                 {/* <SideBar /> */}
                 <div className="flex flex-col w-full h-full mx-0 basis-full ">
+                  <WaitlistBanner/>
                   <NavBar />
                   {children}
                 </div>

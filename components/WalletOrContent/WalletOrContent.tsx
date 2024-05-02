@@ -266,7 +266,7 @@ const WalletOrContent = () => {
                   </div>
                 </DialogTitle>
               </DialogHeader>
-              <div className=" overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto">
+              <div className=" overflow-x-scroll overflow-y-scroll min-w-[600px] max-h-[18rem] md:overflow-x-auto">
 
                 <DepositAndWithDrawTable
                   tableData={deposits}

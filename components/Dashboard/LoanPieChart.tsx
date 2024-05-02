@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer ,Tooltip} from 'recharts';
 import { CategoricalChartFunc } from 'recharts/types/chart/generateCategoricalChart';
 const COLORS = [
   { start: "#D4F5FF", end: "#00C2FF" },
@@ -22,6 +22,17 @@ const data = [
 
  const LoanPieChart:React.FC = () =>{
     // onPieEnter: CategoricalChartFunc | undefined;
+    const CustomTooltip = ({ active, payload, label }: any) => {
+      if (active && payload && payload.length) {
+        return (
+          <div className="">
+            <p className="label">{`${label} : ${payload[0].value}`}</p>
+          </div>
+        );
+      }
+    
+      return null;
+    };
   return (
    
       <div className="relative w-full h-full">
@@ -52,6 +63,7 @@ const data = [
               <Cell key={`cell-${index}`} fill={`url(#myGradient${index})`} />
             ))}
           </Pie>
+          <Tooltip content={<CustomTooltip />} />
         </PieChart>
       </ResponsiveContainer>
       <div className="absolute top-0 w-full h-full">
@@ -87,6 +99,7 @@ const data = [
                 />
               ))}
             </Pie>
+            <Tooltip />
           </PieChart>
         </ResponsiveContainer>
       </div>

@@ -56,7 +56,7 @@ const formSchema = z.object({
 
 
 
-export default function Redeem() {
+export default function page() {
 
 
   const { address: accountAddress } = useAccount();
@@ -622,209 +622,347 @@ export default function Redeem() {
   }
 
   return (
-    <div className="justify-center  align-middle dark:bg-[#141414] ">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full gap-4 ' action="#">
-          <div className='  relative  rounded-xl dark:bg-[#020202]'>
-            <FormField
-              control={form.control}
-              name="collateralAmount"
-              render={({ field }) => (
-                <FormItem className="relative ">
-                  {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
+    <div className='w-[600px] mx-auto mt-5 h-auto bg-white dark:bg-[#141414] shadow-lg rounded-md p-4'>
+      <div className="justify-center  align-middle dark:bg-[#141414] ">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full gap-4 ' action="#">
+            <div className='text-xl font-bold '>
+              Bridge USDa
+            </div>
 
-                  <FormControl>
-                  <div className="relative">
-                    <Input
-                      type="number"
-                      step="any"
-                      // placeholder="Input Amount"
-                      placeholder=""
-                      
-                      {...field}
-                      value={Boolean(field.value) ? field.value : ""}
-                      className="w-full px-2 py-12 text-sm text-gray-900 bg-[#f3f5f7] dark:bg-[#0f0f0f] border-[#00B655] dark:border-[#00B655] border-2 lock dark:text-white focus:outline-none focus:ring-0 peer"
-                      style={{
-                        appearance: 'textfield',
-                        MozAppearance: 'textfield',
-                        WebkitAppearance: 'none',
-                        margin: 0
-                      }}
-                    ></Input>
-                    <label
-                      htmlFor="amount_of_usdt"
-                      className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#f3f5f7] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
-                    >
-                      Input Amount
-                    </label>
-                    </div>
-                  </FormControl>
-                  <FormMessage className="dark:text-[#B43939]" />
-                </FormItem>
-              )}
-            />
-            <FormField
-
-              control={form.control}
-              name="inputCollateral"
-
-              render={() => (
-                <FormItem className='absolute top-[25%]  right-2  basis-2/5 dark:bg-[#020202] w-28'>
-                  <Controller
-                    control={form.control}
-                    name="inputCollateral"
-                    render={({ field }) => (
-                      <Select
-                        onValueChange={(value) => {
-                          form.setValue("collateralAmount", 0);
-                          if (value === 'amint') {
-                            form.setValue('outputCollateral', 'usdt');
-                          } else if (value === 'abond') {
-                            form.setValue('outputCollateral', 'eth');
-                          }
-                          field.onChange(value)
-
-                        }}
-
-                        value={field.value}
-                      >
-                        {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
-
-                        <FormControl className='bg-white dark:bg-[#020202]' >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Collateral</SelectLabel>
-                            <SelectItem value="amint">AMINT</SelectItem>
-                            <SelectItem value="abond">ABOND</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-
-                      </Select>
-                    )}
-                  />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-
-          <div className='relative rounded-xl bg-[#f3f5f7] border-[#00B655] dark:border-[#00B655] border-2  dark:bg-[#020202]   py-8 px-2'>
             <div>
-              {
-                form.getValues("inputCollateral") === 'amint' ? (
-                  <div className='text-sm text-[#041A50] font-medium dark:text-[#FFFF] flex justify-between'>
-                    <div className='p-1 basis-3/5'>{form.getValues("collateralAmount")}</div>
-                    <div className='w-28 p-2 rounded-lg text-center px-3 mr-1 border border-[#192230]'>USDT</div>
-                  </div>
-                ) : form.getValues("inputCollateral") === 'abond' ? (
-                  <div className='text-sm text-[#041A50] font-medium dark:text-[#FFFF] flex justify-between'>
-                    <div className='flex justify-between mr-1 basis-2/5'>
+              <div className='mb-2'>
+                Transfer from:
+              </div>
+              <FormField
+                control={form.control}
+                name="inputCollateral"
+                render={() => (
+                  <FormItem className=' mb-1  right-2  basis-2/5 dark:bg-[#020202] w-full'>
+                    <Controller
+                      control={form.control}
+                      name="inputCollateral"
+                      render={({ field }) => (
+                        <Select
+                          onValueChange={(value) => {
+                            form.setValue("collateralAmount", 0);
+                            if (value === 'amint') {
+                              form.setValue('outputCollateral', 'usdt');
+                            } else if (value === 'abond') {
+                              form.setValue('outputCollateral', 'eth');
+                            }
+                            field.onChange(value)
 
-                      <div className='flex items-center p-1 basis-3/5'>{outputData ? Number(formatEther(outputData[0])).toFixed(5) : 0}</div>
-                      <div className='w-28 p-2 rounded-lg text-center px-3 mr-1 border border-[#192230]'>ETH</div>
-                    </div>
-                    <div className='text-xl 1/5'>+</div>
-                    <div className='flex justify-between basis-2/5'>
+                          }}
 
-                      <div className='flex items-center p-1 basis-3/5'>{outputData ? Number(formatEther(outputData[2])).toFixed(2) : 0}</div>
-                      <div className='w-28 p-2 rounded-lg text-center px-3 mr-1 border border-[#192230]'>AMINT</div>
-                    </div>
-                  </div>
-                ) : <div className='flex items-center p-1 basis-3/5'>Output Amount</div>
-              }
+                          value={field.value}
+                        >
+                          {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
 
+                          <FormControl className='bg-white dark:bg-[#020202] p-2' >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select Network" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Collateral</SelectLabel>
+                              <SelectItem value="amint">Ethereum</SelectItem>
+                              <SelectItem value="abond">Polygon</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+
+                        </Select>
+                      )}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className='  relative  rounded-xl dark:bg-[#020202]'>
+
+                <FormField
+                  control={form.control}
+                  name="collateralAmount"
+                  render={({ field }) => (
+                    <FormItem className="relative ">
+                      {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
+
+                      <FormControl>
+                        <div className="relative">
+                          <Input
+                            type="number"
+                            step="any"
+                            // placeholder="Input Amount"
+                            placeholder=""
+
+                            {...field}
+                            value={Boolean(field.value) ? field.value : ""}
+                            className="w-full px-2 py-12 text-sm text-gray-900 bg-[#f3f5f7] dark:bg-[#0f0f0f] border-[#00B655] dark:border-[#00B655] border-2 lock dark:text-white focus:outline-none focus:ring-0 peer"
+                            style={{
+                              appearance: 'textfield',
+                              MozAppearance: 'textfield',
+                              WebkitAppearance: 'none',
+                              margin: 0
+                            }}
+                          ></Input>
+                          <label
+                            htmlFor="amount_of_usdt"
+                            className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#f3f5f7] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                          >
+                            Input Amount
+                          </label>
+                        </div>
+                      </FormControl>
+                      <FormMessage className="dark:text-[#B43939]" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+
+                  control={form.control}
+                  name="inputCollateral"
+
+                  render={() => (
+                    <FormItem className='absolute top-[25%]  right-2  basis-2/5 dark:bg-[#020202] w-32'>
+                      <Controller
+                        control={form.control}
+                        name="inputCollateral"
+                        render={({ field }) => (
+                          <Select
+                            onValueChange={(value) => {
+                              form.setValue("collateralAmount", 0);
+                              if (value === 'amint') {
+                                form.setValue('outputCollateral', 'usdt');
+                              } else if (value === 'abond') {
+                                form.setValue('outputCollateral', 'eth');
+                              }
+                              field.onChange(value)
+
+                            }}
+
+                            value={field.value}
+                          >
+                            {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
+
+                            <FormControl className='bg-white dark:bg-[#020202]' >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select Token" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>Collateral</SelectLabel>
+                                <SelectItem value="amint">AMINT</SelectItem>
+                                <SelectItem value="abond">ABOND</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+
+                          </Select>
+                        )}
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
 
 
+            <div className='mt-5'>
+            <div className='mb-2'>
+               Transfer to:
+              </div>
+              <FormField
+                control={form.control}
+                name="inputCollateral"
+                render={() => (
+                  <FormItem className='mb-1  right-2  basis-2/5 dark:bg-[#020202] w-full'>
+                    <Controller
+                      control={form.control}
+                      name="inputCollateral"
+                      render={({ field }) => (
+                        <Select
+                          onValueChange={(value) => {
+                            form.setValue("collateralAmount", 0);
+                            if (value === 'amint') {
+                              form.setValue('outputCollateral', 'usdt');
+                            } else if (value === 'abond') {
+                              form.setValue('outputCollateral', 'eth');
+                            }
+                            field.onChange(value)
 
-            {/* <FormField
-            control={form.control}
-            name="outputCollateralAmount"
-            render={({ field }) => (
-              <FormItem className="relative ">
-                <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400'>{!form.getValues("outputCollateralAmount") ? "" : "Output Amount"}</label>
+                          }}
 
-                <FormControl>
-                  <Input
-                    type="number"
-                    placeholder="Output Amount"
-                    {...field}
-                    value={Boolean(field.value) ? field.value : ""}
-                    disabled={true}
-                    className='py-12 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]'
+                          value={field.value}
+                        >
+                          {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
 
-                  ></Input>
-                </FormControl>
-                <FormMessage className="dark:text-[#B43939]" />
-              </FormItem>
-            )}
-          /> */}
-            {/* <FormField
-            control={form.control}
-            name="outputCollateral"
-            render={() => (
-              <FormItem className='absolute top-[25%] right-2  basis-2/5 dark:bg-[#020202]  w-28'>
-                <Controller
+                          <FormControl className='bg-white dark:bg-[#020202]' >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select Network" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Collateral</SelectLabel>
+                              <SelectItem value="amint">AMINT</SelectItem>
+                              <SelectItem value="abond">ABOND</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+
+                        </Select>
+                      )}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className='  relative  rounded-xl dark:bg-[#020202]'>
+
+
+
+                <FormField
                   control={form.control}
-                  name="outputCollateral"
+                  name="collateralAmount"
                   render={({ field }) => (
-                    <Select
-                      onValueChange={(value) => {
-                        console.log("change value", value)
-                        if (value === 'usdt') {
-                          form.setValue('inputCollateral', 'amint');
-                        } else if (value === 'eth') {
-                          form.setValue('inputCollateral', 'abond');
-                        }
-                        field.onChange(value)
-                      }}
-                      value={field.value}
-                    >
-                      <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400'>{!form.getValues("outputCollateral") ? "" : "Output Type"}</label>
+                    <FormItem className="relative ">
+                      {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
 
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
+                        <div className="relative">
+                          <Input
+                            type="number"
+                            step="any"
+                            // placeholder="Input Amount"
+                            placeholder=""
+
+                            {...field}
+                            value={Boolean(field.value) ? field.value : ""}
+                            className="w-full px-2 py-12 text-sm text-gray-900 bg-[#f3f5f7] dark:bg-[#0f0f0f] border-[#00B655] dark:border-[#00B655] border-2 lock dark:text-white focus:outline-none focus:ring-0 peer"
+                            style={{
+                              appearance: 'textfield',
+                              MozAppearance: 'textfield',
+                              WebkitAppearance: 'none',
+                              margin: 0
+                            }}
+                          ></Input>
+                          <label
+                            htmlFor="amount_of_usdt"
+                            className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#f3f5f7] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                          >
+                            Output Amount
+                          </label>
+                        </div>
                       </FormControl>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Collateral</SelectLabel>
-                          <SelectItem value="usdt">USDT</SelectItem>
-                          <SelectItem value="eth">ETH</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
+                      <FormMessage className="dark:text-[#B43939]" />
+                    </FormItem>
                   )}
                 />
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
+                <FormField
 
+                  control={form.control}
+                  name="inputCollateral"
 
-          </div>
+                  render={() => (
+                    <FormItem className='absolute top-[25%]  right-2  basis-2/5 dark:bg-[#020202] w-32'>
+                      <Controller
+                        control={form.control}
+                        name="inputCollateral"
+                        render={({ field }) => (
+                          <Select
+                            onValueChange={(value) => {
+                              form.setValue("collateralAmount", 0);
+                              if (value === 'amint') {
+                                form.setValue('outputCollateral', 'usdt');
+                              } else if (value === 'abond') {
+                                form.setValue('outputCollateral', 'eth');
+                              }
+                              field.onChange(value)
 
-          <Note
-            note="Note: A withdrawal Fee of 2% will be applied."
-          />
-          <Button
-            type="submit"
-            variant={"primary"}
-            className="py-2 text-white"
-            disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading}
-          >
-            {isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading ? <Spinner /> : "Redeem"}
-          </Button>
-        </form>
-      </Form>
+                            }}
 
+                            value={field.value}
+                          >
+                            {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
+
+                            <FormControl className='bg-white dark:bg-[#020202]' >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select Token" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>Collateral</SelectLabel>
+                                <SelectItem value="amint">Ethereum</SelectItem>
+                                <SelectItem value="abond">Polygon</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+
+                          </Select>
+                        )}
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className=''>
+
+              <div className="flex flex-col">
+
+                <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
+                  <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm  dark:text-[#9E9E9E]">
+                    Gas on destination chain
+                  </p>
+                  <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
+                    --
+                  </p>
+                </div>
+                <div className="px-4 py-[10px] border-b border-lineGrey">
+                  <div className="flex justify-between ">
+                    <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textHighlight dark:text-[#9E9E9E]">
+                      Fee
+                    </p>
+                    <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
+                      --
+                    </p>
+                  </div>
+                  
+                </div>
+
+                <div className="px-4 py-[10px] border-b border-lineGrey">
+                  <div className="flex justify-between ">
+                    <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textHighlight dark:text-[#9E9E9E]">
+                      Slipage tolerance
+                    </p>
+                    <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
+                      --
+                    </p>
+                  </div>
+                  
+                </div>
+
+              </div>
+
+            </div>
+
+            <Button
+              type="submit"
+              variant={"primary"}
+              className="py-2 text-white"
+              disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading}
+            >
+              {isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading ? <Spinner /> : "Bridge"}
+            </Button>
+          </form>
+        </Form>
+
+      </div>
     </div>
+
 
   )
 }

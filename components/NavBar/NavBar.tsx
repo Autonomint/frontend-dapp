@@ -65,6 +65,12 @@ const navItemsList = [
     href: "leaderboard",
     targetSegment: "leaderboard",
   },
+  {
+    image: mintmark,
+    label: "Bridge",
+    href: "bridge",
+    targetSegment: "bridge",
+  },
 ];
 
 
@@ -80,16 +86,13 @@ const NavBar = () => {
   const [open2, setOpen2] = React.useState(false);
   const [showNotification, setShowNotification] = useState(false);
   return (
-    <div className="fixed z-50 w-full top-5">
-
-
-
-    <div className="flex w-5/6 rounded-lg  mx-auto h-16  bg-[linear-gradient(180deg,#00679F_0%,#041A50_100%)] dark:bg-none dark:bg-[#1a1a1a] shadow-[0px_2px_4px 0px_rgba(0,0,0,0.25)] shadow-lg z-10">
+    <div className="z-50 w-full ">
+    <div className="flex w-full    mx-auto h-16  bg-[linear-gradient(145deg,#f3f5f7_20%,#ecf2f8_100%)]   dark:bg-none dark:bg-[#1a1a1a] shadow-[0px_2px_4px 0px_rgba(0,0,0,0.25)] shadow-lg z-10">
       <div className="flex items-center gap-2 ml-4">
         <div className="w-[3rem] h-[3rem]">
           <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
         </div>
-        <div className="text-xl font-bold text-white">Autonomint</div>
+        <div className="text-xl font-bold text-[#041A50] dark:text-[#007AFF]">Autonomint</div>
       </div>
       <div className="items-center justify-between invisible hidden w-0 md:flex md:w-full md:visible">
         <div className="flex ml-20 md:gap-2 md:ml-10 lg:gap-5">
@@ -100,8 +103,8 @@ const NavBar = () => {
               <Link
                 className={
                   isActive === item.targetSegment
-                    ? " text-[14px] 2xl:text-normal font-semibold border-b-2 border-[#ffff]  dark:text-white"
-                    : ""
+                    ? " text-[14px] 2xl:text-normal font-semibold border-b-2 border-black dark:border-white  dark:text-white"
+                    : "  "
                 }
                 href={item.href}
                 key={item.href}
@@ -116,9 +119,21 @@ const NavBar = () => {
               </Link>
             );
           })}
+          <div className="flex items-center justify-center">
+
+          <button onClick={() => window.open("https://app.uniswap.org/swap", "_blank")} className="flex items-center h-10 px-4 py-1 text-sm font-bold text-center text-black border border-black rounded-lg dark:text-white dark:border-white">
+            BUY USDa
+          </button>
+          </div>
 
         </div>
         <div className="flex gap-4 mr-5">
+          {/* <div className="flex items-center gap-2 text-sm text-white">
+            USDa APY <span className="font-semibold dark:text-[#00C2FF}">100%</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-white">
+            TVL <span className="font-semibold dark:text-[#00C2FF}">$100M</span>
+          </div> */}
 
           <div className="flex ">
             <label className="relative inline-flex items-center cursor-pointer ">
@@ -131,11 +146,11 @@ const NavBar = () => {
             </label>
           </div>
           <div className="w-[2rem] h-[3rem]">
-            <Image src={notification} className="rounded-sm cursor-pointer " onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
+            <Image src={notification} className="rounded-sm cursor-pointer "  onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
           </div>
           {isConnected ? (
-            <div className="w-[2.5rem] h-[3rem]">
-              <Image src={profile} alt="autonomint-dapp" className="rounded-sm cursor-pointer " onClick={() => setOpen2(!open2)} style={{ width: "100%", height: "100%" }} />
+            <div className="w-[2.5rem] h-[3rem] relative top-1">
+              <Image src={profile} alt="autonomint-dapp" className="rounded-sm cursor-pointer "  onClick={() => setOpen2(!open2)} style={{ width: "100%", height: "100%" }} />
             </div>
           ) : (
             ""
@@ -172,7 +187,7 @@ const NavBar = () => {
             <ul className="flex flex-col gap-3 font-medium rounded-lg dark:border-gray-700">
 
               <li className="w-[2rem] text-md ml-2 text-white font-semibold flex  items-center"> Notifications
-                <Image src={notification} className="rounded-sm cursor-pointer " onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
+                <Image src={notification} fill={false} className="rounded-sm cursor-pointer " onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
               </li>
               <li>
                 {isConnected ? (
@@ -205,7 +220,7 @@ const NavBar = () => {
 
       {
         showNotification ? (
-          <div className="absolute flex flex-col gap-4 w-[300px] dark:bg-[#141414] right-10 top-14 border z-50 bg-white px-2 py-4 rounded-lg shadow-xl">
+          <div className="absolute flex flex-col gap-4 w-[300px] dark:bg-[#141414] right-14 top-24 border z-50 bg-white px-2 py-4 rounded-lg shadow-xl">
             <div className="flex justify-between text-sm font-semibold rounded-md">
               Notifications
               <div className="cursor-pointer" onClick={() => setShowNotification(!showNotification)}>close</div>
@@ -214,13 +229,11 @@ const NavBar = () => {
               <div className="p-2 text-xs">Check out the new leaderboard</div>
             </div>
           </div>
-
         ) : ("")
       }
-{/* number of borrower , no  of dcds user , tvl */}
 {
         open2 ? (
-          <div className=" fixed flex flex-col gap-4 w-auto dark:bg-[#141414] right-36 top-[5.5rem] border bg-white px-4 py-4 rounded-lg shadow-xl">
+          <div className=" fixed flex flex-col gap-4 w-auto dark:bg-[#141414] right-5 top-[6rem] border bg-white px-4 py-4 rounded-lg shadow-xl">
             <div className="flex items-center justify-end w-full">
               <button onClick={()=>setOpen2(!open2)} className="p-1 border border-black rounded-full dark:white"><Cross2Icon className="w-4 h-4"/></button>
             </div>
@@ -229,21 +242,21 @@ const NavBar = () => {
             {address}
           </div>
           <div className="flex gap-2 text-sm rounded-md">
-            <Button className="w-full text-white bg-blue-500 rounded-md cursor-pointer " >Change</Button>
+            <Button className="w-full text-white bg-blue-500 rounded-md cursor-pointer " >Change Network</Button>
             <Button className="w-full text-white bg-red-500 rounded-md cursor-pointer" onClick={() => disconnect()}>Disconnect</Button>
           </div>
           <div className="p-3 text-sm underline border border-gray-500 rounded-md">
             <a href={`https://sepolia.etherscan.io/address/${address}`} >View All Wallets Transactions </a>
           </div>
           <div className="flex justify-between p-3 text-sm border border-gray-500 rounded-md"><div>Verify Joseon ID</div><div className="underline">Learn More</div></div>
-          <div className="flex justify-center p-3 text-sm border border-gray-500 rounded-md ">
+          {/* <div className="flex justify-center p-3 text-sm border border-gray-500 rounded-md ">
             <div className="flex justify-between w-1/2 ">
 
               <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[2.5rem]"><Image src={github} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
               <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[2.5rem]"><Image src={twitter} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} /></div></a>
               <a href="https://t.co/Ck6x2jhVOj" target="_blank" ><div className="w-[2.5rem]"><Image src={discord} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
             </div>
-          </div>
+          </div> */}
           <div className="p-3 text-sm border border-gray-500 rounded-md">
             Terms & privacy policy <a href="" className="text-blue-500 underline">click to view</a>
           </div>

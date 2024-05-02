@@ -277,11 +277,11 @@ const Dcds = () => {
                   </p>
                 </div>
               </DialogTitle>
-              <div className="mb-10 mx-auto overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto">
+              <div className="mb-10 mx-auto min-w-[600px] overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto">
 
                 <Table>
                   <TableHeader>
-                    <TableRow className="bg-gray-200 hover:bg-gray-200">
+                    <TableRow className="bg-gray-200 hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-900">
                       <TableHead className="text-textGrey dark:text-[#C4C4C4]">Id</TableHead>
                       <TableHead className="text-textGrey dark:text-[#C4C4C4]">Amint / Usdt Deposited</TableHead>
                       <TableHead className="text-textGrey dark:text-[#C4C4C4]">Deposited Time</TableHead>

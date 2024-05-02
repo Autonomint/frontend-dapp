@@ -21,6 +21,7 @@ interface TableData {
 
 
 
+
 const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]}) => {
     const [sortedData, setSortedData] = useState<TableData[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -38,9 +39,9 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
     return (
         <div>
              
-            <div className='border dark:border-gray-500 min-h-[50vh]  rounded-md shadow-sm '>
-                <div className=' dark:bg-[#141414]  rounded-lg overflow-hidden'>
-                    <Table>
+            <div className='border rounded-md shadow-sm dark:border-gray-500 '>
+                <div className=' dark:bg-[#141414]  rounded-lg min-h-[50vh] overflow-hidden overflow-x-scroll  '>
+                    <Table className='min-w-[400px]'>
                         <TableHeader>
                             <TableRow className='bg-[linear-gradient(to_right,#23e988,#13d1b6)] dark:bg-none hover:bg-[#5981ff] dark:bg-[#1a1a1a]'>
                                 <TableHead className="w-3 opacity-1 text-white dark:text-[#C4C4C4]">Rank</TableHead>
@@ -58,7 +59,12 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
                         <TableBody className=''>
                             {
                                 sortedData.map((data, index) => (
-                                    <TableRow key={index} className={` hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]   dark:border cursor-pointer`
+                                    <TableRow key={index} className={`
+                                    ${index === 0 ? 'bg-[#EEFFF5] dark:bg-[#002A11]  font-bold ' :
+                                    index === 1 ? 'bg-[#EEFFF5] dark:bg-[#002A11]  font-bold' :
+                                        index === 2 ? 'bg-[#EEFFF5] dark:bg-[#002A11] font-bold':""}
+
+                                    hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]   dark:border cursor-pointer`
                                     }>
                                         <TableCell className={
                                         ` ${index === 0 ? 'text-[#40e862] dark:text-[#71e889] text-[1.25rem] font-bold ' :
