@@ -44,7 +44,7 @@ export default function BorrowSlider() {
     cssEase: "linear"
   }
   return (
-    <div className='flex flex-col w-[380px] h-fit items-center justify-center  bg-white dark:bg-[#141414] px-4 gap-4 py-4  mt-20 rounded-md shadow-sm '>
+    <div className='flex flex-col w-[380px] h-fit items-center justify-center  bg-white dark:bg-[#141414] px-4 gap-4 py-4 mt-10 lg:mt-20 rounded-md shadow-sm '>
       <div className="slider-container">
       <Slider className=' w-[300px] px-3' {...settings}>
 

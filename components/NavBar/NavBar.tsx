@@ -243,7 +243,7 @@ const NavBar = () => {
           </div>
           <div className="flex gap-2 text-sm rounded-md">
             <Button className="w-full text-white bg-blue-500 rounded-md cursor-pointer " >Change Network</Button>
-            <Button className="w-full text-white bg-red-500 rounded-md cursor-pointer" onClick={() => disconnect()}>Disconnect</Button>
+            <Button className="w-full text-white bg-red-500 rounded-md cursor-pointer" onClick={() => {disconnect(); setOpen2(!open2)}}>Disconnect</Button>
           </div>
           <div className="p-3 text-sm underline border border-gray-500 rounded-md">
             <a href={`https://sepolia.etherscan.io/address/${address}`} >View All Wallets Transactions </a>

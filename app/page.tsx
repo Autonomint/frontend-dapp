@@ -45,7 +45,7 @@ export default function Home() {
       {/* Main area */}
       {/* <WalletOrContent/> */}
       <div className="static h-auto pb-10 mt-5 ">
-        <div className="flex w-[95%]  justify-center mx-auto gap-5">
+        <div className="flex w-[95%] flex-wrap lg:flex-row  justify-center mx-auto lg:gap-5">
           
           <div className="w-[95%] border sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[800px] dark:border-none  bg-[#ffff] mission-shadow dark:bg-none dark:bg-[#141414] shadow-lg  pb-4   mt-5 rounded-lg px-4">
             <div className="flex justify-center">
@@ -81,7 +81,7 @@ export default function Home() {
           <BorrowSlider />
           {/* <RightSideInfo/> */}
         </div>
-        <div className="relative flex gap-5 mt-4 lg:ml-5 lg:fixed lg:bottom-10">
+        <div className="relative flex justify-center gap-5 mx-auto mt-12 lg:ml-5 2xl:fixed 2xl:bottom-10">
           <div onClick={() => setOpen2(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[#fffdd7] dark:bg-[#FC9550] dark:text-white  border-2 border-orange-400 rounded-md cursor-pointer">
             ? FAQs
           </div>
@@ -93,7 +93,7 @@ export default function Home() {
           </div> */}
         </div>
 
-        <div className="flex items-center justify-center mt-4 right-10 lg:fixed lg:bottom-10 ">
+        <div className="flex items-center justify-center mt-4 right-10 2xl:fixed 2xl:bottom-10 ">
 
           <div className="flex justify-center p-3 text-sm border border-gray-500 rounded-md bg-white dark:bg-[#020202]">
             <div className="flex justify-between w-40 ">

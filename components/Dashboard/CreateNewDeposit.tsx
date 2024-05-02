@@ -715,7 +715,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                 
                 </div>
               </div> */}
-              <div className="container flex px-0 shadow-md mx-auto border rounded-md bg-[linear-gradient(to_bottom,#f6f6f6_0%,white_100%)] dark:border-gray-700 ">
+              <div className="container flex px-0 shadow-md mx-auto border rounded-md bg-[linear-gradient(to_bottom,#f6f6f6_0%,white_100%)] dark:bg-[linear-gradient(270deg,#16603B_0%,#0D4A5C_100%)]  dark:border-gray-700 ">
                 <div className="w-full p-4 border-r h-36 dark:border-gray-700 dark:bg-none">
                   <h2 className="mb-2  text-gray-800 text-md dark:text-[#DEDEDE]">Borrow Details:</h2>
                   <div className="flex items-center justify-between w-full">
