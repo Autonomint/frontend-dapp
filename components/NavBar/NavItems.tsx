@@ -19,6 +19,9 @@ const NavItems = ({ props: { image, label } }: Props) => {
         />
       </div> */}
       <p className="text-[14px] text-center text-[#00000] dark:text-[#ffff]">{label}</p>
+      {label === "Bridge" ? (
+        <span className="relative text-[0.7rem] bottom-2 border border-black dark:border-white px-1 rounded-lg text-center ">coming soon</span>
+      ):("")}
     </div>
   );
 };

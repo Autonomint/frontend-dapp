@@ -698,7 +698,7 @@ export default function Redeem() {
                         <SelectContent>
                           <SelectGroup>
                             <SelectLabel>Collateral</SelectLabel>
-                            <SelectItem value="amint">AMINT</SelectItem>
+                            <SelectItem value="amint">USDa</SelectItem>
                             <SelectItem value="abond">ABOND</SelectItem>
                           </SelectGroup>
                         </SelectContent>
@@ -732,7 +732,7 @@ export default function Redeem() {
                     <div className='flex justify-between basis-2/5'>
 
                       <div className='flex items-center p-1 basis-3/5'>{outputData ? Number(formatEther(outputData[2])).toFixed(2) : 0}</div>
-                      <div className='w-28 p-2 rounded-lg text-center px-3 mr-1 border border-[#192230]'>AMINT</div>
+                      <div className='w-28 p-2 rounded-lg text-center px-3 mr-1 border border-[#192230]'>USDa</div>
                     </div>
                   </div>
                 ) : <div className='flex items-center p-1 basis-3/5'>Output Amount</div>

@@ -449,11 +449,15 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
    */
 
   useEffect(() => {
-    if (form.getValues("collateralAmount") != 0) {
+    if(form.getValues("collateral") == undefined){
+      form.setError("collateralAmount", { message: "select collateral type" });
+    }
+    else if (form.getValues("collateralAmount") != 0) {
       form.clearErrors("collateralAmount");
       handleAmintToBeMinted();
     }
     else {
+      form.clearErrors("collateralAmount");
       form.setError("collateralAmount", { message: "value should be greater than 0.02 ETH" });
     }
 
@@ -721,8 +725,8 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                   <div className="flex items-center justify-between w-full">
                     <div className="w-full ">
                       <p className="text-sm text-gray-600 flex justify-between dark:text-[#DEDEDE]"><div>Deposit:</div> <div>{(Number(ethPrice) / 100 * Number(form.getValues("collateralAmount"))).toFixed(2)}</div></p>
-                      <p className="w-full text-sm flex justify-between text-[#ff6d6d] "><div>Option Fee (2%):</div> <div>{optionFees.toFixed(2)}</div></p>
-                      <p className="text-sm text-[#007AFF] flex justify-between"><div>USDa borrowed (80%):</div> <div>{amintToBeMinted}</div></p>
+                      <p className="w-full text-sm flex justify-between text-[#ff6d6d] "><div>Option Fee :</div> <div>{optionFees.toFixed(2)}</div></p>
+                      <p className="text-sm text-[#007AFF] flex justify-between"><div>USDa borrowed :</div> <div>{amintToBeMinted}</div></p>
                       <p className="text-sm text-[#00b564] flex justify-between"><div>Downside Protection <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger type="button">
@@ -732,16 +736,14 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                           <p>Hedge your collateral price drop to maintain high LTV</p>
                         </TooltipContent>
                       </Tooltip>
-                    </TooltipProvider>(20%):</div> <div>{downsideProtectionAmnt}</div></p>
+                    </TooltipProvider>:</div> <div>{downsideProtectionAmnt}</div></p>
                     </div>
-
                   </div>
                 </div>
                 <div className="relative flex items-start justify-center w-full ">
-                  <div  className="absolute h-36 w-60 ">
+                  <div  className="absolute w-full h-36 ">
                     <LoanPieChart />
                   </div>
-
                   <div className="w-full mt-2 font-bold text-center text-blue-600 bottom-4">100% LTV</div>
                 </div>
                 {/* <div className="box-border relative flex items-center w-full border h-36 ">

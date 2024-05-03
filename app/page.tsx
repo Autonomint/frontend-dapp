@@ -47,7 +47,7 @@ export default function Home() {
       <div className="static h-auto pb-10 mt-5 ">
         <div className="flex w-[95%] flex-wrap lg:flex-row  justify-center mx-auto lg:gap-5">
           
-          <div className="w-[95%] border sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[800px] dark:border-none  bg-[#ffff] mission-shadow dark:bg-none dark:bg-[#141414] shadow-lg  pb-4   mt-5 rounded-lg px-4">
+          <div className="w-[95%] lg:ml-[15%] border sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[800px] dark:border-none  bg-[#ffff] mission-shadow dark:bg-none dark:bg-[#141414] shadow-lg  pb-4   mt-5 rounded-lg px-4">
             <div className="flex justify-center">
               <div className="">
                 <div className="border-b border-gray-200 dark:border-gray-700">
@@ -81,20 +81,15 @@ export default function Home() {
           <BorrowSlider />
           {/* <RightSideInfo/> */}
         </div>
-        <div className="relative flex justify-center gap-5 mx-auto mt-12 lg:ml-5 2xl:fixed 2xl:bottom-10">
+        <div className="relative flex justify-between gap-5 mx-auto mt-12 lg:ml-5 3xl:fixed 3xl:bottom-5">
+          <div className="flex gap-5">
           <div onClick={() => setOpen2(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[#fffdd7] dark:bg-[#FC9550] dark:text-white  border-2 border-orange-400 rounded-md cursor-pointer">
             ? FAQs
           </div>
           <div onClick={() => setOpenGetstart(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] dark:bg-none  dark:bg-[#143968] dark:text-white border-2 border-gray-400 rounded-md cursor-pointer">
             Get Started
           </div>
-          {/* <div onClick={()=>setOpen2(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] border-2 border-gray-400 rounded-md cursor-pointer">
-          Key Highlights
-          </div> */}
-        </div>
-
-        <div className="flex items-center justify-center mt-4 right-10 2xl:fixed 2xl:bottom-10 ">
-
+          </div>
           <div className="flex justify-center p-3 text-sm border border-gray-500 rounded-md bg-white dark:bg-[#020202]">
             <div className="flex justify-between w-40 ">
               <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[2.5rem]"><Image src={github} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
@@ -102,7 +97,11 @@ export default function Home() {
               <a href="https://t.co/Ck6x2jhVOj" target="_blank" ><div className="w-[2.5rem]"><Image src={discord} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
             </div>
           </div>
+          {/* <div onClick={()=>setOpen2(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] border-2 border-gray-400 rounded-md cursor-pointer">
+          Key Highlights
+          </div> */}
         </div>
+
 
 
         <Dialog open={open2} onOpenChange={setOpen2} >

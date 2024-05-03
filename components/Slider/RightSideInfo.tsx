@@ -8,7 +8,7 @@ export default function RightSideInfo() {
       <h1 className='text-xl font-bold dark:text-[#DEDEDE]'>Experience seamless Amint minting/borrowing</h1>
       <div className='flex flex-col gap-2 '>
         <div className='flex '>
-        1. Borrow & Mint
+        1. 
         </div>
         <div className='basis-5/6 text-[0.8rem] dark:text-[#DEDEDE]'>
         Mint stablecoins at 80% LTV by depositing crypto collateral (currently ETH). Enhance to 100% synthetic LTV by opting for 20% downside protection on your crypto price. Surrender a percentage of your upside and pay option fees to achieve this synthetic LTV.

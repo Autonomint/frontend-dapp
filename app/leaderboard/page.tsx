@@ -4,6 +4,8 @@ import LeaderTable from './LeaderTable';
 import { BACKEND_API_URL } from '@/constants/BackendUrl';
 import { useQuery } from "@tanstack/react-query";
 import { useChainId } from 'wagmi';
+import { useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
+import { formatEther } from 'viem';
 interface TableData {
     rank: string;
     address: string;
@@ -13,10 +15,22 @@ interface TableData {
     totalLTV?: number;
     yield: number;
 }
+function formatNumber(num: number) {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(2) + 'M';
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(2) + 'k';
+    } else {
+      return num.toFixed(2);
+    }
+  }
+  
 
 export default function page() {
     const chainId = useChainId();
-
+    const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
+    const { data: totalStable } = useCdsTotalCdsDepositedAmount({ watch: true })
+    
     async function getBorrowLeaderboard(): Promise<TableData[]> {
         const response = await fetch(`${BACKEND_API_URL}/borrows/leaderboard`);
         return await response.json();
@@ -42,7 +56,7 @@ export default function page() {
       });
     return (
         <div className='px-10 mt-5'>
-            <div className='overflow-hidden  border-1 dark:border-none'>
+            <div className='overflow-hidden border-1 dark:border-none'>
                 <div className='bg-white dark:bg-[#141414] rounded-lg flex mb-5 gap-10 px-5 py-5 lg:px-10 lg:py-8 shadow-sm'>
                         <div className='flex flex-col gap-2 pr-2 border-r-2 lg:pr-5'>
                             <div className='text-sm lg:text-normal' >Total number of borrowers</div>
@@ -54,7 +68,7 @@ export default function page() {
                         </div>
                         <div className='flex flex-col gap-2 '>
                         <div  className='text-sm lg:text-normal'>Total Value Locked (TVL) </div>
-                            <div className='text-xl font-semibold lg:text-3xl'>1000</div>
+                            <div className='text-xl font-semibold lg:text-3xl'>${formatNumber((Number(totalStable) / 10 ** 6) + Number(formatEther((ethLocked ?? 0n) / BigInt(100))))}</div>
                         </div>
                 </div>
                 {/* <h1 className='mb-2 text-3xl font-bold text-textPrimary dark:text-white'>Leaderboard</h1> */}

@@ -50,7 +50,7 @@ const DepositAndWithDrawTable = ({
   }
 
   return (
-    <Table>
+    <Table >
       <TableHeader>
         <TableRow className="bg-gray-200 hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-900">
           <TableHead className="w-3 opacity-1 text-textGrey dark:text-[#C4C4C4]">Id</TableHead>
