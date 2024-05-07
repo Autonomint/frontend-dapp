@@ -306,6 +306,60 @@ const NewDeposit = () => {
       },
     }
   );
+
+  const {isLoading: usdtTransactionLoading, isSuccess: isUsdtApprovedSuccess } = useWaitForTransaction({
+    //transaction hash to watch to check for success or error in this case we are watching for cdsdeposit transaction hash
+    onError(error) {
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                key={2}
+                props={{
+                  t,
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! ${error.name}`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 5000 }
+      );
+
+    },
+    hash: usdtApproveData?.hash,
+    // Callback function called when the transaction is successful
+    onSuccess(data) {
+      // Show a custom toast notification
+      toast.custom(
+        (t) => (
+          <div>
+            {/* CustomToast component */}
+            <CustomToast
+              props={{
+                t: toastId.current,
+                toastMainColor: "#268730",
+                headline: "Transaction Completed",
+                transactionHash: usdtApproveData?.hash,
+                linkLabel: "View Transaction",
+                toastClosebuttonHoverColor: "#90e398",
+                toastClosebuttonColor: "#57C262",
+                completed: true,
+                spinner: false,
+              }}
+            />
+          </div>
+        ),
+        { id: toastId.current }
+      );
+    },
+  });
+
   console.log("usdtApproveData", usdtApproveData, usdtApproved);
 
 
@@ -1149,7 +1203,7 @@ const NewDeposit = () => {
                                         : null;
                                     }}
                                   >
-                                    {usdtApproveLoading || isAmintTransactionLoading ? (
+                                    {usdtApproveLoading || usdtTransactionLoading ? (
                                       <Spinner className="w-5 h-5" />
                                     ) : ("Approve")}
                                   </Button>
