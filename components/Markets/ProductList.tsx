@@ -29,7 +29,7 @@ const ProductList = () => {
           
           <Button 
            variant={"secondary"}
-          className="flex gap-[10px] items-center justify-center w-full min-w-[150px"
+          className="flex gap-[10px] items-center justify-center w-full min-w-[150px] dark:border dark:border-[#5B5B5B]  dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)]"
             onClick={() => window.open("https://app.uniswap.org/swap", "_blank")}
           >
             <Image src={uniswap} width={32} height={32} alt="uniswap"></Image>
@@ -41,13 +41,13 @@ const ProductList = () => {
           <DialogTrigger asChild>
              <Button
               variant={"secondary"}
-              className="flex gap-[10px] items-center justify-center w-full min-w-[150px]"
+              className="flex gap-[10px] items-center justify-center w-full min-w-[150px] "
             >
               <Image src={uniswap} width={32} height={32} alt="uniswap"></Image>
               <p className="min-[1440px]:text-base 2dppx:text-sm text-sm">Uniswap</p>
             </Button>
           </DialogTrigger>
-          <DialogContent className="w-[400px]">
+          <DialogContent className="">
             <div className="flex justify-end w-full ">
               <DialogClose asChild>
                 <Button
@@ -63,7 +63,7 @@ const ProductList = () => {
               </DialogClose>
             </div>
             <DialogHeader className="flex items-start">
-              <DialogTitle className="text-textPrimary font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl tracking-[-1.8px]">
+              <DialogTitle className="text-textPrimary font-medium  min-[1440px]:text-4xl 2dppx:text-4xl min-[1280px]:text-3xl text-4xl tracking-[-1.8px]">
                 SWAP TOKENS
               </DialogTitle>
             </DialogHeader>
@@ -76,7 +76,7 @@ const ProductList = () => {
 
           <Button
             variant={"secondary"}
-            className="flex gap-[10px] items-center justify-center w-full min-w-[150px]"
+            className="flex gap-[10px] items-center justify-center w-full min-w-[150px] dark:border dark:border-[#5B5B5B] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)]"
             onClick={() => setOpen2(true)}
           >
             <Image src={cake} width={32} height={32} alt="uniswap"></Image>
@@ -84,7 +84,7 @@ const ProductList = () => {
           </Button>
           <Button
             variant={"secondary"}
-            className="flex gap-[10px] items-center justify-center w-full min-w-[150px]"
+            className="flex gap-[10px] items-center justify-center w-full min-w-[150px] dark:border dark:border-[#5B5B5B] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)]"
             onClick={() => setOpen2(true)}
           >
             <Image src={sushi} width={32} height={32} alt="uniswap"></Image>
@@ -93,7 +93,7 @@ const ProductList = () => {
 
           <Button
             variant={"secondary"}
-            className="flex gap-[10px] items-center justify-center w-full min-w-[150px]"
+            className="flex gap-[10px] items-center justify-center w-full min-w-[150px] dark:border dark:border-[#5B5B5B] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)]"
             onClick={() => setOpen2(true)}
           >
             <Image src={snx} width={32} height={32} alt="uniswap"></Image>

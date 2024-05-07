@@ -76,20 +76,20 @@ const AmintDepositRow = ({ details ,onClick}: { details: DepositDetail ,onClick:
         key={details.id}
         className="hover:bg-[#E4EDFF] active:bg-[#E4EDFF] cursor-pointer"
       >
-        <TableCell className="text-borderGrey">{`#${details.index}`}</TableCell>
-        <TableCell className="text-textGrey">
+        <TableCell className="text-borderGrey dark:text-[#EEEEEE]">{`#${details.index}`}</TableCell>
+        <TableCell className="text-textGrey dark:text-[#EEEEEE]">
         {details.depositedAmint =="undefined" ? 0:details.depositedAmint} / {details.depositedUsdt=="undefined"?0:details.depositedUsdt}
         </TableCell>
-        <TableCell className="text-textGrey">
+        <TableCell className="text-textGrey dark:text-[#EEEEEE]">
      
             {/* Calculate the time difference */}
             {calculateTimeDifference(details.depositedTime)}
    
         </TableCell>
-        <TableCell className="text-textGrey">
+        <TableCell className="text-textGrey dark:text-[#EEEEEE]">
       {details.lockingPeriod} days
         </TableCell>
-        <TableCell className="text-textGrey">-</TableCell>
+        <TableCell className="text-textGrey dark:text-[#EEEEEE]">-</TableCell>
       </TableRow>
   );
 };

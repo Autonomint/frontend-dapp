@@ -57,6 +57,15 @@ type calculateData = {
     ethPrice: string;
   };
 
+
+//   usdt present in the pool
+//  amint present in the pool
+// eth price at deposit
+// bucket design for the deposit
+// 
+// adress colateral ration usdt eth amount redeem time
+// amint abound redeem 
+// amint - usdt && abond - eth
 const AmintDepositRow = ({ details, handleSheetOpenChange,
     sheetOpen,
     handleRefetch }: {
@@ -457,7 +466,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                                 onClick={()=>handleSheetOpenChange(!sheetOpen)}
                             >
                                 <Cross2Icon className="w-4 h-4" />
-                                <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
+                                <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] dark:text-[#EEEEEE] font-semibold text-base">
                                     Close
                                 </p>
                             </Button>
@@ -481,20 +490,20 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                             />
                         ))}
                         <div className="flex justify-between min-[1440px]:px-4 2dppx:px-2 px-2 min-[1440px]:py-[10px] 2dppx:py-[5px] py-[5px] border-b border-lineGrey">
-                            <p className="min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary">
+                            <p className="min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary dark:text-[#EEEEEE] ">
                                 Total Amount accured
                             </p>
                             {!amountView ? (
                                 <Button
                                     variant={"ghostOutline"}
                                     size={"row"}
-                                    className="text-xs font-medium leading-none text-textHighlight"
+                                    className="text-xs font-medium leading-none text-textHighlight dark:text-[#EEEEEE] "
                                     onClick={() => setAmountView(!amountView)}
                                 >
                                     View
                                 </Button>
                             ) : (
-                                <p className=" min-[1440px]:text-base 2dppx:text-sm text-textHighlight font-medium text-sm leading-none">{`3.42`}</p>
+                                <p className=" min-[1440px]:text-base 2dppx:text-sm text-textHighlight font-medium text-sm leading-none dark:text-[#EEEEEE] ">{`3.42`}</p>
                             )}
                         </div>
                     </div>

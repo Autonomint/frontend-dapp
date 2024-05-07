@@ -1,6 +1,4 @@
 import {
-  useNetwork,
-  useChainId,
   useContractRead,
   UseContractReadConfig,
   useContractWrite,
@@ -22,8 +20,7 @@ import {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export const abondABI = [
   {
@@ -80,6 +77,7 @@ export const abondABI = [
   { type: 'error', inputs: [], name: 'EnforcedPause' },
   { type: 'error', inputs: [], name: 'ExpectedPause' },
   { type: 'error', inputs: [], name: 'FailedInnerCall' },
+  { type: 'error', inputs: [], name: 'InsufficientBalance' },
   { type: 'error', inputs: [], name: 'InvalidInitialization' },
   { type: 'error', inputs: [], name: 'NotInitializing' },
   {
@@ -271,7 +269,7 @@ export const abondABI = [
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
   },
   {
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'decimals',
@@ -289,6 +287,7 @@ export const abondABI = [
     type: 'function',
     inputs: [
       { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
       { name: 'amount', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'mint',
@@ -334,6 +333,18 @@ export const abondABI = [
     type: 'function',
     inputs: [],
     name: 'renounceOwnership',
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: 'user', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
+      { name: 'ethBacked', internalType: 'uint128', type: 'uint128' },
+      { name: 'cumulativeRate', internalType: 'uint128', type: 'uint128' },
+    ],
+    name: 'setAbondData',
     outputs: [],
   },
   {
@@ -402,20 +413,42 @@ export const abondABI = [
     name: 'upgradeToAndCall',
     outputs: [],
   },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'user', internalType: 'address', type: 'address' }],
+    name: 'userStates',
+    outputs: [
+      { name: 'cumulativeRate', internalType: 'uint256', type: 'uint256' },
+      { name: 'ethBacked', internalType: 'uint128', type: 'uint128' },
+      { name: 'aBondBalance', internalType: 'uint128', type: 'uint128' },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'user', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
+    ],
+    name: 'userStatesAtDeposits',
+    outputs: [
+      { name: 'cumulativeRate', internalType: 'uint256', type: 'uint256' },
+      { name: 'ethBacked', internalType: 'uint128', type: 'uint128' },
+      { name: 'aBondBalance', internalType: 'uint128', type: 'uint128' },
+    ],
+  },
 ] as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export const abondAddress = {
-  5: '0x809b57518a5319A1cF348f9425eC7721bD472719',
-  11155111: '0x2b77d91d67642659924f8e339547f46a70992C62',
+  11155111: '0xd83780601Db14F911c7c02F697e6efdc8C20F6a7',
 } as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export const abondConfig = { address: abondAddress, abi: abondABI } as const
 
@@ -424,8 +457,7 @@ export const abondConfig = { address: abondAddress, abi: abondABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export const amintABI = [
   {
@@ -814,17 +846,14 @@ export const amintABI = [
 ] as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export const amintAddress = {
-  5: '0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E',
-  11155111: '0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742',
+  11155111: '0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE',
 } as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export const amintConfig = { address: amintAddress, abi: amintABI } as const
 
@@ -833,8 +862,7 @@ export const amintConfig = { address: amintAddress, abi: amintABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export const borrowingContractABI = [
   {
@@ -1092,8 +1120,6 @@ export const borrowingContractABI = [
     stateMutability: 'payable',
     type: 'function',
     inputs: [
-      { name: '_ethPrice', internalType: 'uint128', type: 'uint128' },
-      { name: '_depositTime', internalType: 'uint64', type: 'uint64' },
       {
         name: '_strikePercent',
         internalType: 'enum IOptions.StrikePrice',
@@ -1104,6 +1130,34 @@ export const borrowingContractABI = [
     ],
     name: 'depositTokens',
     outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'ethRemainingInWithdraw',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'ethValueRemainingInWithdraw',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'user', internalType: 'address', type: 'address' },
+      { name: 'aBondAmount', internalType: 'uint128', type: 'uint128' },
+    ],
+    name: 'getAbondYields',
+    outputs: [
+      { name: '', internalType: 'uint128', type: 'uint128' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+    ],
   },
   {
     stateMutability: 'view',
@@ -1233,6 +1287,16 @@ export const borrowingContractABI = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    inputs: [
+      { name: 'user', internalType: 'address', type: 'address' },
+      { name: 'aBondAmount', internalType: 'uint128', type: 'uint128' },
+    ],
+    name: 'redeemYields',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     inputs: [],
     name: 'renounceOwnership',
     outputs: [],
@@ -1346,8 +1410,6 @@ export const borrowingContractABI = [
     inputs: [
       { name: '_toAddress', internalType: 'address', type: 'address' },
       { name: '_index', internalType: 'uint64', type: 'uint64' },
-      { name: '_ethPrice', internalType: 'uint64', type: 'uint64' },
-      { name: '_withdrawTime', internalType: 'uint64', type: 'uint64' },
     ],
     name: 'withDraw',
     outputs: [],
@@ -1355,17 +1417,14 @@ export const borrowingContractABI = [
 ] as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export const borrowingContractAddress = {
-  5: '0xfBAE0d4337d936538995A26685f69644e6427213',
-  11155111: '0xfBAE0d4337d936538995A26685f69644e6427213',
+  11155111: '0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb',
 } as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export const borrowingContractConfig = {
   address: borrowingContractAddress,
@@ -1377,8 +1436,7 @@ export const borrowingContractConfig = {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export const cdsABI = [
   {
@@ -1420,8 +1478,8 @@ export const cdsABI = [
     inputs: [
       {
         name: 'depositedAmint',
-        internalType: 'uint128',
-        type: 'uint128',
+        internalType: 'uint256',
+        type: 'uint256',
         indexed: false,
       },
       { name: 'index', internalType: 'uint64', type: 'uint64', indexed: false },
@@ -1433,8 +1491,8 @@ export const cdsABI = [
       },
       {
         name: 'normalizedAmount',
-        internalType: 'uint128',
-        type: 'uint128',
+        internalType: 'uint256',
+        type: 'uint256',
         indexed: false,
       },
       {
@@ -1497,8 +1555,8 @@ export const cdsABI = [
     inputs: [
       {
         name: 'withdrewAmint',
-        internalType: 'uint128',
-        type: 'uint128',
+        internalType: 'uint256',
+        type: 'uint256',
         indexed: false,
       },
       {
@@ -1886,17 +1944,14 @@ export const cdsABI = [
 ] as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export const cdsAddress = {
-  5: '0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd',
-  11155111: '0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd',
+  11155111: '0xb4E50c1abEC5316f24f94449B141acB336bFA3DC',
 } as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export const cdsConfig = { address: cdsAddress, abi: cdsABI } as const
 
@@ -1905,8 +1960,7 @@ export const cdsConfig = { address: cdsAddress, abi: cdsABI } as const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export const optionsABI = [
   {
@@ -2010,6 +2064,17 @@ export const optionsABI = [
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: 'depositedAmount', internalType: 'uint128', type: 'uint128' },
+      { name: 'strikePrice', internalType: 'uint128', type: 'uint128' },
+      { name: 'ethPrice', internalType: 'uint64', type: 'uint64' },
+    ],
+    name: 'calculateStrikePriceGains',
+    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
@@ -2058,31 +2123,17 @@ export const optionsABI = [
     name: 'upgradeToAndCall',
     outputs: [],
   },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'depositedAmount', internalType: 'uint128', type: 'uint128' },
-      { name: 'strikePrice', internalType: 'uint128', type: 'uint128' },
-      { name: 'ethPrice', internalType: 'uint64', type: 'uint64' },
-    ],
-    name: 'withdrawOption',
-    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
-  },
 ] as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export const optionsAddress = {
-  5: '0x0a4f5D3FF6950e6308CcC5e14a990650A608F620',
-  11155111: '0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A',
+  11155111: '0xAC31e267FC123De9A61F3722a7d09c0c16b1f799',
 } as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export const optionsConfig = {
   address: optionsAddress,
@@ -2090,113 +2141,11 @@ export const optionsConfig = {
 } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Quoter
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export const quoterABI = [
-  {
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-    inputs: [
-      { name: '_factory', internalType: 'address', type: 'address' },
-      { name: '_WETH9', internalType: 'address', type: 'address' },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'WETH9',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'factory',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'path', internalType: 'bytes', type: 'bytes' },
-      { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'quoteExactInput',
-    outputs: [{ name: 'amountOut', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'tokenIn', internalType: 'address', type: 'address' },
-      { name: 'tokenOut', internalType: 'address', type: 'address' },
-      { name: 'fee', internalType: 'uint24', type: 'uint24' },
-      { name: 'amountIn', internalType: 'uint256', type: 'uint256' },
-      { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
-    ],
-    name: 'quoteExactInputSingle',
-    outputs: [{ name: 'amountOut', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'path', internalType: 'bytes', type: 'bytes' },
-      { name: 'amountOut', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'quoteExactOutput',
-    outputs: [{ name: 'amountIn', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'tokenIn', internalType: 'address', type: 'address' },
-      { name: 'tokenOut', internalType: 'address', type: 'address' },
-      { name: 'fee', internalType: 'uint24', type: 'uint24' },
-      { name: 'amountOut', internalType: 'uint256', type: 'uint256' },
-      { name: 'sqrtPriceLimitX96', internalType: 'uint160', type: 'uint160' },
-    ],
-    name: 'quoteExactOutputSingle',
-    outputs: [{ name: 'amountIn', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'amount0Delta', internalType: 'int256', type: 'int256' },
-      { name: 'amount1Delta', internalType: 'int256', type: 'int256' },
-      { name: 'path', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'uniswapV3SwapCallback',
-    outputs: [],
-  },
-] as const
-
-/**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export const quoterAddress = {
-  5: '0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6',
-} as const
-
-/**
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export const quoterConfig = { address: quoterAddress, abi: quoterABI } as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Treasury
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export const treasuryABI = [
   {
@@ -2389,6 +2338,13 @@ export const treasuryABI = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
+    name: 'WETH',
+    outputs: [{ name: '', internalType: 'contract IWETH9', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
     name: 'aToken',
     outputs: [{ name: '', internalType: 'contract IERC20', type: 'address' }],
   },
@@ -2411,6 +2367,15 @@ export const treasuryABI = [
     inputs: [],
     name: 'aaveWETH',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [],
+    name: 'abond',
+    outputs: [
+      { name: '', internalType: 'contract IABONDToken', type: 'address' },
+    ],
   },
   {
     stateMutability: 'view',
@@ -2466,7 +2431,6 @@ export const treasuryABI = [
       { name: 'hasBorrowed', internalType: 'bool', type: 'bool' },
       { name: 'hasDeposited', internalType: 'bool', type: 'bool' },
       { name: 'borrowerIndex', internalType: 'uint64', type: 'uint64' },
-      { name: 'totalAbondTokens', internalType: 'uint128', type: 'uint128' },
     ],
   },
   {
@@ -2480,15 +2444,21 @@ export const treasuryABI = [
     stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'cEther',
-    outputs: [{ name: '', internalType: 'contract ICEther', type: 'address' }],
+    name: 'cdsContract',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
   },
   {
     stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'cdsContract',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    name: 'comet',
+    outputs: [
+      {
+        name: '',
+        internalType: 'contract CometMainInterface',
+        type: 'address',
+      },
+    ],
   },
   {
     stateMutability: 'view',
@@ -2590,7 +2560,6 @@ export const treasuryABI = [
                 internalType: 'uint128',
                 type: 'uint128',
               },
-              { name: 'withdrawNo', internalType: 'uint8', type: 'uint8' },
               { name: 'withdrawed', internalType: 'bool', type: 'bool' },
               {
                 name: 'withdrawAmount',
@@ -2611,21 +2580,10 @@ export const treasuryABI = [
               },
               { name: 'strikePrice', internalType: 'uint128', type: 'uint128' },
               { name: 'optionFees', internalType: 'uint128', type: 'uint128' },
-              { name: 'burnedAmint', internalType: 'uint256', type: 'uint256' },
               {
                 name: 'externalProtocolCount',
                 internalType: 'uint64',
                 type: 'uint64',
-              },
-              {
-                name: 'discountedPrice',
-                internalType: 'uint256',
-                type: 'uint256',
-              },
-              {
-                name: 'cTokensCredited',
-                internalType: 'uint128',
-                type: 'uint128',
               },
             ],
           },
@@ -2634,13 +2592,22 @@ export const treasuryABI = [
     ],
   },
   {
+    stateMutability: 'view',
+    type: 'function',
+    inputs: [{ name: 'maximum', internalType: 'bool', type: 'bool' }],
+    name: 'getExternalProtocolCumulativeRate',
+    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
+  },
+  {
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: '_borrowing', internalType: 'address', type: 'address' },
       { name: '_tokenAddress', internalType: 'address', type: 'address' },
+      { name: '_abondAddress', internalType: 'address', type: 'address' },
       { name: '_cdsContract', internalType: 'address', type: 'address' },
       { name: '_wethGateway', internalType: 'address', type: 'address' },
+      { name: '_comet', internalType: 'address', type: 'address' },
       {
         name: '_aavePoolAddressProvider',
         internalType: 'address',
@@ -2648,6 +2615,7 @@ export const treasuryABI = [
       },
       { name: '_aToken', internalType: 'address', type: 'address' },
       { name: '_usdt', internalType: 'address', type: 'address' },
+      { name: '_weth', internalType: 'address', type: 'address' },
     ],
     name: 'initialize',
     outputs: [],
@@ -2784,7 +2752,6 @@ export const treasuryABI = [
             internalType: 'uint128',
             type: 'uint128',
           },
-          { name: 'withdrawNo', internalType: 'uint8', type: 'uint8' },
           { name: 'withdrawed', internalType: 'bool', type: 'bool' },
           { name: 'withdrawAmount', internalType: 'uint128', type: 'uint128' },
           { name: 'liquidated', internalType: 'bool', type: 'bool' },
@@ -2801,14 +2768,11 @@ export const treasuryABI = [
           },
           { name: 'strikePrice', internalType: 'uint128', type: 'uint128' },
           { name: 'optionFees', internalType: 'uint128', type: 'uint128' },
-          { name: 'burnedAmint', internalType: 'uint256', type: 'uint256' },
           {
             name: 'externalProtocolCount',
             internalType: 'uint64',
             type: 'uint64',
           },
-          { name: 'discountedPrice', internalType: 'uint256', type: 'uint256' },
-          { name: 'cTokensCredited', internalType: 'uint128', type: 'uint128' },
         ],
       },
     ],
@@ -2840,26 +2804,6 @@ export const treasuryABI = [
     type: 'function',
     inputs: [{ name: 'amount', internalType: 'uint256', type: 'uint256' }],
     name: 'updateInterestFromExternalProtocol',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'borrower', internalType: 'address', type: 'address' },
-      { name: 'amount', internalType: 'uint128', type: 'uint128' },
-    ],
-    name: 'updateTotalAbondTokensDecrease',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'borrower', internalType: 'address', type: 'address' },
-      { name: 'amount', internalType: 'uint128', type: 'uint128' },
-    ],
-    name: 'updateTotalAbondTokensIncrease',
     outputs: [],
   },
   {
@@ -2952,20 +2896,10 @@ export const treasuryABI = [
     stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: 'depositor', internalType: 'address', type: 'address' },
-      { name: 'index', internalType: 'uint64', type: 'uint64' },
+      { name: 'user', internalType: 'address', type: 'address' },
+      { name: 'aBondAmount', internalType: 'uint128', type: 'uint128' },
     ],
-    name: 'withdrawFromAaveByUser',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'depositor', internalType: 'address', type: 'address' },
-      { name: 'index', internalType: 'uint64', type: 'uint64' },
-    ],
-    name: 'withdrawFromCompoundByUser',
+    name: 'withdrawFromExternalProtocol',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
@@ -2982,17 +2916,14 @@ export const treasuryABI = [
 ] as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export const treasuryAddress = {
-  5: '0xF0C29E75985847a99D167C56abDA706ACc88Ff21',
-  11155111: '0x0a4f5D3FF6950e6308CcC5e14a990650A608F620',
+  11155111: '0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA',
 } as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export const treasuryConfig = {
   address: treasuryAddress,
@@ -3004,8 +2935,7 @@ export const treasuryConfig = {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export const usdtContractABI = [
   {
@@ -3380,17 +3310,14 @@ export const usdtContractABI = [
 ] as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export const usdtContractAddress = {
-  5: '0x6c902ece83048d58FB9c9F98626B948dFF7544FF',
-  11155111: '0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E',
+  11155111: '0x0eaBdB5f7493CD504E471D06f5aA586f74973840',
 } as const
 
 /**
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export const usdtContractConfig = {
   address: usdtContractAddress,
@@ -3404,8 +3331,7 @@ export const usdtContractConfig = {
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondRead<
   TFunctionName extends string,
@@ -3416,12 +3342,9 @@ export function useAbondRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
 }
@@ -3429,8 +3352,7 @@ export function useAbondRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondUpgradeInterfaceVersion<
   TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
@@ -3441,12 +3363,9 @@ export function useAbondUpgradeInterfaceVersion<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'UPGRADE_INTERFACE_VERSION',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -3455,8 +3374,7 @@ export function useAbondUpgradeInterfaceVersion<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"allowance"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondAllowance<
   TFunctionName extends 'allowance',
@@ -3467,12 +3385,9 @@ export function useAbondAllowance<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'allowance',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -3481,8 +3396,7 @@ export function useAbondAllowance<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"balanceOf"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondBalanceOf<
   TFunctionName extends 'balanceOf',
@@ -3493,12 +3407,9 @@ export function useAbondBalanceOf<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'balanceOf',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -3507,8 +3418,7 @@ export function useAbondBalanceOf<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"decimals"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondDecimals<
   TFunctionName extends 'decimals',
@@ -3519,12 +3429,9 @@ export function useAbondDecimals<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'decimals',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -3533,8 +3440,7 @@ export function useAbondDecimals<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"name"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondName<
   TFunctionName extends 'name',
@@ -3545,12 +3451,9 @@ export function useAbondName<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'name',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -3559,8 +3462,7 @@ export function useAbondName<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondOwner<
   TFunctionName extends 'owner',
@@ -3571,12 +3473,9 @@ export function useAbondOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -3585,8 +3484,7 @@ export function useAbondOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"paused"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondPaused<
   TFunctionName extends 'paused',
@@ -3597,12 +3495,9 @@ export function useAbondPaused<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'paused',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -3611,8 +3506,7 @@ export function useAbondPaused<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"proxiableUUID"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondProxiableUuid<
   TFunctionName extends 'proxiableUUID',
@@ -3623,12 +3517,9 @@ export function useAbondProxiableUuid<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'proxiableUUID',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -3637,8 +3528,7 @@ export function useAbondProxiableUuid<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"symbol"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondSymbol<
   TFunctionName extends 'symbol',
@@ -3649,12 +3539,9 @@ export function useAbondSymbol<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'symbol',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
@@ -3663,8 +3550,7 @@ export function useAbondSymbol<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"totalSupply"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondTotalSupply<
   TFunctionName extends 'totalSupply',
@@ -3675,13 +3561,54 @@ export function useAbondTotalSupply<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'totalSupply',
+    ...config,
+  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"userStates"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ */
+export function useAbondUserStates<
+  TFunctionName extends 'userStates',
+  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof abondAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: abondABI,
+    address: abondAddress[11155111],
+    functionName: 'userStates',
+    ...config,
+  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"userStatesAtDeposits"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ */
+export function useAbondUserStatesAtDeposits<
+  TFunctionName extends 'userStatesAtDeposits',
+  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof abondAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: abondABI,
+    address: abondAddress[11155111],
+    functionName: 'userStatesAtDeposits',
     ...config,
   } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
 }
@@ -3689,8 +3616,7 @@ export function useAbondTotalSupply<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondWrite<
   TFunctionName extends string,
@@ -3709,12 +3635,9 @@ export function useAbondWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, TFunctionName, TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     ...config,
   } as any)
 }
@@ -3722,8 +3645,7 @@ export function useAbondWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"approve"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondApprove<
   TMode extends WriteContractMode = undefined,
@@ -3745,12 +3667,9 @@ export function useAbondApprove<
         functionName?: 'approve'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'approve', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'approve',
     ...config,
   } as any)
@@ -3759,8 +3678,7 @@ export function useAbondApprove<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burn"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondBurn<
   TMode extends WriteContractMode = undefined,
@@ -3779,12 +3697,9 @@ export function useAbondBurn<
         functionName?: 'burn'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'burn', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'burn',
     ...config,
   } as any)
@@ -3793,8 +3708,7 @@ export function useAbondBurn<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFrom"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondBurnFrom<
   TMode extends WriteContractMode = undefined,
@@ -3816,12 +3730,9 @@ export function useAbondBurnFrom<
         functionName?: 'burnFrom'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'burnFrom', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'burnFrom',
     ...config,
   } as any)
@@ -3830,8 +3741,7 @@ export function useAbondBurnFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondBurnFromUser<
   TMode extends WriteContractMode = undefined,
@@ -3857,12 +3767,9 @@ export function useAbondBurnFromUser<
         functionName?: 'burnFromUser'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'burnFromUser', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'burnFromUser',
     ...config,
   } as any)
@@ -3871,8 +3778,7 @@ export function useAbondBurnFromUser<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondInitialize<
   TMode extends WriteContractMode = undefined,
@@ -3894,12 +3800,9 @@ export function useAbondInitialize<
         functionName?: 'initialize'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'initialize', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as any)
@@ -3908,8 +3811,7 @@ export function useAbondInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"mint"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondMint<
   TMode extends WriteContractMode = undefined,
@@ -3928,12 +3830,9 @@ export function useAbondMint<
         functionName?: 'mint'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'mint', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'mint',
     ...config,
   } as any)
@@ -3942,8 +3841,7 @@ export function useAbondMint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"pause"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondPause<
   TMode extends WriteContractMode = undefined,
@@ -3962,12 +3860,9 @@ export function useAbondPause<
         functionName?: 'pause'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'pause', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'pause',
     ...config,
   } as any)
@@ -3976,8 +3871,7 @@ export function useAbondPause<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -4003,13 +3897,47 @@ export function useAbondRenounceOwnership<
         functionName?: 'renounceOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'renounceOwnership', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'renounceOwnership',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"setAbondData"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ */
+export function useAbondSetAbondData<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof abondAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof abondABI,
+          'setAbondData'
+        >['request']['abi'],
+        'setAbondData',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'setAbondData'
+      }
+    : UseContractWriteConfig<typeof abondABI, 'setAbondData', TMode> & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'setAbondData'
+      } = {} as any,
+) {
+  return useContractWrite<typeof abondABI, 'setAbondData', TMode>({
+    abi: abondABI,
+    address: abondAddress[11155111],
+    functionName: 'setAbondData',
     ...config,
   } as any)
 }
@@ -4017,8 +3945,7 @@ export function useAbondRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondSetBorrowingContract<
   TMode extends WriteContractMode = undefined,
@@ -4044,12 +3971,9 @@ export function useAbondSetBorrowingContract<
         functionName?: 'setBorrowingContract'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'setBorrowingContract', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'setBorrowingContract',
     ...config,
   } as any)
@@ -4058,8 +3982,7 @@ export function useAbondSetBorrowingContract<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transfer"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondTransfer<
   TMode extends WriteContractMode = undefined,
@@ -4081,12 +4004,9 @@ export function useAbondTransfer<
         functionName?: 'transfer'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'transfer', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'transfer',
     ...config,
   } as any)
@@ -4095,8 +4015,7 @@ export function useAbondTransfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferFrom"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondTransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -4122,12 +4041,9 @@ export function useAbondTransferFrom<
         functionName?: 'transferFrom'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'transferFrom', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'transferFrom',
     ...config,
   } as any)
@@ -4136,8 +4052,7 @@ export function useAbondTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -4163,12 +4078,9 @@ export function useAbondTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'transferOwnership', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as any)
@@ -4177,8 +4089,7 @@ export function useAbondTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"unpause"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondUnpause<
   TMode extends WriteContractMode = undefined,
@@ -4200,12 +4111,9 @@ export function useAbondUnpause<
         functionName?: 'unpause'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'unpause', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'unpause',
     ...config,
   } as any)
@@ -4214,8 +4122,7 @@ export function useAbondUnpause<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondUpgradeToAndCall<
   TMode extends WriteContractMode = undefined,
@@ -4241,12 +4148,9 @@ export function useAbondUpgradeToAndCall<
         functionName?: 'upgradeToAndCall'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof abondABI, 'upgradeToAndCall', TMode>({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as any)
@@ -4255,8 +4159,7 @@ export function useAbondUpgradeToAndCall<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondWrite<TFunctionName extends string>(
   config: Omit<
@@ -4264,12 +4167,9 @@ export function usePrepareAbondWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, TFunctionName>)
 }
@@ -4277,8 +4177,7 @@ export function usePrepareAbondWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"approve"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondApprove(
   config: Omit<
@@ -4286,12 +4185,9 @@ export function usePrepareAbondApprove(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'approve',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'approve'>)
@@ -4300,8 +4196,7 @@ export function usePrepareAbondApprove(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burn"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondBurn(
   config: Omit<
@@ -4309,12 +4204,9 @@ export function usePrepareAbondBurn(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'burn',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'burn'>)
@@ -4323,8 +4215,7 @@ export function usePrepareAbondBurn(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFrom"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondBurnFrom(
   config: Omit<
@@ -4332,12 +4223,9 @@ export function usePrepareAbondBurnFrom(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'burnFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'burnFrom'>)
@@ -4346,8 +4234,7 @@ export function usePrepareAbondBurnFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondBurnFromUser(
   config: Omit<
@@ -4355,12 +4242,9 @@ export function usePrepareAbondBurnFromUser(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'burnFromUser',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'burnFromUser'>)
@@ -4369,8 +4253,7 @@ export function usePrepareAbondBurnFromUser(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondInitialize(
   config: Omit<
@@ -4378,12 +4261,9 @@ export function usePrepareAbondInitialize(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'initialize'>)
@@ -4392,8 +4272,7 @@ export function usePrepareAbondInitialize(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"mint"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondMint(
   config: Omit<
@@ -4401,12 +4280,9 @@ export function usePrepareAbondMint(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'mint',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'mint'>)
@@ -4415,8 +4291,7 @@ export function usePrepareAbondMint(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"pause"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondPause(
   config: Omit<
@@ -4424,12 +4299,9 @@ export function usePrepareAbondPause(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'pause',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'pause'>)
@@ -4438,8 +4310,7 @@ export function usePrepareAbondPause(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondRenounceOwnership(
   config: Omit<
@@ -4447,22 +4318,37 @@ export function usePrepareAbondRenounceOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'renounceOwnership'>)
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"setAbondData"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ */
+export function usePrepareAbondSetAbondData(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof abondABI, 'setAbondData'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof abondAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: abondABI,
+    address: abondAddress[11155111],
+    functionName: 'setAbondData',
+    ...config,
+  } as UsePrepareContractWriteConfig<typeof abondABI, 'setAbondData'>)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondSetBorrowingContract(
   config: Omit<
@@ -4470,12 +4356,9 @@ export function usePrepareAbondSetBorrowingContract(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'setBorrowingContract',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'setBorrowingContract'>)
@@ -4484,8 +4367,7 @@ export function usePrepareAbondSetBorrowingContract(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transfer"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondTransfer(
   config: Omit<
@@ -4493,12 +4375,9 @@ export function usePrepareAbondTransfer(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'transfer',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'transfer'>)
@@ -4507,8 +4386,7 @@ export function usePrepareAbondTransfer(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferFrom"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondTransferFrom(
   config: Omit<
@@ -4516,12 +4394,9 @@ export function usePrepareAbondTransferFrom(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'transferFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'transferFrom'>)
@@ -4530,8 +4405,7 @@ export function usePrepareAbondTransferFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondTransferOwnership(
   config: Omit<
@@ -4539,12 +4413,9 @@ export function usePrepareAbondTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'transferOwnership'>)
@@ -4553,8 +4424,7 @@ export function usePrepareAbondTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"unpause"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondUnpause(
   config: Omit<
@@ -4562,12 +4432,9 @@ export function usePrepareAbondUnpause(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'unpause',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'unpause'>)
@@ -4576,8 +4443,7 @@ export function usePrepareAbondUnpause(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function usePrepareAbondUpgradeToAndCall(
   config: Omit<
@@ -4585,12 +4451,9 @@ export function usePrepareAbondUpgradeToAndCall(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as UsePrepareContractWriteConfig<typeof abondABI, 'upgradeToAndCall'>)
@@ -4599,8 +4462,7 @@ export function usePrepareAbondUpgradeToAndCall(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondEvent<TEventName extends string>(
   config: Omit<
@@ -4608,12 +4470,9 @@ export function useAbondEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     ...config,
   } as UseContractEventConfig<typeof abondABI, TEventName>)
 }
@@ -4621,8 +4480,7 @@ export function useAbondEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Approval"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondApprovalEvent(
   config: Omit<
@@ -4630,12 +4488,9 @@ export function useAbondApprovalEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     eventName: 'Approval',
     ...config,
   } as UseContractEventConfig<typeof abondABI, 'Approval'>)
@@ -4644,8 +4499,7 @@ export function useAbondApprovalEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Initialized"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondInitializedEvent(
   config: Omit<
@@ -4653,12 +4507,9 @@ export function useAbondInitializedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     eventName: 'Initialized',
     ...config,
   } as UseContractEventConfig<typeof abondABI, 'Initialized'>)
@@ -4667,8 +4518,7 @@ export function useAbondInitializedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondOwnershipTransferredEvent(
   config: Omit<
@@ -4676,12 +4526,9 @@ export function useAbondOwnershipTransferredEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     eventName: 'OwnershipTransferred',
     ...config,
   } as UseContractEventConfig<typeof abondABI, 'OwnershipTransferred'>)
@@ -4690,8 +4537,7 @@ export function useAbondOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Paused"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondPausedEvent(
   config: Omit<
@@ -4699,12 +4545,9 @@ export function useAbondPausedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     eventName: 'Paused',
     ...config,
   } as UseContractEventConfig<typeof abondABI, 'Paused'>)
@@ -4713,8 +4556,7 @@ export function useAbondPausedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Transfer"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondTransferEvent(
   config: Omit<
@@ -4722,12 +4564,9 @@ export function useAbondTransferEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     eventName: 'Transfer',
     ...config,
   } as UseContractEventConfig<typeof abondABI, 'Transfer'>)
@@ -4736,8 +4575,7 @@ export function useAbondTransferEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Unpaused"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondUnpausedEvent(
   config: Omit<
@@ -4745,12 +4583,9 @@ export function useAbondUnpausedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     eventName: 'Unpaused',
     ...config,
   } as UseContractEventConfig<typeof abondABI, 'Unpaused'>)
@@ -4759,8 +4594,7 @@ export function useAbondUnpausedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Upgraded"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x809b57518a5319A1cF348f9425eC7721bD472719)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x2b77d91d67642659924f8e339547f46a70992C62)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
  */
 export function useAbondUpgradedEvent(
   config: Omit<
@@ -4768,12 +4602,9 @@ export function useAbondUpgradedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof abondAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: abondABI,
-    address: abondAddress[chainId as keyof typeof abondAddress],
+    address: abondAddress[11155111],
     eventName: 'Upgraded',
     ...config,
   } as UseContractEventConfig<typeof abondABI, 'Upgraded'>)
@@ -4782,8 +4613,7 @@ export function useAbondUpgradedEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintRead<
   TFunctionName extends string,
@@ -4794,12 +4624,9 @@ export function useAmintRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
 }
@@ -4807,8 +4634,7 @@ export function useAmintRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintUpgradeInterfaceVersion<
   TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
@@ -4819,12 +4645,9 @@ export function useAmintUpgradeInterfaceVersion<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'UPGRADE_INTERFACE_VERSION',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4833,8 +4656,7 @@ export function useAmintUpgradeInterfaceVersion<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"allowance"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintAllowance<
   TFunctionName extends 'allowance',
@@ -4845,12 +4667,9 @@ export function useAmintAllowance<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'allowance',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4859,8 +4678,7 @@ export function useAmintAllowance<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"balanceOf"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintBalanceOf<
   TFunctionName extends 'balanceOf',
@@ -4871,12 +4689,9 @@ export function useAmintBalanceOf<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'balanceOf',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4885,8 +4700,7 @@ export function useAmintBalanceOf<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"decimals"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintDecimals<
   TFunctionName extends 'decimals',
@@ -4897,12 +4711,9 @@ export function useAmintDecimals<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'decimals',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4911,8 +4722,7 @@ export function useAmintDecimals<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"name"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintName<
   TFunctionName extends 'name',
@@ -4923,12 +4733,9 @@ export function useAmintName<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'name',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4937,8 +4744,7 @@ export function useAmintName<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintOwner<
   TFunctionName extends 'owner',
@@ -4949,12 +4755,9 @@ export function useAmintOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4963,8 +4766,7 @@ export function useAmintOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"paused"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintPaused<
   TFunctionName extends 'paused',
@@ -4975,12 +4777,9 @@ export function useAmintPaused<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'paused',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -4989,8 +4788,7 @@ export function useAmintPaused<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"proxiableUUID"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintProxiableUuid<
   TFunctionName extends 'proxiableUUID',
@@ -5001,12 +4799,9 @@ export function useAmintProxiableUuid<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'proxiableUUID',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -5015,8 +4810,7 @@ export function useAmintProxiableUuid<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"symbol"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintSymbol<
   TFunctionName extends 'symbol',
@@ -5027,12 +4821,9 @@ export function useAmintSymbol<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'symbol',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -5041,8 +4832,7 @@ export function useAmintSymbol<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"totalSupply"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintTotalSupply<
   TFunctionName extends 'totalSupply',
@@ -5053,12 +4843,9 @@ export function useAmintTotalSupply<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'totalSupply',
     ...config,
   } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
@@ -5067,8 +4854,7 @@ export function useAmintTotalSupply<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintWrite<
   TFunctionName extends string,
@@ -5087,12 +4873,9 @@ export function useAmintWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, TFunctionName, TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     ...config,
   } as any)
 }
@@ -5100,8 +4883,7 @@ export function useAmintWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"approve"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintApprove<
   TMode extends WriteContractMode = undefined,
@@ -5123,12 +4905,9 @@ export function useAmintApprove<
         functionName?: 'approve'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'approve', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'approve',
     ...config,
   } as any)
@@ -5137,8 +4916,7 @@ export function useAmintApprove<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burn"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintBurn<
   TMode extends WriteContractMode = undefined,
@@ -5157,12 +4935,9 @@ export function useAmintBurn<
         functionName?: 'burn'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'burn', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'burn',
     ...config,
   } as any)
@@ -5171,8 +4946,7 @@ export function useAmintBurn<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFrom"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintBurnFrom<
   TMode extends WriteContractMode = undefined,
@@ -5194,12 +4968,9 @@ export function useAmintBurnFrom<
         functionName?: 'burnFrom'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'burnFrom', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'burnFrom',
     ...config,
   } as any)
@@ -5208,8 +4979,7 @@ export function useAmintBurnFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintBurnFromUser<
   TMode extends WriteContractMode = undefined,
@@ -5235,12 +5005,9 @@ export function useAmintBurnFromUser<
         functionName?: 'burnFromUser'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'burnFromUser', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'burnFromUser',
     ...config,
   } as any)
@@ -5249,8 +5016,7 @@ export function useAmintBurnFromUser<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintInitialize<
   TMode extends WriteContractMode = undefined,
@@ -5272,12 +5038,9 @@ export function useAmintInitialize<
         functionName?: 'initialize'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'initialize', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as any)
@@ -5286,8 +5049,7 @@ export function useAmintInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"mint"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintMint<
   TMode extends WriteContractMode = undefined,
@@ -5306,12 +5068,9 @@ export function useAmintMint<
         functionName?: 'mint'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'mint', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'mint',
     ...config,
   } as any)
@@ -5320,8 +5079,7 @@ export function useAmintMint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"pause"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintPause<
   TMode extends WriteContractMode = undefined,
@@ -5340,12 +5098,9 @@ export function useAmintPause<
         functionName?: 'pause'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'pause', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'pause',
     ...config,
   } as any)
@@ -5354,8 +5109,7 @@ export function useAmintPause<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -5381,12 +5135,9 @@ export function useAmintRenounceOwnership<
         functionName?: 'renounceOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'renounceOwnership', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as any)
@@ -5395,8 +5146,7 @@ export function useAmintRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintSetBorrowingContract<
   TMode extends WriteContractMode = undefined,
@@ -5422,12 +5172,9 @@ export function useAmintSetBorrowingContract<
         functionName?: 'setBorrowingContract'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'setBorrowingContract', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'setBorrowingContract',
     ...config,
   } as any)
@@ -5436,8 +5183,7 @@ export function useAmintSetBorrowingContract<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"setCdsContract"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintSetCdsContract<
   TMode extends WriteContractMode = undefined,
@@ -5463,12 +5209,9 @@ export function useAmintSetCdsContract<
         functionName?: 'setCdsContract'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'setCdsContract', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'setCdsContract',
     ...config,
   } as any)
@@ -5477,8 +5220,7 @@ export function useAmintSetCdsContract<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transfer"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintTransfer<
   TMode extends WriteContractMode = undefined,
@@ -5500,12 +5242,9 @@ export function useAmintTransfer<
         functionName?: 'transfer'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'transfer', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'transfer',
     ...config,
   } as any)
@@ -5514,8 +5253,7 @@ export function useAmintTransfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferFrom"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintTransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -5541,12 +5279,9 @@ export function useAmintTransferFrom<
         functionName?: 'transferFrom'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'transferFrom', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'transferFrom',
     ...config,
   } as any)
@@ -5555,8 +5290,7 @@ export function useAmintTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -5582,12 +5316,9 @@ export function useAmintTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'transferOwnership', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as any)
@@ -5596,8 +5327,7 @@ export function useAmintTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"unpause"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintUnpause<
   TMode extends WriteContractMode = undefined,
@@ -5619,12 +5349,9 @@ export function useAmintUnpause<
         functionName?: 'unpause'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'unpause', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'unpause',
     ...config,
   } as any)
@@ -5633,8 +5360,7 @@ export function useAmintUnpause<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintUpgradeToAndCall<
   TMode extends WriteContractMode = undefined,
@@ -5660,12 +5386,9 @@ export function useAmintUpgradeToAndCall<
         functionName?: 'upgradeToAndCall'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof amintABI, 'upgradeToAndCall', TMode>({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as any)
@@ -5674,8 +5397,7 @@ export function useAmintUpgradeToAndCall<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintWrite<TFunctionName extends string>(
   config: Omit<
@@ -5683,12 +5405,9 @@ export function usePrepareAmintWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, TFunctionName>)
 }
@@ -5696,8 +5415,7 @@ export function usePrepareAmintWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"approve"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintApprove(
   config: Omit<
@@ -5705,12 +5423,9 @@ export function usePrepareAmintApprove(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'approve',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'approve'>)
@@ -5719,8 +5434,7 @@ export function usePrepareAmintApprove(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burn"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintBurn(
   config: Omit<
@@ -5728,12 +5442,9 @@ export function usePrepareAmintBurn(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'burn',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'burn'>)
@@ -5742,8 +5453,7 @@ export function usePrepareAmintBurn(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFrom"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintBurnFrom(
   config: Omit<
@@ -5751,12 +5461,9 @@ export function usePrepareAmintBurnFrom(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'burnFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'burnFrom'>)
@@ -5765,8 +5472,7 @@ export function usePrepareAmintBurnFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintBurnFromUser(
   config: Omit<
@@ -5774,12 +5480,9 @@ export function usePrepareAmintBurnFromUser(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'burnFromUser',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'burnFromUser'>)
@@ -5788,8 +5491,7 @@ export function usePrepareAmintBurnFromUser(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintInitialize(
   config: Omit<
@@ -5797,12 +5499,9 @@ export function usePrepareAmintInitialize(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'initialize'>)
@@ -5811,8 +5510,7 @@ export function usePrepareAmintInitialize(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"mint"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintMint(
   config: Omit<
@@ -5820,12 +5518,9 @@ export function usePrepareAmintMint(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'mint',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'mint'>)
@@ -5834,8 +5529,7 @@ export function usePrepareAmintMint(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"pause"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintPause(
   config: Omit<
@@ -5843,12 +5537,9 @@ export function usePrepareAmintPause(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'pause',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'pause'>)
@@ -5857,8 +5548,7 @@ export function usePrepareAmintPause(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintRenounceOwnership(
   config: Omit<
@@ -5866,12 +5556,9 @@ export function usePrepareAmintRenounceOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'renounceOwnership'>)
@@ -5880,8 +5567,7 @@ export function usePrepareAmintRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintSetBorrowingContract(
   config: Omit<
@@ -5889,12 +5575,9 @@ export function usePrepareAmintSetBorrowingContract(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'setBorrowingContract',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'setBorrowingContract'>)
@@ -5903,8 +5586,7 @@ export function usePrepareAmintSetBorrowingContract(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"setCdsContract"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintSetCdsContract(
   config: Omit<
@@ -5912,12 +5594,9 @@ export function usePrepareAmintSetCdsContract(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'setCdsContract',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'setCdsContract'>)
@@ -5926,8 +5605,7 @@ export function usePrepareAmintSetCdsContract(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transfer"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintTransfer(
   config: Omit<
@@ -5935,12 +5613,9 @@ export function usePrepareAmintTransfer(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'transfer',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'transfer'>)
@@ -5949,8 +5624,7 @@ export function usePrepareAmintTransfer(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferFrom"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintTransferFrom(
   config: Omit<
@@ -5958,12 +5632,9 @@ export function usePrepareAmintTransferFrom(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'transferFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'transferFrom'>)
@@ -5972,8 +5643,7 @@ export function usePrepareAmintTransferFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintTransferOwnership(
   config: Omit<
@@ -5981,12 +5651,9 @@ export function usePrepareAmintTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'transferOwnership'>)
@@ -5995,8 +5662,7 @@ export function usePrepareAmintTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"unpause"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintUnpause(
   config: Omit<
@@ -6004,12 +5670,9 @@ export function usePrepareAmintUnpause(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'unpause',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'unpause'>)
@@ -6018,8 +5681,7 @@ export function usePrepareAmintUnpause(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function usePrepareAmintUpgradeToAndCall(
   config: Omit<
@@ -6027,12 +5689,9 @@ export function usePrepareAmintUpgradeToAndCall(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as UsePrepareContractWriteConfig<typeof amintABI, 'upgradeToAndCall'>)
@@ -6041,8 +5700,7 @@ export function usePrepareAmintUpgradeToAndCall(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintEvent<TEventName extends string>(
   config: Omit<
@@ -6050,12 +5708,9 @@ export function useAmintEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     ...config,
   } as UseContractEventConfig<typeof amintABI, TEventName>)
 }
@@ -6063,8 +5718,7 @@ export function useAmintEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Approval"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintApprovalEvent(
   config: Omit<
@@ -6072,12 +5726,9 @@ export function useAmintApprovalEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     eventName: 'Approval',
     ...config,
   } as UseContractEventConfig<typeof amintABI, 'Approval'>)
@@ -6086,8 +5737,7 @@ export function useAmintApprovalEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Initialized"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintInitializedEvent(
   config: Omit<
@@ -6095,12 +5745,9 @@ export function useAmintInitializedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     eventName: 'Initialized',
     ...config,
   } as UseContractEventConfig<typeof amintABI, 'Initialized'>)
@@ -6109,8 +5756,7 @@ export function useAmintInitializedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintOwnershipTransferredEvent(
   config: Omit<
@@ -6118,12 +5764,9 @@ export function useAmintOwnershipTransferredEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     eventName: 'OwnershipTransferred',
     ...config,
   } as UseContractEventConfig<typeof amintABI, 'OwnershipTransferred'>)
@@ -6132,8 +5775,7 @@ export function useAmintOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Paused"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintPausedEvent(
   config: Omit<
@@ -6141,12 +5783,9 @@ export function useAmintPausedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     eventName: 'Paused',
     ...config,
   } as UseContractEventConfig<typeof amintABI, 'Paused'>)
@@ -6155,8 +5794,7 @@ export function useAmintPausedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Transfer"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintTransferEvent(
   config: Omit<
@@ -6164,12 +5802,9 @@ export function useAmintTransferEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     eventName: 'Transfer',
     ...config,
   } as UseContractEventConfig<typeof amintABI, 'Transfer'>)
@@ -6178,8 +5813,7 @@ export function useAmintTransferEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Unpaused"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintUnpausedEvent(
   config: Omit<
@@ -6187,12 +5821,9 @@ export function useAmintUnpausedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     eventName: 'Unpaused',
     ...config,
   } as UseContractEventConfig<typeof amintABI, 'Unpaused'>)
@@ -6201,8 +5832,7 @@ export function useAmintUnpausedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Upgraded"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x94ABB18eE78b3F4Ef303f24c50fd916cfB6f0742)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
  */
 export function useAmintUpgradedEvent(
   config: Omit<
@@ -6210,12 +5840,9 @@ export function useAmintUpgradedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof amintAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: amintABI,
-    address: amintAddress[chainId as keyof typeof amintAddress],
+    address: amintAddress[11155111],
     eventName: 'Upgraded',
     ...config,
   } as UseContractEventConfig<typeof amintABI, 'Upgraded'>)
@@ -6224,8 +5851,7 @@ export function useAmintUpgradedEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractRead<
   TFunctionName extends string,
@@ -6240,15 +5866,9 @@ export function useBorrowingContractRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     ...config,
   } as UseContractReadConfig<
     typeof borrowingContractABI,
@@ -6260,8 +5880,7 @@ export function useBorrowingContractRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"APY"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractApy<
   TFunctionName extends 'APY',
@@ -6276,15 +5895,9 @@ export function useBorrowingContractApy<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'APY',
     ...config,
   } as UseContractReadConfig<
@@ -6297,8 +5910,7 @@ export function useBorrowingContractApy<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"DOMAIN_SEPARATOR"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractDomainSeparator<
   TFunctionName extends 'DOMAIN_SEPARATOR',
@@ -6313,15 +5925,9 @@ export function useBorrowingContractDomainSeparator<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'DOMAIN_SEPARATOR',
     ...config,
   } as UseContractReadConfig<
@@ -6334,8 +5940,7 @@ export function useBorrowingContractDomainSeparator<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"PERMIT_TYPEHASH"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractPermitTypehash<
   TFunctionName extends 'PERMIT_TYPEHASH',
@@ -6350,15 +5955,9 @@ export function useBorrowingContractPermitTypehash<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'PERMIT_TYPEHASH',
     ...config,
   } as UseContractReadConfig<
@@ -6371,8 +5970,7 @@ export function useBorrowingContractPermitTypehash<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractUpgradeInterfaceVersion<
   TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
@@ -6387,15 +5985,9 @@ export function useBorrowingContractUpgradeInterfaceVersion<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'UPGRADE_INTERFACE_VERSION',
     ...config,
   } as UseContractReadConfig<
@@ -6408,8 +6000,7 @@ export function useBorrowingContractUpgradeInterfaceVersion<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"abond"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractAbond<
   TFunctionName extends 'abond',
@@ -6424,15 +6015,9 @@ export function useBorrowingContractAbond<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'abond',
     ...config,
   } as UseContractReadConfig<
@@ -6445,8 +6030,7 @@ export function useBorrowingContractAbond<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"amint"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractAmint<
   TFunctionName extends 'amint',
@@ -6461,15 +6045,9 @@ export function useBorrowingContractAmint<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'amint',
     ...config,
   } as UseContractReadConfig<
@@ -6482,8 +6060,7 @@ export function useBorrowingContractAmint<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"cds"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractCds<
   TFunctionName extends 'cds',
@@ -6498,15 +6075,9 @@ export function useBorrowingContractCds<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'cds',
     ...config,
   } as UseContractReadConfig<
@@ -6519,8 +6090,7 @@ export function useBorrowingContractCds<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"cdsAddress"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractCdsAddress<
   TFunctionName extends 'cdsAddress',
@@ -6535,16 +6105,100 @@ export function useBorrowingContractCdsAddress<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'cdsAddress',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"ethRemainingInWithdraw"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ */
+export function useBorrowingContractEthRemainingInWithdraw<
+  TFunctionName extends 'ethRemainingInWithdraw',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[11155111],
+    functionName: 'ethRemainingInWithdraw',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"ethValueRemainingInWithdraw"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ */
+export function useBorrowingContractEthValueRemainingInWithdraw<
+  TFunctionName extends 'ethValueRemainingInWithdraw',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[11155111],
+    functionName: 'ethValueRemainingInWithdraw',
+    ...config,
+  } as UseContractReadConfig<
+    typeof borrowingContractABI,
+    TFunctionName,
+    TSelectData
+  >)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getAbondYields"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ */
+export function useBorrowingContractGetAbondYields<
+  TFunctionName extends 'getAbondYields',
+  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<
+      typeof borrowingContractABI,
+      TFunctionName,
+      TSelectData
+    >,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[11155111],
+    functionName: 'getAbondYields',
     ...config,
   } as UseContractReadConfig<
     typeof borrowingContractABI,
@@ -6556,8 +6210,7 @@ export function useBorrowingContractCdsAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getLTV"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractGetLtv<
   TFunctionName extends 'getLTV',
@@ -6572,15 +6225,9 @@ export function useBorrowingContractGetLtv<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'getLTV',
     ...config,
   } as UseContractReadConfig<
@@ -6593,8 +6240,7 @@ export function useBorrowingContractGetLtv<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getLastEthVaultValue"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractGetLastEthVaultValue<
   TFunctionName extends 'getLastEthVaultValue',
@@ -6609,15 +6255,9 @@ export function useBorrowingContractGetLastEthVaultValue<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'getLastEthVaultValue',
     ...config,
   } as UseContractReadConfig<
@@ -6630,8 +6270,7 @@ export function useBorrowingContractGetLastEthVaultValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getUSDValue"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractGetUsdValue<
   TFunctionName extends 'getUSDValue',
@@ -6646,15 +6285,9 @@ export function useBorrowingContractGetUsdValue<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'getUSDValue',
     ...config,
   } as UseContractReadConfig<
@@ -6667,8 +6300,7 @@ export function useBorrowingContractGetUsdValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastCDSPoolValue"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractLastCdsPoolValue<
   TFunctionName extends 'lastCDSPoolValue',
@@ -6683,15 +6315,9 @@ export function useBorrowingContractLastCdsPoolValue<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'lastCDSPoolValue',
     ...config,
   } as UseContractReadConfig<
@@ -6704,8 +6330,7 @@ export function useBorrowingContractLastCdsPoolValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastCumulativeRate"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractLastCumulativeRate<
   TFunctionName extends 'lastCumulativeRate',
@@ -6720,15 +6345,9 @@ export function useBorrowingContractLastCumulativeRate<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'lastCumulativeRate',
     ...config,
   } as UseContractReadConfig<
@@ -6741,8 +6360,7 @@ export function useBorrowingContractLastCumulativeRate<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastEthVaultValue"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractLastEthVaultValue<
   TFunctionName extends 'lastEthVaultValue',
@@ -6757,15 +6375,9 @@ export function useBorrowingContractLastEthVaultValue<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'lastEthVaultValue',
     ...config,
   } as UseContractReadConfig<
@@ -6778,8 +6390,7 @@ export function useBorrowingContractLastEthVaultValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"multiSign"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractMultiSign<
   TFunctionName extends 'multiSign',
@@ -6794,15 +6405,9 @@ export function useBorrowingContractMultiSign<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'multiSign',
     ...config,
   } as UseContractReadConfig<
@@ -6815,8 +6420,7 @@ export function useBorrowingContractMultiSign<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"name"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractName<
   TFunctionName extends 'name',
@@ -6831,15 +6435,9 @@ export function useBorrowingContractName<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'name',
     ...config,
   } as UseContractReadConfig<
@@ -6852,8 +6450,7 @@ export function useBorrowingContractName<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"noOfLiquidations"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractNoOfLiquidations<
   TFunctionName extends 'noOfLiquidations',
@@ -6868,15 +6465,9 @@ export function useBorrowingContractNoOfLiquidations<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'noOfLiquidations',
     ...config,
   } as UseContractReadConfig<
@@ -6889,8 +6480,7 @@ export function useBorrowingContractNoOfLiquidations<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"options"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractOptions<
   TFunctionName extends 'options',
@@ -6905,15 +6495,9 @@ export function useBorrowingContractOptions<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'options',
     ...config,
   } as UseContractReadConfig<
@@ -6926,8 +6510,7 @@ export function useBorrowingContractOptions<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractOwner<
   TFunctionName extends 'owner',
@@ -6942,15 +6525,9 @@ export function useBorrowingContractOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<
@@ -6963,8 +6540,7 @@ export function useBorrowingContractOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"priceFeedAddress"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractPriceFeedAddress<
   TFunctionName extends 'priceFeedAddress',
@@ -6979,15 +6555,9 @@ export function useBorrowingContractPriceFeedAddress<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'priceFeedAddress',
     ...config,
   } as UseContractReadConfig<
@@ -7000,8 +6570,7 @@ export function useBorrowingContractPriceFeedAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"proxiableUUID"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractProxiableUuid<
   TFunctionName extends 'proxiableUUID',
@@ -7016,15 +6585,9 @@ export function useBorrowingContractProxiableUuid<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'proxiableUUID',
     ...config,
   } as UseContractReadConfig<
@@ -7037,8 +6600,7 @@ export function useBorrowingContractProxiableUuid<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"ratePerSec"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractRatePerSec<
   TFunctionName extends 'ratePerSec',
@@ -7053,15 +6615,9 @@ export function useBorrowingContractRatePerSec<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'ratePerSec',
     ...config,
   } as UseContractReadConfig<
@@ -7074,8 +6630,7 @@ export function useBorrowingContractRatePerSec<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"totalNormalizedAmount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractTotalNormalizedAmount<
   TFunctionName extends 'totalNormalizedAmount',
@@ -7090,15 +6645,9 @@ export function useBorrowingContractTotalNormalizedAmount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'totalNormalizedAmount',
     ...config,
   } as UseContractReadConfig<
@@ -7111,8 +6660,7 @@ export function useBorrowingContractTotalNormalizedAmount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"treasury"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractTreasury<
   TFunctionName extends 'treasury',
@@ -7127,15 +6675,9 @@ export function useBorrowingContractTreasury<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'treasury',
     ...config,
   } as UseContractReadConfig<
@@ -7148,8 +6690,7 @@ export function useBorrowingContractTreasury<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"treasuryAddress"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractTreasuryAddress<
   TFunctionName extends 'treasuryAddress',
@@ -7164,15 +6705,9 @@ export function useBorrowingContractTreasuryAddress<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'treasuryAddress',
     ...config,
   } as UseContractReadConfig<
@@ -7185,8 +6720,7 @@ export function useBorrowingContractTreasuryAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"version"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractVersion<
   TFunctionName extends 'version',
@@ -7201,15 +6735,9 @@ export function useBorrowingContractVersion<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'version',
     ...config,
   } as UseContractReadConfig<
@@ -7222,8 +6750,7 @@ export function useBorrowingContractVersion<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractWrite<
   TFunctionName extends string,
@@ -7249,15 +6776,9 @@ export function useBorrowingContractWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, TFunctionName, TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     ...config,
   } as any)
 }
@@ -7265,8 +6786,7 @@ export function useBorrowingContractWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractCalculateCumulativeRate<
   TMode extends WriteContractMode = undefined,
@@ -7296,19 +6816,13 @@ export function useBorrowingContractCalculateCumulativeRate<
         functionName?: 'calculateCumulativeRate'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'calculateCumulativeRate',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'calculateCumulativeRate',
     ...config,
   } as any)
@@ -7317,8 +6831,7 @@ export function useBorrowingContractCalculateCumulativeRate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateRatio"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractCalculateRatio<
   TMode extends WriteContractMode = undefined,
@@ -7348,16 +6861,10 @@ export function useBorrowingContractCalculateRatio<
         functionName?: 'calculateRatio'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'calculateRatio', TMode>(
     {
       abi: borrowingContractABI,
-      address:
-        borrowingContractAddress[
-          chainId as keyof typeof borrowingContractAddress
-        ],
+      address: borrowingContractAddress[11155111],
       functionName: 'calculateRatio',
       ...config,
     } as any,
@@ -7367,8 +6874,7 @@ export function useBorrowingContractCalculateRatio<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositTokens"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractDepositTokens<
   TMode extends WriteContractMode = undefined,
@@ -7398,15 +6904,9 @@ export function useBorrowingContractDepositTokens<
         functionName?: 'depositTokens'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'depositTokens', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'depositTokens',
     ...config,
   } as any)
@@ -7415,8 +6915,7 @@ export function useBorrowingContractDepositTokens<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractInitialize<
   TMode extends WriteContractMode = undefined,
@@ -7442,15 +6941,9 @@ export function useBorrowingContractInitialize<
         functionName?: 'initialize'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'initialize', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as any)
@@ -7459,8 +6952,7 @@ export function useBorrowingContractInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"liquidate"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractLiquidate<
   TMode extends WriteContractMode = undefined,
@@ -7486,16 +6978,51 @@ export function useBorrowingContractLiquidate<
         functionName?: 'liquidate'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'liquidate', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'liquidate',
+    ...config,
+  } as any)
+}
+
+/**
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"redeemYields"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ */
+export function useBorrowingContractRedeemYields<
+  TMode extends WriteContractMode = undefined,
+  TChainId extends number = keyof typeof borrowingContractAddress,
+>(
+  config: TMode extends 'prepared'
+    ? UseContractWriteConfig<
+        PrepareWriteContractResult<
+          typeof borrowingContractABI,
+          'redeemYields'
+        >['request']['abi'],
+        'redeemYields',
+        TMode
+      > & {
+        address?: Address
+        chainId?: TChainId
+        functionName?: 'redeemYields'
+      }
+    : UseContractWriteConfig<
+        typeof borrowingContractABI,
+        'redeemYields',
+        TMode
+      > & {
+        abi?: never
+        address?: never
+        chainId?: TChainId
+        functionName?: 'redeemYields'
+      } = {} as any,
+) {
+  return useContractWrite<typeof borrowingContractABI, 'redeemYields', TMode>({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[11155111],
+    functionName: 'redeemYields',
     ...config,
   } as any)
 }
@@ -7503,8 +7030,7 @@ export function useBorrowingContractLiquidate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -7534,19 +7060,13 @@ export function useBorrowingContractRenounceOwnership<
         functionName?: 'renounceOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'renounceOwnership',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as any)
@@ -7555,8 +7075,7 @@ export function useBorrowingContractRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAPR"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractSetApr<
   TMode extends WriteContractMode = undefined,
@@ -7578,15 +7097,9 @@ export function useBorrowingContractSetApr<
         functionName?: 'setAPR'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'setAPR', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setAPR',
     ...config,
   } as any)
@@ -7595,8 +7108,7 @@ export function useBorrowingContractSetApr<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAdmin"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractSetAdmin<
   TMode extends WriteContractMode = undefined,
@@ -7618,15 +7130,9 @@ export function useBorrowingContractSetAdmin<
         functionName?: 'setAdmin'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'setAdmin', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setAdmin',
     ...config,
   } as any)
@@ -7635,8 +7141,7 @@ export function useBorrowingContractSetAdmin<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setBondRatio"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractSetBondRatio<
   TMode extends WriteContractMode = undefined,
@@ -7666,15 +7171,9 @@ export function useBorrowingContractSetBondRatio<
         functionName?: 'setBondRatio'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'setBondRatio', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setBondRatio',
     ...config,
   } as any)
@@ -7683,8 +7182,7 @@ export function useBorrowingContractSetBondRatio<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setLTV"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractSetLtv<
   TMode extends WriteContractMode = undefined,
@@ -7706,15 +7204,9 @@ export function useBorrowingContractSetLtv<
         functionName?: 'setLTV'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'setLTV', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setLTV',
     ...config,
   } as any)
@@ -7723,8 +7215,7 @@ export function useBorrowingContractSetLtv<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setOptions"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractSetOptions<
   TMode extends WriteContractMode = undefined,
@@ -7750,15 +7241,9 @@ export function useBorrowingContractSetOptions<
         functionName?: 'setOptions'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'setOptions', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setOptions',
     ...config,
   } as any)
@@ -7767,8 +7252,7 @@ export function useBorrowingContractSetOptions<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setTreasury"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractSetTreasury<
   TMode extends WriteContractMode = undefined,
@@ -7798,15 +7282,9 @@ export function useBorrowingContractSetTreasury<
         functionName?: 'setTreasury'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'setTreasury', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setTreasury',
     ...config,
   } as any)
@@ -7815,8 +7293,7 @@ export function useBorrowingContractSetTreasury<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractSetWithdrawTimeLimit<
   TMode extends WriteContractMode = undefined,
@@ -7846,19 +7323,13 @@ export function useBorrowingContractSetWithdrawTimeLimit<
         functionName?: 'setWithdrawTimeLimit'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'setWithdrawTimeLimit',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setWithdrawTimeLimit',
     ...config,
   } as any)
@@ -7867,8 +7338,7 @@ export function useBorrowingContractSetWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -7898,19 +7368,13 @@ export function useBorrowingContractTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'transferOwnership',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as any)
@@ -7919,8 +7383,7 @@ export function useBorrowingContractTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"updateLastEthVaultValue"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractUpdateLastEthVaultValue<
   TMode extends WriteContractMode = undefined,
@@ -7950,19 +7413,13 @@ export function useBorrowingContractUpdateLastEthVaultValue<
         functionName?: 'updateLastEthVaultValue'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'updateLastEthVaultValue',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'updateLastEthVaultValue',
     ...config,
   } as any)
@@ -7971,8 +7428,7 @@ export function useBorrowingContractUpdateLastEthVaultValue<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractUpgradeToAndCall<
   TMode extends WriteContractMode = undefined,
@@ -8002,19 +7458,13 @@ export function useBorrowingContractUpgradeToAndCall<
         functionName?: 'upgradeToAndCall'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof borrowingContractABI,
     'upgradeToAndCall',
     TMode
   >({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as any)
@@ -8023,8 +7473,7 @@ export function useBorrowingContractUpgradeToAndCall<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withDraw"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractWithDraw<
   TMode extends WriteContractMode = undefined,
@@ -8046,15 +7495,9 @@ export function useBorrowingContractWithDraw<
         functionName?: 'withDraw'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof borrowingContractABI, 'withDraw', TMode>({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'withDraw',
     ...config,
   } as any)
@@ -8063,8 +7506,7 @@ export function useBorrowingContractWithDraw<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractWrite<TFunctionName extends string>(
   config: Omit<
@@ -8072,15 +7514,9 @@ export function usePrepareBorrowingContractWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     ...config,
   } as UsePrepareContractWriteConfig<
     typeof borrowingContractABI,
@@ -8091,8 +7527,7 @@ export function usePrepareBorrowingContractWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractCalculateCumulativeRate(
   config: Omit<
@@ -8103,15 +7538,9 @@ export function usePrepareBorrowingContractCalculateCumulativeRate(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'calculateCumulativeRate',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -8123,8 +7552,7 @@ export function usePrepareBorrowingContractCalculateCumulativeRate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateRatio"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractCalculateRatio(
   config: Omit<
@@ -8135,15 +7563,9 @@ export function usePrepareBorrowingContractCalculateRatio(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'calculateRatio',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -8155,8 +7577,7 @@ export function usePrepareBorrowingContractCalculateRatio(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositTokens"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractDepositTokens(
   config: Omit<
@@ -8164,15 +7585,9 @@ export function usePrepareBorrowingContractDepositTokens(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'depositTokens',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -8184,8 +7599,7 @@ export function usePrepareBorrowingContractDepositTokens(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractInitialize(
   config: Omit<
@@ -8193,15 +7607,9 @@ export function usePrepareBorrowingContractInitialize(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'initialize'>)
@@ -8210,8 +7618,7 @@ export function usePrepareBorrowingContractInitialize(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"liquidate"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractLiquidate(
   config: Omit<
@@ -8219,25 +7626,40 @@ export function usePrepareBorrowingContractLiquidate(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'liquidate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'liquidate'>)
 }
 
 /**
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"redeemYields"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ */
+export function usePrepareBorrowingContractRedeemYields(
+  config: Omit<
+    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'redeemYields'>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: borrowingContractABI,
+    address: borrowingContractAddress[11155111],
+    functionName: 'redeemYields',
+    ...config,
+  } as UsePrepareContractWriteConfig<
+    typeof borrowingContractABI,
+    'redeemYields'
+  >)
+}
+
+/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractRenounceOwnership(
   config: Omit<
@@ -8248,15 +7670,9 @@ export function usePrepareBorrowingContractRenounceOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -8268,8 +7684,7 @@ export function usePrepareBorrowingContractRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAPR"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractSetApr(
   config: Omit<
@@ -8277,15 +7692,9 @@ export function usePrepareBorrowingContractSetApr(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setAPR',
     ...config,
   } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setAPR'>)
@@ -8294,8 +7703,7 @@ export function usePrepareBorrowingContractSetApr(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAdmin"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractSetAdmin(
   config: Omit<
@@ -8303,15 +7711,9 @@ export function usePrepareBorrowingContractSetAdmin(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setAdmin',
     ...config,
   } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setAdmin'>)
@@ -8320,8 +7722,7 @@ export function usePrepareBorrowingContractSetAdmin(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setBondRatio"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractSetBondRatio(
   config: Omit<
@@ -8329,15 +7730,9 @@ export function usePrepareBorrowingContractSetBondRatio(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setBondRatio',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -8349,8 +7744,7 @@ export function usePrepareBorrowingContractSetBondRatio(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setLTV"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractSetLtv(
   config: Omit<
@@ -8358,15 +7752,9 @@ export function usePrepareBorrowingContractSetLtv(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setLTV',
     ...config,
   } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setLTV'>)
@@ -8375,8 +7763,7 @@ export function usePrepareBorrowingContractSetLtv(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setOptions"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractSetOptions(
   config: Omit<
@@ -8384,15 +7771,9 @@ export function usePrepareBorrowingContractSetOptions(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setOptions',
     ...config,
   } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setOptions'>)
@@ -8401,8 +7782,7 @@ export function usePrepareBorrowingContractSetOptions(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setTreasury"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractSetTreasury(
   config: Omit<
@@ -8410,15 +7790,9 @@ export function usePrepareBorrowingContractSetTreasury(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setTreasury',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -8430,8 +7804,7 @@ export function usePrepareBorrowingContractSetTreasury(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractSetWithdrawTimeLimit(
   config: Omit<
@@ -8442,15 +7815,9 @@ export function usePrepareBorrowingContractSetWithdrawTimeLimit(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'setWithdrawTimeLimit',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -8462,8 +7829,7 @@ export function usePrepareBorrowingContractSetWithdrawTimeLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractTransferOwnership(
   config: Omit<
@@ -8474,15 +7840,9 @@ export function usePrepareBorrowingContractTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -8494,8 +7854,7 @@ export function usePrepareBorrowingContractTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"updateLastEthVaultValue"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractUpdateLastEthVaultValue(
   config: Omit<
@@ -8506,15 +7865,9 @@ export function usePrepareBorrowingContractUpdateLastEthVaultValue(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'updateLastEthVaultValue',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -8526,8 +7879,7 @@ export function usePrepareBorrowingContractUpdateLastEthVaultValue(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractUpgradeToAndCall(
   config: Omit<
@@ -8538,15 +7890,9 @@ export function usePrepareBorrowingContractUpgradeToAndCall(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -8558,8 +7904,7 @@ export function usePrepareBorrowingContractUpgradeToAndCall(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withDraw"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function usePrepareBorrowingContractWithDraw(
   config: Omit<
@@ -8567,15 +7912,9 @@ export function usePrepareBorrowingContractWithDraw(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     functionName: 'withDraw',
     ...config,
   } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'withDraw'>)
@@ -8584,8 +7923,7 @@ export function usePrepareBorrowingContractWithDraw(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractEvent<TEventName extends string>(
   config: Omit<
@@ -8593,15 +7931,9 @@ export function useBorrowingContractEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     ...config,
   } as UseContractEventConfig<typeof borrowingContractABI, TEventName>)
 }
@@ -8609,8 +7941,7 @@ export function useBorrowingContractEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Deposit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractDepositEvent(
   config: Omit<
@@ -8618,15 +7949,9 @@ export function useBorrowingContractDepositEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     eventName: 'Deposit',
     ...config,
   } as UseContractEventConfig<typeof borrowingContractABI, 'Deposit'>)
@@ -8635,8 +7960,7 @@ export function useBorrowingContractDepositEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Initialized"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractInitializedEvent(
   config: Omit<
@@ -8644,15 +7968,9 @@ export function useBorrowingContractInitializedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     eventName: 'Initialized',
     ...config,
   } as UseContractEventConfig<typeof borrowingContractABI, 'Initialized'>)
@@ -8661,8 +7979,7 @@ export function useBorrowingContractInitializedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Liquidate"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractLiquidateEvent(
   config: Omit<
@@ -8670,15 +7987,9 @@ export function useBorrowingContractLiquidateEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     eventName: 'Liquidate',
     ...config,
   } as UseContractEventConfig<typeof borrowingContractABI, 'Liquidate'>)
@@ -8687,8 +7998,7 @@ export function useBorrowingContractLiquidateEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractOwnershipTransferredEvent(
   config: Omit<
@@ -8696,15 +8006,9 @@ export function useBorrowingContractOwnershipTransferredEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     eventName: 'OwnershipTransferred',
     ...config,
   } as UseContractEventConfig<
@@ -8716,8 +8020,7 @@ export function useBorrowingContractOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Upgraded"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractUpgradedEvent(
   config: Omit<
@@ -8725,15 +8028,9 @@ export function useBorrowingContractUpgradedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     eventName: 'Upgraded',
     ...config,
   } as UseContractEventConfig<typeof borrowingContractABI, 'Upgraded'>)
@@ -8742,8 +8039,7 @@ export function useBorrowingContractUpgradedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Withdraw"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
  */
 export function useBorrowingContractWithdrawEvent(
   config: Omit<
@@ -8751,15 +8047,9 @@ export function useBorrowingContractWithdrawEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: borrowingContractABI,
-    address:
-      borrowingContractAddress[
-        chainId as keyof typeof borrowingContractAddress
-      ],
+    address: borrowingContractAddress[11155111],
     eventName: 'Withdraw',
     ...config,
   } as UseContractEventConfig<typeof borrowingContractABI, 'Withdraw'>)
@@ -8768,8 +8058,7 @@ export function useBorrowingContractWithdrawEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsRead<
   TFunctionName extends string,
@@ -8780,12 +8069,9 @@ export function useCdsRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
 }
@@ -8793,8 +8079,7 @@ export function useCdsRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"PRECISION"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsPrecision<
   TFunctionName extends 'PRECISION',
@@ -8805,12 +8090,9 @@ export function useCdsPrecision<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'PRECISION',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8819,8 +8101,7 @@ export function useCdsPrecision<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsUpgradeInterfaceVersion<
   TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
@@ -8831,12 +8112,9 @@ export function useCdsUpgradeInterfaceVersion<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'UPGRADE_INTERFACE_VERSION',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8845,8 +8123,7 @@ export function useCdsUpgradeInterfaceVersion<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"amint"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsAmint<
   TFunctionName extends 'amint',
@@ -8857,12 +8134,9 @@ export function useCdsAmint<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'amint',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8871,8 +8145,7 @@ export function useCdsAmint<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"amintLimit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsAmintLimit<
   TFunctionName extends 'amintLimit',
@@ -8883,12 +8156,9 @@ export function useCdsAmintLimit<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'amintLimit',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8897,8 +8167,7 @@ export function useCdsAmintLimit<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"borrowing"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsBorrowing<
   TFunctionName extends 'borrowing',
@@ -8909,12 +8178,9 @@ export function useCdsBorrowing<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'borrowing',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8923,8 +8189,7 @@ export function useCdsBorrowing<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"borrowingContract"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsBorrowingContract<
   TFunctionName extends 'borrowingContract',
@@ -8935,12 +8200,9 @@ export function useCdsBorrowingContract<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'borrowingContract',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8949,8 +8211,7 @@ export function useCdsBorrowingContract<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"burnedAmintInRedeem"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsBurnedAmintInRedeem<
   TFunctionName extends 'burnedAmintInRedeem',
@@ -8961,12 +8222,9 @@ export function useCdsBurnedAmintInRedeem<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'burnedAmintInRedeem',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -8975,8 +8233,7 @@ export function useCdsBurnedAmintInRedeem<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cdsCount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsCdsCount<
   TFunctionName extends 'cdsCount',
@@ -8987,12 +8244,9 @@ export function useCdsCdsCount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'cdsCount',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9001,8 +8255,7 @@ export function useCdsCdsCount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cdsDetails"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsCdsDetails<
   TFunctionName extends 'cdsDetails',
@@ -9013,12 +8266,9 @@ export function useCdsCdsDetails<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'cdsDetails',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9027,8 +8277,7 @@ export function useCdsCdsDetails<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cumulativeValue"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsCumulativeValue<
   TFunctionName extends 'cumulativeValue',
@@ -9039,12 +8288,9 @@ export function useCdsCumulativeValue<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'cumulativeValue',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9053,8 +8299,7 @@ export function useCdsCumulativeValue<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cumulativeValueSign"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsCumulativeValueSign<
   TFunctionName extends 'cumulativeValueSign',
@@ -9065,12 +8310,9 @@ export function useCdsCumulativeValueSign<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'cumulativeValueSign',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9079,8 +8321,7 @@ export function useCdsCumulativeValueSign<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"fallbackEthPrice"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsFallbackEthPrice<
   TFunctionName extends 'fallbackEthPrice',
@@ -9091,12 +8332,9 @@ export function useCdsFallbackEthPrice<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'fallbackEthPrice',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9105,8 +8343,7 @@ export function useCdsFallbackEthPrice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"lastCumulativeRate"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsLastCumulativeRate<
   TFunctionName extends 'lastCumulativeRate',
@@ -9117,12 +8354,9 @@ export function useCdsLastCumulativeRate<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'lastCumulativeRate',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9131,8 +8365,7 @@ export function useCdsLastCumulativeRate<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"lastEthPrice"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsLastEthPrice<
   TFunctionName extends 'lastEthPrice',
@@ -9143,12 +8376,9 @@ export function useCdsLastEthPrice<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'lastEthPrice',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9157,8 +8387,7 @@ export function useCdsLastEthPrice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"liquidationIndexToInfo"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsLiquidationIndexToInfo<
   TFunctionName extends 'liquidationIndexToInfo',
@@ -9169,12 +8398,9 @@ export function useCdsLiquidationIndexToInfo<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'liquidationIndexToInfo',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9183,8 +8409,7 @@ export function useCdsLiquidationIndexToInfo<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"multiSign"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsMultiSign<
   TFunctionName extends 'multiSign',
@@ -9195,12 +8420,9 @@ export function useCdsMultiSign<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'multiSign',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9209,8 +8431,7 @@ export function useCdsMultiSign<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsOwner<
   TFunctionName extends 'owner',
@@ -9221,12 +8442,9 @@ export function useCdsOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9235,8 +8453,7 @@ export function useCdsOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"proxiableUUID"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsProxiableUuid<
   TFunctionName extends 'proxiableUUID',
@@ -9247,12 +8464,9 @@ export function useCdsProxiableUuid<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'proxiableUUID',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9261,8 +8475,7 @@ export function useCdsProxiableUuid<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalAvailableLiquidationAmount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsTotalAvailableLiquidationAmount<
   TFunctionName extends 'totalAvailableLiquidationAmount',
@@ -9273,12 +8486,9 @@ export function useCdsTotalAvailableLiquidationAmount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'totalAvailableLiquidationAmount',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9287,8 +8497,7 @@ export function useCdsTotalAvailableLiquidationAmount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalCdsDepositedAmount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsTotalCdsDepositedAmount<
   TFunctionName extends 'totalCdsDepositedAmount',
@@ -9299,12 +8508,9 @@ export function useCdsTotalCdsDepositedAmount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'totalCdsDepositedAmount',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9313,8 +8519,7 @@ export function useCdsTotalCdsDepositedAmount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalCdsDepositedAmountWithOptionFees"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsTotalCdsDepositedAmountWithOptionFees<
   TFunctionName extends 'totalCdsDepositedAmountWithOptionFees',
@@ -9325,12 +8530,9 @@ export function useCdsTotalCdsDepositedAmountWithOptionFees<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'totalCdsDepositedAmountWithOptionFees',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9339,8 +8541,7 @@ export function useCdsTotalCdsDepositedAmountWithOptionFees<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"treasury"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsTreasury<
   TFunctionName extends 'treasury',
@@ -9351,12 +8552,9 @@ export function useCdsTreasury<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'treasury',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9365,8 +8563,7 @@ export function useCdsTreasury<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"treasuryAddress"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsTreasuryAddress<
   TFunctionName extends 'treasuryAddress',
@@ -9377,12 +8574,9 @@ export function useCdsTreasuryAddress<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'treasuryAddress',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9391,8 +8585,7 @@ export function useCdsTreasuryAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"usdt"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsUsdt<
   TFunctionName extends 'usdt',
@@ -9403,12 +8596,9 @@ export function useCdsUsdt<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'usdt',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9417,8 +8607,7 @@ export function useCdsUsdt<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"usdtAmountDepositedTillNow"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsUsdtAmountDepositedTillNow<
   TFunctionName extends 'usdtAmountDepositedTillNow',
@@ -9429,12 +8618,9 @@ export function useCdsUsdtAmountDepositedTillNow<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'usdtAmountDepositedTillNow',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9443,8 +8629,7 @@ export function useCdsUsdtAmountDepositedTillNow<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"usdtLimit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsUsdtLimit<
   TFunctionName extends 'usdtLimit',
@@ -9455,12 +8640,9 @@ export function useCdsUsdtLimit<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'usdtLimit',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9469,8 +8651,7 @@ export function useCdsUsdtLimit<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdrawTimeLimit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsWithdrawTimeLimit<
   TFunctionName extends 'withdrawTimeLimit',
@@ -9481,12 +8662,9 @@ export function useCdsWithdrawTimeLimit<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'withdrawTimeLimit',
     ...config,
   } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
@@ -9495,8 +8673,7 @@ export function useCdsWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsWrite<
   TFunctionName extends string,
@@ -9515,12 +8692,9 @@ export function useCdsWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, TFunctionName, TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     ...config,
   } as any)
 }
@@ -9528,8 +8702,7 @@ export function useCdsWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsCalculateCumulativeRate<
   TMode extends WriteContractMode = undefined,
@@ -9559,12 +8732,9 @@ export function useCdsCalculateCumulativeRate<
         functionName?: 'calculateCumulativeRate'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'calculateCumulativeRate', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'calculateCumulativeRate',
     ...config,
   } as any)
@@ -9573,8 +8743,7 @@ export function useCdsCalculateCumulativeRate<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"deposit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsDeposit<
   TMode extends WriteContractMode = undefined,
@@ -9593,12 +8762,9 @@ export function useCdsDeposit<
         functionName?: 'deposit'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'deposit', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'deposit',
     ...config,
   } as any)
@@ -9607,8 +8773,7 @@ export function useCdsDeposit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsInitialize<
   TMode extends WriteContractMode = undefined,
@@ -9630,12 +8795,9 @@ export function useCdsInitialize<
         functionName?: 'initialize'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'initialize', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as any)
@@ -9644,8 +8806,7 @@ export function useCdsInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"redeemUSDT"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsRedeemUsdt<
   TMode extends WriteContractMode = undefined,
@@ -9667,12 +8828,9 @@ export function useCdsRedeemUsdt<
         functionName?: 'redeemUSDT'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'redeemUSDT', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'redeemUSDT',
     ...config,
   } as any)
@@ -9681,8 +8839,7 @@ export function useCdsRedeemUsdt<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -9708,12 +8865,9 @@ export function useCdsRenounceOwnership<
         functionName?: 'renounceOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'renounceOwnership', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as any)
@@ -9722,8 +8876,7 @@ export function useCdsRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setAdmin"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsSetAdmin<
   TMode extends WriteContractMode = undefined,
@@ -9742,12 +8895,9 @@ export function useCdsSetAdmin<
         functionName?: 'setAdmin'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'setAdmin', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'setAdmin',
     ...config,
   } as any)
@@ -9756,8 +8906,7 @@ export function useCdsSetAdmin<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setAmintLimit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsSetAmintLimit<
   TMode extends WriteContractMode = undefined,
@@ -9783,12 +8932,9 @@ export function useCdsSetAmintLimit<
         functionName?: 'setAmintLimit'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'setAmintLimit', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'setAmintLimit',
     ...config,
   } as any)
@@ -9797,8 +8943,7 @@ export function useCdsSetAmintLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsSetBorrowingContract<
   TMode extends WriteContractMode = undefined,
@@ -9824,12 +8969,9 @@ export function useCdsSetBorrowingContract<
         functionName?: 'setBorrowingContract'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'setBorrowingContract', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'setBorrowingContract',
     ...config,
   } as any)
@@ -9838,8 +8980,7 @@ export function useCdsSetBorrowingContract<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setTreasury"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsSetTreasury<
   TMode extends WriteContractMode = undefined,
@@ -9865,12 +9006,9 @@ export function useCdsSetTreasury<
         functionName?: 'setTreasury'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'setTreasury', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'setTreasury',
     ...config,
   } as any)
@@ -9879,8 +9017,7 @@ export function useCdsSetTreasury<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setUsdtLimit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsSetUsdtLimit<
   TMode extends WriteContractMode = undefined,
@@ -9906,12 +9043,9 @@ export function useCdsSetUsdtLimit<
         functionName?: 'setUsdtLimit'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'setUsdtLimit', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'setUsdtLimit',
     ...config,
   } as any)
@@ -9920,8 +9054,7 @@ export function useCdsSetUsdtLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsSetWithdrawTimeLimit<
   TMode extends WriteContractMode = undefined,
@@ -9947,12 +9080,9 @@ export function useCdsSetWithdrawTimeLimit<
         functionName?: 'setWithdrawTimeLimit'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'setWithdrawTimeLimit', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'setWithdrawTimeLimit',
     ...config,
   } as any)
@@ -9961,8 +9091,7 @@ export function useCdsSetWithdrawTimeLimit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -9988,12 +9117,9 @@ export function useCdsTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'transferOwnership', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as any)
@@ -10002,8 +9128,7 @@ export function useCdsTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateLiquidationInfo"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsUpdateLiquidationInfo<
   TMode extends WriteContractMode = undefined,
@@ -10029,12 +9154,9 @@ export function useCdsUpdateLiquidationInfo<
         functionName?: 'updateLiquidationInfo'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'updateLiquidationInfo', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'updateLiquidationInfo',
     ...config,
   } as any)
@@ -10043,8 +9165,7 @@ export function useCdsUpdateLiquidationInfo<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalAvailableLiquidationAmount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsUpdateTotalAvailableLiquidationAmount<
   TMode extends WriteContractMode = undefined,
@@ -10074,16 +9195,13 @@ export function useCdsUpdateTotalAvailableLiquidationAmount<
         functionName?: 'updateTotalAvailableLiquidationAmount'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof cdsABI,
     'updateTotalAvailableLiquidationAmount',
     TMode
   >({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'updateTotalAvailableLiquidationAmount',
     ...config,
   } as any)
@@ -10092,8 +9210,7 @@ export function useCdsUpdateTotalAvailableLiquidationAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsUpdateTotalCdsDepositedAmount<
   TMode extends WriteContractMode = undefined,
@@ -10123,16 +9240,13 @@ export function useCdsUpdateTotalCdsDepositedAmount<
         functionName?: 'updateTotalCdsDepositedAmount'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof cdsABI,
     'updateTotalCdsDepositedAmount',
     TMode
   >({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'updateTotalCdsDepositedAmount',
     ...config,
   } as any)
@@ -10141,8 +9255,7 @@ export function useCdsUpdateTotalCdsDepositedAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmountWithOptionFees"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsUpdateTotalCdsDepositedAmountWithOptionFees<
   TMode extends WriteContractMode = undefined,
@@ -10172,16 +9285,13 @@ export function useCdsUpdateTotalCdsDepositedAmountWithOptionFees<
         functionName?: 'updateTotalCdsDepositedAmountWithOptionFees'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof cdsABI,
     'updateTotalCdsDepositedAmountWithOptionFees',
     TMode
   >({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'updateTotalCdsDepositedAmountWithOptionFees',
     ...config,
   } as any)
@@ -10190,8 +9300,7 @@ export function useCdsUpdateTotalCdsDepositedAmountWithOptionFees<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsUpgradeToAndCall<
   TMode extends WriteContractMode = undefined,
@@ -10217,12 +9326,9 @@ export function useCdsUpgradeToAndCall<
         functionName?: 'upgradeToAndCall'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'upgradeToAndCall', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as any)
@@ -10231,8 +9337,7 @@ export function useCdsUpgradeToAndCall<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdraw"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsWithdraw<
   TMode extends WriteContractMode = undefined,
@@ -10251,12 +9356,9 @@ export function useCdsWithdraw<
         functionName?: 'withdraw'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof cdsABI, 'withdraw', TMode>({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'withdraw',
     ...config,
   } as any)
@@ -10265,8 +9367,7 @@ export function useCdsWithdraw<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsWrite<TFunctionName extends string>(
   config: Omit<
@@ -10274,12 +9375,9 @@ export function usePrepareCdsWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, TFunctionName>)
 }
@@ -10287,8 +9385,7 @@ export function usePrepareCdsWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"calculateCumulativeRate"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsCalculateCumulativeRate(
   config: Omit<
@@ -10296,12 +9393,9 @@ export function usePrepareCdsCalculateCumulativeRate(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'calculateCumulativeRate',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'calculateCumulativeRate'>)
@@ -10310,8 +9404,7 @@ export function usePrepareCdsCalculateCumulativeRate(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"deposit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsDeposit(
   config: Omit<
@@ -10319,12 +9412,9 @@ export function usePrepareCdsDeposit(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'deposit',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'deposit'>)
@@ -10333,8 +9423,7 @@ export function usePrepareCdsDeposit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsInitialize(
   config: Omit<
@@ -10342,12 +9431,9 @@ export function usePrepareCdsInitialize(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'initialize'>)
@@ -10356,8 +9442,7 @@ export function usePrepareCdsInitialize(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"redeemUSDT"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsRedeemUsdt(
   config: Omit<
@@ -10365,12 +9450,9 @@ export function usePrepareCdsRedeemUsdt(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'redeemUSDT',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'redeemUSDT'>)
@@ -10379,8 +9461,7 @@ export function usePrepareCdsRedeemUsdt(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsRenounceOwnership(
   config: Omit<
@@ -10388,12 +9469,9 @@ export function usePrepareCdsRenounceOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'renounceOwnership'>)
@@ -10402,8 +9480,7 @@ export function usePrepareCdsRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setAdmin"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsSetAdmin(
   config: Omit<
@@ -10411,12 +9488,9 @@ export function usePrepareCdsSetAdmin(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'setAdmin',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'setAdmin'>)
@@ -10425,8 +9499,7 @@ export function usePrepareCdsSetAdmin(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setAmintLimit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsSetAmintLimit(
   config: Omit<
@@ -10434,12 +9507,9 @@ export function usePrepareCdsSetAmintLimit(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'setAmintLimit',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'setAmintLimit'>)
@@ -10448,8 +9518,7 @@ export function usePrepareCdsSetAmintLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setBorrowingContract"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsSetBorrowingContract(
   config: Omit<
@@ -10457,12 +9526,9 @@ export function usePrepareCdsSetBorrowingContract(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'setBorrowingContract',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'setBorrowingContract'>)
@@ -10471,8 +9537,7 @@ export function usePrepareCdsSetBorrowingContract(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setTreasury"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsSetTreasury(
   config: Omit<
@@ -10480,12 +9545,9 @@ export function usePrepareCdsSetTreasury(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'setTreasury',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'setTreasury'>)
@@ -10494,8 +9556,7 @@ export function usePrepareCdsSetTreasury(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setUsdtLimit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsSetUsdtLimit(
   config: Omit<
@@ -10503,12 +9564,9 @@ export function usePrepareCdsSetUsdtLimit(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'setUsdtLimit',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'setUsdtLimit'>)
@@ -10517,8 +9575,7 @@ export function usePrepareCdsSetUsdtLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsSetWithdrawTimeLimit(
   config: Omit<
@@ -10526,12 +9583,9 @@ export function usePrepareCdsSetWithdrawTimeLimit(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'setWithdrawTimeLimit',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'setWithdrawTimeLimit'>)
@@ -10540,8 +9594,7 @@ export function usePrepareCdsSetWithdrawTimeLimit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsTransferOwnership(
   config: Omit<
@@ -10549,12 +9602,9 @@ export function usePrepareCdsTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'transferOwnership'>)
@@ -10563,8 +9613,7 @@ export function usePrepareCdsTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateLiquidationInfo"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsUpdateLiquidationInfo(
   config: Omit<
@@ -10572,12 +9621,9 @@ export function usePrepareCdsUpdateLiquidationInfo(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'updateLiquidationInfo',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'updateLiquidationInfo'>)
@@ -10586,8 +9632,7 @@ export function usePrepareCdsUpdateLiquidationInfo(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalAvailableLiquidationAmount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsUpdateTotalAvailableLiquidationAmount(
   config: Omit<
@@ -10598,12 +9643,9 @@ export function usePrepareCdsUpdateTotalAvailableLiquidationAmount(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'updateTotalAvailableLiquidationAmount',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -10615,8 +9657,7 @@ export function usePrepareCdsUpdateTotalAvailableLiquidationAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsUpdateTotalCdsDepositedAmount(
   config: Omit<
@@ -10627,12 +9668,9 @@ export function usePrepareCdsUpdateTotalCdsDepositedAmount(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'updateTotalCdsDepositedAmount',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -10644,8 +9682,7 @@ export function usePrepareCdsUpdateTotalCdsDepositedAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmountWithOptionFees"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsUpdateTotalCdsDepositedAmountWithOptionFees(
   config: Omit<
@@ -10656,12 +9693,9 @@ export function usePrepareCdsUpdateTotalCdsDepositedAmountWithOptionFees(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'updateTotalCdsDepositedAmountWithOptionFees',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -10673,8 +9707,7 @@ export function usePrepareCdsUpdateTotalCdsDepositedAmountWithOptionFees(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsUpgradeToAndCall(
   config: Omit<
@@ -10682,12 +9715,9 @@ export function usePrepareCdsUpgradeToAndCall(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'upgradeToAndCall'>)
@@ -10696,8 +9726,7 @@ export function usePrepareCdsUpgradeToAndCall(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdraw"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function usePrepareCdsWithdraw(
   config: Omit<
@@ -10705,12 +9734,9 @@ export function usePrepareCdsWithdraw(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     functionName: 'withdraw',
     ...config,
   } as UsePrepareContractWriteConfig<typeof cdsABI, 'withdraw'>)
@@ -10719,8 +9745,7 @@ export function usePrepareCdsWithdraw(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsEvent<TEventName extends string>(
   config: Omit<
@@ -10728,12 +9753,9 @@ export function useCdsEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     ...config,
   } as UseContractEventConfig<typeof cdsABI, TEventName>)
 }
@@ -10741,8 +9763,7 @@ export function useCdsEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Deposit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsDepositEvent(
   config: Omit<
@@ -10750,12 +9771,9 @@ export function useCdsDepositEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     eventName: 'Deposit',
     ...config,
   } as UseContractEventConfig<typeof cdsABI, 'Deposit'>)
@@ -10764,8 +9782,7 @@ export function useCdsDepositEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Initialized"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsInitializedEvent(
   config: Omit<
@@ -10773,12 +9790,9 @@ export function useCdsInitializedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     eventName: 'Initialized',
     ...config,
   } as UseContractEventConfig<typeof cdsABI, 'Initialized'>)
@@ -10787,8 +9801,7 @@ export function useCdsInitializedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsOwnershipTransferredEvent(
   config: Omit<
@@ -10796,12 +9809,9 @@ export function useCdsOwnershipTransferredEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     eventName: 'OwnershipTransferred',
     ...config,
   } as UseContractEventConfig<typeof cdsABI, 'OwnershipTransferred'>)
@@ -10810,8 +9820,7 @@ export function useCdsOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Upgraded"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsUpgradedEvent(
   config: Omit<
@@ -10819,12 +9828,9 @@ export function useCdsUpgradedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     eventName: 'Upgraded',
     ...config,
   } as UseContractEventConfig<typeof cdsABI, 'Upgraded'>)
@@ -10833,8 +9839,7 @@ export function useCdsUpgradedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Withdraw"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
  */
 export function useCdsWithdrawEvent(
   config: Omit<
@@ -10842,12 +9847,9 @@ export function useCdsWithdrawEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof cdsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: cdsABI,
-    address: cdsAddress[chainId as keyof typeof cdsAddress],
+    address: cdsAddress[11155111],
     eventName: 'Withdraw',
     ...config,
   } as UseContractEventConfig<typeof cdsABI, 'Withdraw'>)
@@ -10856,8 +9858,7 @@ export function useCdsWithdrawEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsRead<
   TFunctionName extends string,
@@ -10868,12 +9869,9 @@ export function useOptionsRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     ...config,
   } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
 }
@@ -10881,8 +9879,7 @@ export function useOptionsRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsUpgradeInterfaceVersion<
   TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
@@ -10893,12 +9890,9 @@ export function useOptionsUpgradeInterfaceVersion<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     functionName: 'UPGRADE_INTERFACE_VERSION',
     ...config,
   } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
@@ -10907,8 +9901,7 @@ export function useOptionsUpgradeInterfaceVersion<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"calculateOptionPrice"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsCalculateOptionPrice<
   TFunctionName extends 'calculateOptionPrice',
@@ -10919,13 +9912,32 @@ export function useOptionsCalculateOptionPrice<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     functionName: 'calculateOptionPrice',
+    ...config,
+  } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"calculateStrikePriceGains"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ */
+export function useOptionsCalculateStrikePriceGains<
+  TFunctionName extends 'calculateStrikePriceGains',
+  TSelectData = ReadContractResult<typeof optionsABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof optionsAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: optionsABI,
+    address: optionsAddress[11155111],
+    functionName: 'calculateStrikePriceGains',
     ...config,
   } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
 }
@@ -10933,8 +9945,7 @@ export function useOptionsCalculateOptionPrice<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsOwner<
   TFunctionName extends 'owner',
@@ -10945,12 +9956,9 @@ export function useOptionsOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
@@ -10959,8 +9967,7 @@ export function useOptionsOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"proxiableUUID"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsProxiableUuid<
   TFunctionName extends 'proxiableUUID',
@@ -10971,39 +9978,10 @@ export function useOptionsProxiableUuid<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     functionName: 'proxiableUUID',
-    ...config,
-  } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"withdrawOption"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
- */
-export function useOptionsWithdrawOption<
-  TFunctionName extends 'withdrawOption',
-  TSelectData = ReadContractResult<typeof optionsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
-    functionName: 'withdrawOption',
     ...config,
   } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
 }
@@ -11011,8 +9989,7 @@ export function useOptionsWithdrawOption<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsWrite<
   TFunctionName extends string,
@@ -11031,12 +10008,9 @@ export function useOptionsWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof optionsABI, TFunctionName, TMode>({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     ...config,
   } as any)
 }
@@ -11044,8 +10018,7 @@ export function useOptionsWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsInitialize<
   TMode extends WriteContractMode = undefined,
@@ -11067,12 +10040,9 @@ export function useOptionsInitialize<
         functionName?: 'initialize'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof optionsABI, 'initialize', TMode>({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as any)
@@ -11081,8 +10051,7 @@ export function useOptionsInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -11108,12 +10077,9 @@ export function useOptionsRenounceOwnership<
         functionName?: 'renounceOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof optionsABI, 'renounceOwnership', TMode>({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as any)
@@ -11122,8 +10088,7 @@ export function useOptionsRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -11149,12 +10114,9 @@ export function useOptionsTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof optionsABI, 'transferOwnership', TMode>({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as any)
@@ -11163,8 +10125,7 @@ export function useOptionsTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsUpgradeToAndCall<
   TMode extends WriteContractMode = undefined,
@@ -11190,12 +10151,9 @@ export function useOptionsUpgradeToAndCall<
         functionName?: 'upgradeToAndCall'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof optionsABI, 'upgradeToAndCall', TMode>({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as any)
@@ -11204,8 +10162,7 @@ export function useOptionsUpgradeToAndCall<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function usePrepareOptionsWrite<TFunctionName extends string>(
   config: Omit<
@@ -11213,12 +10170,9 @@ export function usePrepareOptionsWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     ...config,
   } as UsePrepareContractWriteConfig<typeof optionsABI, TFunctionName>)
 }
@@ -11226,8 +10180,7 @@ export function usePrepareOptionsWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function usePrepareOptionsInitialize(
   config: Omit<
@@ -11235,12 +10188,9 @@ export function usePrepareOptionsInitialize(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof optionsABI, 'initialize'>)
@@ -11249,8 +10199,7 @@ export function usePrepareOptionsInitialize(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function usePrepareOptionsRenounceOwnership(
   config: Omit<
@@ -11258,12 +10207,9 @@ export function usePrepareOptionsRenounceOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof optionsABI, 'renounceOwnership'>)
@@ -11272,8 +10218,7 @@ export function usePrepareOptionsRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function usePrepareOptionsTransferOwnership(
   config: Omit<
@@ -11281,12 +10226,9 @@ export function usePrepareOptionsTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof optionsABI, 'transferOwnership'>)
@@ -11295,8 +10237,7 @@ export function usePrepareOptionsTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function usePrepareOptionsUpgradeToAndCall(
   config: Omit<
@@ -11304,12 +10245,9 @@ export function usePrepareOptionsUpgradeToAndCall(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as UsePrepareContractWriteConfig<typeof optionsABI, 'upgradeToAndCall'>)
@@ -11318,8 +10256,7 @@ export function usePrepareOptionsUpgradeToAndCall(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link optionsABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsEvent<TEventName extends string>(
   config: Omit<
@@ -11327,12 +10264,9 @@ export function useOptionsEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     ...config,
   } as UseContractEventConfig<typeof optionsABI, TEventName>)
 }
@@ -11340,8 +10274,7 @@ export function useOptionsEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link optionsABI}__ and `eventName` set to `"Initialized"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsInitializedEvent(
   config: Omit<
@@ -11349,12 +10282,9 @@ export function useOptionsInitializedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     eventName: 'Initialized',
     ...config,
   } as UseContractEventConfig<typeof optionsABI, 'Initialized'>)
@@ -11363,8 +10293,7 @@ export function useOptionsInitializedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link optionsABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsOwnershipTransferredEvent(
   config: Omit<
@@ -11372,12 +10301,9 @@ export function useOptionsOwnershipTransferredEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     eventName: 'OwnershipTransferred',
     ...config,
   } as UseContractEventConfig<typeof optionsABI, 'OwnershipTransferred'>)
@@ -11386,8 +10312,7 @@ export function useOptionsOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link optionsABI}__ and `eventName` set to `"Upgraded"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
  */
 export function useOptionsUpgradedEvent(
   config: Omit<
@@ -11395,391 +10320,18 @@ export function useOptionsUpgradedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof optionsAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: optionsABI,
-    address: optionsAddress[chainId as keyof typeof optionsAddress],
+    address: optionsAddress[11155111],
     eventName: 'Upgraded',
     ...config,
   } as UseContractEventConfig<typeof optionsABI, 'Upgraded'>)
 }
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link quoterABI}__.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function useQuoterRead<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof quoterABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof quoterAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    ...config,
-  } as UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"WETH9"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function useQuoterWeth9<
-  TFunctionName extends 'WETH9',
-  TSelectData = ReadContractResult<typeof quoterABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof quoterAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    functionName: 'WETH9',
-    ...config,
-  } as UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"factory"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function useQuoterFactory<
-  TFunctionName extends 'factory',
-  TSelectData = ReadContractResult<typeof quoterABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof quoterAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    functionName: 'factory',
-    ...config,
-  } as UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"uniswapV3SwapCallback"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function useQuoterUniswapV3SwapCallback<
-  TFunctionName extends 'uniswapV3SwapCallback',
-  TSelectData = ReadContractResult<typeof quoterABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof quoterAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    functionName: 'uniswapV3SwapCallback',
-    ...config,
-  } as UseContractReadConfig<typeof quoterABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link quoterABI}__.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function useQuoterWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof quoterAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof quoterABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      > & { address?: Address; chainId?: TChainId }
-    : UseContractWriteConfig<typeof quoterABI, TFunctionName, TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-      } = {} as any,
-) {
-  return useContractWrite<typeof quoterABI, TFunctionName, TMode>({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactInput"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function useQuoterQuoteExactInput<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof quoterAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof quoterABI,
-          'quoteExactInput'
-        >['request']['abi'],
-        'quoteExactInput',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'quoteExactInput'
-      }
-    : UseContractWriteConfig<typeof quoterABI, 'quoteExactInput', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'quoteExactInput'
-      } = {} as any,
-) {
-  return useContractWrite<typeof quoterABI, 'quoteExactInput', TMode>({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    functionName: 'quoteExactInput',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactInputSingle"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function useQuoterQuoteExactInputSingle<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof quoterAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof quoterABI,
-          'quoteExactInputSingle'
-        >['request']['abi'],
-        'quoteExactInputSingle',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'quoteExactInputSingle'
-      }
-    : UseContractWriteConfig<
-        typeof quoterABI,
-        'quoteExactInputSingle',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'quoteExactInputSingle'
-      } = {} as any,
-) {
-  return useContractWrite<typeof quoterABI, 'quoteExactInputSingle', TMode>({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    functionName: 'quoteExactInputSingle',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactOutput"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function useQuoterQuoteExactOutput<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof quoterAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof quoterABI,
-          'quoteExactOutput'
-        >['request']['abi'],
-        'quoteExactOutput',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'quoteExactOutput'
-      }
-    : UseContractWriteConfig<typeof quoterABI, 'quoteExactOutput', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'quoteExactOutput'
-      } = {} as any,
-) {
-  return useContractWrite<typeof quoterABI, 'quoteExactOutput', TMode>({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    functionName: 'quoteExactOutput',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactOutputSingle"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function useQuoterQuoteExactOutputSingle<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof quoterAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof quoterABI,
-          'quoteExactOutputSingle'
-        >['request']['abi'],
-        'quoteExactOutputSingle',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'quoteExactOutputSingle'
-      }
-    : UseContractWriteConfig<
-        typeof quoterABI,
-        'quoteExactOutputSingle',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'quoteExactOutputSingle'
-      } = {} as any,
-) {
-  return useContractWrite<typeof quoterABI, 'quoteExactOutputSingle', TMode>({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    functionName: 'quoteExactOutputSingle',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link quoterABI}__.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function usePrepareQuoterWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof quoterABI, TFunctionName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof quoterAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof quoterABI, TFunctionName>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactInput"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function usePrepareQuoterQuoteExactInput(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactInput'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof quoterAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    functionName: 'quoteExactInput',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactInput'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactInputSingle"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function usePrepareQuoterQuoteExactInputSingle(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactInputSingle'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof quoterAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    functionName: 'quoteExactInputSingle',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactInputSingle'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactOutput"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function usePrepareQuoterQuoteExactOutput(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactOutput'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof quoterAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    functionName: 'quoteExactOutput',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactOutput'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link quoterABI}__ and `functionName` set to `"quoteExactOutputSingle"`.
- *
- * [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6)
- */
-export function usePrepareQuoterQuoteExactOutputSingle(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof quoterABI, 'quoteExactOutputSingle'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof quoterAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: quoterABI,
-    address: quoterAddress[5],
-    functionName: 'quoteExactOutputSingle',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof quoterABI,
-    'quoteExactOutputSingle'
-  >)
-}
-
-/**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryRead<
   TFunctionName extends string,
@@ -11790,12 +10342,9 @@ export function useTreasuryRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
 }
@@ -11803,8 +10352,7 @@ export function useTreasuryRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUpgradeInterfaceVersion<
   TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
@@ -11815,13 +10363,32 @@ export function useTreasuryUpgradeInterfaceVersion<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'UPGRADE_INTERFACE_VERSION',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"WETH"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ */
+export function useTreasuryWeth<
+  TFunctionName extends 'WETH',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[11155111],
+    functionName: 'WETH',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
 }
@@ -11829,8 +10396,7 @@ export function useTreasuryUpgradeInterfaceVersion<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aToken"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryAToken<
   TFunctionName extends 'aToken',
@@ -11841,12 +10407,9 @@ export function useTreasuryAToken<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'aToken',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -11855,8 +10418,7 @@ export function useTreasuryAToken<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aavePoolAddressProvider"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryAavePoolAddressProvider<
   TFunctionName extends 'aavePoolAddressProvider',
@@ -11867,12 +10429,9 @@ export function useTreasuryAavePoolAddressProvider<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'aavePoolAddressProvider',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -11881,8 +10440,7 @@ export function useTreasuryAavePoolAddressProvider<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aaveWETH"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryAaveWeth<
   TFunctionName extends 'aaveWETH',
@@ -11893,13 +10451,32 @@ export function useTreasuryAaveWeth<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'aaveWETH',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"abond"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ */
+export function useTreasuryAbond<
+  TFunctionName extends 'abond',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[11155111],
+    functionName: 'abond',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
 }
@@ -11907,8 +10484,7 @@ export function useTreasuryAaveWeth<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"abondAmintPool"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryAbondAmintPool<
   TFunctionName extends 'abondAmintPool',
@@ -11919,12 +10495,9 @@ export function useTreasuryAbondAmintPool<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'abondAmintPool',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -11933,8 +10506,7 @@ export function useTreasuryAbondAmintPool<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"amint"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryAmint<
   TFunctionName extends 'amint',
@@ -11945,12 +10517,9 @@ export function useTreasuryAmint<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'amint',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -11959,8 +10528,7 @@ export function useTreasuryAmint<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrow"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryBorrow<
   TFunctionName extends 'borrow',
@@ -11971,12 +10539,9 @@ export function useTreasuryBorrow<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'borrow',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -11985,8 +10550,7 @@ export function useTreasuryBorrow<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrowing"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryBorrowing<
   TFunctionName extends 'borrowing',
@@ -11997,12 +10561,9 @@ export function useTreasuryBorrowing<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'borrowing',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12011,8 +10572,7 @@ export function useTreasuryBorrowing<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrowingContract"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryBorrowingContract<
   TFunctionName extends 'borrowingContract',
@@ -12023,39 +10583,10 @@ export function useTreasuryBorrowingContract<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'borrowingContract',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"cEther"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- */
-export function useTreasuryCEther<
-  TFunctionName extends 'cEther',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'cEther',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
 }
@@ -12063,8 +10594,7 @@ export function useTreasuryCEther<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"cdsContract"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryCdsContract<
   TFunctionName extends 'cdsContract',
@@ -12075,13 +10605,32 @@ export function useTreasuryCdsContract<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'cdsContract',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"comet"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ */
+export function useTreasuryComet<
+  TFunctionName extends 'comet',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[11155111],
+    functionName: 'comet',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
 }
@@ -12089,8 +10638,7 @@ export function useTreasuryCdsContract<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"compoundAddress"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryCompoundAddress<
   TFunctionName extends 'compoundAddress',
@@ -12101,12 +10649,9 @@ export function useTreasuryCompoundAddress<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'compoundAddress',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12115,8 +10660,7 @@ export function useTreasuryCompoundAddress<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"ethProfitsOfLiquidators"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryEthProfitsOfLiquidators<
   TFunctionName extends 'ethProfitsOfLiquidators',
@@ -12127,12 +10671,9 @@ export function useTreasuryEthProfitsOfLiquidators<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'ethProfitsOfLiquidators',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12141,8 +10682,7 @@ export function useTreasuryEthProfitsOfLiquidators<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"externalProtocolDepositCount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryExternalProtocolDepositCount<
   TFunctionName extends 'externalProtocolDepositCount',
@@ -12153,12 +10693,9 @@ export function useTreasuryExternalProtocolDepositCount<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'externalProtocolDepositCount',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12167,8 +10704,7 @@ export function useTreasuryExternalProtocolDepositCount<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getBalanceInTreasury"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryGetBalanceInTreasury<
   TFunctionName extends 'getBalanceInTreasury',
@@ -12179,12 +10715,9 @@ export function useTreasuryGetBalanceInTreasury<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'getBalanceInTreasury',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12193,8 +10726,7 @@ export function useTreasuryGetBalanceInTreasury<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getBorrowing"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryGetBorrowing<
   TFunctionName extends 'getBorrowing',
@@ -12205,13 +10737,32 @@ export function useTreasuryGetBorrowing<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'getBorrowing',
+    ...config,
+  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
+}
+
+/**
+ * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getExternalProtocolCumulativeRate"`.
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ */
+export function useTreasuryGetExternalProtocolCumulativeRate<
+  TFunctionName extends 'getExternalProtocolCumulativeRate',
+  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
+>(
+  config: Omit<
+    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
+    'abi' | 'address' | 'functionName'
+  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
+) {
+  return useContractRead({
+    abi: treasuryABI,
+    address: treasuryAddress[11155111],
+    functionName: 'getExternalProtocolCumulativeRate',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
 }
@@ -12219,8 +10770,7 @@ export function useTreasuryGetBorrowing<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"noOfBorrowers"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryNoOfBorrowers<
   TFunctionName extends 'noOfBorrowers',
@@ -12231,12 +10781,9 @@ export function useTreasuryNoOfBorrowers<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'noOfBorrowers',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12245,8 +10792,7 @@ export function useTreasuryNoOfBorrowers<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryOwner<
   TFunctionName extends 'owner',
@@ -12257,12 +10803,9 @@ export function useTreasuryOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12271,8 +10814,7 @@ export function useTreasuryOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"protocolDeposit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryProtocolDeposit<
   TFunctionName extends 'protocolDeposit',
@@ -12283,12 +10825,9 @@ export function useTreasuryProtocolDeposit<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'protocolDeposit',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12297,8 +10836,7 @@ export function useTreasuryProtocolDeposit<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"proxiableUUID"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryProxiableUuid<
   TFunctionName extends 'proxiableUUID',
@@ -12309,12 +10847,9 @@ export function useTreasuryProxiableUuid<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'proxiableUUID',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12323,8 +10858,7 @@ export function useTreasuryProxiableUuid<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalInterest"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryTotalInterest<
   TFunctionName extends 'totalInterest',
@@ -12335,12 +10869,9 @@ export function useTreasuryTotalInterest<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'totalInterest',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12349,8 +10880,7 @@ export function useTreasuryTotalInterest<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalInterestFromLiquidation"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryTotalInterestFromLiquidation<
   TFunctionName extends 'totalInterestFromLiquidation',
@@ -12361,12 +10891,9 @@ export function useTreasuryTotalInterestFromLiquidation<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'totalInterestFromLiquidation',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12375,8 +10902,7 @@ export function useTreasuryTotalInterestFromLiquidation<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalVolumeOfBorrowersAmountinUSD"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryTotalVolumeOfBorrowersAmountinUsd<
   TFunctionName extends 'totalVolumeOfBorrowersAmountinUSD',
@@ -12387,12 +10913,9 @@ export function useTreasuryTotalVolumeOfBorrowersAmountinUsd<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'totalVolumeOfBorrowersAmountinUSD',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12401,8 +10924,7 @@ export function useTreasuryTotalVolumeOfBorrowersAmountinUsd<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalVolumeOfBorrowersAmountinWei"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryTotalVolumeOfBorrowersAmountinWei<
   TFunctionName extends 'totalVolumeOfBorrowersAmountinWei',
@@ -12413,12 +10935,9 @@ export function useTreasuryTotalVolumeOfBorrowersAmountinWei<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'totalVolumeOfBorrowersAmountinWei',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12427,8 +10946,7 @@ export function useTreasuryTotalVolumeOfBorrowersAmountinWei<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"usdt"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUsdt<
   TFunctionName extends 'usdt',
@@ -12439,12 +10957,9 @@ export function useTreasuryUsdt<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'usdt',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12453,8 +10968,7 @@ export function useTreasuryUsdt<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"wethGateway"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryWethGateway<
   TFunctionName extends 'wethGateway',
@@ -12465,12 +10979,9 @@ export function useTreasuryWethGateway<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'wethGateway',
     ...config,
   } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
@@ -12479,8 +10990,7 @@ export function useTreasuryWethGateway<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryWrite<
   TFunctionName extends string,
@@ -12502,12 +11012,9 @@ export function useTreasuryWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, TFunctionName, TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     ...config,
   } as any)
 }
@@ -12515,8 +11022,7 @@ export function useTreasuryWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveAmint"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryApproveAmint<
   TMode extends WriteContractMode = undefined,
@@ -12542,12 +11048,9 @@ export function useTreasuryApproveAmint<
         functionName?: 'approveAmint'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'approveAmint', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'approveAmint',
     ...config,
   } as any)
@@ -12556,8 +11059,7 @@ export function useTreasuryApproveAmint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveUsdt"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryApproveUsdt<
   TMode extends WriteContractMode = undefined,
@@ -12583,12 +11085,9 @@ export function useTreasuryApproveUsdt<
         functionName?: 'approveUsdt'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'approveUsdt', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'approveUsdt',
     ...config,
   } as any)
@@ -12597,8 +11096,7 @@ export function useTreasuryApproveUsdt<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"deposit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryDeposit<
   TMode extends WriteContractMode = undefined,
@@ -12620,12 +11118,9 @@ export function useTreasuryDeposit<
         functionName?: 'deposit'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'deposit', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'deposit',
     ...config,
   } as any)
@@ -12634,8 +11129,7 @@ export function useTreasuryDeposit<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryInitialize<
   TMode extends WriteContractMode = undefined,
@@ -12657,12 +11151,9 @@ export function useTreasuryInitialize<
         functionName?: 'initialize'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'initialize', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as any)
@@ -12671,8 +11162,7 @@ export function useTreasuryInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -12698,12 +11188,9 @@ export function useTreasuryRenounceOwnership<
         functionName?: 'renounceOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'renounceOwnership', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as any)
@@ -12712,8 +11199,7 @@ export function useTreasuryRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferEthToCdsLiquidators"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryTransferEthToCdsLiquidators<
   TMode extends WriteContractMode = undefined,
@@ -12743,16 +11229,13 @@ export function useTreasuryTransferEthToCdsLiquidators<
         functionName?: 'transferEthToCdsLiquidators'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof treasuryABI,
     'transferEthToCdsLiquidators',
     TMode
   >({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'transferEthToCdsLiquidators',
     ...config,
   } as any)
@@ -12761,8 +11244,7 @@ export function useTreasuryTransferEthToCdsLiquidators<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -12788,12 +11270,9 @@ export function useTreasuryTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'transferOwnership', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as any)
@@ -12802,8 +11281,7 @@ export function useTreasuryTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateAbondAmintPool"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUpdateAbondAmintPool<
   TMode extends WriteContractMode = undefined,
@@ -12833,12 +11311,9 @@ export function useTreasuryUpdateAbondAmintPool<
         functionName?: 'updateAbondAmintPool'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'updateAbondAmintPool', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateAbondAmintPool',
     ...config,
   } as any)
@@ -12847,8 +11322,7 @@ export function useTreasuryUpdateAbondAmintPool<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateDepositDetails"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUpdateDepositDetails<
   TMode extends WriteContractMode = undefined,
@@ -12878,12 +11352,9 @@ export function useTreasuryUpdateDepositDetails<
         functionName?: 'updateDepositDetails'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'updateDepositDetails', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateDepositDetails',
     ...config,
   } as any)
@@ -12892,8 +11363,7 @@ export function useTreasuryUpdateDepositDetails<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateEthProfitsOfLiquidators"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUpdateEthProfitsOfLiquidators<
   TMode extends WriteContractMode = undefined,
@@ -12923,16 +11393,13 @@ export function useTreasuryUpdateEthProfitsOfLiquidators<
         functionName?: 'updateEthProfitsOfLiquidators'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof treasuryABI,
     'updateEthProfitsOfLiquidators',
     TMode
   >({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateEthProfitsOfLiquidators',
     ...config,
   } as any)
@@ -12941,8 +11408,7 @@ export function useTreasuryUpdateEthProfitsOfLiquidators<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateHasBorrowed"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUpdateHasBorrowed<
   TMode extends WriteContractMode = undefined,
@@ -12968,12 +11434,9 @@ export function useTreasuryUpdateHasBorrowed<
         functionName?: 'updateHasBorrowed'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'updateHasBorrowed', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateHasBorrowed',
     ...config,
   } as any)
@@ -12982,8 +11445,7 @@ export function useTreasuryUpdateHasBorrowed<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateInterestFromExternalProtocol"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUpdateInterestFromExternalProtocol<
   TMode extends WriteContractMode = undefined,
@@ -13013,115 +11475,14 @@ export function useTreasuryUpdateInterestFromExternalProtocol<
         functionName?: 'updateInterestFromExternalProtocol'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof treasuryABI,
     'updateInterestFromExternalProtocol',
     TMode
   >({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateInterestFromExternalProtocol',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalAbondTokensDecrease"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- */
-export function useTreasuryUpdateTotalAbondTokensDecrease<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateTotalAbondTokensDecrease'
-        >['request']['abi'],
-        'updateTotalAbondTokensDecrease',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateTotalAbondTokensDecrease'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'updateTotalAbondTokensDecrease',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateTotalAbondTokensDecrease'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<
-    typeof treasuryABI,
-    'updateTotalAbondTokensDecrease',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'updateTotalAbondTokensDecrease',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalAbondTokensIncrease"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- */
-export function useTreasuryUpdateTotalAbondTokensIncrease<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateTotalAbondTokensIncrease'
-        >['request']['abi'],
-        'updateTotalAbondTokensIncrease',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateTotalAbondTokensIncrease'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'updateTotalAbondTokensIncrease',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateTotalAbondTokensIncrease'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<
-    typeof treasuryABI,
-    'updateTotalAbondTokensIncrease',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'updateTotalAbondTokensIncrease',
     ...config,
   } as any)
 }
@@ -13129,8 +11490,7 @@ export function useTreasuryUpdateTotalAbondTokensIncrease<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalBorrowedAmount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUpdateTotalBorrowedAmount<
   TMode extends WriteContractMode = undefined,
@@ -13160,16 +11520,13 @@ export function useTreasuryUpdateTotalBorrowedAmount<
         functionName?: 'updateTotalBorrowedAmount'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof treasuryABI,
     'updateTotalBorrowedAmount',
     TMode
   >({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateTotalBorrowedAmount',
     ...config,
   } as any)
@@ -13178,8 +11535,7 @@ export function useTreasuryUpdateTotalBorrowedAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalDepositedAmount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUpdateTotalDepositedAmount<
   TMode extends WriteContractMode = undefined,
@@ -13209,16 +11565,13 @@ export function useTreasuryUpdateTotalDepositedAmount<
         functionName?: 'updateTotalDepositedAmount'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof treasuryABI,
     'updateTotalDepositedAmount',
     TMode
   >({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateTotalDepositedAmount',
     ...config,
   } as any)
@@ -13227,8 +11580,7 @@ export function useTreasuryUpdateTotalDepositedAmount<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterest"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUpdateTotalInterest<
   TMode extends WriteContractMode = undefined,
@@ -13258,12 +11610,9 @@ export function useTreasuryUpdateTotalInterest<
         functionName?: 'updateTotalInterest'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'updateTotalInterest', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateTotalInterest',
     ...config,
   } as any)
@@ -13272,8 +11621,7 @@ export function useTreasuryUpdateTotalInterest<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterestFromLiquidation"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUpdateTotalInterestFromLiquidation<
   TMode extends WriteContractMode = undefined,
@@ -13303,16 +11651,13 @@ export function useTreasuryUpdateTotalInterestFromLiquidation<
         functionName?: 'updateTotalInterestFromLiquidation'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof treasuryABI,
     'updateTotalInterestFromLiquidation',
     TMode
   >({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateTotalInterestFromLiquidation',
     ...config,
   } as any)
@@ -13321,8 +11666,7 @@ export function useTreasuryUpdateTotalInterestFromLiquidation<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUpgradeToAndCall<
   TMode extends WriteContractMode = undefined,
@@ -13348,12 +11692,9 @@ export function useTreasuryUpgradeToAndCall<
         functionName?: 'upgradeToAndCall'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'upgradeToAndCall', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as any)
@@ -13362,8 +11703,7 @@ export function useTreasuryUpgradeToAndCall<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdraw"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryWithdraw<
   TMode extends WriteContractMode = undefined,
@@ -13385,12 +11725,9 @@ export function useTreasuryWithdraw<
         functionName?: 'withdraw'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'withdraw', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'withdraw',
     ...config,
   } as any)
@@ -13399,8 +11736,7 @@ export function useTreasuryWithdraw<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawExternalProtocolInterest"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryWithdrawExternalProtocolInterest<
   TMode extends WriteContractMode = undefined,
@@ -13430,28 +11766,24 @@ export function useTreasuryWithdrawExternalProtocolInterest<
         functionName?: 'withdrawExternalProtocolInterest'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof treasuryABI,
     'withdrawExternalProtocolInterest',
     TMode
   >({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'withdrawExternalProtocolInterest',
     ...config,
   } as any)
 }
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromAaveByUser"`.
+ * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromExternalProtocol"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
-export function useTreasuryWithdrawFromAaveByUser<
+export function useTreasuryWithdrawFromExternalProtocol<
   TMode extends WriteContractMode = undefined,
   TChainId extends number = keyof typeof treasuryAddress,
 >(
@@ -13459,82 +11791,34 @@ export function useTreasuryWithdrawFromAaveByUser<
     ? UseContractWriteConfig<
         PrepareWriteContractResult<
           typeof treasuryABI,
-          'withdrawFromAaveByUser'
+          'withdrawFromExternalProtocol'
         >['request']['abi'],
-        'withdrawFromAaveByUser',
+        'withdrawFromExternalProtocol',
         TMode
       > & {
         address?: Address
         chainId?: TChainId
-        functionName?: 'withdrawFromAaveByUser'
+        functionName?: 'withdrawFromExternalProtocol'
       }
     : UseContractWriteConfig<
         typeof treasuryABI,
-        'withdrawFromAaveByUser',
+        'withdrawFromExternalProtocol',
         TMode
       > & {
         abi?: never
         address?: never
         chainId?: TChainId
-        functionName?: 'withdrawFromAaveByUser'
+        functionName?: 'withdrawFromExternalProtocol'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return useContractWrite<typeof treasuryABI, 'withdrawFromAaveByUser', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'withdrawFromAaveByUser',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromCompoundByUser"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- */
-export function useTreasuryWithdrawFromCompoundByUser<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'withdrawFromCompoundByUser'
-        >['request']['abi'],
-        'withdrawFromCompoundByUser',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'withdrawFromCompoundByUser'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'withdrawFromCompoundByUser',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'withdrawFromCompoundByUser'
-      } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<
     typeof treasuryABI,
-    'withdrawFromCompoundByUser',
+    'withdrawFromExternalProtocol',
     TMode
   >({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'withdrawFromCompoundByUser',
+    address: treasuryAddress[11155111],
+    functionName: 'withdrawFromExternalProtocol',
     ...config,
   } as any)
 }
@@ -13542,8 +11826,7 @@ export function useTreasuryWithdrawFromCompoundByUser<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawInterest"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryWithdrawInterest<
   TMode extends WriteContractMode = undefined,
@@ -13569,12 +11852,9 @@ export function useTreasuryWithdrawInterest<
         functionName?: 'withdrawInterest'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof treasuryABI, 'withdrawInterest', TMode>({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'withdrawInterest',
     ...config,
   } as any)
@@ -13583,8 +11863,7 @@ export function useTreasuryWithdrawInterest<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryWrite<TFunctionName extends string>(
   config: Omit<
@@ -13592,12 +11871,9 @@ export function usePrepareTreasuryWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, TFunctionName>)
 }
@@ -13605,8 +11881,7 @@ export function usePrepareTreasuryWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveAmint"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryApproveAmint(
   config: Omit<
@@ -13614,12 +11889,9 @@ export function usePrepareTreasuryApproveAmint(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'approveAmint',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'approveAmint'>)
@@ -13628,8 +11900,7 @@ export function usePrepareTreasuryApproveAmint(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveUsdt"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryApproveUsdt(
   config: Omit<
@@ -13637,12 +11908,9 @@ export function usePrepareTreasuryApproveUsdt(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'approveUsdt',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'approveUsdt'>)
@@ -13651,8 +11919,7 @@ export function usePrepareTreasuryApproveUsdt(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"deposit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryDeposit(
   config: Omit<
@@ -13660,12 +11927,9 @@ export function usePrepareTreasuryDeposit(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'deposit',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'deposit'>)
@@ -13674,8 +11938,7 @@ export function usePrepareTreasuryDeposit(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryInitialize(
   config: Omit<
@@ -13683,12 +11946,9 @@ export function usePrepareTreasuryInitialize(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'initialize'>)
@@ -13697,8 +11957,7 @@ export function usePrepareTreasuryInitialize(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryRenounceOwnership(
   config: Omit<
@@ -13706,12 +11965,9 @@ export function usePrepareTreasuryRenounceOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'renounceOwnership'>)
@@ -13720,8 +11976,7 @@ export function usePrepareTreasuryRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferEthToCdsLiquidators"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryTransferEthToCdsLiquidators(
   config: Omit<
@@ -13732,12 +11987,9 @@ export function usePrepareTreasuryTransferEthToCdsLiquidators(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'transferEthToCdsLiquidators',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -13749,8 +12001,7 @@ export function usePrepareTreasuryTransferEthToCdsLiquidators(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryTransferOwnership(
   config: Omit<
@@ -13758,12 +12009,9 @@ export function usePrepareTreasuryTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'transferOwnership'>)
@@ -13772,8 +12020,7 @@ export function usePrepareTreasuryTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateAbondAmintPool"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryUpdateAbondAmintPool(
   config: Omit<
@@ -13781,12 +12028,9 @@ export function usePrepareTreasuryUpdateAbondAmintPool(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateAbondAmintPool',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -13798,8 +12042,7 @@ export function usePrepareTreasuryUpdateAbondAmintPool(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateDepositDetails"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryUpdateDepositDetails(
   config: Omit<
@@ -13807,12 +12050,9 @@ export function usePrepareTreasuryUpdateDepositDetails(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateDepositDetails',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -13824,8 +12064,7 @@ export function usePrepareTreasuryUpdateDepositDetails(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateEthProfitsOfLiquidators"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryUpdateEthProfitsOfLiquidators(
   config: Omit<
@@ -13836,12 +12075,9 @@ export function usePrepareTreasuryUpdateEthProfitsOfLiquidators(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateEthProfitsOfLiquidators',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -13853,8 +12089,7 @@ export function usePrepareTreasuryUpdateEthProfitsOfLiquidators(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateHasBorrowed"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryUpdateHasBorrowed(
   config: Omit<
@@ -13862,12 +12097,9 @@ export function usePrepareTreasuryUpdateHasBorrowed(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateHasBorrowed',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'updateHasBorrowed'>)
@@ -13876,8 +12108,7 @@ export function usePrepareTreasuryUpdateHasBorrowed(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateInterestFromExternalProtocol"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryUpdateInterestFromExternalProtocol(
   config: Omit<
@@ -13888,12 +12119,9 @@ export function usePrepareTreasuryUpdateInterestFromExternalProtocol(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateInterestFromExternalProtocol',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -13903,68 +12131,9 @@ export function usePrepareTreasuryUpdateInterestFromExternalProtocol(
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalAbondTokensDecrease"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- */
-export function usePrepareTreasuryUpdateTotalAbondTokensDecrease(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'updateTotalAbondTokensDecrease'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'updateTotalAbondTokensDecrease',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'updateTotalAbondTokensDecrease'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalAbondTokensIncrease"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- */
-export function usePrepareTreasuryUpdateTotalAbondTokensIncrease(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'updateTotalAbondTokensIncrease'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'updateTotalAbondTokensIncrease',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'updateTotalAbondTokensIncrease'
-  >)
-}
-
-/**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalBorrowedAmount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryUpdateTotalBorrowedAmount(
   config: Omit<
@@ -13975,12 +12144,9 @@ export function usePrepareTreasuryUpdateTotalBorrowedAmount(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateTotalBorrowedAmount',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -13992,8 +12158,7 @@ export function usePrepareTreasuryUpdateTotalBorrowedAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalDepositedAmount"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryUpdateTotalDepositedAmount(
   config: Omit<
@@ -14004,12 +12169,9 @@ export function usePrepareTreasuryUpdateTotalDepositedAmount(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateTotalDepositedAmount',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -14021,8 +12183,7 @@ export function usePrepareTreasuryUpdateTotalDepositedAmount(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterest"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryUpdateTotalInterest(
   config: Omit<
@@ -14030,12 +12191,9 @@ export function usePrepareTreasuryUpdateTotalInterest(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateTotalInterest',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'updateTotalInterest'>)
@@ -14044,8 +12202,7 @@ export function usePrepareTreasuryUpdateTotalInterest(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterestFromLiquidation"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryUpdateTotalInterestFromLiquidation(
   config: Omit<
@@ -14056,12 +12213,9 @@ export function usePrepareTreasuryUpdateTotalInterestFromLiquidation(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'updateTotalInterestFromLiquidation',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -14073,8 +12227,7 @@ export function usePrepareTreasuryUpdateTotalInterestFromLiquidation(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryUpgradeToAndCall(
   config: Omit<
@@ -14082,12 +12235,9 @@ export function usePrepareTreasuryUpgradeToAndCall(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'upgradeToAndCall'>)
@@ -14096,8 +12246,7 @@ export function usePrepareTreasuryUpgradeToAndCall(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdraw"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryWithdraw(
   config: Omit<
@@ -14105,12 +12254,9 @@ export function usePrepareTreasuryWithdraw(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'withdraw',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'withdraw'>)
@@ -14119,8 +12265,7 @@ export function usePrepareTreasuryWithdraw(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawExternalProtocolInterest"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryWithdrawExternalProtocolInterest(
   config: Omit<
@@ -14131,12 +12276,9 @@ export function usePrepareTreasuryWithdrawExternalProtocolInterest(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'withdrawExternalProtocolInterest',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -14146,65 +12288,34 @@ export function usePrepareTreasuryWithdrawExternalProtocolInterest(
 }
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromAaveByUser"`.
+ * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromExternalProtocol"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
-export function usePrepareTreasuryWithdrawFromAaveByUser(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawFromAaveByUser'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'withdrawFromAaveByUser',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'withdrawFromAaveByUser'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromCompoundByUser"`.
- *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
- */
-export function usePrepareTreasuryWithdrawFromCompoundByUser(
+export function usePrepareTreasuryWithdrawFromExternalProtocol(
   config: Omit<
     UsePrepareContractWriteConfig<
       typeof treasuryABI,
-      'withdrawFromCompoundByUser'
+      'withdrawFromExternalProtocol'
     >,
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
-    functionName: 'withdrawFromCompoundByUser',
+    address: treasuryAddress[11155111],
+    functionName: 'withdrawFromExternalProtocol',
     ...config,
   } as UsePrepareContractWriteConfig<
     typeof treasuryABI,
-    'withdrawFromCompoundByUser'
+    'withdrawFromExternalProtocol'
   >)
 }
 
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawInterest"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function usePrepareTreasuryWithdrawInterest(
   config: Omit<
@@ -14212,12 +12323,9 @@ export function usePrepareTreasuryWithdrawInterest(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     functionName: 'withdrawInterest',
     ...config,
   } as UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawInterest'>)
@@ -14226,8 +12334,7 @@ export function usePrepareTreasuryWithdrawInterest(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryEvent<TEventName extends string>(
   config: Omit<
@@ -14235,12 +12342,9 @@ export function useTreasuryEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, TEventName>)
 }
@@ -14248,8 +12352,7 @@ export function useTreasuryEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Deposit"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryDepositEvent(
   config: Omit<
@@ -14257,12 +12360,9 @@ export function useTreasuryDepositEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     eventName: 'Deposit',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'Deposit'>)
@@ -14271,8 +12371,7 @@ export function useTreasuryDepositEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"DepositToAave"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryDepositToAaveEvent(
   config: Omit<
@@ -14280,12 +12379,9 @@ export function useTreasuryDepositToAaveEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     eventName: 'DepositToAave',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'DepositToAave'>)
@@ -14294,8 +12390,7 @@ export function useTreasuryDepositToAaveEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"DepositToCompound"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryDepositToCompoundEvent(
   config: Omit<
@@ -14303,12 +12398,9 @@ export function useTreasuryDepositToCompoundEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     eventName: 'DepositToCompound',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'DepositToCompound'>)
@@ -14317,8 +12409,7 @@ export function useTreasuryDepositToCompoundEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Initialized"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryInitializedEvent(
   config: Omit<
@@ -14326,12 +12417,9 @@ export function useTreasuryInitializedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     eventName: 'Initialized',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'Initialized'>)
@@ -14340,8 +12428,7 @@ export function useTreasuryInitializedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryOwnershipTransferredEvent(
   config: Omit<
@@ -14349,12 +12436,9 @@ export function useTreasuryOwnershipTransferredEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     eventName: 'OwnershipTransferred',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'OwnershipTransferred'>)
@@ -14363,8 +12447,7 @@ export function useTreasuryOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Upgraded"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryUpgradedEvent(
   config: Omit<
@@ -14372,12 +12455,9 @@ export function useTreasuryUpgradedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     eventName: 'Upgraded',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'Upgraded'>)
@@ -14386,8 +12466,7 @@ export function useTreasuryUpgradedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Withdraw"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryWithdrawEvent(
   config: Omit<
@@ -14395,12 +12474,9 @@ export function useTreasuryWithdrawEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     eventName: 'Withdraw',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'Withdraw'>)
@@ -14409,8 +12485,7 @@ export function useTreasuryWithdrawEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"WithdrawFromAave"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryWithdrawFromAaveEvent(
   config: Omit<
@@ -14418,12 +12493,9 @@ export function useTreasuryWithdrawFromAaveEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     eventName: 'WithdrawFromAave',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'WithdrawFromAave'>)
@@ -14432,8 +12504,7 @@ export function useTreasuryWithdrawFromAaveEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"WithdrawFromCompound"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0xF0C29E75985847a99D167C56abDA706ACc88Ff21)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0a4f5D3FF6950e6308CcC5e14a990650A608F620)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
  */
 export function useTreasuryWithdrawFromCompoundEvent(
   config: Omit<
@@ -14441,12 +12512,9 @@ export function useTreasuryWithdrawFromCompoundEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof treasuryAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: treasuryABI,
-    address: treasuryAddress[chainId as keyof typeof treasuryAddress],
+    address: treasuryAddress[11155111],
     eventName: 'WithdrawFromCompound',
     ...config,
   } as UseContractEventConfig<typeof treasuryABI, 'WithdrawFromCompound'>)
@@ -14455,8 +12523,7 @@ export function useTreasuryWithdrawFromCompoundEvent(
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractRead<
   TFunctionName extends string,
@@ -14467,12 +12534,9 @@ export function useUsdtContractRead<
     'abi' | 'address'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     ...config,
   } as UseContractReadConfig<
     typeof usdtContractABI,
@@ -14484,8 +12548,7 @@ export function useUsdtContractRead<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractUpgradeInterfaceVersion<
   TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
@@ -14496,12 +12559,9 @@ export function useUsdtContractUpgradeInterfaceVersion<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'UPGRADE_INTERFACE_VERSION',
     ...config,
   } as UseContractReadConfig<
@@ -14514,8 +12574,7 @@ export function useUsdtContractUpgradeInterfaceVersion<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"allowance"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractAllowance<
   TFunctionName extends 'allowance',
@@ -14526,12 +12585,9 @@ export function useUsdtContractAllowance<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'allowance',
     ...config,
   } as UseContractReadConfig<
@@ -14544,8 +12600,7 @@ export function useUsdtContractAllowance<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"balanceOf"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractBalanceOf<
   TFunctionName extends 'balanceOf',
@@ -14556,12 +12611,9 @@ export function useUsdtContractBalanceOf<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'balanceOf',
     ...config,
   } as UseContractReadConfig<
@@ -14574,8 +12626,7 @@ export function useUsdtContractBalanceOf<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"decimals"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractDecimals<
   TFunctionName extends 'decimals',
@@ -14586,12 +12637,9 @@ export function useUsdtContractDecimals<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'decimals',
     ...config,
   } as UseContractReadConfig<
@@ -14604,8 +12652,7 @@ export function useUsdtContractDecimals<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"name"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractName<
   TFunctionName extends 'name',
@@ -14616,12 +12663,9 @@ export function useUsdtContractName<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'name',
     ...config,
   } as UseContractReadConfig<
@@ -14634,8 +12678,7 @@ export function useUsdtContractName<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"owner"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractOwner<
   TFunctionName extends 'owner',
@@ -14646,12 +12689,9 @@ export function useUsdtContractOwner<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'owner',
     ...config,
   } as UseContractReadConfig<
@@ -14664,8 +12704,7 @@ export function useUsdtContractOwner<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"paused"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractPaused<
   TFunctionName extends 'paused',
@@ -14676,12 +12715,9 @@ export function useUsdtContractPaused<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'paused',
     ...config,
   } as UseContractReadConfig<
@@ -14694,8 +12730,7 @@ export function useUsdtContractPaused<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"proxiableUUID"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractProxiableUuid<
   TFunctionName extends 'proxiableUUID',
@@ -14706,12 +12741,9 @@ export function useUsdtContractProxiableUuid<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'proxiableUUID',
     ...config,
   } as UseContractReadConfig<
@@ -14724,8 +12756,7 @@ export function useUsdtContractProxiableUuid<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"symbol"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractSymbol<
   TFunctionName extends 'symbol',
@@ -14736,12 +12767,9 @@ export function useUsdtContractSymbol<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'symbol',
     ...config,
   } as UseContractReadConfig<
@@ -14754,8 +12782,7 @@ export function useUsdtContractSymbol<
 /**
  * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"totalSupply"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractTotalSupply<
   TFunctionName extends 'totalSupply',
@@ -14766,12 +12793,9 @@ export function useUsdtContractTotalSupply<
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractRead({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'totalSupply',
     ...config,
   } as UseContractReadConfig<
@@ -14784,8 +12808,7 @@ export function useUsdtContractTotalSupply<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractWrite<
   TFunctionName extends string,
@@ -14807,12 +12830,9 @@ export function useUsdtContractWrite<
         chainId?: TChainId
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, TFunctionName, TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     ...config,
   } as any)
 }
@@ -14820,8 +12840,7 @@ export function useUsdtContractWrite<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"approve"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractApprove<
   TMode extends WriteContractMode = undefined,
@@ -14843,12 +12862,9 @@ export function useUsdtContractApprove<
         functionName?: 'approve'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'approve', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'approve',
     ...config,
   } as any)
@@ -14857,8 +12873,7 @@ export function useUsdtContractApprove<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burn"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractBurn<
   TMode extends WriteContractMode = undefined,
@@ -14880,12 +12895,9 @@ export function useUsdtContractBurn<
         functionName?: 'burn'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'burn', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'burn',
     ...config,
   } as any)
@@ -14894,8 +12906,7 @@ export function useUsdtContractBurn<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFrom"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractBurnFrom<
   TMode extends WriteContractMode = undefined,
@@ -14917,12 +12928,9 @@ export function useUsdtContractBurnFrom<
         functionName?: 'burnFrom'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'burnFrom', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'burnFrom',
     ...config,
   } as any)
@@ -14931,8 +12939,7 @@ export function useUsdtContractBurnFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractBurnFromUser<
   TMode extends WriteContractMode = undefined,
@@ -14958,12 +12965,9 @@ export function useUsdtContractBurnFromUser<
         functionName?: 'burnFromUser'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'burnFromUser', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'burnFromUser',
     ...config,
   } as any)
@@ -14972,8 +12976,7 @@ export function useUsdtContractBurnFromUser<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractInitialize<
   TMode extends WriteContractMode = undefined,
@@ -14995,12 +12998,9 @@ export function useUsdtContractInitialize<
         functionName?: 'initialize'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'initialize', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as any)
@@ -15009,8 +13009,7 @@ export function useUsdtContractInitialize<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"mint"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractMint<
   TMode extends WriteContractMode = undefined,
@@ -15032,12 +13031,9 @@ export function useUsdtContractMint<
         functionName?: 'mint'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'mint', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'mint',
     ...config,
   } as any)
@@ -15046,8 +13042,7 @@ export function useUsdtContractMint<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"pause"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractPause<
   TMode extends WriteContractMode = undefined,
@@ -15069,12 +13064,9 @@ export function useUsdtContractPause<
         functionName?: 'pause'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'pause', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'pause',
     ...config,
   } as any)
@@ -15083,8 +13075,7 @@ export function useUsdtContractPause<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractRenounceOwnership<
   TMode extends WriteContractMode = undefined,
@@ -15114,12 +13105,9 @@ export function useUsdtContractRenounceOwnership<
         functionName?: 'renounceOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'renounceOwnership', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as any)
@@ -15128,8 +13116,7 @@ export function useUsdtContractRenounceOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transfer"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractTransfer<
   TMode extends WriteContractMode = undefined,
@@ -15151,12 +13138,9 @@ export function useUsdtContractTransfer<
         functionName?: 'transfer'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'transfer', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'transfer',
     ...config,
   } as any)
@@ -15165,8 +13149,7 @@ export function useUsdtContractTransfer<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferFrom"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractTransferFrom<
   TMode extends WriteContractMode = undefined,
@@ -15192,12 +13175,9 @@ export function useUsdtContractTransferFrom<
         functionName?: 'transferFrom'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'transferFrom', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'transferFrom',
     ...config,
   } as any)
@@ -15206,8 +13186,7 @@ export function useUsdtContractTransferFrom<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractTransferOwnership<
   TMode extends WriteContractMode = undefined,
@@ -15237,12 +13216,9 @@ export function useUsdtContractTransferOwnership<
         functionName?: 'transferOwnership'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'transferOwnership', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as any)
@@ -15251,8 +13227,7 @@ export function useUsdtContractTransferOwnership<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"unpause"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractUnpause<
   TMode extends WriteContractMode = undefined,
@@ -15274,12 +13249,9 @@ export function useUsdtContractUnpause<
         functionName?: 'unpause'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'unpause', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'unpause',
     ...config,
   } as any)
@@ -15288,8 +13260,7 @@ export function useUsdtContractUnpause<
 /**
  * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractUpgradeToAndCall<
   TMode extends WriteContractMode = undefined,
@@ -15319,12 +13290,9 @@ export function useUsdtContractUpgradeToAndCall<
         functionName?: 'upgradeToAndCall'
       } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractWrite<typeof usdtContractABI, 'upgradeToAndCall', TMode>({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as any)
@@ -15333,8 +13301,7 @@ export function useUsdtContractUpgradeToAndCall<
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractWrite<TFunctionName extends string>(
   config: Omit<
@@ -15342,12 +13309,9 @@ export function usePrepareUsdtContractWrite<TFunctionName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, TFunctionName>)
 }
@@ -15355,8 +13319,7 @@ export function usePrepareUsdtContractWrite<TFunctionName extends string>(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"approve"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractApprove(
   config: Omit<
@@ -15364,12 +13327,9 @@ export function usePrepareUsdtContractApprove(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'approve',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'approve'>)
@@ -15378,8 +13338,7 @@ export function usePrepareUsdtContractApprove(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burn"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractBurn(
   config: Omit<
@@ -15387,12 +13346,9 @@ export function usePrepareUsdtContractBurn(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'burn',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'burn'>)
@@ -15401,8 +13357,7 @@ export function usePrepareUsdtContractBurn(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFrom"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractBurnFrom(
   config: Omit<
@@ -15410,12 +13365,9 @@ export function usePrepareUsdtContractBurnFrom(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'burnFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'burnFrom'>)
@@ -15424,8 +13376,7 @@ export function usePrepareUsdtContractBurnFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFromUser"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractBurnFromUser(
   config: Omit<
@@ -15433,12 +13384,9 @@ export function usePrepareUsdtContractBurnFromUser(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'burnFromUser',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'burnFromUser'>)
@@ -15447,8 +13395,7 @@ export function usePrepareUsdtContractBurnFromUser(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"initialize"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractInitialize(
   config: Omit<
@@ -15456,12 +13403,9 @@ export function usePrepareUsdtContractInitialize(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'initialize',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'initialize'>)
@@ -15470,8 +13414,7 @@ export function usePrepareUsdtContractInitialize(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"mint"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractMint(
   config: Omit<
@@ -15479,12 +13422,9 @@ export function usePrepareUsdtContractMint(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'mint',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'mint'>)
@@ -15493,8 +13433,7 @@ export function usePrepareUsdtContractMint(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"pause"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractPause(
   config: Omit<
@@ -15502,12 +13441,9 @@ export function usePrepareUsdtContractPause(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'pause',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'pause'>)
@@ -15516,8 +13452,7 @@ export function usePrepareUsdtContractPause(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"renounceOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractRenounceOwnership(
   config: Omit<
@@ -15525,12 +13460,9 @@ export function usePrepareUsdtContractRenounceOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'renounceOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -15542,8 +13474,7 @@ export function usePrepareUsdtContractRenounceOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transfer"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractTransfer(
   config: Omit<
@@ -15551,12 +13482,9 @@ export function usePrepareUsdtContractTransfer(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'transfer',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'transfer'>)
@@ -15565,8 +13493,7 @@ export function usePrepareUsdtContractTransfer(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferFrom"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractTransferFrom(
   config: Omit<
@@ -15574,12 +13501,9 @@ export function usePrepareUsdtContractTransferFrom(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'transferFrom',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'transferFrom'>)
@@ -15588,8 +13512,7 @@ export function usePrepareUsdtContractTransferFrom(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferOwnership"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractTransferOwnership(
   config: Omit<
@@ -15597,12 +13520,9 @@ export function usePrepareUsdtContractTransferOwnership(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'transferOwnership',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -15614,8 +13534,7 @@ export function usePrepareUsdtContractTransferOwnership(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"unpause"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractUnpause(
   config: Omit<
@@ -15623,12 +13542,9 @@ export function usePrepareUsdtContractUnpause(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'unpause',
     ...config,
   } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'unpause'>)
@@ -15637,8 +13553,7 @@ export function usePrepareUsdtContractUnpause(
 /**
  * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"upgradeToAndCall"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function usePrepareUsdtContractUpgradeToAndCall(
   config: Omit<
@@ -15646,12 +13561,9 @@ export function usePrepareUsdtContractUpgradeToAndCall(
     'abi' | 'address' | 'functionName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return usePrepareContractWrite({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     functionName: 'upgradeToAndCall',
     ...config,
   } as UsePrepareContractWriteConfig<
@@ -15663,8 +13575,7 @@ export function usePrepareUsdtContractUpgradeToAndCall(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractEvent<TEventName extends string>(
   config: Omit<
@@ -15672,12 +13583,9 @@ export function useUsdtContractEvent<TEventName extends string>(
     'abi' | 'address'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     ...config,
   } as UseContractEventConfig<typeof usdtContractABI, TEventName>)
 }
@@ -15685,8 +13593,7 @@ export function useUsdtContractEvent<TEventName extends string>(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Approval"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractApprovalEvent(
   config: Omit<
@@ -15694,12 +13601,9 @@ export function useUsdtContractApprovalEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     eventName: 'Approval',
     ...config,
   } as UseContractEventConfig<typeof usdtContractABI, 'Approval'>)
@@ -15708,8 +13612,7 @@ export function useUsdtContractApprovalEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Initialized"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractInitializedEvent(
   config: Omit<
@@ -15717,12 +13620,9 @@ export function useUsdtContractInitializedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     eventName: 'Initialized',
     ...config,
   } as UseContractEventConfig<typeof usdtContractABI, 'Initialized'>)
@@ -15731,8 +13631,7 @@ export function useUsdtContractInitializedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"OwnershipTransferred"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractOwnershipTransferredEvent(
   config: Omit<
@@ -15740,12 +13639,9 @@ export function useUsdtContractOwnershipTransferredEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     eventName: 'OwnershipTransferred',
     ...config,
   } as UseContractEventConfig<typeof usdtContractABI, 'OwnershipTransferred'>)
@@ -15754,8 +13650,7 @@ export function useUsdtContractOwnershipTransferredEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Paused"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractPausedEvent(
   config: Omit<
@@ -15763,12 +13658,9 @@ export function useUsdtContractPausedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     eventName: 'Paused',
     ...config,
   } as UseContractEventConfig<typeof usdtContractABI, 'Paused'>)
@@ -15777,8 +13669,7 @@ export function useUsdtContractPausedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Transfer"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractTransferEvent(
   config: Omit<
@@ -15786,12 +13677,9 @@ export function useUsdtContractTransferEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     eventName: 'Transfer',
     ...config,
   } as UseContractEventConfig<typeof usdtContractABI, 'Transfer'>)
@@ -15800,8 +13688,7 @@ export function useUsdtContractTransferEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Unpaused"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractUnpausedEvent(
   config: Omit<
@@ -15809,12 +13696,9 @@ export function useUsdtContractUnpausedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     eventName: 'Unpaused',
     ...config,
   } as UseContractEventConfig<typeof usdtContractABI, 'Unpaused'>)
@@ -15823,8 +13707,7 @@ export function useUsdtContractUnpausedEvent(
 /**
  * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Upgraded"`.
  *
- * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x6c902ece83048d58FB9c9F98626B948dFF7544FF)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4eF259cECbE159Aabf1969e027ab4bd7Eadd033E)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
  */
 export function useUsdtContractUpgradedEvent(
   config: Omit<
@@ -15832,12 +13715,9 @@ export function useUsdtContractUpgradedEvent(
     'abi' | 'address' | 'eventName'
   > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
 ) {
-  const { chain } = useNetwork()
-  const defaultChainId = useChainId()
-  const chainId = config.chainId ?? chain?.id ?? defaultChainId
   return useContractEvent({
     abi: usdtContractABI,
-    address: usdtContractAddress[chainId as keyof typeof usdtContractAddress],
+    address: usdtContractAddress[11155111],
     eventName: 'Upgraded',
     ...config,
   } as UseContractEventConfig<typeof usdtContractABI, 'Upgraded'>)

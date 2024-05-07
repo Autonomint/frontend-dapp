@@ -101,6 +101,17 @@ export const OPTIONSABI = [
   },
   {
     inputs: [
+      { internalType: "uint128", name: "depositedAmount", type: "uint128" },
+      { internalType: "uint128", name: "strikePrice", type: "uint128" },
+      { internalType: "uint64", name: "ethPrice", type: "uint64" },
+    ],
+    name: "calculateStrikePriceGains",
+    outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
       { internalType: "address", name: "_treasuryAddress", type: "address" },
       { internalType: "address", name: "_cdsAddress", type: "address" },
       { internalType: "address", name: "_borrowingAddress", type: "address" },
@@ -146,17 +157,6 @@ export const OPTIONSABI = [
     name: "upgradeToAndCall",
     outputs: [],
     stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint128", name: "depositedAmount", type: "uint128" },
-      { internalType: "uint128", name: "strikePrice", type: "uint128" },
-      { internalType: "uint64", name: "ethPrice", type: "uint64" },
-    ],
-    name: "withdrawOption",
-    outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
-    stateMutability: "view",
     type: "function",
   },
 ] as const;

@@ -127,7 +127,7 @@ const NavBar = () => {
   });
   //getting totalValueLocked from Treasury
   const { data: totalValueLocked } =
-    useTreasuryTotalVolumeOfBorrowersAmountinWei({
+  useTreasuryTotalVolumeOfBorrowersAmountinUsd({
       enabled: !!address,
     });
   //getting ethPrice from Borrowing Contract
@@ -142,18 +142,13 @@ const NavBar = () => {
   })
 
   function getAmintPrice() {
-    if(!isLoading && data != undefined && ethPrice != undefined){
-      const inputAmount = 1;
-      const baseTokenDecimals = 6;
-      const quoteTokenDecimals = 18;
-      const sqrtRatioX96 = TickMath.getSqrtRatioAtTick(data[1])
-      const ratioX192 = JSBI.multiply(sqrtRatioX96, sqrtRatioX96)
-      const baseAmount = JSBI.BigInt( inputAmount * (10 ** baseTokenDecimals))
-      const shift = JSBI.leftShift( JSBI.BigInt(1), JSBI.BigInt(192))
-      const quoteAmount = FullMath.mulDivRoundingUp(ratioX192, baseAmount, shift)
-      console.log((Number(quoteAmount.toString()) / (10**quoteTokenDecimals)) *Number(ethPrice/BigInt(100)));
-      return ((Number(quoteAmount.toString()) / (10**quoteTokenDecimals)) *Number(ethPrice/BigInt(100))).toFixed(3);
-      
+    if(!isLoading && data != undefined ){
+      const Decimal0 = 6;
+      const Decimal1 = 18;
+      const sqrtPriceX96 = Number(data[0]);
+      const buyOneOfToken0 = ((sqrtPriceX96 / 2**96)**2) / (Number((10**Decimal1 / 10**Decimal0).toFixed(Decimal1)));
+      const buyOneOfToken1 = Number((1 / Number(buyOneOfToken0))).toFixed(Decimal0);
+      return formatNumber(Number(buyOneOfToken0) * Number(buyOneOfToken1));
     }
   }
 
@@ -185,7 +180,7 @@ const NavBar = () => {
     console.log(ethLocked)
     if (ltv && totalCdsAmount && ethPrice && totalValueLocked && ethLocked) {
       const updatedData = [...updatedHeaderItems];
-      updatedData[6].value = `$${formatNumber(Number(formatEther((ethLocked) / BigInt(100))))}`;
+      updatedData[6].value = `$${formatNumber(Number(formatEther((totalValueLocked) / BigInt(100))))}`;
       console.log(totalValueLocked , ethPrice)
       updatedData[7].value = `$${formatNumber(
         (Number(totalCdsAmount) / 10 ** 6)
@@ -202,7 +197,7 @@ const NavBar = () => {
 
   return (
     <div className="flex w-[100%] h-[7vh] md:h-auto">
-      <div className="flex w-full scrollb md:hidden md:w-0 bg-bgGrey">
+      <div className="flex w-full scrollb md:hidden md:w-0 bg-bgGrey dark:bg-[#020202]">
       <Link href={"/"}>
           <div className="w-[3rem] h-[3rem]">
             <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
@@ -211,7 +206,7 @@ const NavBar = () => {
       </div>
 
 
-      <div className="hidden bg-bgGrey md:flex flex-col min-[1440px]:pb-6 2dppx:pb-1">
+      <div className="hidden bg-bgGrey   dark:bg-[#020202] md:flex flex-col min-[1440px]:pb-6 2dppx:pb-1">
         <div className={`flex  px-1 py-3 ${showMore?"h-[200px]":"h-[100px]"} w-full sm:px-2 xl:px-5 xl:py-5 lg:px-4 lg:py-4 flex-wrap`}>
           {headerItems.map((item, index) => (
             <div className="flex w-auto min-w-[80px] lg:min-w-[120px] xl:min-w-[180px] h-[10vh] md:h-[90px] mx-2 pb-4">

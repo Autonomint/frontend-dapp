@@ -8,7 +8,7 @@ interface DividerProps extends HTMLAttributes<HTMLDivElement> {
 const Divider: FC<DividerProps> = ({ className, ...rest }) => {
   return (
     <div
-      className={cn("w-full bg-lineGrey h-[1px] my-[30px]", className)}
+      className={cn("w-full bg-lineGrey h-[1px] my-[30px] dark:bg-[#5B5B5B]", className)}
       {...rest}
     ></div>
   );

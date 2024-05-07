@@ -230,8 +230,8 @@ const page = () => {
     <>
       {/* Main area */}
       {/* Check if wallet is connected and render dashboard otherwise render connect wallet Component */}
-      {isConnected ? (
-        <div className="relative p-6 rounded-[10px] bg-white shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
+      {isConnected? (
+        <div className="relative p-6 rounded-[10px] bg-white  dark:bg-[#141414] dark:shadow-none shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
           <ProductList></ProductList>
           <Divider />
           <div className="z-10 flex flex-row flex-wrap items-center justify-between w-full gap-1 sm:gap-2 lg:gap-4 xl:gap-7 lg:flex-nowrap">
@@ -262,11 +262,11 @@ const page = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-textGrey">Id</TableHead>
-                <TableHead className="text-textGrey">Amint / Usdt Deposited</TableHead>
-                <TableHead className="text-textGrey">Deposited Time</TableHead>
-                <TableHead className="text-textGrey">Lock In period</TableHead>
-                <TableHead className="text-textGrey">Abond minted</TableHead>
+                <TableHead className="text-textGrey dark:text-[#C4C4C4]">Id</TableHead>
+                <TableHead className="text-textGrey dark:text-[#C4C4C4]">Amint / Usdt Deposited</TableHead>
+                <TableHead className="text-textGrey dark:text-[#C4C4C4]">Deposited Time</TableHead>
+                <TableHead className="text-textGrey dark:text-[#C4C4C4]">Lock In period</TableHead>
+                <TableHead className="text-textGrey dark:text-[#C4C4C4]">Abond minted</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

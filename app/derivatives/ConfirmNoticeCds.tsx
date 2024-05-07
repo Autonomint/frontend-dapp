@@ -37,7 +37,7 @@ const ConfirmNoticeCds = ({
       
       <div className="flex flex-col min-[1440px]:gap-5 2dppx:gap-[10px] gap-[10px]">
         <div className="flex flex-col gap-[15px] ">
-          <p className="min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary">
+          <p className="min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary dark:text-[#EEEEEE] ">
             Amount
           </p>
           <p className="text-[#020202] font-medium min-[1440px]:text-[32px] 2dppx:text-2xl text-2xl leading-none">

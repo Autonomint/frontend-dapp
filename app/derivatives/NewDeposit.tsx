@@ -78,7 +78,8 @@ import { parseEther, parseUnits } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "../utils/decodeEventLogsFromAbi";
 import Spinner from "@/components/ui/spinner";
-import { PROXY_AMINT_ADDRESS, PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
+import { DEV_PROXY_AMINT_ADDRESS, DEV_PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
+import GradientContainer from "./GradientContainer";
 
 
 
@@ -130,6 +131,12 @@ const InitialformSchema = z.object({
 const NewDeposit = () => {
   // Define the initial state for the open variable for sheet opening and closing
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<number>(0);
+  const maxValue = 100; // Adjust based on your value range
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(Number(event.target.value)); // Convert input value to a number
+  };
   // Define the initial state for the tokensEnabled variable
   const [tokensEnabled, setTokensEnabled] = useState<TokensState>({
     USDT: true, // USDT token is initially enabled
@@ -162,7 +169,7 @@ const NewDeposit = () => {
       params: {
         type: "ERC20",
         options: {
-          address: PROXY_AMINT_ADDRESS,
+          address: DEV_PROXY_AMINT_ADDRESS,
           decimals: 6,
           name: "AMINT",
           symbol: "AMINT"
@@ -177,7 +184,7 @@ const NewDeposit = () => {
       params: {
         type: "ERC20",
         options: {
-          address: PROXY_TESTUSDT_ADDRESS,
+          address: DEV_PROXY_TESTUSDT_ADDRESS,
           decimals: 6,
           name: "TUSDT",
           symbol: "TUSDT"
@@ -206,15 +213,16 @@ const NewDeposit = () => {
     }
   );
 
+
   const { data: amintbal } = useBalance({
-    address: PROXY_AMINT_ADDRESS ? address : undefined,
-    token: PROXY_AMINT_ADDRESS ? PROXY_AMINT_ADDRESS : undefined,
+    address: DEV_PROXY_AMINT_ADDRESS ? address : undefined,
+    token: DEV_PROXY_AMINT_ADDRESS ? DEV_PROXY_AMINT_ADDRESS : undefined,
     watch: true,
   });
 
   const { data: usdtbal } = useBalance({
-    address: PROXY_TESTUSDT_ADDRESS ? address : undefined,
-    token: PROXY_TESTUSDT_ADDRESS ? PROXY_TESTUSDT_ADDRESS : undefined,
+    address: DEV_PROXY_TESTUSDT_ADDRESS ? address : undefined,
+    token: DEV_PROXY_TESTUSDT_ADDRESS ? DEV_PROXY_TESTUSDT_ADDRESS : undefined,
     watch: true,
   });
 
@@ -298,61 +306,6 @@ const NewDeposit = () => {
       },
     }
   );
-
-  const { data: usdtTransactionAllowed, isLoading: usdtTransactionLoading } = useWaitForTransaction({
-    // TODO: Add OnError Custom Toast
-    onError(error) {
-      toast.custom(
-        (t) => {
-          toastId.current = t;
-          return (
-            <div>
-              <CustomToast
-                key={2}
-                props={{
-                  t,
-                  toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
-                  toastClosebuttonHoverColor: "#e66d6d",
-                  toastClosebuttonColor: "#C25757",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-
-      // setOpen(false);
-    },
-    // look for approval transaction hash
-    hash: usdtApproveData?.hash,
-    // Display a custom toast notification
-    onSuccess() {
-      toast.custom(
-        (t) => {
-          return (
-            <div>
-              <CustomToast
-                props={{
-                  t,
-                  toastMainColor: "#268730",
-                  headline: "Amint Approved,Plz Confirm Deposit Now",
-                  transactionHash: amintApproveData?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-    },
-  });
-
-
   console.log("usdtApproveData", usdtApproveData, usdtApproved);
 
 
@@ -472,7 +425,8 @@ const NewDeposit = () => {
   } = useCdsDeposit({
     // Handle errors during the CDS deposit process
     onError: (error) => {
-      console.log(error.message);
+      // console.log(error.message);
+      console.log("MESSAGE", error.cause);
       // Show a custom toast notification for the error
       toast.custom(
         (t) => (
@@ -482,7 +436,7 @@ const NewDeposit = () => {
               props={{
                 t: toastId.current,
                 toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.message.substring(0, 112)}`,
+                headline: `Uhh Ohh! ${error.cause}`,
                 toastClosebuttonHoverColor: "#e66d6d",
                 toastClosebuttonColor: "#C25757",
               }}
@@ -585,13 +539,13 @@ const NewDeposit = () => {
 
       // Retrieve the relevant data from the transaction logs
       const dataLogs =
-        chainId === 5 ? data.logs[data.logs.length-1].data : data.logs[data.logs.length-1].data;
+        chainId === 5 ? data.logs[data.logs.length - 1].data : data.logs[data.logs.length - 1].data;
       // Decode event logs using the provided ABI and event name
-
+      console.log("data logs -------", data.logs[data.logs.length - 1].topics);
       const { eventName, args } = decodeEventLogsFromAbi(
         cdsABI,
         //topic to decode event variables
-        ["0x0a5985aa28fedd5d60e042a47ad0dcb83381febf41639cd599c154a7fee13ca6"],
+        data.logs[data.logs.length - 1].topics ?? [],
         "Deposit",
         dataLogs
       ) as { eventName: string; args: { depositVal: bigint } };
@@ -923,10 +877,10 @@ const NewDeposit = () => {
   return (
     <div className="flex justify-between items-center mb-[30px]">
       <div className="flex flex-col gap-[15px] ">
-        <h2 className="text-textPrimary font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
+        <h2 className="text-textPrimary dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
           Your Deposits
         </h2>
-        <p className="text-textSecondary text-sm min-[1440px]:text-base 2dppx:text-xs">
+        <p className="text-textSecondary dark:text-[#EEEEEE]  text-sm min-[1440px]:text-base 2dppx:text-xs">
           A list of all the deposits you have made.
         </p>
       </div>
@@ -945,7 +899,7 @@ const NewDeposit = () => {
             <Button
               variant={"primary"}
               size={"full"}
-              className="flex gap-[10px] items-center justify-center min-w-[150px]"
+              className="flex gap-[10px] items-center justify-center min-w-[150px]  "
               onClick={() => setOpen(!open)}
             >
               <Image
@@ -976,7 +930,7 @@ const NewDeposit = () => {
 
                     >
                       <Cross2Icon className="w-4 h-4" />
-                      <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
+                      <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] dark:text-[#EEEEEE]  font-semibold text-base">
                         Close
                       </p>
                     </Button>
@@ -984,7 +938,7 @@ const NewDeposit = () => {
                 </div>
 
                 <DialogHeader className="flex items-start">
-                  <DialogTitle className="text-textPrimary font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl tracking-[-1.8px]">
+                  <DialogTitle className="text-textPrimary dark:text-[#90AFFF] font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl tracking-[-1.8px]">
                     Make a New Deposit
                   </DialogTitle>
                 </DialogHeader>
@@ -999,7 +953,7 @@ const NewDeposit = () => {
                       name="AmintDepositAmount"
                       render={({ field }) => (
                         <FormItem className="w-full md:w-[48%]">
-                          <div className="flex items-center justify-end gap-2">
+                          <div className="flex items-center justify-end gap-2 cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
                             <a type="button" onClick={onWatchAssetAmintClick} className="m-0 text-[12px] underline rounded-md ">Add AMINT</a>
                           </div>
@@ -1019,7 +973,7 @@ const NewDeposit = () => {
 
                                 <label
                                   htmlFor="amount_of_amint"
-                                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                                 >
                                   Deposit AMINT
                                 </label>
@@ -1040,7 +994,7 @@ const NewDeposit = () => {
                                       ? amintAmnt !== 0
                                         ? amintApprove({
                                           args: [
-                                            (cdsAddress[5] as `0x${string}`),
+                                            (cdsAddress[11155111] as `0x${string}`),
                                             BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
                                           ],
                                         })
@@ -1064,14 +1018,14 @@ const NewDeposit = () => {
 
                     <PlusIcon width={16} height={16} />
                     <div className="flex flex-col  w-full  md:w-[48%] gap-[10px]">
-                    <div className="flex items-center justify-end gap-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
+                      <div className="flex items-center justify-end gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="cursor-pointer" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
 
-                      <a type="button" onClick={onWatchAssetUsdtClick} className="m-0 text-[12px] underline ">Add TUSDT</a>
+                        <a type="button" onClick={onWatchAssetUsdtClick} className="m-0 text-[12px] underline cursor-pointer ">Add TUSDT</a>
 
-                      <a href={`https://sepolia.etherscan.io/address/${PROXY_TESTUSDT_ADDRESS}`}  className="m-0 text-[12px] underline " target="_blank">
-                        Mint TUSDT
-                      </a>
+                        <a href={`https://sepolia.etherscan.io/address/${DEV_PROXY_TESTUSDT_ADDRESS}`} className="m-0 text-[12px] underline " target="_blank">
+                          Mint TUSDT
+                        </a>
                       </div>
                       <FormField
                         control={form.control}
@@ -1099,7 +1053,7 @@ const NewDeposit = () => {
                                   ></Input>
                                   <label
                                     htmlFor="amount_of_usdt"
-                                    className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                                    className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                                   >
                                     Deposit USDT
                                   </label>
@@ -1122,12 +1076,12 @@ const NewDeposit = () => {
                                       <Button
                                         variant="ghost"
                                         size="timeline"
-                                        className="z-20 bg-white"
+                                        className="z-20 bg-white dark:bg-[#0F0F0F]"
                                       >
                                         <CaretDownIcon width={24} height={24} />
                                       </Button>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent className="w-56">
+                                    <DropdownMenuContent className="w-56 dark:bg-[#0F0F0F]">
                                       <DropdownMenuLabel>
                                         Tokens
                                       </DropdownMenuLabel>
@@ -1187,7 +1141,7 @@ const NewDeposit = () => {
                                           ? usdtWrite({
                                             args: [
 
-                                              (cdsAddress[5] as `0x${string}`),
+                                              (cdsAddress[11155111] as `0x${string}`),
                                               BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
                                             ],
                                           })
@@ -1292,75 +1246,86 @@ const NewDeposit = () => {
 
                     </div>
                   </div>
-                  <div className="flex gap-[10px] items-center">
-                    <div className="flex items-center ml-[4px]">
-                      <InfoCircledIcon width={18} height={18} />
-                    </div>
-                    <p className="min-[1440px]:text-base 2dppx:text-xs text-sm font-normal text-textGrey text-center leading-none">
-                      Minimum {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"} Amount is{" "}
-                      <span className="font-medium text-textHighlight">
-                        500 {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"}
-                      </span>
-                    </p>
-                  </div>
-                  <FormField
-                    control={form.control}
-                    name="lockInPeriod"
-                    render={({ field }) => (
-                      <FormItem>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Choose a Lock-In Period" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>Lock-In Period</SelectLabel>
-                              <SelectItem value="30">30 Days</SelectItem>
-                              <SelectItem value="60">
-                                60 Days (~2 Months)
-                              </SelectItem>
-                              <SelectItem value="120">
-                                120 Days (~4 Months)
-                              </SelectItem>
-                              <SelectItem value="180">
-                                180 Days (~6 Months)
-                              </SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
+                  <div className="flex w-full">
+                    <div className="flex flex-col w-full gap-4 ">
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="liquidationGains"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md p-2 min-[1440px]:p-4 2dppx:p-2">
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-textGrey">
-                            Opt in for liquidation gains
-                          </FormLabel>
+                      <div className="flex gap-[10px] items-center">
+                        <div className="flex items-center ml-[4px]">
+                          <InfoCircledIcon width={18} height={18} />
                         </div>
-                      </FormItem>
-                    )}
-                  />
+                        <p className="min-[1440px]:text-base 2dppx:text-xs text-sm font-normal text-textGrey  dark:text-[#9E9E9E] text-center leading-none">
+                          Minimum {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"} Amount is{" "}
+                          <span className="font-medium text-textHighlight dark:text-[#ffff]">
+                            500 {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"}
+                          </span>
+                        </p>
+                      </div>
+                      <FormField
+                        control={form.control}
+                        name="lockInPeriod"
+                        render={({ field }) => (
+                          <FormItem>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Choose a Lock-In Period" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent className="dark:bg-[#0F0F0F]">
+                                <SelectGroup className="dark:bg-[#0F0F0F]">
+                                  <SelectLabel>Lock-In Period</SelectLabel>
+                                  <SelectItem value="30">30 Days</SelectItem>
+                                  <SelectItem value="60">
+                                    60 Days (~2 Months)
+                                  </SelectItem>
+                                  <SelectItem value="120">
+                                    120 Days (~4 Months)
+                                  </SelectItem>
+                                  <SelectItem value="180">
+                                    180 Days (~6 Months)
+                                  </SelectItem>
+                                </SelectGroup>
+                              </SelectContent>
+                            </Select>
 
-                  <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="liquidationGains"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md p-2 min-[1440px]:p-4 2dppx:p-2">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                                className="dark:bg-[#0F0F0F] dark:border-[#3A3A3A] dark:text-white"
+                              />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                              <FormLabel className="text-textGrey dark:text-white">
+                                Opt in for liquidation gains
+                              </FormLabel>
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+                      <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
+                    </div>
+                    {/* <div className="py-2 ml-4 border rounded-lg shadow-lg basis-1/2">
+                      <div className="text-textPrimary dark:text-[#90AFFF] font-medium px-2">PNL Simulation</div>
+                      <GradientContainer />
+                    </div> */}
+
+                  </div>
+                  
                   {(Boolean(amintAmnt) || Boolean(usdtAmnt)) && Boolean(lockIn) ? (
-                    <div className="min-[144px]:px-[15px] px-[10px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee]">
+                    <div className="min-[144px]:px-[15px] px-[10px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee] dark:bg-none dark:bg-[#0F0F0F]">
                       <div className="min-[144px]:py-[15px] py-[10px] flex items-center justify-between border-b border-lineGrey">
                         <div className="flex gap-[10px] items-center">
                           <Image
@@ -1369,7 +1334,7 @@ const NewDeposit = () => {
                             width={24}
                             height={24}
                           />
-                          <p className="min-[1440px]:text-base text-sm text-textHighlight 2dppx:text-xs">
+                          <p className="min-[1440px]:text-base text-sm text-textHighlight 2dppx:text-xs dark:text-[#EEEEEE]">
                             {amintAmnt == undefined ? 0 : amintAmnt} AMINT + {usdtAmnt == undefined ? 0 : usdtAmnt} USDT
                           </p>
                         </div>
@@ -1382,19 +1347,19 @@ const NewDeposit = () => {
                           ></Image>
                           <p>
                             {lockIn === "30" ? (
-                              <p className="min-[1440px]:text-base text-sm text-textHighlight">
+                              <p className="min-[1440px]:text-base text-sm text-textHighlight dark:text-[#EEEEEE]">
                                 30 Days (~1 Month)
                               </p>
                             ) : lockIn === "60" ? (
-                              <p className="min-[1440px]:text-base 2dppx:text-xs text-sm text-textHighlight">
+                              <p className="min-[1440px]:text-base 2dppx:text-xs text-sm text-textHighlight dark:text-[#EEEEEE] ">
                                 60 Days (~2 Months)
                               </p>
                             ) : lockIn === "120" ? (
-                              <p className="min-[1440px]:text-base 2dppx:text-xs text-sm text-textHighlight">
+                              <p className="min-[1440px]:text-base 2dppx:text-xs text-sm text-textHighlight dark:text-[#EEEEEE]">
                                 120 Days (~4 Months)
                               </p>
                             ) : lockIn === "180" ? (
-                              <p className="min-[1440px]:text-base 2dppx:text-xs text-sm text-textHighlight">
+                              <p className="min-[1440px]:text-base 2dppx:text-xs text-sm text-textHighlight dark:text-[#EEEEEE]">
                                 180 Days (~6 Months)
                               </p>
                             ) : (
@@ -1411,10 +1376,10 @@ const NewDeposit = () => {
                             width={24}
                             height={24}
                           />
-                          <p className="min-[1440px]:text-base text-sm text-[#242424] 2dppx:text-sm">
+                          <p className="min-[1440px]:text-base text-sm text-[#242424] 2dppx:text-sm dark:text-[#EEEEEE]">
                             Expected APR can range from{" "}
-                            <span className="text-textHighlight"> ~5%</span> to{" "}
-                            <span className="text-textHighlight">~200%</span>
+                            <span className="text-textHighlight dark:text-white"> ~5%</span> to{" "}
+                            <span className="text-textHighlight dark:text-white">~200%</span>
                           </p>
                         </div>
                       </div>
@@ -1424,13 +1389,14 @@ const NewDeposit = () => {
                   )}
 
 
+
                   <Button
                     type="submit"
                     variant={"primary"}
                     className="text-white"
                     //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                     disabled={
-                      !amintApproved || (usdtAmountDepositedTillNow < usdtLimit && !usdtApproved) || isCdsDepositLoading
+                      (usdtAmountDepositedTillNow > usdtLimit && !amintApproved) || !usdtApproved || isCdsDepositLoading
                     }
                   >
                     {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}

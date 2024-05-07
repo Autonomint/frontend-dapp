@@ -63,12 +63,12 @@ const TransactionLoader: React.FC<TransactionProps> = ({ heading, subheadingBefo
             </div>
             <div className="ml-4">
                 <h1 className={`font-medium  ${status === TransactionType.Loading || status === TransactionType.InProgress ?"text-base":"text-[14px]" }`}>{heading}</h1>
-                <h2 className="ml-1 text-[12px] text-gray-500"> {status}
+                <h2 className="ml-1 text-[12px] text-gray-500 dark:text-[#EEEEEE]"> {status}
                 {
                 (status === TransactionType.InProgress) && !taskDone ?
-                    <span className="text-[12px] text-gray-500"> {progress}%</span>
+                    <span className="text-[12px] text-gray-500  dark:text-[#EEEEEE]"> {progress}%</span>
                     :(status === TransactionType.InProgress)?
-                    <span className="text-[12px] text-gray-500"> taking longer than usual.</span>
+                    <span className="text-[12px] text-gray-500 dark:text-[#EEEEEE]"> taking longer than usual.</span>
                     :""
                 }
                 </h2>

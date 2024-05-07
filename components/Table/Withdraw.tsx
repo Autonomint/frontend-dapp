@@ -268,7 +268,7 @@ const Withdraw = ({
           ] as `0x${string}`, // address of borrowing contract based on chainId
           BigInt(
             BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
-            (lastCumulativeRate ?? 0n)
+            (lastCumulativeRate ?? 1n)
           ) / BigInt(10 ** 27) + 1000000n, // Total amint amount
         ],
       });
@@ -313,8 +313,6 @@ const Withdraw = ({
         args: [
           address as `0x${string}`,
           BigInt(details.index),
-          BigInt(ethPrice ? ethPrice : 0),
-          BigInt(Date.now())
         ],
       });
     },
@@ -684,6 +682,13 @@ const Withdraw = ({
         // handleRefetch()
       }}
     >
+;
+{/* border: 1px solid;
+
+border-image-source: linear-gradient(180deg, #63AEFF -0.23%, #131D33 99.77%); */}
+
+
+
       {spinner ? <Spinner /> : (
         <SheetContent
           className={" w-full md:w-1/3 lg:max-w-screen-lg overflow-y-scroll max-h-screen "}
@@ -698,14 +703,14 @@ const Withdraw = ({
                   onClick={() => handleSheetOpenChange(!sheetOpen)}
                 >
                   <Cross2Icon className="w-4 h-4" />
-                  <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
+                  <p className="text-transparent dark:text-[#808080] bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
                     Close
                   </p>
                 </Button>
               </SheetClose>
             </div>
             <SheetHeader>
-              <SheetTitle className="text-textPrimary font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
+              <SheetTitle className="text-textPrimary dark:text-[#90AFFF] font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
                 Deposit #{details.index}
               </SheetTitle>
             </SheetHeader>
@@ -721,9 +726,11 @@ const Withdraw = ({
                   }}
                 />
               ))}
-              <div className="flex justify-between min-[1440px]:px-4 2dppx:px-2 px-2 min-[1440px]:py-[10px] 2dppx:py-[5px] py-[5px] border-b border-lineGrey">
+
+
+              <div className="flex justify-between min-[1440px]:px-4 2dppx:px-2 px-2 min-[1440px]:py-[10px] 2dppx:py-[5px] py-[5px]  border-b border-lineGrey">
                 <div className="flex gap-2">
-                  <p className="text-base text-textSecondary">
+                  <p className="text-base text-textSecondary dark:text-[#DEDEDE]">
                     Amount Protected
                   </p>
                   <TooltipProvider>
@@ -741,7 +748,7 @@ const Withdraw = ({
                   <Button
                     variant={"ghostOutline"}
                     size={"row"}
-                    className="text-xs font-medium leading-none text-textHighlight"
+                    className="text-xs font-medium leading-none text-textHighlight dark:text-[#DEDEDE]"
                     onClick={handleAmountProtected}
                   >
                     View
@@ -770,20 +777,20 @@ const Withdraw = ({
                     heading={"Calculate Interest #1"}
                     subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
                     status={cumulativeRateLoading ? "Loading" :(!cumulativeRateError && ispendingCumulative)?"Progress"  : cumulativeRateSuccess ? "Completed" : cumulativeRateError ? "Failed" : "Pending"}
-                    className={`${cumulativeRateLoading || (!cumulativeRateError && ispendingCumulative) ? "w-[100%] px-3 py-3" : "bg-gray-100"} `}
+                    className={`${cumulativeRateLoading || (!cumulativeRateError && ispendingCumulative) ? "w-[100%] px-3 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
                   />
                   <TransactionLoader
                     heading={"Approve Amint #2"}
                     subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
                     status={amintApproveLoading ? "Loading" : ( !amintApproveError && amintTransactionLoading) ? "Progress" : amintApproveSuccess ? "Completed" : amintApproveError ? "Failed" : "Pending"}
-                    className={`${amintApproveLoading || ( !amintApproveError && amintTransactionLoading) ? "w-[100%] px-3 py-3" : "bg-gray-100"} `}
+                    className={`${amintApproveLoading || ( !amintApproveError && amintTransactionLoading) ? "w-[100%] px-3 py-3" : "bg-gray-100 dark:bg-[#141414]"} `}
 
                   />
                   <TransactionLoader
                     heading={"Withdraw #3"}
                     subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
                     status={borrowWithdrawisLoadingone || borrowWithdrawisLoading ? "Loading" :( !borrowWithdrawtransactionError && isPending)? "Progress" : borrowWithdrawtransactionSuccess && backendWithdrawSuccess ? "Completed" : borrowWithdrawtransactionError ? "Failed" : "Pending"}
-                    className={`${borrowWithdrawisLoadingone || borrowWithdrawisLoading || (!borrowWithdrawtransactionError && isPending)? "w-[100%] px-3 py-3" : "bg-gray-100"} `}
+                    className={`${borrowWithdrawisLoadingone || borrowWithdrawisLoading || (!borrowWithdrawtransactionError && isPending)? "w-[100%] px-3 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
                   />
                 </div>
               ) :
@@ -802,7 +809,7 @@ const Withdraw = ({
                       </Button>
                     ) : details.status === "WITHDREW1" ? (
                       <>
-                        <div className="px-[15px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee]">
+                        <div className="px-[15px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee] dark:bg-[linear-gradient(180deg,#1C1C1C_-0.23%,#000000_100%)]">
                           <div className="py-[15px] flex items-center justify-between border-b border-lineGrey">
                             <div className="flex gap-[10px] items-center">
                               <Image
@@ -811,7 +818,7 @@ const Withdraw = ({
                                 width={24}
                                 height={24}
                               />
-                              <p className="text-base text-textSecondary">
+                              <p className="text-base text-textSecondary dark:text-[#ffff]">
                                 First time withdrawed amount
                               </p>
                             </div>
@@ -832,18 +839,18 @@ const Withdraw = ({
                                 width={24}
                                 height={24}
                               />
-                              <p className="text-base text-textSecondary">
+                              <p className="text-base text-textSecondary dark:text-[#ffff]">
                                 Second Withdrawal time
                               </p>
                             </div>
-                            <p className="text-base font-medium text-textHighlight">
+                            <p className="text-base font-medium text-textHighlight dark:text-[#DEDEDE]">
                               {calculate30DaysFromStoredTime(details.withdrawTime1)}
                             </p>
                           </div>
                         </div>
                         <Button
                           variant={"primary"}
-                          className="text-white"
+                          className="text-white dark:text-[#ffff]"
                           onClick={() => {
                             setOpenConfirmNotice(true);
                           }}
