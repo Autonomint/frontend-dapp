@@ -29,8 +29,8 @@ function formatNumber(num: number) {
 
 export default function page() {
     const chainId = useChainId();
-    const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
-    const { data: totalStable } = useCdsTotalCdsDepositedAmount({ watch: true })
+    // const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
+    // const { data: totalStable } = useCdsTotalCdsDepositedAmount({ watch: true })
     const {data :cdsdeposit} = useCdsCdsCount({watch:true})
     const {data:totalBorrowers} = useTreasuryNoOfBorrowers({watch:true})
     async function getBorrowLeaderboard(): Promise<TableData[]> {
@@ -60,19 +60,19 @@ export default function page() {
 
         <div className="relative p-2 md:p-6  rounded-[10px] bg-white dark:bg-[#0F0F0F] dark:shadow-none shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
             <div className='overflow-hidden border-1 dark:border-none'>
-                <div className='bg-white dark:bg-[#141414] border border-lineGrey rounded-lg flex mb-2 gap-10 px-2 py-2 md:px-5 md:py-5 lg:px-10 lg:py-8 shadow-sm'>
-                        <div className='flex flex-col gap-2 pr-2 border-r-2 border-lineGrey lg:pr-5'>
+                <div className='bg-white dark:bg-[#141414]  rounded-lg flex mb-2 gap-10 '>
+                        <div className='flex flex-col gap-2 px-2 py-2 pr-2 border rounded-md shadow-sm border-lineGrey md:px-5 md:py-4 lg:px-10 lg:py-5'>
                             <div className='text-[0.8rem] md:text-sm lg:text-normal' >Total number of borrowers</div>
                             <div className='text-[1rem] md:text-xl font-semibold lg:text-3xl'>{Number(totalBorrowers)}</div>
                         </div>
-                        <div className='flex flex-col gap-2 pr-2 border-r-2 border-lineGrey lg:pr-5'>
+                        <div className='flex flex-col gap-2 px-2 py-2 pr-2 border rounded-md shadow-sm border-lineGrey md:px-5 md:py-4 lg:px-10 lg:py-5'>
                         <div  className='text-[0.8rem] md:text-sm lg:text-normal'>Total number of dcds depositors</div>
                             <div className='text-[1rem] md:text-xl font-semibold lg:text-3xl'>{Number(cdsdeposit)}</div>
                         </div>
-                        <div className='flex flex-col gap-2 '>
+                        {/* <div className='flex flex-col gap-2 '>
                         <div  className='text-[0.8rem] md:text-sm lg:text-normal'>Total Value Locked (TVL) </div>
                             <div className='text-[1rem] md:text-xl font-semibold lg:text-3xl'>${formatNumber((Number(totalStable) / 10 ** 6) + Number(formatEther((ethLocked ?? 0n) / BigInt(100))))}</div>
-                        </div>
+                        </div> */}
                 </div>
                 {/* <h1 className='mb-2 text-3xl font-bold text-textPrimary dark:text-white'>Leaderboard</h1> */}
                 {/* <div className='w-[350px] mb-2'>

@@ -8,6 +8,7 @@ import sunlight from "@/app/assets/sunlight.svg";
 import dashboard from "@/app/assets/dashboard.svg";
 import derivatives from "@/app/assets/toll.svg";
 import mintmark from "@/app/assets/mintmark.svg";
+import leaderboard from "@/app/assets/leaderboard.svg";
 import NavItems from "./NavItems";
 import Profile from "./Profile";
 import metamask from "@/app/assets/metamask.svg";
@@ -37,6 +38,12 @@ const navItemsList = [
     label: "dCDS",
     href: "derivatives",
     targetSegment: "derivatives",
+  },
+  {
+    image: leaderboard,
+    label: "Leaderboard",
+    href: "leaderboard",
+    targetSegment: "leaderboard",
   },
   {
     image: dashboard,
@@ -73,7 +80,7 @@ const SideBar = () => {
           <svg width="auto" height="auto" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.8536 2.85355C13.0488 2.65829 13.0488 2.34171 12.8536 2.14645C12.6583 1.95118 12.3417 1.95118 12.1464 2.14645L7.5 6.79289L2.85355 2.14645C2.65829 1.95118 2.34171 1.95118 2.14645 2.14645C1.95118 2.34171 1.95118 2.65829 2.14645 2.85355L6.79289 7.5L2.14645 12.1464C1.95118 12.3417 1.95118 12.6583 2.14645 12.8536C2.34171 13.0488 2.65829 13.0488 2.85355 12.8536L7.5 8.20711L12.1464 12.8536C12.3417 13.0488 12.6583 13.0488 12.8536 12.8536C13.0488 12.6583 13.0488 12.3417 12.8536 12.1464L8.20711 7.5L12.8536 2.85355Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
         </button>
 
-        <div className="flex flex-col items-center gap-1 mt-2 2xl:gap-4 2xl:mt-5">
+        <div className="flex flex-col items-center gap-1 mt-2 2xl:gap-2 3xl:gap-4 2xl:mt-5">
           {navItemsList.map((item) => {
             const isActive = segment;
             return (
@@ -109,7 +116,7 @@ const SideBar = () => {
             </label>
           </div>
         </div>
-        <div className="flex flex-col justify-end h-full mb-5 ">
+        <div className="relative flex flex-col justify-end h-full pb-5 bottom-5 ">
 
           <Profile
             props={{
