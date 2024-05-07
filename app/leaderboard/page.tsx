@@ -61,11 +61,11 @@ export default function page() {
         <div className="relative p-2 md:p-6  rounded-[10px] bg-white dark:bg-[#0F0F0F] dark:shadow-none shadow-[0px_0px_25px_0px_rgba(0,0,0,0.15)] flex flex-col self-stretch overflow-hidden min-h-[90vh] md:min-h-[82vh]">
             <div className='overflow-hidden border-1 dark:border-none'>
                 <div className='bg-white dark:bg-[#141414]  rounded-lg flex mb-2 gap-10 '>
-                        <div className='flex flex-col gap-2 px-2 py-2 pr-2 border rounded-md shadow-sm border-lineGrey md:px-5 md:py-4 lg:px-10 lg:py-5'>
+                        <div className='flex flex-col gap-2 px-2 py-2 pr-2 border rounded-md shadow-sm border-lineGrey md:px-5 md:py-4 lg:px-5 lg:py-4'>
                             <div className='text-[0.8rem] md:text-sm lg:text-normal' >Total number of borrowers</div>
                             <div className='text-[1rem] md:text-xl font-semibold lg:text-3xl'>{Number(totalBorrowers)}</div>
                         </div>
-                        <div className='flex flex-col gap-2 px-2 py-2 pr-2 border rounded-md shadow-sm border-lineGrey md:px-5 md:py-4 lg:px-10 lg:py-5'>
+                        <div className='flex flex-col gap-2 px-2 py-2 pr-2 border rounded-md shadow-sm border-lineGrey md:px-5 md:py-4 lg:px-5 lg:py-4'>
                         <div  className='text-[0.8rem] md:text-sm lg:text-normal'>Total number of dcds depositors</div>
                             <div className='text-[1rem] md:text-xl font-semibold lg:text-3xl'>{Number(cdsdeposit)}</div>
                         </div>
@@ -85,7 +85,7 @@ export default function page() {
                         </li>
                     </ul>
                 </div> */}
-                <div className='flex flex-col xl:flex-row w-full gap-5   md:p-4 bg-white rounded-lg  dark:bg-[#141414] shadow-sm'>
+                <div className='flex flex-col xl:flex-row w-full gap-5  border-t border-lineGrey  md:p-4 md:pt-0 mt-5 bg-white dark:bg-[#141414] shadow-sm'>
                     <div className='w-full dark:bg-none'>
                         <div className='my-2 text-xl font-bold text-center'>
                             Borrow

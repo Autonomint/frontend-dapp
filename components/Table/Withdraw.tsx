@@ -268,7 +268,7 @@ const Withdraw = ({
           ] as `0x${string}`, // address of borrowing contract based on chainId
           BigInt(
             BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
-            (lastCumulativeRate ?? 0n)
+            (lastCumulativeRate ?? 1n)
           ) / BigInt(10 ** 27) + 1000000n, // Total amint amount
         ],
       });
