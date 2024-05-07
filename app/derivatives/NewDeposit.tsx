@@ -78,7 +78,7 @@ import { parseEther, parseUnits } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "../utils/decodeEventLogsFromAbi";
 import Spinner from "@/components/ui/spinner";
-import { DEV_PROXY_AMINT_ADDRESS, DEV_PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
+import { PROXY_AMINT_ADDRESS, PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
 import GradientContainer from "./GradientContainer";
 
 
@@ -169,7 +169,7 @@ const NewDeposit = () => {
       params: {
         type: "ERC20",
         options: {
-          address: DEV_PROXY_AMINT_ADDRESS,
+          address: PROXY_AMINT_ADDRESS,
           decimals: 6,
           name: "AMINT",
           symbol: "AMINT"
@@ -184,7 +184,7 @@ const NewDeposit = () => {
       params: {
         type: "ERC20",
         options: {
-          address: DEV_PROXY_TESTUSDT_ADDRESS,
+          address: PROXY_TESTUSDT_ADDRESS,
           decimals: 6,
           name: "TUSDT",
           symbol: "TUSDT"
@@ -215,14 +215,14 @@ const NewDeposit = () => {
 
 
   const { data: amintbal } = useBalance({
-    address: DEV_PROXY_AMINT_ADDRESS ? address : undefined,
-    token: DEV_PROXY_AMINT_ADDRESS ? DEV_PROXY_AMINT_ADDRESS : undefined,
+    address: PROXY_AMINT_ADDRESS ? address : undefined,
+    token: PROXY_AMINT_ADDRESS ? PROXY_AMINT_ADDRESS : undefined,
     watch: true,
   });
 
   const { data: usdtbal } = useBalance({
-    address: DEV_PROXY_TESTUSDT_ADDRESS ? address : undefined,
-    token: DEV_PROXY_TESTUSDT_ADDRESS ? DEV_PROXY_TESTUSDT_ADDRESS : undefined,
+    address: PROXY_TESTUSDT_ADDRESS ? address : undefined,
+    token: PROXY_TESTUSDT_ADDRESS ? PROXY_TESTUSDT_ADDRESS : undefined,
     watch: true,
   });
 
@@ -1077,7 +1077,7 @@ const NewDeposit = () => {
 
                         <a type="button" onClick={onWatchAssetUsdtClick} className="m-0 text-[12px] underline cursor-pointer ">Add TUSDT</a>
 
-                        <a href={`https://sepolia.etherscan.io/address/${DEV_PROXY_TESTUSDT_ADDRESS}`} className="m-0 text-[12px] underline " target="_blank">
+                        <a href={`https://sepolia.etherscan.io/address/${PROXY_TESTUSDT_ADDRESS}`} className="m-0 text-[12px] underline " target="_blank">
                           Mint TUSDT
                         </a>
                       </div>

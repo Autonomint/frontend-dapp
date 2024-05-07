@@ -53,7 +53,6 @@ export const AbondABI = [
   { inputs: [], name: "EnforcedPause", type: "error" },
   { inputs: [], name: "ExpectedPause", type: "error" },
   { inputs: [], name: "FailedInnerCall", type: "error" },
-  { inputs: [], name: "InsufficientBalance", type: "error" },
   { inputs: [], name: "InvalidInitialization", type: "error" },
   { inputs: [], name: "NotInitializing", type: "error" },
   {
@@ -248,7 +247,7 @@ export const AbondABI = [
     inputs: [],
     name: "decimals",
     outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
-    stateMutability: "view",
+    stateMutability: "pure",
     type: "function",
   },
   {
@@ -261,7 +260,6 @@ export const AbondABI = [
   {
     inputs: [
       { internalType: "address", name: "to", type: "address" },
-      { internalType: "uint64", name: "index", type: "uint64" },
       { internalType: "uint256", name: "amount", type: "uint256" },
     ],
     name: "mint",
@@ -307,18 +305,6 @@ export const AbondABI = [
   {
     inputs: [],
     name: "renounceOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "user", type: "address" },
-      { internalType: "uint64", name: "index", type: "uint64" },
-      { internalType: "uint128", name: "ethBacked", type: "uint128" },
-      { internalType: "uint128", name: "cumulativeRate", type: "uint128" },
-    ],
-    name: "setAbondData",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -387,31 +373,6 @@ export const AbondABI = [
     name: "upgradeToAndCall",
     outputs: [],
     stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "user", type: "address" }],
-    name: "userStates",
-    outputs: [
-      { internalType: "uint256", name: "cumulativeRate", type: "uint256" },
-      { internalType: "uint128", name: "ethBacked", type: "uint128" },
-      { internalType: "uint128", name: "aBondBalance", type: "uint128" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "user", type: "address" },
-      { internalType: "uint64", name: "index", type: "uint64" },
-    ],
-    name: "userStatesAtDeposits",
-    outputs: [
-      { internalType: "uint256", name: "cumulativeRate", type: "uint256" },
-      { internalType: "uint128", name: "ethBacked", type: "uint128" },
-      { internalType: "uint128", name: "aBondBalance", type: "uint128" },
-    ],
-    stateMutability: "view",
     type: "function",
   },
 ] as const;

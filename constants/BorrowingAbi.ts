@@ -252,6 +252,8 @@ export const BorrowingABI = [
   },
   {
     inputs: [
+      { internalType: "uint128", name: "_ethPrice", type: "uint128" },
+      { internalType: "uint64", name: "_depositTime", type: "uint64" },
       {
         internalType: "enum IOptions.StrikePrice",
         name: "_strikePercent",
@@ -263,34 +265,6 @@ export const BorrowingABI = [
     name: "depositTokens",
     outputs: [],
     stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "ethRemainingInWithdraw",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "ethValueRemainingInWithdraw",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "user", type: "address" },
-      { internalType: "uint128", name: "aBondAmount", type: "uint128" },
-    ],
-    name: "getAbondYields",
-    outputs: [
-      { internalType: "uint128", name: "", type: "uint128" },
-      { internalType: "uint256", name: "", type: "uint256" },
-      { internalType: "uint256", name: "", type: "uint256" },
-    ],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -419,16 +393,6 @@ export const BorrowingABI = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "address", name: "user", type: "address" },
-      { internalType: "uint128", name: "aBondAmount", type: "uint128" },
-    ],
-    name: "redeemYields",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "renounceOwnership",
     outputs: [],
@@ -542,6 +506,8 @@ export const BorrowingABI = [
     inputs: [
       { internalType: "address", name: "_toAddress", type: "address" },
       { internalType: "uint64", name: "_index", type: "uint64" },
+      { internalType: "uint64", name: "_ethPrice", type: "uint64" },
+      { internalType: "uint64", name: "_withdrawTime", type: "uint64" },
     ],
     name: "withDraw",
     outputs: [],

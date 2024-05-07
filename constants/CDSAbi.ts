@@ -37,9 +37,9 @@ export const CDSABI = [
     inputs: [
       {
         indexed: false,
-        internalType: "uint256",
+        internalType: "uint128",
         name: "depositedAmint",
-        type: "uint256",
+        type: "uint128",
       },
       { indexed: false, internalType: "uint64", name: "index", type: "uint64" },
       {
@@ -50,9 +50,9 @@ export const CDSABI = [
       },
       {
         indexed: false,
-        internalType: "uint256",
+        internalType: "uint128",
         name: "normalizedAmount",
-        type: "uint256",
+        type: "uint128",
       },
       {
         indexed: false,
@@ -114,9 +114,9 @@ export const CDSABI = [
     inputs: [
       {
         indexed: false,
-        internalType: "uint256",
+        internalType: "uint128",
         name: "withdrewAmint",
-        type: "uint256",
+        type: "uint128",
       },
       {
         indexed: false,
