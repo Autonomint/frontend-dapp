@@ -1149,7 +1149,7 @@ const NewDeposit = () => {
                                         : null;
                                     }}
                                   >
-                                    {usdtApproveLoading || usdtTransactionLoading ? (
+                                    {usdtApproveLoading || isAmintTransactionLoading ? (
                                       <Spinner className="w-5 h-5" />
                                     ) : ("Approve")}
                                   </Button>
