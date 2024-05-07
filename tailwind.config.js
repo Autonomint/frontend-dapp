@@ -28,7 +28,8 @@ module.exports = {
           raw: "(min-width: 1440px) and (min-resolution: 2dppx)",
         },
         "3xl": "1980px",
-        "mdl":"700px"
+        "mdl":"700px",
+        "mdx":"900px",
       },
       colors: {
         bgGrey: "#F4F8FF",
