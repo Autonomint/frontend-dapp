@@ -31,7 +31,6 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
     const itemsPerPage = 10;
     useEffect(() => {
         let sorted = [...data];
-
         if (sortField) {
             sorted.sort((a, b) => (a[sortField] > b[sortField]) ? 1 : -1);
         }
@@ -61,25 +60,23 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
                             {
                                 sortedData.map((data, index) => (
                                     <TableRow key={index} className={`
-                                    ${index === 0 ? 'bg-[#EEFFF5] dark:bg-[#002A11]  font-bold ' :
-                                    index === 1 ? 'bg-[#EEFFF5] dark:bg-[#002A11]  font-bold' :
-                                        index === 2 ? 'bg-[#EEFFF5] dark:bg-[#002A11] font-bold':""}
+                                    ${(currentPage - 1) * itemsPerPage + index + 1 === 1 ? 'bg-[#EEFFF5] dark:bg-[#002A11]  font-bold ' :
+                                    (currentPage - 1) * itemsPerPage + index + 1 === 2 ? 'bg-[#EEFFF5] dark:bg-[#002A11]  font-bold' :
+                                    (currentPage - 1) * itemsPerPage + index + 1 === 3 ? 'bg-[#EEFFF5] dark:bg-[#002A11] font-bold':""}
 
                                     hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]   dark:border cursor-pointer`
                                     }>
                                         <TableCell className={
-                                        ` ${index === 0 ? 'text-[#40e862] dark:text-[#71e889] text-[1.25rem] font-bold ' :
-                                            index === 1 ? 'text-[#54f374] dark:text-[#71e889] text-[1.15rem] font-bold' :
-                                                index === 2 ? 'text-[#5fe079] dark:text-[#71e889] text-[1.05rem] font-bold' :
-                                                    index === 3 ? 'text-[#66e180] dark:text-[#71e889] text-[1rem] font-bold' :
-                                                        index === 4 ? 'text-[#72e68b] dark:text-[#71e889] text-[0.95rem] font-bold' :
+                                        ` ${(currentPage - 1) * itemsPerPage + index + 1 === 1 ? 'text-[#40e862] dark:text-[#71e889] text-[1.25rem] font-bold ' :
+                                        (currentPage - 1) * itemsPerPage + index + 1 === 2 ? 'text-[#54f374] dark:text-[#71e889] text-[1.15rem] font-bold' :
+                                        (currentPage - 1) * itemsPerPage + index + 1 === 3 ? 'text-[#5fe079] dark:text-[#71e889] text-[1.05rem] font-bold' :
                                                             ' dark:bg-[#1a1a1a]'}
                                         hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  cursor-pointer`
                                     }>
-                                            {index + 1}
+                                            {(currentPage - 1) * itemsPerPage + index + 1}
                                         </TableCell>
                                         <TableCell className="text-textGrey  dark:text-[#EEEEEE]">
-                                            {truncateWeb3WalletAddress(`0x${data.address}`)}
+                                            {truncateWeb3WalletAddress(`${data.address}`)}
                                         </TableCell>
                                         {
                                             tableType === 'borrow' ? <TableCell className="text-textGrey dark:text-[#EEEEEE]">{Number(data.totalAmint).toFixed(4)} </TableCell> :

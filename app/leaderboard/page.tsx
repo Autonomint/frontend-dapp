@@ -47,9 +47,9 @@ export default function page() {
         queryKey: ["borrowDeposits", chainId],
         // Call the getDeposits function to fetch deposits
         queryFn: () => getBorrowLeaderboard(),
-      });
-        console.log(borrowdeposits)
-
+    });
+    console.log(borrowdeposits)
+    
       const { data: cdsdeposits, error: cdsdepositsError } = useQuery<TableData[]>({
         // Set the query key to include chainId and address
         queryKey: ["Cdsdeposits", chainId],

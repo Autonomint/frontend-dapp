@@ -1,4 +1,4 @@
-function truncateWeb3WalletAddress(address: `0x${string}` | undefined): string {
+function truncateWeb3WalletAddress(address: string | undefined): string {
   if(!address) return "";
   return `${address?.substring(0, 4)}...${address?.substring(
     address.length - 4
