@@ -13,6 +13,7 @@ interface TableData {
     rank: string;
     address: string;
     totalDepositedAmount?: string;
+    totalAmint?: string;
     cdsdeposit?: number;
     points: string;
     totalLTV?: number;
@@ -39,7 +40,7 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
     return (
         <div>
              
-            <div className='border rounded-md shadow-sm dark:border-gray-500 '>
+            <div className='border rounded-md shadow-sm dark:border-gray-700 '>
                 <div className=' dark:bg-[#141414]  rounded-lg min-h-[50vh] overflow-hidden overflow-x-scroll  '>
                     <Table className='min-w-[400px]'>
                         <TableHeader>
@@ -47,7 +48,7 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
                                 <TableHead className="w-3 opacity-1 text-white dark:text-[#C4C4C4]">Rank</TableHead>
                                 <TableHead className="text-white dark:text-[#C4C4C4]">Address</TableHead>
                                 {
-                                    tableType === 'borrow' ? <TableHead className="text-white dark:text-[#C4C4C4]">Borrow / Mint deposits</TableHead> :
+                                    tableType === 'borrow' ? <TableHead className="text-white dark:text-[#C4C4C4]">USDa Borrowed</TableHead> :
                                         <TableHead className="text-white dark:text-[#C4C4C4]">dCDS deposits</TableHead>
                                 }
                                 {/* <TableHead className="text-white dark:text-[#C4C4C4]">Points</TableHead> */}
@@ -81,7 +82,7 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
                                             {truncateWeb3WalletAddress(`0x${data.address}`)}
                                         </TableCell>
                                         {
-                                            tableType === 'borrow' ? <TableCell className="text-textGrey dark:text-[#EEEEEE]">{Number(data.totalDepositedAmount).toFixed(4)} </TableCell> :
+                                            tableType === 'borrow' ? <TableCell className="text-textGrey dark:text-[#EEEEEE]">{Number(data.totalAmint).toFixed(4)} </TableCell> :
                                                 <TableCell className="text-textGrey dark:text-[#EEEEEE]">{Number(data.totalDepositedAmount).toFixed(2)} 
                                                 </TableCell>
                                         }
@@ -105,13 +106,13 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
             <div className='mt-4'>
                    
                              
-                   <button className='px-4 py-2 mr-2 text-sm border border-gray-300 rounded-sm dark:border-gray-500' onClick={() => {
+                   <button className='px-4 py-2 mr-2 text-sm border bg-[linear-gradient(to_top,#f6f6f6_0%,white_100%)] dark:bg-none border-gray-300 rounded-md dark:border-gray-700 cursor-pointer' onClick={() => {
            setCurrentPage(currentPage - 1);
        }} disabled={currentPage === 1}> &lt; Previous</button>
 
-       <button className='px-4 py-2 mr-2 text-sm border border-gray-300 rounded-sm dark:border-gray-500' >{currentPage}</button>
+       <button className='px-4 py-2 mr-2 text-sm border bg-[linear-gradient(to_top,#f6f6f6_0%,white_100%)] dark:bg-none border-gray-300 rounded-md dark:border-gray-700 cursor-pointer' >{currentPage}</button>
 
-       <button className='px-4 py-2 mr-2 text-sm border border-gray-300 rounded-sm dark:border-gray-500' onClick={() => {
+       <button className='px-4 py-2 mr-2 text-sm border bg-[linear-gradient(to_top,#f6f6f6_0%,white_100%)] dark:bg-none border-gray-300 rounded-md dark:border-gray-700 cursor-pointer' onClick={() => {
            setCurrentPage(currentPage + 1);
        }} disabled={currentPage === Math.ceil(data.length / itemsPerPage)}>Next &gt;</button>
        

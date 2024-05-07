@@ -8,15 +8,19 @@ import "slick-carousel/slick/slick-theme.css";
 import { ArrowBigLeft, ArrowBigRight, ArrowLeftCircle, ArrowRightCircle, ArrowRightLeftIcon, MoveRightIcon } from 'lucide-react';
 import { useAbondTotalSupply, useAmintTotalSupply, useBorrowingContractGetUsdValue, useBorrowingContractLastCdsPoolValue, useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
 import { formatEther } from 'viem';
+import Image from 'next/image'; 
+import left_arrow from '@/app/assets/left_arrow.svg';
+import right_arrow from '@/app/assets/right_arrow.svg';
 
 const PrevArrow = (props: any) => {
   const { className, style, onClick } = props;
   return (
     <div
       onClick={onClick}
-      style={{ position: 'absolute', left: -30, top: '50%', transform: 'translateY(-50%)', padding: '10px', cursor: 'pointer', zIndex: 2 }}
+      style={{ position: 'absolute', left: -40, top: '50%', transform: 'translateY(-50%)', padding: '10px', cursor: 'pointer', zIndex: 2 }}
     >
-      <ArrowLeftCircle size={30} color='gray' />
+      <Image src={left_arrow} alt="left_arrow" width={40} height={30} />
+      {/* <ArrowLeftCircle size={30} color='gray' /> */}
     </div>
   );
 };
@@ -26,9 +30,10 @@ const NextArrow = (props: any) => {
   return (
     <div
       onClick={onClick}
-      style={{ position: 'absolute', right: -30, top: '50%', transform: 'translateY(-50%)', padding: '10px', cursor: 'pointer', zIndex: 2 }}
+      style={{ position: 'absolute', right: -40, top: '50%', transform: 'translateY(-50%)', padding: '10px', cursor: 'pointer', zIndex: 2 }}
     >
-      <ArrowRightCircle size={30} color='gray' />
+      <Image src={right_arrow} alt="right_arrow" width={40} height={30} />
+      {/* <ArrowRightCircle size={30} color='gray' /> */}
     </div>
   );
 };
@@ -94,7 +99,7 @@ export default function BorrowSlider() {
             <Divider />
             <div className='text-[0.8rem] flex flex-col px-8 gap-2'>
               <div className='flex justify-between text-md'> <p> dCDS TVL</p>  <p>${formatNumber(Number(totalStable) / 10 ** 6)}</p>  </div>
-              <div className='flex justify-between text-md'> <p>APY</p>  <p>200%</p>  </div>
+              <div className='flex justify-between text-md'> <p>APY</p>  <p>5%-200%</p>  </div>
               <div className='flex justify-between text-md'> <p> dCDS P/L</p>  <p>0%</p>  </div>
             </div>
             <Divider />

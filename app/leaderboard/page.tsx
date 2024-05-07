@@ -4,13 +4,14 @@ import LeaderTable from './LeaderTable';
 import { BACKEND_API_URL } from '@/constants/BackendUrl';
 import { useQuery } from "@tanstack/react-query";
 import { useChainId } from 'wagmi';
-import { useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
+import { useCdsCdsCount, useCdsTotalCdsDepositedAmount, useTreasuryNoOfBorrowers, useTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
 import { formatEther } from 'viem';
 interface TableData {
     rank: string;
     address: string;
     totalDepositedAmount?: string;
     cdsdeposit?: number;
+    totalAmint?: string;
     points: string;
     totalLTV?: number;
     yield: number;
@@ -30,7 +31,8 @@ export default function page() {
     const chainId = useChainId();
     const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
     const { data: totalStable } = useCdsTotalCdsDepositedAmount({ watch: true })
-    
+    const {data :cdsdeposit} = useCdsCdsCount({watch:true})
+    const {data:totalBorrowers} = useTreasuryNoOfBorrowers({watch:true})
     async function getBorrowLeaderboard(): Promise<TableData[]> {
         const response = await fetch(`${BACKEND_API_URL}/borrows/leaderboard`);
         return await response.json();
@@ -39,14 +41,14 @@ export default function page() {
         const response = await fetch(`${BACKEND_API_URL}/cds/cds/leaderboard`);
         return await response.json();
     }
-
     //   Fetch and store deposits using react-query
-      const { data: borrowdeposits, error: borrowdepositsError } = useQuery<TableData[]>({
+    const { data: borrowdeposits, error: borrowdepositsError } = useQuery<TableData[]>({
         // Set the query key to include chainId and address
         queryKey: ["borrowDeposits", chainId],
         // Call the getDeposits function to fetch deposits
         queryFn: () => getBorrowLeaderboard(),
       });
+        console.log(borrowdeposits)
 
       const { data: cdsdeposits, error: cdsdepositsError } = useQuery<TableData[]>({
         // Set the query key to include chainId and address
@@ -60,11 +62,11 @@ export default function page() {
                 <div className='bg-white dark:bg-[#141414] rounded-lg flex mb-5 gap-10 px-5 py-5 lg:px-10 lg:py-8 shadow-sm'>
                         <div className='flex flex-col gap-2 pr-2 border-r-2 lg:pr-5'>
                             <div className='text-sm lg:text-normal' >Total number of borrowers</div>
-                            <div className='text-xl font-semibold lg:text-3xl'>1000</div>
+                            <div className='text-xl font-semibold lg:text-3xl'>{Number(totalBorrowers)}</div>
                         </div>
                         <div className='flex flex-col gap-2 pr-2 border-r-2 lg:pr-5'>
                         <div  className='text-sm lg:text-normal'>Total number of dcds depositors</div>
-                            <div className='text-xl font-semibold lg:text-3xl'>1000</div>
+                            <div className='text-xl font-semibold lg:text-3xl'>{Number(cdsdeposit)}</div>
                         </div>
                         <div className='flex flex-col gap-2 '>
                         <div  className='text-sm lg:text-normal'>Total Value Locked (TVL) </div>
