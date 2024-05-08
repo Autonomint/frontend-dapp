@@ -62,7 +62,7 @@ import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 import { watch } from "fs";
 import Spinner from "../ui/spinner";
-import { DEV_PROXY_AMINT_ADDRESS } from "@/constants/Addresses";
+import { PROXY_AMINT_ADDRESS } from "@/constants/Addresses";
 import PnlChart from "./PnlChart";
 import Divider from "../CustomUI/Divider/Divider";
 
@@ -149,7 +149,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       params: {
         type: "ERC20",
         options: {
-          address: DEV_PROXY_AMINT_ADDRESS,
+          address: PROXY_AMINT_ADDRESS,
           decimals: 6,
           name: "AMINT",
           symbol: "AMINT"
@@ -402,15 +402,18 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
       (res) => res.json()
     )
 
-    if (data[0] != undefined) {
+    if (data[0] != undefined && ethPrice != undefined) {
       write?.({
         args: [
+          ethPrice,
+          BigInt(Date.now()),
           strikePercent,
           BigInt(Math.floor((1 + form.getValues("strikePrice") / 100) * Number(ethPrice ? ethPrice : 0))),
           BigInt(data[0]),
         ],
         value: parseEther(form.getValues("collateralAmount").toString()),
       });
+      
     } // mutate(address);
   }
 
