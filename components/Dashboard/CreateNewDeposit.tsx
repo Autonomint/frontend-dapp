@@ -580,7 +580,7 @@ const CreateNewDeposit = ({ handleRefetch }: { handleRefetch: () => void }) => {
                   )}
                 />
                 <span className="top-7  text-gray-400 font-semibold relative md:absolute  right-32 block text-right text-[0.7rem]"> <span className="text-xl">(</span> <span className="text-sm">={(Number(ethPrice) / 100 * Number(form.getValues("collateralAmount"))).toFixed(2)} </span> usdt <span className="text-xl">)</span></span>
-                <span className=" text-textHighlight relative md:absolute md:right-1 block text-right text-[0.7rem]">Balance:  {(Number(ethBalance.data?.formatted)).toFixed(4)} ETH</span>
+                <span className=" text-textHighlight relative md:absolute md:right-1 block text-right text-[0.7rem] dark:text-[#d4d4d4]">Balance:  {(Number(ethBalance.data?.formatted)).toFixed(4)} ETH</span>
               </div>
 
 

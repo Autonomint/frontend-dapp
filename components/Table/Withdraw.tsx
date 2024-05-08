@@ -805,66 +805,73 @@ border-image-source: linear-gradient(180deg, #63AEFF -0.23%, #131D33 99.77%); */
                           setOpenConfirmNotice(true);
                         }}
                       >
-                        Withdraw for the first time
+                        Repay
                       </Button>
-                    ) : details.status === "WITHDREW1" ? (
-                      <>
-                        <div className="px-[15px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee] dark:bg-[linear-gradient(180deg,#1C1C1C_-0.23%,#000000_100%)]">
-                          <div className="py-[15px] flex items-center justify-between border-b border-lineGrey">
-                            <div className="flex gap-[10px] items-center">
-                              <Image
-                                src={payments}
-                                alt="payment"
-                                width={24}
-                                height={24}
-                              />
-                              <p className="text-base text-textSecondary dark:text-[#ffff]">
-                                First time withdrawed amount
-                              </p>
-                            </div>
+                    )
+                    
+                    // : details.status === "WITHDREW1" ? (
+                    //   <>
+                    //     <div className="px-[15px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee] dark:bg-[linear-gradient(180deg,#1C1C1C_-0.23%,#000000_100%)]">
+                    //       <div className="py-[15px] flex items-center justify-between border-b border-lineGrey">
+                    //         <div className="flex gap-[10px] items-center">
+                    //           <Image
+                    //             src={payments}
+                    //             alt="payment"
+                    //             width={24}
+                    //             height={24}
+                    //           />
+                    //           <p className="text-base text-textSecondary dark:text-[#ffff]">
+                    //             First time withdrawed amount
+                    //           </p>
+                    //         </div>
 
-                            <p>
-                              {parseFloat(
-                                details.withdrawAmount1
-                                  ? details.withdrawAmount1
-                                  : "0"
-                              ).toFixed(4)}
-                            </p>
-                          </div>
-                          <div className="py-[15px] flex items-center justify-between">
-                            <div className="flex gap-[10px] items-center">
-                              <Image
-                                src={pace}
-                                alt="time left"
-                                width={24}
-                                height={24}
-                              />
-                              <p className="text-base text-textSecondary dark:text-[#ffff]">
-                                Second Withdrawal time
-                              </p>
-                            </div>
-                            <p className="text-base font-medium text-textHighlight dark:text-[#DEDEDE]">
-                              {calculate30DaysFromStoredTime(details.withdrawTime1)}
-                            </p>
-                          </div>
-                        </div>
-                        <Button
-                          variant={"primary"}
-                          className="text-white dark:text-[#ffff]"
-                          onClick={() => {
-                            setOpenConfirmNotice(true);
-                          }}
-                          disabled={SecondWithdrawalTime() < Date.now() ? false : true}
-                        >
-                          Withdraw for the second time
-                        </Button>
-                      </>
-                    ) : (
+                    //         <p>
+                    //           {parseFloat(
+                    //             details.withdrawAmount1
+                    //               ? details.withdrawAmount1
+                    //               : "0"
+                    //           ).toFixed(4)}
+                    //         </p>
+                    //       </div>
+                    //       <div className="py-[15px] flex items-center justify-between">
+                    //         <div className="flex gap-[10px] items-center">
+                    //           <Image
+                    //             src={pace}
+                    //             alt="time left"
+                    //             width={24}
+                    //             height={24}
+                    //           />
+                    //           <p className="text-base text-textSecondary dark:text-[#ffff]">
+                    //             Second Withdrawal time
+                    //           </p>
+                    //         </div>
+                    //         <p className="text-base font-medium text-textHighlight dark:text-[#DEDEDE]">
+                    //           {calculate30DaysFromStoredTime(details.withdrawTime1)}
+                    //         </p>
+                    //       </div>
+                    //     </div>
+                    //     <Button
+                    //       variant={"primary"}
+                    //       className="text-white dark:text-[#ffff]"
+                    //       onClick={() => {
+                    //         setOpenConfirmNotice(true);
+                    //       }}
+                    //       disabled={SecondWithdrawalTime() < Date.now() ? false : true}
+                    //     >
+                    //       Withdraw for the second time
+                    //     </Button>
+                    //   </>
+                    // ) 
+                    
+                    : (
                       <>
                         {details.status === "LIQUIDATED" ? (
                           <Note note="position is already liquidated" />
                         ) : (
-                          <Note note="amount fully withdrawn" />
+                          <div className="text-center">
+
+                          <Note  note="amount fully withdrawn" />
+                          </div>
                         )}
                       </>
                     )}

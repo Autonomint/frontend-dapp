@@ -41,8 +41,8 @@ const ConfirmNotice = ({
         className="text-white dark:text-[#ffff]"
         onClick={handleWithdrawal}
       >
-        {isLoading ? <Spinner/> : `Confirm Withdrawal for the
-        ${withdrawalTime === "DEPOSITED" ? `First` : `Second`} time`}
+        {isLoading ? <Spinner/> : `Confirm Withdrawal of ${withdrawalTime === "DEPOSITED" ? "AMINT" : "ETH"}`}
+       
         
       </Button>
     </div>

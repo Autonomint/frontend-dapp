@@ -1006,9 +1006,7 @@ const NewDeposit = ({
                     <div>
                       <FormField
                         control={form.control}
-                        disabled={
-                          usdtAmountDepositedTillNow < usdtLimit ? true : false
-                        }
+                 
 
                         name="AmintDepositAmount"
                         render={({ field }) => (
