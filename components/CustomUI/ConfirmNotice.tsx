@@ -27,7 +27,6 @@ const ConfirmNotice = ({
           {withdrawalTime === "DEPOSITED"
             ? `${(parseFloat(amintToMint.toString())/10**6).toString()} AMINT`
             : `~${amintToMint.toString()} ETH`}
-          
           </p>
         </div>
         <p className="min-[1440px]:text-base text-sm 2dppx:text-sm text-textHighlight dark:text-[#ffff]  leading-none">
@@ -41,8 +40,8 @@ const ConfirmNotice = ({
         className="text-white dark:text-[#ffff]"
         onClick={handleWithdrawal}
       >
-        {isLoading ? <Spinner/> : `Confirm Withdrawal for the
-        ${withdrawalTime === "DEPOSITED" ? `First` : `Second`} time`}
+        {isLoading ? <Spinner/> : `Confirm Withdrawal of ${withdrawalTime === "DEPOSITED" ? "AMINT" : "ETH"}`}
+       
         
       </Button>
     </div>

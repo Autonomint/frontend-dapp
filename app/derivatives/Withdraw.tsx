@@ -360,7 +360,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
       });
       console.log(bodyValue);
       const response = await fetch(
-        `${BACKEND_API_URL}/cds/withdraw/calculateWithdrawAmount`,
+        `${BACKEND_API_URL}/cds/calculateWithdrawAmount`,
         {
           method: "POST",
           headers: {
