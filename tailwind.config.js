@@ -17,6 +17,16 @@ module.exports = {
       },
     },
     extend: {
+      fontSize:{
+        "xs":"0.75rem",
+      },
+      fontFamily: {
+        'plex-mono': ['IBM Plex Mono', 'monospace'],
+      },
+      boxShadow: {
+        custom: '4px 4px 0px #C4C4C4',
+        smallcustom: '4px 4px 0px #00679F',
+      },
       zIndex: {
         'max': 999999,
       },

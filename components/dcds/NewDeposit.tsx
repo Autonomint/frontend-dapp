@@ -81,7 +81,7 @@ import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 import Spinner from "@/components/ui/spinner";
 import { DEV_PROXY_AMINT_ADDRESS, DEV_PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
 import ProductList from "../Markets/ProductList";
-
+import arrowout from "@/app/assets/arrow_outward.svg";
 
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
@@ -131,9 +131,11 @@ const InitialformSchema = z.object({
 
 const NewDeposit = ({
 
-  handleRefetch
+  handleRefetch,
+  openDeposits
 }: {
   handleRefetch: Function;
+  openDeposits:Function;
 }) => {
   // Define the initial state for the open variable for sheet opening and closing
   const [open, setOpen] = useState(false);
@@ -978,10 +980,7 @@ const NewDeposit = ({
 
   return (
     <div className="flex items-center justify-between ">
-
       <div className="flex w-full gap-[10px]">
-
-
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full" action="#">
             {/* <div className="flex justify-between w-full mt-4 ">
@@ -1088,7 +1087,7 @@ const NewDeposit = ({
                                 inputMode="numeric"
                                 pattern="[0-9]*"
                                 type="text"
-                                className="w-full px-2 py-10 text-sm text-gray-900 bg-[#f3f5f7] dark:bg-[#0f0f0f] border-[#00B655] dark:border-[#00B655]  border-2 lock dark:text-white focus:outline-none focus:ring-0 peer"
+                                className="w-full px-2 py-5 text-sm rounded-none text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655]  border lock dark:text-white focus:outline-none focus:ring-0 peer"
                                 disabled={!tokensEnabled.USDT}
                                 placeholder=""
                                 {...field}
@@ -1102,7 +1101,7 @@ const NewDeposit = ({
                               ></Input>
                               <label
                                 htmlFor="amount_of_usdt"
-                                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#f3f5f7] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                               >
                                 Deposit USDT
                               </label>
@@ -1321,13 +1320,13 @@ const NewDeposit = ({
 
                         >
                           <FormControl
-                            className="bg-white dark:bg-[#0F0F0F] dark:border-[#3A3A3A] dark:text-white"
+                            className="bg-white py-1 border-[#020202] rounded-none dark:bg-[#0F0F0F]  dark:text-white"
                           >
                             <SelectTrigger>
                               <SelectValue placeholder="Choose a Lock-In Period" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent className="dark:bg-[#0F0F0F]  bg-white">
+                          <SelectContent className="dark:bg-[#0F0F0F]  bg-white  border-[#020202] rounded-none">
                             <SelectGroup className="dark:bg-[#0F0F0F]">
                               <SelectLabel>Lock-In Period</SelectLabel>
                               <SelectItem value="30">30 Days</SelectItem>
@@ -1357,7 +1356,7 @@ const NewDeposit = ({
                           <Checkbox
                             checked={field.value}
                             onCheckedChange={field.onChange}
-                            className="dark:bg-[#0F0F0F] dark:border-[#3A3A3A] dark:text-white"
+                            className="dark:bg-[#020202] dark:border-[#020202] rounded-none dark:text-white"
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
@@ -1437,18 +1436,30 @@ const NewDeposit = ({
               ) : (
                 <></>
               )}
+              <div className="flex w-full gap-5 py-1 border-black ">
+              <Button
+                type="button"
+                onClick={() => openDeposits(true)}
+                variant={"primary"}
+                className="text-[#020202] rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
+                
+                >
+                { 'Open Positions'}<Image src={arrowout} className="absolute right-5" alt="arrow" width={20} height={15} />
+              </Button>
+
 
               <Button
                 type="submit"
                 variant={"primary"}
-                className="text-white"
+                className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
                 //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                 disabled={
                   (usdtAmountDepositedTillNow > usdtLimit) || isCdsDepositLoading || isPending || isLoading
                 }
-              >
+                >
                 {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}
               </Button>
+                </div>
             </div>
           </form>
         </Form>

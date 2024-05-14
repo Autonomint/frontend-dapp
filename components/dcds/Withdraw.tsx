@@ -462,7 +462,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                             <Button
                                 variant={"ghostOutline"}
                                 size={"primary"}
-                                className="flex gap-[10px] border border-borderGrey"
+                                className="flex gap-[10px] border border-borderGrey rounded-none"
                                 onClick={()=>handleSheetOpenChange(!sheetOpen)}
                             >
                                 <Cross2Icon className="w-4 h-4" />
@@ -473,7 +473,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                         </SheetClose>
                     </div>
                     <SheetHeader>
-                        <SheetTitle className="text-textPrimary font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
+                        <SheetTitle className="text-black font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
                             Deposit {`#${details.index}`}
                         </SheetTitle>
                     </SheetHeader>
@@ -525,7 +525,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                         // || (WithdrawalTime() > Date.now())
                         <Button
                             variant={"primary"}
-                            className="text-white"
+                            className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
                             onClick={() => setOpenConfirmNotice(true)}
                             disabled={(status === "WITHDREW" ? true : false) || (WithdrawalTime() > Date.now())}
                         >

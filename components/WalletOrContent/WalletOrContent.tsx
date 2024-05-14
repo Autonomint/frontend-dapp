@@ -229,23 +229,17 @@ const WalletOrContent = () => {
       {isConnected ? (
         <div className="relative p-2 sm:p-2 rounded-[10px] dark:bg-[#141414] dark:shadow-none flex flex-col self-stretch overflow-hidden h-full ">
 
-          <CreateNewDeposit handleRefetch={handleRefetch} />
-          <div className="flex justify-end my-2">
-            <Button variant={"ghostOutline"}
-              size={"primary"}
-              className="border border-borderGrey" onClick={() => setOpen2(!open2)} >Open Positions</Button>
+          <CreateNewDeposit handleRefetch={handleRefetch} openPositions={setOpen2} />
 
-          </div>
-          {/* Table Component */}
 
           <Dialog open={open2} onOpenChange={setOpen2} >
-            <DialogContent className="max-w-[800px] pb-5">
+            <DialogContent className="max-w-[800px] pb-5 ">
               <div className="flex justify-end w-full ">
                 <DialogClose asChild>
                   <Button
                     variant={"ghostOutline"}
                     size={"primary"}
-                    className="flex gap-[10px] border border-borderGrey "
+                    className="flex gap-[10px] border border-borderGrey rounded-none "
                   >
                     <Cross2Icon className="w-4 h-4" />
                     <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
@@ -254,10 +248,10 @@ const WalletOrContent = () => {
                   </Button>
                 </DialogClose>
               </div>
-              <DialogHeader className="flex items-start">
+              <DialogHeader className="flex items-start -mt-5">
                 <DialogTitle className="text-textPrimary  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl ">
                   <div className="flex flex-col gap-[10px] ">
-                    <h2 className="text-textPrimary dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
+                    <h2 className="text-black dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
                       Your Deposits
                     </h2>
                     <p className="text-textSecondary dark:text-[#EEEEEE]  text-sm min-[1440px]:text-base 2dppx:text-xs">

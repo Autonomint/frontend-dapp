@@ -699,18 +699,18 @@ border-image-source: linear-gradient(180deg, #63AEFF -0.23%, #131D33 99.77%); */
                 <Button
                   variant={"ghostOutline"}
                   size={"primary"}
-                  className="flex gap-[10px] border border-borderGrey"
+                  className="flex gap-[10px] border border-borderGrey rounded-none"
                   onClick={() => handleSheetOpenChange(!sheetOpen)}
                 >
                   <Cross2Icon className="w-4 h-4" />
-                  <p className="text-transparent dark:text-[#808080] bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
+                  <p className="text-transparent dark:text-[#808080]  bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
                     Close
                   </p>
                 </Button>
               </SheetClose>
             </div>
             <SheetHeader>
-              <SheetTitle className="text-textPrimary dark:text-[#90AFFF] font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
+              <SheetTitle className="text-[#020202] dark:text-[#90AFFF] font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
                 Deposit #{details.index}
               </SheetTitle>
             </SheetHeader>
@@ -800,7 +800,7 @@ border-image-source: linear-gradient(180deg, #63AEFF -0.23%, #131D33 99.77%); */
                     {details.status === "DEPOSITED" ? (
                       <Button
                         variant={"primary"}
-                        className="text-white"
+                        className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
                         onClick={() => {
                           setOpenConfirmNotice(true);
                         }}

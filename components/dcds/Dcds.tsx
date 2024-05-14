@@ -243,14 +243,8 @@ const Dcds = () => {
       !isConnected ? <ConnectWallet/>:(
         <div className="relative w-full rounded-[10px] px-2   dark:bg-[#141414] dark:shadow-none  flex flex-col self-stretch overflow-hidden ">
 
-        <NewDeposit handleRefetch={handleRefetch} />
-        <div className="flex justify-end my-2">
-          <Button
-            variant={"ghostOutline"}
-            size={"primary"}
-            className="border border-borderGrey"
-            onClick={() => setOpen2(true)}>Show Deposits</Button>
-        </div>
+        <NewDeposit handleRefetch={handleRefetch} openDeposits={setOpen2} />
+
 
 
         <Dialog open={open2} onOpenChange={setOpen2} >
@@ -260,16 +254,16 @@ const Dcds = () => {
                 <Button
                   variant={"ghostOutline"}
                   size={"primary"}
-                  className="flex gap-[10px] border border-borderGrey "
+                  className="flex gap-[10px] border border-borderGrey rounded-none "
                 >
                   <Cross2Icon className="w-4 h-4" />
                 </Button>
               </DialogClose>
             </div>
-            <DialogHeader className="flex items-start">
+            <DialogHeader className="flex items-start -mt-5">
               <DialogTitle className="text-textPrimary  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl ">
                 <div className="flex flex-col gap-[10px] ">
-                  <h2 className="text-textPrimary dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
+                  <h2 className="text-black dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
                     Your Deposits
                   </h2>
                   <p className="text-textSecondary dark:text-[#EEEEEE]  text-sm min-[1440px]:text-base 2dppx:text-xs">
@@ -277,7 +271,7 @@ const Dcds = () => {
                   </p>
                 </div>
               </DialogTitle>
-              <div className="mb-10 mx-auto min-w-[600px] overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto">
+              <div className="mb-10 mx-0 min-w-[600px]  w-full overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto">
 
                 <Table>
                   <TableHeader>

@@ -40,49 +40,47 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
     return (
         <div>
              
-            <div className='border rounded-md shadow-sm dark:border-gray-700 '>
-                <div className=' dark:bg-[#141414]  rounded-lg min-h-[50vh] overflow-hidden overflow-x-scroll  '>
+            <div className='border-t border-black shadow-sm dark:border-gray-700'>
+                <div className=' dark:bg-[#141414]   min-h-[50vh] overflow-hidden overflow-x-scroll  '>
                     <Table className='min-w-[400px]'>
                         <TableHeader>
-                            <TableRow className='bg-[linear-gradient(to_right,#23e988,#13d1b6)] dark:bg-none hover:bg-[#5981ff] dark:bg-[#1a1a1a]'>
-                                <TableHead className="w-3 opacity-1 text-white dark:text-[#C4C4C4]">Rank</TableHead>
-                                <TableHead className="text-white dark:text-[#C4C4C4]">Address</TableHead>
+                            <TableRow className='dark:bg-none  dark:bg-[#1a1a1a]'>
+                                <TableHead className="w-3 opacity-1 text-[#5B5B5B] dark:text-[#C4C4C4]">Rank</TableHead>
+                                <TableHead className="text-[#5B5B5B] dark:text-[#C4C4C4]">Address</TableHead>
                                 {
                                     tableType === 'borrow' ? <TableHead className="text-white dark:text-[#C4C4C4]">USDa Borrowed</TableHead> :
-                                        <TableHead className="text-white dark:text-[#C4C4C4]">dCDS deposits</TableHead>
+                                        <TableHead className="text-[#5B5B5B] dark:text-[#C4C4C4]">dCDS deposits</TableHead>
                                 }
                                 {/* <TableHead className="text-white dark:text-[#C4C4C4]">Points</TableHead> */}
                                 {
-                                    tableType === 'cds' ? null : <TableHead className="text-white dark:text-[#C4C4C4]">LTV ratio</TableHead>
+                                    tableType === 'cds' ? null : <TableHead className="text-[#5B5B5B] dark:text-[#C4C4C4]">LTV ratio</TableHead>
                                 }
                             </TableRow>
                         </TableHeader>
                         <TableBody className=''>
                             {
                                 sortedData.map((data, index) => (
-                                    <TableRow key={index} className={`
-                                    ${(currentPage - 1) * itemsPerPage + index + 1  === 1 ? 'bg-[#EEFFF5] dark:bg-[#002A11]  font-bold ' :
-                                    (currentPage - 1) * itemsPerPage + index + 1  === 2 ? 'bg-[#EEFFF5] dark:bg-[#002A11]  font-bold' :
-                                    (currentPage - 1) * itemsPerPage + index + 1  === 3 ? 'bg-[#EEFFF5] dark:bg-[#002A11] font-bold':""}
-
-                                    hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]   dark:border cursor-pointer`
+                                    <TableRow key={index} className={` text-black
+                                    hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]   dark:border cursor-pointer `
                                     }>
-                                        <TableCell className={
-                                        ` ${(currentPage - 1) * itemsPerPage + index + 1  === 1 ? 'text-[#40e862] dark:text-[#71e889] text-[1.25rem] font-bold ' :
-                                        (currentPage - 1) * itemsPerPage + index + 1  === 2 ? 'text-[#54f374] dark:text-[#71e889] text-[1.15rem] font-bold' :
-                                        (currentPage - 1) * itemsPerPage + index + 1  === 3 ? 'text-[#5fe079] dark:text-[#71e889] text-[1.05rem] font-bold' :
+                                        <TableCell>
+                                        <div className={
+                                        ` ${(currentPage - 1) * itemsPerPage + index + 1  === 1 ? 'bg-[#FFECC7] text-[#BC7C00] dark:text-[#71e889]   ' :
+                                        (currentPage - 1) * itemsPerPage + index + 1  === 2 ? 'bg-[#CEE1E6] text-[#587676] dark:text-[#71e889]  ' :
+                                        (currentPage - 1) * itemsPerPage + index + 1  === 3 ? 'bg-[#FFE4D5] text-[#8A4A00] dark:text-[#71e889]' :
                                                 
                                                             ' dark:bg-[#1a1a1a]'}
-                                        hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  cursor-pointer`
+                                        hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11] rounded-[40%] p-1 text-center cursor-pointer`
                                     }>
-                                            (currentPage - 1) * itemsPerPage + index + 1 
+                                           #{ (currentPage - 1) * itemsPerPage + index + 1 }
+                                           </div>
                                         </TableCell>
-                                        <TableCell className="text-textGrey  dark:text-[#EEEEEE]">
+                                        <TableCell className="  dark:text-[#EEEEEE]">
                                             {truncateWeb3WalletAddress(`0x${data.address}`)}
                                         </TableCell>
                                         {
-                                            tableType === 'borrow' ? <TableCell className="text-textGrey dark:text-[#EEEEEE]">{Number(data.totalAmint).toFixed(4)} </TableCell> :
-                                                <TableCell className="text-textGrey dark:text-[#EEEEEE]">{Number(data.totalDepositedAmount).toFixed(2)} 
+                                            tableType === 'borrow' ? <TableCell className=" dark:text-[#EEEEEE]">{Number(data.totalAmint).toFixed(4)} </TableCell> :
+                                                <TableCell className=" dark:text-[#EEEEEE]">{Number(data.totalDepositedAmount).toFixed(2)} 
                                                 </TableCell>
                                         }
 
@@ -90,7 +88,7 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
                                         </TableCell> */}
                                         {
                                             tableType === 'cds' ? null :
-                                                <TableCell className="text-textGrey dark:text-[#EEEEEE]">{0}
+                                                <TableCell className=" dark:text-[#EEEEEE]">{0}
                                                 </TableCell>
                                         }
 
@@ -102,16 +100,16 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
                    
                 </div>
             </div>
-            <div className='mt-4'>
+            <div className='bg-[#020202] flex justify-between relative'>
                    
                              
-                   <button className='px-4 py-2 mr-2 text-sm border bg-[linear-gradient(to_top,#f6f6f6_0%,white_100%)] dark:bg-none border-gray-300 rounded-md dark:border-gray-700 cursor-pointer' onClick={() => {
+                   <button className='px-4 py-2 mr-2 text-sm text-white cursor-pointer dark:bg-none dark:border-gray-700' onClick={() => {
            setCurrentPage(currentPage - 1);
        }} disabled={currentPage === 1}> &lt; Previous</button>
 
-       <button className='px-4 py-2 mr-2 text-sm border bg-[linear-gradient(to_top,#f6f6f6_0%,white_100%)] dark:bg-none border-gray-300 rounded-md dark:border-gray-700 cursor-pointer' >{currentPage}</button>
+       {/* <button className='px-4 py-2 mr-2 text-sm border bg-[linear-gradient(to_top,#f6f6f6_0%,white_100%)] dark:bg-none border-gray-300 rounded-md dark:border-gray-700 cursor-pointer' >{currentPage}</button> */}
 
-       <button className='px-4 py-2 mr-2 text-sm border bg-[linear-gradient(to_top,#f6f6f6_0%,white_100%)] dark:bg-none border-gray-300 rounded-md dark:border-gray-700 cursor-pointer' onClick={() => {
+       <button className='px-4 py-2 mr-2 text-sm text-white cursor-pointer dark:bg-none dark:border-gray-700' onClick={() => {
            setCurrentPage(currentPage + 1);
        }} disabled={currentPage === Math.ceil(data.length / itemsPerPage)}>Next &gt;</button>
        

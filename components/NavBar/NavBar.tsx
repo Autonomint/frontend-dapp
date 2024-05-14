@@ -89,6 +89,7 @@ const NavBar = () => {
       : undefined,
     watch: true,
   });
+  
 
   const segment = useSelectedLayoutSegment();
   const [openMenu, setOpenMenu] = React.useState(false);
@@ -97,55 +98,58 @@ const NavBar = () => {
   const [showNotification, setShowNotification] = useState(false);
   return (
     <div className="z-50 w-full ">
-      <div className="flex w-full    mx-auto h-16  bg-[linear-gradient(145deg,#f3f5f7_20%,#ecf2f8_100%)]   dark:bg-none dark:bg-[#1a1a1a] shadow-[0px_2px_4px 0px_rgba(0,0,0,0.25)] shadow-lg z-10">
+      <div className="flex w-full justify-between  mx-auto h-16  bg-[#EEEEEE]   dark:bg-none dark:bg-[#1a1a1a]  z-10">
         <div className="flex items-center gap-2 ml-4">
           <div className="w-[3rem] h-[3rem]">
             <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
           </div>
-          <div className="text-xl font-bold text-[#041A50] dark:text-[#007AFF]">Autonomint</div>
+          <div className="text-2xl font-medium tracking-tighter font-plex-mono text-[#041A50] dark:text-[#007AFF]">Autonomint</div>
         </div>
-        <div className="items-center justify-between invisible hidden w-0 md:flex md:w-full md:visible">
-          <div className="flex ml-20 md:gap-2 md:ml-10 lg:gap-5">
+        <div className="items-center justify-between invisible hidden w-0 mr-0 md:flex md:w-fit md:visible">
+          <div className="flex justify-center ">
+            <div className="flex md:gap-2 md:ml-10 lg:gap-5">
 
-            {navItemsList.map((item) => {
-              const isActive = segment;
-              return (
-                <Link
-                  className={
-                    isActive === item.targetSegment
-                      ? " text-[14px] 2xl:text-normal font-semibold border-b-2 border-black dark:border-white  dark:text-white"
-                      : "  "
-                  }
-                  href={item.href}
-                  key={item.href}
-                  onClick={() => setOpenMenu(false)
-                  }
-                >
-                  <NavItems
-                    props={{
-                      label: item.label,
-                    }}
-                  />
-                </Link>
-              );
-            })}
-            <div className="flex items-center justify-center">
+              {navItemsList.map((item) => {
+                const isActive = segment;
+                return (
+                  <Link
+                    className={
+                      isActive === item.targetSegment
+                        ? " text-[14px] 2xl:text-normal font-semibold  dark:border-white  dark:text-white"
+                        : "  "
+                    }
+                    href={item.href}
+                    key={item.href}
+                    onClick={() => setOpenMenu(false)
+                    }
+                  >
+                    <NavItems
+                      props={{
+                        label: item.label,
+                      }}
+                    />
+                  </Link>
+                );
+              })}
+              <div className="flex items-center justify-center">
 
-              <button onClick={() => window.open("https://app.uniswap.org/swap", "_blank")} className="flex items-center h-10 px-4 py-1 text-sm font-bold text-center text-black border border-black rounded-lg dark:text-white dark:border-white">
+                {/* <button onClick={() => window.open("https://app.uniswap.org/swap", "_blank")} className="flex items-center h-10 px-4 py-1 text-sm font-bold text-center text-black border border-black rounded-lg dark:text-white dark:border-white">
                 BUY USDa
-              </button>
+              </button> */}
+              </div>
             </div>
 
           </div>
-          <div className="flex gap-4 mr-5">
-            {/* <div className="flex items-center gap-2 text-sm text-white">
+        </div>
+        <div className="flex gap-4 mr-5">
+          {/* <div className="flex items-center gap-2 text-sm text-white">
             USDa APY <span className="font-semibold dark:text-[#00C2FF}">100%</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-white">
             TVL <span className="font-semibold dark:text-[#00C2FF}">$100M</span>
           </div> */}
 
-            <div className="flex ">
+          <div className="flex ">
               <label className="relative inline-flex items-center cursor-pointer ">
                 <input type="checkbox" value="" className="sr-only peer" onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")} checked={resolvedTheme === "dark" ? true : false} />
                 <div className="relative w-10 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#3e61baa2]"></div>
@@ -155,18 +159,19 @@ const NavBar = () => {
                 </div>
               </label>
             </div>
-            <div className="w-[2rem] h-[3rem]">
+            {/* <div className="w-[2rem] h-[3rem]">
               <Image src={notification} className="rounded-sm cursor-pointer " onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
+            </div> */}
+          {isConnected ? (
+            <div className="px-5 flex gap-2- py-1 pt-2 mt-3 h-fit text-sm font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+              <div className="w-[1.5rem] "><Image src={profile} alt="autonomint-dapp" className="rounded-sm cursor-pointer " onClick={() => setOpen2(!open2)} style={{ width: "100%", height: "100%" }} /> </div>Profile
             </div>
-            {isConnected ? (
-              <div className="w-[2.5rem] h-[3rem] relative top-1">
-                <Image src={profile} alt="autonomint-dapp" className="rounded-sm cursor-pointer " onClick={() => setOpen2(!open2)} style={{ width: "100%", height: "100%" }} />
-              </div>
-            ) : (
-              ""
-            )}
+          ) : (
+            <div  className="px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+                        Connect Wallet
+                    </div>
+          )}
 
-          </div>
         </div>
 
         <div className="absolute right-0 flex items-center justify-center mr-3 top-2 md:hidden">
@@ -228,56 +233,36 @@ const NavBar = () => {
           ) : ("")
         }
 
-        {
-          showNotification ? (
-            <div className="absolute flex flex-col gap-4 w-[300px] dark:bg-[#141414] right-14 top-24 border z-50 bg-white px-2 py-4 rounded-lg shadow-xl">
-              <div className="flex justify-between text-sm font-semibold rounded-md">
-                Notifications
-                <div className="cursor-pointer" onClick={() => setShowNotification(!showNotification)}>close</div>
-              </div>
-              <div className="border-t">
-                <div className="p-2 text-xs">Check out the new leaderboard</div>
-              </div>
-            </div>
-          ) : ("")
-        }
+
         {
           open2 ? (
-            <div className=" fixed  w-auto dark:bg-[#141414] right-5 top-[6rem] border dark:border-gray-600 bg-white px-4 py-4 pt-2 rounded-lg shadow-xl">
+            <div className=" fixed  w-auto dark:bg-[#141414] right-5 top-[4rem] border dark:border-gray-600 bg-white px-4 py-4 pt-2 shadow-xl">
               <div className="flex items-center justify-end w-full mb-2 ">
                 <button onClick={() => setOpen2(!open2)} className="p-1 border border-black rounded-full dark:border-white dark:white"><Cross2Icon className="w-4 h-4" /></button>
               </div>
               <div className="flex flex-col gap-4">
-              
-              <div className="flex flex-col gap-3">
-              <div className="p-3 text-sm border border-gray-500 rounded-md">
-                <div className="text-[0.8rem]"> USDa Balance</div>
-                <div className="text-xl font-bold">${data?.formatted.slice(0, 8)}</div>
-              </div>
-                <div className="p-3 text-sm border border-gray-500 rounded-md">
-                  {address}
-                </div>
-      
-                <div className="flex gap-2 text-sm rounded-md">
-                  <Button className="w-full text-white bg-blue-500 rounded-md cursor-pointer " >Change Network</Button>
-                  <Button className="w-full text-white bg-red-500 rounded-md cursor-pointer" onClick={() => { disconnect(); setOpen2(!open2) }}>Disconnect</Button>
-                </div>
-                <div className="p-3 text-sm underline border border-gray-500 rounded-md">
-                  <a href={`https://sepolia.etherscan.io/address/${address}`} >View All Wallets Transactions </a>
-                </div>
-                <div className="flex justify-between p-3 text-sm border border-gray-500 rounded-md"><div>Verify Joseon ID</div><div className="underline">Learn More</div></div>
-                {/* <div className="flex justify-center p-3 text-sm border border-gray-500 rounded-md ">
-            <div className="flex justify-between w-1/2 ">
 
-              <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[2.5rem]"><Image src={github} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
-              <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[2.5rem]"><Image src={twitter} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} /></div></a>
-              <a href="https://t.co/Ck6x2jhVOj" target="_blank" ><div className="w-[2.5rem]"><Image src={discord} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
-            </div>
-          </div> */}
-                <div className="p-3 text-sm border border-gray-500 rounded-md">
-                  Terms & privacy policy <a href="" className="text-blue-500 underline">click to view</a>
+                <div className="flex flex-col gap-3">
+                  <div className="p-3 text-sm border border-gray-500 ">
+                    <div className="text-[0.8rem]"> USDa Balance</div>
+                    <div className="text-xl font-bold">${data?.formatted.slice(0, 8)}</div>
+                  </div>
+                  <div className="p-3 text-sm border border-gray-500 ">
+                    {address}
+                  </div>
+
+                  <div className="flex gap-2 text-sm ">
+                    <Button className="w-full text-white bg-blue-500 rounded-none cursor-pointer " >Change Network</Button>
+                    <Button className="w-full text-white bg-red-500 rounded-none cursor-pointer" onClick={() => { disconnect(); setOpen2(!open2) }}>Disconnect</Button>
+                  </div>
+                  <div className="p-3 text-sm underline border border-gray-500 rounded-md">
+                    <a href={`https://sepolia.etherscan.io/address/${address}`} >View All Wallets Transactions </a>
+                  </div>
+                  <div className="flex justify-between p-3 text-sm border border-gray-500 "><div>Verify Joseon ID</div><div className="underline">Learn More</div></div>
+                  <div className="p-3 text-sm border border-gray-500 ">
+                    Terms & privacy policy <a href="" className="text-blue-500 underline">click to view</a>
+                  </div>
                 </div>
-              </div>
               </div>
             </div>
 

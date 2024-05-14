@@ -57,49 +57,47 @@ export default function page() {
         queryFn: () => getCdsLeaderboard(),
       });
     return (
-        <div className='px-10 mt-5'>
+        <div className='px-8 py-5 w-[97%] m-auto bg-white shadow-custom border-[1px] border-[#9E9E9E] min-h-[80vh] '>
             <div className='overflow-hidden border-1 dark:border-none'>
-                <div className='bg-white dark:bg-[#141414] rounded-lg flex mb-5 gap-10 px-5 py-5 lg:px-10 lg:py-8 shadow-sm'>
-                        <div className='flex flex-col gap-2 pr-2 border-r-2 lg:pr-5'>
+                <div className=' dark:bg-[#141414] flex mb-5 gap-10 w-full '>
+                        <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
                             <div className='text-sm lg:text-normal' >Total number of borrowers</div>
                             <div className='text-xl font-semibold lg:text-3xl'>{Number(totalBorrowers)}</div>
                         </div>
-                        <div className='flex flex-col gap-2 pr-2 border-r-2 lg:pr-5'>
+                        <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
                         <div  className='text-sm lg:text-normal'>Total number of dcds depositors</div>
                             <div className='text-xl font-semibold lg:text-3xl'>{Number(cdsdeposit)}</div>
                         </div>
-                        <div className='flex flex-col gap-2 '>
+                        <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
                         <div  className='text-sm lg:text-normal'>Total Value Locked (TVL) </div>
                             <div className='text-xl font-semibold lg:text-3xl'>${formatNumber((Number(totalStable) / 10 ** 6) + Number(formatEther((ethLocked ?? 0n) / BigInt(100))))}</div>
                         </div>
                 </div>
-                {/* <h1 className='mb-2 text-3xl font-bold text-textPrimary dark:text-white'>Leaderboard</h1> */}
-                {/* <div className='w-[350px] mb-2'>
-                    <ul className="overflow-hidden text-sm font-medium text-center text-gray-500 shadow rounded-xl sm:flex dark:divide-gray-700 dark:text-gray-400">
-                        <li onClick={()=>setSelectedTab("borrow")} className="w-full focus-within:z-10">
-                            <a href="#" className="inline-block w-full p-2 text-gray-900 bg-gray-100 border-r border-gray-200 dark:border-gray-700 rounded-s-lg dark:bg-gray-700 dark:text-white" aria-current="page">Borrow</a>
-                        </li>
-                        <li onClick={()=>setSelectedTab("dcds")} className="w-full focus-within:z-10">
-                            <a href="#" className="inline-block w-full p-2 bg-white border-r border-gray-200 dark:border-gray-700 hover:text-gray-700 hover:bg-gray-50 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">dCDS</a>
-                        </li>
-                    </ul>
-                </div> */}
-                <div className='flex flex-col lg:flex-row w-full gap-5   p-4 bg-white rounded-lg  dark:bg-[#141414] shadow-sm'>
-                    <div className='w-full dark:bg-none'>
-                        <div className='my-2 text-xl font-bold text-center'>
-                            Borrow
+
+                <div className='flex flex-col lg:flex-row w-full gap-10 dark:bg-[#141414] shadow-custom  p-2 '>
+                    <div className='basis-1/2 dark:bg-none border border-[#020202] shadow-custom '>
+                        <div className=' text-3xl py-5 px-5 font-medium  bg-[linear-gradient(88.13deg,#CCFFDE_0%,#ABFFFF_99.86%)]'>
+                            Top Borrowers
                         </div>
                         <LeaderTable tableType='borrow' data={borrowdeposits ?? []}/>
                     </div>
-                    <div className='w-full dark:bg-none '>
-                        <div className='my-2 text-xl font-bold text-center'>
-                            dCDS
+
+                    <div className='basis-1/2 dark:bg-none border border-[#020202]  shadow-custom '>
+                        <div className='text-3xl py-5 px-5 font-medium bg-[linear-gradient(88.13deg,#FFCCF4_0%,#FFD8AB_99.86%)]'>
+                            Top dCDS Depositors
                         </div>
                         <LeaderTable tableType='cds' data={cdsdeposits ?? []}/>
                     </div>
                 </div>
 
             </div>
+
+
+
         </div>
     )
-}
+}/* Frame 72 */
+
+
+
+
