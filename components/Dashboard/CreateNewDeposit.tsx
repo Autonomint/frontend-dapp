@@ -9,7 +9,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-
 import { Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons";
 import {
   Select,
@@ -543,12 +542,11 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
 
                             <FormControl className="py-5 rounded-none" >
                               <SelectTrigger>
-                                <SelectValue placeholder="Select" />
+                                <SelectValue placeholder="Collateral" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent className="text-white bg-[#020202] rounded-none">
                               <SelectGroup >
-                                <SelectLabel>Collateral</SelectLabel>
                                 <SelectItem className="text-white bg-[#020202] rounded-none" value="eth">ETH</SelectItem>
                               </SelectGroup>
                             </SelectContent>
@@ -577,7 +575,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
               
 
               <div className="flex items-center gap-2 mt-2 ">
-                <div className="text-xs  text-textHighlight dark:text-[#DEDEDE] ">
+                <div className="text-sm  text-textHighlight dark:text-[#DEDEDE] ">
                   Surrender Upside Price
                   <TooltipProvider>
                     <Tooltip>
@@ -592,8 +590,8 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                   :
                 </div>
                 <div className="flex gap-4">
-                  <div onClick={() => form.setValue("strikePrice", 5)} className={`p-[1px] ${form.getValues("strikePrice") == 5 ? "border-black  text-black font-medium" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"}  text-xs border  w-[2.5rem] text-center cursor-pointer `}>5%</div>
-                  <div onClick={() => form.setValue("strikePrice", 10)} className={`p-[1px] ${form.getValues("strikePrice") == 10 ? "border-black text-black font-medium" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"} text-xs border w-[2.5rem] text-center  cursor-pointer `}>10%</div>
+                  <div onClick={() => form.setValue("strikePrice", 5)} className={`p-[1px] ${form.getValues("strikePrice") == 5 ? "border-black border-2  text-black font-medium" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"}  text-sm border  w-[2.5rem] text-center cursor-pointer `}>5%</div>
+                  <div onClick={() => form.setValue("strikePrice", 10)} className={`p-[1px] ${form.getValues("strikePrice") == 10 ? "border-black border-2 text-black font-medium" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"} text-sm border w-[2.5rem] text-center  cursor-pointer `}>10%</div>
                 </div>
               </div>
               <div className='relative  bg-[#ffffff] dark:bg-[#020202] border-[#020202] border-[1px] dark:border-[#00B655]    rounded-none py-1 px-2'>
@@ -633,8 +631,8 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
               <div className="relative container flex px-0  mx-auto border-[1px] border-[#020202] dark:bg-[linear-gradient(270deg,#16603B_0%,#0D4A5C_100%)]  dark:border-gray-700 ">
             <div className="absolute flex w-full h-8 ">
               <div style={{  background: 'linear-gradient(to bottom, #0029AC 1%, #6185F8 2%, white 80%)'}} className="w-[78%] h-8 "></div>
-              <div style={{  background: 'linear-gradient(to bottom, #AA0001 1%, #F69596 4%, white 90%)'}} className="w-[2%] h-8 "></div>
-              <div style={{  background: 'linear-gradient(to bottom, #006733 1%, #A1F9CD 2%, white 90%)'}} className="w-[21%] h-8"></div>
+              <div style={{  background: 'linear-gradient(to bottom, #AA0001 1%, #F69596 2%, white 80%)'}} className="w-[2%] h-8 "></div>
+              <div style={{  background: 'linear-gradient(to bottom, #006733 1%, #A1F9CD 2%, white 80%)'}} className="w-[21%] h-8"></div>
             </div>
                 <div className="w-full p-4 mt-3 border-r dark:border-gray-700 dark:bg-none">
                   <h2 className="mb-2  text-black font-medium text-md dark:text-[#DEDEDE]">100% LTV</h2>
@@ -642,7 +640,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                     <div className="w-full ">
                       <p className="text-sm text-gray-600 flex justify-between dark:text-[#DEDEDE] py-1 border-b border-[#9E9E9E] "><div>Deposit:</div> <div className="text-black">{(Number(ethPrice) / 100 * Number(form.getValues("collateralAmount"))).toFixed(2)}</div></p>
                       <p className="w-full text-gray-600 text-sm flex justify-between  py-1 border-b border-[#9E9E9E]  "><div>Option Fee :</div> <div className="text-[#ff6d6d]">{optionFees.toFixed(2)}</div></p>
-                      <p className="text-sm text-gray-600  flex justify-between py-1 border-b border-[#9E9E9E] "><div>USDa borrowed :</div> <div className="text-[#007AFF]">{amintToBeMinted}</div></p>
+                      <p className="text-sm text-gray-600  flex justify-between py-1 border-b border-[#9E9E9E] "><div>USDa borrowed :</div> <div className="text-[#007AFF]">{Number(amintToBeMinted).toFixed(2)}</div></p>
                       <p className="flex justify-between py-1 text-sm text-gray-600"><div>Downside Protection <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger type="button">
@@ -652,7 +650,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                             <p>Hedge your collateral price drop to maintain high LTV</p>
                           </TooltipContent>
                         </Tooltip>
-                      </TooltipProvider>:</div> <div className="text-[#00b564] ">{downsideProtectionAmnt}</div></p>
+                      </TooltipProvider>:</div> <div className="text-[#00b564] ">{Number(downsideProtectionAmnt).toFixed(2)}</div></p>
                     </div>
                   </div>
                 </div>

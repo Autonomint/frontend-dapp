@@ -14,9 +14,8 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import darkmoon from "@/app/assets/darkmoon.svg";
 import sunlight from "@/app/assets/sunlight.svg";
 import dashboard from "@/app/assets/dashboard.svg";
-import twitter from "@/app/assets/twitter.svg";
-import discord from "@/app/assets/discord.svg";
-import github from "@/app/assets/github.svg";
+
+import walleticon from "@/app/assets/link.svg";
 import currencyExchange from "@/app/assets/currency_exchange.svg";
 import derivatives from "@/app/assets/toll.svg";
 import mintmark from "@/app/assets/mintmark.svg";
@@ -35,7 +34,7 @@ import {
 } from "@/components/ui/dialog";
 import { ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
-
+import truncateWeb3WalletAddress from "@/app/utils/truncateWeb3Address";
 
 function formatNumber(num: number) {
   if (num >= 1000000) {
@@ -152,10 +151,10 @@ const NavBar = () => {
           <div className="flex ">
               <label className="relative inline-flex items-center cursor-pointer ">
                 <input type="checkbox" value="" className="sr-only peer" onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")} checked={resolvedTheme === "dark" ? true : false} />
-                <div className="relative w-10 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#3e61baa2]"></div>
+                <div className="relative w-10 h-5 border border-black bg-white peer-focus:outline-none    peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[0px] after:start-[0px] after:bg-[#ABFFDE]  after:border after:h-full after:border-black after:w-5 after:transition-all dark:border-gray-600 "></div>
 
                 <div className="absolute  dark:right-[1px] ">
-                  {resolvedTheme === "light" ? <Image src={sunlight} width={25} alt="" /> : <Image src={darkmoon} width={15} alt="" />}
+                  {resolvedTheme === "light" ? (<div className="bg-[#ABFFDE]"></div>) : (<div className="bg-[#ABFFDE]"></div>) }
                 </div>
               </label>
             </div>
@@ -163,8 +162,8 @@ const NavBar = () => {
               <Image src={notification} className="rounded-sm cursor-pointer " onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
             </div> */}
           {isConnected ? (
-            <div className="px-5 flex gap-2- py-1 pt-2 mt-3 h-fit text-sm font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
-              <div className="w-[1.5rem] "><Image src={profile} alt="autonomint-dapp" className="rounded-sm cursor-pointer " onClick={() => setOpen2(!open2)} style={{ width: "100%", height: "100%" }} /> </div>Profile
+            <div onClick={() => setOpen2(!open2)} className="px-5 flex gap-2 py-1 pt-2 mt-3 h-fit text-sm font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+              <div className="w-[1.5rem] -mt-[2px] "><Image src={walleticon} alt="autonomint-dapp" className="rounded-sm cursor-pointer "  style={{ width: "100%", height: "100%" }} /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
             </div>
           ) : (
             <div  className="px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
@@ -207,7 +206,7 @@ const NavBar = () => {
                 <li>
                   {isConnected ? (
                     <div className="w-[2rem] text-md ml-2 gap-2 text-white font-semibold flex  items-center">
-                      Profile <Image src={profile} alt="autonomint-dapp" className="rounded-sm cursor-pointer " onClick={() => setOpen2(!open2)} style={{ width: "100%", height: "100%" }} />
+                      Profile <Image src={walleticon} alt="autonomint-dapp" className="rounded-sm cursor-pointer " onClick={() => setOpen2(!open2)} style={{ width: "100%", height: "100%" }} />
                     </div>
                   ) : (
                     ""
@@ -236,31 +235,38 @@ const NavBar = () => {
 
         {
           open2 ? (
-            <div className=" fixed  w-auto dark:bg-[#141414] right-5 top-[4rem] border dark:border-gray-600 bg-white px-4 py-4 pt-2 shadow-xl">
+            <div className=" fixed  border-black  w-auto dark:bg-[#141414] right-5 top-[4rem] border dark:border-gray-600 bg-white px-4 py-4 pt-2 shadow-xl">
               <div className="flex items-center justify-end w-full mb-2 ">
-                <button onClick={() => setOpen2(!open2)} className="p-1 border border-black rounded-full dark:border-white dark:white"><Cross2Icon className="w-4 h-4" /></button>
+                <button onClick={() => setOpen2(!open2)} className="p-1 border border-black dark:border-white dark:white hover:bg-gray-200"><Cross2Icon className="w-4 h-4" /></button>
               </div>
               <div className="flex flex-col gap-4">
 
                 <div className="flex flex-col gap-3">
-                  <div className="p-3 text-sm border border-gray-500 ">
-                    <div className="text-[0.8rem]"> USDa Balance</div>
-                    <div className="text-xl font-bold">${data?.formatted.slice(0, 8)}</div>
-                  </div>
-                  <div className="p-3 text-sm border border-gray-500 ">
+                  <div className="p-3 text-sm border  bg-[#DEDEDE]">
                     {address}
+                  </div>
+                  <div className="p-3 relative text-sm border  bg-[#DEDEDE]">
+                    <div className="text-[0.8rem]"> USDa Balance</div>
+                    <div className="absolute flex items-center gap-2 text-xs top-3 right-2">
+                      <div className="h-4 w-4 bg-[#93F3BA] rounded-full flex items-center justify-center">
+                        <div className="h-2 w-2 bg-[#009350] rounded-full"></div>
+                      </div>
+                      {chainId === 11155111?"Ethereum Sepolia ": chainId === 8453 ?"Base Sepolia":"unsupported network"}
+              
+                    </div>
+                    <div className="text-xl font-bold">${data?.formatted.slice(0, 8)}</div>
                   </div>
 
                   <div className="flex gap-2 text-sm ">
-                    <Button className="w-full text-white bg-blue-500 rounded-none cursor-pointer " >Change Network</Button>
-                    <Button className="w-full text-white bg-red-500 rounded-none cursor-pointer" onClick={() => { disconnect(); setOpen2(!open2) }}>Disconnect</Button>
+                    <Button  className="text-[white]  w-full relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#020202] py-2" >Change Network</Button>
+                    <Button className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 " onClick={() => { disconnect(); setOpen2(!open2) }}>Disconnect</Button>
                   </div>
-                  <div className="p-3 text-sm underline border border-gray-500 rounded-md">
+                  <div className="p-3 text-sm underline border  bg-[#DEDEDE]">
                     <a href={`https://sepolia.etherscan.io/address/${address}`} >View All Wallets Transactions </a>
                   </div>
-                  <div className="flex justify-between p-3 text-sm border border-gray-500 "><div>Verify Joseon ID</div><div className="underline">Learn More</div></div>
-                  <div className="p-3 text-sm border border-gray-500 ">
-                    Terms & privacy policy <a href="" className="text-blue-500 underline">click to view</a>
+                  <div className="flex justify-between p-3 text-sm border  bg-[#DEDEDE]"><div>Verify Joseon ID</div><div className="underline">Learn More</div></div>
+                  <div className="p-3 text-sm border  bg-[#DEDEDE]">
+                    Terms & privacy policy <a href="" target="_blank" className="text-black underline">click to view</a>
                   </div>
                 </div>
               </div>
@@ -269,10 +275,6 @@ const NavBar = () => {
           ) : ("")
         }
 
-
-
-
-
       </div >
     </div>
 
@@ -280,6 +282,8 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
+
 {/* <Dialog open={isConnected && open2} onOpenChange={setOpen2}  >
 <DialogContent className="max-w-[400px] pb-5 backdrop:bg-none absolute right-2">
   <div className="flex justify-end w-full ">

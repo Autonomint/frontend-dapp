@@ -29,6 +29,8 @@ import CustomToast from "@/components/CustomUI/CustomToast";
 import { useAccount, useWaitForTransaction, useBalance, useChainId } from 'wagmi';
 import Spinner from '@/components/ui/spinner';
 import { formatEther } from 'viem';
+import Image from 'next/image';
+import swapArrow from "@/app/assets/swap_vert.svg"; 
 const formSchema = z.object({
   inputCollateral: z.string(),
   collateralAmount: z
@@ -622,347 +624,272 @@ export default function page() {
   }
 
   return (
-    <div className='w-[600px] mx-auto mt-5 h-auto bg-white dark:bg-[#141414] shadow-lg rounded-md p-4'>
-      <div className="justify-center  align-middle dark:bg-[#141414] ">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full gap-4 ' action="#">
-            <div className='text-xl font-bold '>
-              Bridge USDa
-            </div>
+    <div className='w-full px-5 '>
+      <div className='w-full bg-white shadow-custom min-h-[82vh]'>
 
-            <div>
-              <div className='mb-2'>
-                Transfer from:
-              </div>
-              <FormField
-                control={form.control}
-                name="inputCollateral"
-                render={() => (
-                  <FormItem className=' mb-1  right-2  basis-2/5 dark:bg-[#020202] w-full'>
-                    <Controller
+        <div className='w-[600px] mx-auto h-auto  dark:bg-[#141414] pt-10 p-4'>
+          <div className="justify-center  align-middle dark:bg-[#141414] ">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full gap-4 ' action="#">
+                <div >
+                  <div className='flex justify-between w-full mb-1 text-xs'>
+                    <div className='flex items-center gap-2'>
+                      <div className="h-4 w-4 bg-[#93F3BA] rounded-full flex items-center justify-center">
+                        <div className="h-2 w-2 bg-[#009350] rounded-full"></div>
+                      </div>
+                      {chainId === 11155111 ? "Ethereum Sepolia " : chainId === 8453 ? "Base Sepolia" : "unsupported network"}
+                    </div>
+                    <div className='flex items-center '>
+                      Bal. <span className='ml-2 font-semibold'>  3.2 ETH</span>
+                    </div>
+                    <div className='text-[#020202] px-3 py-1 relative rounded-none  border-0 border-b-2 border-[#020202] bg-[#DEDEDE]'>
+                      max
+                    </div>
+                  </div>
+                  <div className='  relative flex  dark:bg-[#020202]'>
+                    <FormField
                       control={form.control}
                       name="inputCollateral"
-                      render={({ field }) => (
-                        <Select
-                          onValueChange={(value) => {
-                            form.setValue("collateralAmount", 0);
-                            if (value === 'amint') {
-                              form.setValue('outputCollateral', 'usdt');
-                            } else if (value === 'abond') {
-                              form.setValue('outputCollateral', 'eth');
-                            }
-                            field.onChange(value)
+                      render={() => (
+                        <FormItem className='  basis-2/6 bg-[#020202] '>
+                          <Controller
+                            control={form.control}
+                            name="inputCollateral"
+                            render={({ field }) => (
+                              <Select
+                                onValueChange={(value) => {
+                                  form.setValue("collateralAmount", 0);
+                                  if (value === 'amint') {
+                                    form.setValue('outputCollateral', 'usdt');
+                                  } else if (value === 'abond') {
+                                    form.setValue('outputCollateral', 'eth');
+                                  }
+                                  field.onChange(value)
 
-                          }}
+                                }}
 
-                          value={field.value}
-                        >
-                          {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
+                                value={field.value}
+                              >
+                                {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
 
-                          <FormControl className='bg-white dark:bg-[#020202] p-2' >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select Network" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>Collateral</SelectLabel>
-                              <SelectItem value="amint">Ethereum</SelectItem>
-                              <SelectItem value="abond">Polygon</SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
+                                <FormControl className='bg-[#020202] text-white py-5 rounded-none' >
+                          <SelectTrigger >
+                            <SelectValue placeholder="Collateral" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className='bg-[#020202] rounded-none text-white'>
+                          <SelectGroup>
+                            <SelectItem value="amint">USDa</SelectItem>
+                            <SelectItem value="abond">ABOND</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
 
-                        </Select>
+                              </Select>
+                            )}
+                          />
+                          <FormMessage />
+                        </FormItem>
                       )}
                     />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className='  relative  rounded-xl dark:bg-[#020202]'>
+                    <FormField
+                      control={form.control}
+                      name="collateralAmount"
+                      render={({ field }) => (
+                        <FormItem className="relative basis-4/6 ">
+                          {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
 
-                <FormField
-                  control={form.control}
-                  name="collateralAmount"
-                  render={({ field }) => (
-                    <FormItem className="relative ">
-                      {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
+                          <FormControl>
+                    <div className="relative">
+                      <Input
+                        type="number"
+                        step="any"
+                        // placeholder="Input Amount"
+                        placeholder=""
 
-                      <FormControl>
-                        <div className="relative">
-                          <Input
-                            type="number"
-                            step="any"
-                            // placeholder="Input Amount"
-                            placeholder=""
+                        {...field}
+                        value={Boolean(field.value) ? field.value : ""}
+                        className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655] border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                        style={{
+                          appearance: 'textfield',
+                          MozAppearance: 'textfield',
+                          WebkitAppearance: 'none',
+                          margin: 0
+                        }}
+                      ></Input>
+                      <label
+                        htmlFor="amount_of_usdt"
+                        className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                      >
+                        Input Amount
+                      </label>
+                    </div>
+                  </FormControl>
+                          <FormMessage className="dark:text-[#B43939]" />
+                        </FormItem>
+                      )}
+                    />
 
-                            {...field}
-                            value={Boolean(field.value) ? field.value : ""}
-                            className="w-full px-2 py-12 text-sm text-gray-900 bg-[#f3f5f7] dark:bg-[#0f0f0f] border-[#00B655] dark:border-[#00B655] border-2 lock dark:text-white focus:outline-none focus:ring-0 peer"
-                            style={{
-                              appearance: 'textfield',
-                              MozAppearance: 'textfield',
-                              WebkitAppearance: 'none',
-                              margin: 0
-                            }}
-                          ></Input>
-                          <label
-                            htmlFor="amount_of_usdt"
-                            className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#f3f5f7] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
-                          >
-                            Input Amount
-                          </label>
-                        </div>
-                      </FormControl>
-                      <FormMessage className="dark:text-[#B43939]" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
+                  </div>
+                </div>
+                <div className='flex items-center justify-center my-4'>
 
-                  control={form.control}
-                  name="inputCollateral"
-
-                  render={() => (
-                    <FormItem className='absolute top-[25%]  right-2  basis-2/5 dark:bg-[#020202] w-32'>
-                      <Controller
-                        control={form.control}
-                        name="inputCollateral"
-                        render={({ field }) => (
-                          <Select
-                            onValueChange={(value) => {
-                              form.setValue("collateralAmount", 0);
-                              if (value === 'amint') {
-                                form.setValue('outputCollateral', 'usdt');
-                              } else if (value === 'abond') {
-                                form.setValue('outputCollateral', 'eth');
-                              }
-                              field.onChange(value)
-
-                            }}
-
-                            value={field.value}
-                          >
-                            {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
-
-                            <FormControl className='bg-white dark:bg-[#020202]' >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select Token" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Collateral</SelectLabel>
-                                <SelectItem value="amint">AMINT</SelectItem>
-                                <SelectItem value="abond">ABOND</SelectItem>
-                              </SelectGroup>
-                            </SelectContent>
-
-                          </Select>
-                        )}
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
+                  <div className='w-20 h-20 p-5 bg-[#DEDEDE] rounded-full'>
+                      <Image src={swapArrow} alt="arrow" className="w-full h-full" />
+                  </div>
+                </div>
 
 
-            <div className='mt-5'>
-            <div className='mb-2'>
-               Transfer to:
-              </div>
-              <FormField
-                control={form.control}
-                name="inputCollateral"
-                render={() => (
-                  <FormItem className='mb-1  right-2  basis-2/5 dark:bg-[#020202] w-full'>
-                    <Controller
+                <div className=''>
+
+                  <div className='flex justify-between w-full mb-1 text-xs'>
+                    <div className='flex items-center gap-2'>
+                      <div className="h-4 w-4 bg-[#93F3BA] rounded-full flex items-center justify-center">
+                        <div className="h-2 w-2 bg-[#009350] rounded-full"></div>
+                      </div>
+                      {chainId === 11155111 ? "Ethereum Sepolia " : chainId === 8453 ? "Base Sepolia" : "unsupported network"}
+                    </div>
+
+                  </div>
+                  <div className='  relative flex  dark:bg-[#020202]'>
+                    <FormField
                       control={form.control}
                       name="inputCollateral"
-                      render={({ field }) => (
-                        <Select
-                          onValueChange={(value) => {
-                            form.setValue("collateralAmount", 0);
-                            if (value === 'amint') {
-                              form.setValue('outputCollateral', 'usdt');
-                            } else if (value === 'abond') {
-                              form.setValue('outputCollateral', 'eth');
-                            }
-                            field.onChange(value)
+                      render={() => (
+                        <FormItem className='  basis-2/6 bg-[#020202] '>
+                          <Controller
+                            control={form.control}
+                            name="inputCollateral"
+                            render={({ field }) => (
+                              <Select
+                                onValueChange={(value) => {
+                                  form.setValue("collateralAmount", 0);
+                                  if (value === 'amint') {
+                                    form.setValue('outputCollateral', 'usdt');
+                                  } else if (value === 'abond') {
+                                    form.setValue('outputCollateral', 'eth');
+                                  }
+                                  field.onChange(value)
 
-                          }}
+                                }}
 
-                          value={field.value}
-                        >
-                          {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
+                                value={field.value}
+                              >
+                                {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
 
-                          <FormControl className='bg-white dark:bg-[#020202]' >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select Network" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>Collateral</SelectLabel>
-                              <SelectItem value="amint">AMINT</SelectItem>
-                              <SelectItem value="abond">ABOND</SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
+                                <FormControl className='bg-[#020202] text-white py-5 rounded-none' >
+                          <SelectTrigger >
+                            <SelectValue placeholder="Collateral" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className='bg-[#020202] rounded-none text-white'>
+                          <SelectGroup>
+                            <SelectItem value="amint">USDa</SelectItem>
+                            <SelectItem value="abond">ABOND</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
 
-                        </Select>
+                              </Select>
+                            )}
+                          />
+                          <FormMessage />
+                        </FormItem>
                       )}
                     />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className='  relative  rounded-xl dark:bg-[#020202]'>
+                    <FormField
+                      control={form.control}
+                      name="collateralAmount"
+                      render={({ field }) => (
+                        <FormItem className="relative basis-4/6 ">
+                          {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
 
+                          <FormControl>
+                    <div className="relative">
+                      <Input
+                        type="number"
+                        step="any"
+                        // placeholder="Input Amount"
+                        placeholder=""
 
+                        {...field}
+                        value={Boolean(field.value) ? field.value : ""}
+                        className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655] border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                        style={{
+                          appearance: 'textfield',
+                          MozAppearance: 'textfield',
+                          WebkitAppearance: 'none',
+                          margin: 0
+                        }}
+                      ></Input>
+                      <label
+                        htmlFor="amount_of_usdt"
+                        className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                      >
+                        Input Amount
+                      </label>
+                    </div>
+                  </FormControl>
+                          <FormMessage className="dark:text-[#B43939]" />
+                        </FormItem>
+                      )}
+                    />
 
-                <FormField
-                  control={form.control}
-                  name="collateralAmount"
-                  render={({ field }) => (
-                    <FormItem className="relative ">
-                      {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
-
-                      <FormControl>
-                        <div className="relative">
-                          <Input
-                            type="number"
-                            step="any"
-                            // placeholder="Input Amount"
-                            placeholder=""
-
-                            {...field}
-                            value={Boolean(field.value) ? field.value : ""}
-                            className="w-full px-2 py-12 text-sm text-gray-900 bg-[#f3f5f7] dark:bg-[#0f0f0f] border-[#00B655] dark:border-[#00B655] border-2 lock dark:text-white focus:outline-none focus:ring-0 peer"
-                            style={{
-                              appearance: 'textfield',
-                              MozAppearance: 'textfield',
-                              WebkitAppearance: 'none',
-                              margin: 0
-                            }}
-                          ></Input>
-                          <label
-                            htmlFor="amount_of_usdt"
-                            className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#f3f5f7] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
-                          >
-                            Output Amount
-                          </label>
-                        </div>
-                      </FormControl>
-                      <FormMessage className="dark:text-[#B43939]" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-
-                  control={form.control}
-                  name="inputCollateral"
-
-                  render={() => (
-                    <FormItem className='absolute top-[25%]  right-2  basis-2/5 dark:bg-[#020202] w-32'>
-                      <Controller
-                        control={form.control}
-                        name="inputCollateral"
-                        render={({ field }) => (
-                          <Select
-                            onValueChange={(value) => {
-                              form.setValue("collateralAmount", 0);
-                              if (value === 'amint') {
-                                form.setValue('outputCollateral', 'usdt');
-                              } else if (value === 'abond') {
-                                form.setValue('outputCollateral', 'eth');
-                              }
-                              field.onChange(value)
-
-                            }}
-
-                            value={field.value}
-                          >
-                            {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
-
-                            <FormControl className='bg-white dark:bg-[#020202]' >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select Token" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Collateral</SelectLabel>
-                                <SelectItem value="amint">Ethereum</SelectItem>
-                                <SelectItem value="abond">Polygon</SelectItem>
-                              </SelectGroup>
-                            </SelectContent>
-
-                          </Select>
-                        )}
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-
-            <div className=''>
-
-              <div className="flex flex-col">
-
-                <div className="flex justify-between px-4 py-[10px] border-b border-lineGrey">
-                  <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm  dark:text-[#9E9E9E]">
-                    Gas on destination chain
-                  </p>
-                  <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
-                    --
-                  </p>
-                </div>
-                <div className="px-4 py-[10px] border-b border-lineGrey">
-                  <div className="flex justify-between ">
-                    <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textHighlight dark:text-[#9E9E9E]">
-                      Fee
-                    </p>
-                    <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
-                      --
-                    </p>
                   </div>
-                  
                 </div>
 
-                <div className="px-4 py-[10px] border-b border-lineGrey">
-                  <div className="flex justify-between ">
-                    <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textHighlight dark:text-[#9E9E9E]">
-                      Slipage tolerance
-                    </p>
-                    <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
-                      --
-                    </p>
+                <div className='bg-[#DEDEDE] shadow-custom px-4'>
+
+                  <div className="flex flex-col tracking-tighter">
+
+                    <div className="flex justify-between px-4 py-[10px]  border-b border-[#020202]">
+                      <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm  dark:text-[#9E9E9E]">
+                        Gas on destination chain
+                      </p>
+                      <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
+                        --
+                      </p>
+                    </div>
+                    <div className="px-4 py-[10px] border-b border-[#020202]">
+                      <div className="flex justify-between ">
+                        <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textHighlight dark:text-[#9E9E9E]">
+                          Fee
+                        </p>
+                        <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
+                          --
+                        </p>
+                      </div>
+
+                    </div>
+
+                    <div className="px-4 py-[10px] ">
+                      <div className="flex justify-between ">
+                        <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textHighlight dark:text-[#9E9E9E]">
+                          Slipage tolerance
+                        </p>
+                        <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
+                          --
+                        </p>
+                      </div>
+
+                    </div>
+
                   </div>
-                  
+
                 </div>
 
-              </div>
-
-            </div>
-
-            <Button
-              type="submit"
-              variant={"primary"}
-              className="py-2 text-white"
-              disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading}
-            >
-              {isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading ? <Spinner /> : "Bridge"}
-            </Button>
-          </form>
-        </Form>
-
+                <Button
+                  type="submit"
+                  variant={"primary"}
+                  className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
+                  disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading}
+                >
+                  {isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading ? <Spinner /> : "Bridge"}
+                </Button>
+              </form>
+            </Form>
+          </div>
+        </div>
       </div>
     </div>
-
 
   )
 }

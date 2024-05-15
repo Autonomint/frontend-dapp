@@ -21,11 +21,11 @@ export default function Footer() {
     const [openGetstart, setOpenGetstart] = React.useState(false);
     return (
         <div className='p-2 '>
-            <div className="relative flex justify-between gap-5 mx-auto lg:ml-5 3xl:fixed 3xl:bottom-5">
-            <div className="flex justify-center p-3 text-sm   rounded-md dark:bg-[#020202]">
+            <div className="relative flex justify-between gap-5 mx-auto lg:ml-5 ">
+                <div className="flex justify-center p-3 text-sm   rounded-md dark:bg-[#020202]">
                     <div className="flex justify-between w-40 ">
                         <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[1.8rem]"><Image src={github} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
-                        <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[1.7rem] "><Image src={twitter}  alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} /></div></a>
+                        <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[1.7rem] "><Image src={twitter} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} /></div></a>
                         <a href="https://t.co/Ck6x2jhVOj" target="_blank" ><div className="w-[1.9rem]"><Image src={discord} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
                     </div>
                 </div>
@@ -37,7 +37,7 @@ export default function Footer() {
                         Get Started
                     </div>
                 </div>
-              
+
                 {/* <div onClick={()=>setOpen2(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] border-2 border-gray-400 rounded-md cursor-pointer">
           Key Highlights
           </div> */}
@@ -47,7 +47,7 @@ export default function Footer() {
 
             <Dialog open={open2} onOpenChange={setOpen2} >
                 <DialogContent className="max-w-[800px]  pb-5">
-                    <div className="absolute flex justify-end right-5 top-2 ">
+                    <div className="flex justify-end right-5 top-2">
                         <DialogClose asChild>
                             <Button
                                 variant={"ghostOutline"}
@@ -61,12 +61,15 @@ export default function Footer() {
                             </Button>
                         </DialogClose>
                     </div>
-                    <Faq type={selectedTab} />
+                    <div className='-mt-5'>
+
+                        <Faq type={selectedTab} />
+                    </div>
                 </DialogContent>
             </Dialog>
 
             <Dialog open={openGetstart} onOpenChange={setOpenGetstart} >
-                <DialogContent className="max-w-[800px]  pb-5">
+                <DialogContent className="max-w-[800px] pb-5">
                     <div className="flex justify-end w-full ">
                         <DialogClose asChild>
                             <Button
@@ -81,20 +84,23 @@ export default function Footer() {
                             </Button>
                         </DialogClose>
                     </div>
-                    <DialogHeader className="flex items-start">
-                        <DialogTitle className="text-black  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-2xl text-xl ">
-                            <h1>Acuire ETH and Collateral</h1>
-                        </DialogTitle>
-                    </DialogHeader>
-                    <div className="pl-4">
-                        <div>
-                            <ol className="text-sm list-disc ">
-                                <li>Make sure you have some Sepolia ETH in your account to pay for gas. if not,grab some the <a href="">Sepolia Faucet.</a></li>
-                                <li>Grab some TUSDT and Eth to trade with from the USDa faucet.</li>
-                                <li>Click the button below to go deposit collateral and mint some stable coins!</li>
-                            </ol>
+                    <div className='-mt-5'>
+
+                        <DialogHeader className="flex items-start">
+                            <DialogTitle className="text-black  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-2xl text-xl ">
+                                <h1>Acuire ETH and Collateral</h1>
+                            </DialogTitle>
+                        </DialogHeader>
+                        <div className="pl-4">
+                            <div>
+                                <ol className="text-sm list-disc ">
+                                    <li>Make sure you have some Sepolia ETH in your account to pay for gas. if not,grab some the <a href="">Sepolia Faucet.</a></li>
+                                    <li>Grab some TUSDT and Eth to trade with from the USDa faucet.</li>
+                                    <li>Click the button below to go deposit collateral and mint some stable coins!</li>
+                                </ol>
+                            </div>
+                            <Button className="border-[#041A50] mt-4 bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 ">Start Trade Now</Button>
                         </div>
-                        <Button  className="border-[#041A50] mt-4 bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 ">Start Trade Now</Button>
                     </div>
 
                 </DialogContent>

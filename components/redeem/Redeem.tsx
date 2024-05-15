@@ -61,8 +61,8 @@ const formSchema = z.object({
 const Redeem = ({
   openRedeemableAssets
 }: {
-  openRedeemableAssets:Function
-}) =>  {
+  openRedeemableAssets: Function
+}) => {
 
 
   const { address: accountAddress } = useAccount();
@@ -640,29 +640,29 @@ const Redeem = ({
                   {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
 
                   <FormControl>
-                  <div className="relative">
-                    <Input
-                      type="number"
-                      step="any"
-                      // placeholder="Input Amount"
-                      placeholder=""
-                      
-                      {...field}
-                      value={Boolean(field.value) ? field.value : ""}
-                      className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655] border lock dark:text-white focus:outline-none focus:ring-0 peer"
-                      style={{
-                        appearance: 'textfield',
-                        MozAppearance: 'textfield',
-                        WebkitAppearance: 'none',
-                        margin: 0
-                      }}
-                    ></Input>
-                    <label
-                      htmlFor="amount_of_usdt"
-                      className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
-                    >
-                      Input Amount
-                    </label>
+                    <div className="relative">
+                      <Input
+                        type="number"
+                        step="any"
+                        // placeholder="Input Amount"
+                        placeholder=""
+
+                        {...field}
+                        value={Boolean(field.value) ? field.value : ""}
+                        className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655] border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                        style={{
+                          appearance: 'textfield',
+                          MozAppearance: 'textfield',
+                          WebkitAppearance: 'none',
+                          margin: 0
+                        }}
+                      ></Input>
+                      <label
+                        htmlFor="amount_of_usdt"
+                        className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                      >
+                        Input Amount
+                      </label>
                     </div>
                   </FormControl>
                   <FormMessage className="dark:text-[#B43939]" />
@@ -675,7 +675,7 @@ const Redeem = ({
               name="inputCollateral"
 
               render={() => (
-                <FormItem className=' basis-2/6 dark:bg-[#020202'>
+                <FormItem className=' basis-2/6 dark:bg-[#020202]'>
                   <Controller
                     control={form.control}
                     name="inputCollateral"
@@ -698,12 +698,11 @@ const Redeem = ({
 
                         <FormControl className='bg-[#020202] text-white py-5 rounded-none' >
                           <SelectTrigger >
-                            <SelectValue  placeholder="Select" />
+                            <SelectValue placeholder="Collateral" />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent className='bg-[#020202] text-white'>
+                        <SelectContent className='bg-[#020202] rounded-none text-white'>
                           <SelectGroup>
-                            <SelectLabel>Collateral</SelectLabel>
                             <SelectItem value="amint">USDa</SelectItem>
                             <SelectItem value="abond">ABOND</SelectItem>
                           </SelectGroup>
@@ -744,7 +743,7 @@ const Redeem = ({
                       <div className='w-28 p-2  text-center px-3 mr-1 border border-[#004795]'>USDa</div>
                     </div>
                   </div>
-                ) : <div className='flex items-center p-1 basis-3/5 text-[#004795] text-xl font-semibold'>Output Amount</div>
+                ) : <div className='flex items-center pt-1 basis-3/5 text-[#00679F] text-2xl font-semibold'>Output Amount</div>
               }
 
             </div>
@@ -755,24 +754,24 @@ const Redeem = ({
             note="Note: A withdrawal Fee of 2% will be applied."
           />
           <div className="flex w-full gap-5 ">
-              <Button
-                type="button"
-                onClick={() => openRedeemableAssets(true)}
-                variant={"primary"}
-                className="text-[#020202] rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
-                
-                >
-                { 'Redeemable Assets'}<Image src={arrowout} className="absolute right-5" alt="arrow" width={20} height={15} />
-              </Button>
-          <Button
-            type="submit"
-            variant={"primary"}
-            className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2"
-            disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading}
+            <Button
+              type="button"
+              onClick={() => openRedeemableAssets(true)}
+              variant={"primary"}
+              className="text-[#020202] relative rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
+
             >
-            {isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading ? <Spinner /> : "Redeem"}
-          </Button>
-            </div>
+              {'Redeemable Assets'}<Image src={arrowout} className="absolute right-5" alt="arrow" width={20} height={15} />
+            </Button>
+            <Button
+              type="submit"
+              variant={"primary"}
+              className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2"
+              disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading}
+            >
+              {isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading ? <Spinner /> : "Redeem"}
+            </Button>
+          </div>
         </form>
       </Form>
 

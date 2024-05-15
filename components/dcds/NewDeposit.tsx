@@ -1001,23 +1001,21 @@ const NewDeposit = ({
             <div className="flex w-full flex-col min-[1440px]:pt-[10px] 2dppx:pt-[15px] pt-[10px] min-[1440px]:gap-[20px] 2dppx:gap-[10px] min-[1280px]:gap-[16px] gap-[10px]">
               <div className="flex flex-col md:flex-row gap-[10px] items-center w-full justify-between ">
                 {
-                  usdtAmountDepositedTillNow < usdtLimit ? ("") : (
-                    <div>
+                   usdtAmountDepositedTillNow < usdtLimit ?(""): (
+                    <>
+                    <div className="flex w-full ">
                       <FormField
                         control={form.control}
-                 
-
                         name="AmintDepositAmount"
                         render={({ field }) => (
-                          <FormItem className={`${usdtAmountDepositedTillNow < usdtLimit ? "invisible w-full md:w-[48%]" : ""}  `}>
+                          <FormItem className="w-full" >
                             <FormControl>
-                              <div className="relative">
-                                <div className="relative">
+                                <div className="relative ">
                                   <Input
                                     inputMode="numeric"
                                     pattern="[0-9]*"
                                     type="text"
-                                    className="lock bg-white px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-0 peer"
+                                    className="w-full px-2 py-5 text-sm rounded-none text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655]  border lock dark:text-white focus:outline-none focus:ring-0 peer"
                                     placeholder=""
                                     {...field}
                                     value={field.value ?? ""}
@@ -1032,44 +1030,16 @@ const NewDeposit = ({
                                   </label>
 
                                 </div>
-                                <div className="absolute top-0 right-0 flex items-center h-full">
-                                  <Button
-                                    type="button"
-                                    variant={"outline"}
-                                    className="z-20 text-xs rounded-r-md"
-                                    disabled={
-                                      usdtAmountDepositedTillNow < usdtLimit
-                                        ? true
-                                        : false
-                                    }
-                                    onClick={() => {
-                                      amintAmnt !== undefined
-                                        ? amintAmnt !== 0
-                                          ? amintApprove({
-                                            args: [
-                                              (cdsAddress[11155111] as `0x${string}`),
-                                              BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
-                                            ],
-                                          })
-                                          : null
-                                        : null;
-                                    }}
-                                  >
-                                    {isAmintApproveLoading || isAmintTransactionLoading ? (
-                                      <Spinner className="w-5 h-5" />
-                                    ) : ("Approve")}
 
-                                  </Button>
-                                </div>
-                              </div>
                             </FormControl>
                             <span className=" block text-[10px] text-right mr-1">bal. {amintbal?.formatted.slice(0, 8)} AMINT</span>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
-                      <PlusIcon className={`${usdtAmountDepositedTillNow < usdtLimit ? "" : ""}`} width={16} height={16} />
                     </div>
+                    <PlusIcon className={` -mt-5`} width={35} height={50} />
+                    </>
                   )
                 }
 
@@ -1312,21 +1282,22 @@ const NewDeposit = ({
                   <FormField
                     control={form.control}
                     name="lockInPeriod"
+            
                     render={({ field }) => (
                       <FormItem>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
-
+                          
                         >
                           <FormControl
-                            className="bg-white py-1 border-[#020202] rounded-none dark:bg-[#0F0F0F]  dark:text-white"
+                            className="bg-white py-3 h-fit border-[#020202] rounded-none dark:bg-[#0F0F0F]  dark:text-white"
                           >
                             <SelectTrigger>
                               <SelectValue placeholder="Choose a Lock-In Period" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent className="dark:bg-[#0F0F0F]  bg-white  border-[#020202] rounded-none">
+                          <SelectContent className="dark:bg-[#0F0F0F] py-2 bg-white  border-[#020202] rounded-none">
                             <SelectGroup className="dark:bg-[#0F0F0F]">
                               <SelectLabel>Lock-In Period</SelectLabel>
                               <SelectItem value="30">30 Days</SelectItem>
@@ -1441,10 +1412,9 @@ const NewDeposit = ({
                 type="button"
                 onClick={() => openDeposits(true)}
                 variant={"primary"}
-                className="text-[#020202] rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
-                
+                className="text-[#020202] relative rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
                 >
-                { 'Open Positions'}<Image src={arrowout} className="absolute right-5" alt="arrow" width={20} height={15} />
+                { 'View Positions'}<Image src={arrowout} className="absolute right-5" alt="arrow" width={20} height={15} />
               </Button>
 
 
@@ -1481,18 +1451,7 @@ const NewDeposit = ({
                 </Button>
               </DialogClose>
             </div>
-            {/* <DialogHeader className="flex items-start">
-              <DialogTitle className="text-textPrimary  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl ">
-                <div className="flex flex-col gap-[10px] ">
-                  <h2 className="text-textPrimary dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
-                    Your Deposits
-                  </h2>
-                  <p className="text-textSecondary dark:text-[#EEEEEE]  text-sm min-[1440px]:text-base 2dppx:text-xs">
-                    A list of all the deposits you have made.
-                  </p>
-                </div>
-              </DialogTitle>
-            </DialogHeader> */}
+
             <ProductList />
 
           </DialogContent>

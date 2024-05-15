@@ -94,7 +94,7 @@ const [accordintype, setAccordintype] = useState(type);
     <div className="mx-auto max-w-[1440px] w-full px-4">
       <div className="">
         <div className="mb-[15px]">
-          <p className=" font-semibold text-[20px] text-[#808080]">
+          <p className=" font-semibold text-[20px] text-[#020202]">
             <button className={`mr-2 tracking-[2px] `} >{accordintype=="mint"?'Borrow & Mint FAQs':"dCDS FAQs "}  </button>
           </p>
         </div>

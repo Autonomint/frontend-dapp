@@ -57,7 +57,8 @@ export default function page() {
         queryFn: () => getCdsLeaderboard(),
       });
     return (
-        <div className='px-8 py-5 w-[97%] m-auto bg-white shadow-custom border-[1px] border-[#9E9E9E] min-h-[80vh] '>
+        <div className='w-full px-5'>
+        <div className='px-8 py-5 w-full bg-white shadow-custom border-[1px] border-[#9E9E9E] min-h-[80vh] '>
             <div className='overflow-hidden border-1 dark:border-none'>
                 <div className=' dark:bg-[#141414] flex mb-5 gap-10 w-full '>
                         <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
@@ -92,11 +93,11 @@ export default function page() {
 
             </div>
 
-
+            </div>
 
         </div>
     )
-}/* Frame 72 */
+}
 
 
 
