@@ -624,10 +624,10 @@ export default function page() {
   }
 
   return (
-    <div className='w-full px-5 '>
+    <div className='w-full px-2 sm:px-5 '>
       <div className='w-full bg-white shadow-custom min-h-[82vh]'>
 
-        <div className='w-[600px] mx-auto h-auto  dark:bg-[#141414] pt-10 p-4'>
+        <div className='w-[95%] sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[800px] mx-auto h-auto  dark:bg-[#141414] pt-10 p-1 sm:p-4'>
           <div className="justify-center  align-middle dark:bg-[#141414] ">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full gap-4 ' action="#">
@@ -733,7 +733,7 @@ export default function page() {
                 </div>
                 <div className='flex items-center justify-center my-4'>
 
-                  <div className='w-20 h-20 p-5 bg-[#DEDEDE] rounded-full'>
+                  <div className='w-20 h-20 p-5 bg-[#EEEEEE] rounded-full'>
                       <Image src={swapArrow} alt="arrow" className="w-full h-full" />
                   </div>
                 </div>

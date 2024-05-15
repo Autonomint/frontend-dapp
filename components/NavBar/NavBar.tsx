@@ -68,7 +68,7 @@ const navItemsList = [
   {
     image: mintmark,
     label: "Bridge",
-    href: "",
+    href: "bridge",
     targetSegment: "bridge",
   },
 ];
@@ -88,7 +88,7 @@ const NavBar = () => {
       : undefined,
     watch: true,
   });
-  
+
 
   const segment = useSelectedLayoutSegment();
   const [openMenu, setOpenMenu] = React.useState(false);
@@ -104,7 +104,7 @@ const NavBar = () => {
           </div>
           <div className="text-2xl font-medium tracking-tighter font-plex-mono text-[#041A50] dark:text-[#007AFF]">Autonomint</div>
         </div>
-        <div className="items-center justify-between invisible hidden w-0 mr-0 md:flex md:w-fit md:visible">
+        <div className="items-center justify-between invisible hidden w-0 mr-0 md:flex md:w-fit mdb:visible">
           <div className="flex justify-center ">
             <div className="flex md:gap-2 md:ml-10 lg:gap-5">
 
@@ -149,82 +149,101 @@ const NavBar = () => {
           </div> */}
 
           <div className="flex ">
-              <label className="relative inline-flex items-center cursor-pointer ">
-                <input type="checkbox" value="" className="sr-only peer" onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")} checked={resolvedTheme === "dark" ? true : false} />
-                <div className="relative w-10 h-5 border border-black bg-white peer-focus:outline-none    peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[0px] after:start-[0px] after:bg-[#ABFFDE]  after:border after:h-full after:border-black after:w-5 after:transition-all dark:border-gray-600 "></div>
+            <label className="relative items-center hidden cursor-pointer mdb:inline-flex ">
+              <input type="checkbox" value="" className="sr-only peer" onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")} checked={resolvedTheme === "dark" ? true : false} />
+              <div className="relative w-10 h-5 border border-black bg-white peer-focus:outline-none    peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[0px] after:start-[0px] after:bg-[#ABFFDE]  after:border after:h-full after:border-black after:w-5 after:transition-all dark:border-gray-600 "></div>
 
-                <div className="absolute  dark:right-[1px] ">
-                  {resolvedTheme === "light" ? (<div className="bg-[#ABFFDE]"></div>) : (<div className="bg-[#ABFFDE]"></div>) }
-                </div>
-              </label>
-            </div>
-            {/* <div className="w-[2rem] h-[3rem]">
+              <div className="absolute  dark:right-[1px] ">
+                {resolvedTheme === "light" ? (<div className="bg-[#ABFFDE]"></div>) : (<div className="bg-[#ABFFDE]"></div>)}
+              </div>
+            </label>
+          </div>
+          {/* <div className="w-[2rem] h-[3rem]">
               <Image src={notification} className="rounded-sm cursor-pointer " onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
             </div> */}
           {isConnected ? (
-            <div onClick={() => setOpen2(!open2)} className="px-5 flex gap-2 py-1 pt-2 mt-3 h-fit text-sm font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
-              <div className="w-[1.5rem] -mt-[2px] "><Image src={walleticon} alt="autonomint-dapp" className="rounded-sm cursor-pointer "  style={{ width: "100%", height: "100%" }} /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
+            <div onClick={() => setOpen2(!open2)} className="px-5 hidden mdb:flex gap-2 py-1 pt-2 mt-3 h-fit text-sm font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+              <div className="w-[1.5rem] -mt-[2px] "><Image src={walleticon} alt="autonomint-dapp" className="rounded-sm cursor-pointer " style={{ width: "100%", height: "100%" }} /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
             </div>
           ) : (
-            <div  className="px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
-                        Connect Wallet
-                    </div>
+            <div className="hidden mdb:flex px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+              Connect Wallet
+            </div>
           )}
+          <div className="right-0 flex items-center justify-center top-2 mdb:hidden">
+
+            <button onClick={() => setShowMore(!showMore)} data-collapse-toggle="navbar-hamburger" type="button" className="flex  shadow-custom items-center justify-center w-10 h-10 text-sm text-[#c7c2c2] bg-white border border-[#9E9E9E] dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-hamburger" aria-expanded="false">
+              <span className="sr-only">Open main menu</span>
+              <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+              </svg>
+            </button>
+          </div>
 
         </div>
 
-        <div className="absolute right-0 flex items-center justify-center mr-3 top-2 md:hidden">
 
-          <button onClick={() => setShowMore(!showMore)} data-collapse-toggle="navbar-hamburger" type="button" className="flex items-center justify-center w-10 h-10 text-sm text-white border rounded-lg dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-hamburger" aria-expanded="false">
-            <span className="sr-only">Open main menu</span>
-            <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 17 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
-            </svg>
-          </button>
-        </div>
         {
           showMore ? (
-            <div className="absolute w-[250px] right-0 top-16 h-screen bg-[linear-gradient(180deg,_#00679F_0%,#041A50_100%)]  border-black" id="navbar-hamburger">
+            <div className="absolute w-[220px] right-0 p-2 h-screen bg-[#EEEEEE]  border-black" id="navbar-hamburger">
+              <button onClick={() => setShowMore(!showMore)} data-collapse-toggle="navbar-hamburger" type="button" className="flex  shadow-custom items-center justify-center w-10 h-10 text-sm text-[#c7c2c2] bg-white border border-[#9E9E9E] dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-hamburger" aria-expanded="false">
+                <Cross2Icon className="w-5 h-5 text-black" />
+              </button>
               <ul className="flex flex-col font-medium rounded-lg dark:border-gray-700">
-                <li>
-                  <a href="#" className="block px-3 py-2 font-semibold text-white text-md" aria-current="page">Home Page</a>
-                </li>
-                <li>
-                  <a href="#" className="block px-3 py-2 font-semibold text-white rounded text-md hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Dashboard</a>
-                </li>
-                <li>
-                  <a href="#" className="block px-3 py-2 font-semibold text-white rounded text-md 0 hover:bg-gray-100 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white">Leaderboard</a>
-                </li>
+                {navItemsList.map((item) => {
+                  const isActive = segment;
+                  return (
+                    <Link
+                      className={
+                        isActive === item.targetSegment
+                          ? " text-[14px] 2xl:text-normal font-semibold  dark:border-white  dark:text-white"
+                          : "  "
+                      }
+                      href={item.href}
+                      key={item.href}
+                      onClick={() => setOpenMenu(false)
+                      }
+                    >
+                      <NavItems
+                        props={{
+                          label: item.label,
+                        }}
+                      />
+                    </Link>
+                  );
+                })}
 
               </ul>
-              <div className="h-[2px] bg-gray-300 my-10"></div>
+              <div className="h-[2px] bg-gray-300 my-5"></div>
               <ul className="flex flex-col gap-3 font-medium rounded-lg dark:border-gray-700">
 
-                <li className="w-[2rem] text-md ml-2 text-white font-semibold flex  items-center"> Notifications
-                  <Image src={notification} fill={false} className="rounded-sm cursor-pointer " onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
-                </li>
+
                 <li>
                   {isConnected ? (
-                    <div className="w-[2rem] text-md ml-2 gap-2 text-white font-semibold flex  items-center">
-                      Profile <Image src={walleticon} alt="autonomint-dapp" className="rounded-sm cursor-pointer " onClick={() => setOpen2(!open2)} style={{ width: "100%", height: "100%" }} />
+                    <div onClick={() => setOpen2(!open2)} className="px-5 flex gap-2 py-1 pt-2 h-fit text-sm font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+                      <div className="w-[1.5rem] -mt-[2px] "><Image src={walleticon} alt="autonomint-dapp" className="rounded-sm cursor-pointer " style={{ width: "100%", height: "100%" }} /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
                     </div>
                   ) : (
-                    ""
+                    <div className="hidden mdb:flex px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+                      Connect Wallet
+                    </div>
                   )}
                 </li>
                 <li className="flex gap-2">
-                  <h2 className="ml-2 font-semibold text-white text-md">
+                  <h2 className="ml-2 font-semibold text-black text-md">
 
                     {resolvedTheme === "light" ? "Light" : "Dark"}
                   </h2>
-                  <label className="relative inline-flex items-center ml-2 cursor-pointer ">
-                    <input type="checkbox" value="" className="sr-only peer" onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")} checked={resolvedTheme === "dark" ? true : false} />
-                    <div className="relative w-10 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#3e61baa2]"></div>
+                  <div className="flex">
+                    <label className="relative items-center cursor-pointer mdb:inline-flex ">
+                      <input type="checkbox" value="" className="sr-only peer" onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")} checked={resolvedTheme === "dark" ? true : false} />
+                      <div className="relative w-10 h-5 border border-black bg-white peer-focus:outline-none    peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[0px] after:start-[0px] after:bg-[#ABFFDE]  after:border after:h-full after:border-black after:w-5 after:transition-all dark:border-gray-600 "></div>
 
-                    <div className="absolute  dark:right-[1px] ">
-                      {resolvedTheme === "light" ? <Image src={sunlight} width={25} alt="" /> : <Image src={darkmoon} width={15} alt="" />}
-                    </div>
-                  </label>
+                      <div className="absolute  dark:right-[1px] ">
+                        {resolvedTheme === "light" ? (<div className="bg-[#ABFFDE]"></div>) : (<div className="bg-[#ABFFDE]"></div>)}
+                      </div>
+                    </label>
+                  </div>
                 </li>
 
               </ul>
@@ -235,7 +254,7 @@ const NavBar = () => {
 
         {
           open2 ? (
-            <div className=" fixed  border-black  w-auto dark:bg-[#141414] right-5 top-[4rem] border dark:border-gray-600 bg-white px-4 py-4 pt-2 shadow-xl">
+            <div className=" fixed w-[100%] border-black  sm:w-auto dark:bg-[#141414] sm:right-5 sm:top-[4rem] right-0 top-0 border dark:border-gray-600 bg-white px-4 py-4 pt-2 shadow-xl">
               <div className="flex items-center justify-end w-full mb-2 ">
                 <button onClick={() => setOpen2(!open2)} className="p-1 border border-black dark:border-white dark:white hover:bg-gray-200"><Cross2Icon className="w-4 h-4" /></button>
               </div>
@@ -251,14 +270,14 @@ const NavBar = () => {
                       <div className="h-4 w-4 bg-[#93F3BA] rounded-full flex items-center justify-center">
                         <div className="h-2 w-2 bg-[#009350] rounded-full"></div>
                       </div>
-                      {chainId === 11155111?"Ethereum Sepolia ": chainId === 8453 ?"Base Sepolia":"unsupported network"}
-              
+                      {chainId === 11155111 ? "Ethereum Sepolia " : chainId === 8453 ? "Base Sepolia" : "unsupported network"}
+
                     </div>
                     <div className="text-xl font-bold">${data?.formatted.slice(0, 8)}</div>
                   </div>
 
                   <div className="flex gap-2 text-sm ">
-                    <Button  className="text-[white]  w-full relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#020202] py-2" >Change Network</Button>
+                    <Button className="text-[white]  w-full relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#020202] py-2" >Change Network</Button>
                     <Button className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 " onClick={() => { disconnect(); setOpen2(!open2) }}>Disconnect</Button>
                   </div>
                   <div className="p-3 text-sm underline border  bg-[#DEDEDE]">

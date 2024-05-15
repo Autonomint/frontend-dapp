@@ -21,7 +21,7 @@ export default function Footer() {
     const [openGetstart, setOpenGetstart] = React.useState(false);
     return (
         <div className='p-2 '>
-            <div className="relative flex justify-between gap-5 mx-auto lg:ml-5 ">
+            <div className="relative flex flex-col flex-col-reverse justify-between gap-2 mx-auto sm:flex-row mdb-5 lg:ml-5 ">
                 <div className="flex justify-center p-3 text-sm   rounded-md dark:bg-[#020202]">
                     <div className="flex justify-between w-40 ">
                         <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[1.8rem]"><Image src={github} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
@@ -29,7 +29,7 @@ export default function Footer() {
                         <a href="https://t.co/Ck6x2jhVOj" target="_blank" ><div className="w-[1.9rem]"><Image src={discord} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
                     </div>
                 </div>
-                <div className="flex items-center gap-5 mr-2">
+                <div className="flex items-center justify-center w-full gap-5 mr-2 border sm:justify-normal sm:w-auto ">
                     <div onClick={() => setOpen2(!open2)} className="px-8 py-2 h-fit text-sm font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
                         ? FAQs
                     </div>

@@ -18,7 +18,7 @@ const ConfirmNoticeCds = ({
 }) => {
   const [switchOn, setSwitchOn] = React.useState(false);
   return (
-    <div className="p-4 rounded-[6px] border border-[#004795] bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] flex flex-col min-[1440px]:gap-[15px] gap-2 2dppx:gap-2">
+    <div className="p-4 border border-[#020202] bg-[#eeeeee]  flex flex-col min-[1440px]:gap-[15px] gap-2 2dppx:gap-2">
         {optedForLiquidation ?(
           <div className="flex items-center justify-between w-full gap-5">
         <p className="min-[1440px]:text-base text-xs 2dppx:text-xs text-textGrey font-normal ">
@@ -47,7 +47,7 @@ const ConfirmNoticeCds = ({
       </div>
       <Button
         variant={"primary"}
-        className="text-white"
+        className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
         onClick={handleWithdrawal}
         disabled={setLoding}
       >

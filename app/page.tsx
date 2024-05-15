@@ -48,9 +48,9 @@ export default function Home() {
       {/* Main area */}
       {/* <WalletOrContent/> */}
 
-      <div className="static min-h-[82vh] pb-5 mx-5 bg-white shadow-custom border-[1px] border-[#9E9E9E]">
+      <div className="static min-h-[82vh] pb-5 mx-2 sm:mx-5 bg-white shadow-custom border-[1px] border-[#9E9E9E]">
         <div className="relative flex flex-wrap justify-center mx-auto lg:flex-row lg:gap-5">
-          <div className="w-[95%]   sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[800px] dark:border-none  bg-[#ffff]  dark:bg-none dark:bg-[#141414]  pb-4   mt-5 px-4">
+          <div className="w-[98%]   sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[900px] dark:border-none  bg-[#ffff]  dark:bg-none dark:bg-[#141414]  pb-4   mt-5 p-1 sm:p-4">
             {isConnected ? (
               <>
                 <div className="flex justify-center">
@@ -87,10 +87,10 @@ export default function Home() {
               <ConnectWallet />
             )}
           </div>
-          <div onClick={() => setOpenInfo(!openInfo)} className="absolute left-5 top-5 border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
+          <div onClick={() => setOpenInfo(!openInfo)} className=" mr-5 sm:mr-0 sm:absolute  left-5 -bottom-10 sm:top-5 border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
             <InfoCircledIcon className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
           </div>
-          <div className="absolute flex flex-col gap-5 right-5 top-5">
+          <div className="flex gap-5 sm:flex-col sm:absolute mdb:flex right-5 top-5">
             <div onClick={() => setShowNotification(!showNotification)} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
               <BellIcon className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
             </div>

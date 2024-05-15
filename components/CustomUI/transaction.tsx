@@ -46,7 +46,7 @@ const TransactionLoader: React.FC<TransactionProps> = ({ heading, subheadingBefo
 
     return (
         <div
-            className={`border-2 shadow-md rounded-xl min-w-[80%] flex py-2 px-3 ${className} `}
+            className={`border border-black shadow-custom min-w-[80%] flex py-2 px-3 ${className} `}
         >
             <div className="flex items-center justify-center mx-2">
                 {
