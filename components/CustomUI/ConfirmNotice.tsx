@@ -25,23 +25,18 @@ const ConfirmNotice = ({
           </p>
           <p className="text-[#020202] font-medium min-[1440px]:text-[32px] 2dppx:text-2xl text-2xl leading-none dark:text-[#ffff]">
           {withdrawalTime === "DEPOSITED"
-            ? `${(parseFloat(amintToMint.toString())/10**6).toString()} AMINT`
+            ? `${(parseFloat(amintToMint.toString())/10**6).toString()} USDa`
             : `~${amintToMint.toString()} ETH`}
           
           </p>
         </div>
-        <p className="min-[1440px]:text-base text-sm 2dppx:text-sm text-textHighlight dark:text-[#ffff]  leading-none">
-          {withdrawalTime === "DEPOSITED"
-            ? `Second time withdrawal date will be ${calculateNext30Days()}`
-            : ""}
-        </p>
       </div>
       <Button
         variant={"primary"}
         className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
         onClick={handleWithdrawal}
       >
-        {isLoading ? <Spinner/> : `Confirm repay of ${withdrawalTime === "DEPOSITED" ? "AMINT" : "ETH"}`}
+        {isLoading ? <Spinner/> : `Confirm repay of ${withdrawalTime === "DEPOSITED" ? "USDa" : "ETH"}`}
        
         
       </Button>

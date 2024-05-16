@@ -261,10 +261,10 @@ const NavBar = () => {
               <div className="flex flex-col gap-4">
 
                 <div className="flex flex-col gap-3">
-                  <div className="p-3 text-sm border  bg-[#DEDEDE]">
+                  <div className="p-3 text-sm border  bg-[#EEEEEE]">
                     {address}
                   </div>
-                  <div className="p-3 relative text-sm border  bg-[#DEDEDE]">
+                  <div className="p-3 relative text-sm border  bg-[#EEEEEE]">
                     <div className="text-[0.8rem]"> USDa Balance</div>
                     <div className="absolute flex items-center gap-2 text-xs top-3 right-2">
                       <div className="h-4 w-4 bg-[#93F3BA] rounded-full flex items-center justify-center">
@@ -280,11 +280,11 @@ const NavBar = () => {
                     <Button className="text-[white]  w-full relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#020202] py-2" >Change Network</Button>
                     <Button className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 " onClick={() => { disconnect(); setOpen2(!open2) }}>Disconnect</Button>
                   </div>
-                  <div className="p-3 text-sm underline border  bg-[#DEDEDE]">
+                  <div className="p-3 text-sm underline border  bg-[#EEEEEE]">
                     <a href={`https://sepolia.etherscan.io/address/${address}`} >View All Wallets Transactions </a>
                   </div>
-                  <div className="flex justify-between p-3 text-sm border  bg-[#DEDEDE]"><div>Verify Joseon ID</div><div className="underline">Learn More</div></div>
-                  <div className="p-3 text-sm border  bg-[#DEDEDE]">
+                  <div className="flex justify-between p-3 text-sm border  bg-[#EEEEEE]"><div>Verify Joseon ID</div><div className="underline">Learn More</div></div>
+                  <div className="p-3 text-sm border  bg-[#EEEEEE]">
                     Terms & privacy policy <a href="" target="_blank" className="text-black underline">click to view</a>
                   </div>
                 </div>

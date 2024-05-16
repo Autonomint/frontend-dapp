@@ -470,7 +470,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} action="#">
           <div className="flex justify-between">
- 
+
             {/* <div className="flex items-center justify-end gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" height={15} width={15}><path d="M.003 4.54c-.008-.37.092-1.233 1.216-1.533L12.507.747c.828 0 1.5.673 1.5 1.5V4.26l.5-.001a1.502 1.502 0 0 1 1.495 1.5v7.996c0 .827-.672 1.5-1.5 1.5H1.495c-.827 0-1.5-.673-1.5-1.5L.003 4.54Zm13.004-2.293a.5.5 0 0 0-.457-.498L1.52 3.982c-.004.002.082.28.482.275h11.006v-2.01ZM.993 13.754a.5.5 0 0 0 .5.5h13.008a.5.5 0 0 0 .5-.5V5.756a.5.5 0 0 0-.5-.5H2c-.491 0-1.006-.167-1.006-.498v8.996ZM13 8.758a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" fill="currentColor"></path></svg>
               <a type="button" onClick={onWatchAssetAmintClick} className="m-0 text-[12px] underline rounded-md ">Add USDa</a>
@@ -536,7 +536,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                             }}
 
                             value={field.value}
-                            
+
                           >
                             {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateral") ? "" : "Input Type"}</label> */}
 
@@ -559,20 +559,20 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                     </FormItem>
                   )}
                 />
-                
+
                 {/* <span className="top-7  text-gray-400 font-semibold relative md:absolute  right-32 block text-right text-[0.7rem]"> <span className="text-xl">(</span> <span className="text-sm">={(Number(ethPrice) / 100 * Number(form.getValues("collateralAmount"))).toFixed(2)} </span> usdt <span className="text-xl">)</span></span>
                 <span className=" text-textHighlight relative md:absolute md:right-1 block text-right text-[0.7rem] dark:text-[#d4d4d4]">Balance:  {(Number(ethBalance.data?.formatted)).toFixed(4)} ETH</span> */}
               </div>
               <div className="px-[1px] -mt-2 flex gap-[10px] items-center">
-              {/* <InfoCircledIcon width={18} height={18} /> */}
-              <p className=" min-[1440px]:text-base 2dppx:text-sm text-xs font-normal text-textGrey dark:text-[#DEDEDE] ">
-                Minimum Collateral Amount is{" "}
-                <span className="font-medium text-textHighlight dark:text-[#ffff]">
-                  0.02 ETH
-                </span>
-              </p>
-            </div>
-              
+                {/* <InfoCircledIcon width={18} height={18} /> */}
+                <p className=" min-[1440px]:text-base 2dppx:text-sm text-xs font-normal text-textGrey dark:text-[#DEDEDE] ">
+                  Minimum Collateral Amount is{" "}
+                  <span className="font-medium text-textHighlight dark:text-[#ffff]">
+                    0.02 ETH
+                  </span>
+                </p>
+              </div>
+
 
               <div className="flex items-center gap-2 mt-2 ">
                 <div className="text-sm  text-textHighlight dark:text-[#DEDEDE] ">
@@ -603,37 +603,38 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                 </div>
               </div>
               <div className="flex w-full gap-5 ">
-              <Button
-                type="button"
-                onClick={() => openPositions(true)}
-                variant={"primary"}
-                className="text-[#020202] relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
-                
-                >
-                { 'View Positions'} <Image src={arrowout} className="absolute right-5" alt="arrow" width={20} height={15} />
-              </Button>
+                <Button
+                  type="button"
+                  onClick={() => openPositions(true)}
+                  variant={"primary"}
+                  className="text-[#020202] relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
 
-              <Button
-                type="submit"
-                variant={"primary"}
-                className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
-                disabled={isDepositsLoading || isDepositHashsLoading || disabled}
                 >
-                {isDepositsLoading || isDepositHashsLoading ? <Spinner /> : 'Confirm Deposit'}
-              </Button>
-                </div>
-                <Note 
+                  {'View Positions'} <Image src={arrowout} className="absolute right-5" alt="arrow" width={20} height={15} />
+                </Button>
+
+                <Button
+                  type="submit"
+                  variant={"primary"}
+                  className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
+                  disabled={isDepositsLoading || isDepositHashsLoading || disabled}
+                >
+                  {isDepositsLoading || isDepositHashsLoading ? <Spinner /> : 'Confirm Deposit'}
+                </Button>
+              </div>
+
+              <Note
                 note="Note: Only 50% of the amount is retrievable on initial
                   withdrawal. For 2nd 50% of amount, you will be getting
                   Abond and your collateral can be withdrawn by returning Abond."
               />
 
               <div className="relative container flex px-0  mx-auto border-[1px] border-[#020202] dark:bg-[linear-gradient(270deg,#16603B_0%,#0D4A5C_100%)]  dark:border-gray-700 ">
-            <div className="absolute flex w-full h-8 ">
-              <div style={{  background: 'linear-gradient(to bottom, #0029AC 1%, #6185F8 2%, white 80%)'}} className="w-[78%] h-8 "></div>
-              <div style={{  background: 'linear-gradient(to bottom, #AA0001 1%, #F69596 2%, white 80%)'}} className="w-[2%] h-8 "></div>
-              <div style={{  background: 'linear-gradient(to bottom, #006733 1%, #A1F9CD 2%, white 80%)'}} className="w-[21%] h-8"></div>
-            </div>
+                <div className="absolute flex w-full h-8 ">
+                  <div style={{ background: 'linear-gradient(to bottom, #0029AC 1%, #6185F8 2%, white 80%)' }} className="w-[78%] h-8 "></div>
+                  <div style={{ background: 'linear-gradient(to bottom, #AA0001 1%, #F69596 2%, white 80%)' }} className="w-[2%] h-8 "></div>
+                  <div style={{ background: 'linear-gradient(to bottom, #006733 1%, #A1F9CD 2%, white 80%)' }} className="w-[21%] h-8"></div>
+                </div>
                 <div className="w-full p-4 mt-3 border-r dark:border-gray-700 dark:bg-none">
                   <h2 className="mb-2  text-black font-medium text-md dark:text-[#DEDEDE]">100% LTV</h2>
                   <div className="flex items-center justify-between w-full">
@@ -667,7 +668,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
 
 
 
-             
+
             </div>
             {/* <Divider className='w-[1px] h-auto mx-4' /> */}
           </div>
