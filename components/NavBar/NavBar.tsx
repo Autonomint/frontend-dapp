@@ -71,6 +71,12 @@ const navItemsList = [
     href: "bridge",
     targetSegment: "bridge",
   },
+  {
+    image: mintmark,
+    label: "Rewards",
+    href: "rewards",
+    targetSegment: "rewards",
+  },
 ];
 
 
@@ -97,7 +103,7 @@ const NavBar = () => {
   const [showNotification, setShowNotification] = useState(false);
   return (
     <div className="z-50 w-full ">
-      <div className="flex w-full justify-between  mx-auto h-16  bg-[#EEEEEE]   dark:bg-none dark:bg-[#1a1a1a]  z-10">
+      <div className="flex w-full justify-between  mx-auto h-[8vh] bg-[#EEEEEE]   dark:bg-none dark:bg-[#1a1a1a]  z-10">
         <div className="flex items-center gap-2 ml-4">
           <div className="w-[3rem] h-[3rem]">
             <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
@@ -148,16 +154,7 @@ const NavBar = () => {
             TVL <span className="font-semibold dark:text-[#00C2FF}">$100M</span>
           </div> */}
 
-          <div className="flex ">
-            <label className="relative items-center hidden cursor-pointer mdb:inline-flex ">
-              <input type="checkbox" value="" className="sr-only peer" onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")} checked={resolvedTheme === "dark" ? true : false} />
-              <div className="relative w-10 h-5 border border-black bg-white peer-focus:outline-none    peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[0px] after:start-[0px] after:bg-[#ABFFDE]  after:border after:h-full after:border-black after:w-5 after:transition-all dark:border-gray-600 "></div>
 
-              <div className="absolute  dark:right-[1px] ">
-                {resolvedTheme === "light" ? (<div className="bg-[#ABFFDE]"></div>) : (<div className="bg-[#ABFFDE]"></div>)}
-              </div>
-            </label>
-          </div>
           {/* <div className="w-[2rem] h-[3rem]">
               <Image src={notification} className="rounded-sm cursor-pointer " onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
             </div> */}
@@ -172,7 +169,7 @@ const NavBar = () => {
           )}
           <div className="right-0 flex items-center justify-center top-2 mdb:hidden">
 
-            <button onClick={() => setShowMore(!showMore)} data-collapse-toggle="navbar-hamburger" type="button" className="flex  shadow-custom items-center justify-center w-10 h-10 text-sm text-[#c7c2c2] bg-white border border-[#9E9E9E] dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-hamburger" aria-expanded="false">
+            <button onClick={() => setShowMore(!showMore)} data-collapse-toggle="navbar-hamburger" type="button" className="flex  shadow-custom items-center justify-center w-10 h-10 text-sm text-[#020202] bg-white border border-[#9E9E9E] dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-hamburger" aria-expanded="false">
               <span className="sr-only">Open main menu</span>
               <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 17 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />

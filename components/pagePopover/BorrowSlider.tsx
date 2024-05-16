@@ -56,6 +56,12 @@ const BorrowSlider = ({
   open: Boolean,
   opentoggler: Function
 }) => {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
   const settings = {
     dots: true,
     dotsClass: "slick-dots slick-top absolute -top-8  font-bold ",
@@ -72,20 +78,20 @@ const BorrowSlider = ({
   }
 
   const { data: totalStable } = useCdsTotalCdsDepositedAmount({ watch: true })
-  const { data: ethPrice } = useBorrowingContractGetUsdValue({ watch: true })
   const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
   const { data: amintsupply } = useAmintTotalSupply({ watch: true })
-  const { data: cdsPool } = useBorrowingContractLastCdsPoolValue({ watch: true })
   const { data: abondSupply } = useAbondTotalSupply({ watch: true });
 
-  return (
-    <div className={`${open ? "" : "hidden"} absolute  w-full h-[82vh]`}>
 
-      <div onClick={() => opentoggler(!open)} className={`${open ? "" : "hidden"} absolute z-50  w-full h-[80vh] backdrop-blur-sm  `}>
+  return (
+    <div className={`${open ? "" : "hidden"} absolute w-full h-[84vh]`}>
+
+      <div onClick={() => opentoggler(!open)} className={`${open ? "" : "hidden"} fixed left-10 z-50  w-full h-[80vh] backdrop-blur-sm  `}>
       </div>
       <div className='absolute z-50 border border-black left-5 top-24'>
 
         <div className='flex flex-col h-auto items-center justify-center  bg-white dark:bg-[#141414] px-4 gap-4 pt-4 pb-2  rounded-md shadow-sm '>
+        {isLoaded?(
           <div className="slider-container w-[300px] mt-5">
             <Slider  {...settings}>
 
@@ -132,6 +138,8 @@ const BorrowSlider = ({
               </div>
             </Slider>
           </div>
+        ):("")}
+          
 
         </div>
       </div>

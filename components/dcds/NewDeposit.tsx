@@ -1414,7 +1414,7 @@ const NewDeposit = ({
                 variant={"primary"}
                 className="text-[#020202] relative rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
                 >
-                { 'View Positions'}<Image src={arrowout} className="absolute right-5" alt="arrow" width={20} height={15} />
+                { 'View Positions'}<Image src={arrowout} className="ml-2 sm:ml-0 sm:absolute sm:right-5" alt="arrow" width={20} height={15} />
               </Button>
 
 

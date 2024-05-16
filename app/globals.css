@@ -13,3 +13,12 @@
 {
 	background-color: #9f9e9e;
 }
+::-webkit-scrollbar-horizontal {
+	height: 6px;
+	background-color: #F5F5F5;
+}
+
+
+::-webkit-scrollbar-thumb-horizontal {
+	background-color: #9f9e9e;
+}

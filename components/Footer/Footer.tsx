@@ -20,8 +20,8 @@ export default function Footer() {
     const [open2, setOpen2] = React.useState(false);
     const [openGetstart, setOpenGetstart] = React.useState(false);
     return (
-        <div className='p-2 '>
-            <div className="relative flex flex-col flex-col-reverse justify-between gap-2 mx-auto sm:flex-row mdb-5 lg:ml-5 ">
+        <div className='p-2 h-[8vh] '>
+            <div className="relative flex flex-col-reverse justify-between gap-2 mx-auto sm:flex-row mdb-5 lg:ml-5 ">
                 <div className="flex justify-center p-3 text-sm   rounded-md dark:bg-[#020202]">
                     <div className="flex justify-between w-40 ">
                         <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[1.8rem]"><Image src={github} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>

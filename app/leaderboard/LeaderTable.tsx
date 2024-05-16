@@ -41,27 +41,29 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
         <div>
              
             <div className='border-t border-black shadow-sm dark:border-gray-700'>
-                <div className=' dark:bg-[#141414]   min-h-[50vh] overflow-hidden overflow-x-scroll  '>
+                <div className=' dark:bg-[#141414]   min-h-[24rem] sm:overflow-auto  overflow-x-scroll  '>
                     <Table className='min-w-[400px]'>
                         <TableHeader>
                             <TableRow className='dark:bg-none  dark:bg-[#1a1a1a]'>
                                 <TableHead className="w-3 opacity-1 text-[#5B5B5B] dark:text-[#C4C4C4]">Rank</TableHead>
                                 <TableHead className="text-[#5B5B5B] dark:text-[#C4C4C4]">Address</TableHead>
                                 {
-                                    tableType === 'borrow' ? <TableHead className="text-white dark:text-[#C4C4C4]">USDa Borrowed</TableHead> :
+                                    tableType === 'borrow' ? <TableHead className="text-[#5B5B5B] dark:text-[#C4C4C4]">USDa Borrowed</TableHead> :
                                         <TableHead className="text-[#5B5B5B] dark:text-[#C4C4C4]">dCDS deposits</TableHead>
                                 }
                                 {/* <TableHead className="text-white dark:text-[#C4C4C4]">Points</TableHead> */}
                                 {
                                     tableType === 'cds' ? null : <TableHead className="text-[#5B5B5B] dark:text-[#C4C4C4]">LTV ratio</TableHead>
                                 }
+                                <TableHead className="text-[#5B5B5B] dark:text-[#C4C4C4]">Points</TableHead>
+
                             </TableRow>
                         </TableHeader>
                         <TableBody className=''>
                             {
                                 sortedData.map((data, index) => (
                                     <TableRow key={index} className={` text-black
-                                    hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]   dark:border cursor-pointer `
+                                    hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11] h-8   dark:border cursor-pointer `
                                     }>
                                         <TableCell>
                                         <div className={
@@ -84,13 +86,14 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
                                                 </TableCell>
                                         }
 
-                                        {/* <TableCell className="text-textGrey dark:text-[#EEEEEE]">{data.points}
-                                        </TableCell> */}
+                                     
                                         {
                                             tableType === 'cds' ? null :
                                                 <TableCell className=" dark:text-[#EEEEEE]">{0}
                                                 </TableCell>
                                         }
+                                        <TableCell className=" dark:text-[#EEEEEE]">{0}
+                                                </TableCell>
 
                                     </TableRow>
                                 ))
