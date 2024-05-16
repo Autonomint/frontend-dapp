@@ -41,7 +41,7 @@ const ConfirmNoticeCds = ({
             Amount
           </p>
           <p className="text-[#020202] font-medium min-[1440px]:text-[32px] 2dppx:text-2xl text-2xl leading-none">
-            {optedForLiquidation ? `${withdrawdata[0]/10**6} AMINT + ${withdrawdata.length==2?withdrawdata[2]:"0" } ETH`: `${withdrawdata[0]/10**6} AMINT` }
+            {optedForLiquidation ? `${withdrawdata[0]/10**6} USDa + ${withdrawdata.length==2?withdrawdata[2]:"0" } ETH`: `${withdrawdata[0]/10**6} USDa` }
           </p>
         </div>
       </div>

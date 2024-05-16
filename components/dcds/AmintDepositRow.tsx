@@ -27,7 +27,7 @@ interface DepositDetail {
 const AmintDepositRow = ({ details ,onClick,isnewtxn,islasttxn}: { details: DepositDetail ,onClick: Function,isnewtxn:boolean,islasttxn:boolean}) => {
   const depositDetails = [
     {
-      headline: "AMINT Deposited",
+      headline: "USDa Deposited",
       value: "1200",
     },
     {

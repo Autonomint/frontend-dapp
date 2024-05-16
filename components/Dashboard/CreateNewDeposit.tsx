@@ -500,7 +500,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                               WebkitAppearance: 'none',
                               margin: 0
                             }}
-                          // disabled={form.getValues("collateral")==undefined}
+                          disabled={form.getValues("collateral")==undefined}
                           ></Input>
                           <label
                             htmlFor="amount_of_usdt"

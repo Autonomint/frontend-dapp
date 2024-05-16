@@ -78,7 +78,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
     // kept this inside because every row is going to have different state
     const depositDetails = [
         {
-            headline: "AMINT Deposited",
+            headline: "USDa Deposited",
             value: "1200",
         },
         {

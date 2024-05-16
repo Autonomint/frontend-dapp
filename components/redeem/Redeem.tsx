@@ -656,6 +656,7 @@ const Redeem = ({
                           WebkitAppearance: 'none',
                           margin: 0
                         }}
+                        disabled={form.getValues("inputCollateral")==undefined}
                       ></Input>
                       <label
                         htmlFor="amount_of_usdt"
