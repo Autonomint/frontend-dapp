@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/dialog";
 import { ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
+import AmintDepositRowCopy from "./Withdrawcopy";
 
 interface DepositDetail {
   id: string;
@@ -239,17 +240,17 @@ const Dcds = () => {
 
   return (
     <>
-    {
-      !isConnected ? <ConnectWallet/>:(
-        <div className="relative w-full rounded-[10px] px-2   dark:bg-[#141414] dark:shadow-none  flex flex-col self-stretch overflow-hidden ">
+      {
+        !isConnected ? <ConnectWallet /> : (
+          <div className="relative w-full rounded-[10px] px-2   dark:bg-[#141414] dark:shadow-none  flex flex-col self-stretch overflow-hidden ">
 
-        <NewDeposit handleRefetch={handleRefetch} openDeposits={setOpen2} />
+            <NewDeposit handleRefetch={handleRefetch} openDeposits={setOpen2} />
 
 
 
-        <Dialog open={open2} onOpenChange={setOpen2} >
-          <DialogContent className="px-4 pb-5">
-            <div className="flex justify-end w-full ">
+            <Dialog open={open2} onOpenChange={setOpen2} >
+              <DialogContent className="min-w-[80%]">
+                {/* <div className="flex justify-end w-full ">
               <DialogClose asChild>
                 <Button
                   variant={"ghostOutline"}
@@ -261,6 +262,7 @@ const Dcds = () => {
               </DialogClose>
             </div>
             <DialogHeader className="flex items-start -mt-5">
+                  </DialogHeader>
               <DialogTitle className="text-textPrimary  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl ">
                 <div className="flex flex-col gap-[10px] ">
                   <h2 className="text-black dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
@@ -270,45 +272,73 @@ const Dcds = () => {
                     A list of all the deposits you have made.
                   </p>
                 </div>
-              </DialogTitle>
-              <div className="mb-10 mx-0 min-w-[600px]  w-full overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto">
+              </DialogTitle> */}
+                {/* <div className="mb-10 mx-0 min-w-[600px]  w-full overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto"> */}
+                <div className="flex border  h-[74vh] w-full">
+                  <div className="flex w-full ">
+                    <div className={`${!sheetDetails ? "basis-full" : "basis-full xl:basis-2/3 "}  overflow-hidden `}>
+                      <div className="flex flex-col gap-[10px] ">
+                        <div className="p-4">
 
-                <Table>
-                  <TableHeader>
-                    <TableRow className="bg-gray-200 hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-900">
-                      <TableHead className="text-textGrey dark:text-[#C4C4C4]">Id</TableHead>
-                      <TableHead className="text-textGrey dark:text-[#C4C4C4]">USDa / Usdt Deposited</TableHead>
-                      <TableHead className="text-textGrey dark:text-[#C4C4C4]">Deposited Time</TableHead>
-                      <TableHead className="text-textGrey dark:text-[#C4C4C4]">Lock In period</TableHead>
-                      <TableHead className="text-textGrey dark:text-[#C4C4C4]">Repay</TableHead>
-                      
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {!depositsError
-                      ? deposits?.map((details: DepositDetail,index) => (
-                        <AmintDepositRow isnewtxn={newtxn} islasttxn= {deposits.length-1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} />
-                      ))
-                      : null}
-                  </TableBody>
-                </Table>
-              </div>
-            </DialogHeader>
+                          <h2 className="text-black dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
+                            Your Deposits
+                          </h2>
+                          <p className="text-textSecondary dark:text-[#EEEEEE]  text-sm min-[1440px]:text-base 2dppx:text-xs">
+                            A list of all the deposits you have made.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="min-h-[58.6vh] h-full overflow-y-scroll ">
+                        <Table>
+                          <TableHeader>
+                            <TableRow className="bg-gray-200 hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-900">
+                              <TableHead className="text-textGrey dark:text-[#C4C4C4]">Id</TableHead>
+                              <TableHead className="text-textGrey dark:text-[#C4C4C4]">USDa / Usdt Deposited</TableHead>
+                              <TableHead className="text-textGrey dark:text-[#C4C4C4]">Deposited Time</TableHead>
+                              <TableHead className="text-textGrey dark:text-[#C4C4C4]">Lock In period</TableHead>
+                              <TableHead className="text-textGrey dark:text-[#C4C4C4]">Repay</TableHead>
 
-          </DialogContent>
-        </Dialog>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {!depositsError
+                              ? deposits?.map((details: DepositDetail, index) => (
+                                <AmintDepositRow isnewtxn={newtxn} islasttxn={deposits.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} />
+                              ))
+                              : null}
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </div>
+                    <div className={`${!sheetDetails ? "hidden basis-0" : "basis-1/3"} border-l h-[99.9%] overflow-y-scroll right-0 xl:overflow-auto absolute xl:relative border-black  bg-[#eeeeee]`}>
+                      <div className="absolute right-0 p-1 border border-black cursor-pointer w-fit" onClick={() => setSheetDetails(undefined)}><Cross2Icon /></div>
 
-        {
+                      {
+                        sheetDetails && <AmintDepositRowCopy
+                          details={sheetDetails}
+                          sheetOpen={sheetOpen}
+                          handleSheetOpenChange={setSheetOpen}
+                          handleRefetch={handleRefetch}
+                        />
+                      }
+                    </div>
+                  </div>
+                </div>
+
+              </DialogContent>
+            </Dialog>
+
+            {/* {
           sheetDetails && <Withdraw
             details={sheetDetails}
             sheetOpen={sheetOpen}
             handleSheetOpenChange={setSheetOpen}
             handleRefetch={handleRefetch}
           />
-        }
-      </div>
-      )
-    }
+        } */}
+          </div>
+        )
+      }
     </>
   );
 };

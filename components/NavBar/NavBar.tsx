@@ -2,7 +2,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import logo from "@/app/assets/logo.svg";
-import { useAccount, useBalance, useChainId, useDisconnect, } from "wagmi";
+import { useAccount, useBalance, useChainId, useDisconnect, useSwitchNetwork,useNetwork} from "wagmi";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import dashboard from "@/app/assets/dashboard.svg";
@@ -19,11 +19,7 @@ import { useWeb3Modal, createWeb3Modal } from '@web3modal/wagmi/react'
 import { config, projectId } from "@/providers/WalletProvider";
 import {
   Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+
 } from "@/components/ui/form";
 import {
   Select,
@@ -34,13 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import * as z from "zod";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 
-const formSchema = z.object({
-  selectedNetwork: z.string(),
-});
 
 function formatNumber(num: number) {
   if (num >= 1000000) {
@@ -97,13 +87,10 @@ const NavBar = () => {
   const onConnect = () => {
     open()
   }
+  const chains = useNetwork()
+  const { switchNetwork } = useSwitchNetwork();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      selectedNetwork: "Ethereum",
-    },
-  });
+
   const { disconnect } = useDisconnect();
   const chainId = useChainId();
   const [showMore, setShowMore] = useState(false);
@@ -123,11 +110,10 @@ const NavBar = () => {
   const { resolvedTheme, theme, setTheme } = useTheme();
   const [open2, setOpen2] = React.useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  console.log(chains)
 
+  const [selectedNetwork,setSelectedNetwork] = React.useState<string>(chainId===11155111 ? "Ethereum" :  "unsupported network")
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
   return (
     <div className="z-50 w-full ">
       <div className="flex w-full justify-between  mx-auto h-[8vh] bg-[#EEEEEE]   dark:bg-none dark:bg-[#1a1a1a]  z-10">
@@ -177,47 +163,27 @@ const NavBar = () => {
               <Image src={notification} className="rounded-sm cursor-pointer " onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
             </div> */}
           <div className="flex items-center justify-end border-black w-28">
-          <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} action="#">
-          <FormField
-          control={form.control}
-              name="selectedNetwork"
 
-              render={() => (
-                <FormItem className=' dark:bg-[#020202]'>
-                  <Controller
-                    control={form.control}
-                    name="selectedNetwork"
-                    render={({ field }) => (
-                      <Select
-                        onValueChange={(value) => {
-                          form.setValue("selectedNetwork", value);
-                          field.onChange(value)
+        <Select
+          onValueChange={(value) => {
+            switchNetwork && switchNetwork(11155111 );
+          }}
+          value={selectedNetwork}
+        >
+                <SelectTrigger className='border border-black rounded-none bg-[#020202] text-white' >
+                  <SelectValue placeholder={selectedNetwork} />
+                </SelectTrigger>
+                <SelectContent className='text-white  bg-[#020202] rounded-none '>
+                  <SelectGroup>
+                    <SelectItem value="Ethereum">Ethereum</SelectItem>
+                    {/* <SelectItem value="Base Sepolia">Base Sepolia</SelectItem> */}
+                  </SelectGroup>
+                </SelectContent>
 
-                        }}
-                        value={field.value}
-                      >
-                     
-                        <FormControl className='bg-[#020202] text-[0.8rem] text-white py-2 rounded-none' >
-                          <SelectTrigger >
-                            <SelectValue placeholder="Collateral" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className='bg-[#020202] text-[0.8rem] rounded-none text-white'>
-                          <SelectGroup>
-                            <SelectItem value="Ethereum">Ethereum</SelectItem>
-                            <SelectItem value="Base">Base</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    )}
-                  />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
+              </Select>
+
+
+    
           </div>
 
 
@@ -330,7 +296,7 @@ const NavBar = () => {
                       <div className="h-4 w-4 bg-[#93F3BA] rounded-full flex items-center justify-center">
                         <div className="h-2 w-2 bg-[#009350] rounded-full"></div>
                       </div>
-                      {chainId === 11155111 ? "Ethereum Sepolia " : chainId === 8453 ? "Base Sepolia" : "unsupported network"}
+                      {chainId === 11155111 ? "Ethereum Sepolia " : chainId === 84532 ? "Base Sepolia" : "unsupported network"}
 
                     </div>
                     <div className="text-xl font-bold">${data?.formatted.slice(0, 8)}</div>

@@ -232,9 +232,9 @@ const WalletOrContent = () => {
           <CreateNewDeposit handleRefetch={handleRefetch} openPositions={setOpen2} />
 
 
-          <Dialog open={open2} onOpenChange={setOpen2} >
-            <DialogContent className="max-w-[800px] px-4 pb-5 ">
-              <div className="flex justify-end w-full ">
+          <Dialog open={open2} onOpenChange={setOpen2}  >
+            <DialogContent className="min-w-[80%] ">
+              {/* <div className="flex justify-end w-full ">
                 <DialogClose asChild>
                   <Button
                     variant={"ghostOutline"}
@@ -247,8 +247,8 @@ const WalletOrContent = () => {
                     </p>
                   </Button>
                 </DialogClose>
-              </div>
-              <DialogHeader className="flex items-start -mt-5">
+              </div> */}
+              {/* <DialogHeader className="flex items-start -mt-5">
                 <DialogTitle className="text-textPrimary  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl ">
                   <div className="flex flex-col gap-[10px] ">
                     <h2 className="text-black dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
@@ -259,8 +259,8 @@ const WalletOrContent = () => {
                     </p>
                   </div>
                 </DialogTitle>
-              </DialogHeader>
-              <div className=" overflow-x-scroll overflow-y-scroll min-w-[600px] max-h-[18rem] md:overflow-x-auto">
+              </DialogHeader> */}
+              <div className="flex border  h-[74vh] w-full ">
 
                 <DepositAndWithDrawTable
                   tableData={deposits}
