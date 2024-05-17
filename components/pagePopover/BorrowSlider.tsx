@@ -84,18 +84,18 @@ const BorrowSlider = ({
 
 
   return (
-    <div className={`${open ? "" : "hidden"} absolute w-full h-[84vh]`}>
+    <div className={`${open ? "" : "hidden"} absolute left-0 w-[300px] h-[84vh]`}>
 
       <div onClick={() => opentoggler(!open)} className={`${open ? "" : "hidden"} fixed left-10 z-50  w-full h-[80vh] backdrop-blur-sm  `}>
       </div>
       <div className='absolute z-50 border border-black left-5 top-24'>
 
-        <div className='flex flex-col h-auto items-center justify-center  bg-white dark:bg-[#141414] px-4 gap-4 pt-4 pb-2  rounded-md shadow-sm '>
+        <div className='flex  flex-col h-auto items-center justify-center  bg-white dark:bg-[#141414] px-4 gap-4 pt-4 pb-2  rounded-md shadow-sm '>
         {isLoaded?(
-          <div className="slider-container w-[300px] mt-5">
-            <Slider  {...settings}>
+          <div className="slider-container transition-all duration-300 ease-in-out w-[300px] mt-5">
+            <Slider className='w-[300px]'  {...settings}>
 
-              <div className=''>
+              <div className='w-full' >
                 <div className='mb-4  mx-auto text-xl font-bold text-center border text-white py-12 border-black bg-[linear-gradient(254.52deg,#65C578_0%,#23D1F6_100%)]'>
                   Borrow & Mint
                 </div>
@@ -109,7 +109,7 @@ const BorrowSlider = ({
                 </div>
 
               </div>
-              <div className=''>
+              <div >
                 <div className='mb-4 mx-auto text-xl font-bold text-center border text-white py-12 border-black bg-[linear-gradient(254.52deg,#C191FE_0%,#29CEF6_100%);]'>
                   dCDS
                 </div>
@@ -123,7 +123,7 @@ const BorrowSlider = ({
                 </div>
 
               </div>
-              <div className=''>
+              <div >
                 <div className='mb-4  mx-auto text-xl font-bold text-center border text-white py-12 border-black bg-[linear-gradient(254.52deg,#C191FE_0%,#2ACEF6_100%)]'>
                   Loan Repayment
                 </div>

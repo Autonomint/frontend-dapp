@@ -2,39 +2,45 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import logo from "@/app/assets/logo.svg";
-import { formatEther } from "viem";
-import displayNumberWithPrecision from "@/app/utils/precision";
 import { useAccount, useBalance, useChainId, useDisconnect, } from "wagmi";
-import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import Link from "next/link";
-import JSBI from 'jsbi'
-import { TickMath, FullMath } from '@uniswap/v3-sdk'
-import { useContractRead } from "wagmi"; import { Pool_Abi } from "@/constants/Pool";
 import { useSelectedLayoutSegment } from "next/navigation";
-import darkmoon from "@/app/assets/darkmoon.svg";
-import sunlight from "@/app/assets/sunlight.svg";
 import dashboard from "@/app/assets/dashboard.svg";
-
 import walleticon from "@/app/assets/link.svg";
 import currencyExchange from "@/app/assets/currency_exchange.svg";
-import derivatives from "@/app/assets/toll.svg";
 import mintmark from "@/app/assets/mintmark.svg";
-import profile from "@/app/assets/profile.svg";
-import notification from "@/app/assets/notifications.svg";
 import NavItems from "./NavItems";
 import { useTheme } from "next-themes";
 import { amintAddress } from "@/abiAndHooks";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import truncateWeb3WalletAddress from "@/app/utils/truncateWeb3Address";
+import { useWeb3Modal, createWeb3Modal } from '@web3modal/wagmi/react'
+import { config, projectId } from "@/providers/WalletProvider";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import * as z from "zod";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const formSchema = z.object({
+  selectedNetwork: z.string(),
+});
 
 function formatNumber(num: number) {
   if (num >= 1000000) {
@@ -82,6 +88,22 @@ const navItemsList = [
 
 
 const NavBar = () => {
+  createWeb3Modal({
+    wagmiConfig: config,
+    projectId,
+    enableAnalytics: true,
+  })
+  const { open, close } = useWeb3Modal()
+  const onConnect = () => {
+    open()
+  }
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      selectedNetwork: "Ethereum",
+    },
+  });
   const { disconnect } = useDisconnect();
   const chainId = useChainId();
   const [showMore, setShowMore] = useState(false);
@@ -101,6 +123,11 @@ const NavBar = () => {
   const { resolvedTheme, theme, setTheme } = useTheme();
   const [open2, setOpen2] = React.useState(false);
   const [showNotification, setShowNotification] = useState(false);
+
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
   return (
     <div className="z-50 w-full ">
       <div className="flex w-full justify-between  mx-auto h-[8vh] bg-[#EEEEEE]   dark:bg-none dark:bg-[#1a1a1a]  z-10">
@@ -137,33 +164,69 @@ const NavBar = () => {
                 );
               })}
               <div className="flex items-center justify-center">
-
-                {/* <button onClick={() => window.open("https://app.uniswap.org/swap", "_blank")} className="flex items-center h-10 px-4 py-1 text-sm font-bold text-center text-black border border-black rounded-lg dark:text-white dark:border-white">
-                BUY USDa
-              </button> */}
               </div>
             </div>
 
           </div>
         </div>
         <div className="flex gap-4 mr-5">
-          {/* <div className="flex items-center gap-2 text-sm text-white">
-            USDa APY <span className="font-semibold dark:text-[#00C2FF}">100%</span>
-          </div>
-          <div className="flex items-center gap-2 text-sm text-white">
-            TVL <span className="font-semibold dark:text-[#00C2FF}">$100M</span>
-          </div> */}
+
 
 
           {/* <div className="w-[2rem] h-[3rem]">
               <Image src={notification} className="rounded-sm cursor-pointer " onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
             </div> */}
+          <div className="flex items-center justify-end border-black w-28">
+          <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} action="#">
+          <FormField
+          control={form.control}
+              name="selectedNetwork"
+
+              render={() => (
+                <FormItem className=' dark:bg-[#020202]'>
+                  <Controller
+                    control={form.control}
+                    name="selectedNetwork"
+                    render={({ field }) => (
+                      <Select
+                        onValueChange={(value) => {
+                          form.setValue("selectedNetwork", value);
+                          field.onChange(value)
+
+                        }}
+                        value={field.value}
+                      >
+                     
+                        <FormControl className='bg-[#020202] text-[0.8rem] text-white py-2 rounded-none' >
+                          <SelectTrigger >
+                            <SelectValue placeholder="Collateral" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className='bg-[#020202] text-[0.8rem] rounded-none text-white'>
+                          <SelectGroup>
+                            <SelectItem value="Ethereum">Ethereum</SelectItem>
+                            <SelectItem value="Base">Base</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+          </div>
+
+
           {isConnected ? (
-            <div onClick={() => setOpen2(!open2)} className="px-5 hidden mdb:flex gap-2 py-1 pt-2 mt-3 h-fit text-sm font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+            <div onClick={() => setOpen2(!open2)} className="px-3 hidden mdb:flex gap-2 py-1 pt-2 mt-3 h-fit text-[0.8rem] font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
               <div className="w-[1.5rem] -mt-[2px] "><Image src={walleticon} alt="autonomint-dapp" className="rounded-sm cursor-pointer " style={{ width: "100%", height: "100%" }} /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
             </div>
           ) : (
-            <div className="hidden mdb:flex px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+            <div onClick={onConnect} className="hover:bg-[#d3d2d2] hidden mdb:flex px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
               Connect Wallet
             </div>
           )}
@@ -298,46 +361,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-
-{/* <Dialog open={isConnected && open2} onOpenChange={setOpen2}  >
-<DialogContent className="max-w-[400px] pb-5 backdrop:bg-none absolute right-2">
-  <div className="flex justify-end w-full ">
-    <DialogClose asChild>
-      <Button
-        variant={"ghostOutline"}
-        size={"primary"}
-        className="flex gap-[10px] border rounded-full border-borderGrey "
-      >
-        <Cross2Icon className="w-4 h-4"  />
-     
-      </Button>
-    </DialogClose>
-  </div>
-
-  <div className="flex flex-col gap-3">
-    <div className="p-3 text-sm border border-gray-500 rounded-md">
-      {address}
-    </div>
-    <div className="flex gap-2 text-sm rounded-md">
-      <Button className="w-full text-white bg-blue-500 rounded-sm cursor-pointer " >Change</Button>
-      <Button className="w-full text-white bg-red-500 rounded-sm cursor-pointer" onClick={() => disconnect()}>Disconnect</Button>
-    </div>
-    <div className="p-3 text-sm underline border border-gray-500 rounded-md">
-      <a href={`https://sepolia.etherscan.io/address/${address}`} >View All Wallets Transactions </a>
-    </div>
-    <div className="flex justify-between p-3 text-sm border border-gray-500 rounded-md"><div>Verify Joseon ID</div><div>Learn More</div></div>
-    <div className="flex justify-center p-3 text-sm border border-gray-500 rounded-md ">
-      <div className="flex justify-between w-1/2 ">
-
-        <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[2.5rem]"><Image src={github} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
-        <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[2.5rem]"><Image src={twitter} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} /></div></a>
-        <a href="https://t.co/Ck6x2jhVOj" target="_blank" ><div className="w-[2.5rem]"><Image src={discord} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
-      </div>
-    </div>
-    <div className="p-3 text-sm border border-gray-500 rounded-md">
-      Terms & privacy policy <a href="" className="text-blue-500 underline">click to view</a>
-    </div>
-  </div>
-</DialogContent >
-</Dialog > */}

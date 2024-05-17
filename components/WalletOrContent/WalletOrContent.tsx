@@ -233,7 +233,7 @@ const WalletOrContent = () => {
 
 
           <Dialog open={open2} onOpenChange={setOpen2} >
-            <DialogContent className="max-w-[800px] pb-5 ">
+            <DialogContent className="max-w-[800px] px-4 pb-5 ">
               <div className="flex justify-end w-full ">
                 <DialogClose asChild>
                   <Button

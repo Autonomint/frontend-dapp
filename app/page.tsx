@@ -35,9 +35,14 @@ export default function Home() {
   return (
     <>
       {/* Main area */}
-      <div className="static min-h-[84vh] pb-5 mx-2 sm:mx-5 bg-white shadow-custom border-[1px] border-[#9E9E9E]">
+      <div className="z-40 static min-h-[84vh] pb-5 mx-2 sm:mx-5 bg-white shadow-custom border-[1px] border-[#9E9E9E]">
         <div className="relative flex flex-wrap justify-center mx-auto lg:flex-row lg:gap-5">
-          <div className="w-[98%]   sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[900px] dark:border-none  bg-[#ffff]  dark:bg-none dark:bg-[#141414]  pb-4   mt-5 p-1 sm:p-4">
+
+        <div onClick={() => {setOpenInfo(!openInfo)}} className=" hidden sm:flex  mr-5 sm:mr-0 absolute  sm:left-5 sm:-bottom-10 sm:top-5 border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-1.5 sm:p-[15px] cursor-pointer">
+            <InfoCircledIcon className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
+          </div>
+          
+          <div className="w-[98%]   sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[900px] dark:border-none  bg-[#ffff]  dark:bg-none dark:bg-[#141414]  pb-4  mt-5 p-1 sm:p-4">
             {isConnected ? (
               <>
                 <div className="flex justify-center">
@@ -74,10 +79,8 @@ export default function Home() {
               <ConnectWallet />
             )}
           </div>
-          <div onClick={() => {setOpenInfo(!openInfo)}} className=" mr-5 sm:mr-0 sm:absolute  left-5 -bottom-10 sm:top-5 border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
-            <InfoCircledIcon className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
-          </div>
-          <div className="flex gap-5 sm:flex-col sm:absolute mdb:flex right-5 top-5">
+          
+          <div className="hidden gap-5 sm:flex sm:flex-col sm:absolute mdb:flex right-5 top-5">
             <div onClick={() => {setShowNotification(!showNotification);setOpenSettings(false)}} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
               <BellIcon className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
             </div>

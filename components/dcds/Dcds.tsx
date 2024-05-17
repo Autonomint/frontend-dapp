@@ -248,7 +248,7 @@ const Dcds = () => {
 
 
         <Dialog open={open2} onOpenChange={setOpen2} >
-          <DialogContent className="pb-2">
+          <DialogContent className="px-4 pb-5">
             <div className="flex justify-end w-full ">
               <DialogClose asChild>
                 <Button
@@ -280,7 +280,8 @@ const Dcds = () => {
                       <TableHead className="text-textGrey dark:text-[#C4C4C4]">USDa / Usdt Deposited</TableHead>
                       <TableHead className="text-textGrey dark:text-[#C4C4C4]">Deposited Time</TableHead>
                       <TableHead className="text-textGrey dark:text-[#C4C4C4]">Lock In period</TableHead>
-                      <TableHead className="text-textGrey dark:text-[#C4C4C4]">Abond minted</TableHead>
+                      <TableHead className="text-textGrey dark:text-[#C4C4C4]">Repay</TableHead>
+                      
                     </TableRow>
                   </TableHeader>
                   <TableBody>

@@ -671,7 +671,6 @@ const Redeem = ({
               )}
             />
             <FormField
-
               control={form.control}
               name="inputCollateral"
 

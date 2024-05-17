@@ -89,7 +89,7 @@ const AmintDepositRow = ({ details ,onClick,isnewtxn,islasttxn}: { details: Depo
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
       {details.lockingPeriod} days
         </TableCell>
-        <TableCell className="text-textGrey dark:text-[#EEEEEE]">-</TableCell>
+        <TableCell className="text-textGrey dark:text-[#EEEEEE] "><button className="mr-4 px-2 py-1 bg-[#020202] text-white"> Repay</button> </TableCell>
       </TableRow>
   );
 };

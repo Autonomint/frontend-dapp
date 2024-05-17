@@ -18,42 +18,45 @@ const ConfirmNoticeCds = ({
 }) => {
   const [switchOn, setSwitchOn] = React.useState(false);
   return (
-    <div className="p-4 border border-[#020202] bg-[#eeeeee]  flex flex-col min-[1440px]:gap-[15px] gap-2 2dppx:gap-2">
+    <div className="flex flex-col w-full gap-4 px-4">
+
+    <div className="p-4 border border-[#00679F] bg-[#ffffff]  flex flex-col min-[1440px]:gap-[15px] gap-2 2dppx:gap-2">
         {optedForLiquidation ?(
           <div className="flex items-center justify-between w-full gap-5">
-        <p className="min-[1440px]:text-base text-xs 2dppx:text-xs text-textGrey font-normal ">
+        <p className="min-[1440px]:text-base text-xs 2dppx:text-xs text-[#00679F] font-normal ">
           Withdraw Amount + ETH accrued from Liquidation Gains
         </p>
         {/* <Switch onCheckedChange={() => setSwitchOn(!switchOn)} />  */}
       </div>
         ) :(
-          <p className="min-[1440px]:text-base text-xs 2dppx:text-xs text-textGrey font-normal ">
+          <p className="min-[1440px]:text-base text-xs 2dppx:text-xs text-[#00679F] font-normal ">
           Withdraw Deposits
         </p>
         )}
 
-      <Divider className="my-[5px]" />
+      <Divider className="my-[5px] bg-[#00679F]" />
 
       
       <div className="flex flex-col min-[1440px]:gap-5 2dppx:gap-[10px] gap-[10px]">
         <div className="flex flex-col gap-[15px] ">
-          <p className="min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary dark:text-[#EEEEEE] ">
+          <p className="min-[1440px]:text-base 2dppx:text-sm text-sm text-[#00679F] dark:text-[#EEEEEE] ">
             Amount
           </p>
-          <p className="text-[#020202] font-medium min-[1440px]:text-[32px] 2dppx:text-2xl text-2xl leading-none">
+          <p className="text-[#00679F] font-medium min-[1440px]:text-[32px] 2dppx:text-2xl text-2xl leading-none">
             {optedForLiquidation ? `${withdrawdata[0]/10**6} USDa + ${withdrawdata.length==2?withdrawdata[2]:"0" } ETH`: `${withdrawdata[0]/10**6} USDa` }
           </p>
         </div>
       </div>
+      </div>
       <Button
         variant={"primary"}
-        className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
+        className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none w-full "
         onClick={handleWithdrawal}
         disabled={setLoding}
-      >
+        >
         Confirm Withdrawal
       </Button>
-    </div>
+        </div>
   );
 };
 

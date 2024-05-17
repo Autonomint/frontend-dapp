@@ -35,7 +35,7 @@ const ConnectWallet = () => {
       <div className="flex flex-col gap-[30px] items-center justify-center z-10">
         <Image src={wallets} alt="wallets" width={266.044} height={82}></Image>
         <div className="flex flex-col gap-[10px]">
-          <p className="text-center font-medium text-5xl tracking-[-2.4px] text-[#020202] dark:text-[#90AFFF]">
+          <p className="text-center font-medium text-3xl sm:text-4xl md:5xl tracking-[-2.4px] text-[#020202] dark:text-[#90AFFF]">
             Connect your wallet to get started
           </p>
           <p className="text-base font-medium text-center text-[#020202] dark:text-[#EEEEEE]">
@@ -46,7 +46,7 @@ const ConnectWallet = () => {
         {/* connect with wallet onClick on connect wallet button */}
         <Button
           variant={"primary"}
-          className="flex items-center justify-center gap-[5px] rounded-none  px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white border-0  border-b-2 border-[#020202]  cursor-pointer"
+          className="hover:bg-[#d3d2d2] flex items-center justify-center gap-[5px] rounded-none  px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white border-0  border-b-2 border-[#020202]  cursor-pointer"
           onClick={onConnect}
         >
           <p className="text-[#020202] bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] font-semibold text-base">

@@ -20,7 +20,6 @@ import {
 import { useCdsRedeemUsdt, useBorrowingContractRedeemYields, useAmintApprove, useAbondApprove, cdsAddress, borrowingContractAddress, useBorrowingContractGetAbondYields, abondAddress, amintAddress } from '@/abiAndHooks';
 import { Input } from "@/components/ui/input";
 import { Button } from '@/components/ui/button';
-import Note from '@/components/CustomUI/Note';
 import * as z from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,6 +30,12 @@ import Spinner from '@/components/ui/spinner';
 import { formatEther } from 'viem';
 import Image from 'next/image';
 import swapArrow from "@/app/assets/swap_vert.svg"; 
+import Notification from "@/components/pagePopover/Notification";
+import PageSettings from "@/components/pagePopover/PageSettings";
+import {  BellIcon,  InfoCircledIcon } from "@radix-ui/react-icons";
+import { Settings } from "lucide-react";
+
+
 const formSchema = z.object({
   inputCollateral: z.string(),
   collateralAmount: z
@@ -62,7 +67,9 @@ export default function page() {
 
 
   const { address: accountAddress } = useAccount();
-
+  const [openSettings, setOpenSettings] = React.useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -625,9 +632,19 @@ export default function page() {
 
   return (
     <div className='w-full px-2 sm:px-5 '>
-      <div className='w-full bg-white border border-[#9E9E9E] shadow-custom min-h-[84vh]'>
-
+      <div className='w-full relative bg-white border border-[#9E9E9E] shadow-custom min-h-[84vh]'>
+      <div className="hidden gap-5 sm:flex sm:flex-col sm:absolute mdb:flex right-5 top-5">
+            <div onClick={() => {setShowNotification(!showNotification);setOpenSettings(false)}} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
+              <BellIcon className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
+            </div>
+            <div className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
+              <Settings onClick={() => {setOpenSettings(!openSettings);setShowNotification(false)}} className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
+            </div>
+          </div>
+          <Notification showNotifications={showNotification} setShowNotifications={setShowNotification} />
+          <PageSettings showSettings={openSettings} setShowSettings={setOpenSettings} />
         <div className='w-[95%] sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[800px] mx-auto h-auto  dark:bg-[#141414]  p-1 sm:p-4'>
+      
           <div className="justify-center mt-6  align-middle dark:bg-[#141414] ">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full gap-4 ' action="#">

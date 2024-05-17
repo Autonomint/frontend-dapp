@@ -710,7 +710,7 @@ border-image-source: linear-gradient(180deg, #63AEFF -0.23%, #131D33 99.77%); */
               </SheetClose>
             </div>
             <SheetHeader>
-              <SheetTitle className="text-[#020202] dark:text-[#90AFFF] font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
+              <SheetTitle className="text-[#020202] px-4 dark:text-[#90AFFF] font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
                 Deposit #{details.index}
               </SheetTitle>
             </SheetHeader>
@@ -728,9 +728,9 @@ border-image-source: linear-gradient(180deg, #63AEFF -0.23%, #131D33 99.77%); */
               ))}
 
 
-              <div className="flex justify-between min-[1440px]:px-4 2dppx:px-2 px-2 min-[1440px]:py-[10px] 2dppx:py-[5px] py-[5px]  border-b border-lineGrey">
+              <div className="flex justify-between min-[1440px]:px-4 2dppx:px-2 px-4 min-[1440px]:py-[10px] 2dppx:py-[5px] py-[5px]  border-b border-lineGrey">
                 <div className="flex gap-2">
-                  <p className="text-base text-textSecondary dark:text-[#DEDEDE]">
+                  <p className="text-base text-black dark:text-[#DEDEDE]">
                     Amount Protected
                   </p>
                   <TooltipProvider>
@@ -748,7 +748,7 @@ border-image-source: linear-gradient(180deg, #63AEFF -0.23%, #131D33 99.77%); */
                   <Button
                     variant={"ghostOutline"}
                     size={"row"}
-                    className="text-xs font-medium leading-none text-textHighlight dark:text-[#DEDEDE]"
+                    className="text-[#020202] relative text-xs rounded-none  border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-1"
                     onClick={handleAmountProtected}
                   >
                     View
@@ -777,20 +777,20 @@ border-image-source: linear-gradient(180deg, #63AEFF -0.23%, #131D33 99.77%); */
                     heading={"Calculate Interest #1"}
                     subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
                     status={cumulativeRateLoading ? "Loading" :(!cumulativeRateError && ispendingCumulative)?"Progress"  : cumulativeRateSuccess ? "Completed" : cumulativeRateError ? "Failed" : "Pending"}
-                    className={`${cumulativeRateLoading || (!cumulativeRateError && ispendingCumulative) ? "w-[100%] px-3 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
+                    className={`${cumulativeRateLoading || (!cumulativeRateError && ispendingCumulative) ? "w-[100%] px-4 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
                   />
                   <TransactionLoader
                     heading={"Approve Amint #2"}
                     subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
                     status={amintApproveLoading ? "Loading" : ( !amintApproveError && amintTransactionLoading) ? "Progress" : amintApproveSuccess ? "Completed" : amintApproveError ? "Failed" : "Pending"}
-                    className={`${amintApproveLoading || ( !amintApproveError && amintTransactionLoading) ? "w-[100%] px-3 py-3" : "bg-gray-100 dark:bg-[#141414]"} `}
+                    className={`${amintApproveLoading || ( !amintApproveError && amintTransactionLoading) ? "w-[100%] px-4 py-3" : "bg-gray-100 dark:bg-[#141414]"} `}
 
                   />
                   <TransactionLoader
                     heading={"Withdraw #3"}
                     subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
                     status={borrowWithdrawisLoadingone || borrowWithdrawisLoading ? "Loading" :( !borrowWithdrawtransactionError && isPending)? "Progress" : borrowWithdrawtransactionSuccess && backendWithdrawSuccess ? "Completed" : borrowWithdrawtransactionError ? "Failed" : "Pending"}
-                    className={`${borrowWithdrawisLoadingone || borrowWithdrawisLoading || (!borrowWithdrawtransactionError && isPending)? "w-[100%] px-3 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
+                    className={`${borrowWithdrawisLoadingone || borrowWithdrawisLoading || (!borrowWithdrawtransactionError && isPending)? "w-[100%] px-4 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
                   />
                 </div>
               ) :
@@ -800,7 +800,7 @@ border-image-source: linear-gradient(180deg, #63AEFF -0.23%, #131D33 99.77%); */
                     {details.status === "DEPOSITED" ? (
                       <Button
                         variant={"primary"}
-                        className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
+                        className="border-[#041A50] mx-4 bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
                         onClick={() => {
                           setOpenConfirmNotice(true);
                         }}
@@ -866,11 +866,14 @@ border-image-source: linear-gradient(180deg, #63AEFF -0.23%, #131D33 99.77%); */
                     : (
                       <>
                         {details.status === "LIQUIDATED" ? (
-                          <Note note="position is already liquidated" />
-                        ) : (
-                          <div className="text-center">
+                          <div className="p-4 text-center">
 
-                          <Note  note="amount fully withdrawn" />
+                          <Note note="Note: This deposit has already been liquidated" />
+                          </div>
+                        ) : (
+                          <div className="p-4 text-center">
+
+                          <Note  note="Note: Amount fully withdrawn" />
                           </div>
                         )}
                       </>

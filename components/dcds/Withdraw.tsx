@@ -454,7 +454,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
         >
 
             <SheetContent
-                className={"w-full md:w-auto lg:max-w-screen-lg overflow-y-scroll max-h-screen"}
+                className={"w-full md:w-1/3 lg:max-w-screen-lg overflow-y-scroll max-h-screen"}
             >
                 <div className="flex flex-col min-[1440px]:gap-6 2dppx:gap-2 gap-2">
                     <div className="flex justify-end w-full">
@@ -473,7 +473,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                         </SheetClose>
                     </div>
                     <SheetHeader>
-                        <SheetTitle className="text-black font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
+                        <SheetTitle className="text-black font-medium min-[1440px]:text-4xl px-4 2dppx:text-2xl text-2xl tracking-[-1.8px]">
                             Deposit {`#${details.index}`}
                         </SheetTitle>
                     </SheetHeader>
@@ -489,15 +489,15 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                                 }}
                             />
                         ))}
-                        <div className="flex justify-between min-[1440px]:px-4 2dppx:px-2 px-2 min-[1440px]:py-[10px] 2dppx:py-[5px] py-[5px] border-b border-lineGrey">
-                            <p className="min-[1440px]:text-base 2dppx:text-sm text-sm text-textSecondary dark:text-[#EEEEEE] ">
+                        <div className="flex justify-between min-[1440px]:px-4 2dppx:px-2 px-4 min-[1440px]:py-[10px] 2dppx:py-[5px] py-[5px] border-b border-lineGrey">
+                            <p className="min-[1440px]:text-base 2dppx:text-sm text-sm text-[#020202] dark:text-[#EEEEEE] ">
                                 Total Amount accured
                             </p>
                             {!amountView ? (
                                 <Button
                                     variant={"ghostOutline"}
                                     size={"row"}
-                                    className="text-xs font-medium leading-none text-textHighlight dark:text-[#EEEEEE] "
+                                    className="text-[#020202] relative text-xs rounded-none  border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-1"
                                     onClick={() => setAmountView(!amountView)}
                                 >
                                     View
@@ -507,7 +507,10 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                             )}
                         </div>
                     </div>
+                    <div className="px-4">
+
                     <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
+                    </div>
 
                     {openConfirmNotice ? (
                         // If openConfirmNotice is true, render the ConfirmNoticeCds component
@@ -525,7 +528,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                         // || (WithdrawalTime() > Date.now())
                         <Button
                             variant={"primary"}
-                            className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
+                            className="border-[#041A50] bg-[#ABFFDE] mx-4 text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
                             onClick={() => setOpenConfirmNotice(true)}
                             disabled={(status === "WITHDREW" ? true : false) || (WithdrawalTime() > Date.now())}
                         >

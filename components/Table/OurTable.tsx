@@ -50,6 +50,8 @@ const DepositAndWithDrawTable = ({
   }
 
   return (
+    <div>
+
     <Table >
       <TableHeader>
         <TableRow className="bg-gray-200 hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-900">
@@ -59,25 +61,27 @@ const DepositAndWithDrawTable = ({
           <TableHead className="text-textGrey dark:text-[#C4C4C4]">Interest rate</TableHead>
           <TableHead className="text-textGrey dark:text-[#C4C4C4]">Abond minted</TableHead>
           <TableHead className="text-textGrey dark:text-[#C4C4C4]">Liquidated</TableHead>
+          <TableHead className="text-textGrey dark:text-[#C4C4C4]">Repay</TableHead>
         </TableRow>
       </TableHeader>
 
       <TableBody>
         {tableData && tableData?.map((details, index) => {
-          console.log(tableData.length-1, index)
-          return <TableRows isnewtxn={newtxn} islasttxn= {tableData.length-1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} handleRefetch={handleRefetch} />
-})}
+          console.log(tableData.length - 1, index)
+          return <TableRows isnewtxn={newtxn} islasttxn={tableData.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} handleRefetch={handleRefetch} />
+        })}
       </TableBody>
-        
+
+      </Table>
       {
         sheetDetails && <Withdraw
-          details={sheetDetails}
-          sheetOpen={sheetOpen}
-          handleSheetOpenChange={setSheetOpen}
-          handleRefetch={handleRefetch}
+        details={sheetDetails}
+        sheetOpen={sheetOpen}
+        handleSheetOpenChange={setSheetOpen}
+        handleRefetch={handleRefetch}
         />
       }
-    </Table>
+      </div>
   );
 };
 

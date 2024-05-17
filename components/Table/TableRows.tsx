@@ -155,6 +155,9 @@ const TableRows = ({
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
             {details.status === "LIQUIDATED" ? "Yes" : "No"}
         </TableCell>
+        <TableCell className="text-textGrey dark:text-[#EEEEEE]">
+            <button className="py-1 px-2 mr-4 bg-[#020202] text-white" >repay</button>
+        </TableCell>
 
        
       </TableRow>
