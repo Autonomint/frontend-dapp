@@ -296,7 +296,7 @@ const Dcds = () => {
                               <TableHead className="text-textGrey dark:text-[#C4C4C4]">USDa / Usdt Deposited</TableHead>
                               <TableHead className="text-textGrey dark:text-[#C4C4C4]">Deposited Time</TableHead>
                               <TableHead className="text-textGrey dark:text-[#C4C4C4]">Lock In period</TableHead>
-                              <TableHead className="text-textGrey dark:text-[#C4C4C4]">Repay</TableHead>
+                              <TableHead className="text-textGrey dark:text-[#C4C4C4]">Withdraw</TableHead>
 
                             </TableRow>
                           </TableHeader>

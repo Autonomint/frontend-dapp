@@ -84,7 +84,7 @@ export default function Footer() {
 
                         <DialogHeader className="flex items-start">
                             <DialogTitle className="text-black  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-2xl text-xl ">
-                                <h1>Acuire ETH and Collateral</h1>
+                                <h1>Aqcuire ETH and Collateral</h1>
                             </DialogTitle>
                         </DialogHeader>
                         <div className="pl-4">
