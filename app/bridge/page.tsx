@@ -656,9 +656,7 @@ export default function page() {
                       </div>
                       {chainId === 11155111 ? "Ethereum Sepolia " : chainId === 8453 ? "Base Sepolia" : "unsupported network"}
                     </div>
-                    <div className='flex items-center '>
-                      Bal. <span className='ml-2 font-semibold'>  3.2 ETH</span>
-                    </div>
+                    
                     <div className='text-[#020202] px-3 py-1 relative rounded-none  border-0 border-b-2 border-[#020202] bg-[#DEDEDE]'>
                       max
                     </div>
@@ -747,6 +745,9 @@ export default function page() {
                     />
 
                   </div>
+                <div className='flex items-center justify-end text-xs text-end '>
+                      Bal. <span className='ml-2 font-semibold'>  3.2 ETH</span>
+                    </div>
                 </div>
                 <div className='flex items-center justify-center my-4'>
 

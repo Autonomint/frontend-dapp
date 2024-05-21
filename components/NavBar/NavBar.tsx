@@ -19,7 +19,6 @@ import { useWeb3Modal, createWeb3Modal } from '@web3modal/wagmi/react'
 import { config, projectId } from "@/providers/WalletProvider";
 import {
   Form,
-
 } from "@/components/ui/form";
 import {
   Select,
@@ -186,9 +185,10 @@ const NavBar = () => {
     
           </div>
 
+          <div className="flex items-center justify-center top-2">
 
           {isConnected ? (
-            <div onClick={() => setOpen2(!open2)} className="px-3 hidden mdb:flex gap-2 py-1 pt-2 mt-3 h-fit text-[0.8rem] font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+            <div onClick={() => setOpen2(!open2)} className="px-3 hidden mdb:flex gap-2 py-1 pt-2  h-fit text-[0.8rem] font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
               <div className="w-[1.5rem] -mt-[2px] "><Image src={walleticon} alt="autonomint-dapp" className="rounded-sm cursor-pointer " style={{ width: "100%", height: "100%" }} /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
             </div>
           ) : (
@@ -196,6 +196,7 @@ const NavBar = () => {
               Connect Wallet
             </div>
           )}
+          </div>
           <div className="right-0 flex items-center justify-center top-2 mdb:hidden">
 
             <button onClick={() => setShowMore(!showMore)} data-collapse-toggle="navbar-hamburger" type="button" className="flex  shadow-custom items-center justify-center w-10 h-10 text-sm text-[#020202] bg-white border border-[#9E9E9E] dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-hamburger" aria-expanded="false">
@@ -257,7 +258,6 @@ const NavBar = () => {
                 </li>
                 <li className="flex gap-2">
                   <h2 className="ml-2 font-semibold text-black text-md">
-
                     {resolvedTheme === "light" ? "Light" : "Dark"}
                   </h2>
                   <div className="flex">
@@ -309,9 +309,9 @@ const NavBar = () => {
                   <div className="p-3 text-sm underline border  bg-[#EEEEEE]">
                     <a href={`https://sepolia.etherscan.io/address/${address}`} >View All Wallets Transactions </a>
                   </div>
-                  <div className="flex justify-between p-3 text-sm border  bg-[#EEEEEE]"><div>Verify Joseon ID</div><div className="underline">Learn More</div></div>
+                  <div className="flex justify-between p-3 text-sm border  bg-[#EEEEEE]"><div>Verify Joseon ID</div><a className="underline" href="https://www.joseon.com/l/en-US/" target="_blank">Learn More</a></div>
                   <div className="p-3 text-sm border  bg-[#EEEEEE]">
-                    Terms & privacy policy <a href="" target="_blank" className="text-black underline">click to view</a>
+                    Terms & privacy policy <a href="https://www.autonomint.com/terms-and-privacy" target="_blank" className="text-black underline">click to view</a>
                   </div>
                 </div>
               </div>

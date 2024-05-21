@@ -35,7 +35,8 @@ export default function page() {
                             </div>
                             <div className='-4'>
                                 {
-                                    showReferral ?(
+                                    showReferral ?
+                                    (
                                         <div>
                                         <div className='text-xl font-bold'>Refer and Earn</div>
                                         <div className='flex gap-4'>

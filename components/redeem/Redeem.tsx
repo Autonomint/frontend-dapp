@@ -31,6 +31,7 @@ import Spinner from '@/components/ui/spinner';
 import { formatEther } from 'viem';
 import arrowout from "@/app/assets/arrow_outward.svg";
 import Image from 'next/image';
+import GetBalance from '../ConnectWallet/GetBalance';
 const formSchema = z.object({
   inputCollateral: z.string(),
   collateralAmount: z
@@ -631,7 +632,7 @@ const Redeem = ({
     <div className="justify-center  align-middle dark:bg-[#141414] ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full gap-4 ' action="#">
-          <div className=' flex  relative  gap-2 dark:bg-[#020202]'>
+          <div className=' flex  relative  gap-2 dark:bg-[#020202] overflow-visible'>
             <FormField
               control={form.control}
               name="collateralAmount"
@@ -715,10 +716,14 @@ const Redeem = ({
                 </FormItem>
               )}
             />
+            <div className='absolute right-0 text-xs -bottom-5'>
+
+             {form.getValues("inputCollateral") && <GetBalance token={form.getValues("inputCollateral")} />} 
+            </div>
           </div>
 
 
-          <div className='relative bg-[#ffffff] border-[#004795] dark:border-[#004795] border  dark:bg-[#020202]   py-2 px-2'>
+          <div className='relative bg-[#ffffff] border-[#004795] dark:border-[#004795] border mt-4  dark:bg-[#020202]   py-2 px-2'>
             <div className='text-sm text-[#004795]'>
               Redeemable Amount
             </div>

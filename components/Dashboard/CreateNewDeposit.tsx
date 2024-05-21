@@ -560,8 +560,8 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                   )}
                 />
 
-                {/* <span className="top-7  text-gray-400 font-semibold relative md:absolute  right-32 block text-right text-[0.7rem]"> <span className="text-xl">(</span> <span className="text-sm">={(Number(ethPrice) / 100 * Number(form.getValues("collateralAmount"))).toFixed(2)} </span> usdt <span className="text-xl">)</span></span>
-                <span className=" text-textHighlight relative md:absolute md:right-1 block text-right text-[0.7rem] dark:text-[#d4d4d4]">Balance:  {(Number(ethBalance.data?.formatted)).toFixed(4)} ETH</span> */}
+                {/* <span className="top-7  text-gray-400 font-semibold relative md:absolute  right-32 block text-right text-[0.7rem]"> <span className="text-xl">(</span> <span className="text-sm">={(Number(ethPrice) / 100 * Number(form.getValues("collateralAmount"))).toFixed(2)} </span> usdt <span className="text-xl">)</span></span> */}
+                <span className=" text-textHighlight  relative md:absolute md:right-1 -bottom-5 block text-right text-[0.7rem] dark:text-[#d4d4d4]">Balance:  {(Number(ethBalance.data?.formatted)).toFixed(4)} ETH</span> 
               </div>
               <div className="px-[1px] -mt-2 flex gap-[10px] items-center">
                 {/* <InfoCircledIcon width={18} height={18} /> */}

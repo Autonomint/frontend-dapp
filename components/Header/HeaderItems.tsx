@@ -65,7 +65,7 @@ const HeaderItems = ({
           `${
             lastElement
               ? ""
-              : "w-[1px]  bg-lineGrey dark:bg-[#5B5B5B]  2dppx:mx-6 mx-[2px] md:mx-1 xl:mx-3"
+              : "w-[1px]  bg-black dark:bg-[#5B5B5B]  2dppx:mx-6 mx-[2px] md:mx-1 xl:mx-3"
           }`,
           className
         )}

@@ -13,14 +13,14 @@ import { infuraProvider } from "wagmi/providers/infura";
 import { goerli } from "@wagmi/core/chains";
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 import { baseSepolia, sepolia } from 'viem/chains'
-const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [goerli,sepolia, polygonMumbai,optimismSepolia,bscTestnet,baseSepolia],
-  [
-    // alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API as string }),
-    infuraProvider({ apiKey:"db13973dc7f54cbab913af8ebc58e376" }),
-    publicProvider(),
-  ]
-);
+// const { chains, publicClient, webSocketPublicClient } = configureChains(
+//   [goerli,sepolia, polygonMumbai,optimismSepolia,bscTestnet,baseSepolia],
+//   [
+//     // alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API as string }),
+//     infuraProvider({ apiKey:"db13973dc7f54cbab913af8ebc58e376" }),
+//     publicProvider(),
+//   ]
+// );
 export const projectId ="077109262f9ea2fe0fbbf0bf65fd7e57"
 
 if (!projectId) throw new Error('Project ID is not defined')
@@ -34,9 +34,8 @@ const metadata = {
 
 export const config = defaultWagmiConfig({
   chains: [sepolia,baseSepolia],
-  projectId, // required
+  projectId, 
   metadata, 
-
 });
 
 // createWeb3Modal({

@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
       </head>
       <ThemeProvider
         attribute="class"
@@ -41,7 +41,7 @@ export default function RootLayout({
         enableSystem
         disableTransitionOnChange
       >
-        <body className={` font-plex-mono bg-[#EEEEEE] dark:bg-none dark:bg-[#020202]`}>
+        <body className={` font-plex-sans bg-[#EEEEEE] dark:bg-none dark:bg-[#020202]`}>
           {/* <div className="max-w-[1440px] mx-auto"> */}
           <main className="relative flex w-full h-auto md:left-0 ">
             <WalletProvider>

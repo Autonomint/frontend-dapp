@@ -46,8 +46,8 @@ export default function Footer() {
 
 
             <Dialog open={open2} onOpenChange={setOpen2} >
-                <DialogContent className="max-w-[800px]  pb-5">
-                    <div className="flex justify-end right-5 top-2">
+                <DialogContent className="max-w-[800px]  p-5">
+                    <div className="flex justify-end mb-4 right-5 top-2">
                         <DialogClose asChild>
                             <Button
                                 variant={"ghostOutline"}
@@ -55,9 +55,7 @@ export default function Footer() {
                                 className="flex gap-[10px] border border-borderGrey rounded-none "
                             >
                                 <Cross2Icon className="w-4 h-4" />
-                                <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
-                                    Close
-                                </p>
+                               
                             </Button>
                         </DialogClose>
                     </div>
@@ -69,18 +67,16 @@ export default function Footer() {
             </Dialog>
 
             <Dialog open={openGetstart} onOpenChange={setOpenGetstart} >
-                <DialogContent className="max-w-[800px] pb-5">
+                <DialogContent className="max-w-[800px] p-5">
                     <div className="flex justify-end w-full ">
                         <DialogClose asChild>
                             <Button
                                 variant={"ghostOutline"}
                                 size={"primary"}
-                                className="flex gap-[10px] border border-borderGrey rounded-none"
+                                className="flex gap-[10px] mb-4 border border-borderGrey rounded-none"
                             >
                                 <Cross2Icon className="w-4 h-4" />
-                                <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
-                                    Close
-                                </p>
+                                
                             </Button>
                         </DialogClose>
                     </div>
@@ -94,8 +90,8 @@ export default function Footer() {
                         <div className="pl-4">
                             <div>
                                 <ol className="text-sm list-disc ">
-                                    <li>Make sure you have some Sepolia ETH in your account to pay for gas. if not,grab some the <a href="">Sepolia Faucet.</a></li>
-                                    <li>Grab some TUSDT and Eth to trade with from the USDa faucet.</li>
+                                    <li>Make sure you have some Sepolia ETH in your account to pay for gas. if not, grab some the Sepolia Faucet.</li>
+                                    <li>Grab some <a href="" className='underline'>TUSDT</a> and Eth to trade with from the USDa faucet.</li>
                                     <li>Click the button below to go deposit collateral and mint some stable coins!</li>
                                 </ol>
                             </div>

@@ -58,7 +58,7 @@ export default function page() {
       });
     return (
         <div className='w-full px-2 sm:px-5'>
-        <div className='px-2 sm:px-8 py-5 w-full bg-white shadow-custom border-[1px] border-[#9E9E9E] mdb:h-[84vh] '>
+        <div className='px-2 sm:px-8 py-5 w-full bg-white shadow-custom border-[1px] border-[#9E9E9E] mdb:min-h-[84vh] '>
             <div className='overflow-hidden border-1 dark:border-none'>
                 <div className=' dark:bg-[#141414] flex mb-5 gap-2 md:gap-10 w-full '>
                         <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>

@@ -4,21 +4,21 @@ import WalletOrContent from "@/components/WalletOrContent/WalletOrContent";
 import Dcds from "@/components/dcds/Dcds";
 import RedeemPage from "@/components/redeem/RedeemPage";
 
-import { ArrowRightIcon, BellIcon, Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import WaitlistBanner from "@/components/Banner/WaitlistBanner";
 import BorrowSlider from "@/components/pagePopover/BorrowSlider";
-import { Settings, Settings2Icon } from "lucide-react";
+import {  BellIcon,  InfoCircledIcon } from "@radix-ui/react-icons";
+import { Settings } from "lucide-react";
 import { useAccount } from "wagmi";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import Notification from "@/components/pagePopover/Notification";
 import PageSettings from "@/components/pagePopover/PageSettings";
 
 export default function Home() {
+  const [openSettings, setOpenSettings] = React.useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [selectedTab, setSelectedTab] = useState("mint");
   const [openInfo, setOpenInfo] = React.useState(false);
-  const [openSettings, setOpenSettings] = React.useState(false);
   // useEffect(() => {
   //   const checkIsStarted = localStorage.getItem("firstStart");
   //   if (!checkIsStarted) {
@@ -84,8 +84,8 @@ export default function Home() {
             <div onClick={() => {setShowNotification(!showNotification);setOpenSettings(false)}} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
               <BellIcon className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
             </div>
-            <div className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
-              <Settings onClick={() => {setOpenSettings(!openSettings);setShowNotification(false)}} className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
+            <div onClick={() => {setOpenSettings(!openSettings);setShowNotification(false)}} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
+              <Settings  className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
             </div>
           </div>
 

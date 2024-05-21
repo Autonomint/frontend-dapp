@@ -74,6 +74,8 @@ const BorrowSlider = ({
     speed: 500,
     autoplaySpeed: 3000,
     cssEase: "linear",
+    variableWidth: false,
+    variableHeight: false
 
   }
 
@@ -84,22 +86,24 @@ const BorrowSlider = ({
 
 
   return (
-    <div className={`${open ? "" : "hidden"} absolute left-0 w-[300px] h-[84vh]`}>
+    <div className={`${open ? "" : "hidden"} absolute w-full h-full `}>
 
-      <div onClick={() => opentoggler(!open)} className={`${open ? "" : "hidden"} fixed left-10 z-50  w-full h-[80vh] backdrop-blur-sm  `}>
+
+
+      <div onClick={() => opentoggler(!open)} className={` absolute z-50  h-full w-full backdrop-blur-sm  `}>
       </div>
-      <div className='absolute z-50 border border-black left-5 top-24'>
 
-        <div className='flex  flex-col h-auto items-center justify-center  bg-white dark:bg-[#141414] px-4 gap-4 pt-4 pb-2  rounded-md shadow-sm '>
-        {isLoaded?(
-          <div className="slider-container transition-all duration-300 ease-in-out w-[300px] mt-5">
-            <Slider className='w-[300px]'  {...settings}>
+        {
+          open ? (
+            <div className='absolute z-50 px-4 pt-4 pb-2 transition-all duration-500 ease-in-out border border-black animate-in-out left-5 top-24 '>
+            <div className=" w-[300px] mt-5">
+            <Slider {...settings}>
 
-              <div className='w-full' >
+              <div className=''  >
                 <div className='mb-4  mx-auto text-xl font-bold text-center border text-white py-12 border-black bg-[linear-gradient(254.52deg,#65C578_0%,#23D1F6_100%)]'>
                   Borrow & Mint
                 </div>
-                <div className='mx-auto text-[0.75rem] text-[#0F0F0F] '>
+                <div className='min-w-200px mx-auto text-[0.75rem] text-[#0F0F0F] '>
                   Mint stablecoins at 80% LTV by depositing crypto collateral (currently ETH). Enhance to 100% synthetic LTV by opting for 20% downside protection on your crypto price. Surrender a percentage of your upside and pay option fees to achieve this synthetic LTV.
                 </div>
                 <div className='text-[0.8rem] flex flex-col  gap-2 mt-5 text-[#0F0F0F]'>
@@ -107,8 +111,9 @@ const BorrowSlider = ({
                   <div className='flex justify-between text-md py-1 border-b border-[#020202]'> <p >USDa Supply</p>  <p className='font-bold'>{formatNumber(Number(amintsupply) / 10 ** 6)}</p>  </div>
                   <div className='flex justify-between py-1 text-md '> <p>USDa Price</p>  <p className='font-bold'>$1</p>  </div>
                 </div>
-
               </div>
+
+
               <div >
                 <div className='mb-4 mx-auto text-xl font-bold text-center border text-white py-12 border-black bg-[linear-gradient(254.52deg,#C191FE_0%,#29CEF6_100%);]'>
                   dCDS
@@ -121,8 +126,9 @@ const BorrowSlider = ({
                   <div className='flex justify-between text-md py-1 border-b border-[#020202]'> <p>APY</p>  <p className='font-bold'>5%-200%</p>  </div>
                   <div className='flex justify-between py-1 text-md '> <p> dCDS P/L</p>  <p className='font-bold'>0%</p>  </div>
                 </div>
-
               </div>
+
+
               <div >
                 <div className='mb-4  mx-auto text-xl font-bold text-center border text-white py-12 border-black bg-[linear-gradient(254.52deg,#C191FE_0%,#2ACEF6_100%)]'>
                   Loan Repayment
@@ -136,13 +142,16 @@ const BorrowSlider = ({
                   <div className='flex justify-between py-1 text-md '> <p> ABOND APY</p>  <p className='font-bold'>200%</p>  </div>
                 </div>
               </div>
+
             </Slider>
           </div>
-        ):("")}
-          
-
-        </div>
       </div>
+          ):("hello")
+          
+        }
+
+
+
     </div>
 
   )
@@ -150,3 +159,4 @@ const BorrowSlider = ({
 
 
 export default BorrowSlider;
+
