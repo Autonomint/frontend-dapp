@@ -580,21 +580,22 @@ const Withdrawcopy = ({
   function handleDepositData() {
     // Calculate the totalAmintAmnt
     setSpinner(true);
-    const totalAmintAmnt =
-      BigInt(
-        BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
-        (lastCumulativeRate ?? 1n)
-      ) / BigInt(10 ** 27);
-
-    totalAmintAmount.current = totalAmintAmnt;
-
-    if (details) {
+    
+    if (details && lastCumulativeRate) {
+      const totalAmintAmnt =
+        BigInt(
+          BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
+          (lastCumulativeRate )
+        ) / BigInt(10 ** 27);
+      totalAmintAmount.current = totalAmintAmnt;
       // If details are available, update each value in the depositData array
       const updatedData = [...depositData];
       updatedData[0].value = details.depositedAmount + ` (${(Number(details.depositedAmount) * Number(details.ethPrice)).toFixed(2)} $) `;
       updatedData[1].value = `${details.ethPrice}`;
       updatedData[2].value = details.noOfAmintMinted;
       updatedData[3].value = (parseFloat(totalAmintAmnt.toString()) / 10 ** 6).toString();
+      console.log("----------------------->",(parseFloat(totalAmintAmnt.toString()) / 10 ** 6).toString()) 
+
       updatedData[4].value = `${details.aprAtDeposit}%`;
       updatedData[5].value = `${details.downsideProtectionPercentage}%`;
       updatedData[6].value = details.status === "LIQUIDATED" ? "Yes" : "No";
