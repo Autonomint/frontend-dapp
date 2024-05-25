@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Withdraw from "./Withdraw";
 import TableRows from "./TableRows";
 import Spinner from "../CustomUI/Spinner";
 import Withdrawcopy from "../Dashboard/Withdrawcopy";

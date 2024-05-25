@@ -19,7 +19,6 @@ import AmintDepositRow from "./AmintDepositRow";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { formatEther } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
-import Withdraw from "./Withdraw";
 import {
   Dialog,
   DialogClose,
