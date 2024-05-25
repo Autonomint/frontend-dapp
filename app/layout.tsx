@@ -60,10 +60,6 @@ export default function RootLayout({
                   initialIsOpen={false}
                 />
               </QueryProvider>
-            </WalletProvider>
-
-          </main>
-          {/* </div> */}
           <Toaster
             expand
             visibleToasts={9}
@@ -72,6 +68,10 @@ export default function RootLayout({
             position="top-center"
             toastOptions={{ style: { zIndex: 999, left: "-30%" } }}
           />
+            </WalletProvider>
+
+          </main>
+          {/* </div> */}
         </body>
       </ThemeProvider>
     </html>

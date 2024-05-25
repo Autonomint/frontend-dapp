@@ -3,9 +3,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
@@ -20,7 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from "zod";
 import {
   CaretDownIcon,
@@ -41,39 +38,27 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import payments from "@/app/assets/payments.svg";
 import trending from "@/app/assets/trending_up.svg";
 import calendar from "@/app/assets/date_range.svg";
 import {
-  cdsABI,
+  cdsAbi,
   cdsAddress,
-  useAmintApprove,
-  useBorrowingContractGetUsdValue,
-  useCdsAmintLimit,
-  useCdsDeposit,
-  useCdsUsdtAmountDepositedTillNow,
-  useCdsUsdtLimit,
-  usePrepareCdsDeposit,
-  useUsdtContractApprove,
+  useWriteUsDaApprove,
+  useReadBorrowingContractGetUsdValue,
+  useWriteCdsDeposit,
+  useReadCdsGetCdsDepositDetails,
+  useWriteTestusdtAbiApprove,
+  useReadCdsUsdtAmountDepositedTillNow,
+  useReadCdsUsdtLimit,
+  useReadCdsUsdaLimit,
+  useReadCdsQuote
 } from "@/abiAndHooks";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAccount, useBalance, useChainId, useWaitForTransaction } from "wagmi";
-import { toast } from "sonner";
+import { useAccount, useBalance, useChainId, useWaitForTransactionReceipt } from "wagmi";
+import { toast } from 'sonner';
 import CustomToast from "@/components/CustomUI/CustomToast";
 import { parseEther, parseUnits } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
@@ -82,7 +67,7 @@ import Spinner from "@/components/ui/spinner";
 import { DEV_PROXY_AMINT_ADDRESS, DEV_PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
 import ProductList from "../Markets/ProductList";
 import arrowout from "@/app/assets/arrow_outward.svg";
-
+import { Options } from '@layerzerolabs/lz-v2-utilities'
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 interface TokensState {
@@ -90,7 +75,6 @@ interface TokensState {
   COMP: Checked;
   USDC: Checked;
 }
-
 
 
 
@@ -135,7 +119,7 @@ const NewDeposit = ({
   openDeposits
 }: {
   handleRefetch: Function;
-  openDeposits:Function;
+  openDeposits: Function;
 }) => {
   // Define the initial state for the open variable for sheet opening and closing
   const [open, setOpen] = useState(false);
@@ -145,6 +129,7 @@ const NewDeposit = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(Number(event.target.value)); // Convert input value to a number
   };
+  const options = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
 
 
   // Define the initial state for the tokensEnabled variable
@@ -157,6 +142,8 @@ const NewDeposit = ({
   const depositVal = useRef<bigint>(0n);
   const { address } = useAccount();
   const chainId = useChainId();
+  const Eid = chainId === 11155111 ? 40245 : 40161;
+
   // managing toastId for custom toast
   const toastId = useRef<number | string>("");
   // Define the initial state for the form schema
@@ -227,159 +214,119 @@ const NewDeposit = ({
   const { data: amintbal } = useBalance({
     address: DEV_PROXY_AMINT_ADDRESS ? address : undefined,
     token: DEV_PROXY_AMINT_ADDRESS ? DEV_PROXY_AMINT_ADDRESS : undefined,
-    watch: true,
   });
 
   const { data: usdtbal } = useBalance({
     address: DEV_PROXY_TESTUSDT_ADDRESS ? address : undefined,
     token: DEV_PROXY_TESTUSDT_ADDRESS ? DEV_PROXY_TESTUSDT_ADDRESS : undefined,
-    watch: true,
   });
 
   // get eth price from Borrowing contract and store it in ethPrice and setting default value to 0n
-  const { data: ethPrice = 0n } = useBorrowingContractGetUsdValue({
-    staleTime: 10 * 1000,
+  const { data: ethPrice = 0n } = useReadBorrowingContractGetUsdValue({
+    query: {
+      staleTime: 10 * 1000,
+    }
   });
 
 
   // get usdt limit from CDS contract and store it in usdtLimit and setting default value to 0n
-  const { data: usdtLimit = 0n } = useCdsUsdtLimit({ watch: true });
+  const { data: usdtLimit = 0n } = useReadCdsUsdtLimit();
 
 
   // get usdt amount deposited till now from CDS contract and store it in usdtAmountDepositedTillNow and setting default value to 0n
-  const { data: usdtAmountDepositedTillNow = 0n } =
-    useCdsUsdtAmountDepositedTillNow({ watch: true });
+  const { data: usdtAmountDepositedTillNow = 0n } = useReadCdsUsdtAmountDepositedTillNow();
 
   // get ratio from CDS contract and store it in ratio
-  const { data: ratio } = useCdsAmintLimit({ staleTime: 60 * 1000 });
+  const { data: ratio } = useReadCdsUsdaLimit({ query: { staleTime: 60 * 1000 } });
 
+  const { data: nativeFee1, error } = useReadCdsQuote({
+    query: { enabled: !!address }, args: [Eid, 1, 123n, 123n, 123n,
+      { liquidationAmount: 0n, profits: 0n, ethAmount: 0n, availableLiquidationAmount: 0n }, 0n, options, false]
+  });
 
   // usdt approval
   const {
-    isLoading: usdtApproveLoading,
+    isPending: usdtApproveLoading,
     data: usdtApproveData,
-    write: usdtWrite,
+    writeContract: usdtWrite,
     isSuccess: usdtApproved,
-  } = useUsdtContractApprove(
+  } = useWriteTestusdtAbiApprove(
     {
-      // Handle error and show a custom toast notification
-      onError(error) {
-        toast.custom(
-          (t) => {
-            toastId.current = t;
-            return (
-              <div>
-                <CustomToast
-                  key={2}
-                  props={{
-                    t,
-                    toastMainColor: "#B43939",
-                    headline: `Uhh Ohh! ${error.name}`,
-                    toastClosebuttonHoverColor: "#e66d6d",
-                    toastClosebuttonColor: "#C25757",
-                  }}
-                />
-              </div>
-            );
-          },
-          { duration: 5000 }
-        );
 
-        // setOpen(false);
-      },
+      mutation: {
+        onError(error) {
+          toast.custom(
+            (t) => {
+              toastId.current = t;
+              return (
+                <div>
+                  <CustomToast
+                    key={2}
+                    props={{
+                      t,
+                      toastMainColor: "#B43939",
+                      headline: `Uhh Ohh! ${error.name}`,
+                      toastClosebuttonHoverColor: "#e66d6d",
+                      toastClosebuttonColor: "#C25757",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: 5000 }
+          );
+        },
 
-      // Handle success and show a custom toast notification
-      onSuccess: (data) => {
-        toast.custom(
-          (t) => {
-            toastId.current = t;
-            return (
-              <div>
-                <CustomToast
-                  props={{
-                    t,
-                    toastMainColor: "#268730",
-                    headline: "Transaction Submitted",
-                    transactionHash: data?.hash,
-                    linkLabel: "View Transaction",
-                    toastClosebuttonHoverColor: "#90e398",
-                    toastClosebuttonColor: "#57C262",
-                  }}
-                />
-              </div>
-            );
-          },
-          { duration: Infinity }
-        );
-        //closing sheet so that user can click on the links from the toast
-        // setOpen(false);
-      },
+        onSuccess: (data) => {
+          toast.custom(
+            (t) => {
+              toastId.current = t;
+              return (
+                <div>
+                  <CustomToast
+                    props={{
+                      t,
+                      toastMainColor: "#268730",
+                      headline: "Transaction Submitted",
+                      transactionHash: data,
+                      linkLabel: "View Transaction",
+                      toastClosebuttonHoverColor: "#90e398",
+                      toastClosebuttonColor: "#57C262",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: Infinity }
+          );
+        },
+      }
     }
   );
 
-  const { data: usdtTransactionAllowed, isLoading: usdtTransactionLoading } = useWaitForTransaction({
-    // TODO: Add OnError Custom Toast
-    onError(error) {
-      toast.custom(
-        (t) => {
-          toastId.current = t;
-          return (
-            <div>
-              <CustomToast
-                key={2}
-                props={{
-                  t,
-                  toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
-                  toastClosebuttonHoverColor: "#e66d6d",
-                  toastClosebuttonColor: "#C25757",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
+  const { isLoading: UsdtApprovalLoading, isSuccess: UsdtApprovalSuccess, isError: UsdtApprovalError, data: UsdtApprovalReceipt } = useWaitForTransactionReceipt({
+    hash: usdtApproveData,
+  });
 
-      // setOpen(false);
-    },
-    // look for approval transaction hash
-    hash: usdtApproveData?.hash,
-    // Display a custom toast notification
-    onSuccess() {
-      toast.custom(
-        (t) => {
-          return (
-            <div>
-              <CustomToast
-                props={{
-                  t,
-                  toastMainColor: "#268730",
-                  headline: "Amint Approved,Plz Confirm Deposit Now",
-                  transactionHash: amintApproveData?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
+  useEffect(() => {
+    console.log(usdtApproveData, UsdtApprovalReceipt?.logs);
+    if (UsdtApprovalSuccess) {
       const liqAmnt =
         ((Number(amintAmnt ? amintAmnt : 0) + Number(usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
-      ConfirmDeposit?.({
-        args: [
-          BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
-          BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
-          liquidationGains,
-          liquidationGains ? parseUnits(liqAmnt.toString(), 6) : 0n,
-        ],
-      });
+      if (nativeFee1) {
+        ConfirmDeposit?.({
+          args: [
+            BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
+            BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
+            liquidationGains,
+            liquidationGains ? parseUnits(liqAmnt.toString(), 6) : 0n,
+          ],
+          value: nativeFee1.nativeFee,
+        });
+      }
+    }
 
-    },
-  });
+  }, [UsdtApprovalReceipt])
 
 
   console.log("usdtApproveData", usdtApproveData, usdtApproved);
@@ -492,77 +439,89 @@ const NewDeposit = ({
     return result;
   }
 
+
+
+
+
   // Use the useCdsDeposit hook to handle the CDS deposit functionality
 
   const {
-    write: ConfirmDeposit,
+    writeContract: ConfirmDeposit,
     data: CdsDepositData,
     reset,
-    isLoading: isCdsDepositLoading
-  } = useCdsDeposit({
+    isPending: isCdsDepositLoading
+  } = useWriteCdsDeposit({
     // Handle errors during the CDS deposit process
-    onError: (error) => {
-      // console.log(error.message);
-      console.log("MESSAGE", error.cause);
-      // Show a custom toast notification for the error
-      toast.custom(
-        (t) => (
-          <div>
-            <CustomToast
-              key={2}
-              props={{
-                t: toastId.current,
-                toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.cause}`,
-                toastClosebuttonHoverColor: "#e66d6d",
-                toastClosebuttonColor: "#C25757",
-              }}
-            />
-          </div>
-        ),
-        { duration: Infinity, id: toastId.current }
-      );
+    mutation: {
 
-      // Dismiss the toast notification after 5 seconds
-      setTimeout(() => {
-        toast.dismiss(toastId.current);
-      }, 5000);
-    },
-    // Handle the successful completion of the CDS deposit process
-    onSuccess: (data) => {
-      console.log(data);
-      // Show a custom toast notification for the successful transaction
-      toast.custom(
-        (t) => {
-          return (
+      onError: (error) => {
+        // console.log(error.message);
+        console.log("MESSAGE", error.cause);
+        // Show a custom toast notification for the error
+        toast.custom(
+          (t) => (
             <div>
               <CustomToast
+                key={2}
                 props={{
                   t: toastId.current,
-                  toastMainColor: "#268730",
-                  headline: "Transaction Submitted",
-                  transactionHash: data?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                  spinner: true,
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! ${error.cause}`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
                 }}
               />
             </div>
-          );
-        },
-        // Set the duration of the toast notification to be infinite
-        { duration: Infinity, id: toastId.current }
-      );
-    },
+          ),
+          { duration: Infinity, id: toastId.current }
+        );
+
+        // Dismiss the toast notification after 5 seconds
+        setTimeout(() => {
+          toast.dismiss(toastId.current);
+        }, 5000);
+      },
+      // Handle the successful completion of the CDS deposit process
+      onSuccess: (data) => {
+        console.log(data);
+        // Show a custom toast notification for the successful transaction
+        toast.custom(
+          (t) => {
+            return (
+              <div>
+                <CustomToast
+                  props={{
+                    t: toastId.current,
+                    toastMainColor: "#268730",
+                    headline: "Transaction Submitted",
+                    transactionHash: data,
+                    linkLabel: "View Transaction",
+                    toastClosebuttonHoverColor: "#90e398",
+                    toastClosebuttonColor: "#57C262",
+                    spinner: true,
+                  }}
+                />
+              </div>
+            );
+          },
+          // Set the duration of the toast notification to be infinite
+          { duration: Infinity, id: toastId.current }
+        );
+      },
+    }
+  }
+  );
+
+
+
+
+  const { isLoading, isSuccess: cdsDepositSuccess, isError: cdsDepositError, data: DepositdataReceipt } = useWaitForTransactionReceipt({
+    hash: CdsDepositData,
   });
 
 
-
-
-  const { isLoading, isSuccess: cdsDepositSuccess } = useWaitForTransaction({
-    //transaction hash to watch to check for success or error in this case we are watching for cdsdeposit transaction hash
-    onError(error) {
+  useEffect(() => {
+    if (cdsDepositError) {
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -573,7 +532,7 @@ const NewDeposit = ({
                 props={{
                   t,
                   toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
+                  headline: `Uhh Ohh! `,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
                 }}
@@ -583,46 +542,18 @@ const NewDeposit = ({
         },
         { duration: 5000 }
       );
-
-    },
-    hash: CdsDepositData?.hash,
-    // Callback function called when the transaction is successful
-    onSuccess(data) {
-      // Show a custom toast notification
-      toast.custom(
-        (t) => (
-          <div>
-            {/* CustomToast component */}
-            <CustomToast
-              props={{
-                t: toastId.current,
-                toastMainColor: "#268730",
-                headline: "Transaction Completed",
-                transactionHash: CdsDepositData?.hash,
-                linkLabel: "View Transaction",
-                toastClosebuttonHoverColor: "#90e398",
-                toastClosebuttonColor: "#57C262",
-                completed: true,
-                spinner: false,
-              }}
-            />
-          </div>
-        ),
-        { id: toastId.current }
-      );
-
-
-      console.log("data logs -------", data);
-
+    }
+    if (cdsDepositSuccess) {
+      console.log("data logs -------", DepositdataReceipt);
       // Retrieve the relevant data from the transaction logs
       const dataLogs =
-        chainId === 5 ? data.logs[data.logs.length - 1].data : data.logs[data.logs.length - 1].data;
+        chainId === 5 ? DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].data : DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].data;
       // Decode event logs using the provided ABI and event name
-      console.log("data logs -------", data.logs[data.logs.length - 1].topics);
+      console.log("data logs -------", DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].topics);
       const { eventName, args } = decodeEventLogsFromAbi(
-        cdsABI,
+        cdsAbi,
         //topic to decode event variables
-        data.logs[data.logs.length - 1].topics ?? [],
+        DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].topics ?? [],
         "Deposit",
         dataLogs
       ) as { eventName: string; args: { depositVal: bigint } };
@@ -636,151 +567,100 @@ const NewDeposit = ({
       setTimeout(() => {
         toast.dismiss(toastId.current);
       }, 5000);
-    },
-  });
+    }
+
+  }, [DepositdataReceipt])
+
+
 
 
 
   // Destructure the necessary values from the hook
   const {
-    isLoading: isAmintApproveLoading,  // Flag to indicate if the approve request is loading
-    write: amintApprove,  // Function to initiate the approve request
+    writeContract: amintApprove,  // Function to initiate the approve request
     data: amintApproveData,  // Data returned from the approve request
     reset: amintReset,  // Function to reset the approve request state
     isSuccess: amintApproved,  // Flag to indicate if the approve request is successful
-  } = useAmintApprove({
-    // Handle error and show a custom toast notification
-    onError(error) {
-      toast.custom(
-        (t) => {
-          toastId.current = t;
-          return (
-            <div>
-              <CustomToast
-                key={2}
-                props={{
-                  t,
-                  toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
-                  toastClosebuttonHoverColor: "#e66d6d",
-                  toastClosebuttonColor: "#C25757",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
+  } = useWriteUsDaApprove({
+    mutation: {
 
-      // setOpen(false);
-    },
+      onError(error) {
+        toast.custom(
+          (t) => {
+            toastId.current = t;
+            return (
+              <div>
+                <CustomToast
+                  key={2}
+                  props={{
+                    t,
+                    toastMainColor: "#B43939",
+                    headline: `Uhh Ohh! ${error.name}`,
+                    toastClosebuttonHoverColor: "#e66d6d",
+                    toastClosebuttonColor: "#C25757",
+                  }}
+                />
+              </div>
+            );
+          },
+          { duration: 5000 }
+        );
+      },
 
-    // Handle success and show a custom toast notification
-    onSuccess: (data) => {
-      toast.custom(
-        (t) => {
-          toastId.current = t;
-          return (
-            <div>
-              <CustomToast
-                props={{
-                  t,
-                  toastMainColor: "#268730",
-                  headline: "Transaction Submitted",
-                  transactionHash: data?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-      //closing sheet so that user can click on the links from the toast
-      // setOpen(false);
+      // Handle success and show a custom toast notification
+      onSuccess: (data) => {
 
-    },
+        if (form.getValues("USDCDepositAmount") && (usdtAmnt ?? 0) > 0) {
+          usdtWrite({
+            args: [
+              (cdsAddress[chainId as keyof typeof cdsAddress] as `0x${string}`),
+              BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
+            ],
+          })
+        }
+        else {
+          const liqAmnt =
+            ((Number(amintAmnt ? amintAmnt : 0) + Number(usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
+          if (nativeFee1) {
+            ConfirmDeposit?.({
+              args: [
+                BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
+                BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
+                liquidationGains,
+                liquidationGains ? parseUnits(liqAmnt.toString(), 6) : 0n,
+              ],
+              value: nativeFee1.nativeFee,
+            });
+          }
+        }
+
+        toast.custom(
+          (t) => {
+            toastId.current = t;
+            return (
+              <div>
+                <CustomToast
+                  props={{
+                    t,
+                    toastMainColor: "#268730",
+                    headline: "Transaction Submitted",
+                    transactionHash: data,
+                    linkLabel: "View Transaction",
+                    toastClosebuttonHoverColor: "#90e398",
+                    toastClosebuttonColor: "#57C262",
+                  }}
+                />
+              </div>
+            );
+          },
+          { duration: 5000 }
+        );
+        //closing sheet so that user can click on the links from the toast
+        // setOpen(false);
+
+      },
+    }
   });
-
-
-
-
-  const { data: amintTransactionAllowed, isLoading: isAmintTransactionLoading } = useWaitForTransaction({
-    // TODO: Add OnError Custom Toast
-    onError(error) {
-      toast.custom(
-        (t) => {
-          toastId.current = t;
-          return (
-            <div>
-              <CustomToast
-                key={2}
-                props={{
-                  t,
-                  toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
-                  toastClosebuttonHoverColor: "#e66d6d",
-                  toastClosebuttonColor: "#C25757",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-
-      // setOpen(false);
-    },
-    // look for approval transaction hash
-    hash: amintApproveData?.hash,
-    // Display a custom toast notification
-    onSuccess() {
-      toast.custom(
-        (t) => {
-          return (
-            <div>
-              <CustomToast
-                props={{
-                  t,
-                  toastMainColor: "#268730",
-                  headline: "Amint Approved,Plz Confirm Deposit Now",
-                  transactionHash: amintApproveData?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-
-      if (form.getValues("USDCDepositAmount") && (usdtAmnt ?? 0) > 0) {
-        usdtWrite({
-          args: [
-            (cdsAddress[11155111] as `0x${string}`),
-            BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
-          ],
-        })
-      }
-      else {
-        const liqAmnt =
-          ((Number(amintAmnt ? amintAmnt : 0) + Number(usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
-        ConfirmDeposit?.({
-          args: [
-            BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
-            BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
-            liquidationGains,
-            liquidationGains ? parseUnits(liqAmnt.toString(), 6) : 0n,
-          ],
-        });
-      }
-    },
-  });
-
 
 
 
@@ -818,7 +698,7 @@ const NewDeposit = ({
       else {
         amintApprove({
           args: [
-            (cdsAddress[11155111] as `0x${string}`),
+            (cdsAddress[chainId as keyof typeof cdsAddress] as `0x${string}`),
             BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
           ],
         })
@@ -827,7 +707,7 @@ const NewDeposit = ({
     else {
       usdtWrite({
         args: [
-          (cdsAddress[11155111] as `0x${string}`),
+          (cdsAddress[chainId as keyof typeof cdsAddress ] as `0x${string}`),
           BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
         ],
       })
@@ -1001,15 +881,15 @@ const NewDeposit = ({
             <div className="flex w-full flex-col min-[1440px]:pt-[10px] 2dppx:pt-[15px] pt-[10px] min-[1440px]:gap-[20px] 2dppx:gap-[10px] min-[1280px]:gap-[16px] gap-[10px]">
               <div className="flex flex-col md:flex-row gap-[10px] items-center w-full justify-between ">
                 {
-                   usdtAmountDepositedTillNow < usdtLimit ?(""): (
+                  usdtAmountDepositedTillNow < usdtLimit ? ("") : (
                     <>
-                    <div className="flex w-full ">
-                      <FormField
-                        control={form.control}
-                        name="AmintDepositAmount"
-                        render={({ field }) => (
-                          <FormItem className="w-full" >
-                            <FormControl>
+                      <div className="flex w-full ">
+                        <FormField
+                          control={form.control}
+                          name="AmintDepositAmount"
+                          render={({ field }) => (
+                            <FormItem className="w-full" >
+                              <FormControl>
                                 <div className="relative ">
                                   <Input
                                     inputMode="numeric"
@@ -1031,14 +911,14 @@ const NewDeposit = ({
 
                                 </div>
 
-                            </FormControl>
-                            <span className=" block text-[10px] text-right mr-1">bal. {amintbal?.formatted.slice(0, 8)} AMINT</span>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <PlusIcon className={` -mt-5`} width={35} height={50} />
+                              </FormControl>
+                              <span className=" block text-[10px] text-right mr-1">bal. {amintbal?.formatted.slice(0, 8)} AMINT</span>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <PlusIcon className={` -mt-5`} width={35} height={50} />
                     </>
                   )
                 }
@@ -1090,88 +970,7 @@ const NewDeposit = ({
                                 </div>
                               )}
 
-                              {/* <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button
-                                    variant="ghost"
-                                    size="timeline"
-                                    className="z-20 bg-white dark:bg-[#0F0F0F]"
-                                  >
-                                    <CaretDownIcon width={24} height={24} />
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56 dark:bg-[#0F0F0F]">
-                                  <DropdownMenuLabel>
-                                    Tokens
-                                  </DropdownMenuLabel>
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuCheckboxItem
-                                    checked={tokensEnabled.USDT}
-                                    onCheckedChange={() =>
-                                      setTokensEnabled((prev) => ({
-                                        ...prev,
-                                        USDT: !prev.USDT,
-                                      }))
-                                    }
-                                  >
-                                    USDT
-                                  </DropdownMenuCheckboxItem>
-                                  <DropdownMenuCheckboxItem
-                                    checked={tokensEnabled.COMP}
-                                    onCheckedChange={() =>
-                                      setTokensEnabled((prev) => ({
-                                        ...prev,
-                                        COMP: !prev.COMP,
-                                      }))
-                                    }
-                                    disabled={
-                                      usdtAmountDepositedTillNow < usdtLimit
-                                        ? true
-                                        : false
-                                    }
-                                  >
-                                    COMP
-                                  </DropdownMenuCheckboxItem>
-                                  <DropdownMenuCheckboxItem
-                                    checked={tokensEnabled.USDC}
-                                    onCheckedChange={() =>
-                                      setTokensEnabled((prev) => ({
-                                        ...prev,
-                                        USDC: !prev.USDC,
-                                      }))
-                                    }
-                                    disabled={
-                                      usdtAmountDepositedTillNow < usdtLimit
-                                        ? true
-                                        : false
-                                    }
-                                  >
-                                    USDC
-                                  </DropdownMenuCheckboxItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu> */}
-                              {/* <Button
-                                type="button"
-                                variant={"outline"}
-                                className="z-20 text-xs rounded-r-md"
-                                onClick={() => {
-                                  usdtAmnt !== undefined
-                                    ? usdtAmnt !== 0
-                                      ? usdtWrite({
-                                        args: [
 
-                                          (cdsAddress[11155111] as `0x${string}`),
-                                          BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
-                                        ],
-                                      })
-                                      : null
-                                    : null;
-                                }}
-                              >
-                                {usdtApproveLoading || usdtTransactionLoading ? (
-                                  <Spinner className="w-5 h-5" />
-                                ) : ("Approve")}
-                              </Button> */}
                             </div>
                           </div>
                         </FormControl>
@@ -1282,13 +1081,13 @@ const NewDeposit = ({
                   <FormField
                     control={form.control}
                     name="lockInPeriod"
-            
+
                     render={({ field }) => (
                       <FormItem>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
-                          
+
                         >
                           <FormControl
                             className="bg-white py-3 h-fit border-[#020202] rounded-none dark:bg-[#0F0F0F]  dark:text-white"
@@ -1408,28 +1207,28 @@ const NewDeposit = ({
                 <></>
               )}
               <div className="flex w-full gap-5 py-1 border-black ">
-              <Button
-                type="button"
-                onClick={() => openDeposits(true)}
-                variant={"primary"}
-                className="text-[#020202] relative rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
+                <Button
+                  type="button"
+                  onClick={() => openDeposits(true)}
+                  variant={"primary"}
+                  className="text-[#020202] relative rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
                 >
-                { 'View Positions'}<Image src={arrowout} className="ml-2 sm:ml-0 sm:absolute sm:right-5" alt="arrow" width={20} height={15} />
-              </Button>
+                  {'View Positions'}<Image src={arrowout} className="ml-2 sm:ml-0 sm:absolute sm:right-5" alt="arrow" width={20} height={15} />
+                </Button>
 
 
-              <Button
-                type="submit"
-                variant={"primary"}
-                className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
-                //   disabled if the amount deposited is less than the limit and the user has not approved usdt
-                disabled={
-                  (usdtAmountDepositedTillNow > usdtLimit) || isCdsDepositLoading || isPending || isLoading
-                }
+                <Button
+                  type="submit"
+                  variant={"primary"}
+                  className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
+                  //   disabled if the amount deposited is less than the limit and the user has not approved usdt
+                  disabled={
+                    (usdtAmountDepositedTillNow > usdtLimit) || isCdsDepositLoading || isPending || isLoading
+                  }
                 >
-                {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}
-              </Button>
-                </div>
+                  {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}
+                </Button>
+              </div>
             </div>
           </form>
         </Form>

@@ -9,11 +9,12 @@ import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import Image from "next/image";
 
 import DepositAndWithDrawTable from "@/components/Table/OurTable";
-import { useAccount, useChainId, ConnectorData } from "wagmi";
+import { useAccount, useChainId } from "wagmi";
 import {
   abondAddress,
-  amintAddress,
-  useBorrowingContractRead,
+  usDaAddress,
+  useReadBorrowingContract,
+  useReadBorrowingContractGetUsdValue
 } from "@/abiAndHooks";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import displayNumberWithPrecision from "@/app/utils/precision";
@@ -32,32 +33,32 @@ import { ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import { set } from "react-hook-form";
 
-const dasboardStatsItem = [
-  {
-    heading: "Total amount of ETH Deposited",
-    value: "0",
-    subheadingBefore: "Across a total of",
-    subheadingHighlight: "",
-    subheadingAfter: "investments",
-    showSubHeading: true,
-  },
-  {
-    heading: "Total amount of AMINT received.",
-    value: "0",
-    subheadingHighlight: "0",
-    subheadingAfter: "AMINT is available in your wallet",
-    showSubHeading: true,
-    tokenAddress: amintAddress,
-  },
-  {
-    heading: "Total amount of ABOND received.",
-    value: "0",
-    subheadingHighlight: "0",
-    subheadingAfter: "ABOND is available in your wallet.",
-    showSubHeading: true,
-    tokenAddress: abondAddress,
-  },
-];
+// const dasboardStatsItem = [
+//   {
+//     heading: "Total amount of ETH Deposited",
+//     value: "0",
+//     subheadingBefore: "Across a total of",
+//     subheadingHighlight: "",
+//     subheadingAfter: "investments",
+//     showSubHeading: true,
+//   },
+//   {
+//     heading: "Total amount of AMINT received.",
+//     value: "0",
+//     subheadingHighlight: "0",
+//     subheadingAfter: "AMINT is available in your wallet",
+//     showSubHeading: true,
+//     tokenAddress: usDaAddress,
+//   },
+//   {
+//     heading: "Total amount of ABOND received.",
+//     value: "0",
+//     subheadingHighlight: "0",
+//     subheadingAfter: "ABOND is available in your wallet.",
+//     showSubHeading: true,
+//     tokenAddress: abondAddress,
+//   },
+// ];
 
 const WalletOrContent = () => {
   // destructure isConnected and address from useAccount hook of wagmi
@@ -66,31 +67,30 @@ const WalletOrContent = () => {
   const queryClient = useQueryClient();
   const [open2, setOpen2] = React.useState(false);
   // manage dashboardStats items
-  const [dashboardStats, setDashboardStats] = useState(dasboardStatsItem);
+  // const [dashboardStats, setDashboardStats] = useState(dasboardStatsItem);
   // manage refetching
   const [shouldRefetch, setShouldRefetch] = useState(1);
   const [newtxn,setnewtxn]=useState(false)
   // get ethPrice from use Borrowing Contract using wagmi useContractRead Hook
-  const { data: ethPrice } = useBorrowingContractRead({
-    functionName: "getUSDValue",
-    staleTime: 10 * 1000,
+  const { data: ethPrice } = useReadBorrowingContractGetUsdValue({
+    query:{staleTime: 10 * 1000}
   });
 
-  useEffect(() => {
-    const handleConnectorUpdate = ({ account, chain }: ConnectorData) => {
-      window.location.reload();
-    };
+  // useEffect(() => {
+  //   const handleConnectorUpdate = ({ account, chain }: ConnectorData) => {
+  //     window.location.reload();
+  //   };
 
-    if (activeConnector) {
-      activeConnector.on('change', handleConnectorUpdate);
-    }
+  //   if (activeConnector) {
+  //     activeConnector.on('change', handleConnectorUpdate);
+  //   }
 
-    return () => {
-      if (activeConnector) {
-        activeConnector.off('change', handleConnectorUpdate);
-      }
-    };
-  }, [activeConnector]);
+  //   return () => {
+  //     if (activeConnector) {
+  //       activeConnector.off('change', handleConnectorUpdate);
+  //     }
+  //   };
+  // }, [activeConnector]);
 
   /**
    * Retrieves the depositor data for a given address.
@@ -145,83 +145,83 @@ const WalletOrContent = () => {
   /**
    * Handles the stats item.
    */
-  function handleStatsItem() {
-    // Check for errors or specific status codes
-    if (
-      depositorDataError ||
-      depositorData?.statusCode === 404 ||
-      depositorData?.statusCode === 500
-    ) {
-      const updatedStats = [...dashboardStats];
-      updatedStats[0].value = "-";
-      updatedStats[1].value = "-";
-      updatedStats[2].value = "-";
-      updatedStats[0].subheadingHighlight = "-";
-      setDashboardStats(updatedStats);
-      return;
-    }
+  // function handleStatsItem() {
+  //   // Check for errors or specific status codes
+  //   if (
+  //     depositorDataError ||
+  //     depositorData?.statusCode === 404 ||
+  //     depositorData?.statusCode === 500
+  //   ) {
+  //     const updatedStats = [...dashboardStats];
+  //     updatedStats[0].value = "-";
+  //     updatedStats[1].value = "-";
+  //     updatedStats[2].value = "-";
+  //     updatedStats[0].subheadingHighlight = "-";
+  //     setDashboardStats(updatedStats);
+  //     return;
+  //   }
 
-    // Update stats based on depositorData
-    if (depositorData) {
-      const updatedStats = [...dashboardStats];
-      const ethPriceNow = ethPrice ? ethPrice : 0n;
-      // Calculate and format the value for the first stat item
+  //   // Update stats based on depositorData
+  //   if (depositorData) {
+  //     const updatedStats = [...dashboardStats];
+  //     const ethPriceNow = ethPrice ? ethPrice : 0n;
+  //     // Calculate and format the value for the first stat item
 
-      updatedStats[0].value =
-        chainId === 5 || chainId === 11155111
-          ? `$${parseFloat(
-            (
-              (depositorData.totalDepositedAmount *
-                Number(ethPriceNow)) /
-              100
-            ).toString()
-          ).toFixed(2)}`
-          : `$${parseFloat(
-            (
-              (depositorData.totalDepositedAmountInEthereum *
-                Number(ethPriceNow)) /
-              100
-            ).toString()
-          ).toFixed(2)}`;
-      console.log(updatedStats[0].value)
-      // Update the value for the second stat item
-      updatedStats[1].value =
-        chainId === 5 || chainId === 11155111
-          ? (parseFloat(depositorData.totalAmint)).toFixed(2)
-          : parseFloat(depositorData.totalAmint).toFixed(2);
+  //     updatedStats[0].value =
+  //       chainId === 5 || chainId === 11155111
+  //         ? `$${parseFloat(
+  //           (
+  //             (depositorData.totalDepositedAmount *
+  //               Number(ethPriceNow)) /
+  //             100
+  //           ).toString()
+  //         ).toFixed(2)}`
+  //         : `$${parseFloat(
+  //           (
+  //             (depositorData.totalDepositedAmountInEthereum *
+  //               Number(ethPriceNow)) /
+  //             100
+  //           ).toString()
+  //         ).toFixed(2)}`;
+  //     console.log(updatedStats[0].value)
+  //     // Update the value for the second stat item
+  //     updatedStats[1].value =
+  //       chainId === 5 || chainId === 11155111
+  //         ? (parseFloat(depositorData.totalAmint)).toFixed(2)
+  //         : parseFloat(depositorData.totalAmint).toFixed(2);
 
-      // Update the value for the third stat item
-      updatedStats[2].value =
-        chainId === 5 || chainId === 11155111
-          ? parseFloat(depositorData.totalAbond).toFixed(2)
-          : parseFloat(depositorData.totalAbond).toFixed(2);
+  //     // Update the value for the third stat item
+  //     updatedStats[2].value =
+  //       chainId === 5 || chainId === 11155111
+  //         ? parseFloat(depositorData.totalAbond).toFixed(2)
+  //         : parseFloat(depositorData.totalAbond).toFixed(2);
 
-      // Update the subheading highlight based on the chainId
-      updatedStats[0].subheadingHighlight =
-        chainId === 5 || chainId === 11155111
-          ? depositorData.totalIndex
-          : depositorData.totalIndex;
+  //     // Update the subheading highlight based on the chainId
+  //     updatedStats[0].subheadingHighlight =
+  //       chainId === 5 || chainId === 11155111
+  //         ? depositorData.totalIndex
+  //         : depositorData.totalIndex;
 
-      setDashboardStats(updatedStats);
-    } else {
-      // If depositorData is null, set default values for stats
-      const updatedStats = [...dashboardStats];
-      updatedStats[0].value = "-";
-      updatedStats[1].value = "-";
-      updatedStats[2].value = "-";
-      updatedStats[0].subheadingHighlight = "-";
-    }
+  //     setDashboardStats(updatedStats);
+  //   } else {
+  //     // If depositorData is null, set default values for stats
+  //     const updatedStats = [...dashboardStats];
+  //     updatedStats[0].value = "-";
+  //     updatedStats[1].value = "-";
+  //     updatedStats[2].value = "-";
+  //     updatedStats[0].subheadingHighlight = "-";
+  //   }
 
-  }
+  // }
 
   useEffect(() => {
     // Log the returned data and error
     console.log("returned data", depositorData);
     console.log("error0", depositorDataError);
     // Call the handleStatsItem function to keep values updated as soon as we have new data from depositorData
-    handleStatsItem();
+    // handleStatsItem();
     // Log the dashboard stats
-    console.log(dashboardStats);
+    // console.log(dashboardStats);
   }, [depositorData, depositorDataError]);
 
   return (

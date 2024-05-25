@@ -2,7 +2,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import logo from "@/app/assets/logo.svg";
-import { useAccount, useBalance, useChainId, useDisconnect, useSwitchNetwork,useNetwork} from "wagmi";
+import { useAccount, useBalance, useChainId, useDisconnect, useSwitchChain} from "wagmi";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import dashboard from "@/app/assets/dashboard.svg";
@@ -11,7 +11,7 @@ import currencyExchange from "@/app/assets/currency_exchange.svg";
 import mintmark from "@/app/assets/mintmark.svg";
 import NavItems from "./NavItems";
 import { useTheme } from "next-themes";
-import { amintAddress } from "@/abiAndHooks";
+import { usDaAddress } from "@/abiAndHooks";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import truncateWeb3WalletAddress from "@/app/utils/truncateWeb3Address";
@@ -86,8 +86,7 @@ const NavBar = () => {
   const onConnect = () => {
     open()
   }
-  const chains = useNetwork()
-  const { switchNetwork } = useSwitchNetwork();
+  const { switchChain } = useSwitchChain();
 
 
   const { disconnect } = useDisconnect();
@@ -96,11 +95,10 @@ const NavBar = () => {
   const { address, isConnected } = useAccount();
 
   const { data, isError, isLoading } = useBalance({
-    address: amintAddress ? address : undefined,
-    token: amintAddress
-      ? amintAddress[chainId as keyof typeof amintAddress]
+    address: usDaAddress ? address : undefined,
+    token: usDaAddress
+      ? usDaAddress[chainId as keyof typeof usDaAddress]
       : undefined,
-    watch: true,
   });
 
 
@@ -109,10 +107,12 @@ const NavBar = () => {
   const { resolvedTheme, theme, setTheme } = useTheme();
   const [open2, setOpen2] = React.useState(false);
   const [showNotification, setShowNotification] = useState(false);
-  console.log(chains)
 
-  const [selectedNetwork,setSelectedNetwork] = React.useState<string>(chainId===11155111 ? "Ethereum" :  "unsupported network")
+  const [selectedNetwork,setSelectedNetwork] = React.useState<string>(chainId===11155111 ? "Sepolia" :chainId===84532 ? "Base Sepolia"  :  "unsupported network")
 
+  useEffect(()=>{
+    setSelectedNetwork(chainId===11155111 ? "Sepolia" :chainId===84532 ? "Base Sepolia"  :  "unsupported network")
+  },[chainId])
   return (
     <div className="z-50 w-full ">
       <div className="flex w-full justify-between  mx-auto h-[8vh] bg-[#EEEEEE]   dark:bg-none dark:bg-[#1a1a1a]  z-10">
@@ -165,7 +165,8 @@ const NavBar = () => {
 
         <Select
           onValueChange={(value) => {
-            switchNetwork && switchNetwork(11155111 );
+            console.log("value",value)
+            switchChain({ chainId: value === "Sepolia" ? 11155111 : 84532});
           }}
           value={selectedNetwork}
         >
@@ -174,8 +175,8 @@ const NavBar = () => {
                 </SelectTrigger>
                 <SelectContent className='text-white  bg-[#020202] rounded-none '>
                   <SelectGroup>
-                    <SelectItem value="Ethereum">Ethereum</SelectItem>
-                    {/* <SelectItem value="Base Sepolia">Base Sepolia</SelectItem> */}
+                    <SelectItem value="Sepolia">Ethereum</SelectItem>
+                    <SelectItem value="Base Sepolia">Base</SelectItem>
                   </SelectGroup>
                 </SelectContent>
 

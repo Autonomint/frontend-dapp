@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { Button } from "../ui/button";
 import { Cross1Icon, ExternalLinkIcon } from "@radix-ui/react-icons";
@@ -34,6 +35,7 @@ const CustomToast = ({
     completed = false,
   },
 }: Props) => {
+
   const chainId = useChainId();
   return (
     <div className="fixed flex rounded pointer-events-auto z-max">

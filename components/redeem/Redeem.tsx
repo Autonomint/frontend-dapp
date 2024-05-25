@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCdsRedeemUsdt, useBorrowingContractRedeemYields, useAmintApprove, useAbondApprove, cdsAddress, borrowingContractAddress, useBorrowingContractGetAbondYields, abondAddress, amintAddress } from '@/abiAndHooks';
+import { useWriteCdsRedeemUsdt,useReadCdsQuote, useWriteBorrowingContractRedeemYields, useWriteUsDaApprove, useWriteAbondApprove, cdsAddress, borrowingContractAddress, useReadBorrowingContractGetAbondYields, abondAddress, usDaAddress } from '@/abiAndHooks';
 import { Input } from "@/components/ui/input";
 import { Button } from '@/components/ui/button';
 import Note from '@/components/CustomUI/Note';
@@ -26,12 +26,13 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
-import { useAccount, useWaitForTransaction, useBalance, useChainId } from 'wagmi';
+import { useAccount, useWaitForTransactionReceipt, useBalance, useChainId } from 'wagmi';
 import Spinner from '@/components/ui/spinner';
 import { formatEther } from 'viem';
 import arrowout from "@/app/assets/arrow_outward.svg";
 import Image from 'next/image';
 import GetBalance from '../ConnectWallet/GetBalance';
+import { Options } from '@layerzerolabs/lz-v2-utilities';
 const formSchema = z.object({
   inputCollateral: z.string(),
   collateralAmount: z
@@ -67,7 +68,6 @@ const Redeem = ({
 
 
   const { address: accountAddress } = useAccount();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -83,25 +83,31 @@ const Redeem = ({
     token: abondAddress
       ? abondAddress[chainId as keyof typeof abondAddress]
       : undefined,
-    watch: true,
   });
   const { data: amintbalance } = useBalance({
-    address: amintAddress ? accountAddress : undefined,
-    token: amintAddress
-      ? amintAddress[chainId as keyof typeof amintAddress]
+    address: usDaAddress ? accountAddress : undefined,
+    token: usDaAddress
+      ? usDaAddress[chainId as keyof typeof usDaAddress]
       : undefined,
-    watch: true,
   });
   const toastId = useRef<string | number>("");
+  const options = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
+  const Eid = chainId === 11155111 ? 40245 : 40161;
+
+  const { data: nativeFee1, error } = useReadCdsQuote({
+    args: [Eid, 1, 123n, 123n, 123n,
+      { liquidationAmount: 0n, profits: 0n, ethAmount: 0n, availableLiquidationAmount: 0n }, 0n, options, false]
+  });
+
 
   const {
-    isLoading: amintApproveLoading,
+    isPending: amintApproveLoading,
     data: amintApproveData,
-    write: amintApproveWrite,
+    writeContract: amintApproveWrite,
     isSuccess: amintApproved,
-  } = useAmintApprove(
+  } = useWriteUsDaApprove(
     {
-      // Handle error and show a custom toast notification
+      mutation:{
       onError(error) {
         toast.custom(
           (t) => {
@@ -123,8 +129,6 @@ const Redeem = ({
           },
           { duration: 5000 }
         );
-
-        // setOpen(false);
       },
 
       // Handle success and show a custom toast notification
@@ -139,7 +143,7 @@ const Redeem = ({
                     t,
                     toastMainColor: "#268730",
                     headline: "Transaction Submitted",
-                    transactionHash: data?.hash,
+                    transactionHash: data,
                     linkLabel: "View Transaction",
                     toastClosebuttonHoverColor: "#90e398",
                     toastClosebuttonColor: "#57C262",
@@ -150,16 +154,27 @@ const Redeem = ({
           },
           { duration: Infinity }
         );
-        //closing sheet so that user can click on the links from the toast
-        // setOpen(false);
       },
     }
-  );
+  });
 
 
-  const { data: amintTransactionAllowed, isLoading: isAmintTransactionLoading } = useWaitForTransaction({
-    // TODO: Add OnError Custom Toast
-    onError(error) {
+  const { data: amintTransactionAllowed, isLoading: isAmintTransactionLoading ,isError:usdaErrorApprove,isSuccess:usdaApproveSuccess} = useWaitForTransactionReceipt({
+    hash: amintApproveData
+  });
+
+  useEffect(() => {
+    if(usdaApproveSuccess && nativeFee1) {
+      redeemUsdt?.({
+        args: [
+          BigInt(Number(form.getValues("collateralAmount")) * 10 ** 6),
+          BigInt(1000000),
+          BigInt(1000000),
+        ],
+        value:nativeFee1.nativeFee
+      });
+    }
+    else if(usdaErrorApprove) {
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -170,7 +185,7 @@ const Redeem = ({
                 props={{
                   t,
                   toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
+                  headline: `Uhh Ohh! Unable to approve USDa`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
                 }}
@@ -180,53 +195,20 @@ const Redeem = ({
         },
         { duration: 5000 }
       );
+    }
 
-      // setOpen(false);
-    },
-    // look for approval transaction hash
-    hash: amintApproveData?.hash,
-    // Display a custom toast notification
-    onSuccess() {
-      redeemUsdt?.({
-        args: [
-          BigInt(Number(form.getValues("collateralAmount")) * 10 ** 6),
-          BigInt(1000000),
-          BigInt(1000000),
-        ]
-      });
-
-      toast.custom(
-        (t) => {
-          return (
-            <div>
-              <CustomToast
-                props={{
-                  t,
-                  toastMainColor: "#268730",
-                  headline: "Amint Approved,Plz confirm the transaction to redeem USDT",
-                  transactionHash: amintApproveData?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-    },
-  });
+  },[amintTransactionAllowed])
 
 
 
   const {
-    write: redeemUsdt,
+    writeContract: redeemUsdt,
     data: redeemUsdtData,
     reset: resetUsdt,
-    isLoading: isRedeemUsdt
-  } = useCdsRedeemUsdt({
+    isPending: isRedeemUsdt
+  } = useWriteCdsRedeemUsdt({
     // Handle errors during the process
+    mutation:{
     onError: (error) => {
       // console.log(error.message);
       console.log("MESSAGE", error.cause);
@@ -249,15 +231,11 @@ const Redeem = ({
         { duration: Infinity, id: toastId.current }
       );
 
-      // Dismiss the toast notification after 5 seconds
       setTimeout(() => {
         toast.dismiss(toastId.current);
       }, 5000);
     },
-    // Handle the successful completion of the process
     onSuccess: (data) => {
-      console.log(data);
-      // Show a custom toast notification for the successful transaction
       toast.custom(
         (t) => {
           return (
@@ -267,7 +245,7 @@ const Redeem = ({
                   t: toastId.current,
                   toastMainColor: "#268730",
                   headline: "Transaction Submitted",
-                  transactionHash: data?.hash,
+                  transactionHash: data,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
@@ -280,36 +258,19 @@ const Redeem = ({
         { duration: 10000, id: toastId.current }
       );
     },
+  }
   });
 
-  const { data: redeemdataUsdt, isLoading: isRedeemUsdtTransactionLoading } = useWaitForTransaction({
-    // TODO: Add OnError Custom Toast
-    onError(error) {
-      toast.custom(
-        (t) => {
-          toastId.current = t;
-          return (
-            <div>
-              <CustomToast
-                key={2}
-                props={{
-                  t,
-                  toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
-                  toastClosebuttonHoverColor: "#e66d6d",
-                  toastClosebuttonColor: "#C25757",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-    },
-    // look for approval transaction hash
-    hash: redeemUsdtData?.hash,
-    // Display a custom toast notification
-    onSuccess() {
+
+
+  const { data: redeemdataUsdt, isLoading: isRedeemUsdtTransactionLoading,isError:redeemUsdtError,isSuccess:redeemUsdtSuccess,error:redeemError } = useWaitForTransactionReceipt({
+    hash: redeemUsdtData,
+
+  });
+
+
+  useEffect(()=>{
+    if(redeemUsdtSuccess) {
       toast.custom(
         (t) => {
           return (
@@ -319,7 +280,7 @@ const Redeem = ({
                   t,
                   toastMainColor: "#268730",
                   headline: "Transaction Completed",
-                  transactionHash: redeemUsdtData?.hash,
+                  transactionHash: redeemUsdtData,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
@@ -330,9 +291,33 @@ const Redeem = ({
         },
         { duration: 5000 }
       );
-    },
-  });
-  const { data: outputData, refetch } = useBorrowingContractGetAbondYields({ args: [accountAddress as `0x${string}`, BigInt(Number(form.getValues("collateralAmount")) * 10 ** 18)] });
+    }
+    else if(redeemUsdtError) {
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                key={2}
+                props={{
+                  t,
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! ${redeemError.name}`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 5000 }
+      );
+    }
+
+  },[redeemdataUsdt])
+
+  const { data: outputData, refetch } = useReadBorrowingContractGetAbondYields({ args: [accountAddress as `0x${string}`, BigInt(Number(form.getValues("collateralAmount")) * 10 ** 18)] });
 
   useEffect(() => {
     if (form.getValues("inputCollateral") === 'abond' && form.getValues("collateralAmount") > 0) {
@@ -365,13 +350,14 @@ const Redeem = ({
 
 
   const {
-    isLoading: abondApproveLoading,
+    isPending: abondApproveLoading,
     data: abondApproveData,
-    write: abondApproveWrite,
+    writeContract: abondApproveWrite,
     isSuccess: abondApproved,
-  } = useAbondApprove(
+  } = useWriteAbondApprove(
     {
       // Handle error and show a custom toast notification
+      mutation:{
       onError(error) {
         toast.custom(
           (t) => {
@@ -409,7 +395,7 @@ const Redeem = ({
                     t,
                     toastMainColor: "#268730",
                     headline: "Transaction Submitted",
-                    transactionHash: data?.hash,
+                    transactionHash: data,
                     linkLabel: "View Transaction",
                     toastClosebuttonHoverColor: "#90e398",
                     toastClosebuttonColor: "#57C262",
@@ -424,11 +410,28 @@ const Redeem = ({
         // setOpen(false);
       },
     }
+    }
   );
 
-  const { data: abondTransactionAllowed, isLoading: isAbondTransactionLoading } = useWaitForTransaction({
+  const { data: abondTransactionAllowed, isLoading: isAbondTransactionLoading ,isError:abondApproveError,isSuccess:abondApproveSuccess,error:AbondError } = useWaitForTransactionReceipt({
     // TODO: Add OnError Custom Toast
-    onError(error) {
+
+    // look for approval transaction hash
+    hash: abondApproveData,
+    // Display a custom toast notification
+
+  });
+
+  useEffect(() => {
+    if(abondApproveSuccess) {
+      redeemEth?.({
+        args: [
+          accountAddress as `0x${string}`,
+          BigInt(Number(form.getValues("collateralAmount")) * 10 ** 18),
+        ]
+      });
+    }
+    if(abondApproveError) {
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -439,7 +442,7 @@ const Redeem = ({
                 props={{
                   t,
                   toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
+                  headline: `Uhh Ohh! ${AbondError.name}`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
                 }}
@@ -449,53 +452,20 @@ const Redeem = ({
         },
         { duration: 5000 }
       );
-
-      // setOpen(false);
-    },
-    // look for approval transaction hash
-    hash: abondApproveData?.hash,
-    // Display a custom toast notification
-    onSuccess() {
-      redeemEth?.({
-        args: [
-          accountAddress as `0x${string}`,
-          BigInt(Number(form.getValues("collateralAmount")) * 10 ** 18),
-        ]
-      });
-
-      toast.custom(
-        (t) => {
-          return (
-            <div>
-              <CustomToast
-                props={{
-                  t,
-                  toastMainColor: "#268730",
-                  headline: "Abond Approved,Plz confirm the transaction to redeem ETH",
-                  transactionHash: amintApproveData?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-    },
-  });
-
+    }
+  },[abondTransactionAllowed])
 
 
   const {
-    write: redeemEth,
+    writeContract: redeemEth,
     data: redeemEthData,
     reset: resetEth,
-    isLoading: isRedeemEthLoading,
+    isPending: isRedeemEthLoading,
 
-  } = useBorrowingContractRedeemYields({
+  } = useWriteBorrowingContractRedeemYields({
     // Handle errors during the CDS deposit process
+    mutation:{
+
     onError: (error) => {
       // console.log(error.message);
       console.log("MESSAGE", error.cause);
@@ -536,7 +506,7 @@ const Redeem = ({
                   t: toastId.current,
                   toastMainColor: "#268730",
                   headline: "Transaction Submitted",
-                  transactionHash: data?.hash,
+                  transactionHash: data,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
@@ -549,37 +519,16 @@ const Redeem = ({
         { duration: 10000, id: toastId.current }
       );
     },
+  }
   });
 
+  const { data: redeemdataEth, isLoading: isRedeemEthTransactionLoading,isError:redeemEthError,isSuccess:redeemEthSuccess,error:redeemEthErorrdata } = useWaitForTransactionReceipt({
+    hash: redeemEthData
+  });
 
-  const { data: redeemdataEth, isLoading: isRedeemEthTransactionLoading } = useWaitForTransaction({
-    // TODO: Add OnError Custom Toast
-    onError(error) {
-      toast.custom(
-        (t) => {
-          toastId.current = t;
-          return (
-            <div>
-              <CustomToast
-                key={2}
-                props={{
-                  t,
-                  toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
-                  toastClosebuttonHoverColor: "#e66d6d",
-                  toastClosebuttonColor: "#C25757",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-    },
-    // look for approval transaction hash
-    hash: redeemEthData?.hash,
-    // Display a custom toast notification
-    onSuccess() {
+  useEffect(()=>{
+
+    if(redeemEthSuccess) {
       toast.custom(
         (t) => {
           return (
@@ -589,7 +538,7 @@ const Redeem = ({
                   t,
                   toastMainColor: "#268730",
                   headline: "Transaction Completed",
-                  transactionHash: redeemEthData?.hash,
+                  transactionHash: redeemEthData,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
@@ -600,9 +549,30 @@ const Redeem = ({
         },
         { duration: 5000 }
       );
-    },
-  });
-
+    }
+    else if(redeemEthError) {
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                key={2}
+                props={{
+                  t,
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! ${redeemEthErorrdata.name}`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 5000 }
+      );
+    }
+  },[redeemdataEth])
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
 
@@ -611,7 +581,7 @@ const Redeem = ({
       amintApproveWrite({
         args: [
 
-          (cdsAddress[11155111] as `0x${string}`),
+          (cdsAddress[chainId as keyof typeof cdsAddress] as `0x${string}`),
           BigInt(values.collateralAmount * 10 ** 6),
         ],
       })
@@ -621,7 +591,7 @@ const Redeem = ({
       abondApproveWrite({
         args: [
 
-          (borrowingContractAddress[11155111] as `0x${string}`),
+          (borrowingContractAddress[chainId as keyof typeof borrowingContractAddress] as `0x${string}`),
           BigInt(values.collateralAmount * 10 ** 18),
         ],
       })
@@ -718,7 +688,7 @@ const Redeem = ({
             />
             <div className='absolute right-0 text-xs -bottom-5'>
 
-             {form.getValues("inputCollateral") && <GetBalance token={form.getValues("inputCollateral")} />} 
+             {form.getValues("inputCollateral") && <GetBalance token={form.getValues("inputCollateral")==='amint'?"USDa":"ABOND"} />} 
             </div>
           </div>
 

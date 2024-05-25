@@ -98,6 +98,7 @@ const Withdraw = ({
   sheetOpen: boolean;
   handleRefetch: Function;
 }) => {
+  console.log("fsfsfoisofs" ,details);
   const depositDetails = [
     {
       headline: "Eth Deposited",

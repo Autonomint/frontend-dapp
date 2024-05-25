@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCdsRedeemUsdt, useBorrowingContractRedeemYields, useAmintApprove, useAbondApprove, cdsAddress, borrowingContractAddress, useBorrowingContractGetAbondYields, abondAddress, amintAddress } from '@/abiAndHooks';
+import { useReadTestusdtAbiQuoteSend, useReadUsDaQuoteSend, useWriteTestusdtAbiSend, useWriteUsDaSend,useWriteUsDaApprove, testusdtAbiAddress, usDaAddress } from '@/abiAndHooks';
 import { Input } from "@/components/ui/input";
 import { Button } from '@/components/ui/button';
 import * as z from "zod";
@@ -25,18 +25,32 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
-import { useAccount, useWaitForTransaction, useBalance, useChainId } from 'wagmi';
+import { useAccount, useWaitForTransactionReceipt, useBalance, useChainId, useSwitchChain } from 'wagmi';
 import Spinner from '@/components/ui/spinner';
 import { formatEther } from 'viem';
 import Image from 'next/image';
-import swapArrow from "@/app/assets/swap_vert.svg"; 
+import swapArrow from "@/app/assets/swap_vert.svg";
 import Notification from "@/components/pagePopover/Notification";
 import PageSettings from "@/components/pagePopover/PageSettings";
-import {  BellIcon,  InfoCircledIcon } from "@radix-ui/react-icons";
+import { BellIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { Settings } from "lucide-react";
+import { Options } from '@layerzerolabs/lz-v2-utilities';
+import { ethers, BigNumberish } from 'ethers';
+import GetBalance from '@/components/ConnectWallet/GetBalance';
 
+interface TransactionParams {
+  dstEid: number; // Assuming Eid is a string, adjust the type if it's different
+  to: `0x${string}`; // Account address padded to 32 characters
+  amountLD: bigint; // Amount in Ether, parsed from a string
+  minAmountLD: bigint; // Minimum amount in Ether, parsed from a string
+  extraOptions: any; // Assuming options is of a generic type, adjust as necessary
+  composeMsg: `0x${string}`; // A hexadecimal string
+  oftCmd: `0x${string}`; // Another hexadecimal string
+}
 
 const formSchema = z.object({
+  sourceChain: z.string(),
+  destinationChain: z.string(),
   inputCollateral: z.string(),
   collateralAmount: z
     .number()
@@ -65,45 +79,79 @@ const formSchema = z.object({
 
 export default function page() {
 
+  const { switchChain } = useSwitchChain();
 
   const { address: accountAddress } = useAccount();
+
   const [openSettings, setOpenSettings] = React.useState(false);
+
   const [showNotification, setShowNotification] = useState(false);
-  
+
+  const toastId = useRef<string | number>("");
+
+  const chainId = useChainId();
+
+  const [Eid, setEid] = useState(chainId);
+
+  const options = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      sourceChain: "11155111",
+      destinationChain: "84532",
       inputCollateral: undefined,
       collateralAmount: 0,
       outputCollateral: undefined,
       outputCollateralAmount: 0
     },
   });
-  const chainId = useChainId();
-  const { data: abondbalance } = useBalance({
-    address: abondAddress ? accountAddress : undefined,
-    token: abondAddress
-      ? abondAddress[chainId as keyof typeof abondAddress]
-      : undefined,
-    watch: true,
+  const [collateralAmountString, setCollateralAmountString] = useState<string>("0");
+  useEffect(() => {
+    console.log(form.getValues("collateralAmount"))
+    let letamount = form.getValues("collateralAmount").toString();
+    if(!form.getValues("collateralAmount")){
+      setCollateralAmountString('0')
+      letamount = "0"
+    }
+    else{
+      setCollateralAmountString(form.getValues("collateralAmount").toString())
+    }
+    if(nativeFee1){
+    const amount = ethers.parseEther(letamount) - nativeFee1.nativeFee;
+    form.setValue("outputCollateralAmount", Number((Number(amount)/10**18).toFixed(4)));
+  }
+
+  }, [form.watch("collateralAmount")]);
+  
+
+  const transactionParams: TransactionParams = {
+    dstEid: Eid,
+    to: ethers.zeroPadValue(accountAddress ?? '0', 32) as `0x${string}`,
+    amountLD: BigInt(collateralAmountString),
+    minAmountLD:  BigInt(collateralAmountString),
+    extraOptions: options,
+    composeMsg: `0x${''.padEnd(64, '0')}`,
+    oftCmd: `0x${''.padEnd(64, '0')}`,
+  };
+
+  const { data: nativeFee1, error: UsdaQuoteError, refetch: refetchnativeFee1 } = useReadUsDaQuoteSend({
+    args: [transactionParams as any, false]
   });
-  const { data: amintbalance } = useBalance({
-    address: amintAddress ? accountAddress : undefined,
-    token: amintAddress
-      ? amintAddress[chainId as keyof typeof amintAddress]
-      : undefined,
-    watch: true,
+
+  const { data: nativeFee2, error: TUSDTQuoteError, refetch: refetchnativeFee2 } = useReadTestusdtAbiQuoteSend({
+    args: [transactionParams as any, false]
   });
-  const toastId = useRef<string | number>("");
+
 
   const {
-    isLoading: amintApproveLoading,
+    isPending: amintApproveLoading,
     data: amintApproveData,
-    write: amintApproveWrite,
+    writeContract: amintApproveWrite,
     isSuccess: amintApproved,
-  } = useAmintApprove(
+  } = useWriteUsDaApprove(
     {
-      // Handle error and show a custom toast notification
+      mutation:{
       onError(error) {
         toast.custom(
           (t) => {
@@ -125,8 +173,6 @@ export default function page() {
           },
           { duration: 5000 }
         );
-
-        // setOpen(false);
       },
 
       // Handle success and show a custom toast notification
@@ -141,7 +187,7 @@ export default function page() {
                     t,
                     toastMainColor: "#268730",
                     headline: "Transaction Submitted",
-                    transactionHash: data?.hash,
+                    transactionHash: data,
                     linkLabel: "View Transaction",
                     toastClosebuttonHoverColor: "#90e398",
                     toastClosebuttonColor: "#57C262",
@@ -152,16 +198,26 @@ export default function page() {
           },
           { duration: Infinity }
         );
-        //closing sheet so that user can click on the links from the toast
-        // setOpen(false);
       },
     }
-  );
+  });
 
+  const { data: amintTransactionAllowed, isLoading: isAmintTransactionLoading ,isError:usdaErrorApprove,isSuccess:usdaApproveSuccess} = useWaitForTransactionReceipt({
+    hash: amintApproveData
+  });
 
-  const { data: amintTransactionAllowed, isLoading: isAmintTransactionLoading } = useWaitForTransaction({
-    // TODO: Add OnError Custom Toast
-    onError(error) {
+  useEffect(() => {
+    if(usdaApproveSuccess && nativeFee1 && accountAddress) {
+      usdaApproveWrite({
+        args: [
+          transactionParams,
+          { nativeFee: nativeFee1.nativeFee, lzTokenFee: 0n },
+          accountAddress,
+        ],
+        value: nativeFee1.nativeFee,
+      })
+    }
+    else if(usdaErrorApprove) {
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -172,7 +228,7 @@ export default function page() {
                 props={{
                   t,
                   toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
+                  headline: `Uhh Ohh! Unable to approve USDa`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
                 }}
@@ -182,20 +238,79 @@ export default function page() {
         },
         { duration: 5000 }
       );
+    }
 
-      // setOpen(false);
-    },
-    // look for approval transaction hash
-    hash: amintApproveData?.hash,
-    // Display a custom toast notification
-    onSuccess() {
-      redeemUsdt?.({
-        args: [
-          BigInt(Number(form.getValues("collateralAmount")) * 10 ** 6),
-          BigInt(1000000),
-          BigInt(1000000),
-        ]
-      });
+  },[amintTransactionAllowed])
+
+
+  const {
+    isPending: usdaApproveLoading,
+    data: usdaApproveData,
+    writeContract: usdaApproveWrite,
+    isSuccess: usdaApproved,
+  } = useWriteUsDaSend(
+    {
+      mutation: {
+        onError(error) {
+          console.log(error.cause)
+          console.log(error.message)
+          console.log(error.name)
+          toast.custom(
+            (t) => {
+              toastId.current = t;
+              return (
+                <div>
+                  <CustomToast
+                    key={2}
+                    props={{
+                      t,
+                      toastMainColor: "#B43939",
+                      headline: `Uhh Ohh! ${error.name}`,
+                      toastClosebuttonHoverColor: "#e66d6d",
+                      toastClosebuttonColor: "#C25757",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: 5000 }
+          );
+        },
+        onSuccess: (data) => {
+          toast.custom(
+            (t) => {
+              toastId.current = t;
+              return (
+                <div>
+                  <CustomToast
+                    props={{
+                      t,
+                      toastMainColor: "#268730",
+                      headline: "Transaction Submitted",
+                      transactionHash: data,
+                      linkLabel: "View Transaction",
+                      toastClosebuttonHoverColor: "#90e398",
+                      toastClosebuttonColor: "#57C262",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: Infinity }
+          );
+        },
+      }
+    }
+  );
+
+
+  const { data: usdaTransactionConfirmed, isLoading: isUsdaTransactionLoading, isError: usdaIsError, isSuccess: usdaIsSuccess, error: usdaError } = useWaitForTransactionReceipt({
+    hash: usdaApproveData,
+  });
+
+  useEffect(() => {
+    if (usdaIsSuccess) {
+
 
       toast.custom(
         (t) => {
@@ -206,7 +321,7 @@ export default function page() {
                   t,
                   toastMainColor: "#268730",
                   headline: "Amint Approved,Plz confirm the transaction to redeem USDT",
-                  transactionHash: amintApproveData?.hash,
+                  transactionHash: usdaApproveData,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
@@ -217,76 +332,8 @@ export default function page() {
         },
         { duration: 5000 }
       );
-    },
-  });
-
-
-
-  const {
-    write: redeemUsdt,
-    data: redeemUsdtData,
-    reset: resetUsdt,
-    isLoading: isRedeemUsdt
-  } = useCdsRedeemUsdt({
-    // Handle errors during the process
-    onError: (error) => {
-      // console.log(error.message);
-      console.log("MESSAGE", error.cause);
-      // Show a custom toast notification for the error
-      toast.custom(
-        (t) => (
-          <div>
-            <CustomToast
-              key={2}
-              props={{
-                t: toastId.current,
-                toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.cause}`,
-                toastClosebuttonHoverColor: "#e66d6d",
-                toastClosebuttonColor: "#C25757",
-              }}
-            />
-          </div>
-        ),
-        { duration: Infinity, id: toastId.current }
-      );
-
-      // Dismiss the toast notification after 5 seconds
-      setTimeout(() => {
-        toast.dismiss(toastId.current);
-      }, 5000);
-    },
-    // Handle the successful completion of the process
-    onSuccess: (data) => {
-      console.log(data);
-      // Show a custom toast notification for the successful transaction
-      toast.custom(
-        (t) => {
-          return (
-            <div>
-              <CustomToast
-                props={{
-                  t: toastId.current,
-                  toastMainColor: "#268730",
-                  headline: "Transaction Submitted",
-                  transactionHash: data?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                }}
-              />
-            </div>
-          );
-        },
-        // Set the duration of the toast notification to be infinite
-        { duration: 10000, id: toastId.current }
-      );
-    },
-  });
-
-  const { data: redeemdataUsdt, isLoading: isRedeemUsdtTransactionLoading } = useWaitForTransaction({
-    // TODO: Add OnError Custom Toast
-    onError(error) {
+    }
+    else if (usdaIsError) {
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -297,7 +344,7 @@ export default function page() {
                 props={{
                   t,
                   toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
+                  headline: `Uhh Ohh! ${usdaError.name}`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
                 }}
@@ -307,73 +354,18 @@ export default function page() {
         },
         { duration: 5000 }
       );
-    },
-    // look for approval transaction hash
-    hash: redeemUsdtData?.hash,
-    // Display a custom toast notification
-    onSuccess() {
-      toast.custom(
-        (t) => {
-          return (
-            <div>
-              <CustomToast
-                props={{
-                  t,
-                  toastMainColor: "#268730",
-                  headline: "Transaction Completed",
-                  transactionHash: redeemUsdtData?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-    },
-  });
-  const { data: outputData, refetch } = useBorrowingContractGetAbondYields({ args: [accountAddress as `0x${string}`, BigInt(Number(form.getValues("collateralAmount")) * 10 ** 18)] });
-
-  useEffect(() => {
-    if (form.getValues("inputCollateral") === 'abond' && form.getValues("collateralAmount") > 0) {
-      console.log(abondbalance?.formatted)
-
-      if (form.getValues("collateralAmount") > Number(abondbalance?.formatted.slice(0, 8))) {
-        form.setError("collateralAmount", { message: "Insufficient Balance" });
-      }
-      else {
-        form.clearErrors("collateralAmount");
-        refetch();
-        if (outputData) form.setValue("outputCollateralAmount", Number(formatEther(outputData[0])));
-      }
     }
-    else if (form.getValues("inputCollateral") === 'amint' && form.getValues("collateralAmount") > 0) {
-      console.log(amintbalance?.formatted)
-      if (form.getValues("collateralAmount") > Number(amintbalance?.formatted.slice(0, 9))) {
-        form.setError("collateralAmount", { message: "Insufficient Balance" });
-      }
-      else {
-        form.clearErrors("collateralAmount");
-        form.setValue("outputCollateralAmount", Number(form.getValues("collateralAmount")));
-      }
-    }
-    else {
-      form.setValue("outputCollateralAmount", 0);
-    }
-  }, [form.watch("collateralAmount")]);
-
+  }, [usdaTransactionConfirmed]);
 
 
   const {
-    isLoading: abondApproveLoading,
-    data: abondApproveData,
-    write: abondApproveWrite,
-    isSuccess: abondApproved,
-  } = useAbondApprove(
+    isPending: tusDTApproveLoading,
+    data: tusDTApproveData,
+    writeContract: tusDTApproveWrite,
+    isSuccess: tusDTApproved,
+  } = useWriteUsDaApprove(
     {
-      // Handle error and show a custom toast notification
+      mutation:{
       onError(error) {
         toast.custom(
           (t) => {
@@ -395,8 +387,6 @@ export default function page() {
           },
           { duration: 5000 }
         );
-
-        // setOpen(false);
       },
 
       // Handle success and show a custom toast notification
@@ -411,7 +401,7 @@ export default function page() {
                     t,
                     toastMainColor: "#268730",
                     headline: "Transaction Submitted",
-                    transactionHash: data?.hash,
+                    transactionHash: data,
                     linkLabel: "View Transaction",
                     toastClosebuttonHoverColor: "#90e398",
                     toastClosebuttonColor: "#57C262",
@@ -422,15 +412,136 @@ export default function page() {
           },
           { duration: Infinity }
         );
-        //closing sheet so that user can click on the links from the toast
-        // setOpen(false);
       },
+    }
+  });
+
+  const { data: tusDTTransactionAllowed, isLoading: tusDTTransactionLoading ,isError:tusDTErrorApprove,isSuccess:tusDTApproveSuccess} = useWaitForTransactionReceipt({
+    hash: tusDTApproveData
+  });
+
+  useEffect(() => {
+    if(tusDTApproveSuccess && nativeFee2 && accountAddress) {
+      tusdtApproveWrite({
+        args: [
+          transactionParams,
+          { nativeFee: nativeFee2.nativeFee, lzTokenFee: 0n },
+          accountAddress,
+        ],
+        value: nativeFee2.nativeFee,
+      })
+    }
+    else if(usdaErrorApprove) {
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                key={2}
+                props={{
+                  t,
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! Unable to approve USDa`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 5000 }
+      );
+    }
+
+  },[tusDTTransactionAllowed])
+
+  const {
+    isPending: tusdtApproveLoading,
+    data: tusdtApproveData,
+    writeContract: tusdtApproveWrite,
+    isSuccess: tusdtApproved,
+  } = useWriteTestusdtAbiSend(
+    {
+      mutation: {
+        onError(error) {
+          toast.custom(
+            (t) => {
+              toastId.current = t;
+              return (
+                <div>
+                  <CustomToast
+                    key={2}
+                    props={{
+                      t,
+                      toastMainColor: "#B43939",
+                      headline: `Uhh Ohh! ${error.name}`,
+                      toastClosebuttonHoverColor: "#e66d6d",
+                      toastClosebuttonColor: "#C25757",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: 5000 }
+          );
+        },
+        onSuccess: (data) => {
+          toast.custom(
+            (t) => {
+              toastId.current = t;
+              return (
+                <div>
+                  <CustomToast
+                    props={{
+                      t,
+                      toastMainColor: "#268730",
+                      headline: "Transaction Submitted",
+                      transactionHash: data,
+                      linkLabel: "View Transaction",
+                      toastClosebuttonHoverColor: "#90e398",
+                      toastClosebuttonColor: "#57C262",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: Infinity }
+          );
+        },
+      }
     }
   );
 
-  const { data: abondTransactionAllowed, isLoading: isAbondTransactionLoading } = useWaitForTransaction({
-    // TODO: Add OnError Custom Toast
-    onError(error) {
+
+  const { data: tusdtTransactionConfirmed, isLoading: istusdtTransactionLoading, isError: tusdtIsError, isSuccess: tusdtIsSuccess, error: tusdtError } = useWaitForTransactionReceipt({
+    hash: tusdtApproveData,
+  });
+
+  useEffect(() => {
+    if (tusdtIsSuccess) {
+      toast.custom(
+        (t) => {
+          return (
+            <div>
+              <CustomToast
+                props={{
+                  t,
+                  toastMainColor: "#268730",
+                  headline: "Amint Approved,Plz confirm the transaction to redeem USDT",
+                  transactionHash: tusdtApproveData,
+                  linkLabel: "View Transaction",
+                  toastClosebuttonHoverColor: "#90e398",
+                  toastClosebuttonColor: "#57C262",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 5000 }
+      );
+    }
+    else if (tusdtIsError) {
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -441,7 +552,7 @@ export default function page() {
                 props={{
                   t,
                   toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
+                  headline: `Uhh Ohh! ${tusdtError.name}`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
                 }}
@@ -451,212 +562,127 @@ export default function page() {
         },
         { duration: 5000 }
       );
-
-      // setOpen(false);
-    },
-    // look for approval transaction hash
-    hash: abondApproveData?.hash,
-    // Display a custom toast notification
-    onSuccess() {
-      redeemEth?.({
-        args: [
-          accountAddress as `0x${string}`,
-          BigInt(Number(form.getValues("collateralAmount")) * 10 ** 18),
-        ]
-      });
-
-      toast.custom(
-        (t) => {
-          return (
-            <div>
-              <CustomToast
-                props={{
-                  t,
-                  toastMainColor: "#268730",
-                  headline: "Abond Approved,Plz confirm the transaction to redeem ETH",
-                  transactionHash: amintApproveData?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-    },
-  });
-
-
-
-  const {
-    write: redeemEth,
-    data: redeemEthData,
-    reset: resetEth,
-    isLoading: isRedeemEthLoading,
-
-  } = useBorrowingContractRedeemYields({
-    // Handle errors during the CDS deposit process
-    onError: (error) => {
-      // console.log(error.message);
-      console.log("MESSAGE", error.cause);
-      // Show a custom toast notification for the error
-      toast.custom(
-        (t) => (
-          <div>
-            <CustomToast
-              key={2}
-              props={{
-                t: toastId.current,
-                toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.cause}`,
-                toastClosebuttonHoverColor: "#e66d6d",
-                toastClosebuttonColor: "#C25757",
-              }}
-            />
-          </div>
-        ),
-        { duration: Infinity, id: toastId.current }
-      );
-
-      // Dismiss the toast notification after 5 seconds
-      setTimeout(() => {
-        toast.dismiss(toastId.current);
-      }, 5000);
-    },
-    // Handle the successful completion of the CDS deposit process
-    onSuccess: (data) => {
-      console.log(data);
-      // Show a custom toast notification for the successful transaction
-      toast.custom(
-        (t) => {
-          return (
-            <div>
-              <CustomToast
-                props={{
-                  t: toastId.current,
-                  toastMainColor: "#268730",
-                  headline: "Transaction Submitted",
-                  transactionHash: data?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                }}
-              />
-            </div>
-          );
-        },
-        // Set the duration of the toast notification to be infinite
-        { duration: 10000, id: toastId.current }
-      );
-    },
-  });
-
-
-  const { data: redeemdataEth, isLoading: isRedeemEthTransactionLoading } = useWaitForTransaction({
-    // TODO: Add OnError Custom Toast
-    onError(error) {
-      toast.custom(
-        (t) => {
-          toastId.current = t;
-          return (
-            <div>
-              <CustomToast
-                key={2}
-                props={{
-                  t,
-                  toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
-                  toastClosebuttonHoverColor: "#e66d6d",
-                  toastClosebuttonColor: "#C25757",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-    },
-    // look for approval transaction hash
-    hash: redeemEthData?.hash,
-    // Display a custom toast notification
-    onSuccess() {
-      toast.custom(
-        (t) => {
-          return (
-            <div>
-              <CustomToast
-                props={{
-                  t,
-                  toastMainColor: "#268730",
-                  headline: "Transaction Completed",
-                  transactionHash: redeemEthData?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                }}
-              />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-    },
-  });
+    }
+  }, [usdaTransactionConfirmed]);
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("values", values);
+    if (accountAddress) {
 
-    if (values.inputCollateral === 'amint') {
-      console.log('redeem usdt');
-      amintApproveWrite({
-        args: [
 
-          (cdsAddress[11155111] as `0x${string}`),
-          BigInt(values.collateralAmount * 10 ** 6),
-        ],
-      })
 
-    } else if (values.inputCollateral === 'abond') {
-      console.log('redeem eth');
-      abondApproveWrite({
-        args: [
+      if (values.inputCollateral === 'usda' && nativeFee1) {
+        amintApproveWrite({
+          args: [
+  
+            (usDaAddress[chainId as keyof typeof usDaAddress] as `0x${string}`),
+            BigInt(values.collateralAmount * 10 ** 6),
+          ],
+        })
+ 
 
-          (borrowingContractAddress[11155111] as `0x${string}`),
-          BigInt(values.collateralAmount * 10 ** 18),
-        ],
-      })
+      } else if (values.inputCollateral === 'tusdt' && nativeFee2) {
+        tusDTApproveWrite({
+          args: [
+  
+            (testusdtAbiAddress[chainId as keyof typeof testusdtAbiAddress] as `0x${string}`),
+            BigInt(values.collateralAmount * 10 ** 6),
+          ],
+        })
+      }
     }
+
   }
 
+  useEffect(() => {
+    if (form.getValues("sourceChain") === '11155111') {
+      setEid(40245);
+    }
+    else {
+      setEid(40161);
+    }
+  }, [form.watch("sourceChain")]);
+
+  useEffect(() => {
+    if (form.getValues("inputCollateral") === 'usda') {
+      refetchnativeFee1()
+      form.setValue('outputCollateral', 'usda');
+    } else if (form.getValues("inputCollateral") === 'tusdt') {
+      refetchnativeFee2()
+      form.setValue('outputCollateral', 'tusdt');
+    }
+
+  }, [form.watch("inputCollateral")]);
+
+ 
   return (
     <div className='w-full px-2 sm:px-5 '>
       <div className='w-full relative bg-white border border-[#9E9E9E] shadow-custom min-h-[84vh]'>
-      <div className="hidden gap-5 sm:flex sm:flex-col sm:absolute mdb:flex right-5 top-5">
-            <div onClick={() => {setShowNotification(!showNotification);setOpenSettings(false)}} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
-              <BellIcon className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
-            </div>
-            <div className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
-              <Settings onClick={() => {setOpenSettings(!openSettings);setShowNotification(false)}} className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
-            </div>
+        <div className="hidden gap-5 sm:flex sm:flex-col sm:absolute mdb:flex right-5 top-5">
+          <div onClick={() => { setShowNotification(!showNotification); setOpenSettings(false) }} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
+            <BellIcon className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
           </div>
-          <Notification showNotifications={showNotification} setShowNotifications={setShowNotification} />
-          <PageSettings showSettings={openSettings} setShowSettings={setOpenSettings} />
+          <div className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
+            <Settings onClick={() => { setOpenSettings(!openSettings); setShowNotification(false) }} className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
+          </div>
+        </div>
+        <Notification showNotifications={showNotification} setShowNotifications={setShowNotification} />
+        <PageSettings showSettings={openSettings} setShowSettings={setOpenSettings} />
         <div className='w-[95%] sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[800px] mx-auto h-auto  dark:bg-[#141414]  p-1 sm:p-4'>
-      
+
           <div className="justify-center mt-6  align-middle dark:bg-[#141414] ">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full gap-4 ' action="#">
                 <div >
                   <div className='flex justify-between w-full mb-1 text-xs'>
-                    <div className='flex items-center gap-2'>
+                    <div className='flex items-center'>
                       <div className="h-4 w-4 bg-[#93F3BA] rounded-full flex items-center justify-center">
                         <div className="h-2 w-2 bg-[#009350] rounded-full"></div>
                       </div>
-                      {chainId === 11155111 ? "Ethereum Sepolia " : chainId === 8453 ? "Base Sepolia" : "unsupported network"}
+                      <FormField
+                        control={form.control}
+                        name="sourceChain"
+                        render={() => (
+                          <FormItem className=''>
+                            <Controller
+                              control={form.control}
+                              name="sourceChain"
+                              render={({ field }) => (
+                                <Select
+                                  onValueChange={(value) => {
+                                    form.setValue("collateralAmount", 0);
+                                    if (value === '11155111') {
+                                      form.setValue('destinationChain', '84532');
+                                    } else if (value === '84532') {
+                                      form.setValue('destinationChain', '11155111');
+                                    }
+                                    switchChain && switchChain({ chainId: Number(value) });
+                                    field.onChange(value)
+
+                                  }}
+                                  value={field.value}
+                                >
+                                  <FormControl className='flex gap-4 text-black border-none rounded-none ' >
+                                    <SelectTrigger >
+                                      <SelectValue placeholder="Source Chain" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent className='text-black '>
+                                    <SelectGroup>
+                                      <SelectItem value="11155111">Sepolia</SelectItem>
+                                      <SelectItem value="84532">Base Sepolia</SelectItem>
+                                    </SelectGroup>
+                                  </SelectContent>
+                                </Select>
+                              )}
+                            />
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
-                    
+
                     <div className='text-[#020202] px-3 py-1 relative rounded-none  border-0 border-b-2 border-[#020202] bg-[#DEDEDE]'>
                       max
                     </div>
@@ -674,30 +700,28 @@ export default function page() {
                               <Select
                                 onValueChange={(value) => {
                                   form.setValue("collateralAmount", 0);
-                                  if (value === 'amint') {
-                                    form.setValue('outputCollateral', 'usdt');
-                                  } else if (value === 'abond') {
-                                    form.setValue('outputCollateral', 'eth');
+                                  if (value === 'usda') {
+                                    form.setValue('outputCollateral', 'usda');
+                                  } else if (value === 'tusdt') {
+                                    form.setValue('outputCollateral', 'tusdt');
                                   }
                                   field.onChange(value)
-
                                 }}
 
                                 value={field.value}
                               >
-                                {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
 
                                 <FormControl className='bg-[#020202] text-white py-5 rounded-none' >
-                          <SelectTrigger >
-                            <SelectValue placeholder="Collateral" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className='bg-[#020202] rounded-none text-white'>
-                          <SelectGroup>
-                            <SelectItem value="amint">USDa</SelectItem>
-                            <SelectItem value="abond">ABOND</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
+                                  <SelectTrigger >
+                                    <SelectValue placeholder="Input Token" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent className='bg-[#020202] rounded-none text-white'>
+                                  <SelectGroup>
+                                    <SelectItem value="usda">USDa</SelectItem>
+                                    <SelectItem value="tusdt">TUSDT</SelectItem>
+                                  </SelectGroup>
+                                </SelectContent>
 
                               </Select>
                             )}
@@ -714,45 +738,46 @@ export default function page() {
                           {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
 
                           <FormControl>
-                    <div className="relative">
-                      <Input
-                        type="number"
-                        step="any"
-                        // placeholder="Input Amount"
-                        placeholder=""
+                            <div className="relative">
+                              <Input
+                                type="number"
+                                step="any"
+                                // placeholder="Input Amount"
+                                placeholder=""
 
-                        {...field}
-                        value={Boolean(field.value) ? field.value : ""}
-                        className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655] border lock dark:text-white focus:outline-none focus:ring-0 peer"
-                        style={{
-                          appearance: 'textfield',
-                          MozAppearance: 'textfield',
-                          WebkitAppearance: 'none',
-                          margin: 0
-                        }}
-                      ></Input>
-                      <label
-                        htmlFor="amount_of_usdt"
-                        className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
-                      >
-                        Input Amount
-                      </label>
-                    </div>
-                  </FormControl>
+                                {...field}
+                                value={Boolean(field.value) ? field.value : ""}
+                                className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655] border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                                style={{
+                                  appearance: 'textfield',
+                                  MozAppearance: 'textfield',
+                                  WebkitAppearance: 'none',
+                                  margin: 0
+                                }}
+                                min={0.02}
+                              ></Input>
+                              <label
+                                htmlFor="amount_of_usdt"
+                                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                              >
+                                Input Amount
+                              </label>
+                            </div>
+                          </FormControl>
                           <FormMessage className="dark:text-[#B43939]" />
                         </FormItem>
                       )}
                     />
 
                   </div>
-                <div className='flex items-center justify-end text-xs text-end '>
-                      Bal. <span className='ml-2 font-semibold'>  3.2 ETH</span>
-                    </div>
+                  <div className='flex items-center justify-end text-xs text-end '>
+                   <GetBalance token={form.getValues("inputCollateral")==="usda"?"USDa":"TUSDT"} />
+                  </div>
                 </div>
                 <div className='flex items-center justify-center my-4'>
 
                   <div className='w-20 h-20 p-5 bg-[#EEEEEE] rounded-full'>
-                      <Image src={swapArrow} alt="arrow" className="w-full h-full" />
+                    <Image src={swapArrow} alt="arrow" className="w-full h-full" />
                   </div>
                 </div>
 
@@ -760,51 +785,79 @@ export default function page() {
                 <div className=''>
 
                   <div className='flex justify-between w-full mb-1 text-xs'>
-                    <div className='flex items-center gap-2'>
+                    <div className='flex items-center '>
                       <div className="h-4 w-4 bg-[#93F3BA] rounded-full flex items-center justify-center">
                         <div className="h-2 w-2 bg-[#009350] rounded-full"></div>
                       </div>
-                      {chainId === 11155111 ? "Ethereum Sepolia " : chainId === 8453 ? "Base Sepolia" : "unsupported network"}
+                      <FormField
+                        control={form.control}
+                        name="destinationChain"
+                        render={() => (
+                          <FormItem className=''>
+                            <Controller
+                              control={form.control}
+                              name="destinationChain"
+                              render={({ field }) => (
+                                <Select
+                                  onValueChange={(value) => {
+                                    field.onChange(value)
+                                  }}
+                                  value={field.value}
+                                  disabled={true}
+                                >
+                                  <FormControl className='flex gap-4 text-black border-none rounded-none ' >
+                                    <SelectTrigger >
+                                      <SelectValue placeholder="Destination Chain" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent className='bg-[#020202] rounded-none text-white'>
+                                    <SelectGroup>
+                                      <SelectItem value="11155111">Sepolia</SelectItem>
+                                      <SelectItem value="84532">Base Sepolia</SelectItem>
+                                    </SelectGroup>
+                                  </SelectContent>
+                                </Select>
+                              )}
+                            />
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
 
                   </div>
                   <div className='  relative flex  dark:bg-[#020202]'>
                     <FormField
                       control={form.control}
-                      name="inputCollateral"
+                      name="outputCollateral"
                       render={() => (
                         <FormItem className='  basis-2/6 bg-[#020202] '>
                           <Controller
                             control={form.control}
-                            name="inputCollateral"
+                            name="outputCollateral"
                             render={({ field }) => (
                               <Select
                                 onValueChange={(value) => {
-                                  form.setValue("collateralAmount", 0);
-                                  if (value === 'amint') {
-                                    form.setValue('outputCollateral', 'usdt');
-                                  } else if (value === 'abond') {
-                                    form.setValue('outputCollateral', 'eth');
-                                  }
+
                                   field.onChange(value)
 
                                 }}
-
+                                disabled={true}
                                 value={field.value}
                               >
                                 {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
 
                                 <FormControl className='bg-[#020202] text-white py-5 rounded-none' >
-                          <SelectTrigger >
-                            <SelectValue placeholder="Collateral" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className='bg-[#020202] rounded-none text-white'>
-                          <SelectGroup>
-                            <SelectItem value="amint">USDa</SelectItem>
-                            <SelectItem value="abond">ABOND</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
+                                  <SelectTrigger >
+                                    <SelectValue placeholder="Output Token" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent className='bg-[#020202] rounded-none text-white'>
+                                  <SelectGroup>
+                                    <SelectItem value="usda">USDa</SelectItem>
+                                    <SelectItem value="tusdt">TUSDT</SelectItem>
+                                  </SelectGroup>
+                                </SelectContent>
 
                               </Select>
                             )}
@@ -815,37 +868,37 @@ export default function page() {
                     />
                     <FormField
                       control={form.control}
-                      name="collateralAmount"
+                      name="outputCollateralAmount"
                       render={({ field }) => (
                         <FormItem className="relative basis-4/6 ">
                           {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("collateralAmount") ? "" : "Input Amount"}</label> */}
 
                           <FormControl>
-                    <div className="relative">
-                      <Input
-                        type="number"
-                        step="any"
-                        // placeholder="Input Amount"
-                        placeholder=""
+                            <div className="relative">
+                              <Input
+                                type="number"
+                                step="any"
+                                // placeholder="Input Amount"
+                                placeholder=""
 
-                        {...field}
-                        value={Boolean(field.value) ? field.value : ""}
-                        className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655] border lock dark:text-white focus:outline-none focus:ring-0 peer"
-                        style={{
-                          appearance: 'textfield',
-                          MozAppearance: 'textfield',
-                          WebkitAppearance: 'none',
-                          margin: 0
-                        }}
-                      ></Input>
-                      <label
-                        htmlFor="amount_of_usdt"
-                        className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
-                      >
-                        Input Amount
-                      </label>
-                    </div>
-                  </FormControl>
+                                {...field}
+                                value={Boolean(field.value) ? field.value : ""}
+                                className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655] border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                                style={{
+                                  appearance: 'textfield',
+                                  MozAppearance: 'textfield',
+                                  WebkitAppearance: 'none',
+                                  margin: 0
+                                }}
+                              ></Input>
+                              <label
+                                htmlFor="amount_of_usdt"
+                                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                              >
+                                Output Amount
+                              </label>
+                            </div>
+                          </FormControl>
                           <FormMessage className="dark:text-[#B43939]" />
                         </FormItem>
                       )}
@@ -898,10 +951,12 @@ export default function page() {
                   type="submit"
                   variant={"primary"}
                   className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
-                  disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading}
+                  disabled={ isUsdaTransactionLoading  || istusdtTransactionLoading }
+                  onClick={() => { form.handleSubmit(onSubmit) }}
                 >
-                  {isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading ? <Spinner /> : "Bridge"}
+                  { isUsdaTransactionLoading || istusdtTransactionLoading ? <Spinner /> : "Bridge"}
                 </Button>
+
               </form>
             </Form>
           </div>

@@ -35,16 +35,25 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { useAccount, useBalance, useChainId, useWaitForTransaction } from "wagmi";
+import { Options } from '@layerzerolabs/lz-v2-utilities'
+import { useAccount, useBalance, useChainId, useWaitForTransactionReceipt, useReadContract } from "wagmi";
 import { parseEther, parseUnits } from "viem";
 import arrowout from "@/app/assets/arrow_outward.svg";
 import {
-  borrowingContractABI,
-  useBorrowingContractDepositTokens,
-  useBorrowingContractGetLtv,
-  useBorrowingContractRead,
-  useCdsTotalCdsDepositedAmount,
-  useTreasuryTotalVolumeOfBorrowersAmountinUsd,
+  borrowingContractAbi,
+  treasuryAbi,
+  cdsAddress,
+  cdsAbi,
+  borrowingContractAddress,
+  treasuryAddress,
+  useWriteBorrowingContractDepositTokens,
+  useReadBorrowingContractGetLtv,
+  useReadBorrowingContractGetUsdValue,
+  useReadCdsTotalCdsDepositedAmount,
+  useReadTreasuryTotalVolumeOfBorrowersAmountinUsd,
+  useReadCdsQuote,
+  useReadTreasuryQuote,
+  useReadBorrowingContractQuote,
 } from "@/abiAndHooks";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -79,6 +88,9 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
   const [disabled, setDisabled] = useState(false);
   const { address } = useAccount();
   const chainId = useChainId();
+
+  const Eid = chainId===11155111? 40245: 40161;
+
   // const timer = useRef<number>();
   const queryClient = useQueryClient();
   //we will get this normalizedAmount from events while depositing
@@ -95,21 +107,45 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
     },
   });
   const ethBalance = useBalance({ address: address })
+  const options  = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
 
   // watch for the strikePrice in the form
   const strikePrice = form.watch("strikePrice");
   // watch for the ltv from the borrowing Contract
-  const { data: ltv } = useBorrowingContractGetLtv({ enabled: !!address });
+  const { data: ltv } = useReadBorrowingContractGetLtv({ query: { enabled: !!address } });
   // watch for the totalVolumeOfBorrowersAmountinUsd from the  treasury
   const { data: totalVolumeOfBorrowersAmountinUsd } =
-    useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true });
-  const { data: totalCdsDepositedAmount } = useCdsTotalCdsDepositedAmount({
-    watch: true,
+    useReadTreasuryTotalVolumeOfBorrowersAmountinUsd({
+      query: { staleTime: 10 * 1000 }
+    });
+
+  const { data: totalCdsDepositedAmount } = useReadCdsTotalCdsDepositedAmount({
+    query: { staleTime: 10 * 1000 }
   });
+
+  const {data:nativeFee } = useReadTreasuryQuote({ query: { enabled: !!address },args:[Eid, 1,
+    {recipient:"0x0000000000000000000000000000000000000000",tokensToSend:0n},
+    {recipient:"0x0000000000000000000000000000000000000000",nativeTokensToSend:0n}, options, false],
+  });
+
+  const {data:nativeFee1,error  } = useReadCdsQuote({ query: { enabled: !!address },args:[Eid, 1,123n,123n,123n,
+    {liquidationAmount: 0n, profits: 0n, ethAmount: 0n, availableLiquidationAmount: 0n},0n, options, false] });
+
+
+  const {data:nativeFee2 } = useReadBorrowingContractQuote({query:{enabled:!!address},args:[Eid, {
+    normalizedAmount: 5n,
+    ethVaultValue: 10n,
+    cdsPoolValue: 15n,
+    totalCDSPool: 20n,
+    noOfLiquidations: 25n,
+    ethRemainingInWithdraw: 30n,
+    ethValueRemainingInWithdraw: 35n,
+    nonce: 40n
+  }, options, false]})
 
 
   // Perform a mutation and get the mutate and depositReset functions
-  const { mutate, reset: depositReset } = useMutation({
+  const { mutate, reset: depositReset,isPending:isStoringbackend } = useMutation({
     // Specify the mutation function to be called
     mutationFn: storeToBackend,
     // Handle any errors that occur during the mutation
@@ -127,6 +163,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
 
       // Reset the form
       form.reset();
+      reset()
     },
     // Retry the mutation up to 4 times if it fails
     retry: 4,
@@ -243,120 +280,136 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
 
 
   // get  ethPrice using useContractRead hook
-  const { data: ethPrice } = useBorrowingContractRead({
-    functionName: "getUSDValue",
-    staleTime: 10 * 1000,
-  });
+  const { data: ethPrice } = useReadBorrowingContractGetUsdValue({});
 
 
   const {
-    isLoading: isDepositsLoading,
-    data: depositData, // Data received from the `useBorrowingContractDepositTokens` hook
-    write, // Function to initiate a write operation
+    isPending: isDepositsLoading,
+    data: depositDatahash, // Data received from the `useBorrowingContractDepositTokens` hook
+    writeContract, // Function to initiate a write operation
     reset, // Function to reset the state of the hook
-  } = useBorrowingContractDepositTokens({
-    // Value to be sent along with the transaction
-    onError(error) {
-      setOpen(false); // Close the modal
-      console.log(error); // Log the error to the console
-      toast.custom(
-        (t) => (
-          <div>
+  } = useWriteBorrowingContractDepositTokens({
+
+    mutation: {
+      onSuccess: (data) => {
+        // Show custom toast
+        toast.custom(
+          () => (
             <CustomToast
-              key={2}
               props={{
-                t,
-                toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.cause}`,
-                toastClosebuttonHoverColor: "#e66d6d",
-                toastClosebuttonColor: "#C25757",
+                t: toastId.current,
+                toastMainColor: "#268730",
+                headline: "Transaction Completed. A new Deposit has been created",
+                transactionHash: data,
+                linkLabel: "View Transaction",
+                toastClosebuttonHoverColor: "#90e398",
+                toastClosebuttonColor: "#57C262",
               }}
             />
-          </div>
-        ),
-        { duration: 10000 } // Toast duration: 5000 milliseconds
-      );
-    },
-    onSuccess(data) {
-      // form.reset(); // Reset the form
-      console.log(data?.hash); // Log the transaction hash to the console
-      toast.custom(
-        (t) => {
-          toastId.current = t;
-          return (
+          ),
+          { id: toastId.current }
+        );
+
+        // Dismiss toast after 3 seconds
+        setTimeout(() => {
+          toast.dismiss(toastId.current);
+        }, 3000);
+      },
+      onError: (error: any) => {
+        // Log the error to the console
+        console.log(error);
+        // Show custom toast
+        toast.custom(
+          (t) => (
             <div>
               <CustomToast
+                key={2}
                 props={{
                   t,
-                  toastMainColor: "#268730",
-                  headline: "Transaction Submitted",
-                  transactionHash: data?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! ${error.cause}`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
                 }}
               />
             </div>
-          );
-        },
-        { duration: Infinity } // Toast duration: Infinity (will remain visible until manually closed)
-      );
-    },
+          ),
+          { duration: 10000 } // Toast duration: 5000 milliseconds
+        );
+      },
+    }
+
   });
 
 
-  const { isLoading: isDepositHashsLoading, isSuccess: transactionSuccess } = useWaitForTransaction({
-    hash: depositData?.hash,
-    onSuccess(data) {
-      // Log transaction completion
+const{data:Depositdata , isError:depositError,isLoading:isDepositdataLoading,isSuccess:isDepositSuccess} = useWaitForTransactionReceipt({
+  hash: depositDatahash,
+})
 
-      console.log("transaction completed", depositData?.hash, data);
-      // Get the data logs based on the chainId
+useEffect(()=>{
+  if(isDepositSuccess){
+    console.log("transaction completed", Depositdata);
+    const dataLogs = Depositdata.logs[Depositdata.logs.length - 1]
+    const { eventName, args } = decodeEventLogsFromAbi(
+      borrowingContractAbi,
+      dataLogs.topics,
+      "Deposit",
+      dataLogs.data
+    ) as { eventName: string; args: { normalizedAmount: bigint, borrowAmount: bigint } };
 
-      const dataLogs = data.logs[data.logs.length - 1]
+    // Log event name and normalized amount
+    console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toString())
+    // Set the normalizedAmount value
+    normalizedAmount.current = args?.normalizedAmount.toString();
+    noOfAmintMinted.current = args?.borrowAmount.toString();
 
-      // Decode event logs from ABI
-      const { eventName, args } = decodeEventLogsFromAbi(
-        borrowingContractABI,
-        dataLogs.topics,
-        "Deposit",
-        dataLogs.data
-      ) as { eventName: string; args: { normalizedAmount: bigint, borrowAmount: bigint } };
+    // Call mutate function with the address to store things to backend
+    mutate(address);
+    setOpen(false);
+    // Show custom toast
+    toast.custom(
+      () => (
+        <CustomToast
+          props={{
+            t: toastId.current,
+            toastMainColor: "#268730",
+            headline: "Transaction Completed. A new Deposit has been created",
+            transactionHash: Depositdata.blockHash,
+            linkLabel: "View Transaction",
+            toastClosebuttonHoverColor: "#90e398",
+            toastClosebuttonColor: "#57C262",
+          }}
+        />
+      ),
+      { id: toastId.current }
+    );
 
-      // Log event name and normalized amount
-      console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toString())
-      // Set the normalizedAmount value
-      normalizedAmount.current = args?.normalizedAmount.toString();
-      noOfAmintMinted.current = args?.borrowAmount.toString();
-
-      // Call mutate function with the address to store things to backend
-      mutate(address);
-      setOpen(false);
-      // Show custom toast
-      toast.custom(
-        () => (
+    // Dismiss toast after 3 seconds
+    setTimeout(() => {
+      toast.dismiss(toastId.current);
+    }, 3000);
+  }else if(depositError){
+    toast.custom(
+      (t) => (
+        <div>
           <CustomToast
+            key={2}
             props={{
-              t: toastId.current,
-              toastMainColor: "#268730",
-              headline: "Transaction Completed. A new Deposit has been created",
-              transactionHash: depositData?.hash,
-              linkLabel: "View Transaction",
-              toastClosebuttonHoverColor: "#90e398",
-              toastClosebuttonColor: "#57C262",
+              t,
+              toastMainColor: "#B43939",
+              headline: `Uhh Ohh! Unknow error occured`,
+              toastClosebuttonHoverColor: "#e66d6d",
+              toastClosebuttonColor: "#C25757",
             }}
           />
-        ),
-        { id: toastId.current }
-      );
+        </div>
+      ),
+      { duration: 10000 } // Toast duration: 5000 milliseconds
+    );
+  }
+  
 
-      // Dismiss toast after 3 seconds
-      setTimeout(() => {
-        toast.dismiss(toastId.current);
-      }, 3000);
-    },
-  });
-
+},[Depositdata])
 
   /**
    * useEffect hook that disables a deposit button based on certain conditions.
@@ -369,7 +422,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
    * @param {boolean} write - Flag indicating if the feature is enabled or disabled.
    */
   useEffect(() => {
-    if (!write) {
+    if (!writeContract) {
       setDisabled(true);
     } else {
       //check if we have both values or not
@@ -393,18 +446,29 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
     const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${colateralamount}/${ethPrice}/${strikePercent}`).then(
       (res) => res.json()
     )
-
-    if (data[0] != undefined) {
-      write?.({
+    console.log(data[0])
+    if (data[0] != undefined  && nativeFee1 != undefined && nativeFee2 != undefined && nativeFee != undefined) {
+      writeContract?.({
         args: [
           strikePercent,
           BigInt(Math.floor((1 + form.getValues("strikePrice") / 100) * Number(ethPrice ? ethPrice : 0))),
           BigInt(data[0]),
+          parseEther((form.getValues("collateralAmount")).toString()),
         ],
-        value: parseEther(form.getValues("collateralAmount").toString()),
+        value: parseEther(form.getValues("collateralAmount").toString())+ nativeFee1.nativeFee + nativeFee2.nativeFee + nativeFee.nativeFee,
       });
     } // mutate(address);
   }
+
+
+
+  /**
+   * Handles the Fee Calculation.
+   */
+
+
+
+
 
   /**
    * Handles the calculation and setting of the amint to be minted and downside protection amounts.
@@ -432,6 +496,9 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
     setDownsideProtectionAmnt(downsideProtection2Decimal);
   };
 
+
+
+
   /**
    * Handles the calculation and setting of the eth volatility.
    */
@@ -451,17 +518,6 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
 
   }, [form.watch("collateralAmount"), form.watch("strikePrice")]);
 
-  const [chartstikePrice, setChartStrikePrice] = useState(1);
-
-  useEffect(() => {
-    if (transactionSuccess) {
-      //reseting contract values after it is successfull
-      reset();
-    }
-    // return () => {
-    //   window.clearTimeout(timer.current); 
-    // };
-  }, [transactionSuccess]);
 
 
 
@@ -500,7 +556,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                               WebkitAppearance: 'none',
                               margin: 0
                             }}
-                          disabled={form.getValues("collateral")==undefined}
+                            disabled={form.getValues("collateral") == undefined}
                           ></Input>
                           <label
                             htmlFor="amount_of_usdt"
@@ -561,7 +617,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                 />
 
                 {/* <span className="top-7  text-gray-400 font-semibold relative md:absolute  right-32 block text-right text-[0.7rem]"> <span className="text-xl">(</span> <span className="text-sm">={(Number(ethPrice) / 100 * Number(form.getValues("collateralAmount"))).toFixed(2)} </span> usdt <span className="text-xl">)</span></span> */}
-                <span className=" text-textHighlight  relative md:absolute md:right-1 -bottom-5 block text-right text-[0.7rem] dark:text-[#d4d4d4]">Balance:  {(Number(ethBalance.data?.formatted)).toFixed(4)} ETH</span> 
+                <span className=" text-textHighlight  relative md:absolute md:right-1 -bottom-5 block text-right text-[0.7rem] dark:text-[#d4d4d4]">Balance:  {(Number(ethBalance.data?.formatted)).toFixed(4)} ETH</span>
               </div>
               <div className="px-[1px] -mt-2 flex gap-[10px] items-center">
                 {/* <InfoCircledIcon width={18} height={18} /> */}
@@ -617,9 +673,9 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                   type="submit"
                   variant={"primary"}
                   className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
-                  disabled={isDepositsLoading || isDepositHashsLoading || disabled}
+                  disabled={isDepositsLoading ||isDepositdataLoading || isStoringbackend  || disabled}
                 >
-                  {isDepositsLoading || isDepositHashsLoading ? <Spinner /> : 'Confirm Deposit'}
+                  {isDepositsLoading ||isDepositdataLoading || isStoringbackend ? <Spinner /> : 'Confirm Deposit'}
                 </Button>
               </div>
 
@@ -655,22 +711,8 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                     </div>
                   </div>
                 </div>
-                {/* <div className="relative flex items-start justify-center w-full ">
-                  <div className="absolute w-full h-36 ">
-                    <LoanPieChart />
-                  </div>
-                  <div className="w-full mt-2 font-bold text-center text-blue-600 bottom-4">100% LTV</div>
-                </div> */}
-                {/* <div className="box-border relative flex items-center w-full border h-36 ">
-                    </div> */}
               </div>
-
-
-
-
-
             </div>
-            {/* <Divider className='w-[1px] h-auto mx-4' /> */}
           </div>
         </form>
       </Form>

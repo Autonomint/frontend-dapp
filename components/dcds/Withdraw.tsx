@@ -12,12 +12,12 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 import React, { useEffect, useRef, useState } from "react";
 import calculateTimeDifference from "@/app/utils/calculateTimeDifference";
 import {
-    cdsABI,
-    useBorrowingContractGetUsdValue,
-    useCdsWithdraw,
+    cdsAbi,
+    useReadBorrowingContractGetUsdValue,
+    useWriteCdsWithdraw,
 } from "@/abiAndHooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
+import { useAccount, useChainId, useWaitForTransactionReceipt } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
 import { parseEther } from "viem";
@@ -132,8 +132,10 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
     const queryClient = useQueryClient();
 
 
-    const { data: ethPrice } = useBorrowingContractGetUsdValue({
-        staleTime: 10 * 1000, //refresh eth price after 10 seconds
+    const { data: ethPrice } = useReadBorrowingContractGetUsdValue({
+        query:{
+            staleTime: 10 * 1000, //refresh eth price after 10 seconds
+        }
     });
 
     console.log("cdscds", ethPrice)
@@ -144,8 +146,10 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
 
 
 
-    const { write: cdsWithdraw, data: cdsWithdrawData, isLoading } = useCdsWithdraw({
+    const { writeContract: cdsWithdraw, data: cdsWithdrawData, isPending:isLoading } = useWriteCdsWithdraw({
         // onError callback function
+        mutation:{
+
         onError(error) {
             console.log(error);
             // Display custom toast with error message
@@ -172,7 +176,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
         },
         // onSuccess callback function
         onSuccess(data) {
-            console.log(data?.hash);
+            console.log(data);
             // Close the sheet
             // setSheetOpen(false);
             // Display custom toast with success message and transaction hash
@@ -186,7 +190,7 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                                     t,
                                     toastMainColor: "#268730",
                                     headline: "Transaction Submitted",
-                                    transactionHash: data?.hash,
+                                    transactionHash: data,
                                     linkLabel: "View Transaction",
                                     toastClosebuttonHoverColor: "#90e398",
                                     toastClosebuttonColor: "#57C262",
@@ -199,6 +203,8 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
                 { duration: Infinity }
             );
         },
+    }
+
     });
 
     // Use the `mutate` function from the `useMutation` hook
@@ -223,61 +229,61 @@ const AmintDepositRow = ({ details, handleSheetOpenChange,
     });
 
 
-    useWaitForTransaction({
-        hash: cdsWithdrawData?.hash, // The transaction hash to wait for
-        confirmations: 1, // Number of confirmations required for success
-        onSuccess(data) {
+    // useWaitForTransactionReceipt({
+    //     hash: cdsWithdrawData?.hash, // The transaction hash to wait for
+    //     confirmations: 1, // Number of confirmations required for success
+    //     onSuccess(data) {
 
-            const dataLogs =
-                chainId === 5 ? data.logs[3].data : data.logs[3].data; // Get the transaction logs data
+    //         const dataLogs =
+    //             chainId === 5 ? data.logs[3].data : data.logs[3].data; // Get the transaction logs data
 
-            // Decode event logs using the provided ABI and event name
-            const { eventName, args } = decodeEventLogsFromAbi(
-                cdsABI, // ABI of the contract
-                ["0x02d30220fb33c212455a8cbb2cf068095e080a18a527044b34360e67a705addd"], // Topics to decode event variables
-                "Withdraw", // Event name to filter
-                dataLogs // Data to decode
-            ) as {
-                eventName: string;
-                args: { withdrewAmint: bigint; withdrawETH: bigint };
-            };
+    //         // Decode event logs using the provided ABI and event name
+    //         const { eventName, args } = decodeEventLogsFromAbi(
+    //             cdsABI, // ABI of the contract
+    //             ["0x02d30220fb33c212455a8cbb2cf068095e080a18a527044b34360e67a705addd"], // Topics to decode event variables
+    //             "Withdraw", // Event name to filter
+    //             dataLogs // Data to decode
+    //         ) as {
+    //             eventName: string;
+    //             args: { withdrewAmint: bigint; withdrawETH: bigint };
+    //         };
 
-            // Update the current events value with the decoded values
-            eventsValue.current = {
-                withdrewAmint: args?.withdrewAmint.toString(),
-                withdrawETH: args?.withdrawETH.toString(),
-            };
+    //         // Update the current events value with the decoded values
+    //         eventsValue.current = {
+    //             withdrewAmint: args?.withdrewAmint.toString(),
+    //             withdrawETH: args?.withdrawETH.toString(),
+    //         };
 
-            backendCDSWithdraw(address); // Perform the backend CDS withdraw operation
-            // Show a custom toast notification
-            toast.custom(
-                (t) => (
-                    <div>
-                        {/* CustomToast component */}
-                        <CustomToast
-                            props={{
-                                t: toastId.current,
-                                toastMainColor: "#268730",
-                                headline:
-                                    "Transaction Completed.Withdrawal Completed Successfully",
-                                transactionHash: cdsWithdrawData?.hash,
-                                linkLabel: "View Transaction",
-                                toastClosebuttonHoverColor: "#90e398",
-                                toastClosebuttonColor: "#57C262",
-                                completed: true,
-                            }}
-                        />
-                    </div>
-                ),
-                { id: toastId.current }
-            );
+    //         backendCDSWithdraw(address); // Perform the backend CDS withdraw operation
+    //         // Show a custom toast notification
+    //         toast.custom(
+    //             (t) => (
+    //                 <div>
+    //                     {/* CustomToast component */}
+    //                     <CustomToast
+    //                         props={{
+    //                             t: toastId.current,
+    //                             toastMainColor: "#268730",
+    //                             headline:
+    //                                 "Transaction Completed.Withdrawal Completed Successfully",
+    //                             transactionHash: cdsWithdrawData?.hash,
+    //                             linkLabel: "View Transaction",
+    //                             toastClosebuttonHoverColor: "#90e398",
+    //                             toastClosebuttonColor: "#57C262",
+    //                             completed: true,
+    //                         }}
+    //                     />
+    //                 </div>
+    //             ),
+    //             { id: toastId.current }
+    //         );
 
-            // Dismiss the toast notification after 5 seconds
-            setTimeout(() => {
-                toast.dismiss(toastId.current);
-            }, 5000);
-        },
-    });
+    //         // Dismiss the toast notification after 5 seconds
+    //         setTimeout(() => {
+    //             toast.dismiss(toastId.current);
+    //         }, 5000);
+    //     },
+    // });
 
     /**
      * Asynchronously withdraws CDS from the backend.

@@ -90,7 +90,7 @@ export default function Footer() {
                         <div className="pl-4">
                             <div>
                                 <ol className="text-sm list-disc ">
-                                    <li>Make sure you have some Sepolia ETH in your account to pay for gas. if not, grab some the Sepolia Faucet.</li>
+                                    <li>Make sure you have some Sepolia ETH in your account to pay for gas. if not, grab some the <a href='https://cloud.google.com/application/web3/faucet/ethereum/sepolia' className='underline' target='_black'>Sepolia Faucet</a> .</li>
                                     <li>Grab some <a href="" className='underline'>TUSDT</a> and Eth to trade with from the USDa faucet.</li>
                                     <li>Click the button below to go deposit collateral and mint some stable coins!</li>
                                 </ol>

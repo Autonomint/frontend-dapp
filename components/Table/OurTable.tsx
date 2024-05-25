@@ -52,9 +52,9 @@ const DepositAndWithDrawTable = ({
   }
 
   return (
-    <div className="flex w-full ">
+    <div className="flex w-full h-[74vh] ">
       <div className={`${!sheetDetails? "basis-full":"basis-full xl:basis-2/3 "}  overflow-hidden `}>
-        <div className="flex flex-col gap-[10px] ">
+        <div className="flex flex-col gap-[10px] h-[10vh] ">
           <div className="p-4">
 
             <h2 className="text-black dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
@@ -65,7 +65,7 @@ const DepositAndWithDrawTable = ({
             </p>
           </div>
         </div>
-        <div className="min-h-[58.6vh] h-full overflow-y-scroll ">
+        <div className="overflow-y-scroll h-[63vh] ">
 
 
         <Table  >
@@ -84,7 +84,6 @@ const DepositAndWithDrawTable = ({
 
           <TableBody>
             {tableData && tableData?.map((details, index) => {
-              console.log(tableData.length - 1, index)
               return <TableRows isnewtxn={newtxn} islasttxn={tableData.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} handleRefetch={handleRefetch} />
             })}
           </TableBody>

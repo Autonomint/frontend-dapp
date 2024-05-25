@@ -34,7 +34,6 @@ const DashboardStatsItem = ({
     token: tokenAddress
       ? tokenAddress[chainId as keyof typeof tokenAddress]
       : undefined,
-    watch: true,
   });
 
 

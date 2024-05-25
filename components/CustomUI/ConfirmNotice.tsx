@@ -9,12 +9,10 @@ const ConfirmNotice = ({
   withdrawalTime,
   handleWithdrawal,
   amintToMint,
-  isLoading,
 }: {
   withdrawalTime: string;
   handleWithdrawal: VoidFunction;
   amintToMint: number;
-  isLoading: boolean;
 }) => {
   return (
     <div className=" mx-4  flex flex-col min-[1440px]:gap-[15px] gap-2 2dppx:gap-2">
@@ -39,7 +37,7 @@ const ConfirmNotice = ({
         className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
         onClick={handleWithdrawal}
       >
-        {isLoading ? <Spinner/> : `Confirm repay of ${withdrawalTime === "DEPOSITED" ? "USDa" : "ETH"}`}
+       {  `Confirm repay of ${withdrawalTime === "DEPOSITED" ? "USDa" : "ETH"}`}
        
         
       </Button>

@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
-import { useAccount, useChainId, useSwitchNetwork, useNetwork } from "wagmi";
+import { useAccount, useChainId, useSwitchChain } from "wagmi";
 import {
   Select,
   SelectContent,
@@ -19,17 +19,14 @@ import {
 } from "@/components/ui/select";
 export default function CheckNetwork() {
   const { isConnected } = useAccount()
-  console.log("isConnected", useNetwork());
-  const { chain } = useNetwork();
   const chainId = useChainId();
   const [open, setOpen] = React.useState(true);
-  const { switchNetwork } = useSwitchNetwork();
-  console.log(chain)
+  const { switchChain } = useSwitchChain();
   console.log("chainId", chainId);
   const [selectedNetwork,setSelectedNetwork] = React.useState("")
   return (
     <div>
-      {isConnected && (chain?.id == 11155111  ? "" :
+      {isConnected && (chainId == 11155111 || chainId == 84532 ? "" :
         <Dialog open={open}   >
           <DialogContent className='border border-black rounded-none max-w-[350px] p-4'>
             <DialogHeader className="flex items-start">
@@ -40,7 +37,7 @@ export default function CheckNetwork() {
             <div className='mt-4'>
               <Select
                 onValueChange={(value) => {
-                  switchNetwork && switchNetwork(11155111)
+                  switchChain && switchChain({chainId:Number(value)})
                   setOpen(false)
                 }}
                 value={selectedNetwork}
@@ -52,7 +49,7 @@ export default function CheckNetwork() {
                 <SelectContent className='text-white  bg-[#020202] rounded-none '>
                   <SelectGroup>
                     <SelectItem value="11155111">Ethereum Sepolia</SelectItem>
-                    <SelectItem value="11155111">Base Sepolia</SelectItem>
+                    <SelectItem value="84532">Base Sepolia</SelectItem>
                   </SelectGroup>
                 </SelectContent>
 

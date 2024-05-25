@@ -1,17 +1,11 @@
 "use client";
 import { PropsWithChildren } from "react";
-import {
-  WagmiConfig,
-  configureChains,
 
-} from "wagmi";
+import { State, WagmiProvider } from 'wagmi'
 import { polygonMumbai,optimismSepolia,bscTestnet} from "@wagmi/core/chains";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { publicProvider } from "wagmi/providers/public";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { infuraProvider } from "wagmi/providers/infura";
+
 import { goerli } from "@wagmi/core/chains";
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
+import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
 import { baseSepolia, sepolia } from 'viem/chains'
 // const { chains, publicClient, webSocketPublicClient } = configureChains(
 //   [goerli,sepolia, polygonMumbai,optimismSepolia,bscTestnet,baseSepolia],
@@ -45,7 +39,7 @@ export const config = defaultWagmiConfig({
 // })
 
 const WalletProvider = ({ children }: PropsWithChildren) => {
-  return <WagmiConfig config={config}>{children}</WagmiConfig>;
+  return <WagmiProvider config={config}>{children}</WagmiProvider>;
 };
 
 export default WalletProvider;

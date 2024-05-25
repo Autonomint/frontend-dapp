@@ -19,16 +19,22 @@ import ConfirmNotice from "../CustomUI/ConfirmNotice";
 import Note from "../CustomUI/Note";
 import SheetRow from "../CustomUI/SheetRow";
 import {
-  borrowingContractABI,
+  borrowingContractAbi,
+  treasuryAbi,
+  cdsAddress,
+  cdsAbi,
+  treasuryAddress,
   borrowingContractAddress,
-  useAmintApprove,
-  useBorrowingContractCalculateCumulativeRate,
-  useBorrowingContractLastCumulativeRate,
-  useBorrowingContractRead,
-  useBorrowingContractWithDraw,
-  usePrepareBorrowingContractCalculateCumulativeRate,
+  useWriteUsDaApprove,
+  useWriteBorrowingContractCalculateCumulativeRate,
+  useReadBorrowingContractLastCumulativeRate,
+  useReadBorrowingContractGetUsdValue,
+  useWriteBorrowingContractWithDraw,
+  useReadTreasuryQuote,
+  useReadBorrowingContractQuote
 } from "@/abiAndHooks";
-import { useAccount, useChainId, useWaitForTransaction } from "wagmi";
+import { Options } from '@layerzerolabs/lz-v2-utilities'
+import { useAccount, useBalance, useChainId, useWaitForTransactionReceipt, useReadContract } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "../CustomUI/CustomToast";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
@@ -98,6 +104,7 @@ const Withdrawcopy = ({
   sheetOpen: boolean;
   handleRefetch: Function;
 }) => {
+
   const depositDetails = [
     {
       headline: "Eth Deposited",
@@ -168,99 +175,111 @@ const Withdrawcopy = ({
   // to store eventsValue we get from events while withdrawing
   const eventsValue = useRef(events);
   // get eth price from BorrowingContract getUSDValue function
-  const { data: ethPrice } = useBorrowingContractRead({
-    functionName: "getUSDValue",
-    staleTime: 10 * 1000,
+  const { data: ethPrice } = useReadBorrowingContractGetUsdValue({
+
+    query: { staleTime: 10 * 1000, }
+  });
+  const Eid = chainId===11155111? 40245: 40161;
+  const options  = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
+
+  const {data:nativeFee } = useReadTreasuryQuote({ query: { enabled: !!address },args:[Eid, 1,
+    {recipient:"0x0000000000000000000000000000000000000000",tokensToSend:0n},
+    {recipient:"0x0000000000000000000000000000000000000000",nativeTokensToSend:0n}, options, false],
   });
 
+
+
+
+  const {data:nativeFee2 } = useReadBorrowingContractQuote({query:{enabled:!!address},args:[Eid, {
+    normalizedAmount: 5n,
+    ethVaultValue: 10n,
+    cdsPoolValue: 15n,
+    totalCDSPool: 20n,
+    noOfLiquidations: 25n,
+    ethRemainingInWithdraw: 30n,
+    ethValueRemainingInWithdraw: 35n,
+    nonce: 40n
+  }, options, false]})
+
   const {
-    isLoading: cumulativeRateLoading,
+    isPending: cumulativeRateLoading,
     isError: cumulativeRateError,
     // Data for the cumulative rate
     data: cumulativeRate,
     // Function to calculate the cumulative rate
-    write: calculateCumulativeRate,
+    writeContract: calculateCumulativeRate,
     // Function to reset the cumulative rate
     reset: cumulativeReset,
-  } = useBorrowingContractCalculateCumulativeRate({
+  } = useWriteBorrowingContractCalculateCumulativeRate({
     // Error handling
-    onError(error) {
-      console.log(error);
-      cumulativeReset?.();
-      // Show custom toast notification for error
-      toast.custom(
-        (t) => {
-          toastId.current = t;
-          return (
-            <div>
+    mutation: {
+      onError(error) {
+        console.log(error);
+        cumulativeReset?.();
+        // Show custom toast notification for error
+        setOpenConfirmNotice(true);
+
+        toast.custom(
+          (t) => {
+            toastId.current = t;
+            return (
+              <div>
+                <CustomToast
+                  key={2}
+                  props={{
+                    t,
+                    toastMainColor: "#B43939",
+                    headline: `Uhh Ohh! ${error.name}`,
+                    toastClosebuttonHoverColor: "#e66d6d",
+                    toastClosebuttonColor: "#C25757",
+                  }}
+                />
+              </div>
+            );
+          },
+          {duration:5000, id: toastId.current },
+        );
+      },
+      onSuccess(data, variables, context) {
+        toast.custom(
+          (t) => {
+            toastId.current = t;
+            return (
               <CustomToast
-                key={2}
                 props={{
                   t,
-                  toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.name}`,
-                  toastClosebuttonHoverColor: "#e66d6d",
-                  toastClosebuttonColor: "#C25757",
+                  toastMainColor: "#268730",
+                  headline: "Transaction Submitted",
+                  transactionHash: data,
+                  linkLabel: "View Transaction",
+                  toastClosebuttonHoverColor: "#90e398",
+                  toastClosebuttonColor: "#57C262",
                 }}
               />
-            </div>
-          );
-        },
-        { duration: 5000 }
-      );
-    },
-    // Success handling
-    onSuccess(data, variables, context) {
-      // Show custom toast notification for success
-      toast.custom(
-        (t) => {
-          toastId.current = t;
-          return (
-            <CustomToast
-              props={{
-                t,
-                toastMainColor: "#268730",
-                headline: "Transaction Submitted",
-                transactionHash: data?.hash,
-                linkLabel: "View Transaction",
-                toastClosebuttonHoverColor: "#90e398",
-                toastClosebuttonColor: "#57C262",
-              }}
-            />
-          );
-        },
-        // Set duration to Infinity for persistent toast
-        { duration: Infinity }
-      );
-    },
-  });
+            );
+          },
+          // Set duration to Infinity for persistent toast
+          {duration:5000, id: toastId.current },
+        );
+
+      },
+    }
+  }
+
+  );
   //get last cumulative rate from BorrowingContract using our custom useBorrowingContractLastCumulativeRate hook
-  const { data: lastCumulativeRate } = useBorrowingContractLastCumulativeRate({
-    watch: true,
+  const { data: lastCumulativeRate } = useReadBorrowingContractLastCumulativeRate({
+    query: { staleTime: 10 * 1000 }
   });
-  const { isLoading: ispendingCumulative, isSuccess: cumulativeRateSuccess } = useWaitForTransaction({
-    hash: cumulativeRate?.hash, // Transaction hash to wait for
+  const { isLoading: ispendingCumulative, isSuccess: cumulativeRateSuccess, data: culmulativeData } = useWaitForTransactionReceipt({
+    hash: cumulativeRate, // Transaction hash to wait for
     confirmations: 3, // Number of confirmations required
-    onSuccess(data) {
-      console.log("transaction completed---", cumulativeRate?.hash, cumulativeRate); // Log transaction completion data
-      toast.custom(
-        (t) => (
-          <CustomToast
-            props={{
-              t: toastId.current, // Toast ID
-              toastMainColor: "#268730", // Main color of the toast
-              headline:
-                "Transaction Completed. Please Approve Amint to move Forward", // Headline of the toast
-              transactionHash: cumulativeRate?.hash, // Transaction hash to display
-              linkLabel: "View Transaction", // Label for transaction link
-              toastClosebuttonHoverColor: "#90e398", // Hover color of the close button
-              toastClosebuttonColor: "#57C262", // Color of the close button
-            }}
-          />
-        ),
-        { id: toastId.current } // ID of the toast
-      );
-      console.log()
+
+  });
+
+  useEffect(() => {
+    if (culmulativeData) {
+      // Perform the amint approval after the cumulative rate is calculated
       amintApprove?.({
         args: [
           borrowingContractAddress[
@@ -272,131 +291,187 @@ const Withdrawcopy = ({
           ) / BigInt(10 ** 27) + 1000000n, // Total amint amount
         ],
       });
-    },
-  });
+    }
+
+  }, [culmulativeData])
+
+
 
   const {
-    isLoading: amintApproveLoading,
+    isPending: amintApproveLoading,
     isSuccess: amintApproveSuccess,
     isError: amintApproveError,
-    data: amintApproveData,
-    write: amintApprove,
+    writeContract: amintApprove,
     reset: approveReset,
-  } = useAmintApprove();
-  // Use the useWaitForTransaction hook to get the amint transaction status
-  const { data: amintTransactionAllowed, isLoading: amintTransactionLoading } = useWaitForTransaction({
-    hash: amintApproveData?.hash, // Hash of the amint approval transaction
-    onSuccess(data) {
-      // Show a custom toast when the transaction is successful
-      toast.custom(
-        (t) => {
-          return (
-            <div>
-              <CustomToast
-                props={{
-                  t: toastId.current,
-                  toastMainColor: "#268730",
-                  headline: "Amint is Approved,Please Confirm Final Withdrawal",
-                  transactionHash: amintApproveData?.hash,
-                  linkLabel: "View Transaction",
-                  toastClosebuttonHoverColor: "#90e398",
-                  toastClosebuttonColor: "#57C262",
-                }}
-              />
-            </div>
-          );
-        },
-        { id: toastId.current }
-      );
-      // Perform the borrow withdrawal after the transaction is successful
-      borrowWithdraw?.({
-        args: [
-          address as `0x${string}`,
-          BigInt(details.index),
-        ],
-      });
-    },
-  });
-  const {
-    isLoading: borrowWithdrawisLoadingone,
-    write: borrowWithdraw, // Function for borrowing withdrawal
-    reset: borrowReset, // Function for resetting borrowing
-    data: borrowWithdrawData, // Data for borrowing withdrawal
-  } = useBorrowingContractWithDraw({
-    onSuccess(data) {
-      // Success callback for borrowing withdrawal
-      toast.custom(
-        (t) => {
-          return (
-            <div>
+    data: amintApproveHash,
+  } = useWriteUsDaApprove({
+    mutation: {
+      onError(error) {
+        console.log(error);
+        approveReset?.();
+        // Show custom toast notification for error
+        toast.custom(
+          (t) => {
+            toastId.current = t;
+            return (
+              <div>
+                <CustomToast
+                  key={2}
+                  props={{
+                    t,
+                    toastMainColor: "#B43939",
+                    headline: `Uhh Ohh! ${error.message}`,
+                    toastClosebuttonHoverColor: "#e66d6d",
+                    toastClosebuttonColor: "#C25757",
+                  }}
+                />
+              </div>
+            );
+          },
+          { duration: 5000 }
+        );
+      },
+      onSuccess(data) {
+        toast.custom(
+          (t) => {
+            toastId.current = t;
+            return (
+              <div>
               <CustomToast
                 props={{
                   t: toastId.current,
                   toastMainColor: "#268730",
                   headline: "Transaction Submitted",
-                  transactionHash: data?.hash,
+                  transactionHash: data,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
                 }}
               />
             </div>
-          );
-        },
-        { id: toastId.current }
-      );
-    },
-    onError(error) {
-      // Error callback for borrowing withdrawal
-      approveReset?.();
+            );
+          },
+          { duration: 5000 }
+        );
+      }
 
-      toast.custom(
-        (t) => (
-          <div>
-            <CustomToast
-              props={{
-                t: toastId.current,
-                toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.message}`,
-                toastClosebuttonHoverColor: "#e66d6d",
-                toastClosebuttonColor: "#C25757",
-              }}
-            />
-          </div>
-        ),
-        { id: toastId.current }
-      );
-      setTimeout(() => {
-        // Dismiss the toast after 5 seconds
-        toast.dismiss(toastId.current);
-      }, 5000);
-    },
+    }
+
   });
+
+  const { data: usdaHashData, isSuccess: usdaHashSucces, isError: usdaHashError, isLoading: usdaHashLoading } = useWaitForTransactionReceipt({
+    hash: amintApproveHash,
+  })
+
+  useEffect(() => {
+    if (usdaHashData && usdaHashSucces) {
+      withdrawBorrowAmount()
+    }
+
+  }, [usdaHashData])
+
+
+  const withdrawBorrowAmount = async () => {
+    if(nativeFee && nativeFee2){
+    borrowWithdraw?.({
+      args: [
+        address as `0x${string}`,
+        BigInt(details.index),
+      ],
+      value: nativeFee.nativeFee + nativeFee2.nativeFee
+    });
+  }
+  }
+
+
+  const {
+    isPending: borrowWithdrawisLoadingone,
+    writeContract: borrowWithdraw, // Function for borrowing withdrawal
+    reset: borrowReset, // Function for resetting borrowing
+    data: borrowWithdrawData, // Data for borrowing withdrawal
+  } = useWriteBorrowingContractWithDraw({
+    mutation: {
+      onSuccess(data) {
+        // Reset approve, cumulative, and borrow values
+        toast.custom(
+          (t) => {
+            return (
+              <div>
+                <CustomToast
+                  props={{
+                    t: toastId.current,
+                    toastMainColor: "#268730",
+                    headline: "Transaction Submitted",
+                    transactionHash: data,
+                    linkLabel: "View Transaction",
+                    toastClosebuttonHoverColor: "#90e398",
+                    toastClosebuttonColor: "#57C262",
+                  }}
+                />
+              </div>
+            );
+          },
+          {duration:5000, id: toastId.current },
+          
+        );
+      },
+      onError(error) {
+        // Error callback for borrowing withdrawal
+        setOpenConfirmNotice(true);
+        approveReset?.();
+        toast.custom(
+          (t) => (
+            <div>
+              <CustomToast
+                props={{
+                  t: toastId.current,
+                  toastMainColor: "#B43939",
+                  headline: `Uhh Ohh! ${error.message}`,
+                  toastClosebuttonHoverColor: "#e66d6d",
+                  toastClosebuttonColor: "#C25757",
+                }}
+              />
+            </div>
+          ),
+          { id: toastId.current }
+        );
+        setTimeout(() => {
+          // Dismiss the toast after 5 seconds
+          toast.dismiss(toastId.current);
+        }, 5000);
+      },
+    }
+  });
+
+
+
+
+
+
 
 
   const {
     isLoading: borrowWithdrawisLoading, // Flag indicating if the transaction for borrowing and withdrawing is loading
     isSuccess: borrowWithdrawtransactionSuccess,
     isError: borrowWithdrawtransactionError,
+    data: withdrawDataLog
     // Flag indicating if the transaction for borrowing and withdrawing was successful
-  } = useWaitForTransaction({
-    hash: borrowWithdrawData?.hash, // Hash of the transaction for borrowing and withdrawing
+  } = useWaitForTransactionReceipt({
+    hash: borrowWithdrawData, // Hash of the transaction for borrowing and withdrawing
     confirmations: 1, // Number of confirmations required for the transaction
-    onSuccess(data) {
+  });
+
+  useEffect(() => {
+    if (backendWithdrawSuccess && withdrawDataLog) {
       // Callback function executed when the transaction is successful
-      console.log("transaction completed", borrowWithdrawData?.hash, data);
-
+      console.log("transaction completed", withdrawDataLog.blockHash);
       // Get data logs based on the chain ID
-      const dataLogs =
-        chainId === 5 ? data.logs[4].data : data.logs[4].data;
-
-      // Decode event logs from ABI
+      const dataLogs = withdrawDataLog.logs[withdrawDataLog.logs.length - 1]
       const { eventName, args } = decodeEventLogsFromAbi(
-        borrowingContractABI,
-        //topics to filter and decode event variables
-        ["0x2dc3b614e32706dcf24286e69af4692f4b2c24fc339d659e80b26d49379b6914"],
+        borrowingContractAbi,
+        dataLogs.topics,
         "Withdraw",
-        dataLogs
+        dataLogs.data
       ) as {
         eventName: string;
         args: { borrowDebt: bigint; withdrawAmount: bigint; noOfAbond: bigint };
@@ -421,7 +496,10 @@ const Withdrawcopy = ({
         noOfAbond: eventsValue.current.noOfAbond,
         totalDebtAmount: eventsValue.current.borrowDebt,
       });
-
+      approveReset?.();
+      cumulativeReset?.();
+      borrowReset?.();
+      handleSheetOpenChange(!sheetOpen)
       // Display custom toast for successful transaction
       toast.custom(
         (t) => (
@@ -430,7 +508,7 @@ const Withdrawcopy = ({
               t: toastId.current,
               toastMainColor: "#268730",
               headline: "Transaction Completed. Withdrawal Done",
-              transactionHash: cumulativeRate?.hash,
+              transactionHash: borrowWithdrawData,
               linkLabel: "View Transaction",
               toastClosebuttonHoverColor: "#90e398",
               toastClosebuttonColor: "#57C262",
@@ -445,16 +523,13 @@ const Withdrawcopy = ({
         toast.dismiss(toastId.current);
       }, 5000);
 
-      // Reset approve, cumulative, and borrow values
 
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
       handleSheetOpenChange(!sheetOpen)
-    },
-    onError(error) {
-      // Callback function executed when there is an error in the transaction
-      // Display custom toast for error
+    }
+    if (borrowWithdrawtransactionError) {
       toast.custom(
         (t) => (
           <div>
@@ -463,7 +538,7 @@ const Withdrawcopy = ({
               props={{
                 t: toastId.current,
                 toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.name}`,
+                headline: `Uhh Ohh! Failed to withdraw`,
                 toastClosebuttonHoverColor: "#e66d6d",
                 toastClosebuttonColor: "#C25757",
               }}
@@ -478,10 +553,11 @@ const Withdrawcopy = ({
       cumulativeReset?.();
       borrowReset?.();
       handleSheetOpenChange(!sheetOpen)
-    },
-  });
+    }
+  }, [withdrawDataLog])
+
   //using custom hook to mutate backend withdraw
-  const { mutate: backendWithdraw, isPending ,isSuccess:backendWithdrawSuccess } = useMutation({
+  const { mutate: backendWithdraw, isPending, isSuccess: backendWithdrawSuccess } = useMutation({
     // Specify the mutation function
     mutationFn: withdrawFromBackend,
 
@@ -498,7 +574,7 @@ const Withdrawcopy = ({
       // Invalidate the queries for `dCDSdeposits`
       queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
       handleRefetch()
-      setOpenConfirmNotice(false);
+      setOpenConfirmNotice(true)
 
     },
   });
@@ -539,8 +615,7 @@ const Withdrawcopy = ({
       /*
       Call calculateCumulativeRate function to calculate the cumulative rate before withdrawal and then we are calling approval function to approve the withdrawal and then finally we are withdrawing on success of approval
       */
-
-      calculateCumulativeRate?.();
+      calculateCumulativeRate?.({})
       // setOpenConfirmNotice(false);
     } else if (details.status === "WITHDREW1") {
       //TODO you have to manage second withdrawal it is not handled currently and simply shows a toast message
@@ -561,7 +636,6 @@ const Withdrawcopy = ({
         ),
         { duration: 5000 }
       );
-      setOpenConfirmNotice(false);
       // setWithdrawalTime("liquidated");
       handleSheetOpenChange(false)
     } else {
@@ -579,14 +653,15 @@ const Withdrawcopy = ({
 
   function handleDepositData() {
     // Calculate the totalAmintAmnt
-    setSpinner(true);
     
-    if (details && lastCumulativeRate) {
-      const totalAmintAmnt =
+
+    if (details) {
+      const totalAmintAmnt = lastCumulativeRate===undefined ? BigInt(details.normalizedAmount) :(
         BigInt(
           BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
-          (lastCumulativeRate )
-        ) / BigInt(10 ** 27);
+          (lastCumulativeRate)
+        ) / BigInt(10 ** 27))
+
       totalAmintAmount.current = totalAmintAmnt;
       // If details are available, update each value in the depositData array
       const updatedData = [...depositData];
@@ -594,7 +669,7 @@ const Withdrawcopy = ({
       updatedData[1].value = `${details.ethPrice}`;
       updatedData[2].value = details.noOfAmintMinted;
       updatedData[3].value = (parseFloat(totalAmintAmnt.toString()) / 10 ** 6).toString();
-      console.log("----------------------->",(parseFloat(totalAmintAmnt.toString()) / 10 ** 6).toString()) 
+      console.log("----------------------->", (parseFloat(totalAmintAmnt.toString()) / 10 ** 6).toString())
 
       updatedData[4].value = `${details.aprAtDeposit}%`;
       updatedData[5].value = `${details.downsideProtectionPercentage}%`;
@@ -618,7 +693,6 @@ const Withdrawcopy = ({
       updatedData[8].value = "-";
       setDepositData(updatedData);
     }
-    setSpinner(false);
   }
 
 
@@ -660,17 +734,13 @@ const Withdrawcopy = ({
   };
 
 
-  const SecondWithdrawalTime = () => {
-    const storedDate = new Date(parseInt(details.withdrawTime1));
-    return storedDate.getTime() + 30 * 24 * 60 * 60 * 1000;
-  }
-
   useEffect(() => {
-
-
+    setSpinner(true);
     handleDepositData();
     handleAmountProtected()
-    setOpenConfirmNotice(false);
+    setOpenConfirmNotice(true);
+    setSpinner(false);
+
   }, [details, sheetOpen]);
 
 
@@ -748,128 +818,55 @@ const Withdrawcopy = ({
                 )}
               </div>
             </div>
-            {openConfirmNotice ? (
-              <>
-                <ConfirmNotice
-                  withdrawalTime={details.status}
-                  handleWithdrawal={handleWithdrawalTime}
-                  amintToMint={details.status === "DEPOSITED" ? Number(totalAmintAmount.current) : Number(details.depositedAmount) / 2}
-                  isLoading={ispendingCumulative || borrowWithdrawisLoadingone || cumulativeRateLoading || amintApproveLoading || borrowWithdrawisLoading || amintTransactionLoading || isPending}
-                />
-              </>
-            ) :
-              (
-                ispendingCumulative || borrowWithdrawisLoadingone || cumulativeRateLoading || amintApproveLoading || borrowWithdrawisLoading || amintTransactionLoading || isPending
-              ) ? (
-                <div className="flex flex-col items-center justify-center gap-2">
 
-                  <TransactionLoader
-                    heading={"Calculate Interest #1"}
-                    subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
-                    status={cumulativeRateLoading ? "Loading" :(!cumulativeRateError && ispendingCumulative)?"Progress"  : cumulativeRateSuccess ? "Completed" : cumulativeRateError ? "Failed" : "Pending"}
-                    className={`${cumulativeRateLoading || (!cumulativeRateError && ispendingCumulative) ? "w-[100%] px-4 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
-                  />
-                  <TransactionLoader
-                    heading={"Approve Amint #2"}
-                    subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
-                    status={amintApproveLoading ? "Loading" : ( !amintApproveError && amintTransactionLoading) ? "Progress" : amintApproveSuccess ? "Completed" : amintApproveError ? "Failed" : "Pending"}
-                    className={`${amintApproveLoading || ( !amintApproveError && amintTransactionLoading) ? "w-[100%] px-4 py-3" : "bg-gray-100 dark:bg-[#141414]"} `}
+            {
+   
+                    details.status === "LIQUIDATED" ? (
+                      <div className="p-4 text-center">
 
-                  />
-                  <TransactionLoader
-                    heading={"Withdraw #3"}
-                    subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
-                    status={borrowWithdrawisLoadingone || borrowWithdrawisLoading ? "Loading" :( !borrowWithdrawtransactionError && isPending)? "Progress" : borrowWithdrawtransactionSuccess && backendWithdrawSuccess ? "Completed" : borrowWithdrawtransactionError ? "Failed" : "Pending"}
-                    className={`${borrowWithdrawisLoadingone || borrowWithdrawisLoading || (!borrowWithdrawtransactionError && isPending)? "w-[100%] px-4 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
-                  />
-                </div>
-              ) :
+                        <Note note="Note: This deposit has already been liquidated" />
+                      </div>
+                    ) : details.status==="WITHDREW1"?(
+                      <div className="p-4 text-center">
 
-                (
-                  <>
-                    {details.status === "DEPOSITED" ? (
-                      <Button
-                        variant={"primary"}
-                        className="border-[#041A50] mx-4 bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
-                        onClick={() => {
-                          setOpenConfirmNotice(true);
-                        }}
-                      >
-                        Repay
-                      </Button>
+                        <Note note="Note: Amount fully withdrawn" />
+                      </div>
                     )
-                    
-                    // : details.status === "WITHDREW1" ? (
-                    //   <>
-                    //     <div className="px-[15px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee] dark:bg-[linear-gradient(180deg,#1C1C1C_-0.23%,#000000_100%)]">
-                    //       <div className="py-[15px] flex items-center justify-between border-b border-lineGrey">
-                    //         <div className="flex gap-[10px] items-center">
-                    //           <Image
-                    //             src={payments}
-                    //             alt="payment"
-                    //             width={24}
-                    //             height={24}
-                    //           />
-                    //           <p className="text-base text-textSecondary dark:text-[#ffff]">
-                    //             First time withdrawed amount
-                    //           </p>
-                    //         </div>
+                  :
+                  details.status==="DEPOSITED" && openConfirmNotice ? (
+            <>
+              <ConfirmNotice
+                withdrawalTime={details.status}
+                handleWithdrawal={handleWithdrawalTime}
+                amintToMint={details.status === "DEPOSITED" ? Number(totalAmintAmount.current) : Number(details.depositedAmount) / 2}
+              />
+            </>
+            ) :
+            (
+            <div className="flex flex-col items-center justify-center gap-2">
 
-                    //         <p>
-                    //           {parseFloat(
-                    //             details.withdrawAmount1
-                    //               ? details.withdrawAmount1
-                    //               : "0"
-                    //           ).toFixed(4)}
-                    //         </p>
-                    //       </div>
-                    //       <div className="py-[15px] flex items-center justify-between">
-                    //         <div className="flex gap-[10px] items-center">
-                    //           <Image
-                    //             src={pace}
-                    //             alt="time left"
-                    //             width={24}
-                    //             height={24}
-                    //           />
-                    //           <p className="text-base text-textSecondary dark:text-[#ffff]">
-                    //             Second Withdrawal time
-                    //           </p>
-                    //         </div>
-                    //         <p className="text-base font-medium text-textHighlight dark:text-[#DEDEDE]">
-                    //           {calculate30DaysFromStoredTime(details.withdrawTime1)}
-                    //         </p>
-                    //       </div>
-                    //     </div>
-                    //     <Button
-                    //       variant={"primary"}
-                    //       className="text-white dark:text-[#ffff]"
-                    //       onClick={() => {
-                    //         setOpenConfirmNotice(true);
-                    //       }}
-                    //       disabled={SecondWithdrawalTime() < Date.now() ? false : true}
-                    //     >
-                    //       Withdraw for the second time
-                    //     </Button>
-                    //   </>
-                    // ) 
-                    
-                    : (
-                      <>
-                        {details.status === "LIQUIDATED" ? (
-                          <div className="p-4 text-center">
+              <TransactionLoader
+                heading={"Calculate Interest #1"}
+                subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
+                status={cumulativeRateLoading ? "Loading" : (!cumulativeRateError && ispendingCumulative) ? "Progress" : cumulativeRateSuccess ? "Completed" : cumulativeRateError ? "Failed" : "Pending"}
+                className={`${cumulativeRateLoading || (!cumulativeRateError && ispendingCumulative) ? "w-[100%] px-4 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
+              />
+              <TransactionLoader
+                heading={"Approve USDa #2"}
+                subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
+                status={amintApproveLoading ? "Loading" : (!amintApproveError && usdaHashLoading) ? "Progress" : amintApproveSuccess ? "Completed" : amintApproveError ? "Failed" : "Pending"}
+                className={`${amintApproveLoading || (!amintApproveError && usdaHashLoading) ? "w-[100%] px-4 py-3" : "bg-gray-100 dark:bg-[#141414]"} `}
 
-                          <Note note="Note: This deposit has already been liquidated" />
-                          </div>
-                        ) : (
-                          <div className="p-4 text-center">
-
-                          <Note  note="Note: Amount fully withdrawn" />
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </>
-                )}
+              />
+              <TransactionLoader
+                heading={"Withdraw #3"}
+                subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
+                status={borrowWithdrawisLoading ? "Loading" : (!borrowWithdrawtransactionError && isPending) ? "Progress" : borrowWithdrawtransactionSuccess && backendWithdrawSuccess ? "Completed" : borrowWithdrawtransactionError ? "Failed" : "Pending"}
+                className={`${borrowWithdrawisLoadingone || borrowWithdrawisLoading || (!borrowWithdrawtransactionError && isPending) ? "w-[100%] px-4 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
+              />
+            </div>
+            ) 
+              }
 
           </div>
         </div>

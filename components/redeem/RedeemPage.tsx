@@ -2,15 +2,15 @@
 import ConnectWallet from '@/components/ConnectWallet/ConnectWallet';
 import exp from 'constants'
 import React, { useEffect } from 'react'
-import { useAccount, useContractEvent, usePublicClient } from 'wagmi';
+import { useAccount } from 'wagmi';
 import Redeem from './Redeem';
 import Divider from '@/components/CustomUI/Divider/Divider';
-import { borrowingContractABI, useCdsUsdtAmountDepositedTillNow, useTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
+import { borrowingContractAbi, useReadCdsUsdtAmountDepositedTillNow, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
 import { formatEther } from 'ethers';
 import {
   abondAddress,
-  amintAddress,
-  usdtContractAddress,
+  usDaAddress,
+  testusdtAbiAddress,
   borrowingContractAddress,
   cdsAddress
 } from "@/abiAndHooks";
@@ -37,27 +37,27 @@ import {
 import { ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 
-const dasboardStatsItem = [
-  {
-    heading: "USDT",
-    value: "0",
-    tokenAddress: usdtContractAddress,
-  },
-  {
-    heading: "ETH",
-    value: "0",
-  },
-  {
-    heading: "AMINT ",
-    value: "0",
-    tokenAddress: amintAddress,
-  },
-  {
-    heading: "ABOND",
-    value: "0",
-    tokenAddress: abondAddress,
-  },
-];
+// const dasboardStatsItem = [
+//   {
+//     heading: "USDT",
+//     value: "0",
+//     tokenAddress: usdtContractAddress,
+//   },
+//   {
+//     heading: "ETH",
+//     value: "0",
+//   },
+//   {
+//     heading: "AMINT ",
+//     value: "0",
+//     tokenAddress: amintAddress,
+//   },
+//   {
+//     heading: "ABOND",
+//     value: "0",
+//     tokenAddress: abondAddress,
+//   },
+// ];
 
 const poolValues = [
   {
@@ -97,9 +97,8 @@ const RedeemPage = () => {
   const { isConnected, address, connector: activeConnector } = useAccount();
   const [open2, setOpen2] = React.useState(false);
   // fetch data from the blockchain
-  const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true });
-  const { data: usdtLocked } = useCdsUsdtAmountDepositedTillNow({ watch: true });
-  useContractEvent()
+  const { data: ethLocked } = useReadTreasuryTotalVolumeOfBorrowersAmountinUsd();
+  const { data: usdtLocked } = useReadCdsUsdtAmountDepositedTillNow();
 
   useEffect(() => {
     if (ethLocked && usdtLocked) {

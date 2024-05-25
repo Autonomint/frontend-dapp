@@ -11,7 +11,7 @@ import money from "@/app/assets/send_money.svg";
 import HeaderItems from "@/components/Header/HeaderItems";
 import Charts from "./Charts";
 import RatioPieChart from "./RatioPieChart";
-import { useAbondTotalSupply, useAmintTotalSupply, useBorrowingContractGetUsdValue, useBorrowingContractLastCdsPoolValue, useCdsLastEthPrice, useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd, useTreasuryTotalVolumeOfBorrowersAmountinWei } from "@/abiAndHooks";
+import { useReadAbondTotalSupply, useReadUsDaTotalSupply, useReadBorrowingContractGetUsdValue, useReadBorrowingContractOmniChainBorrowingCdsPoolValue, useReadCdsTotalCdsDepositedAmount, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from "@/abiAndHooks";
 import { ethers, formatEther } from "ethers";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import { useChainId,useAccount } from "wagmi";
@@ -116,12 +116,12 @@ const page = () => {
   const chainId = useChainId();
   const [loading, setLoading] = React.useState(true);
   const [feeOption, setFeeOption] = React.useState("option");
-  const { data: totalStable } = useCdsTotalCdsDepositedAmount({ watch: true })
-  const { data: ethPrice} = useBorrowingContractGetUsdValue({ watch: true })
-  const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
-  const { data: amintsupply } = useAmintTotalSupply({ watch: true })
-  const { data: cdsPool } = useBorrowingContractLastCdsPoolValue({ watch: true })
-  const { data: abondSupply} = useAbondTotalSupply({ watch: true });
+  const { data: totalStable } = useReadCdsTotalCdsDepositedAmount()
+  const { data: ethPrice} = useReadBorrowingContractGetUsdValue()
+  const { data: ethLocked } = useReadTreasuryTotalVolumeOfBorrowersAmountinUsd()
+  const { data: amintsupply } = useReadUsDaTotalSupply()
+  const { data: cdsPool } = useReadBorrowingContractOmniChainBorrowingCdsPoolValue()
+  const { data: abondSupply} = useReadAbondTotalSupply();
   // get ratio data
   const {data:ratioData} = useQuery({
     queryKey: ["ratioData"],

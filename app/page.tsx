@@ -6,7 +6,7 @@ import RedeemPage from "@/components/redeem/RedeemPage";
 
 import { Button } from "@/components/ui/button";
 import WaitlistBanner from "@/components/Banner/WaitlistBanner";
-import BorrowSlider from "@/components/pagePopover/BorrowSlider";
+// import BorrowSlider from "@/components/pagePopover/BorrowSlider";
 import {  BellIcon,  InfoCircledIcon } from "@radix-ui/react-icons";
 import { Settings } from "lucide-react";
 import { useAccount } from "wagmi";
@@ -71,7 +71,8 @@ export default function Home() {
                 <div className="mt-4">
                   {
                     selectedTab == "mint" ?
-                      <WalletOrContent /> : selectedTab == "dcds" ? <Dcds /> : selectedTab == "redeem" ? <RedeemPage /> : ""
+                      <WalletOrContent /> : selectedTab == "dcds" ? <Dcds />  : selectedTab == "redeem" ? <RedeemPage />:""
+                      
                   }
                 </div>
               </>
@@ -90,7 +91,7 @@ export default function Home() {
           </div>
 
 
-          <BorrowSlider open={openInfo} opentoggler={setOpenInfo} />
+          {/* <BorrowSlider open={openInfo} opentoggler={setOpenInfo} /> */}
           <Notification showNotifications={showNotification} setShowNotifications={setShowNotification} />
           <PageSettings showSettings={openSettings} setShowSettings={setOpenSettings} />
         </div>

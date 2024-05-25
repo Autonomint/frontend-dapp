@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import React, { useEffect, useState } from "react";
-import { useAccount, useChainId, ConnectorData } from "wagmi";
+import { useAccount, useChainId } from "wagmi";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import NewDeposit from "./NewDeposit";
 import AmintDepositRow from "./AmintDepositRow";
@@ -89,21 +89,21 @@ const Dcds = () => {
   const [newtxn, setNewtxn] = useState(false);
   const [shouldRefetch, setShouldRefetch] = useState(1);
 
-  useEffect(() => {
-    const handleConnectorUpdate = ({ account, chain }: ConnectorData) => {
-      window.location.reload();
-    };
+  // useEffect(() => {
+  //   const handleConnectorUpdate = ({ account, chain }: ConnectorData) => {
+  //     window.location.reload();
+  //   };
 
-    if (activeConnector) {
-      activeConnector.on('change', handleConnectorUpdate);
-    }
+  //   if (activeConnector) {
+  //     activeConnector.on('change', handleConnectorUpdate);
+  //   }
 
-    return () => {
-      if (activeConnector) {
-        activeConnector.off('change', handleConnectorUpdate);
-      }
-    };
-  }, [activeConnector]);
+  //   return () => {
+  //     if (activeConnector) {
+  //       activeConnector.off('change', handleConnectorUpdate);
+  //     }
+  //   };
+  // }, [activeConnector]);
 
 
   // getting chainId from useChainId() of wagmi

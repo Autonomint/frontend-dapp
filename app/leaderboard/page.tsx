@@ -4,7 +4,7 @@ import LeaderTable from './LeaderTable';
 import { BACKEND_API_URL } from '@/constants/BackendUrl';
 import { useQuery } from "@tanstack/react-query";
 import { useChainId } from 'wagmi';
-import { useCdsCdsCount, useCdsTotalCdsDepositedAmount, useTreasuryNoOfBorrowers, useTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
+import { useReadCdsCdsCount, useReadCdsTotalCdsDepositedAmount, useReadTreasuryNoOfBorrowers, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
 import { formatEther } from 'viem';
 interface TableData {
     rank: string;
@@ -29,10 +29,10 @@ function formatNumber(num: number) {
 
 export default function page() {
     const chainId = useChainId();
-    const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
-    const { data: totalStable } = useCdsTotalCdsDepositedAmount({ watch: true })
-    const {data :cdsdeposit} = useCdsCdsCount({watch:true})
-    const {data:totalBorrowers} = useTreasuryNoOfBorrowers({watch:true})
+    const { data: ethLocked } = useReadTreasuryTotalVolumeOfBorrowersAmountinUsd()
+    const { data: totalStable } = useReadCdsTotalCdsDepositedAmount()
+    const {data :cdsdeposit} = useReadCdsCdsCount()
+    const {data:totalBorrowers} = useReadTreasuryNoOfBorrowers()
     async function getBorrowLeaderboard(): Promise<TableData[]> {
         const response = await fetch(`${BACKEND_API_URL}/borrows/leaderboard`);
         return await response.json();

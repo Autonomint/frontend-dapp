@@ -1,28 +1,19 @@
 import {
-  useContractRead,
-  UseContractReadConfig,
-  useContractWrite,
-  Address,
-  UseContractWriteConfig,
-  usePrepareContractWrite,
-  UsePrepareContractWriteConfig,
-  useContractEvent,
-  UseContractEventConfig,
-} from 'wagmi'
-import {
-  ReadContractResult,
-  WriteContractMode,
-  PrepareWriteContractResult,
-} from 'wagmi/actions'
+  createUseReadContract,
+  createUseWriteContract,
+  createUseSimulateContract,
+  createUseWatchContractEvent,
+} from 'wagmi/codegen'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ABOND
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export const abondABI = [
+export const abondAbi = [
   {
     type: 'error',
     inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
@@ -208,14 +199,13 @@ export const abondABI = [
     name: 'Upgraded',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'UPGRADE_INTERFACE_VERSION',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [
       { name: 'owner', internalType: 'address', type: 'address' },
@@ -223,9 +213,9 @@ export const abondABI = [
     ],
     name: 'allowance',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'spender', internalType: 'address', type: 'address' },
@@ -233,23 +223,23 @@ export const abondABI = [
     ],
     name: 'approve',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
     name: 'balanceOf',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'value', internalType: 'uint256', type: 'uint256' }],
     name: 'burn',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'account', internalType: 'address', type: 'address' },
@@ -257,9 +247,9 @@ export const abondABI = [
     ],
     name: 'burnFrom',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'to', internalType: 'address', type: 'address' },
@@ -267,23 +257,23 @@ export const abondABI = [
     ],
     name: 'burnFromUser',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'decimals',
     outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'initialize',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'to', internalType: 'address', type: 'address' },
@@ -292,51 +282,51 @@ export const abondABI = [
     ],
     name: 'mint',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'name',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'owner',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'pause',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'paused',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'proxiableUUID',
     outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'renounceOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'user', internalType: 'address', type: 'address' },
@@ -346,30 +336,30 @@ export const abondABI = [
     ],
     name: 'setAbondData',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_address', internalType: 'address', type: 'address' }],
     name: 'setBorrowingContract',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'symbol',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'totalSupply',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'to', internalType: 'address', type: 'address' },
@@ -377,9 +367,9 @@ export const abondABI = [
     ],
     name: 'transfer',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'from', internalType: 'address', type: 'address' },
@@ -388,23 +378,23 @@ export const abondABI = [
     ],
     name: 'transferFrom',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'unpause',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'payable',
     type: 'function',
     inputs: [
       { name: 'newImplementation', internalType: 'address', type: 'address' },
@@ -412,9 +402,9 @@ export const abondABI = [
     ],
     name: 'upgradeToAndCall',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'user', internalType: 'address', type: 'address' }],
     name: 'userStates',
@@ -423,9 +413,9 @@ export const abondABI = [
       { name: 'ethBacked', internalType: 'uint128', type: 'uint128' },
       { name: 'aBondBalance', internalType: 'uint128', type: 'uint128' },
     ],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [
       { name: 'user', internalType: 'address', type: 'address' },
@@ -437,438 +427,43 @@ export const abondABI = [
       { name: 'ethBacked', internalType: 'uint128', type: 'uint128' },
       { name: 'aBondBalance', internalType: 'uint128', type: 'uint128' },
     ],
+    stateMutability: 'view',
   },
 ] as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
 export const abondAddress = {
-  11155111: '0xd83780601Db14F911c7c02F697e6efdc8C20F6a7',
+  84532: '0x37df4e70eDc4525Be0d7380730a7224Cf5205c14',
+  11155111: '0xdd8F438822473bc650567231C940b55C3B1E98B3',
 } as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export const abondConfig = { address: abondAddress, abi: abondABI } as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// AMINT
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export const amintABI = [
-  {
-    type: 'error',
-    inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
-    name: 'AddressEmptyCode',
-  },
-  {
-    type: 'error',
-    inputs: [
-      { name: 'implementation', internalType: 'address', type: 'address' },
-    ],
-    name: 'ERC1967InvalidImplementation',
-  },
-  { type: 'error', inputs: [], name: 'ERC1967NonPayable' },
-  {
-    type: 'error',
-    inputs: [
-      { name: 'spender', internalType: 'address', type: 'address' },
-      { name: 'allowance', internalType: 'uint256', type: 'uint256' },
-      { name: 'needed', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'ERC20InsufficientAllowance',
-  },
-  {
-    type: 'error',
-    inputs: [
-      { name: 'sender', internalType: 'address', type: 'address' },
-      { name: 'balance', internalType: 'uint256', type: 'uint256' },
-      { name: 'needed', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'ERC20InsufficientBalance',
-  },
-  {
-    type: 'error',
-    inputs: [{ name: 'approver', internalType: 'address', type: 'address' }],
-    name: 'ERC20InvalidApprover',
-  },
-  {
-    type: 'error',
-    inputs: [{ name: 'receiver', internalType: 'address', type: 'address' }],
-    name: 'ERC20InvalidReceiver',
-  },
-  {
-    type: 'error',
-    inputs: [{ name: 'sender', internalType: 'address', type: 'address' }],
-    name: 'ERC20InvalidSender',
-  },
-  {
-    type: 'error',
-    inputs: [{ name: 'spender', internalType: 'address', type: 'address' }],
-    name: 'ERC20InvalidSpender',
-  },
-  { type: 'error', inputs: [], name: 'EnforcedPause' },
-  { type: 'error', inputs: [], name: 'ExpectedPause' },
-  { type: 'error', inputs: [], name: 'FailedInnerCall' },
-  { type: 'error', inputs: [], name: 'InvalidInitialization' },
-  { type: 'error', inputs: [], name: 'NotInitializing' },
-  {
-    type: 'error',
-    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
-    name: 'OwnableInvalidOwner',
-  },
-  {
-    type: 'error',
-    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
-    name: 'OwnableUnauthorizedAccount',
-  },
-  { type: 'error', inputs: [], name: 'UUPSUnauthorizedCallContext' },
-  {
-    type: 'error',
-    inputs: [{ name: 'slot', internalType: 'bytes32', type: 'bytes32' }],
-    name: 'UUPSUnsupportedProxiableUUID',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'owner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'spender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    name: 'Approval',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'version',
-        internalType: 'uint64',
-        type: 'uint64',
-        indexed: false,
-      },
-    ],
-    name: 'Initialized',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'previousOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'newOwner',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-    ],
-    name: 'OwnershipTransferred',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'account',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-    ],
-    name: 'Paused',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'value',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    name: 'Transfer',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'account',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-    ],
-    name: 'Unpaused',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'implementation',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-    ],
-    name: 'Upgraded',
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'UPGRADE_INTERFACE_VERSION',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [
-      { name: 'owner', internalType: 'address', type: 'address' },
-      { name: 'spender', internalType: 'address', type: 'address' },
-    ],
-    name: 'allowance',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'spender', internalType: 'address', type: 'address' },
-      { name: 'value', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'approve',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
-    name: 'balanceOf',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: 'value', internalType: 'uint256', type: 'uint256' }],
-    name: 'burn',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'value', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'burnFrom',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'burnFromUser',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'pure',
-    type: 'function',
-    inputs: [],
-    name: 'decimals',
-    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [],
-    name: 'initialize',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'mint',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'name',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'owner',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [],
-    name: 'pause',
-    outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'paused',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'proxiableUUID',
-    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [],
-    name: 'renounceOwnership',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: '_address', internalType: 'address', type: 'address' }],
-    name: 'setBorrowingContract',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: '_address', internalType: 'address', type: 'address' }],
-    name: 'setCdsContract',
-    outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'symbol',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'totalSupply',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'value', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'transfer',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address' },
-      { name: 'to', internalType: 'address', type: 'address' },
-      { name: 'value', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'transferFrom',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
-    name: 'transferOwnership',
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [],
-    name: 'unpause',
-    outputs: [],
-  },
-  {
-    stateMutability: 'payable',
-    type: 'function',
-    inputs: [
-      { name: 'newImplementation', internalType: 'address', type: 'address' },
-      { name: 'data', internalType: 'bytes', type: 'bytes' },
-    ],
-    name: 'upgradeToAndCall',
-    outputs: [],
-  },
-] as const
-
-/**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export const amintAddress = {
-  11155111: '0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE',
-} as const
-
-/**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export const amintConfig = { address: amintAddress, abi: amintABI } as const
+export const abondConfig = { address: abondAddress, abi: abondAbi } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BorrowingContract
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export const borrowingContractABI = [
+export const borrowingContractAbi = [
   {
     type: 'error',
     inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
     name: 'AddressEmptyCode',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'AddressInsufficientBalance',
   },
   { type: 'error', inputs: [], name: 'Borrowing_DepositFailed' },
   { type: 'error', inputs: [], name: 'Borrowing_GettingETHPriceFailed' },
@@ -878,11 +473,11 @@ export const borrowingContractABI = [
     inputs: [],
     name: 'Borrowing_LiquidateEthTransferToCdsFailed',
   },
-  { type: 'error', inputs: [], name: 'Borrowing_WithdrawAMINTTransferFailed' },
   { type: 'error', inputs: [], name: 'Borrowing_WithdrawBurnFailed' },
   { type: 'error', inputs: [], name: 'Borrowing_WithdrawEthTransferFailed' },
+  { type: 'error', inputs: [], name: 'Borrowing_WithdrawUSDaTransferFailed' },
   { type: 'error', inputs: [], name: 'Borrowing_abondMintFailed' },
-  { type: 'error', inputs: [], name: 'Borrowing_amintMintFailed' },
+  { type: 'error', inputs: [], name: 'Borrowing_usdaMintFailed' },
   {
     type: 'error',
     inputs: [
@@ -891,9 +486,41 @@ export const borrowingContractABI = [
     name: 'ERC1967InvalidImplementation',
   },
   { type: 'error', inputs: [], name: 'ERC1967NonPayable' },
+  { type: 'error', inputs: [], name: 'EndPointUnavailable' },
   { type: 'error', inputs: [], name: 'FailedInnerCall' },
+  { type: 'error', inputs: [], name: 'InvalidDelegate' },
+  { type: 'error', inputs: [], name: 'InvalidEndpointCall' },
   { type: 'error', inputs: [], name: 'InvalidInitialization' },
+  {
+    type: 'error',
+    inputs: [{ name: 'optionType', internalType: 'uint16', type: 'uint16' }],
+    name: 'InvalidOptionType',
+  },
+  { type: 'error', inputs: [], name: 'LzTokenUnavailable' },
+  {
+    type: 'error',
+    inputs: [{ name: 'eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'NoPeer',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'msgValue', internalType: 'uint256', type: 'uint256' }],
+    name: 'NotEnoughNative',
+  },
   { type: 'error', inputs: [], name: 'NotInitializing' },
+  {
+    type: 'error',
+    inputs: [{ name: 'addr', internalType: 'address', type: 'address' }],
+    name: 'OnlyEndpoint',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'eid', internalType: 'uint32', type: 'uint32' },
+      { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'OnlyPeer',
+  },
   {
     type: 'error',
     inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
@@ -905,6 +532,19 @@ export const borrowingContractABI = [
     name: 'OwnableUnauthorizedAccount',
   },
   { type: 'error', inputs: [], name: 'ReentrancyGuardReentrantCall' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'bits', internalType: 'uint8', type: 'uint8' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'SafeCastOverflowedUintDowncast',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'token', internalType: 'address', type: 'address' }],
+    name: 'SafeERC20FailedOperation',
+  },
   { type: 'error', inputs: [], name: 'UUPSUnauthorizedCallContext' },
   {
     type: 'error',
@@ -1005,6 +645,20 @@ export const borrowingContractABI = [
     type: 'event',
     anonymous: false,
     inputs: [
+      { name: 'eid', internalType: 'uint32', type: 'uint32', indexed: false },
+      {
+        name: 'peer',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: false,
+      },
+    ],
+    name: 'PeerSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
       {
         name: 'implementation',
         internalType: 'address',
@@ -1040,58 +694,38 @@ export const borrowingContractABI = [
     name: 'Withdraw',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'APY',
-    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'DOMAIN_SEPARATOR',
-    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'PERMIT_TYPEHASH',
-    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
-  },
-  {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'UPGRADE_INTERFACE_VERSION',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
-    inputs: [],
-    name: 'abond',
-    outputs: [
-      { name: '', internalType: 'contract IABONDToken', type: 'address' },
+    inputs: [
+      {
+        name: 'origin',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
     ],
-  },
-  {
+    name: 'allowInitializePath',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
     stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'amint',
-    outputs: [{ name: '', internalType: 'contract IAMINT', type: 'address' }],
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'calculateCumulativeRate',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: '_amount', internalType: 'uint256', type: 'uint256' },
@@ -1099,25 +733,9 @@ export const borrowingContractABI = [
     ],
     name: 'calculateRatio',
     outputs: [{ name: '', internalType: 'uint64', type: 'uint64' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'cds',
-    outputs: [
-      { name: '', internalType: 'contract CDSInterface', type: 'address' },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'cdsAddress',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
-    stateMutability: 'payable',
     type: 'function',
     inputs: [
       {
@@ -1127,26 +745,26 @@ export const borrowingContractABI = [
       },
       { name: '_strikePrice', internalType: 'uint64', type: 'uint64' },
       { name: '_volatility', internalType: 'uint256', type: 'uint256' },
+      { name: '_depositingAmount', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'depositTokens',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'ethRemainingInWithdraw',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'endpoint',
+    outputs: [
+      {
+        name: '',
+        internalType: 'contract ILayerZeroEndpointV2',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'ethValueRemainingInWithdraw',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
     type: 'function',
     inputs: [
       { name: 'user', internalType: 'address', type: 'address' },
@@ -1158,30 +776,23 @@ export const borrowingContractABI = [
       { name: '', internalType: 'uint256', type: 'uint256' },
       { name: '', internalType: 'uint256', type: 'uint256' },
     ],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'getLTV',
     outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'getLastEthVaultValue',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'getUSDValue',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: '_tokenAddress', internalType: 'address', type: 'address' },
@@ -1190,102 +801,180 @@ export const borrowingContractABI = [
       { name: '_multiSign', internalType: 'address', type: 'address' },
       { name: '_priceFeedAddress', internalType: 'address', type: 'address' },
       { name: 'chainId', internalType: 'uint64', type: 'uint64' },
+      { name: '_endpoint', internalType: 'address', type: 'address' },
+      { name: '_delegate', internalType: 'address', type: 'address' },
     ],
     name: 'initialize',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
-    inputs: [],
-    name: 'lastCDSPoolValue',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    inputs: [
+      {
+        name: '',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+      { name: '', internalType: 'bytes', type: 'bytes' },
+      { name: '_sender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isComposeMsgSender',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'lastCumulativeRate',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
     stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'lastEthVaultValue',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: '_user', internalType: 'address', type: 'address' },
-      { name: '_index', internalType: 'uint64', type: 'uint64' },
-      { name: 'currentEthPrice', internalType: 'uint64', type: 'uint64' },
+      { name: 'user', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
     ],
     name: 'liquidate',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
-    inputs: [],
-    name: 'multiSign',
-    outputs: [
-      { name: '', internalType: 'contract IMultiSign', type: 'address' },
+    inputs: [
+      {
+        name: '_origin',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+      { name: '_guid', internalType: 'bytes32', type: 'bytes32' },
+      { name: '_message', internalType: 'bytes', type: 'bytes' },
+      { name: '_executor', internalType: 'address', type: 'address' },
+      { name: '_extraData', internalType: 'bytes', type: 'bytes' },
     ],
+    name: 'lzReceive',
+    outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
-    inputs: [],
-    name: 'name',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    inputs: [
+      { name: '', internalType: 'uint32', type: 'uint32' },
+      { name: '', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'nextNonce',
+    outputs: [{ name: 'nonce', internalType: 'uint64', type: 'uint64' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'noOfLiquidations',
+    name: 'oAppVersion',
+    outputs: [
+      { name: 'senderVersion', internalType: 'uint64', type: 'uint64' },
+      { name: 'receiverVersion', internalType: 'uint64', type: 'uint64' },
+    ],
+    stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'omniChainBorrowingCDSPoolValue',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'omniChainBorrowingNoOfLiquidations',
     outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'options',
-    outputs: [{ name: '', internalType: 'contract IOptions', type: 'address' }],
-  },
-  {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'owner',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
-    inputs: [],
-    name: 'priceFeedAddress',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    inputs: [{ name: 'eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'peers',
+    outputs: [{ name: 'peer', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'proxiableUUID',
     outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
-  },
-  {
     stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'ratePerSec',
-    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
   },
   {
-    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      { name: '_dstEid', internalType: 'uint32', type: 'uint32' },
+      {
+        name: '_message',
+        internalType: 'struct IBorrowing.OmniChainBorrowingData',
+        type: 'tuple',
+        components: [
+          {
+            name: 'normalizedAmount',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+          { name: 'ethVaultValue', internalType: 'uint256', type: 'uint256' },
+          { name: 'cdsPoolValue', internalType: 'uint256', type: 'uint256' },
+          { name: 'totalCDSPool', internalType: 'uint256', type: 'uint256' },
+          {
+            name: 'noOfLiquidations',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
+          {
+            name: 'ethRemainingInWithdraw',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+          {
+            name: 'ethValueRemainingInWithdraw',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+      { name: '_options', internalType: 'bytes', type: 'bytes' },
+      { name: '_payInLzToken', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'quote',
+    outputs: [
+      {
+        name: 'fee',
+        internalType: 'struct MessagingFee',
+        type: 'tuple',
+        components: [
+          { name: 'nativeFee', internalType: 'uint256', type: 'uint256' },
+          { name: 'lzTokenFee', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [
       { name: 'user', internalType: 'address', type: 'address' },
@@ -1293,102 +982,105 @@ export const borrowingContractABI = [
     ],
     name: 'redeemYields',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'renounceOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_ratePerSec', internalType: 'uint128', type: 'uint128' }],
     name: 'setAPR',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_admin', internalType: 'address', type: 'address' }],
     name: 'setAdmin',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_bondRatio', internalType: 'uint64', type: 'uint64' }],
     name: 'setBondRatio',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
+    type: 'function',
+    inputs: [
+      { name: '_borrowLiquidation', internalType: 'address', type: 'address' },
+    ],
+    name: 'setBorrowLiquidation',
+    outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_delegate', internalType: 'address', type: 'address' }],
+    name: 'setDelegate',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'setDstEid',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
     type: 'function',
     inputs: [{ name: '_LTV', internalType: 'uint8', type: 'uint8' }],
     name: 'setLTV',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_options', internalType: 'address', type: 'address' }],
     name: 'setOptions',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
+    type: 'function',
+    inputs: [
+      { name: '_eid', internalType: 'uint32', type: 'uint32' },
+      { name: '_peer', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'setPeer',
+    outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
     type: 'function',
     inputs: [{ name: '_treasury', internalType: 'address', type: 'address' }],
     name: 'setTreasury',
     outputs: [],
-  },
-  {
     stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [{ name: '_timeLimit', internalType: 'uint64', type: 'uint64' }],
-    name: 'setWithdrawTimeLimit',
-    outputs: [],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'totalNormalizedAmount',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
     outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'treasury',
-    outputs: [
-      { name: '', internalType: 'contract ITreasury', type: 'address' },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'treasuryAddress',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
     stateMutability: 'nonpayable',
+  },
+  {
     type: 'function',
     inputs: [{ name: '_amount', internalType: 'uint256', type: 'uint256' }],
     name: 'updateLastEthVaultValue',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'payable',
     type: 'function',
     inputs: [
       { name: 'newImplementation', internalType: 'address', type: 'address' },
@@ -1396,16 +1088,9 @@ export const borrowingContractABI = [
     ],
     name: 'upgradeToAndCall',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'version',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-  },
-  {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: '_toAddress', internalType: 'address', type: 'address' },
@@ -1413,22 +1098,26 @@ export const borrowingContractABI = [
     ],
     name: 'withDraw',
     outputs: [],
+    stateMutability: 'payable',
   },
 ] as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
 export const borrowingContractAddress = {
-  11155111: '0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb',
+  84532: '0x739E6a6C4233011D99F68d96D8A3560E690a64A3',
+  11155111: '0xE5D4b991861E70D563e7d061e017e5566935941f',
 } as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
 export const borrowingContractConfig = {
   address: borrowingContractAddress,
-  abi: borrowingContractABI,
+  abi: borrowingContractAbi,
 } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1436,13 +1125,19 @@ export const borrowingContractConfig = {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export const cdsABI = [
+export const cdsAbi = [
   {
     type: 'error',
     inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
     name: 'AddressEmptyCode',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'AddressInsufficientBalance',
   },
   {
     type: 'error',
@@ -1452,9 +1147,41 @@ export const cdsABI = [
     name: 'ERC1967InvalidImplementation',
   },
   { type: 'error', inputs: [], name: 'ERC1967NonPayable' },
+  { type: 'error', inputs: [], name: 'EndPointUnavailable' },
   { type: 'error', inputs: [], name: 'FailedInnerCall' },
+  { type: 'error', inputs: [], name: 'InvalidDelegate' },
+  { type: 'error', inputs: [], name: 'InvalidEndpointCall' },
   { type: 'error', inputs: [], name: 'InvalidInitialization' },
+  {
+    type: 'error',
+    inputs: [{ name: 'optionType', internalType: 'uint16', type: 'uint16' }],
+    name: 'InvalidOptionType',
+  },
+  { type: 'error', inputs: [], name: 'LzTokenUnavailable' },
+  {
+    type: 'error',
+    inputs: [{ name: 'eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'NoPeer',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'msgValue', internalType: 'uint256', type: 'uint256' }],
+    name: 'NotEnoughNative',
+  },
   { type: 'error', inputs: [], name: 'NotInitializing' },
+  {
+    type: 'error',
+    inputs: [{ name: 'addr', internalType: 'address', type: 'address' }],
+    name: 'OnlyEndpoint',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'eid', internalType: 'uint32', type: 'uint32' },
+      { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'OnlyPeer',
+  },
   {
     type: 'error',
     inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
@@ -1466,6 +1193,19 @@ export const cdsABI = [
     name: 'OwnableUnauthorizedAccount',
   },
   { type: 'error', inputs: [], name: 'ReentrancyGuardReentrantCall' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'bits', internalType: 'uint8', type: 'uint8' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'SafeCastOverflowedUintDowncast',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'token', internalType: 'address', type: 'address' }],
+    name: 'SafeERC20FailedOperation',
+  },
   { type: 'error', inputs: [], name: 'UUPSUnauthorizedCallContext' },
   {
     type: 'error',
@@ -1477,7 +1217,7 @@ export const cdsABI = [
     anonymous: false,
     inputs: [
       {
-        name: 'depositedAmint',
+        name: 'depositedUSDa',
         internalType: 'uint256',
         type: 'uint256',
         indexed: false,
@@ -1540,6 +1280,20 @@ export const cdsABI = [
     type: 'event',
     anonymous: false,
     inputs: [
+      { name: 'eid', internalType: 'uint32', type: 'uint32', indexed: false },
+      {
+        name: 'peer',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: false,
+      },
+    ],
+    name: 'PeerSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
       {
         name: 'implementation',
         internalType: 'address',
@@ -1554,7 +1308,7 @@ export const cdsABI = [
     anonymous: false,
     inputs: [
       {
-        name: 'withdrewAmint',
+        name: 'withdrewUSDa',
         internalType: 'uint256',
         type: 'uint256',
         indexed: false,
@@ -1569,72 +1323,123 @@ export const cdsABI = [
     name: 'Withdraw',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'PRECISION',
-    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
-  },
-  {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'UPGRADE_INTERFACE_VERSION',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
-    inputs: [],
-    name: 'amint',
-    outputs: [{ name: '', internalType: 'contract IAMINT', type: 'address' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'amintLimit',
-    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'borrowing',
-    outputs: [
-      { name: '', internalType: 'contract IBorrowing', type: 'address' },
+    inputs: [
+      {
+        name: 'origin',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
     ],
-  },
-  {
+    name: 'allowInitializePath',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
     stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'borrowingContract',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'burnedAmintInRedeem',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'fees', internalType: 'uint128', type: 'uint128' }],
     name: 'calculateCumulativeRate',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'view',
+    type: 'function',
+    inputs: [
+      { name: '_dstEid', internalType: 'uint32', type: 'uint32' },
+      {
+        name: 'functionToDo',
+        internalType: 'enum CDSInterface.FunctionToDo',
+        type: 'uint8',
+      },
+      {
+        name: 'optionsFeesToGetFromOtherChain',
+        internalType: 'uint256',
+        type: 'uint256',
+      },
+      {
+        name: 'cdsAmountToGetFromOtherChain',
+        internalType: 'uint256',
+        type: 'uint256',
+      },
+      {
+        name: 'liqAmountToGetFromOtherChain',
+        internalType: 'uint256',
+        type: 'uint256',
+      },
+      {
+        name: 'liquidationInfo',
+        internalType: 'struct CDSInterface.LiquidationInfo',
+        type: 'tuple',
+        components: [
+          {
+            name: 'liquidationAmount',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
+          { name: 'profits', internalType: 'uint128', type: 'uint128' },
+          { name: 'ethAmount', internalType: 'uint128', type: 'uint128' },
+          {
+            name: 'availableLiquidationAmount',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+        ],
+      },
+      { name: 'liqIndex', internalType: 'uint128', type: 'uint128' },
+      {
+        name: 'fee',
+        internalType: 'struct MessagingFee',
+        type: 'tuple',
+        components: [
+          { name: 'nativeFee', internalType: 'uint256', type: 'uint256' },
+          { name: 'lzTokenFee', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+      { name: '_options', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'callLzSendFromExternal',
+    outputs: [
+      {
+        name: 'receipt',
+        internalType: 'struct MessagingReceipt',
+        type: 'tuple',
+        components: [
+          { name: 'guid', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+          {
+            name: 'fee',
+            internalType: 'struct MessagingFee',
+            type: 'tuple',
+            components: [
+              { name: 'nativeFee', internalType: 'uint256', type: 'uint256' },
+              { name: 'lzTokenFee', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+        ],
+      },
+    ],
+    stateMutability: 'payable',
+  },
+  {
     type: 'function',
     inputs: [],
     name: 'cdsCount',
     outputs: [{ name: '', internalType: 'uint64', type: 'uint64' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: '', internalType: 'address', type: 'address' }],
     name: 'cdsDetails',
@@ -1642,219 +1447,376 @@ export const cdsABI = [
       { name: 'index', internalType: 'uint64', type: 'uint64' },
       { name: 'hasDeposited', internalType: 'bool', type: 'bool' },
     ],
-  },
-  {
     stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'cumulativeValue',
-    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'cumulativeValueSign',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-  },
-  {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'usdtAmount', internalType: 'uint128', type: 'uint128' },
-      { name: 'amintAmount', internalType: 'uint128', type: 'uint128' },
+      { name: 'usdaAmount', internalType: 'uint128', type: 'uint128' },
       { name: '_liquidate', internalType: 'bool', type: 'bool' },
       { name: '_liquidationAmount', internalType: 'uint128', type: 'uint128' },
     ],
     name: 'deposit',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'fallbackEthPrice',
-    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
+    name: 'endpoint',
+    outputs: [
+      {
+        name: '',
+        internalType: 'contract ILayerZeroEndpointV2',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: '_amint', internalType: 'address', type: 'address' },
+      { name: 'depositor', internalType: 'address', type: 'address' },
+      { name: 'index', internalType: 'uint64', type: 'uint64' },
+    ],
+    name: 'getCDSDepositDetails',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct CDSInterface.CdsAccountDetails',
+        type: 'tuple',
+        components: [
+          { name: 'depositedTime', internalType: 'uint64', type: 'uint64' },
+          { name: 'depositedAmount', internalType: 'uint256', type: 'uint256' },
+          { name: 'withdrawedTime', internalType: 'uint64', type: 'uint64' },
+          {
+            name: 'withdrawedAmount',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+          { name: 'withdrawed', internalType: 'bool', type: 'bool' },
+          { name: 'depositPrice', internalType: 'uint128', type: 'uint128' },
+          { name: 'depositValue', internalType: 'uint128', type: 'uint128' },
+          { name: 'depositValueSign', internalType: 'bool', type: 'bool' },
+          { name: 'optedLiquidation', internalType: 'bool', type: 'bool' },
+          {
+            name: 'InitialLiquidationAmount',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
+          {
+            name: 'liquidationAmount',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
+          {
+            name: 'liquidationindex',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
+          {
+            name: 'normalizedAmount',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+        ],
+      },
+      { name: '', internalType: 'uint64', type: 'uint64' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_usda', internalType: 'address', type: 'address' },
       { name: 'priceFeed', internalType: 'address', type: 'address' },
       { name: '_usdt', internalType: 'address', type: 'address' },
       { name: '_multiSign', internalType: 'address', type: 'address' },
+      { name: '_endpoint', internalType: 'address', type: 'address' },
+      { name: '_delegate', internalType: 'address', type: 'address' },
     ],
     name: 'initialize',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'lastCumulativeRate',
-    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'lastEthPrice',
-    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
-  },
-  {
-    stateMutability: 'view',
     type: 'function',
     inputs: [
-      { name: 'liquidationIndex', internalType: 'uint128', type: 'uint128' },
-    ],
-    name: 'liquidationIndexToInfo',
-    outputs: [
-      { name: 'liquidationAmount', internalType: 'uint128', type: 'uint128' },
-      { name: 'profits', internalType: 'uint128', type: 'uint128' },
-      { name: 'ethAmount', internalType: 'uint128', type: 'uint128' },
       {
-        name: 'availableLiquidationAmount',
-        internalType: 'uint256',
-        type: 'uint256',
+        name: '',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
       },
+      { name: '', internalType: 'bytes', type: 'bytes' },
+      { name: '_sender', internalType: 'address', type: 'address' },
     ],
+    name: 'isComposeMsgSender',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
   },
   {
+    type: 'function',
+    inputs: [
+      {
+        name: '_origin',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+      { name: '_guid', internalType: 'bytes32', type: 'bytes32' },
+      { name: '_message', internalType: 'bytes', type: 'bytes' },
+      { name: '_executor', internalType: 'address', type: 'address' },
+      { name: '_extraData', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'lzReceive',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'uint32', type: 'uint32' },
+      { name: '', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'nextNonce',
+    outputs: [{ name: 'nonce', internalType: 'uint64', type: 'uint64' }],
     stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [],
-    name: 'multiSign',
+    name: 'oAppVersion',
     outputs: [
-      { name: '', internalType: 'contract IMultiSign', type: 'address' },
+      { name: 'senderVersion', internalType: 'uint64', type: 'uint64' },
+      { name: 'receiverVersion', internalType: 'uint64', type: 'uint64' },
     ],
+    stateMutability: 'pure',
   },
   {
+    type: 'function',
+    inputs: [],
+    name: 'omniChainCDSTotalAvailableLiquidationAmount',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'omniChainCDSTotalCdsDepositedAmount',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [],
     name: 'owner',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
+    type: 'function',
+    inputs: [{ name: 'eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'peers',
+    outputs: [{ name: 'peer', internalType: 'bytes32', type: 'bytes32' }],
     stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [],
     name: 'proxiableUUID',
     outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
-      { name: '_amintAmount', internalType: 'uint128', type: 'uint128' },
-      { name: 'amintPrice', internalType: 'uint64', type: 'uint64' },
+      { name: '_dstEid', internalType: 'uint32', type: 'uint32' },
+      {
+        name: '_functionToDo',
+        internalType: 'enum CDSInterface.FunctionToDo',
+        type: 'uint8',
+      },
+      {
+        name: 'optionsFeesToGetFromOtherChain',
+        internalType: 'uint256',
+        type: 'uint256',
+      },
+      {
+        name: 'cdsAmountToGetFromOtherChain',
+        internalType: 'uint256',
+        type: 'uint256',
+      },
+      {
+        name: 'liqAmountToGetFromOtherChain',
+        internalType: 'uint256',
+        type: 'uint256',
+      },
+      {
+        name: 'liquidationInfo',
+        internalType: 'struct CDSInterface.LiquidationInfo',
+        type: 'tuple',
+        components: [
+          {
+            name: 'liquidationAmount',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
+          { name: 'profits', internalType: 'uint128', type: 'uint128' },
+          { name: 'ethAmount', internalType: 'uint128', type: 'uint128' },
+          {
+            name: 'availableLiquidationAmount',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+        ],
+      },
+      { name: 'liqIndex', internalType: 'uint128', type: 'uint128' },
+      { name: '_options', internalType: 'bytes', type: 'bytes' },
+      { name: '_payInLzToken', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'quote',
+    outputs: [
+      {
+        name: 'fee',
+        internalType: 'struct MessagingFee',
+        type: 'tuple',
+        components: [
+          { name: 'nativeFee', internalType: 'uint256', type: 'uint256' },
+          { name: 'lzTokenFee', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_usdaAmount', internalType: 'uint128', type: 'uint128' },
+      { name: 'usdaPrice', internalType: 'uint64', type: 'uint64' },
       { name: 'usdtPrice', internalType: 'uint64', type: 'uint64' },
     ],
     name: 'redeemUSDT',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'renounceOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_admin', internalType: 'address', type: 'address' }],
     name: 'setAdmin',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
-    inputs: [{ name: 'percent', internalType: 'uint8', type: 'uint8' }],
-    name: 'setAmintLimit',
+    inputs: [{ name: '_address', internalType: 'address', type: 'address' }],
+    name: 'setBorrowLiquidation',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_address', internalType: 'address', type: 'address' }],
     name: 'setBorrowingContract',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
+    type: 'function',
+    inputs: [{ name: '_delegate', internalType: 'address', type: 'address' }],
+    name: 'setDelegate',
+    outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'setDstEid',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_eid', internalType: 'uint32', type: 'uint32' },
+      { name: '_peer', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'setPeer',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
     type: 'function',
     inputs: [{ name: '_treasury', internalType: 'address', type: 'address' }],
     name: 'setTreasury',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
+    type: 'function',
+    inputs: [{ name: 'percent', internalType: 'uint8', type: 'uint8' }],
+    name: 'setUSDaLimit',
+    outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
     type: 'function',
     inputs: [{ name: 'amount', internalType: 'uint64', type: 'uint64' }],
     name: 'setUsdtLimit',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_timeLimit', internalType: 'uint64', type: 'uint64' }],
     name: 'setWithdrawTimeLimit',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'totalAvailableLiquidationAmount',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'totalCdsDepositedAmount',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
     stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'totalCdsDepositedAmountWithOptionFees',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
     outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'treasury',
-    outputs: [
-      { name: '', internalType: 'contract ITreasury', type: 'address' },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'treasuryAddress',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
     stateMutability: 'nonpayable',
+  },
+  {
     type: 'function',
     inputs: [
       { name: 'index', internalType: 'uint128', type: 'uint128' },
       {
         name: 'liquidationData',
-        internalType: 'struct CDS.LiquidationInfo',
+        internalType: 'struct CDSInterface.LiquidationInfo',
         type: 'tuple',
         components: [
           {
@@ -1874,30 +1836,30 @@ export const cdsABI = [
     ],
     name: 'updateLiquidationInfo',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'amount', internalType: 'uint256', type: 'uint256' }],
     name: 'updateTotalAvailableLiquidationAmount',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_amount', internalType: 'uint128', type: 'uint128' }],
     name: 'updateTotalCdsDepositedAmount',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_amount', internalType: 'uint128', type: 'uint128' }],
     name: 'updateTotalCdsDepositedAmountWithOptionFees',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'payable',
     type: 'function',
     inputs: [
       { name: 'newImplementation', internalType: 'address', type: 'address' },
@@ -1905,64 +1867,62 @@ export const cdsABI = [
     ],
     name: 'upgradeToAndCall',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'usdt',
-    outputs: [{ name: '', internalType: 'contract IERC20', type: 'address' }],
+    name: 'usdaLimit',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'usdtAmountDepositedTillNow',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'usdtLimit',
     outputs: [{ name: '', internalType: 'uint64', type: 'uint64' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_index', internalType: 'uint64', type: 'uint64' }],
     name: 'withdraw',
     outputs: [],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'withdrawTimeLimit',
-    outputs: [{ name: '', internalType: 'uint64', type: 'uint64' }],
+    stateMutability: 'payable',
   },
 ] as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
 export const cdsAddress = {
-  11155111: '0xb4E50c1abEC5316f24f94449B141acB336bFA3DC',
+  84532: '0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A',
+  11155111: '0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df',
 } as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export const cdsConfig = { address: cdsAddress, abi: cdsABI } as const
+export const cdsConfig = { address: cdsAddress, abi: cdsAbi } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Options
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export const optionsABI = [
+export const optionsAbi = [
   {
     type: 'error',
     inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
@@ -2041,14 +2001,13 @@ export const optionsABI = [
     name: 'Upgraded',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'UPGRADE_INTERFACE_VERSION',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [
       { name: '_ethPrice', internalType: 'uint128', type: 'uint128' },
@@ -2062,9 +2021,9 @@ export const optionsABI = [
     ],
     name: 'calculateOptionPrice',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [
       { name: 'depositedAmount', internalType: 'uint128', type: 'uint128' },
@@ -2073,9 +2032,9 @@ export const optionsABI = [
     ],
     name: 'calculateStrikePriceGains',
     outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: '_treasuryAddress', internalType: 'address', type: 'address' },
@@ -2084,37 +2043,37 @@ export const optionsABI = [
     ],
     name: 'initialize',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'owner',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'proxiableUUID',
     outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'renounceOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'payable',
     type: 'function',
     inputs: [
       { name: 'newImplementation', internalType: 'address', type: 'address' },
@@ -2122,36 +2081,46 @@ export const optionsABI = [
     ],
     name: 'upgradeToAndCall',
     outputs: [],
+    stateMutability: 'payable',
   },
 ] as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
 export const optionsAddress = {
-  11155111: '0xAC31e267FC123De9A61F3722a7d09c0c16b1f799',
+  84532: '0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec',
+  11155111: '0x7C6441B23f21A7A5cd5965B516D8054F119bA53f',
 } as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
 export const optionsConfig = {
   address: optionsAddress,
-  abi: optionsABI,
+  abi: optionsAbi,
 } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Treasury
+// TESTUSDT_ABI
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export const treasuryABI = [
+export const testusdtAbiAbi = [
   {
     type: 'error',
     inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
     name: 'AddressEmptyCode',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'AddressInsufficientBalance',
   },
   {
     type: 'error',
@@ -2161,9 +2130,1121 @@ export const treasuryABI = [
     name: 'ERC1967InvalidImplementation',
   },
   { type: 'error', inputs: [], name: 'ERC1967NonPayable' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'allowance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC20InsufficientAllowance',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'balance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC20InsufficientBalance',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'approver', internalType: 'address', type: 'address' }],
+    name: 'ERC20InvalidApprover',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'receiver', internalType: 'address', type: 'address' }],
+    name: 'ERC20InvalidReceiver',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'sender', internalType: 'address', type: 'address' }],
+    name: 'ERC20InvalidSender',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'spender', internalType: 'address', type: 'address' }],
+    name: 'ERC20InvalidSpender',
+  },
+  { type: 'error', inputs: [], name: 'EndPointUnavailable' },
+  { type: 'error', inputs: [], name: 'EnforcedPause' },
+  { type: 'error', inputs: [], name: 'ExpectedPause' },
   { type: 'error', inputs: [], name: 'FailedInnerCall' },
+  { type: 'error', inputs: [], name: 'InvalidDelegate' },
+  { type: 'error', inputs: [], name: 'InvalidEndpointCall' },
   { type: 'error', inputs: [], name: 'InvalidInitialization' },
+  { type: 'error', inputs: [], name: 'InvalidLocalDecimals' },
+  {
+    type: 'error',
+    inputs: [{ name: 'options', internalType: 'bytes', type: 'bytes' }],
+    name: 'InvalidOptions',
+  },
+  { type: 'error', inputs: [], name: 'LzTokenUnavailable' },
+  {
+    type: 'error',
+    inputs: [{ name: 'eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'NoPeer',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'msgValue', internalType: 'uint256', type: 'uint256' }],
+    name: 'NotEnoughNative',
+  },
   { type: 'error', inputs: [], name: 'NotInitializing' },
+  {
+    type: 'error',
+    inputs: [{ name: 'addr', internalType: 'address', type: 'address' }],
+    name: 'OnlyEndpoint',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'eid', internalType: 'uint32', type: 'uint32' },
+      { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'OnlyPeer',
+  },
+  { type: 'error', inputs: [], name: 'OnlySelf' },
+  {
+    type: 'error',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'OwnableInvalidOwner',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'OwnableUnauthorizedAccount',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'token', internalType: 'address', type: 'address' }],
+    name: 'SafeERC20FailedOperation',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'result', internalType: 'bytes', type: 'bytes' }],
+    name: 'SimulationResult',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'amountLD', internalType: 'uint256', type: 'uint256' },
+      { name: 'minAmountLD', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'SlippageExceeded',
+  },
+  { type: 'error', inputs: [], name: 'UUPSUnauthorizedCallContext' },
+  {
+    type: 'error',
+    inputs: [{ name: 'slot', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'UUPSUnsupportedProxiableUUID',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'value',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: '_enforcedOptions',
+        internalType: 'struct EnforcedOptionParam[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'eid', internalType: 'uint32', type: 'uint32' },
+          { name: 'msgType', internalType: 'uint16', type: 'uint16' },
+          { name: 'options', internalType: 'bytes', type: 'bytes' },
+        ],
+        indexed: false,
+      },
+    ],
+    name: 'EnforcedOptionSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'version',
+        internalType: 'uint64',
+        type: 'uint64',
+        indexed: false,
+      },
+    ],
+    name: 'Initialized',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'inspector',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'MsgInspectorSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'guid', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'srcEid',
+        internalType: 'uint32',
+        type: 'uint32',
+        indexed: false,
+      },
+      {
+        name: 'toAddress',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amountReceivedLD',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'OFTReceived',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'guid', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'dstEid',
+        internalType: 'uint32',
+        type: 'uint32',
+        indexed: false,
+      },
+      {
+        name: 'fromAddress',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amountSentLD',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'amountReceivedLD',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'OFTSent',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'Paused',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'eid', internalType: 'uint32', type: 'uint32', indexed: false },
+      {
+        name: 'peer',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: false,
+      },
+    ],
+    name: 'PeerSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'preCrimeAddress',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'PreCrimeSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'value',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'Unpaused',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'implementation',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'Upgraded',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'SEND',
+    outputs: [{ name: '', internalType: 'uint16', type: 'uint16' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'SEND_AND_CALL',
+    outputs: [{ name: '', internalType: 'uint16', type: 'uint16' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'UPGRADE_INTERFACE_VERSION',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_owner', internalType: 'address', type: 'address' }],
+    name: '__OAppOptionsType3_init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_owner', internalType: 'address', type: 'address' }],
+    name: '__OAppPreCrimeSimulator_init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_localDecimals', internalType: 'uint8', type: 'uint8' },
+      { name: '_endpoint', internalType: 'address', type: 'address' },
+      { name: '_delegate', internalType: 'address', type: 'address' },
+    ],
+    name: '__OFTCore_init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_name', internalType: 'string', type: 'string' },
+      { name: '_symbol', internalType: 'string', type: 'string' },
+      { name: '_lzEndpoint', internalType: 'address', type: 'address' },
+      { name: '_delegate', internalType: 'address', type: 'address' },
+    ],
+    name: '__OFT_init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: 'origin',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+    ],
+    name: 'allowInitializePath',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'approvalRequired',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'value', internalType: 'uint256', type: 'uint256' }],
+    name: 'burn',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'burnFrom',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'burnFromUser',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_eid', internalType: 'uint32', type: 'uint32' },
+      { name: '_msgType', internalType: 'uint16', type: 'uint16' },
+      { name: '_extraOptions', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'combineOptions',
+    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'decimalConversionRate',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'decimals',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'endpoint',
+    outputs: [
+      {
+        name: '',
+        internalType: 'contract ILayerZeroEndpointV2',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'eid', internalType: 'uint32', type: 'uint32' },
+      { name: 'msgType', internalType: 'uint16', type: 'uint16' },
+    ],
+    name: 'enforcedOptions',
+    outputs: [{ name: 'enforcedOption', internalType: 'bytes', type: 'bytes' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_name', internalType: 'string', type: 'string' },
+      { name: '_symbol', internalType: 'string', type: 'string' },
+      { name: '_lzEndpoint', internalType: 'address', type: 'address' },
+      { name: '_delegate', internalType: 'address', type: 'address' },
+    ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+      { name: '', internalType: 'bytes', type: 'bytes' },
+      { name: '_sender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isComposeMsgSender',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_eid', internalType: 'uint32', type: 'uint32' },
+      { name: '_peer', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'isPeer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_origin',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+      { name: '_guid', internalType: 'bytes32', type: 'bytes32' },
+      { name: '_message', internalType: 'bytes', type: 'bytes' },
+      { name: '_executor', internalType: 'address', type: 'address' },
+      { name: '_extraData', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'lzReceive',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_packets',
+        internalType: 'struct InboundPacket[]',
+        type: 'tuple[]',
+        components: [
+          {
+            name: 'origin',
+            internalType: 'struct Origin',
+            type: 'tuple',
+            components: [
+              { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+              { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+              { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+            ],
+          },
+          { name: 'dstEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'receiver', internalType: 'address', type: 'address' },
+          { name: 'guid', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'value', internalType: 'uint256', type: 'uint256' },
+          { name: 'executor', internalType: 'address', type: 'address' },
+          { name: 'message', internalType: 'bytes', type: 'bytes' },
+          { name: 'extraData', internalType: 'bytes', type: 'bytes' },
+        ],
+      },
+    ],
+    name: 'lzReceiveAndRevert',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_origin',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+      { name: '_guid', internalType: 'bytes32', type: 'bytes32' },
+      { name: '_message', internalType: 'bytes', type: 'bytes' },
+      { name: '_executor', internalType: 'address', type: 'address' },
+      { name: '_extraData', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'lzReceiveSimulate',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'mint',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'msgInspector',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'uint32', type: 'uint32' },
+      { name: '', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'nextNonce',
+    outputs: [{ name: 'nonce', internalType: 'uint64', type: 'uint64' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'oApp',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'oAppVersion',
+    outputs: [
+      { name: 'senderVersion', internalType: 'uint64', type: 'uint64' },
+      { name: 'receiverVersion', internalType: 'uint64', type: 'uint64' },
+    ],
+    stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'oftVersion',
+    outputs: [
+      { name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' },
+      { name: 'version', internalType: 'uint64', type: 'uint64' },
+    ],
+    stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'pause',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'paused',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'peers',
+    outputs: [{ name: 'peer', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'preCrime',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'proxiableUUID',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_sendParam',
+        internalType: 'struct SendParam',
+        type: 'tuple',
+        components: [
+          { name: 'dstEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'to', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'amountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'minAmountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'extraOptions', internalType: 'bytes', type: 'bytes' },
+          { name: 'composeMsg', internalType: 'bytes', type: 'bytes' },
+          { name: 'oftCmd', internalType: 'bytes', type: 'bytes' },
+        ],
+      },
+    ],
+    name: 'quoteOFT',
+    outputs: [
+      {
+        name: 'oftLimit',
+        internalType: 'struct OFTLimit',
+        type: 'tuple',
+        components: [
+          { name: 'minAmountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'maxAmountLD', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+      {
+        name: 'oftFeeDetails',
+        internalType: 'struct OFTFeeDetail[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'feeAmountLD', internalType: 'int256', type: 'int256' },
+          { name: 'description', internalType: 'string', type: 'string' },
+        ],
+      },
+      {
+        name: 'oftReceipt',
+        internalType: 'struct OFTReceipt',
+        type: 'tuple',
+        components: [
+          { name: 'amountSentLD', internalType: 'uint256', type: 'uint256' },
+          {
+            name: 'amountReceivedLD',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_sendParam',
+        internalType: 'struct SendParam',
+        type: 'tuple',
+        components: [
+          { name: 'dstEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'to', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'amountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'minAmountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'extraOptions', internalType: 'bytes', type: 'bytes' },
+          { name: 'composeMsg', internalType: 'bytes', type: 'bytes' },
+          { name: 'oftCmd', internalType: 'bytes', type: 'bytes' },
+        ],
+      },
+      { name: '_payInLzToken', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'quoteSend',
+    outputs: [
+      {
+        name: 'msgFee',
+        internalType: 'struct MessagingFee',
+        type: 'tuple',
+        components: [
+          { name: 'nativeFee', internalType: 'uint256', type: 'uint256' },
+          { name: 'lzTokenFee', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_sendParam',
+        internalType: 'struct SendParam',
+        type: 'tuple',
+        components: [
+          { name: 'dstEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'to', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'amountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'minAmountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'extraOptions', internalType: 'bytes', type: 'bytes' },
+          { name: 'composeMsg', internalType: 'bytes', type: 'bytes' },
+          { name: 'oftCmd', internalType: 'bytes', type: 'bytes' },
+        ],
+      },
+      {
+        name: '_fee',
+        internalType: 'struct MessagingFee',
+        type: 'tuple',
+        components: [
+          { name: 'nativeFee', internalType: 'uint256', type: 'uint256' },
+          { name: 'lzTokenFee', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+      { name: '_refundAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'send',
+    outputs: [
+      {
+        name: 'msgReceipt',
+        internalType: 'struct MessagingReceipt',
+        type: 'tuple',
+        components: [
+          { name: 'guid', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+          {
+            name: 'fee',
+            internalType: 'struct MessagingFee',
+            type: 'tuple',
+            components: [
+              { name: 'nativeFee', internalType: 'uint256', type: 'uint256' },
+              { name: 'lzTokenFee', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+        ],
+      },
+      {
+        name: 'oftReceipt',
+        internalType: 'struct OFTReceipt',
+        type: 'tuple',
+        components: [
+          { name: 'amountSentLD', internalType: 'uint256', type: 'uint256' },
+          {
+            name: 'amountReceivedLD',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_delegate', internalType: 'address', type: 'address' }],
+    name: 'setDelegate',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'setDstEid',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_enforcedOptions',
+        internalType: 'struct EnforcedOptionParam[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'eid', internalType: 'uint32', type: 'uint32' },
+          { name: 'msgType', internalType: 'uint16', type: 'uint16' },
+          { name: 'options', internalType: 'bytes', type: 'bytes' },
+        ],
+      },
+    ],
+    name: 'setEnforcedOptions',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_msgInspector', internalType: 'address', type: 'address' },
+    ],
+    name: 'setMsgInspector',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_eid', internalType: 'uint32', type: 'uint32' },
+      { name: '_peer', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'setPeer',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_preCrime', internalType: 'address', type: 'address' }],
+    name: 'setPreCrime',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'sharedDecimals',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'symbol',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'token',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address' },
+      { name: 'to', internalType: 'address', type: 'address' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'unpause',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'newImplementation', internalType: 'address', type: 'address' },
+      { name: 'data', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'upgradeToAndCall',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+] as const
+
+/**
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const testusdtAbiAddress = {
+  84532: '0xfBAE0d4337d936538995A26685f69644e6427213',
+  11155111: '0xC1fd34E478c147f0460dc013D636c63BC407D480',
+} as const
+
+/**
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const testusdtAbiConfig = {
+  address: testusdtAbiAddress,
+  abi: testusdtAbiAbi,
+} as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Treasury
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const treasuryAbi = [
+  {
+    type: 'error',
+    inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
+    name: 'AddressEmptyCode',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'AddressInsufficientBalance',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'implementation', internalType: 'address', type: 'address' },
+    ],
+    name: 'ERC1967InvalidImplementation',
+  },
+  { type: 'error', inputs: [], name: 'ERC1967NonPayable' },
+  { type: 'error', inputs: [], name: 'EndPointUnavailable' },
+  { type: 'error', inputs: [], name: 'FailedInnerCall' },
+  { type: 'error', inputs: [], name: 'InvalidDelegate' },
+  { type: 'error', inputs: [], name: 'InvalidEndpointCall' },
+  { type: 'error', inputs: [], name: 'InvalidInitialization' },
+  {
+    type: 'error',
+    inputs: [{ name: 'optionType', internalType: 'uint16', type: 'uint16' }],
+    name: 'InvalidOptionType',
+  },
+  { type: 'error', inputs: [], name: 'LzTokenUnavailable' },
+  {
+    type: 'error',
+    inputs: [{ name: 'eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'NoPeer',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'msgValue', internalType: 'uint256', type: 'uint256' }],
+    name: 'NotEnoughNative',
+  },
+  { type: 'error', inputs: [], name: 'NotInitializing' },
+  {
+    type: 'error',
+    inputs: [{ name: 'addr', internalType: 'address', type: 'address' }],
+    name: 'OnlyEndpoint',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'eid', internalType: 'uint32', type: 'uint32' },
+      { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'OnlyPeer',
+  },
   {
     type: 'error',
     inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
@@ -2175,6 +3256,19 @@ export const treasuryABI = [
     name: 'OwnableUnauthorizedAccount',
   },
   { type: 'error', inputs: [], name: 'ReentrancyGuardReentrantCall' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'bits', internalType: 'uint8', type: 'uint8' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'SafeCastOverflowedUintDowncast',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'token', internalType: 'address', type: 'address' }],
+    name: 'SafeERC20FailedOperation',
+  },
   { type: 'error', inputs: [], name: 'Treasury_AaveDepositAndMintFailed' },
   { type: 'error', inputs: [], name: 'Treasury_AavePoolAddressZero' },
   { type: 'error', inputs: [], name: 'Treasury_AaveWithdrawFailed' },
@@ -2276,6 +3370,20 @@ export const treasuryABI = [
     type: 'event',
     anonymous: false,
     inputs: [
+      { name: 'eid', internalType: 'uint32', type: 'uint32', indexed: false },
+      {
+        name: 'peer',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: false,
+      },
+    ],
+    name: 'PeerSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
       {
         name: 'implementation',
         internalType: 'address',
@@ -2328,81 +3436,48 @@ export const treasuryABI = [
     name: 'WithdrawFromCompound',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'UPGRADE_INTERFACE_VERSION',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'WETH',
-    outputs: [{ name: '', internalType: 'contract IWETH9', type: 'address' }],
+    name: 'abondUSDaPool',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
-    inputs: [],
-    name: 'aToken',
-    outputs: [{ name: '', internalType: 'contract IERC20', type: 'address' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'aavePoolAddressProvider',
-    outputs: [
+    inputs: [
       {
-        name: '',
-        internalType: 'contract IPoolAddressesProvider',
-        type: 'address',
+        name: 'origin',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
       },
     ],
-  },
-  {
+    name: 'allowInitializePath',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
     stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'aaveWETH',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'abond',
-    outputs: [
-      { name: '', internalType: 'contract IABONDToken', type: 'address' },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'abondAmintPool',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'amint',
-    outputs: [{ name: '', internalType: 'contract IAMINT', type: 'address' }],
-  },
-  {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: '_address', internalType: 'address', type: 'address' },
       { name: '_amount', internalType: 'uint256', type: 'uint256' },
     ],
-    name: 'approveAmint',
+    name: 'approveUSDa',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: '_address', internalType: 'address', type: 'address' },
@@ -2410,18 +3485,9 @@ export const treasuryABI = [
     ],
     name: 'approveUsdt',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'borrow',
-    outputs: [
-      { name: '', internalType: 'contract IBorrowing', type: 'address' },
-    ],
-  },
-  {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'depositor', internalType: 'address', type: 'address' }],
     name: 'borrowing',
@@ -2432,45 +3498,22 @@ export const treasuryABI = [
       { name: 'hasDeposited', internalType: 'bool', type: 'bool' },
       { name: 'borrowerIndex', internalType: 'uint64', type: 'uint64' },
     ],
-  },
-  {
     stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'borrowingContract',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'cdsContract',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'comet',
-    outputs: [
-      {
-        name: '',
-        internalType: 'contract CometMainInterface',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'compoundAddress',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
-    stateMutability: 'payable',
     type: 'function',
     inputs: [
+      { name: 'user', internalType: 'address', type: 'address' },
+      { name: 'aBondAmount', internalType: 'uint128', type: 'uint128' },
+    ],
+    name: 'calculateYieldsForExternalProtocol',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_depositingAmount', internalType: 'uint256', type: 'uint256' },
       { name: 'user', internalType: 'address', type: 'address' },
       { name: '_ethPrice', internalType: 'uint128', type: 'uint128' },
       { name: '_depositTime', internalType: 'uint64', type: 'uint64' },
@@ -2479,7 +3522,7 @@ export const treasuryABI = [
     outputs: [
       {
         name: '',
-        internalType: 'struct Treasury.DepositResult',
+        internalType: 'struct ITreasury.DepositResult',
         type: 'tuple',
         components: [
           { name: 'hasDeposited', internalType: 'bool', type: 'bool' },
@@ -2487,30 +3530,29 @@ export const treasuryABI = [
         ],
       },
     ],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'ethProfitsOfLiquidators',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'endpoint',
+    outputs: [
+      {
+        name: '',
+        internalType: 'contract ILayerZeroEndpointV2',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'externalProtocolDepositCount',
-    outputs: [{ name: '', internalType: 'uint64', type: 'uint64' }],
-  },
-  {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'getBalanceInTreasury',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [
       { name: 'depositor', internalType: 'address', type: 'address' },
@@ -2520,13 +3562,13 @@ export const treasuryABI = [
     outputs: [
       {
         name: '',
-        internalType: 'struct Treasury.GetBorrowingResult',
+        internalType: 'struct ITreasury.GetBorrowingResult',
         type: 'tuple',
         components: [
           { name: 'totalIndex', internalType: 'uint64', type: 'uint64' },
           {
             name: 'depositDetails',
-            internalType: 'struct Treasury.DepositDetails',
+            internalType: 'struct ITreasury.DepositDetails',
             type: 'tuple',
             components: [
               { name: 'depositedTime', internalType: 'uint64', type: 'uint64' },
@@ -2580,32 +3622,289 @@ export const treasuryABI = [
               },
               { name: 'strikePrice', internalType: 'uint128', type: 'uint128' },
               { name: 'optionFees', internalType: 'uint128', type: 'uint128' },
-              {
-                name: 'externalProtocolCount',
-                internalType: 'uint64',
-                type: 'uint64',
-              },
             ],
           },
         ],
       },
     ],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'maximum', internalType: 'bool', type: 'bool' }],
     name: 'getExternalProtocolCumulativeRate',
     outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: '_borrowing', internalType: 'address', type: 'address' },
       { name: '_tokenAddress', internalType: 'address', type: 'address' },
       { name: '_abondAddress', internalType: 'address', type: 'address' },
       { name: '_cdsContract', internalType: 'address', type: 'address' },
+      { name: '_borrowLiquidation', internalType: 'address', type: 'address' },
+      { name: '_usdt', internalType: 'address', type: 'address' },
+      { name: '_endpoint', internalType: 'address', type: 'address' },
+      { name: '_delegate', internalType: 'address', type: 'address' },
+    ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+      { name: '', internalType: 'bytes', type: 'bytes' },
+      { name: '_sender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isComposeMsgSender',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_origin',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+      { name: '_guid', internalType: 'bytes32', type: 'bytes32' },
+      { name: '_message', internalType: 'bytes', type: 'bytes' },
+      { name: '_executor', internalType: 'address', type: 'address' },
+      { name: '_extraData', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'lzReceive',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'uint32', type: 'uint32' },
+      { name: '', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'nextNonce',
+    outputs: [{ name: 'nonce', internalType: 'uint64', type: 'uint64' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'noOfBorrowers',
+    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'oAppVersion',
+    outputs: [
+      { name: 'senderVersion', internalType: 'uint64', type: 'uint64' },
+      { name: 'receiverVersion', internalType: 'uint64', type: 'uint64' },
+    ],
+    stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_functionToDo',
+        internalType: 'enum ITreasury.FunctionToDo',
+        type: 'uint8',
+      },
+      {
+        name: '_oftTransferData',
+        internalType: 'struct ITreasury.USDaOftTransferData',
+        type: 'tuple',
+        components: [
+          { name: 'recipient', internalType: 'address', type: 'address' },
+          { name: 'tokensToSend', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+      {
+        name: '_nativeTokenTransferData',
+        internalType: 'struct ITreasury.NativeTokenTransferData',
+        type: 'tuple',
+        components: [
+          { name: 'recipient', internalType: 'address', type: 'address' },
+          {
+            name: 'nativeTokensToSend',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+    name: 'oftOrNativeReceiveFromOtherChains',
+    outputs: [
+      {
+        name: 'receipt',
+        internalType: 'struct MessagingReceipt',
+        type: 'tuple',
+        components: [
+          { name: 'guid', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+          {
+            name: 'fee',
+            internalType: 'struct MessagingFee',
+            type: 'tuple',
+            components: [
+              { name: 'nativeFee', internalType: 'uint256', type: 'uint256' },
+              { name: 'lzTokenFee', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+        ],
+      },
+    ],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'omniChainTreasuryEthProfitsOfLiquidators',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'omniChainTreasuryNoOfBorrowers',
+    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'omniChainTreasuryTotalVolumeOfBorrowersAmountinUSD',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'omniChainTreasuryTotalVolumeOfBorrowersAmountinWei',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'peers',
+    outputs: [{ name: 'peer', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'proxiableUUID',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_dstEid', internalType: 'uint32', type: 'uint32' },
+      {
+        name: '_functionToDo',
+        internalType: 'enum ITreasury.FunctionToDo',
+        type: 'uint8',
+      },
+      {
+        name: '_oftTransferData',
+        internalType: 'struct ITreasury.USDaOftTransferData',
+        type: 'tuple',
+        components: [
+          { name: 'recipient', internalType: 'address', type: 'address' },
+          { name: 'tokensToSend', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+      {
+        name: '_nativeTokenTransferData',
+        internalType: 'struct ITreasury.NativeTokenTransferData',
+        type: 'tuple',
+        components: [
+          { name: 'recipient', internalType: 'address', type: 'address' },
+          {
+            name: 'nativeTokensToSend',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+        ],
+      },
+      { name: '_options', internalType: 'bytes', type: 'bytes' },
+      { name: '_payInLzToken', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'quote',
+    outputs: [
+      {
+        name: 'fee',
+        internalType: 'struct MessagingFee',
+        type: 'tuple',
+        components: [
+          { name: 'nativeFee', internalType: 'uint256', type: 'uint256' },
+          { name: 'lzTokenFee', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_delegate', internalType: 'address', type: 'address' }],
+    name: 'setDelegate',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'setDstEid',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_treasuryAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'setDstTreasuryAddress',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
       { name: '_wethGateway', internalType: 'address', type: 'address' },
       { name: '_comet', internalType: 'address', type: 'address' },
       {
@@ -2614,85 +3913,37 @@ export const treasuryABI = [
         type: 'address',
       },
       { name: '_aToken', internalType: 'address', type: 'address' },
-      { name: '_usdt', internalType: 'address', type: 'address' },
       { name: '_weth', internalType: 'address', type: 'address' },
     ],
-    name: 'initialize',
+    name: 'setExternalProtocolAddresses',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'noOfBorrowers',
-    outputs: [{ name: '', internalType: 'uint128', type: 'uint128' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'owner',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-  },
-  {
-    stateMutability: 'view',
     type: 'function',
     inputs: [
-      { name: '', internalType: 'enum Treasury.Protocol', type: 'uint8' },
+      { name: '_eid', internalType: 'uint32', type: 'uint32' },
+      { name: '_peer', internalType: 'bytes32', type: 'bytes32' },
     ],
-    name: 'protocolDeposit',
-    outputs: [
-      { name: 'depositIndex', internalType: 'uint64', type: 'uint64' },
-      { name: 'depositedAmount', internalType: 'uint256', type: 'uint256' },
-      { name: 'totalCreditedTokens', internalType: 'uint256', type: 'uint256' },
-      { name: 'depositedUsdValue', internalType: 'uint256', type: 'uint256' },
-      { name: 'cumulativeRate', internalType: 'uint256', type: 'uint256' },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'proxiableUUID',
-    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    inputs: [],
-    name: 'renounceOwnership',
+    name: 'setPeer',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'totalInterest',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'totalInterestFromLiquidation',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-  },
-  {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'totalVolumeOfBorrowersAmountinUSD',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'totalVolumeOfBorrowersAmountinWei',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'borrower', internalType: 'address', type: 'address' },
@@ -2700,33 +3951,33 @@ export const treasuryABI = [
     ],
     name: 'transferEthToCdsLiquidators',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'amount', internalType: 'uint256', type: 'uint256' },
       { name: 'operation', internalType: 'bool', type: 'bool' },
     ],
-    name: 'updateAbondAmintPool',
+    name: 'updateAbondUSDaPool',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'depositor', internalType: 'address', type: 'address' },
       { name: 'index', internalType: 'uint64', type: 'uint64' },
       {
         name: 'depositDetail',
-        internalType: 'struct Treasury.DepositDetails',
+        internalType: 'struct ITreasury.DepositDetails',
         type: 'tuple',
         components: [
           { name: 'depositedTime', internalType: 'uint64', type: 'uint64' },
@@ -2768,19 +4019,14 @@ export const treasuryABI = [
           },
           { name: 'strikePrice', internalType: 'uint128', type: 'uint128' },
           { name: 'optionFees', internalType: 'uint128', type: 'uint128' },
-          {
-            name: 'externalProtocolCount',
-            internalType: 'uint64',
-            type: 'uint64',
-          },
         ],
       },
     ],
     name: 'updateDepositDetails',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'amount', internalType: 'uint256', type: 'uint256' },
@@ -2788,9 +4034,9 @@ export const treasuryABI = [
     ],
     name: 'updateEthProfitsOfLiquidators',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'borrower', internalType: 'address', type: 'address' },
@@ -2798,16 +4044,16 @@ export const treasuryABI = [
     ],
     name: 'updateHasBorrowed',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'amount', internalType: 'uint256', type: 'uint256' }],
     name: 'updateInterestFromExternalProtocol',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'borrower', internalType: 'address', type: 'address' },
@@ -2815,9 +4061,9 @@ export const treasuryABI = [
     ],
     name: 'updateTotalBorrowedAmount',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'borrower', internalType: 'address', type: 'address' },
@@ -2825,23 +4071,33 @@ export const treasuryABI = [
     ],
     name: 'updateTotalDepositedAmount',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_amount', internalType: 'uint256', type: 'uint256' }],
     name: 'updateTotalInterest',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: '_amount', internalType: 'uint256', type: 'uint256' }],
     name: 'updateTotalInterestFromLiquidation',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'payable',
+    type: 'function',
+    inputs: [
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+      { name: 'operation', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'updateUSDaGainedFromLiquidation',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
     type: 'function',
     inputs: [
       { name: 'newImplementation', internalType: 'address', type: 'address' },
@@ -2849,29 +4105,16 @@ export const treasuryABI = [
     ],
     name: 'upgradeToAndCall',
     outputs: [],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
-    name: 'usdt',
-    outputs: [{ name: '', internalType: 'contract IERC20', type: 'address' }],
-  },
-  {
+    name: 'usdaGainedFromLiquidation',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
-    inputs: [],
-    name: 'wethGateway',
-    outputs: [
-      {
-        name: '',
-        internalType: 'contract IWrappedTokenGatewayV3',
-        type: 'address',
-      },
-    ],
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'borrower', internalType: 'address', type: 'address' },
@@ -2881,9 +4124,9 @@ export const treasuryABI = [
     ],
     name: 'withdraw',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'payable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'toAddress', internalType: 'address', type: 'address' },
@@ -2891,9 +4134,9 @@ export const treasuryABI = [
     ],
     name: 'withdrawExternalProtocolInterest',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'user', internalType: 'address', type: 'address' },
@@ -2901,9 +4144,9 @@ export const treasuryABI = [
     ],
     name: 'withdrawFromExternalProtocol',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'toAddress', internalType: 'address', type: 'address' },
@@ -2911,37 +4154,47 @@ export const treasuryABI = [
     ],
     name: 'withdrawInterest',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
-  { stateMutability: 'payable', type: 'receive' },
+  { type: 'receive', stateMutability: 'payable' },
 ] as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
  */
 export const treasuryAddress = {
-  11155111: '0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA',
+  84532: '0x80f872b6402D1FB4BffF4837efe9E4b49cB91909',
+  11155111: '0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB',
 } as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
  */
 export const treasuryConfig = {
   address: treasuryAddress,
-  abi: treasuryABI,
+  abi: treasuryAbi,
 } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// USDTContract
+// USDa
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
  */
-export const usdtContractABI = [
+export const usDaAbi = [
   {
     type: 'error',
     inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
     name: 'AddressEmptyCode',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'AddressInsufficientBalance',
   },
   {
     type: 'error',
@@ -2989,11 +4242,45 @@ export const usdtContractABI = [
     inputs: [{ name: 'spender', internalType: 'address', type: 'address' }],
     name: 'ERC20InvalidSpender',
   },
+  { type: 'error', inputs: [], name: 'EndPointUnavailable' },
   { type: 'error', inputs: [], name: 'EnforcedPause' },
   { type: 'error', inputs: [], name: 'ExpectedPause' },
   { type: 'error', inputs: [], name: 'FailedInnerCall' },
+  { type: 'error', inputs: [], name: 'InvalidDelegate' },
+  { type: 'error', inputs: [], name: 'InvalidEndpointCall' },
   { type: 'error', inputs: [], name: 'InvalidInitialization' },
+  { type: 'error', inputs: [], name: 'InvalidLocalDecimals' },
+  {
+    type: 'error',
+    inputs: [{ name: 'options', internalType: 'bytes', type: 'bytes' }],
+    name: 'InvalidOptions',
+  },
+  { type: 'error', inputs: [], name: 'LzTokenUnavailable' },
+  {
+    type: 'error',
+    inputs: [{ name: 'eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'NoPeer',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'msgValue', internalType: 'uint256', type: 'uint256' }],
+    name: 'NotEnoughNative',
+  },
   { type: 'error', inputs: [], name: 'NotInitializing' },
+  {
+    type: 'error',
+    inputs: [{ name: 'addr', internalType: 'address', type: 'address' }],
+    name: 'OnlyEndpoint',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'eid', internalType: 'uint32', type: 'uint32' },
+      { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'OnlyPeer',
+  },
+  { type: 'error', inputs: [], name: 'OnlySelf' },
   {
     type: 'error',
     inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
@@ -3003,6 +4290,24 @@ export const usdtContractABI = [
     type: 'error',
     inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
     name: 'OwnableUnauthorizedAccount',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'token', internalType: 'address', type: 'address' }],
+    name: 'SafeERC20FailedOperation',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'result', internalType: 'bytes', type: 'bytes' }],
+    name: 'SimulationResult',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'amountLD', internalType: 'uint256', type: 'uint256' },
+      { name: 'minAmountLD', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'SlippageExceeded',
   },
   { type: 'error', inputs: [], name: 'UUPSUnauthorizedCallContext' },
   {
@@ -3040,6 +4345,24 @@ export const usdtContractABI = [
     anonymous: false,
     inputs: [
       {
+        name: '_enforcedOptions',
+        internalType: 'struct EnforcedOptionParam[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'eid', internalType: 'uint32', type: 'uint32' },
+          { name: 'msgType', internalType: 'uint16', type: 'uint16' },
+          { name: 'options', internalType: 'bytes', type: 'bytes' },
+        ],
+        indexed: false,
+      },
+    ],
+    name: 'EnforcedOptionSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
         name: 'version',
         internalType: 'uint64',
         type: 'uint64',
@@ -3047,6 +4370,77 @@ export const usdtContractABI = [
       },
     ],
     name: 'Initialized',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'inspector',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'MsgInspectorSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'guid', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'srcEid',
+        internalType: 'uint32',
+        type: 'uint32',
+        indexed: false,
+      },
+      {
+        name: 'toAddress',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amountReceivedLD',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'OFTReceived',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'guid', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'dstEid',
+        internalType: 'uint32',
+        type: 'uint32',
+        indexed: false,
+      },
+      {
+        name: 'fromAddress',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amountSentLD',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'amountReceivedLD',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'OFTSent',
   },
   {
     type: 'event',
@@ -3079,6 +4473,33 @@ export const usdtContractABI = [
       },
     ],
     name: 'Paused',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'eid', internalType: 'uint32', type: 'uint32', indexed: false },
+      {
+        name: 'peer',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: false,
+      },
+    ],
+    name: 'PeerSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'preCrimeAddress',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'PreCrimeSet',
   },
   {
     type: 'event',
@@ -3122,14 +4543,82 @@ export const usdtContractABI = [
     name: 'Upgraded',
   },
   {
+    type: 'function',
+    inputs: [],
+    name: 'SEND',
+    outputs: [{ name: '', internalType: 'uint16', type: 'uint16' }],
     stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'SEND_AND_CALL',
+    outputs: [{ name: '', internalType: 'uint16', type: 'uint16' }],
+    stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [],
     name: 'UPGRADE_INTERFACE_VERSION',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
+    type: 'function',
+    inputs: [{ name: '_owner', internalType: 'address', type: 'address' }],
+    name: '__OAppOptionsType3_init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_owner', internalType: 'address', type: 'address' }],
+    name: '__OAppPreCrimeSimulator_init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_localDecimals', internalType: 'uint8', type: 'uint8' },
+      { name: '_endpoint', internalType: 'address', type: 'address' },
+      { name: '_delegate', internalType: 'address', type: 'address' },
+    ],
+    name: '__OFTCore_init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_name', internalType: 'string', type: 'string' },
+      { name: '_symbol', internalType: 'string', type: 'string' },
+      { name: '_lzEndpoint', internalType: 'address', type: 'address' },
+      { name: '_delegate', internalType: 'address', type: 'address' },
+    ],
+    name: '__OFT_init',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: 'origin',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+    ],
+    name: 'allowInitializePath',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
     stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [
       { name: 'owner', internalType: 'address', type: 'address' },
@@ -3137,9 +4626,16 @@ export const usdtContractABI = [
     ],
     name: 'allowance',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [],
+    name: 'approvalRequired',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'pure',
+  },
+  {
     type: 'function',
     inputs: [
       { name: 'spender', internalType: 'address', type: 'address' },
@@ -3147,23 +4643,23 @@ export const usdtContractABI = [
     ],
     name: 'approve',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
     name: 'balanceOf',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'value', internalType: 'uint256', type: 'uint256' }],
     name: 'burn',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'account', internalType: 'address', type: 'address' },
@@ -3171,9 +4667,9 @@ export const usdtContractABI = [
     ],
     name: 'burnFrom',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'to', internalType: 'address', type: 'address' },
@@ -3181,23 +4677,173 @@ export const usdtContractABI = [
     ],
     name: 'burnFromUser',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'pure',
+    type: 'function',
+    inputs: [
+      { name: '_eid', internalType: 'uint32', type: 'uint32' },
+      { name: '_msgType', internalType: 'uint16', type: 'uint16' },
+      { name: '_extraOptions', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'combineOptions',
+    outputs: [{ name: '', internalType: 'bytes', type: 'bytes' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'decimalConversionRate',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [],
     name: 'decimals',
     outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'pure',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
-    name: 'initialize',
-    outputs: [],
+    name: 'endpoint',
+    outputs: [
+      {
+        name: '',
+        internalType: 'contract ILayerZeroEndpointV2',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
   },
   {
+    type: 'function',
+    inputs: [
+      { name: 'eid', internalType: 'uint32', type: 'uint32' },
+      { name: 'msgType', internalType: 'uint16', type: 'uint16' },
+    ],
+    name: 'enforcedOptions',
+    outputs: [{ name: 'enforcedOption', internalType: 'bytes', type: 'bytes' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_lzEndpoint', internalType: 'address', type: 'address' },
+      { name: '_delegate', internalType: 'address', type: 'address' },
+    ],
+    name: 'initialize',
+    outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+      { name: '', internalType: 'bytes', type: 'bytes' },
+      { name: '_sender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isComposeMsgSender',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_eid', internalType: 'uint32', type: 'uint32' },
+      { name: '_peer', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'isPeer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_origin',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+      { name: '_guid', internalType: 'bytes32', type: 'bytes32' },
+      { name: '_message', internalType: 'bytes', type: 'bytes' },
+      { name: '_executor', internalType: 'address', type: 'address' },
+      { name: '_extraData', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'lzReceive',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_packets',
+        internalType: 'struct InboundPacket[]',
+        type: 'tuple[]',
+        components: [
+          {
+            name: 'origin',
+            internalType: 'struct Origin',
+            type: 'tuple',
+            components: [
+              { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+              { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+              { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+            ],
+          },
+          { name: 'dstEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'receiver', internalType: 'address', type: 'address' },
+          { name: 'guid', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'value', internalType: 'uint256', type: 'uint256' },
+          { name: 'executor', internalType: 'address', type: 'address' },
+          { name: 'message', internalType: 'bytes', type: 'bytes' },
+          { name: 'extraData', internalType: 'bytes', type: 'bytes' },
+        ],
+      },
+    ],
+    name: 'lzReceiveAndRevert',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_origin',
+        internalType: 'struct Origin',
+        type: 'tuple',
+        components: [
+          { name: 'srcEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'sender', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+        ],
+      },
+      { name: '_guid', internalType: 'bytes32', type: 'bytes32' },
+      { name: '_message', internalType: 'bytes', type: 'bytes' },
+      { name: '_executor', internalType: 'address', type: 'address' },
+      { name: '_extraData', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'lzReceiveSimulate',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
     type: 'function',
     inputs: [
       { name: 'to', internalType: 'address', type: 'address' },
@@ -3205,65 +4851,360 @@ export const usdtContractABI = [
     ],
     name: 'mint',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
   },
   {
+    type: 'function',
+    inputs: [],
+    name: 'msgInspector',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
     stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [],
     name: 'name',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'uint32', type: 'uint32' },
+      { name: '', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'nextNonce',
+    outputs: [{ name: 'nonce', internalType: 'uint64', type: 'uint64' }],
     stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'oApp',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'oAppVersion',
+    outputs: [
+      { name: 'senderVersion', internalType: 'uint64', type: 'uint64' },
+      { name: 'receiverVersion', internalType: 'uint64', type: 'uint64' },
+    ],
+    stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'oftVersion',
+    outputs: [
+      { name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' },
+      { name: 'version', internalType: 'uint64', type: 'uint64' },
+    ],
+    stateMutability: 'pure',
+  },
+  {
     type: 'function',
     inputs: [],
     name: 'owner',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'pause',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'view',
     type: 'function',
     inputs: [],
     name: 'paused',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
   },
   {
+    type: 'function',
+    inputs: [{ name: 'eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'peers',
+    outputs: [{ name: 'peer', internalType: 'bytes32', type: 'bytes32' }],
     stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'preCrime',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [],
     name: 'proxiableUUID',
     outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
+    type: 'function',
+    inputs: [
+      {
+        name: '_sendParam',
+        internalType: 'struct SendParam',
+        type: 'tuple',
+        components: [
+          { name: 'dstEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'to', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'amountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'minAmountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'extraOptions', internalType: 'bytes', type: 'bytes' },
+          { name: 'composeMsg', internalType: 'bytes', type: 'bytes' },
+          { name: 'oftCmd', internalType: 'bytes', type: 'bytes' },
+        ],
+      },
+    ],
+    name: 'quoteOFT',
+    outputs: [
+      {
+        name: 'oftLimit',
+        internalType: 'struct OFTLimit',
+        type: 'tuple',
+        components: [
+          { name: 'minAmountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'maxAmountLD', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+      {
+        name: 'oftFeeDetails',
+        internalType: 'struct OFTFeeDetail[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'feeAmountLD', internalType: 'int256', type: 'int256' },
+          { name: 'description', internalType: 'string', type: 'string' },
+        ],
+      },
+      {
+        name: 'oftReceipt',
+        internalType: 'struct OFTReceipt',
+        type: 'tuple',
+        components: [
+          { name: 'amountSentLD', internalType: 'uint256', type: 'uint256' },
+          {
+            name: 'amountReceivedLD',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_sendParam',
+        internalType: 'struct SendParam',
+        type: 'tuple',
+        components: [
+          { name: 'dstEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'to', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'amountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'minAmountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'extraOptions', internalType: 'bytes', type: 'bytes' },
+          { name: 'composeMsg', internalType: 'bytes', type: 'bytes' },
+          { name: 'oftCmd', internalType: 'bytes', type: 'bytes' },
+        ],
+      },
+      { name: '_payInLzToken', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'quoteSend',
+    outputs: [
+      {
+        name: 'msgFee',
+        internalType: 'struct MessagingFee',
+        type: 'tuple',
+        components: [
+          { name: 'nativeFee', internalType: 'uint256', type: 'uint256' },
+          { name: 'lzTokenFee', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [],
     name: 'renounceOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
+    type: 'function',
+    inputs: [
+      {
+        name: '_sendParam',
+        internalType: 'struct SendParam',
+        type: 'tuple',
+        components: [
+          { name: 'dstEid', internalType: 'uint32', type: 'uint32' },
+          { name: 'to', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'amountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'minAmountLD', internalType: 'uint256', type: 'uint256' },
+          { name: 'extraOptions', internalType: 'bytes', type: 'bytes' },
+          { name: 'composeMsg', internalType: 'bytes', type: 'bytes' },
+          { name: 'oftCmd', internalType: 'bytes', type: 'bytes' },
+        ],
+      },
+      {
+        name: '_fee',
+        internalType: 'struct MessagingFee',
+        type: 'tuple',
+        components: [
+          { name: 'nativeFee', internalType: 'uint256', type: 'uint256' },
+          { name: 'lzTokenFee', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+      { name: '_refundAddress', internalType: 'address', type: 'address' },
+    ],
+    name: 'send',
+    outputs: [
+      {
+        name: 'msgReceipt',
+        internalType: 'struct MessagingReceipt',
+        type: 'tuple',
+        components: [
+          { name: 'guid', internalType: 'bytes32', type: 'bytes32' },
+          { name: 'nonce', internalType: 'uint64', type: 'uint64' },
+          {
+            name: 'fee',
+            internalType: 'struct MessagingFee',
+            type: 'tuple',
+            components: [
+              { name: 'nativeFee', internalType: 'uint256', type: 'uint256' },
+              { name: 'lzTokenFee', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+        ],
+      },
+      {
+        name: 'oftReceipt',
+        internalType: 'struct OFTReceipt',
+        type: 'tuple',
+        components: [
+          { name: 'amountSentLD', internalType: 'uint256', type: 'uint256' },
+          {
+            name: 'amountReceivedLD',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_address', internalType: 'address', type: 'address' }],
+    name: 'setBorrowingContract',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_address', internalType: 'address', type: 'address' }],
+    name: 'setCdsContract',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_delegate', internalType: 'address', type: 'address' }],
+    name: 'setDelegate',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_eid', internalType: 'uint32', type: 'uint32' }],
+    name: 'setDstEid',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      {
+        name: '_enforcedOptions',
+        internalType: 'struct EnforcedOptionParam[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'eid', internalType: 'uint32', type: 'uint32' },
+          { name: 'msgType', internalType: 'uint16', type: 'uint16' },
+          { name: 'options', internalType: 'bytes', type: 'bytes' },
+        ],
+      },
+    ],
+    name: 'setEnforcedOptions',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_msgInspector', internalType: 'address', type: 'address' },
+    ],
+    name: 'setMsgInspector',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_eid', internalType: 'uint32', type: 'uint32' },
+      { name: '_peer', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'setPeer',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_preCrime', internalType: 'address', type: 'address' }],
+    name: 'setPreCrime',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'sharedDecimals',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
     stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [],
     name: 'symbol',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
   },
   {
+    type: 'function',
+    inputs: [],
+    name: 'token',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
     stateMutability: 'view',
+  },
+  {
     type: 'function',
     inputs: [],
     name: 'totalSupply',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'to', internalType: 'address', type: 'address' },
@@ -3271,9 +5212,9 @@ export const usdtContractABI = [
     ],
     name: 'transfer',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [
       { name: 'from', internalType: 'address', type: 'address' },
@@ -3282,23 +5223,23 @@ export const usdtContractABI = [
     ],
     name: 'transferFrom',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
     name: 'transferOwnership',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'nonpayable',
     type: 'function',
     inputs: [],
     name: 'unpause',
     outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
-    stateMutability: 'payable',
     type: 'function',
     inputs: [
       { name: 'newImplementation', internalType: 'address', type: 'address' },
@@ -3306,10419 +5247,6615 @@ export const usdtContractABI = [
     ],
     name: 'upgradeToAndCall',
     outputs: [],
+    stateMutability: 'payable',
   },
 ] as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
  */
-export const usdtContractAddress = {
-  11155111: '0x0eaBdB5f7493CD504E471D06f5aA586f74973840',
+export const usDaAddress = {
+  84532: '0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd',
+  11155111: '0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64',
 } as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
  */
-export const usdtContractConfig = {
-  address: usdtContractAddress,
-  abi: usdtContractABI,
-} as const
+export const usDaConfig = { address: usDaAddress, abi: usDaAbi } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // React
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondRead<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+export const useReadAbond = /*#__PURE__*/ createUseReadContract({
+  abi: abondAbi,
+  address: abondAddress,
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondUpgradeInterfaceVersion<
-  TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useReadAbondUpgradeInterfaceVersion =
+  /*#__PURE__*/ createUseReadContract({
+    abi: abondAbi,
+    address: abondAddress,
     functionName: 'UPGRADE_INTERFACE_VERSION',
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"allowance"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"allowance"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondAllowance<
-  TFunctionName extends 'allowance',
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'allowance',
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+export const useReadAbondAllowance = /*#__PURE__*/ createUseReadContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'allowance',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"balanceOf"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"balanceOf"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondBalanceOf<
-  TFunctionName extends 'balanceOf',
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+export const useReadAbondBalanceOf = /*#__PURE__*/ createUseReadContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'balanceOf',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"decimals"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"decimals"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondDecimals<
-  TFunctionName extends 'decimals',
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'decimals',
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+export const useReadAbondDecimals = /*#__PURE__*/ createUseReadContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'decimals',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"name"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"name"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondName<
-  TFunctionName extends 'name',
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'name',
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+export const useReadAbondName = /*#__PURE__*/ createUseReadContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'name',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"owner"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"owner"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondOwner<
-  TFunctionName extends 'owner',
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'owner',
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+export const useReadAbondOwner = /*#__PURE__*/ createUseReadContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'owner',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"paused"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"paused"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondPaused<
-  TFunctionName extends 'paused',
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'paused',
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+export const useReadAbondPaused = /*#__PURE__*/ createUseReadContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'paused',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"proxiableUUID"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"proxiableUUID"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondProxiableUuid<
-  TFunctionName extends 'proxiableUUID',
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'proxiableUUID',
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+export const useReadAbondProxiableUuid = /*#__PURE__*/ createUseReadContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'proxiableUUID',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"symbol"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"symbol"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondSymbol<
-  TFunctionName extends 'symbol',
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'symbol',
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+export const useReadAbondSymbol = /*#__PURE__*/ createUseReadContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'symbol',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"totalSupply"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"totalSupply"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondTotalSupply<
-  TFunctionName extends 'totalSupply',
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'totalSupply',
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+export const useReadAbondTotalSupply = /*#__PURE__*/ createUseReadContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'totalSupply',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"userStates"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"userStates"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondUserStates<
-  TFunctionName extends 'userStates',
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'userStates',
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+export const useReadAbondUserStates = /*#__PURE__*/ createUseReadContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'userStates',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"userStatesAtDeposits"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"userStatesAtDeposits"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondUserStatesAtDeposits<
-  TFunctionName extends 'userStatesAtDeposits',
-  TSelectData = ReadContractResult<typeof abondABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useReadAbondUserStatesAtDeposits =
+  /*#__PURE__*/ createUseReadContract({
+    abi: abondAbi,
+    address: abondAddress,
     functionName: 'userStatesAtDeposits',
-    ...config,
-  } as UseContractReadConfig<typeof abondABI, TFunctionName, TSelectData>)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof abondABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      > & { address?: Address; chainId?: TChainId }
-    : UseContractWriteConfig<typeof abondABI, TFunctionName, TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, TFunctionName, TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    ...config,
-  } as any)
-}
+export const useWriteAbond = /*#__PURE__*/ createUseWriteContract({
+  abi: abondAbi,
+  address: abondAddress,
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"approve"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"approve"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondApprove<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof abondABI,
-          'approve'
-        >['request']['abi'],
-        'approve',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'approve' }
-    : UseContractWriteConfig<typeof abondABI, 'approve', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'approve'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'approve', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'approve',
-    ...config,
-  } as any)
-}
+export const useWriteAbondApprove = /*#__PURE__*/ createUseWriteContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'approve',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burn"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"burn"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondBurn<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof abondABI, 'burn'>['request']['abi'],
-        'burn',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'burn' }
-    : UseContractWriteConfig<typeof abondABI, 'burn', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'burn'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'burn', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'burn',
-    ...config,
-  } as any)
-}
+export const useWriteAbondBurn = /*#__PURE__*/ createUseWriteContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'burn',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFrom"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"burnFrom"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondBurnFrom<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof abondABI,
-          'burnFrom'
-        >['request']['abi'],
-        'burnFrom',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'burnFrom' }
-    : UseContractWriteConfig<typeof abondABI, 'burnFrom', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'burnFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'burnFrom', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'burnFrom',
-    ...config,
-  } as any)
-}
+export const useWriteAbondBurnFrom = /*#__PURE__*/ createUseWriteContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'burnFrom',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFromUser"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"burnFromUser"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondBurnFromUser<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof abondABI,
-          'burnFromUser'
-        >['request']['abi'],
-        'burnFromUser',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'burnFromUser'
-      }
-    : UseContractWriteConfig<typeof abondABI, 'burnFromUser', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'burnFromUser'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'burnFromUser', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'burnFromUser',
-    ...config,
-  } as any)
-}
+export const useWriteAbondBurnFromUser = /*#__PURE__*/ createUseWriteContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'burnFromUser',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"initialize"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"initialize"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondInitialize<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof abondABI,
-          'initialize'
-        >['request']['abi'],
-        'initialize',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'initialize' }
-    : UseContractWriteConfig<typeof abondABI, 'initialize', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'initialize'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'initialize', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'initialize',
-    ...config,
-  } as any)
-}
+export const useWriteAbondInitialize = /*#__PURE__*/ createUseWriteContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'initialize',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"mint"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"mint"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondMint<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof abondABI, 'mint'>['request']['abi'],
-        'mint',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'mint' }
-    : UseContractWriteConfig<typeof abondABI, 'mint', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'mint'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'mint', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'mint',
-    ...config,
-  } as any)
-}
+export const useWriteAbondMint = /*#__PURE__*/ createUseWriteContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'mint',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"pause"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"pause"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondPause<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof abondABI, 'pause'>['request']['abi'],
-        'pause',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'pause' }
-    : UseContractWriteConfig<typeof abondABI, 'pause', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'pause'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'pause', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'pause',
-    ...config,
-  } as any)
-}
+export const useWriteAbondPause = /*#__PURE__*/ createUseWriteContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'pause',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"renounceOwnership"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"renounceOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondRenounceOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof abondABI,
-          'renounceOwnership'
-        >['request']['abi'],
-        'renounceOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      }
-    : UseContractWriteConfig<typeof abondABI, 'renounceOwnership', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'renounceOwnership', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useWriteAbondRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: abondAbi,
+    address: abondAddress,
     functionName: 'renounceOwnership',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"setAbondData"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"setAbondData"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondSetAbondData<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof abondABI,
-          'setAbondData'
-        >['request']['abi'],
-        'setAbondData',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'setAbondData'
-      }
-    : UseContractWriteConfig<typeof abondABI, 'setAbondData', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setAbondData'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'setAbondData', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useWriteAbondSetAbondData = /*#__PURE__*/ createUseWriteContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'setAbondData',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"setBorrowingContract"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useWriteAbondSetBorrowingContract =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: abondAbi,
+    address: abondAddress,
+    functionName: 'setBorrowingContract',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"transfer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useWriteAbondTransfer = /*#__PURE__*/ createUseWriteContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'transfer',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"transferFrom"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useWriteAbondTransferFrom = /*#__PURE__*/ createUseWriteContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'transferFrom',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"transferOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useWriteAbondTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: abondAbi,
+    address: abondAddress,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"unpause"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useWriteAbondUnpause = /*#__PURE__*/ createUseWriteContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'unpause',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"upgradeToAndCall"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useWriteAbondUpgradeToAndCall =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: abondAbi,
+    address: abondAddress,
+    functionName: 'upgradeToAndCall',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useSimulateAbond = /*#__PURE__*/ createUseSimulateContract({
+  abi: abondAbi,
+  address: abondAddress,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"approve"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useSimulateAbondApprove = /*#__PURE__*/ createUseSimulateContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'approve',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"burn"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useSimulateAbondBurn = /*#__PURE__*/ createUseSimulateContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'burn',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"burnFrom"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useSimulateAbondBurnFrom = /*#__PURE__*/ createUseSimulateContract(
+  { abi: abondAbi, address: abondAddress, functionName: 'burnFrom' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"burnFromUser"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useSimulateAbondBurnFromUser =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: abondAbi,
+    address: abondAddress,
+    functionName: 'burnFromUser',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"initialize"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useSimulateAbondInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: abondAbi,
+    address: abondAddress,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"mint"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useSimulateAbondMint = /*#__PURE__*/ createUseSimulateContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"pause"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useSimulateAbondPause = /*#__PURE__*/ createUseSimulateContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'pause',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"renounceOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useSimulateAbondRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: abondAbi,
+    address: abondAddress,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"setAbondData"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
+ */
+export const useSimulateAbondSetAbondData =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: abondAbi,
+    address: abondAddress,
     functionName: 'setAbondData',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"setBorrowingContract"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"setBorrowingContract"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondSetBorrowingContract<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof abondABI,
-          'setBorrowingContract'
-        >['request']['abi'],
-        'setBorrowingContract',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'setBorrowingContract'
-      }
-    : UseContractWriteConfig<typeof abondABI, 'setBorrowingContract', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setBorrowingContract'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'setBorrowingContract', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useSimulateAbondSetBorrowingContract =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: abondAbi,
+    address: abondAddress,
     functionName: 'setBorrowingContract',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transfer"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"transfer"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondTransfer<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof abondABI,
-          'transfer'
-        >['request']['abi'],
-        'transfer',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'transfer' }
-    : UseContractWriteConfig<typeof abondABI, 'transfer', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transfer'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'transfer', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'transfer',
-    ...config,
-  } as any)
-}
+export const useSimulateAbondTransfer = /*#__PURE__*/ createUseSimulateContract(
+  { abi: abondAbi, address: abondAddress, functionName: 'transfer' },
+)
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferFrom"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"transferFrom"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondTransferFrom<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof abondABI,
-          'transferFrom'
-        >['request']['abi'],
-        'transferFrom',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'transferFrom'
-      }
-    : UseContractWriteConfig<typeof abondABI, 'transferFrom', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'transferFrom', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useSimulateAbondTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: abondAbi,
+    address: abondAddress,
     functionName: 'transferFrom',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferOwnership"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"transferOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondTransferOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof abondABI,
-          'transferOwnership'
-        >['request']['abi'],
-        'transferOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      }
-    : UseContractWriteConfig<typeof abondABI, 'transferOwnership', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'transferOwnership', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useSimulateAbondTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: abondAbi,
+    address: abondAddress,
     functionName: 'transferOwnership',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"unpause"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"unpause"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondUnpause<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof abondABI,
-          'unpause'
-        >['request']['abi'],
-        'unpause',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'unpause' }
-    : UseContractWriteConfig<typeof abondABI, 'unpause', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'unpause'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'unpause', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'unpause',
-    ...config,
-  } as any)
-}
+export const useSimulateAbondUnpause = /*#__PURE__*/ createUseSimulateContract({
+  abi: abondAbi,
+  address: abondAddress,
+  functionName: 'unpause',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"upgradeToAndCall"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link abondAbi}__ and `functionName` set to `"upgradeToAndCall"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondUpgradeToAndCall<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof abondAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof abondABI,
-          'upgradeToAndCall'
-        >['request']['abi'],
-        'upgradeToAndCall',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      }
-    : UseContractWriteConfig<typeof abondABI, 'upgradeToAndCall', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      } = {} as any,
-) {
-  return useContractWrite<typeof abondABI, 'upgradeToAndCall', TMode>({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useSimulateAbondUpgradeToAndCall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: abondAbi,
+    address: abondAddress,
     functionName: 'upgradeToAndCall',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link abondAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function usePrepareAbondWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, TFunctionName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, TFunctionName>)
-}
+export const useWatchAbondEvent = /*#__PURE__*/ createUseWatchContractEvent({
+  abi: abondAbi,
+  address: abondAddress,
+})
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"approve"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link abondAbi}__ and `eventName` set to `"Approval"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function usePrepareAbondApprove(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'approve'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'approve',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'approve'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burn"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondBurn(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'burn'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'burn',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'burn'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFrom"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondBurnFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'burnFrom'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'burnFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'burnFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"burnFromUser"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondBurnFromUser(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'burnFromUser'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'burnFromUser',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'burnFromUser'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"initialize"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondInitialize(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'initialize'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'initialize',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'initialize'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"mint"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondMint(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'mint'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'mint',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'mint'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"pause"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondPause(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'pause'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'pause',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'pause'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"renounceOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondRenounceOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'renounceOwnership'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'renounceOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'renounceOwnership'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"setAbondData"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondSetAbondData(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'setAbondData'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'setAbondData',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'setAbondData'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"setBorrowingContract"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondSetBorrowingContract(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'setBorrowingContract'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'setBorrowingContract',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'setBorrowingContract'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transfer"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondTransfer(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'transfer'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'transfer',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'transfer'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferFrom"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'transferFrom'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'transferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'transferFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"transferOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondTransferOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'transferOwnership'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'transferOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'transferOwnership'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"unpause"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondUnpause(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'unpause'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'unpause',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'unpause'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link abondABI}__ and `functionName` set to `"upgradeToAndCall"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function usePrepareAbondUpgradeToAndCall(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof abondABI, 'upgradeToAndCall'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    functionName: 'upgradeToAndCall',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof abondABI, 'upgradeToAndCall'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function useAbondEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof abondABI, TEventName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: abondABI,
-    address: abondAddress[11155111],
-    ...config,
-  } as UseContractEventConfig<typeof abondABI, TEventName>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Approval"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
- */
-export function useAbondApprovalEvent(
-  config: Omit<
-    UseContractEventConfig<typeof abondABI, 'Approval'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useWatchAbondApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: abondAbi,
+    address: abondAddress,
     eventName: 'Approval',
-    ...config,
-  } as UseContractEventConfig<typeof abondABI, 'Approval'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Initialized"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link abondAbi}__ and `eventName` set to `"Initialized"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondInitializedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof abondABI, 'Initialized'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useWatchAbondInitializedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: abondAbi,
+    address: abondAddress,
     eventName: 'Initialized',
-    ...config,
-  } as UseContractEventConfig<typeof abondABI, 'Initialized'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"OwnershipTransferred"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link abondAbi}__ and `eventName` set to `"OwnershipTransferred"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondOwnershipTransferredEvent(
-  config: Omit<
-    UseContractEventConfig<typeof abondABI, 'OwnershipTransferred'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useWatchAbondOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: abondAbi,
+    address: abondAddress,
     eventName: 'OwnershipTransferred',
-    ...config,
-  } as UseContractEventConfig<typeof abondABI, 'OwnershipTransferred'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Paused"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link abondAbi}__ and `eventName` set to `"Paused"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondPausedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof abondABI, 'Paused'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useWatchAbondPausedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: abondAbi,
+    address: abondAddress,
     eventName: 'Paused',
-    ...config,
-  } as UseContractEventConfig<typeof abondABI, 'Paused'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Transfer"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link abondAbi}__ and `eventName` set to `"Transfer"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondTransferEvent(
-  config: Omit<
-    UseContractEventConfig<typeof abondABI, 'Transfer'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useWatchAbondTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: abondAbi,
+    address: abondAddress,
     eventName: 'Transfer',
-    ...config,
-  } as UseContractEventConfig<typeof abondABI, 'Transfer'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Unpaused"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link abondAbi}__ and `eventName` set to `"Unpaused"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondUnpausedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof abondABI, 'Unpaused'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useWatchAbondUnpausedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: abondAbi,
+    address: abondAddress,
     eventName: 'Unpaused',
-    ...config,
-  } as UseContractEventConfig<typeof abondABI, 'Unpaused'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link abondABI}__ and `eventName` set to `"Upgraded"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link abondAbi}__ and `eventName` set to `"Upgraded"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd83780601Db14F911c7c02F697e6efdc8C20F6a7)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x37df4e70eDc4525Be0d7380730a7224Cf5205c14)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xdd8F438822473bc650567231C940b55C3B1E98B3)
  */
-export function useAbondUpgradedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof abondABI, 'Upgraded'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof abondAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: abondABI,
-    address: abondAddress[11155111],
+export const useWatchAbondUpgradedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: abondAbi,
+    address: abondAddress,
     eventName: 'Upgraded',
-    ...config,
-  } as UseContractEventConfig<typeof abondABI, 'Upgraded'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useAmintRead<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof amintABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    ...config,
-  } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
-}
+export const useReadBorrowingContract = /*#__PURE__*/ createUseReadContract({
+  abi: borrowingContractAbi,
+  address: borrowingContractAddress,
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useAmintUpgradeInterfaceVersion<
-  TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
-  TSelectData = ReadContractResult<typeof amintABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: amintABI,
-    address: amintAddress[11155111],
+export const useReadBorrowingContractUpgradeInterfaceVersion =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'UPGRADE_INTERFACE_VERSION',
-    ...config,
-  } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"allowance"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"allowInitializePath"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useAmintAllowance<
-  TFunctionName extends 'allowance',
-  TSelectData = ReadContractResult<typeof amintABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'allowance',
-    ...config,
-  } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
-}
+export const useReadBorrowingContractAllowInitializePath =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'allowInitializePath',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"balanceOf"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"endpoint"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useAmintBalanceOf<
-  TFunctionName extends 'balanceOf',
-  TSelectData = ReadContractResult<typeof amintABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
-}
+export const useReadBorrowingContractEndpoint =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'endpoint',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"decimals"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"getAbondYields"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useAmintDecimals<
-  TFunctionName extends 'decimals',
-  TSelectData = ReadContractResult<typeof amintABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'decimals',
-    ...config,
-  } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"name"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintName<
-  TFunctionName extends 'name',
-  TSelectData = ReadContractResult<typeof amintABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'name',
-    ...config,
-  } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"owner"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintOwner<
-  TFunctionName extends 'owner',
-  TSelectData = ReadContractResult<typeof amintABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'owner',
-    ...config,
-  } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"paused"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintPaused<
-  TFunctionName extends 'paused',
-  TSelectData = ReadContractResult<typeof amintABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'paused',
-    ...config,
-  } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"proxiableUUID"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintProxiableUuid<
-  TFunctionName extends 'proxiableUUID',
-  TSelectData = ReadContractResult<typeof amintABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'proxiableUUID',
-    ...config,
-  } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"symbol"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintSymbol<
-  TFunctionName extends 'symbol',
-  TSelectData = ReadContractResult<typeof amintABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'symbol',
-    ...config,
-  } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"totalSupply"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintTotalSupply<
-  TFunctionName extends 'totalSupply',
-  TSelectData = ReadContractResult<typeof amintABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'totalSupply',
-    ...config,
-  } as UseContractReadConfig<typeof amintABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof amintABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      > & { address?: Address; chainId?: TChainId }
-    : UseContractWriteConfig<typeof amintABI, TFunctionName, TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, TFunctionName, TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"approve"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintApprove<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof amintABI,
-          'approve'
-        >['request']['abi'],
-        'approve',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'approve' }
-    : UseContractWriteConfig<typeof amintABI, 'approve', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'approve'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'approve', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'approve',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burn"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintBurn<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof amintABI, 'burn'>['request']['abi'],
-        'burn',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'burn' }
-    : UseContractWriteConfig<typeof amintABI, 'burn', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'burn'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'burn', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'burn',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFrom"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintBurnFrom<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof amintABI,
-          'burnFrom'
-        >['request']['abi'],
-        'burnFrom',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'burnFrom' }
-    : UseContractWriteConfig<typeof amintABI, 'burnFrom', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'burnFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'burnFrom', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'burnFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFromUser"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintBurnFromUser<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof amintABI,
-          'burnFromUser'
-        >['request']['abi'],
-        'burnFromUser',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'burnFromUser'
-      }
-    : UseContractWriteConfig<typeof amintABI, 'burnFromUser', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'burnFromUser'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'burnFromUser', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'burnFromUser',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"initialize"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintInitialize<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof amintABI,
-          'initialize'
-        >['request']['abi'],
-        'initialize',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'initialize' }
-    : UseContractWriteConfig<typeof amintABI, 'initialize', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'initialize'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'initialize', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'initialize',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"mint"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintMint<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof amintABI, 'mint'>['request']['abi'],
-        'mint',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'mint' }
-    : UseContractWriteConfig<typeof amintABI, 'mint', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'mint'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'mint', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'mint',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"pause"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintPause<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof amintABI, 'pause'>['request']['abi'],
-        'pause',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'pause' }
-    : UseContractWriteConfig<typeof amintABI, 'pause', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'pause'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'pause', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'pause',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"renounceOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintRenounceOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof amintABI,
-          'renounceOwnership'
-        >['request']['abi'],
-        'renounceOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      }
-    : UseContractWriteConfig<typeof amintABI, 'renounceOwnership', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'renounceOwnership', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'renounceOwnership',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"setBorrowingContract"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintSetBorrowingContract<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof amintABI,
-          'setBorrowingContract'
-        >['request']['abi'],
-        'setBorrowingContract',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'setBorrowingContract'
-      }
-    : UseContractWriteConfig<typeof amintABI, 'setBorrowingContract', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setBorrowingContract'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'setBorrowingContract', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'setBorrowingContract',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"setCdsContract"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintSetCdsContract<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof amintABI,
-          'setCdsContract'
-        >['request']['abi'],
-        'setCdsContract',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'setCdsContract'
-      }
-    : UseContractWriteConfig<typeof amintABI, 'setCdsContract', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setCdsContract'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'setCdsContract', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'setCdsContract',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transfer"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintTransfer<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof amintABI,
-          'transfer'
-        >['request']['abi'],
-        'transfer',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'transfer' }
-    : UseContractWriteConfig<typeof amintABI, 'transfer', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transfer'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'transfer', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'transfer',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferFrom"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintTransferFrom<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof amintABI,
-          'transferFrom'
-        >['request']['abi'],
-        'transferFrom',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'transferFrom'
-      }
-    : UseContractWriteConfig<typeof amintABI, 'transferFrom', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'transferFrom', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'transferFrom',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintTransferOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof amintABI,
-          'transferOwnership'
-        >['request']['abi'],
-        'transferOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      }
-    : UseContractWriteConfig<typeof amintABI, 'transferOwnership', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'transferOwnership', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'transferOwnership',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"unpause"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintUnpause<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof amintABI,
-          'unpause'
-        >['request']['abi'],
-        'unpause',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'unpause' }
-    : UseContractWriteConfig<typeof amintABI, 'unpause', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'unpause'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'unpause', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'unpause',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"upgradeToAndCall"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintUpgradeToAndCall<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof amintAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof amintABI,
-          'upgradeToAndCall'
-        >['request']['abi'],
-        'upgradeToAndCall',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      }
-    : UseContractWriteConfig<typeof amintABI, 'upgradeToAndCall', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      } = {} as any,
-) {
-  return useContractWrite<typeof amintABI, 'upgradeToAndCall', TMode>({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'upgradeToAndCall',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, TFunctionName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, TFunctionName>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"approve"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintApprove(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'approve'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'approve',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'approve'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burn"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintBurn(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'burn'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'burn',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'burn'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFrom"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintBurnFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'burnFrom'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'burnFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'burnFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"burnFromUser"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintBurnFromUser(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'burnFromUser'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'burnFromUser',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'burnFromUser'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"initialize"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintInitialize(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'initialize'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'initialize',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'initialize'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"mint"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintMint(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'mint'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'mint',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'mint'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"pause"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintPause(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'pause'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'pause',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'pause'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"renounceOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintRenounceOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'renounceOwnership'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'renounceOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'renounceOwnership'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"setBorrowingContract"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintSetBorrowingContract(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'setBorrowingContract'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'setBorrowingContract',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'setBorrowingContract'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"setCdsContract"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintSetCdsContract(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'setCdsContract'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'setCdsContract',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'setCdsContract'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transfer"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintTransfer(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'transfer'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'transfer',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'transfer'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferFrom"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'transferFrom'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'transferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'transferFrom'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"transferOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintTransferOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'transferOwnership'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'transferOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'transferOwnership'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"unpause"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintUnpause(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'unpause'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'unpause',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'unpause'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link amintABI}__ and `functionName` set to `"upgradeToAndCall"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function usePrepareAmintUpgradeToAndCall(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof amintABI, 'upgradeToAndCall'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    functionName: 'upgradeToAndCall',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof amintABI, 'upgradeToAndCall'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof amintABI, TEventName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    ...config,
-  } as UseContractEventConfig<typeof amintABI, TEventName>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Approval"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintApprovalEvent(
-  config: Omit<
-    UseContractEventConfig<typeof amintABI, 'Approval'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    eventName: 'Approval',
-    ...config,
-  } as UseContractEventConfig<typeof amintABI, 'Approval'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Initialized"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintInitializedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof amintABI, 'Initialized'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    eventName: 'Initialized',
-    ...config,
-  } as UseContractEventConfig<typeof amintABI, 'Initialized'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"OwnershipTransferred"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintOwnershipTransferredEvent(
-  config: Omit<
-    UseContractEventConfig<typeof amintABI, 'OwnershipTransferred'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    eventName: 'OwnershipTransferred',
-    ...config,
-  } as UseContractEventConfig<typeof amintABI, 'OwnershipTransferred'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Paused"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintPausedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof amintABI, 'Paused'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    eventName: 'Paused',
-    ...config,
-  } as UseContractEventConfig<typeof amintABI, 'Paused'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Transfer"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintTransferEvent(
-  config: Omit<
-    UseContractEventConfig<typeof amintABI, 'Transfer'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    eventName: 'Transfer',
-    ...config,
-  } as UseContractEventConfig<typeof amintABI, 'Transfer'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Unpaused"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintUnpausedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof amintABI, 'Unpaused'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    eventName: 'Unpaused',
-    ...config,
-  } as UseContractEventConfig<typeof amintABI, 'Unpaused'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link amintABI}__ and `eventName` set to `"Upgraded"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x163B51BdFA222a0dDf0EB3ec45CcbABC55993cEE)
- */
-export function useAmintUpgradedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof amintABI, 'Upgraded'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof amintAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: amintABI,
-    address: amintAddress[11155111],
-    eventName: 'Upgraded',
-    ...config,
-  } as UseContractEventConfig<typeof amintABI, 'Upgraded'>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractRead<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"APY"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractApy<
-  TFunctionName extends 'APY',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'APY',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"DOMAIN_SEPARATOR"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractDomainSeparator<
-  TFunctionName extends 'DOMAIN_SEPARATOR',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'DOMAIN_SEPARATOR',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"PERMIT_TYPEHASH"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractPermitTypehash<
-  TFunctionName extends 'PERMIT_TYPEHASH',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'PERMIT_TYPEHASH',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractUpgradeInterfaceVersion<
-  TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'UPGRADE_INTERFACE_VERSION',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"abond"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractAbond<
-  TFunctionName extends 'abond',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'abond',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"amint"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractAmint<
-  TFunctionName extends 'amint',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'amint',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"cds"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractCds<
-  TFunctionName extends 'cds',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'cds',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"cdsAddress"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractCdsAddress<
-  TFunctionName extends 'cdsAddress',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'cdsAddress',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"ethRemainingInWithdraw"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractEthRemainingInWithdraw<
-  TFunctionName extends 'ethRemainingInWithdraw',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'ethRemainingInWithdraw',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"ethValueRemainingInWithdraw"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractEthValueRemainingInWithdraw<
-  TFunctionName extends 'ethValueRemainingInWithdraw',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'ethValueRemainingInWithdraw',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getAbondYields"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractGetAbondYields<
-  TFunctionName extends 'getAbondYields',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useReadBorrowingContractGetAbondYields =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'getAbondYields',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getLTV"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"getLTV"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractGetLtv<
-  TFunctionName extends 'getLTV',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useReadBorrowingContractGetLtv =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'getLTV',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getLastEthVaultValue"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"getUSDValue"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractGetLastEthVaultValue<
-  TFunctionName extends 'getLastEthVaultValue',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'getLastEthVaultValue',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"getUSDValue"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractGetUsdValue<
-  TFunctionName extends 'getUSDValue',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useReadBorrowingContractGetUsdValue =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'getUSDValue',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastCDSPoolValue"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"isComposeMsgSender"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractLastCdsPoolValue<
-  TFunctionName extends 'lastCDSPoolValue',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'lastCDSPoolValue',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+export const useReadBorrowingContractIsComposeMsgSender =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'isComposeMsgSender',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastCumulativeRate"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"lastCumulativeRate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractLastCumulativeRate<
-  TFunctionName extends 'lastCumulativeRate',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useReadBorrowingContractLastCumulativeRate =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'lastCumulativeRate',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"lastEthVaultValue"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"nextNonce"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractLastEthVaultValue<
-  TFunctionName extends 'lastEthVaultValue',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'lastEthVaultValue',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+export const useReadBorrowingContractNextNonce =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'nextNonce',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"multiSign"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"oAppVersion"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractMultiSign<
-  TFunctionName extends 'multiSign',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'multiSign',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+export const useReadBorrowingContractOAppVersion =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'oAppVersion',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"name"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"omniChainBorrowingCDSPoolValue"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractName<
-  TFunctionName extends 'name',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'name',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+export const useReadBorrowingContractOmniChainBorrowingCdsPoolValue =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'omniChainBorrowingCDSPoolValue',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"noOfLiquidations"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"omniChainBorrowingNoOfLiquidations"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractNoOfLiquidations<
-  TFunctionName extends 'noOfLiquidations',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'noOfLiquidations',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+export const useReadBorrowingContractOmniChainBorrowingNoOfLiquidations =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'omniChainBorrowingNoOfLiquidations',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"options"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"owner"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractOptions<
-  TFunctionName extends 'options',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'options',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"owner"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractOwner<
-  TFunctionName extends 'owner',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useReadBorrowingContractOwner =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'owner',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"priceFeedAddress"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"peers"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractPriceFeedAddress<
-  TFunctionName extends 'priceFeedAddress',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'priceFeedAddress',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+export const useReadBorrowingContractPeers =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'peers',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"proxiableUUID"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"proxiableUUID"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractProxiableUuid<
-  TFunctionName extends 'proxiableUUID',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useReadBorrowingContractProxiableUuid =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'proxiableUUID',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"ratePerSec"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"quote"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractRatePerSec<
-  TFunctionName extends 'ratePerSec',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'ratePerSec',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+export const useReadBorrowingContractQuote =
+  /*#__PURE__*/ createUseReadContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'quote',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"totalNormalizedAmount"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractTotalNormalizedAmount<
-  TFunctionName extends 'totalNormalizedAmount',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'totalNormalizedAmount',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+export const useWriteBorrowingContract = /*#__PURE__*/ createUseWriteContract({
+  abi: borrowingContractAbi,
+  address: borrowingContractAddress,
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"treasury"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"calculateCumulativeRate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractTreasury<
-  TFunctionName extends 'treasury',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'treasury',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"treasuryAddress"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractTreasuryAddress<
-  TFunctionName extends 'treasuryAddress',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'treasuryAddress',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"version"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractVersion<
-  TFunctionName extends 'version',
-  TSelectData = ReadContractResult<typeof borrowingContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<
-      typeof borrowingContractABI,
-      TFunctionName,
-      TSelectData
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'version',
-    ...config,
-  } as UseContractReadConfig<
-    typeof borrowingContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          string
-        >['request']['abi'],
-        TFunctionName,
-        TMode
-      > & { address?: Address; chainId?: TChainId }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        TFunctionName,
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, TFunctionName, TMode>({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateCumulativeRate"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractCalculateCumulativeRate<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'calculateCumulativeRate'
-        >['request']['abi'],
-        'calculateCumulativeRate',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'calculateCumulativeRate'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'calculateCumulativeRate',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'calculateCumulativeRate'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof borrowingContractABI,
-    'calculateCumulativeRate',
-    TMode
-  >({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractCalculateCumulativeRate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'calculateCumulativeRate',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateRatio"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"calculateRatio"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractCalculateRatio<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'calculateRatio'
-        >['request']['abi'],
-        'calculateRatio',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'calculateRatio'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'calculateRatio',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'calculateRatio'
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, 'calculateRatio', TMode>(
-    {
-      abi: borrowingContractABI,
-      address: borrowingContractAddress[11155111],
-      functionName: 'calculateRatio',
-      ...config,
-    } as any,
-  )
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositTokens"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractDepositTokens<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'depositTokens'
-        >['request']['abi'],
-        'depositTokens',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'depositTokens'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'depositTokens',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'depositTokens'
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, 'depositTokens', TMode>({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'depositTokens',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"initialize"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractInitialize<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'initialize'
-        >['request']['abi'],
-        'initialize',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'initialize' }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'initialize',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'initialize'
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, 'initialize', TMode>({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'initialize',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"liquidate"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractLiquidate<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'liquidate'
-        >['request']['abi'],
-        'liquidate',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'liquidate' }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'liquidate',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'liquidate'
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, 'liquidate', TMode>({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'liquidate',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"redeemYields"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractRedeemYields<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'redeemYields'
-        >['request']['abi'],
-        'redeemYields',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'redeemYields'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'redeemYields',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'redeemYields'
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, 'redeemYields', TMode>({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'redeemYields',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"renounceOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractRenounceOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'renounceOwnership'
-        >['request']['abi'],
-        'renounceOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'renounceOwnership',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof borrowingContractABI,
-    'renounceOwnership',
-    TMode
-  >({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'renounceOwnership',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAPR"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractSetApr<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'setAPR'
-        >['request']['abi'],
-        'setAPR',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'setAPR' }
-    : UseContractWriteConfig<typeof borrowingContractABI, 'setAPR', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setAPR'
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, 'setAPR', TMode>({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'setAPR',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAdmin"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractSetAdmin<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'setAdmin'
-        >['request']['abi'],
-        'setAdmin',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'setAdmin' }
-    : UseContractWriteConfig<typeof borrowingContractABI, 'setAdmin', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setAdmin'
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, 'setAdmin', TMode>({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'setAdmin',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setBondRatio"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractSetBondRatio<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'setBondRatio'
-        >['request']['abi'],
-        'setBondRatio',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'setBondRatio'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'setBondRatio',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setBondRatio'
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, 'setBondRatio', TMode>({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'setBondRatio',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setLTV"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractSetLtv<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'setLTV'
-        >['request']['abi'],
-        'setLTV',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'setLTV' }
-    : UseContractWriteConfig<typeof borrowingContractABI, 'setLTV', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setLTV'
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, 'setLTV', TMode>({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'setLTV',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setOptions"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractSetOptions<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'setOptions'
-        >['request']['abi'],
-        'setOptions',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'setOptions' }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'setOptions',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setOptions'
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, 'setOptions', TMode>({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'setOptions',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setTreasury"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractSetTreasury<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'setTreasury'
-        >['request']['abi'],
-        'setTreasury',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'setTreasury'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'setTreasury',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setTreasury'
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, 'setTreasury', TMode>({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'setTreasury',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractSetWithdrawTimeLimit<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'setWithdrawTimeLimit'
-        >['request']['abi'],
-        'setWithdrawTimeLimit',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'setWithdrawTimeLimit'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'setWithdrawTimeLimit',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setWithdrawTimeLimit'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof borrowingContractABI,
-    'setWithdrawTimeLimit',
-    TMode
-  >({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'setWithdrawTimeLimit',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"transferOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractTransferOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'transferOwnership'
-        >['request']['abi'],
-        'transferOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'transferOwnership',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof borrowingContractABI,
-    'transferOwnership',
-    TMode
-  >({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'transferOwnership',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"updateLastEthVaultValue"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractUpdateLastEthVaultValue<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'updateLastEthVaultValue'
-        >['request']['abi'],
-        'updateLastEthVaultValue',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateLastEthVaultValue'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'updateLastEthVaultValue',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateLastEthVaultValue'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof borrowingContractABI,
-    'updateLastEthVaultValue',
-    TMode
-  >({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'updateLastEthVaultValue',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"upgradeToAndCall"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractUpgradeToAndCall<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'upgradeToAndCall'
-        >['request']['abi'],
-        'upgradeToAndCall',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      }
-    : UseContractWriteConfig<
-        typeof borrowingContractABI,
-        'upgradeToAndCall',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof borrowingContractABI,
-    'upgradeToAndCall',
-    TMode
-  >({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'upgradeToAndCall',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withDraw"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function useBorrowingContractWithDraw<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof borrowingContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof borrowingContractABI,
-          'withDraw'
-        >['request']['abi'],
-        'withDraw',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'withDraw' }
-    : UseContractWriteConfig<typeof borrowingContractABI, 'withDraw', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'withDraw'
-      } = {} as any,
-) {
-  return useContractWrite<typeof borrowingContractABI, 'withDraw', TMode>({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'withDraw',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function usePrepareBorrowingContractWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, TFunctionName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    TFunctionName
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateCumulativeRate"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function usePrepareBorrowingContractCalculateCumulativeRate(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof borrowingContractABI,
-      'calculateCumulativeRate'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'calculateCumulativeRate',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'calculateCumulativeRate'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"calculateRatio"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function usePrepareBorrowingContractCalculateRatio(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof borrowingContractABI,
-      'calculateRatio'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractCalculateRatio =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'calculateRatio',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'calculateRatio'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"depositTokens"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"depositTokens"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractDepositTokens(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'depositTokens'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractDepositTokens =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'depositTokens',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'depositTokens'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"initialize"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"initialize"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractInitialize(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'initialize'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractInitialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'initialize',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'initialize'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"liquidate"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"liquidate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractLiquidate(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'liquidate'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractLiquidate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'liquidate',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'liquidate'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"redeemYields"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"lzReceive"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractRedeemYields(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'redeemYields'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractLzReceive =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'lzReceive',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"redeemYields"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useWriteBorrowingContractRedeemYields =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'redeemYields',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'redeemYields'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"renounceOwnership"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"renounceOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractRenounceOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof borrowingContractABI,
-      'renounceOwnership'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'renounceOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'renounceOwnership'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAPR"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setAPR"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractSetApr(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setAPR'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractSetApr =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'setAPR',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setAPR'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setAdmin"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setAdmin"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractSetAdmin(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setAdmin'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractSetAdmin =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'setAdmin',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setAdmin'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setBondRatio"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setBondRatio"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractSetBondRatio(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setBondRatio'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractSetBondRatio =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'setBondRatio',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'setBondRatio'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setLTV"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setBorrowLiquidation"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractSetLtv(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setLTV'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractSetBorrowLiquidation =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setBorrowLiquidation',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setDelegate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useWriteBorrowingContractSetDelegate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setDelegate',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setDstEid"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useWriteBorrowingContractSetDstEid =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setDstEid',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setLTV"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useWriteBorrowingContractSetLtv =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'setLTV',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setLTV'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setOptions"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setOptions"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractSetOptions(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setOptions'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractSetOptions =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'setOptions',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setOptions'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setTreasury"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setPeer"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractSetTreasury(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'setTreasury'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractSetPeer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setPeer',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setTreasury"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useWriteBorrowingContractSetTreasury =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'setTreasury',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'setTreasury'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"transferOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractSetWithdrawTimeLimit(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof borrowingContractABI,
-      'setWithdrawTimeLimit'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    functionName: 'setWithdrawTimeLimit',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'setWithdrawTimeLimit'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"transferOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
- */
-export function usePrepareBorrowingContractTransferOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof borrowingContractABI,
-      'transferOwnership'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'transferOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'transferOwnership'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"updateLastEthVaultValue"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"updateLastEthVaultValue"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractUpdateLastEthVaultValue(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof borrowingContractABI,
-      'updateLastEthVaultValue'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractUpdateLastEthVaultValue =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'updateLastEthVaultValue',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'updateLastEthVaultValue'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"upgradeToAndCall"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"upgradeToAndCall"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractUpgradeToAndCall(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof borrowingContractABI,
-      'upgradeToAndCall'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractUpgradeToAndCall =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'upgradeToAndCall',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof borrowingContractABI,
-    'upgradeToAndCall'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link borrowingContractABI}__ and `functionName` set to `"withDraw"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"withDraw"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function usePrepareBorrowingContractWithDraw(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof borrowingContractABI, 'withDraw'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWriteBorrowingContractWithDraw =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     functionName: 'withDraw',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof borrowingContractABI, 'withDraw'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof borrowingContractABI, TEventName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
-    ...config,
-  } as UseContractEventConfig<typeof borrowingContractABI, TEventName>)
-}
+export const useSimulateBorrowingContract =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Deposit"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"calculateCumulativeRate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractDepositEvent(
-  config: Omit<
-    UseContractEventConfig<typeof borrowingContractABI, 'Deposit'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useSimulateBorrowingContractCalculateCumulativeRate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'calculateCumulativeRate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"calculateRatio"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractCalculateRatio =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'calculateRatio',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"depositTokens"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractDepositTokens =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'depositTokens',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"initialize"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"liquidate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractLiquidate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'liquidate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"lzReceive"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractLzReceive =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'lzReceive',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"redeemYields"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractRedeemYields =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'redeemYields',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"renounceOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setAPR"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractSetApr =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setAPR',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setAdmin"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractSetAdmin =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setAdmin',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setBondRatio"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractSetBondRatio =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setBondRatio',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setBorrowLiquidation"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractSetBorrowLiquidation =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setBorrowLiquidation',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setDelegate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractSetDelegate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setDelegate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setDstEid"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractSetDstEid =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setDstEid',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setLTV"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractSetLtv =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setLTV',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setOptions"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractSetOptions =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setOptions',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setPeer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractSetPeer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setPeer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"setTreasury"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractSetTreasury =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'setTreasury',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"transferOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"updateLastEthVaultValue"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractUpdateLastEthVaultValue =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'updateLastEthVaultValue',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"upgradeToAndCall"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractUpgradeToAndCall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'upgradeToAndCall',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"withDraw"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useSimulateBorrowingContractWithDraw =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    functionName: 'withDraw',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link borrowingContractAbi}__
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useWatchBorrowingContractEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link borrowingContractAbi}__ and `eventName` set to `"Deposit"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useWatchBorrowingContractDepositEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     eventName: 'Deposit',
-    ...config,
-  } as UseContractEventConfig<typeof borrowingContractABI, 'Deposit'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Initialized"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link borrowingContractAbi}__ and `eventName` set to `"Initialized"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractInitializedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof borrowingContractABI, 'Initialized'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWatchBorrowingContractInitializedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     eventName: 'Initialized',
-    ...config,
-  } as UseContractEventConfig<typeof borrowingContractABI, 'Initialized'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Liquidate"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link borrowingContractAbi}__ and `eventName` set to `"Liquidate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractLiquidateEvent(
-  config: Omit<
-    UseContractEventConfig<typeof borrowingContractABI, 'Liquidate'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWatchBorrowingContractLiquidateEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     eventName: 'Liquidate',
-    ...config,
-  } as UseContractEventConfig<typeof borrowingContractABI, 'Liquidate'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"OwnershipTransferred"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link borrowingContractAbi}__ and `eventName` set to `"OwnershipTransferred"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractOwnershipTransferredEvent(
-  config: Omit<
-    UseContractEventConfig<typeof borrowingContractABI, 'OwnershipTransferred'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWatchBorrowingContractOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     eventName: 'OwnershipTransferred',
-    ...config,
-  } as UseContractEventConfig<
-    typeof borrowingContractABI,
-    'OwnershipTransferred'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Upgraded"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link borrowingContractAbi}__ and `eventName` set to `"PeerSet"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractUpgradedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof borrowingContractABI, 'Upgraded'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWatchBorrowingContractPeerSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
+    eventName: 'PeerSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link borrowingContractAbi}__ and `eventName` set to `"Upgraded"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
+ */
+export const useWatchBorrowingContractUpgradedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     eventName: 'Upgraded',
-    ...config,
-  } as UseContractEventConfig<typeof borrowingContractABI, 'Upgraded'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link borrowingContractABI}__ and `eventName` set to `"Withdraw"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link borrowingContractAbi}__ and `eventName` set to `"Withdraw"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1F6E1A9139399c98fd42a0Ee80844a5F75C15EBb)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
  */
-export function useBorrowingContractWithdrawEvent(
-  config: Omit<
-    UseContractEventConfig<typeof borrowingContractABI, 'Withdraw'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof borrowingContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: borrowingContractABI,
-    address: borrowingContractAddress[11155111],
+export const useWatchBorrowingContractWithdrawEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: borrowingContractAbi,
+    address: borrowingContractAddress,
     eventName: 'Withdraw',
-    ...config,
-  } as UseContractEventConfig<typeof borrowingContractABI, 'Withdraw'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsRead<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCds = /*#__PURE__*/ createUseReadContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"PRECISION"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsPrecision<
-  TFunctionName extends 'PRECISION',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'PRECISION',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
- */
-export function useCdsUpgradeInterfaceVersion<
-  TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useReadCdsUpgradeInterfaceVersion =
+  /*#__PURE__*/ createUseReadContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'UPGRADE_INTERFACE_VERSION',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"amint"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"allowInitializePath"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsAmint<
-  TFunctionName extends 'amint',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'amint',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsAllowInitializePath =
+  /*#__PURE__*/ createUseReadContract({
+    abi: cdsAbi,
+    address: cdsAddress,
+    functionName: 'allowInitializePath',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"amintLimit"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"cdsCount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsAmintLimit<
-  TFunctionName extends 'amintLimit',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'amintLimit',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsCdsCount = /*#__PURE__*/ createUseReadContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'cdsCount',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"borrowing"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"cdsDetails"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsBorrowing<
-  TFunctionName extends 'borrowing',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'borrowing',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsCdsDetails = /*#__PURE__*/ createUseReadContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'cdsDetails',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"borrowingContract"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"endpoint"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsBorrowingContract<
-  TFunctionName extends 'borrowingContract',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'borrowingContract',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsEndpoint = /*#__PURE__*/ createUseReadContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'endpoint',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"burnedAmintInRedeem"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"getCDSDepositDetails"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsBurnedAmintInRedeem<
-  TFunctionName extends 'burnedAmintInRedeem',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'burnedAmintInRedeem',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsGetCdsDepositDetails =
+  /*#__PURE__*/ createUseReadContract({
+    abi: cdsAbi,
+    address: cdsAddress,
+    functionName: 'getCDSDepositDetails',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cdsCount"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"isComposeMsgSender"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsCdsCount<
-  TFunctionName extends 'cdsCount',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'cdsCount',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsIsComposeMsgSender = /*#__PURE__*/ createUseReadContract(
+  { abi: cdsAbi, address: cdsAddress, functionName: 'isComposeMsgSender' },
+)
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cdsDetails"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"nextNonce"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsCdsDetails<
-  TFunctionName extends 'cdsDetails',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'cdsDetails',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsNextNonce = /*#__PURE__*/ createUseReadContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'nextNonce',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cumulativeValue"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"oAppVersion"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsCumulativeValue<
-  TFunctionName extends 'cumulativeValue',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'cumulativeValue',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsOAppVersion = /*#__PURE__*/ createUseReadContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'oAppVersion',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"cumulativeValueSign"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"omniChainCDSTotalAvailableLiquidationAmount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsCumulativeValueSign<
-  TFunctionName extends 'cumulativeValueSign',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'cumulativeValueSign',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsOmniChainCdsTotalAvailableLiquidationAmount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: cdsAbi,
+    address: cdsAddress,
+    functionName: 'omniChainCDSTotalAvailableLiquidationAmount',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"fallbackEthPrice"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"omniChainCDSTotalCdsDepositedAmount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsFallbackEthPrice<
-  TFunctionName extends 'fallbackEthPrice',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'fallbackEthPrice',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsOmniChainCdsTotalCdsDepositedAmount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: cdsAbi,
+    address: cdsAddress,
+    functionName: 'omniChainCDSTotalCdsDepositedAmount',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"lastCumulativeRate"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"owner"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsLastCumulativeRate<
-  TFunctionName extends 'lastCumulativeRate',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'lastCumulativeRate',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsOwner = /*#__PURE__*/ createUseReadContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'owner',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"lastEthPrice"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"peers"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsLastEthPrice<
-  TFunctionName extends 'lastEthPrice',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'lastEthPrice',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsPeers = /*#__PURE__*/ createUseReadContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'peers',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"liquidationIndexToInfo"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"proxiableUUID"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsLiquidationIndexToInfo<
-  TFunctionName extends 'liquidationIndexToInfo',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'liquidationIndexToInfo',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsProxiableUuid = /*#__PURE__*/ createUseReadContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'proxiableUUID',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"multiSign"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"quote"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsMultiSign<
-  TFunctionName extends 'multiSign',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'multiSign',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsQuote = /*#__PURE__*/ createUseReadContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'quote',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"owner"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"totalAvailableLiquidationAmount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsOwner<
-  TFunctionName extends 'owner',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'owner',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"proxiableUUID"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
- */
-export function useCdsProxiableUuid<
-  TFunctionName extends 'proxiableUUID',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'proxiableUUID',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalAvailableLiquidationAmount"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
- */
-export function useCdsTotalAvailableLiquidationAmount<
-  TFunctionName extends 'totalAvailableLiquidationAmount',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useReadCdsTotalAvailableLiquidationAmount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'totalAvailableLiquidationAmount',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalCdsDepositedAmount"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"totalCdsDepositedAmount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsTotalCdsDepositedAmount<
-  TFunctionName extends 'totalCdsDepositedAmount',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useReadCdsTotalCdsDepositedAmount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'totalCdsDepositedAmount',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"totalCdsDepositedAmountWithOptionFees"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"usdaLimit"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsTotalCdsDepositedAmountWithOptionFees<
-  TFunctionName extends 'totalCdsDepositedAmountWithOptionFees',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'totalCdsDepositedAmountWithOptionFees',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsUsdaLimit = /*#__PURE__*/ createUseReadContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'usdaLimit',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"treasury"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"usdtAmountDepositedTillNow"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsTreasury<
-  TFunctionName extends 'treasury',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'treasury',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"treasuryAddress"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
- */
-export function useCdsTreasuryAddress<
-  TFunctionName extends 'treasuryAddress',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'treasuryAddress',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"usdt"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
- */
-export function useCdsUsdt<
-  TFunctionName extends 'usdt',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'usdt',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"usdtAmountDepositedTillNow"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
- */
-export function useCdsUsdtAmountDepositedTillNow<
-  TFunctionName extends 'usdtAmountDepositedTillNow',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useReadCdsUsdtAmountDepositedTillNow =
+  /*#__PURE__*/ createUseReadContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'usdtAmountDepositedTillNow',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"usdtLimit"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"usdtLimit"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsUsdtLimit<
-  TFunctionName extends 'usdtLimit',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'usdtLimit',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useReadCdsUsdtLimit = /*#__PURE__*/ createUseReadContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'usdtLimit',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdrawTimeLimit"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsWithdrawTimeLimit<
-  TFunctionName extends 'withdrawTimeLimit',
-  TSelectData = ReadContractResult<typeof cdsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'withdrawTimeLimit',
-    ...config,
-  } as UseContractReadConfig<typeof cdsABI, TFunctionName, TSelectData>)
-}
+export const useWriteCds = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"calculateCumulativeRate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof cdsABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      > & { address?: Address; chainId?: TChainId }
-    : UseContractWriteConfig<typeof cdsABI, TFunctionName, TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, TFunctionName, TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"calculateCumulativeRate"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
- */
-export function useCdsCalculateCumulativeRate<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'calculateCumulativeRate'
-        >['request']['abi'],
-        'calculateCumulativeRate',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'calculateCumulativeRate'
-      }
-    : UseContractWriteConfig<
-        typeof cdsABI,
-        'calculateCumulativeRate',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'calculateCumulativeRate'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'calculateCumulativeRate', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWriteCdsCalculateCumulativeRate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'calculateCumulativeRate',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"deposit"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"callLzSendFromExternal"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsDeposit<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof cdsABI, 'deposit'>['request']['abi'],
-        'deposit',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'deposit' }
-    : UseContractWriteConfig<typeof cdsABI, 'deposit', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'deposit'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'deposit', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'deposit',
-    ...config,
-  } as any)
-}
+export const useWriteCdsCallLzSendFromExternal =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: cdsAbi,
+    address: cdsAddress,
+    functionName: 'callLzSendFromExternal',
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"initialize"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"deposit"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsInitialize<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'initialize'
-        >['request']['abi'],
-        'initialize',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'initialize' }
-    : UseContractWriteConfig<typeof cdsABI, 'initialize', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'initialize'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'initialize', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'initialize',
-    ...config,
-  } as any)
-}
+export const useWriteCdsDeposit = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'deposit',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"redeemUSDT"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"initialize"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsRedeemUsdt<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'redeemUSDT'
-        >['request']['abi'],
-        'redeemUSDT',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'redeemUSDT' }
-    : UseContractWriteConfig<typeof cdsABI, 'redeemUSDT', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'redeemUSDT'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'redeemUSDT', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'redeemUSDT',
-    ...config,
-  } as any)
-}
+export const useWriteCdsInitialize = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'initialize',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"renounceOwnership"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"lzReceive"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsRenounceOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'renounceOwnership'
-        >['request']['abi'],
-        'renounceOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      }
-    : UseContractWriteConfig<typeof cdsABI, 'renounceOwnership', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'renounceOwnership', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWriteCdsLzReceive = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'lzReceive',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"redeemUSDT"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useWriteCdsRedeemUsdt = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'redeemUSDT',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"renounceOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useWriteCdsRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'renounceOwnership',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setAdmin"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setAdmin"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsSetAdmin<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof cdsABI, 'setAdmin'>['request']['abi'],
-        'setAdmin',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'setAdmin' }
-    : UseContractWriteConfig<typeof cdsABI, 'setAdmin', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setAdmin'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'setAdmin', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'setAdmin',
-    ...config,
-  } as any)
-}
+export const useWriteCdsSetAdmin = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'setAdmin',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setAmintLimit"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setBorrowLiquidation"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsSetAmintLimit<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'setAmintLimit'
-        >['request']['abi'],
-        'setAmintLimit',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'setAmintLimit'
-      }
-    : UseContractWriteConfig<typeof cdsABI, 'setAmintLimit', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setAmintLimit'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'setAmintLimit', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'setAmintLimit',
-    ...config,
-  } as any)
-}
+export const useWriteCdsSetBorrowLiquidation =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: cdsAbi,
+    address: cdsAddress,
+    functionName: 'setBorrowLiquidation',
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setBorrowingContract"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setBorrowingContract"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsSetBorrowingContract<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'setBorrowingContract'
-        >['request']['abi'],
-        'setBorrowingContract',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'setBorrowingContract'
-      }
-    : UseContractWriteConfig<typeof cdsABI, 'setBorrowingContract', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setBorrowingContract'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'setBorrowingContract', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWriteCdsSetBorrowingContract =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'setBorrowingContract',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setTreasury"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setDelegate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsSetTreasury<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'setTreasury'
-        >['request']['abi'],
-        'setTreasury',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'setTreasury'
-      }
-    : UseContractWriteConfig<typeof cdsABI, 'setTreasury', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setTreasury'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'setTreasury', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'setTreasury',
-    ...config,
-  } as any)
-}
+export const useWriteCdsSetDelegate = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'setDelegate',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setUsdtLimit"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setDstEid"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsSetUsdtLimit<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'setUsdtLimit'
-        >['request']['abi'],
-        'setUsdtLimit',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'setUsdtLimit'
-      }
-    : UseContractWriteConfig<typeof cdsABI, 'setUsdtLimit', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setUsdtLimit'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'setUsdtLimit', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'setUsdtLimit',
-    ...config,
-  } as any)
-}
+export const useWriteCdsSetDstEid = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'setDstEid',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setPeer"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsSetWithdrawTimeLimit<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'setWithdrawTimeLimit'
-        >['request']['abi'],
-        'setWithdrawTimeLimit',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'setWithdrawTimeLimit'
-      }
-    : UseContractWriteConfig<typeof cdsABI, 'setWithdrawTimeLimit', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'setWithdrawTimeLimit'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'setWithdrawTimeLimit', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWriteCdsSetPeer = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'setPeer',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setTreasury"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useWriteCdsSetTreasury = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'setTreasury',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setUSDaLimit"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useWriteCdsSetUsDaLimit = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'setUSDaLimit',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setUsdtLimit"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useWriteCdsSetUsdtLimit = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'setUsdtLimit',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setWithdrawTimeLimit"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useWriteCdsSetWithdrawTimeLimit =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'setWithdrawTimeLimit',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"transferOwnership"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"transferOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsTransferOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'transferOwnership'
-        >['request']['abi'],
-        'transferOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      }
-    : UseContractWriteConfig<typeof cdsABI, 'transferOwnership', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'transferOwnership', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWriteCdsTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'transferOwnership',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateLiquidationInfo"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"updateLiquidationInfo"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsUpdateLiquidationInfo<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'updateLiquidationInfo'
-        >['request']['abi'],
-        'updateLiquidationInfo',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateLiquidationInfo'
-      }
-    : UseContractWriteConfig<typeof cdsABI, 'updateLiquidationInfo', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateLiquidationInfo'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'updateLiquidationInfo', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWriteCdsUpdateLiquidationInfo =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'updateLiquidationInfo',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalAvailableLiquidationAmount"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"updateTotalAvailableLiquidationAmount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsUpdateTotalAvailableLiquidationAmount<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'updateTotalAvailableLiquidationAmount'
-        >['request']['abi'],
-        'updateTotalAvailableLiquidationAmount',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateTotalAvailableLiquidationAmount'
-      }
-    : UseContractWriteConfig<
-        typeof cdsABI,
-        'updateTotalAvailableLiquidationAmount',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateTotalAvailableLiquidationAmount'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof cdsABI,
-    'updateTotalAvailableLiquidationAmount',
-    TMode
-  >({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWriteCdsUpdateTotalAvailableLiquidationAmount =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'updateTotalAvailableLiquidationAmount',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmount"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"updateTotalCdsDepositedAmount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsUpdateTotalCdsDepositedAmount<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'updateTotalCdsDepositedAmount'
-        >['request']['abi'],
-        'updateTotalCdsDepositedAmount',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateTotalCdsDepositedAmount'
-      }
-    : UseContractWriteConfig<
-        typeof cdsABI,
-        'updateTotalCdsDepositedAmount',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateTotalCdsDepositedAmount'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof cdsABI,
-    'updateTotalCdsDepositedAmount',
-    TMode
-  >({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWriteCdsUpdateTotalCdsDepositedAmount =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'updateTotalCdsDepositedAmount',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmountWithOptionFees"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"updateTotalCdsDepositedAmountWithOptionFees"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsUpdateTotalCdsDepositedAmountWithOptionFees<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'updateTotalCdsDepositedAmountWithOptionFees'
-        >['request']['abi'],
-        'updateTotalCdsDepositedAmountWithOptionFees',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateTotalCdsDepositedAmountWithOptionFees'
-      }
-    : UseContractWriteConfig<
-        typeof cdsABI,
-        'updateTotalCdsDepositedAmountWithOptionFees',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateTotalCdsDepositedAmountWithOptionFees'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof cdsABI,
-    'updateTotalCdsDepositedAmountWithOptionFees',
-    TMode
-  >({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWriteCdsUpdateTotalCdsDepositedAmountWithOptionFees =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'updateTotalCdsDepositedAmountWithOptionFees',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"upgradeToAndCall"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"upgradeToAndCall"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsUpgradeToAndCall<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof cdsABI,
-          'upgradeToAndCall'
-        >['request']['abi'],
-        'upgradeToAndCall',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      }
-    : UseContractWriteConfig<typeof cdsABI, 'upgradeToAndCall', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'upgradeToAndCall', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'upgradeToAndCall',
-    ...config,
-  } as any)
-}
+export const useWriteCdsUpgradeToAndCall = /*#__PURE__*/ createUseWriteContract(
+  { abi: cdsAbi, address: cdsAddress, functionName: 'upgradeToAndCall' },
+)
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdraw"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"withdraw"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsWithdraw<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof cdsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof cdsABI, 'withdraw'>['request']['abi'],
-        'withdraw',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'withdraw' }
-    : UseContractWriteConfig<typeof cdsABI, 'withdraw', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'withdraw'
-      } = {} as any,
-) {
-  return useContractWrite<typeof cdsABI, 'withdraw', TMode>({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'withdraw',
-    ...config,
-  } as any)
-}
+export const useWriteCdsWithdraw = /*#__PURE__*/ createUseWriteContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'withdraw',
+})
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, TFunctionName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, TFunctionName>)
-}
+export const useSimulateCds = /*#__PURE__*/ createUseSimulateContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+})
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"calculateCumulativeRate"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"calculateCumulativeRate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsCalculateCumulativeRate(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'calculateCumulativeRate'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useSimulateCdsCalculateCumulativeRate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'calculateCumulativeRate',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'calculateCumulativeRate'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"deposit"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"callLzSendFromExternal"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsDeposit(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'deposit'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'deposit',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'deposit'>)
-}
+export const useSimulateCdsCallLzSendFromExternal =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
+    functionName: 'callLzSendFromExternal',
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"initialize"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"deposit"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsInitialize(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'initialize'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'initialize',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'initialize'>)
-}
+export const useSimulateCdsDeposit = /*#__PURE__*/ createUseSimulateContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'deposit',
+})
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"redeemUSDT"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"initialize"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsRedeemUsdt(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'redeemUSDT'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'redeemUSDT',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'redeemUSDT'>)
-}
+export const useSimulateCdsInitialize = /*#__PURE__*/ createUseSimulateContract(
+  { abi: cdsAbi, address: cdsAddress, functionName: 'initialize' },
+)
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"renounceOwnership"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"lzReceive"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsRenounceOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'renounceOwnership'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useSimulateCdsLzReceive = /*#__PURE__*/ createUseSimulateContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'lzReceive',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"redeemUSDT"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useSimulateCdsRedeemUsdt = /*#__PURE__*/ createUseSimulateContract(
+  { abi: cdsAbi, address: cdsAddress, functionName: 'redeemUSDT' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"renounceOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useSimulateCdsRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'renounceOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'renounceOwnership'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setAdmin"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setAdmin"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsSetAdmin(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'setAdmin'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'setAdmin',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'setAdmin'>)
-}
+export const useSimulateCdsSetAdmin = /*#__PURE__*/ createUseSimulateContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'setAdmin',
+})
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setAmintLimit"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setBorrowLiquidation"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsSetAmintLimit(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'setAmintLimit'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'setAmintLimit',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'setAmintLimit'>)
-}
+export const useSimulateCdsSetBorrowLiquidation =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
+    functionName: 'setBorrowLiquidation',
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setBorrowingContract"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setBorrowingContract"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsSetBorrowingContract(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'setBorrowingContract'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useSimulateCdsSetBorrowingContract =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'setBorrowingContract',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'setBorrowingContract'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setTreasury"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setDelegate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsSetTreasury(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'setTreasury'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useSimulateCdsSetDelegate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
+    functionName: 'setDelegate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setDstEid"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useSimulateCdsSetDstEid = /*#__PURE__*/ createUseSimulateContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'setDstEid',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setPeer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useSimulateCdsSetPeer = /*#__PURE__*/ createUseSimulateContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'setPeer',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setTreasury"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useSimulateCdsSetTreasury =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'setTreasury',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'setTreasury'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setUsdtLimit"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setUSDaLimit"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsSetUsdtLimit(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'setUsdtLimit'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useSimulateCdsSetUsDaLimit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
+    functionName: 'setUSDaLimit',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setUsdtLimit"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useSimulateCdsSetUsdtLimit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'setUsdtLimit',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'setUsdtLimit'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"setWithdrawTimeLimit"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"setWithdrawTimeLimit"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsSetWithdrawTimeLimit(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'setWithdrawTimeLimit'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useSimulateCdsSetWithdrawTimeLimit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'setWithdrawTimeLimit',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'setWithdrawTimeLimit'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"transferOwnership"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"transferOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsTransferOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'transferOwnership'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useSimulateCdsTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'transferOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'transferOwnership'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateLiquidationInfo"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"updateLiquidationInfo"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsUpdateLiquidationInfo(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'updateLiquidationInfo'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useSimulateCdsUpdateLiquidationInfo =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'updateLiquidationInfo',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'updateLiquidationInfo'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalAvailableLiquidationAmount"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"updateTotalAvailableLiquidationAmount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsUpdateTotalAvailableLiquidationAmount(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof cdsABI,
-      'updateTotalAvailableLiquidationAmount'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useSimulateCdsUpdateTotalAvailableLiquidationAmount =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'updateTotalAvailableLiquidationAmount',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof cdsABI,
-    'updateTotalAvailableLiquidationAmount'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmount"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"updateTotalCdsDepositedAmount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsUpdateTotalCdsDepositedAmount(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof cdsABI,
-      'updateTotalCdsDepositedAmount'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useSimulateCdsUpdateTotalCdsDepositedAmount =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'updateTotalCdsDepositedAmount',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof cdsABI,
-    'updateTotalCdsDepositedAmount'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"updateTotalCdsDepositedAmountWithOptionFees"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"updateTotalCdsDepositedAmountWithOptionFees"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsUpdateTotalCdsDepositedAmountWithOptionFees(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof cdsABI,
-      'updateTotalCdsDepositedAmountWithOptionFees'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useSimulateCdsUpdateTotalCdsDepositedAmountWithOptionFees =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'updateTotalCdsDepositedAmountWithOptionFees',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof cdsABI,
-    'updateTotalCdsDepositedAmountWithOptionFees'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"upgradeToAndCall"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"upgradeToAndCall"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsUpgradeToAndCall(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'upgradeToAndCall'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useSimulateCdsUpgradeToAndCall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: cdsAbi,
+    address: cdsAddress,
     functionName: 'upgradeToAndCall',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'upgradeToAndCall'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link cdsABI}__ and `functionName` set to `"withdraw"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"withdraw"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function usePrepareCdsWithdraw(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof cdsABI, 'withdraw'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    functionName: 'withdraw',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof cdsABI, 'withdraw'>)
-}
+export const useSimulateCdsWithdraw = /*#__PURE__*/ createUseSimulateContract({
+  abi: cdsAbi,
+  address: cdsAddress,
+  functionName: 'withdraw',
+})
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link cdsAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof cdsABI, TEventName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
-    ...config,
-  } as UseContractEventConfig<typeof cdsABI, TEventName>)
-}
+export const useWatchCdsEvent = /*#__PURE__*/ createUseWatchContractEvent({
+  abi: cdsAbi,
+  address: cdsAddress,
+})
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Deposit"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link cdsAbi}__ and `eventName` set to `"Deposit"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsDepositEvent(
-  config: Omit<
-    UseContractEventConfig<typeof cdsABI, 'Deposit'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWatchCdsDepositEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: cdsAbi,
+    address: cdsAddress,
     eventName: 'Deposit',
-    ...config,
-  } as UseContractEventConfig<typeof cdsABI, 'Deposit'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Initialized"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link cdsAbi}__ and `eventName` set to `"Initialized"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsInitializedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof cdsABI, 'Initialized'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWatchCdsInitializedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: cdsAbi,
+    address: cdsAddress,
     eventName: 'Initialized',
-    ...config,
-  } as UseContractEventConfig<typeof cdsABI, 'Initialized'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"OwnershipTransferred"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link cdsAbi}__ and `eventName` set to `"OwnershipTransferred"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsOwnershipTransferredEvent(
-  config: Omit<
-    UseContractEventConfig<typeof cdsABI, 'OwnershipTransferred'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWatchCdsOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: cdsAbi,
+    address: cdsAddress,
     eventName: 'OwnershipTransferred',
-    ...config,
-  } as UseContractEventConfig<typeof cdsABI, 'OwnershipTransferred'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Upgraded"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link cdsAbi}__ and `eventName` set to `"PeerSet"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsUpgradedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof cdsABI, 'Upgraded'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWatchCdsPeerSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: cdsAbi,
+    address: cdsAddress,
+    eventName: 'PeerSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link cdsAbi}__ and `eventName` set to `"Upgraded"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
+ */
+export const useWatchCdsUpgradedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: cdsAbi,
+    address: cdsAddress,
     eventName: 'Upgraded',
-    ...config,
-  } as UseContractEventConfig<typeof cdsABI, 'Upgraded'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link cdsABI}__ and `eventName` set to `"Withdraw"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link cdsAbi}__ and `eventName` set to `"Withdraw"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xb4E50c1abEC5316f24f94449B141acB336bFA3DC)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export function useCdsWithdrawEvent(
-  config: Omit<
-    UseContractEventConfig<typeof cdsABI, 'Withdraw'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof cdsAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: cdsABI,
-    address: cdsAddress[11155111],
+export const useWatchCdsWithdrawEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: cdsAbi,
+    address: cdsAddress,
     eventName: 'Withdraw',
-    ...config,
-  } as UseContractEventConfig<typeof cdsABI, 'Withdraw'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link optionsAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsRead<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof optionsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
-    ...config,
-  } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
-}
+export const useReadOptions = /*#__PURE__*/ createUseReadContract({
+  abi: optionsAbi,
+  address: optionsAddress,
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsUpgradeInterfaceVersion<
-  TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
-  TSelectData = ReadContractResult<typeof optionsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useReadOptionsUpgradeInterfaceVersion =
+  /*#__PURE__*/ createUseReadContract({
+    abi: optionsAbi,
+    address: optionsAddress,
     functionName: 'UPGRADE_INTERFACE_VERSION',
-    ...config,
-  } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"calculateOptionPrice"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"calculateOptionPrice"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsCalculateOptionPrice<
-  TFunctionName extends 'calculateOptionPrice',
-  TSelectData = ReadContractResult<typeof optionsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useReadOptionsCalculateOptionPrice =
+  /*#__PURE__*/ createUseReadContract({
+    abi: optionsAbi,
+    address: optionsAddress,
     functionName: 'calculateOptionPrice',
-    ...config,
-  } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"calculateStrikePriceGains"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"calculateStrikePriceGains"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsCalculateStrikePriceGains<
-  TFunctionName extends 'calculateStrikePriceGains',
-  TSelectData = ReadContractResult<typeof optionsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useReadOptionsCalculateStrikePriceGains =
+  /*#__PURE__*/ createUseReadContract({
+    abi: optionsAbi,
+    address: optionsAddress,
     functionName: 'calculateStrikePriceGains',
-    ...config,
-  } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"owner"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"owner"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsOwner<
-  TFunctionName extends 'owner',
-  TSelectData = ReadContractResult<typeof optionsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
-    functionName: 'owner',
-    ...config,
-  } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
-}
+export const useReadOptionsOwner = /*#__PURE__*/ createUseReadContract({
+  abi: optionsAbi,
+  address: optionsAddress,
+  functionName: 'owner',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"proxiableUUID"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"proxiableUUID"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsProxiableUuid<
-  TFunctionName extends 'proxiableUUID',
-  TSelectData = ReadContractResult<typeof optionsABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
-    functionName: 'proxiableUUID',
-    ...config,
-  } as UseContractReadConfig<typeof optionsABI, TFunctionName, TSelectData>)
-}
+export const useReadOptionsProxiableUuid = /*#__PURE__*/ createUseReadContract({
+  abi: optionsAbi,
+  address: optionsAddress,
+  functionName: 'proxiableUUID',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link optionsAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof optionsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<typeof optionsABI, string>['request']['abi'],
-        TFunctionName,
-        TMode
-      > & { address?: Address; chainId?: TChainId }
-    : UseContractWriteConfig<typeof optionsABI, TFunctionName, TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-      } = {} as any,
-) {
-  return useContractWrite<typeof optionsABI, TFunctionName, TMode>({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
-    ...config,
-  } as any)
-}
+export const useWriteOptions = /*#__PURE__*/ createUseWriteContract({
+  abi: optionsAbi,
+  address: optionsAddress,
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"initialize"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"initialize"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsInitialize<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof optionsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof optionsABI,
-          'initialize'
-        >['request']['abi'],
-        'initialize',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'initialize' }
-    : UseContractWriteConfig<typeof optionsABI, 'initialize', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'initialize'
-      } = {} as any,
-) {
-  return useContractWrite<typeof optionsABI, 'initialize', TMode>({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
-    functionName: 'initialize',
-    ...config,
-  } as any)
-}
+export const useWriteOptionsInitialize = /*#__PURE__*/ createUseWriteContract({
+  abi: optionsAbi,
+  address: optionsAddress,
+  functionName: 'initialize',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"renounceOwnership"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"renounceOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsRenounceOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof optionsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof optionsABI,
-          'renounceOwnership'
-        >['request']['abi'],
-        'renounceOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      }
-    : UseContractWriteConfig<typeof optionsABI, 'renounceOwnership', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<typeof optionsABI, 'renounceOwnership', TMode>({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useWriteOptionsRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: optionsAbi,
+    address: optionsAddress,
     functionName: 'renounceOwnership',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"transferOwnership"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"transferOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsTransferOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof optionsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof optionsABI,
-          'transferOwnership'
-        >['request']['abi'],
-        'transferOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      }
-    : UseContractWriteConfig<typeof optionsABI, 'transferOwnership', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<typeof optionsABI, 'transferOwnership', TMode>({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useWriteOptionsTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: optionsAbi,
+    address: optionsAddress,
     functionName: 'transferOwnership',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"upgradeToAndCall"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"upgradeToAndCall"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsUpgradeToAndCall<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof optionsAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof optionsABI,
-          'upgradeToAndCall'
-        >['request']['abi'],
-        'upgradeToAndCall',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      }
-    : UseContractWriteConfig<typeof optionsABI, 'upgradeToAndCall', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      } = {} as any,
-) {
-  return useContractWrite<typeof optionsABI, 'upgradeToAndCall', TMode>({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useWriteOptionsUpgradeToAndCall =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: optionsAbi,
+    address: optionsAddress,
     functionName: 'upgradeToAndCall',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link optionsAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function usePrepareOptionsWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof optionsABI, TFunctionName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof optionsABI, TFunctionName>)
-}
+export const useSimulateOptions = /*#__PURE__*/ createUseSimulateContract({
+  abi: optionsAbi,
+  address: optionsAddress,
+})
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"initialize"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"initialize"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function usePrepareOptionsInitialize(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof optionsABI, 'initialize'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useSimulateOptionsInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: optionsAbi,
+    address: optionsAddress,
     functionName: 'initialize',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof optionsABI, 'initialize'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"renounceOwnership"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"renounceOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function usePrepareOptionsRenounceOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof optionsABI, 'renounceOwnership'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useSimulateOptionsRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: optionsAbi,
+    address: optionsAddress,
     functionName: 'renounceOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof optionsABI, 'renounceOwnership'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"transferOwnership"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"transferOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function usePrepareOptionsTransferOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof optionsABI, 'transferOwnership'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useSimulateOptionsTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: optionsAbi,
+    address: optionsAddress,
     functionName: 'transferOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof optionsABI, 'transferOwnership'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link optionsABI}__ and `functionName` set to `"upgradeToAndCall"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link optionsAbi}__ and `functionName` set to `"upgradeToAndCall"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function usePrepareOptionsUpgradeToAndCall(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof optionsABI, 'upgradeToAndCall'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useSimulateOptionsUpgradeToAndCall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: optionsAbi,
+    address: optionsAddress,
     functionName: 'upgradeToAndCall',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof optionsABI, 'upgradeToAndCall'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link optionsABI}__.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link optionsAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof optionsABI, TEventName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
-    ...config,
-  } as UseContractEventConfig<typeof optionsABI, TEventName>)
-}
+export const useWatchOptionsEvent = /*#__PURE__*/ createUseWatchContractEvent({
+  abi: optionsAbi,
+  address: optionsAddress,
+})
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link optionsABI}__ and `eventName` set to `"Initialized"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link optionsAbi}__ and `eventName` set to `"Initialized"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsInitializedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof optionsABI, 'Initialized'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useWatchOptionsInitializedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: optionsAbi,
+    address: optionsAddress,
     eventName: 'Initialized',
-    ...config,
-  } as UseContractEventConfig<typeof optionsABI, 'Initialized'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link optionsABI}__ and `eventName` set to `"OwnershipTransferred"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link optionsAbi}__ and `eventName` set to `"OwnershipTransferred"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsOwnershipTransferredEvent(
-  config: Omit<
-    UseContractEventConfig<typeof optionsABI, 'OwnershipTransferred'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useWatchOptionsOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: optionsAbi,
+    address: optionsAddress,
     eventName: 'OwnershipTransferred',
-    ...config,
-  } as UseContractEventConfig<typeof optionsABI, 'OwnershipTransferred'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link optionsABI}__ and `eventName` set to `"Upgraded"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link optionsAbi}__ and `eventName` set to `"Upgraded"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xAC31e267FC123De9A61F3722a7d09c0c16b1f799)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7C6441B23f21A7A5cd5965B516D8054F119bA53f)
  */
-export function useOptionsUpgradedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof optionsABI, 'Upgraded'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof optionsAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: optionsABI,
-    address: optionsAddress[11155111],
+export const useWatchOptionsUpgradedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: optionsAbi,
+    address: optionsAddress,
     eventName: 'Upgraded',
-    ...config,
-  } as UseContractEventConfig<typeof optionsABI, 'Upgraded'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryRead<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbi = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"SEND"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryUpgradeInterfaceVersion<
-  TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
+export const useReadTestusdtAbiSend = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'SEND',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"SEND_AND_CALL"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useReadTestusdtAbiSendAndCall =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'SEND_AND_CALL',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useReadTestusdtAbiUpgradeInterfaceVersion =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'UPGRADE_INTERFACE_VERSION',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"WETH"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"allowInitializePath"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryWeth<
-  TFunctionName extends 'WETH',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'WETH',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiAllowInitializePath =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'allowInitializePath',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aToken"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"allowance"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryAToken<
-  TFunctionName extends 'aToken',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'aToken',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiAllowance = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'allowance',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aavePoolAddressProvider"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"approvalRequired"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryAavePoolAddressProvider<
-  TFunctionName extends 'aavePoolAddressProvider',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'aavePoolAddressProvider',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiApprovalRequired =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'approvalRequired',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"aaveWETH"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"balanceOf"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryAaveWeth<
-  TFunctionName extends 'aaveWETH',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'aaveWETH',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiBalanceOf = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'balanceOf',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"abond"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"combineOptions"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryAbond<
-  TFunctionName extends 'abond',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'abond',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiCombineOptions =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'combineOptions',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"abondAmintPool"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"decimalConversionRate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryAbondAmintPool<
-  TFunctionName extends 'abondAmintPool',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'abondAmintPool',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiDecimalConversionRate =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'decimalConversionRate',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"amint"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"decimals"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryAmint<
-  TFunctionName extends 'amint',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'amint',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiDecimals = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'decimals',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrow"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"endpoint"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryBorrow<
-  TFunctionName extends 'borrow',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'borrow',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiEndpoint = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'endpoint',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrowing"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"enforcedOptions"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryBorrowing<
-  TFunctionName extends 'borrowing',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'borrowing',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiEnforcedOptions =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'enforcedOptions',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"borrowingContract"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"isComposeMsgSender"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryBorrowingContract<
-  TFunctionName extends 'borrowingContract',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'borrowingContract',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiIsComposeMsgSender =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'isComposeMsgSender',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"cdsContract"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"isPeer"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryCdsContract<
-  TFunctionName extends 'cdsContract',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'cdsContract',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiIsPeer = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'isPeer',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"comet"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"msgInspector"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryComet<
-  TFunctionName extends 'comet',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'comet',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiMsgInspector =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'msgInspector',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"compoundAddress"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"name"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryCompoundAddress<
-  TFunctionName extends 'compoundAddress',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'compoundAddress',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiName = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'name',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"ethProfitsOfLiquidators"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"nextNonce"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryEthProfitsOfLiquidators<
-  TFunctionName extends 'ethProfitsOfLiquidators',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'ethProfitsOfLiquidators',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiNextNonce = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'nextNonce',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"externalProtocolDepositCount"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"oApp"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryExternalProtocolDepositCount<
-  TFunctionName extends 'externalProtocolDepositCount',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'externalProtocolDepositCount',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiOApp = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'oApp',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getBalanceInTreasury"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"oAppVersion"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryGetBalanceInTreasury<
-  TFunctionName extends 'getBalanceInTreasury',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'getBalanceInTreasury',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiOAppVersion =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'oAppVersion',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getBorrowing"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"oftVersion"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryGetBorrowing<
-  TFunctionName extends 'getBorrowing',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'getBorrowing',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiOftVersion = /*#__PURE__*/ createUseReadContract(
+  {
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'oftVersion',
+  },
+)
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"getExternalProtocolCumulativeRate"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"owner"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryGetExternalProtocolCumulativeRate<
-  TFunctionName extends 'getExternalProtocolCumulativeRate',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'getExternalProtocolCumulativeRate',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiOwner = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'owner',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"noOfBorrowers"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"paused"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryNoOfBorrowers<
-  TFunctionName extends 'noOfBorrowers',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'noOfBorrowers',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiPaused = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'paused',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"owner"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"peers"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryOwner<
-  TFunctionName extends 'owner',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'owner',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiPeers = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'peers',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"protocolDeposit"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"preCrime"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryProtocolDeposit<
-  TFunctionName extends 'protocolDeposit',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'protocolDeposit',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiPreCrime = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'preCrime',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"proxiableUUID"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"proxiableUUID"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryProxiableUuid<
-  TFunctionName extends 'proxiableUUID',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
+export const useReadTestusdtAbiProxiableUuid =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'proxiableUUID',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalInterest"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"quoteOFT"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryTotalInterest<
-  TFunctionName extends 'totalInterest',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'totalInterest',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiQuoteOft = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'quoteOFT',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalInterestFromLiquidation"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"quoteSend"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryTotalInterestFromLiquidation<
-  TFunctionName extends 'totalInterestFromLiquidation',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'totalInterestFromLiquidation',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiQuoteSend = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'quoteSend',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalVolumeOfBorrowersAmountinUSD"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"sharedDecimals"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryTotalVolumeOfBorrowersAmountinUsd<
-  TFunctionName extends 'totalVolumeOfBorrowersAmountinUSD',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'totalVolumeOfBorrowersAmountinUSD',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiSharedDecimals =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'sharedDecimals',
+  })
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"totalVolumeOfBorrowersAmountinWei"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"symbol"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryTotalVolumeOfBorrowersAmountinWei<
-  TFunctionName extends 'totalVolumeOfBorrowersAmountinWei',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'totalVolumeOfBorrowersAmountinWei',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiSymbol = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'symbol',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"usdt"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"token"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryUsdt<
-  TFunctionName extends 'usdt',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'usdt',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
+export const useReadTestusdtAbiToken = /*#__PURE__*/ createUseReadContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'token',
+})
 
 /**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"wethGateway"`.
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"totalSupply"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useTreasuryWethGateway<
-  TFunctionName extends 'wethGateway',
-  TSelectData = ReadContractResult<typeof treasuryABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'wethGateway',
-    ...config,
-  } as UseContractReadConfig<typeof treasuryABI, TFunctionName, TSelectData>)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          string
-        >['request']['abi'],
-        TFunctionName,
-        TMode
-      > & { address?: Address; chainId?: TChainId }
-    : UseContractWriteConfig<typeof treasuryABI, TFunctionName, TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, TFunctionName, TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveAmint"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryApproveAmint<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'approveAmint'
-        >['request']['abi'],
-        'approveAmint',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'approveAmint'
-      }
-    : UseContractWriteConfig<typeof treasuryABI, 'approveAmint', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'approveAmint'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'approveAmint', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'approveAmint',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveUsdt"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryApproveUsdt<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'approveUsdt'
-        >['request']['abi'],
-        'approveUsdt',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'approveUsdt'
-      }
-    : UseContractWriteConfig<typeof treasuryABI, 'approveUsdt', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'approveUsdt'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'approveUsdt', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'approveUsdt',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"deposit"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryDeposit<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'deposit'
-        >['request']['abi'],
-        'deposit',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'deposit' }
-    : UseContractWriteConfig<typeof treasuryABI, 'deposit', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'deposit'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'deposit', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'deposit',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"initialize"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryInitialize<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'initialize'
-        >['request']['abi'],
-        'initialize',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'initialize' }
-    : UseContractWriteConfig<typeof treasuryABI, 'initialize', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'initialize'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'initialize', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'initialize',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"renounceOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryRenounceOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'renounceOwnership'
-        >['request']['abi'],
-        'renounceOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      }
-    : UseContractWriteConfig<typeof treasuryABI, 'renounceOwnership', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'renounceOwnership', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'renounceOwnership',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferEthToCdsLiquidators"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryTransferEthToCdsLiquidators<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'transferEthToCdsLiquidators'
-        >['request']['abi'],
-        'transferEthToCdsLiquidators',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'transferEthToCdsLiquidators'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'transferEthToCdsLiquidators',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferEthToCdsLiquidators'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof treasuryABI,
-    'transferEthToCdsLiquidators',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'transferEthToCdsLiquidators',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryTransferOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'transferOwnership'
-        >['request']['abi'],
-        'transferOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      }
-    : UseContractWriteConfig<typeof treasuryABI, 'transferOwnership', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'transferOwnership', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'transferOwnership',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateAbondAmintPool"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryUpdateAbondAmintPool<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateAbondAmintPool'
-        >['request']['abi'],
-        'updateAbondAmintPool',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateAbondAmintPool'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'updateAbondAmintPool',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateAbondAmintPool'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'updateAbondAmintPool', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateAbondAmintPool',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateDepositDetails"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryUpdateDepositDetails<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateDepositDetails'
-        >['request']['abi'],
-        'updateDepositDetails',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateDepositDetails'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'updateDepositDetails',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateDepositDetails'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'updateDepositDetails', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateDepositDetails',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateEthProfitsOfLiquidators"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryUpdateEthProfitsOfLiquidators<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateEthProfitsOfLiquidators'
-        >['request']['abi'],
-        'updateEthProfitsOfLiquidators',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateEthProfitsOfLiquidators'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'updateEthProfitsOfLiquidators',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateEthProfitsOfLiquidators'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof treasuryABI,
-    'updateEthProfitsOfLiquidators',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateEthProfitsOfLiquidators',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateHasBorrowed"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryUpdateHasBorrowed<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateHasBorrowed'
-        >['request']['abi'],
-        'updateHasBorrowed',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateHasBorrowed'
-      }
-    : UseContractWriteConfig<typeof treasuryABI, 'updateHasBorrowed', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateHasBorrowed'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'updateHasBorrowed', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateHasBorrowed',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateInterestFromExternalProtocol"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryUpdateInterestFromExternalProtocol<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateInterestFromExternalProtocol'
-        >['request']['abi'],
-        'updateInterestFromExternalProtocol',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateInterestFromExternalProtocol'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'updateInterestFromExternalProtocol',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateInterestFromExternalProtocol'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof treasuryABI,
-    'updateInterestFromExternalProtocol',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateInterestFromExternalProtocol',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalBorrowedAmount"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryUpdateTotalBorrowedAmount<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateTotalBorrowedAmount'
-        >['request']['abi'],
-        'updateTotalBorrowedAmount',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateTotalBorrowedAmount'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'updateTotalBorrowedAmount',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateTotalBorrowedAmount'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof treasuryABI,
-    'updateTotalBorrowedAmount',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateTotalBorrowedAmount',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalDepositedAmount"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryUpdateTotalDepositedAmount<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateTotalDepositedAmount'
-        >['request']['abi'],
-        'updateTotalDepositedAmount',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateTotalDepositedAmount'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'updateTotalDepositedAmount',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateTotalDepositedAmount'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof treasuryABI,
-    'updateTotalDepositedAmount',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateTotalDepositedAmount',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterest"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryUpdateTotalInterest<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateTotalInterest'
-        >['request']['abi'],
-        'updateTotalInterest',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateTotalInterest'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'updateTotalInterest',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateTotalInterest'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'updateTotalInterest', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateTotalInterest',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterestFromLiquidation"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryUpdateTotalInterestFromLiquidation<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'updateTotalInterestFromLiquidation'
-        >['request']['abi'],
-        'updateTotalInterestFromLiquidation',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'updateTotalInterestFromLiquidation'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'updateTotalInterestFromLiquidation',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'updateTotalInterestFromLiquidation'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof treasuryABI,
-    'updateTotalInterestFromLiquidation',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateTotalInterestFromLiquidation',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"upgradeToAndCall"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryUpgradeToAndCall<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'upgradeToAndCall'
-        >['request']['abi'],
-        'upgradeToAndCall',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      }
-    : UseContractWriteConfig<typeof treasuryABI, 'upgradeToAndCall', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'upgradeToAndCall', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'upgradeToAndCall',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdraw"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryWithdraw<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'withdraw'
-        >['request']['abi'],
-        'withdraw',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'withdraw' }
-    : UseContractWriteConfig<typeof treasuryABI, 'withdraw', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'withdraw'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'withdraw', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'withdraw',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawExternalProtocolInterest"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryWithdrawExternalProtocolInterest<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'withdrawExternalProtocolInterest'
-        >['request']['abi'],
-        'withdrawExternalProtocolInterest',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'withdrawExternalProtocolInterest'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'withdrawExternalProtocolInterest',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'withdrawExternalProtocolInterest'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof treasuryABI,
-    'withdrawExternalProtocolInterest',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'withdrawExternalProtocolInterest',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromExternalProtocol"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryWithdrawFromExternalProtocol<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'withdrawFromExternalProtocol'
-        >['request']['abi'],
-        'withdrawFromExternalProtocol',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'withdrawFromExternalProtocol'
-      }
-    : UseContractWriteConfig<
-        typeof treasuryABI,
-        'withdrawFromExternalProtocol',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'withdrawFromExternalProtocol'
-      } = {} as any,
-) {
-  return useContractWrite<
-    typeof treasuryABI,
-    'withdrawFromExternalProtocol',
-    TMode
-  >({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'withdrawFromExternalProtocol',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawInterest"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryWithdrawInterest<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof treasuryAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof treasuryABI,
-          'withdrawInterest'
-        >['request']['abi'],
-        'withdrawInterest',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'withdrawInterest'
-      }
-    : UseContractWriteConfig<typeof treasuryABI, 'withdrawInterest', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'withdrawInterest'
-      } = {} as any,
-) {
-  return useContractWrite<typeof treasuryABI, 'withdrawInterest', TMode>({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'withdrawInterest',
-    ...config,
-  } as any)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, TFunctionName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, TFunctionName>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveAmint"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryApproveAmint(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'approveAmint'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'approveAmint',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'approveAmint'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"approveUsdt"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryApproveUsdt(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'approveUsdt'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'approveUsdt',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'approveUsdt'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"deposit"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryDeposit(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'deposit'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'deposit',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'deposit'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"initialize"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryInitialize(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'initialize'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'initialize',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'initialize'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"renounceOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryRenounceOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'renounceOwnership'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'renounceOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'renounceOwnership'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferEthToCdsLiquidators"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryTransferEthToCdsLiquidators(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'transferEthToCdsLiquidators'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'transferEthToCdsLiquidators',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'transferEthToCdsLiquidators'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"transferOwnership"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryTransferOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'transferOwnership'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'transferOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'transferOwnership'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateAbondAmintPool"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryUpdateAbondAmintPool(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'updateAbondAmintPool'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateAbondAmintPool',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'updateAbondAmintPool'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateDepositDetails"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryUpdateDepositDetails(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'updateDepositDetails'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateDepositDetails',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'updateDepositDetails'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateEthProfitsOfLiquidators"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryUpdateEthProfitsOfLiquidators(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'updateEthProfitsOfLiquidators'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateEthProfitsOfLiquidators',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'updateEthProfitsOfLiquidators'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateHasBorrowed"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryUpdateHasBorrowed(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'updateHasBorrowed'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateHasBorrowed',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'updateHasBorrowed'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateInterestFromExternalProtocol"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryUpdateInterestFromExternalProtocol(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'updateInterestFromExternalProtocol'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateInterestFromExternalProtocol',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'updateInterestFromExternalProtocol'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalBorrowedAmount"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryUpdateTotalBorrowedAmount(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'updateTotalBorrowedAmount'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateTotalBorrowedAmount',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'updateTotalBorrowedAmount'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalDepositedAmount"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryUpdateTotalDepositedAmount(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'updateTotalDepositedAmount'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateTotalDepositedAmount',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'updateTotalDepositedAmount'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterest"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryUpdateTotalInterest(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'updateTotalInterest'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateTotalInterest',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'updateTotalInterest'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"updateTotalInterestFromLiquidation"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryUpdateTotalInterestFromLiquidation(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'updateTotalInterestFromLiquidation'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'updateTotalInterestFromLiquidation',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'updateTotalInterestFromLiquidation'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"upgradeToAndCall"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryUpgradeToAndCall(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'upgradeToAndCall'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'upgradeToAndCall',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'upgradeToAndCall'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdraw"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryWithdraw(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'withdraw'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'withdraw',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'withdraw'>)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawExternalProtocolInterest"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryWithdrawExternalProtocolInterest(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'withdrawExternalProtocolInterest'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'withdrawExternalProtocolInterest',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'withdrawExternalProtocolInterest'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawFromExternalProtocol"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryWithdrawFromExternalProtocol(
-  config: Omit<
-    UsePrepareContractWriteConfig<
-      typeof treasuryABI,
-      'withdrawFromExternalProtocol'
-    >,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'withdrawFromExternalProtocol',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof treasuryABI,
-    'withdrawFromExternalProtocol'
-  >)
-}
-
-/**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link treasuryABI}__ and `functionName` set to `"withdrawInterest"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function usePrepareTreasuryWithdrawInterest(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawInterest'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    functionName: 'withdrawInterest',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof treasuryABI, 'withdrawInterest'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof treasuryABI, TEventName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    ...config,
-  } as UseContractEventConfig<typeof treasuryABI, TEventName>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Deposit"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryDepositEvent(
-  config: Omit<
-    UseContractEventConfig<typeof treasuryABI, 'Deposit'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    eventName: 'Deposit',
-    ...config,
-  } as UseContractEventConfig<typeof treasuryABI, 'Deposit'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"DepositToAave"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryDepositToAaveEvent(
-  config: Omit<
-    UseContractEventConfig<typeof treasuryABI, 'DepositToAave'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    eventName: 'DepositToAave',
-    ...config,
-  } as UseContractEventConfig<typeof treasuryABI, 'DepositToAave'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"DepositToCompound"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryDepositToCompoundEvent(
-  config: Omit<
-    UseContractEventConfig<typeof treasuryABI, 'DepositToCompound'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    eventName: 'DepositToCompound',
-    ...config,
-  } as UseContractEventConfig<typeof treasuryABI, 'DepositToCompound'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Initialized"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryInitializedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof treasuryABI, 'Initialized'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    eventName: 'Initialized',
-    ...config,
-  } as UseContractEventConfig<typeof treasuryABI, 'Initialized'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"OwnershipTransferred"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryOwnershipTransferredEvent(
-  config: Omit<
-    UseContractEventConfig<typeof treasuryABI, 'OwnershipTransferred'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    eventName: 'OwnershipTransferred',
-    ...config,
-  } as UseContractEventConfig<typeof treasuryABI, 'OwnershipTransferred'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Upgraded"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryUpgradedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof treasuryABI, 'Upgraded'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    eventName: 'Upgraded',
-    ...config,
-  } as UseContractEventConfig<typeof treasuryABI, 'Upgraded'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"Withdraw"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryWithdrawEvent(
-  config: Omit<
-    UseContractEventConfig<typeof treasuryABI, 'Withdraw'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    eventName: 'Withdraw',
-    ...config,
-  } as UseContractEventConfig<typeof treasuryABI, 'Withdraw'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"WithdrawFromAave"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryWithdrawFromAaveEvent(
-  config: Omit<
-    UseContractEventConfig<typeof treasuryABI, 'WithdrawFromAave'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    eventName: 'WithdrawFromAave',
-    ...config,
-  } as UseContractEventConfig<typeof treasuryABI, 'WithdrawFromAave'>)
-}
-
-/**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link treasuryABI}__ and `eventName` set to `"WithdrawFromCompound"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x92fe4AaB6496480E129D6952E124Bd3e392B7CAA)
- */
-export function useTreasuryWithdrawFromCompoundEvent(
-  config: Omit<
-    UseContractEventConfig<typeof treasuryABI, 'WithdrawFromCompound'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof treasuryAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: treasuryABI,
-    address: treasuryAddress[11155111],
-    eventName: 'WithdrawFromCompound',
-    ...config,
-  } as UseContractEventConfig<typeof treasuryABI, 'WithdrawFromCompound'>)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
- */
-export function useUsdtContractRead<
-  TFunctionName extends string,
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
- */
-export function useUsdtContractUpgradeInterfaceVersion<
-  TFunctionName extends 'UPGRADE_INTERFACE_VERSION',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'UPGRADE_INTERFACE_VERSION',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"allowance"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
- */
-export function useUsdtContractAllowance<
-  TFunctionName extends 'allowance',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'allowance',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"balanceOf"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
- */
-export function useUsdtContractBalanceOf<
-  TFunctionName extends 'balanceOf',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'balanceOf',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"decimals"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
- */
-export function useUsdtContractDecimals<
-  TFunctionName extends 'decimals',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'decimals',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"name"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
- */
-export function useUsdtContractName<
-  TFunctionName extends 'name',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'name',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"owner"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
- */
-export function useUsdtContractOwner<
-  TFunctionName extends 'owner',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'owner',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"paused"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
- */
-export function useUsdtContractPaused<
-  TFunctionName extends 'paused',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'paused',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"proxiableUUID"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
- */
-export function useUsdtContractProxiableUuid<
-  TFunctionName extends 'proxiableUUID',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'proxiableUUID',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"symbol"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
- */
-export function useUsdtContractSymbol<
-  TFunctionName extends 'symbol',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'symbol',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
-
-/**
- * Wraps __{@link useContractRead}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"totalSupply"`.
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
- */
-export function useUsdtContractTotalSupply<
-  TFunctionName extends 'totalSupply',
-  TSelectData = ReadContractResult<typeof usdtContractABI, TFunctionName>,
->(
-  config: Omit<
-    UseContractReadConfig<typeof usdtContractABI, TFunctionName, TSelectData>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractRead({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useReadTestusdtAbiTotalSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'totalSupply',
-    ...config,
-  } as UseContractReadConfig<
-    typeof usdtContractABI,
-    TFunctionName,
-    TSelectData
-  >)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractWrite<
-  TFunctionName extends string,
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          string
-        >['request']['abi'],
-        TFunctionName,
-        TMode
-      > & { address?: Address; chainId?: TChainId }
-    : UseContractWriteConfig<typeof usdtContractABI, TFunctionName, TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, TFunctionName, TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    ...config,
-  } as any)
-}
+export const useWriteTestusdtAbi = /*#__PURE__*/ createUseWriteContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"approve"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"__OAppOptionsType3_init"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractApprove<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'approve'
-        >['request']['abi'],
-        'approve',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'approve' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'approve', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'approve'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'approve', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'approve',
-    ...config,
-  } as any)
-}
+export const useWriteTestusdtAbiOAppOptionsType3Init =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: '__OAppOptionsType3_init',
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burn"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"__OAppPreCrimeSimulator_init"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractBurn<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'burn'
-        >['request']['abi'],
-        'burn',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'burn' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'burn', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'burn'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'burn', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'burn',
-    ...config,
-  } as any)
-}
+export const useWriteTestusdtAbiOAppPreCrimeSimulatorInit =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: '__OAppPreCrimeSimulator_init',
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFrom"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"__OFTCore_init"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractBurnFrom<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'burnFrom'
-        >['request']['abi'],
-        'burnFrom',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'burnFrom' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'burnFrom', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'burnFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'burnFrom', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWriteTestusdtAbiOftCoreInit =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: '__OFTCore_init',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"__OFT_init"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiOftInit = /*#__PURE__*/ createUseWriteContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: '__OFT_init',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"approve"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiApprove = /*#__PURE__*/ createUseWriteContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'approve',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"burn"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiBurn = /*#__PURE__*/ createUseWriteContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'burn',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"burnFrom"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiBurnFrom = /*#__PURE__*/ createUseWriteContract(
+  {
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'burnFrom',
-    ...config,
-  } as any)
-}
+  },
+)
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFromUser"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"burnFromUser"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractBurnFromUser<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'burnFromUser'
-        >['request']['abi'],
-        'burnFromUser',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'burnFromUser'
-      }
-    : UseContractWriteConfig<typeof usdtContractABI, 'burnFromUser', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'burnFromUser'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'burnFromUser', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWriteTestusdtAbiBurnFromUser =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'burnFromUser',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"initialize"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"initialize"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractInitialize<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'initialize'
-        >['request']['abi'],
-        'initialize',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'initialize' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'initialize', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'initialize'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'initialize', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWriteTestusdtAbiInitialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'initialize',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"mint"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"lzReceive"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractMint<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'mint'
-        >['request']['abi'],
-        'mint',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'mint' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'mint', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'mint'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'mint', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'mint',
-    ...config,
-  } as any)
-}
+export const useWriteTestusdtAbiLzReceive =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'lzReceive',
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"pause"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"lzReceiveAndRevert"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractPause<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'pause'
-        >['request']['abi'],
-        'pause',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'pause' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'pause', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'pause'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'pause', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'pause',
-    ...config,
-  } as any)
-}
+export const useWriteTestusdtAbiLzReceiveAndRevert =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'lzReceiveAndRevert',
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"renounceOwnership"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"lzReceiveSimulate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractRenounceOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'renounceOwnership'
-        >['request']['abi'],
-        'renounceOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      }
-    : UseContractWriteConfig<
-        typeof usdtContractABI,
-        'renounceOwnership',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'renounceOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'renounceOwnership', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWriteTestusdtAbiLzReceiveSimulate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'lzReceiveSimulate',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"mint"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiMint = /*#__PURE__*/ createUseWriteContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"pause"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiPause = /*#__PURE__*/ createUseWriteContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'pause',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"renounceOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'renounceOwnership',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transfer"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"send"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractTransfer<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'transfer'
-        >['request']['abi'],
-        'transfer',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'transfer' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'transfer', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transfer'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'transfer', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWriteTestusdtAbiSend = /*#__PURE__*/ createUseWriteContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'send',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"setDelegate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiSetDelegate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'setDelegate',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"setDstEid"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiSetDstEid =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'setDstEid',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"setEnforcedOptions"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiSetEnforcedOptions =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'setEnforcedOptions',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"setMsgInspector"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiSetMsgInspector =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'setMsgInspector',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"setPeer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiSetPeer = /*#__PURE__*/ createUseWriteContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'setPeer',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"setPreCrime"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiSetPreCrime =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'setPreCrime',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"transfer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWriteTestusdtAbiTransfer = /*#__PURE__*/ createUseWriteContract(
+  {
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'transfer',
-    ...config,
-  } as any)
-}
+  },
+)
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferFrom"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"transferFrom"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractTransferFrom<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'transferFrom'
-        >['request']['abi'],
-        'transferFrom',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'transferFrom'
-      }
-    : UseContractWriteConfig<typeof usdtContractABI, 'transferFrom', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferFrom'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'transferFrom', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWriteTestusdtAbiTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'transferFrom',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferOwnership"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"transferOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractTransferOwnership<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'transferOwnership'
-        >['request']['abi'],
-        'transferOwnership',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      }
-    : UseContractWriteConfig<
-        typeof usdtContractABI,
-        'transferOwnership',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'transferOwnership'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'transferOwnership', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWriteTestusdtAbiTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'transferOwnership',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"unpause"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"unpause"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractUnpause<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'unpause'
-        >['request']['abi'],
-        'unpause',
-        TMode
-      > & { address?: Address; chainId?: TChainId; functionName?: 'unpause' }
-    : UseContractWriteConfig<typeof usdtContractABI, 'unpause', TMode> & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'unpause'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'unpause', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    functionName: 'unpause',
-    ...config,
-  } as any)
-}
+export const useWriteTestusdtAbiUnpause = /*#__PURE__*/ createUseWriteContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+  functionName: 'unpause',
+})
 
 /**
- * Wraps __{@link useContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"upgradeToAndCall"`.
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"upgradeToAndCall"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractUpgradeToAndCall<
-  TMode extends WriteContractMode = undefined,
-  TChainId extends number = keyof typeof usdtContractAddress,
->(
-  config: TMode extends 'prepared'
-    ? UseContractWriteConfig<
-        PrepareWriteContractResult<
-          typeof usdtContractABI,
-          'upgradeToAndCall'
-        >['request']['abi'],
-        'upgradeToAndCall',
-        TMode
-      > & {
-        address?: Address
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      }
-    : UseContractWriteConfig<
-        typeof usdtContractABI,
-        'upgradeToAndCall',
-        TMode
-      > & {
-        abi?: never
-        address?: never
-        chainId?: TChainId
-        functionName?: 'upgradeToAndCall'
-      } = {} as any,
-) {
-  return useContractWrite<typeof usdtContractABI, 'upgradeToAndCall', TMode>({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWriteTestusdtAbiUpgradeToAndCall =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'upgradeToAndCall',
-    ...config,
-  } as any)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractWrite<TFunctionName extends string>(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, TFunctionName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, TFunctionName>)
-}
+export const useSimulateTestusdtAbi = /*#__PURE__*/ createUseSimulateContract({
+  abi: testusdtAbiAbi,
+  address: testusdtAbiAddress,
+})
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"approve"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"__OAppOptionsType3_init"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractApprove(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'approve'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiOAppOptionsType3Init =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: '__OAppOptionsType3_init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"__OAppPreCrimeSimulator_init"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiOAppPreCrimeSimulatorInit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: '__OAppPreCrimeSimulator_init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"__OFTCore_init"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiOftCoreInit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: '__OFTCore_init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"__OFT_init"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiOftInit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: '__OFT_init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"approve"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'approve',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'approve'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burn"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"burn"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractBurn(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'burn'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiBurn =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'burn',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'burn'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFrom"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"burnFrom"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractBurnFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'burnFrom'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiBurnFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'burnFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'burnFrom'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"burnFromUser"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"burnFromUser"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractBurnFromUser(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'burnFromUser'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiBurnFromUser =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'burnFromUser',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'burnFromUser'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"initialize"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"initialize"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractInitialize(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'initialize'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'initialize',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'initialize'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"mint"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"lzReceive"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractMint(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'mint'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiLzReceive =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'lzReceive',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"lzReceiveAndRevert"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiLzReceiveAndRevert =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'lzReceiveAndRevert',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"lzReceiveSimulate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiLzReceiveSimulate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'lzReceiveSimulate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"mint"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiMint =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'mint',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'mint'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"pause"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"pause"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractPause(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'pause'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiPause =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'pause',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'pause'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"renounceOwnership"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"renounceOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractRenounceOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'renounceOwnership'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'renounceOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof usdtContractABI,
-    'renounceOwnership'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transfer"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"send"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractTransfer(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'transfer'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiSend =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'send',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"setDelegate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiSetDelegate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'setDelegate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"setDstEid"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiSetDstEid =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'setDstEid',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"setEnforcedOptions"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiSetEnforcedOptions =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'setEnforcedOptions',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"setMsgInspector"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiSetMsgInspector =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'setMsgInspector',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"setPeer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiSetPeer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'setPeer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"setPreCrime"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiSetPreCrime =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    functionName: 'setPreCrime',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"transfer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useSimulateTestusdtAbiTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'transfer',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'transfer'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferFrom"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"transferFrom"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractTransferFrom(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'transferFrom'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'transferFrom',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'transferFrom'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"transferOwnership"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"transferOwnership"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractTransferOwnership(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'transferOwnership'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'transferOwnership',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof usdtContractABI,
-    'transferOwnership'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"unpause"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"unpause"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractUnpause(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'unpause'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiUnpause =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'unpause',
-    ...config,
-  } as UsePrepareContractWriteConfig<typeof usdtContractABI, 'unpause'>)
-}
+  })
 
 /**
- * Wraps __{@link usePrepareContractWrite}__ with `abi` set to __{@link usdtContractABI}__ and `functionName` set to `"upgradeToAndCall"`.
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testusdtAbiAbi}__ and `functionName` set to `"upgradeToAndCall"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function usePrepareUsdtContractUpgradeToAndCall(
-  config: Omit<
-    UsePrepareContractWriteConfig<typeof usdtContractABI, 'upgradeToAndCall'>,
-    'abi' | 'address' | 'functionName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return usePrepareContractWrite({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useSimulateTestusdtAbiUpgradeToAndCall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     functionName: 'upgradeToAndCall',
-    ...config,
-  } as UsePrepareContractWriteConfig<
-    typeof usdtContractABI,
-    'upgradeToAndCall'
-  >)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractEvent<TEventName extends string>(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, TEventName>,
-    'abi' | 'address'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, TEventName>)
-}
+export const useWatchTestusdtAbiEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Approval"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"Approval"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractApprovalEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'Approval'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWatchTestusdtAbiApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     eventName: 'Approval',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'Approval'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Initialized"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"EnforcedOptionSet"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractInitializedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'Initialized'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWatchTestusdtAbiEnforcedOptionSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    eventName: 'EnforcedOptionSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"Initialized"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWatchTestusdtAbiInitializedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     eventName: 'Initialized',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'Initialized'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"OwnershipTransferred"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"MsgInspectorSet"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractOwnershipTransferredEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'OwnershipTransferred'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWatchTestusdtAbiMsgInspectorSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    eventName: 'MsgInspectorSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"OFTReceived"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWatchTestusdtAbiOftReceivedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    eventName: 'OFTReceived',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"OFTSent"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWatchTestusdtAbiOftSentEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    eventName: 'OFTSent',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWatchTestusdtAbiOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     eventName: 'OwnershipTransferred',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'OwnershipTransferred'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Paused"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"Paused"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractPausedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'Paused'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWatchTestusdtAbiPausedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     eventName: 'Paused',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'Paused'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Transfer"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"PeerSet"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractTransferEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'Transfer'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWatchTestusdtAbiPeerSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    eventName: 'PeerSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"PreCrimeSet"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWatchTestusdtAbiPreCrimeSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
+    eventName: 'PreCrimeSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"Transfer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
+ */
+export const useWatchTestusdtAbiTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     eventName: 'Transfer',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'Transfer'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Unpaused"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"Unpaused"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractUnpausedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'Unpaused'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWatchTestusdtAbiUnpausedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     eventName: 'Unpaused',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'Unpaused'>)
-}
+  })
 
 /**
- * Wraps __{@link useContractEvent}__ with `abi` set to __{@link usdtContractABI}__ and `eventName` set to `"Upgraded"`.
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testusdtAbiAbi}__ and `eventName` set to `"Upgraded"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x0eaBdB5f7493CD504E471D06f5aA586f74973840)
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0xfBAE0d4337d936538995A26685f69644e6427213)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480)
  */
-export function useUsdtContractUpgradedEvent(
-  config: Omit<
-    UseContractEventConfig<typeof usdtContractABI, 'Upgraded'>,
-    'abi' | 'address' | 'eventName'
-  > & { chainId?: keyof typeof usdtContractAddress } = {} as any,
-) {
-  return useContractEvent({
-    abi: usdtContractABI,
-    address: usdtContractAddress[11155111],
+export const useWatchTestusdtAbiUpgradedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: testusdtAbiAbi,
+    address: testusdtAbiAddress,
     eventName: 'Upgraded',
-    ...config,
-  } as UseContractEventConfig<typeof usdtContractABI, 'Upgraded'>)
-}
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasury = /*#__PURE__*/ createUseReadContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryUpgradeInterfaceVersion =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'UPGRADE_INTERFACE_VERSION',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"abondUSDaPool"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryAbondUsDaPool = /*#__PURE__*/ createUseReadContract(
+  { abi: treasuryAbi, address: treasuryAddress, functionName: 'abondUSDaPool' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"allowInitializePath"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryAllowInitializePath =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'allowInitializePath',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"borrowing"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryBorrowing = /*#__PURE__*/ createUseReadContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'borrowing',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"calculateYieldsForExternalProtocol"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryCalculateYieldsForExternalProtocol =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'calculateYieldsForExternalProtocol',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"endpoint"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryEndpoint = /*#__PURE__*/ createUseReadContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'endpoint',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"getBalanceInTreasury"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryGetBalanceInTreasury =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'getBalanceInTreasury',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"getBorrowing"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryGetBorrowing = /*#__PURE__*/ createUseReadContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'getBorrowing',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"getExternalProtocolCumulativeRate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryGetExternalProtocolCumulativeRate =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'getExternalProtocolCumulativeRate',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"isComposeMsgSender"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryIsComposeMsgSender =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'isComposeMsgSender',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"nextNonce"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryNextNonce = /*#__PURE__*/ createUseReadContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'nextNonce',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"noOfBorrowers"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryNoOfBorrowers = /*#__PURE__*/ createUseReadContract(
+  { abi: treasuryAbi, address: treasuryAddress, functionName: 'noOfBorrowers' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"oAppVersion"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryOAppVersion = /*#__PURE__*/ createUseReadContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'oAppVersion',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"omniChainTreasuryEthProfitsOfLiquidators"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryOmniChainTreasuryEthProfitsOfLiquidators =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'omniChainTreasuryEthProfitsOfLiquidators',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"omniChainTreasuryNoOfBorrowers"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryOmniChainTreasuryNoOfBorrowers =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'omniChainTreasuryNoOfBorrowers',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"omniChainTreasuryTotalVolumeOfBorrowersAmountinUSD"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryOmniChainTreasuryTotalVolumeOfBorrowersAmountinUsd =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'omniChainTreasuryTotalVolumeOfBorrowersAmountinUSD',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"omniChainTreasuryTotalVolumeOfBorrowersAmountinWei"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryOmniChainTreasuryTotalVolumeOfBorrowersAmountinWei =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'omniChainTreasuryTotalVolumeOfBorrowersAmountinWei',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"owner"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryOwner = /*#__PURE__*/ createUseReadContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'owner',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"peers"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryPeers = /*#__PURE__*/ createUseReadContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'peers',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"proxiableUUID"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryProxiableUuid = /*#__PURE__*/ createUseReadContract(
+  { abi: treasuryAbi, address: treasuryAddress, functionName: 'proxiableUUID' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"quote"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryQuote = /*#__PURE__*/ createUseReadContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'quote',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"totalVolumeOfBorrowersAmountinUSD"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryTotalVolumeOfBorrowersAmountinUsd =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'totalVolumeOfBorrowersAmountinUSD',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"totalVolumeOfBorrowersAmountinWei"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryTotalVolumeOfBorrowersAmountinWei =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'totalVolumeOfBorrowersAmountinWei',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"usdaGainedFromLiquidation"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useReadTreasuryUsdaGainedFromLiquidation =
+  /*#__PURE__*/ createUseReadContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'usdaGainedFromLiquidation',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasury = /*#__PURE__*/ createUseWriteContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"approveUSDa"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryApproveUsDa = /*#__PURE__*/ createUseWriteContract(
+  { abi: treasuryAbi, address: treasuryAddress, functionName: 'approveUSDa' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"approveUsdt"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryApproveUsdt = /*#__PURE__*/ createUseWriteContract(
+  { abi: treasuryAbi, address: treasuryAddress, functionName: 'approveUsdt' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"deposit"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryDeposit = /*#__PURE__*/ createUseWriteContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'deposit',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"initialize"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryInitialize = /*#__PURE__*/ createUseWriteContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'initialize',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"lzReceive"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryLzReceive = /*#__PURE__*/ createUseWriteContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'lzReceive',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"oftOrNativeReceiveFromOtherChains"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryOftOrNativeReceiveFromOtherChains =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'oftOrNativeReceiveFromOtherChains',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"renounceOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"setDelegate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasurySetDelegate = /*#__PURE__*/ createUseWriteContract(
+  { abi: treasuryAbi, address: treasuryAddress, functionName: 'setDelegate' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"setDstEid"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasurySetDstEid = /*#__PURE__*/ createUseWriteContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'setDstEid',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"setDstTreasuryAddress"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasurySetDstTreasuryAddress =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'setDstTreasuryAddress',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"setExternalProtocolAddresses"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasurySetExternalProtocolAddresses =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'setExternalProtocolAddresses',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"setPeer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasurySetPeer = /*#__PURE__*/ createUseWriteContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'setPeer',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"transferEthToCdsLiquidators"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryTransferEthToCdsLiquidators =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'transferEthToCdsLiquidators',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"transferOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateAbondUSDaPool"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryUpdateAbondUsDaPool =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateAbondUSDaPool',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateDepositDetails"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryUpdateDepositDetails =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateDepositDetails',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateEthProfitsOfLiquidators"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryUpdateEthProfitsOfLiquidators =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateEthProfitsOfLiquidators',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateHasBorrowed"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryUpdateHasBorrowed =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateHasBorrowed',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateInterestFromExternalProtocol"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryUpdateInterestFromExternalProtocol =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateInterestFromExternalProtocol',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateTotalBorrowedAmount"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryUpdateTotalBorrowedAmount =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateTotalBorrowedAmount',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateTotalDepositedAmount"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryUpdateTotalDepositedAmount =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateTotalDepositedAmount',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateTotalInterest"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryUpdateTotalInterest =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateTotalInterest',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateTotalInterestFromLiquidation"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryUpdateTotalInterestFromLiquidation =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateTotalInterestFromLiquidation',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateUSDaGainedFromLiquidation"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryUpdateUsDaGainedFromLiquidation =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateUSDaGainedFromLiquidation',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"upgradeToAndCall"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryUpgradeToAndCall =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'upgradeToAndCall',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"withdraw"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryWithdraw = /*#__PURE__*/ createUseWriteContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+  functionName: 'withdraw',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"withdrawExternalProtocolInterest"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryWithdrawExternalProtocolInterest =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'withdrawExternalProtocolInterest',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"withdrawFromExternalProtocol"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryWithdrawFromExternalProtocol =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'withdrawFromExternalProtocol',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"withdrawInterest"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWriteTreasuryWithdrawInterest =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'withdrawInterest',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasury = /*#__PURE__*/ createUseSimulateContract({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"approveUSDa"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryApproveUsDa =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'approveUSDa',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"approveUsdt"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryApproveUsdt =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'approveUsdt',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"deposit"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryDeposit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'deposit',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"initialize"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"lzReceive"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryLzReceive =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'lzReceive',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"oftOrNativeReceiveFromOtherChains"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryOftOrNativeReceiveFromOtherChains =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'oftOrNativeReceiveFromOtherChains',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"renounceOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"setDelegate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasurySetDelegate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'setDelegate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"setDstEid"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasurySetDstEid =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'setDstEid',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"setDstTreasuryAddress"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasurySetDstTreasuryAddress =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'setDstTreasuryAddress',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"setExternalProtocolAddresses"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasurySetExternalProtocolAddresses =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'setExternalProtocolAddresses',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"setPeer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasurySetPeer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'setPeer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"transferEthToCdsLiquidators"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryTransferEthToCdsLiquidators =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'transferEthToCdsLiquidators',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"transferOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateAbondUSDaPool"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryUpdateAbondUsDaPool =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateAbondUSDaPool',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateDepositDetails"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryUpdateDepositDetails =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateDepositDetails',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateEthProfitsOfLiquidators"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryUpdateEthProfitsOfLiquidators =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateEthProfitsOfLiquidators',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateHasBorrowed"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryUpdateHasBorrowed =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateHasBorrowed',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateInterestFromExternalProtocol"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryUpdateInterestFromExternalProtocol =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateInterestFromExternalProtocol',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateTotalBorrowedAmount"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryUpdateTotalBorrowedAmount =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateTotalBorrowedAmount',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateTotalDepositedAmount"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryUpdateTotalDepositedAmount =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateTotalDepositedAmount',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateTotalInterest"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryUpdateTotalInterest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateTotalInterest',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateTotalInterestFromLiquidation"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryUpdateTotalInterestFromLiquidation =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateTotalInterestFromLiquidation',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"updateUSDaGainedFromLiquidation"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryUpdateUsDaGainedFromLiquidation =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'updateUSDaGainedFromLiquidation',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"upgradeToAndCall"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryUpgradeToAndCall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'upgradeToAndCall',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"withdraw"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryWithdraw =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'withdraw',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"withdrawExternalProtocolInterest"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryWithdrawExternalProtocolInterest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'withdrawExternalProtocolInterest',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"withdrawFromExternalProtocol"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryWithdrawFromExternalProtocol =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'withdrawFromExternalProtocol',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"withdrawInterest"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useSimulateTreasuryWithdrawInterest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    functionName: 'withdrawInterest',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link treasuryAbi}__
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWatchTreasuryEvent = /*#__PURE__*/ createUseWatchContractEvent({
+  abi: treasuryAbi,
+  address: treasuryAddress,
+})
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link treasuryAbi}__ and `eventName` set to `"Deposit"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWatchTreasuryDepositEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    eventName: 'Deposit',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link treasuryAbi}__ and `eventName` set to `"DepositToAave"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWatchTreasuryDepositToAaveEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    eventName: 'DepositToAave',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link treasuryAbi}__ and `eventName` set to `"DepositToCompound"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWatchTreasuryDepositToCompoundEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    eventName: 'DepositToCompound',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link treasuryAbi}__ and `eventName` set to `"Initialized"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWatchTreasuryInitializedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    eventName: 'Initialized',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link treasuryAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWatchTreasuryOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    eventName: 'OwnershipTransferred',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link treasuryAbi}__ and `eventName` set to `"PeerSet"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWatchTreasuryPeerSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    eventName: 'PeerSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link treasuryAbi}__ and `eventName` set to `"Upgraded"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWatchTreasuryUpgradedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    eventName: 'Upgraded',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link treasuryAbi}__ and `eventName` set to `"Withdraw"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWatchTreasuryWithdrawEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    eventName: 'Withdraw',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link treasuryAbi}__ and `eventName` set to `"WithdrawFromAave"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWatchTreasuryWithdrawFromAaveEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    eventName: 'WithdrawFromAave',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link treasuryAbi}__ and `eventName` set to `"WithdrawFromCompound"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
+ */
+export const useWatchTreasuryWithdrawFromCompoundEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: treasuryAbi,
+    address: treasuryAddress,
+    eventName: 'WithdrawFromCompound',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDa = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"SEND"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaSend = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'SEND',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"SEND_AND_CALL"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaSendAndCall = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'SEND_AND_CALL',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaUpgradeInterfaceVersion =
+  /*#__PURE__*/ createUseReadContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'UPGRADE_INTERFACE_VERSION',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"allowInitializePath"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaAllowInitializePath =
+  /*#__PURE__*/ createUseReadContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'allowInitializePath',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"allowance"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaAllowance = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'allowance',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"approvalRequired"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaApprovalRequired = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'approvalRequired',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"balanceOf"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaBalanceOf = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'balanceOf',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"combineOptions"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaCombineOptions = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'combineOptions',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"decimalConversionRate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaDecimalConversionRate =
+  /*#__PURE__*/ createUseReadContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'decimalConversionRate',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"decimals"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaDecimals = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'decimals',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"endpoint"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaEndpoint = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'endpoint',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"enforcedOptions"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaEnforcedOptions = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'enforcedOptions',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"isComposeMsgSender"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaIsComposeMsgSender =
+  /*#__PURE__*/ createUseReadContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'isComposeMsgSender',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"isPeer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaIsPeer = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'isPeer',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"msgInspector"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaMsgInspector = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'msgInspector',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"name"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaName = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'name',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"nextNonce"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaNextNonce = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'nextNonce',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"oApp"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaOApp = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'oApp',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"oAppVersion"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaOAppVersion = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'oAppVersion',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"oftVersion"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaOftVersion = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'oftVersion',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"owner"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaOwner = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'owner',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"paused"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaPaused = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'paused',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"peers"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaPeers = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'peers',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"preCrime"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaPreCrime = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'preCrime',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"proxiableUUID"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaProxiableUuid = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'proxiableUUID',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"quoteOFT"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaQuoteOft = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'quoteOFT',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"quoteSend"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaQuoteSend = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'quoteSend',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"sharedDecimals"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaSharedDecimals = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'sharedDecimals',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"symbol"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaSymbol = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'symbol',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"token"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaToken = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'token',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"totalSupply"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useReadUsDaTotalSupply = /*#__PURE__*/ createUseReadContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'totalSupply',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDa = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"__OAppOptionsType3_init"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaOAppOptionsType3Init =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: '__OAppOptionsType3_init',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"__OAppPreCrimeSimulator_init"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaOAppPreCrimeSimulatorInit =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: '__OAppPreCrimeSimulator_init',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"__OFTCore_init"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaOftCoreInit = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: '__OFTCore_init',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"__OFT_init"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaOftInit = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: '__OFT_init',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"approve"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaApprove = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'approve',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"burn"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaBurn = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'burn',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"burnFrom"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaBurnFrom = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'burnFrom',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"burnFromUser"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaBurnFromUser = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'burnFromUser',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"initialize"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaInitialize = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'initialize',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"lzReceive"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaLzReceive = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'lzReceive',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"lzReceiveAndRevert"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaLzReceiveAndRevert =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'lzReceiveAndRevert',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"lzReceiveSimulate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaLzReceiveSimulate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'lzReceiveSimulate',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"mint"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaMint = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"pause"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaPause = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'pause',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"renounceOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"send"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaSend = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'send',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setBorrowingContract"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaSetBorrowingContract =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'setBorrowingContract',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setCdsContract"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaSetCdsContract = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'setCdsContract',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setDelegate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaSetDelegate = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'setDelegate',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setDstEid"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaSetDstEid = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'setDstEid',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setEnforcedOptions"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaSetEnforcedOptions =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'setEnforcedOptions',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setMsgInspector"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaSetMsgInspector = /*#__PURE__*/ createUseWriteContract(
+  { abi: usDaAbi, address: usDaAddress, functionName: 'setMsgInspector' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setPeer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaSetPeer = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'setPeer',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setPreCrime"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaSetPreCrime = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'setPreCrime',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"transfer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaTransfer = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'transfer',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"transferFrom"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaTransferFrom = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'transferFrom',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"transferOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"unpause"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaUnpause = /*#__PURE__*/ createUseWriteContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'unpause',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"upgradeToAndCall"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWriteUsDaUpgradeToAndCall =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'upgradeToAndCall',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDa = /*#__PURE__*/ createUseSimulateContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"__OAppOptionsType3_init"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaOAppOptionsType3Init =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: '__OAppOptionsType3_init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"__OAppPreCrimeSimulator_init"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaOAppPreCrimeSimulatorInit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: '__OAppPreCrimeSimulator_init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"__OFTCore_init"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaOftCoreInit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: '__OFTCore_init',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"__OFT_init"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaOftInit = /*#__PURE__*/ createUseSimulateContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: '__OFT_init',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"approve"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaApprove = /*#__PURE__*/ createUseSimulateContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'approve',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"burn"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaBurn = /*#__PURE__*/ createUseSimulateContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'burn',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"burnFrom"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaBurnFrom = /*#__PURE__*/ createUseSimulateContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'burnFrom',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"burnFromUser"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaBurnFromUser =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'burnFromUser',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"initialize"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"lzReceive"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaLzReceive = /*#__PURE__*/ createUseSimulateContract(
+  { abi: usDaAbi, address: usDaAddress, functionName: 'lzReceive' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"lzReceiveAndRevert"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaLzReceiveAndRevert =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'lzReceiveAndRevert',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"lzReceiveSimulate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaLzReceiveSimulate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'lzReceiveSimulate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"mint"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaMint = /*#__PURE__*/ createUseSimulateContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"pause"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaPause = /*#__PURE__*/ createUseSimulateContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'pause',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"renounceOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"send"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaSend = /*#__PURE__*/ createUseSimulateContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'send',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setBorrowingContract"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaSetBorrowingContract =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'setBorrowingContract',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setCdsContract"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaSetCdsContract =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'setCdsContract',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setDelegate"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaSetDelegate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'setDelegate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setDstEid"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaSetDstEid = /*#__PURE__*/ createUseSimulateContract(
+  { abi: usDaAbi, address: usDaAddress, functionName: 'setDstEid' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setEnforcedOptions"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaSetEnforcedOptions =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'setEnforcedOptions',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setMsgInspector"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaSetMsgInspector =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'setMsgInspector',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setPeer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaSetPeer = /*#__PURE__*/ createUseSimulateContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'setPeer',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"setPreCrime"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaSetPreCrime =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'setPreCrime',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"transfer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaTransfer = /*#__PURE__*/ createUseSimulateContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'transfer',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"transferFrom"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"transferOwnership"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"unpause"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaUnpause = /*#__PURE__*/ createUseSimulateContract({
+  abi: usDaAbi,
+  address: usDaAddress,
+  functionName: 'unpause',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link usDaAbi}__ and `functionName` set to `"upgradeToAndCall"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useSimulateUsDaUpgradeToAndCall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: usDaAbi,
+    address: usDaAddress,
+    functionName: 'upgradeToAndCall',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaEvent = /*#__PURE__*/ createUseWatchContractEvent({
+  abi: usDaAbi,
+  address: usDaAddress,
+})
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"Approval"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"EnforcedOptionSet"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaEnforcedOptionSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'EnforcedOptionSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"Initialized"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaInitializedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'Initialized',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"MsgInspectorSet"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaMsgInspectorSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'MsgInspectorSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"OFTReceived"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaOftReceivedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'OFTReceived',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"OFTSent"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaOftSentEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'OFTSent',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'OwnershipTransferred',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"Paused"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaPausedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'Paused',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"PeerSet"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaPeerSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'PeerSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"PreCrimeSet"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaPreCrimeSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'PreCrimeSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"Transfer"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"Unpaused"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaUnpausedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'Unpaused',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link usDaAbi}__ and `eventName` set to `"Upgraded"`
+ *
+ * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64)
+ */
+export const useWatchUsDaUpgradedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: usDaAbi,
+    address: usDaAddress,
+    eventName: 'Upgraded',
+  })

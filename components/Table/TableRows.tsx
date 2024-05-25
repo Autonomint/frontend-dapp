@@ -131,8 +131,6 @@ const TableRows = ({
   useEffect(() => {
     handleDepositData();
   }, [details]);
-  console.log("isnewtxn",isnewtxn)
-  console.log("islasttxn",islasttxn)
 
   return (
 

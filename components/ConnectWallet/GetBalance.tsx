@@ -1,17 +1,22 @@
 import React from 'react'
-import { DEV_PROXY_AMINT_ADDRESS, DEV_PROXY_TESTUSDT_ADDRESS,DEV_PROXY_ABOND_ADDRESS } from "@/constants/Addresses";
-import { useBalance,useAccount } from "wagmi";
+import { usDaAddress,abondAddress,testusdtAbiAddress } from '@/abiAndHooks';
+import { useBalance,useAccount, useChainId } from "wagmi";
 
  const  GetBalance=({token}:{token:string})=> {
+    const chainId = useChainId();
     const {address} = useAccount();
     const { data } = useBalance({
         address:address,
-        token: token == "amint" ? DEV_PROXY_AMINT_ADDRESS : token == "usdt" ? DEV_PROXY_TESTUSDT_ADDRESS : token=="abond"?DEV_PROXY_ABOND_ADDRESS: undefined,
-        watch: true,
+        token: token == "USDa" ? usDaAddress[chainId as keyof typeof usDaAddress] 
+        : token == "TUSDT" ? testusdtAbiAddress[chainId as keyof typeof testusdtAbiAddress]
+        : token=="ABOND"?abondAddress[chainId as keyof typeof abondAddress]
+        : undefined,
+
       });
   return (
     <div>
-       bal. {data?.formatted.slice(0, 8) } {token?.toUpperCase()}
+      
+       bal. {data?.formatted.slice(0, 8) } {data?.value} {token}
     </div>
   )
 }
