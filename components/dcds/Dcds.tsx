@@ -1,8 +1,5 @@
 "use client";
-import CreateNewDeposit from "@/components/Dashboard/CreateNewDeposit";
-import DashboardStatsItem from "@/components/Dashboard/DashboardStatsItem";
-import Divider from "@/components/CustomUI/Divider/Divider";
-import ProductList from "@/components/Markets/ProductList";
+
 import {
   Table,
   TableBody,
@@ -17,7 +14,6 @@ import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import NewDeposit from "./NewDeposit";
 import AmintDepositRow from "./AmintDepositRow";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { formatEther } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import {
   Dialog,

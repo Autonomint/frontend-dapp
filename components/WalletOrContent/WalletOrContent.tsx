@@ -1,26 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import heroPattern from "@/app/assets/gridBg.svg";
-import DashboardStatsItem from "@/components/Dashboard/DashboardStatsItem";
-
 import CreateNewDeposit from "@/components/Dashboard/CreateNewDeposit";
-import Divider from "@/components/CustomUI/Divider/Divider";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
-import Image from "next/image";
-
 import DepositAndWithDrawTable from "@/components/Table/OurTable";
 import { useAccount, useChainId } from "wagmi";
 import {
-  abondAddress,
-  usDaAddress,
-  useReadBorrowingContract,
   useReadBorrowingContractGetUsdValue
 } from "@/abiAndHooks";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import displayNumberWithPrecision from "@/app/utils/precision";
-import { formatEther } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
-import { error } from "console";
 import {
   Dialog,
   DialogClose,
@@ -32,33 +20,6 @@ import {
 import { ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import { set } from "react-hook-form";
-
-// const dasboardStatsItem = [
-//   {
-//     heading: "Total amount of ETH Deposited",
-//     value: "0",
-//     subheadingBefore: "Across a total of",
-//     subheadingHighlight: "",
-//     subheadingAfter: "investments",
-//     showSubHeading: true,
-//   },
-//   {
-//     heading: "Total amount of AMINT received.",
-//     value: "0",
-//     subheadingHighlight: "0",
-//     subheadingAfter: "AMINT is available in your wallet",
-//     showSubHeading: true,
-//     tokenAddress: usDaAddress,
-//   },
-//   {
-//     heading: "Total amount of ABOND received.",
-//     value: "0",
-//     subheadingHighlight: "0",
-//     subheadingAfter: "ABOND is available in your wallet.",
-//     showSubHeading: true,
-//     tokenAddress: abondAddress,
-//   },
-// ];
 
 const WalletOrContent = () => {
   // destructure isConnected and address from useAccount hook of wagmi

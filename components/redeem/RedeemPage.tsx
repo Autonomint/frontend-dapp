@@ -1,26 +1,10 @@
 'use client';
 import ConnectWallet from '@/components/ConnectWallet/ConnectWallet';
-import exp from 'constants'
 import React, { useEffect } from 'react'
 import { useAccount } from 'wagmi';
 import Redeem from './Redeem';
-import Divider from '@/components/CustomUI/Divider/Divider';
 import { borrowingContractAbi, useReadCdsUsdtAmountDepositedTillNow, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
 import { formatEther } from 'ethers';
-import {
-  abondAddress,
-  usDaAddress,
-  testusdtAbiAddress,
-  borrowingContractAddress,
-  cdsAddress
-} from "@/abiAndHooks";
-import { publicClient } from './client';
-import { watchContractEvent } from '@wagmi/core'
-import { config } from '@/providers/WalletProvider';
-import { BorrowingABI } from '@/constants/BorrowingAbi';
-import { CDSABI } from '@/constants/CDSAbi';
-
-import StatItem from './StateItems';
 import eth from "@/app/assets/eth.svg";
 import usdt from "@/app/assets/tether-usdt.svg";
 import Image from 'next/image';
@@ -36,28 +20,6 @@ import {
 } from "@/components/ui/dialog";
 import { ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
-
-// const dasboardStatsItem = [
-//   {
-//     heading: "USDT",
-//     value: "0",
-//     tokenAddress: usdtContractAddress,
-//   },
-//   {
-//     heading: "ETH",
-//     value: "0",
-//   },
-//   {
-//     heading: "AMINT ",
-//     value: "0",
-//     tokenAddress: amintAddress,
-//   },
-//   {
-//     heading: "ABOND",
-//     value: "0",
-//     tokenAddress: abondAddress,
-//   },
-// ];
 
 const poolValues = [
   {
