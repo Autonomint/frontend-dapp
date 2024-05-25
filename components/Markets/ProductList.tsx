@@ -6,7 +6,6 @@ import uniswap from "@/app/assets/uni.svg";
 import cake from "@/app/assets/cake.svg";
 import sushi from "@/app/assets/sushi.svg";
 import snx from "@/app/assets/snx.svg";
-import Swap from "../uniswap/Swap";
 import {
   Dialog,
   DialogClose,

@@ -1,10 +1,7 @@
-import { Button } from "@/components/ui/button";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import SideBar from "@/components/Sidebar/SideBar";
 import { Toaster } from "sonner";
-// import WalletProvider from "@/providers/WalletProvider";
 import NavBar from "@/components/NavBar/NavBar";
 import QueryProvider from "@/providers/QueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -47,7 +44,6 @@ export default function RootLayout({
             <WalletProvider>
               <QueryProvider>
 
-                {/* <SideBar /> */}
                 <div className="flex flex-col w-full h-full mx-0 basis-full ">
                   {/* <WaitlistBanner/> */}
                   <NavBar />

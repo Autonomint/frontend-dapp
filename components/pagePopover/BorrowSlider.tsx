@@ -6,7 +6,7 @@ import Slider from "react-slick"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ArrowBigLeft, ArrowBigRight, ArrowLeftCircle, ArrowRightCircle, ArrowRightLeftIcon, MoveRightIcon } from 'lucide-react';
-import { useAbondTotalSupply, useAmintTotalSupply, useBorrowingContractGetUsdValue, useBorrowingContractLastCdsPoolValue, useCdsTotalCdsDepositedAmount, useTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
+import { useReadAbondTotalSupply, useReadUsDaTotalSupply, useReadCdsTotalCdsDepositedAmount, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
 import { formatEther } from 'viem';
 import Image from 'next/image';
 import left_arrow from '@/app/assets/left_arrow.svg';
@@ -79,10 +79,10 @@ const BorrowSlider = ({
 
   }
 
-  const { data: totalStable } = useCdsTotalCdsDepositedAmount({ watch: true })
-  const { data: ethLocked } = useTreasuryTotalVolumeOfBorrowersAmountinUsd({ watch: true })
-  const { data: amintsupply } = useAmintTotalSupply({ watch: true })
-  const { data: abondSupply } = useAbondTotalSupply({ watch: true });
+  const { data: totalStable } = useReadCdsTotalCdsDepositedAmount()
+  const { data: ethLocked } = useReadTreasuryTotalVolumeOfBorrowersAmountinUsd()
+  const { data: amintsupply } = useReadUsDaTotalSupply()
+  const { data: abondSupply } = useReadAbondTotalSupply();
 
 
   return (
