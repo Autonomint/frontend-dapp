@@ -117,10 +117,16 @@ export default function page() {
     else{
       setCollateralAmountString(form.getValues("collateralAmount").toString())
     }
-    if(nativeFee1){
+    const amount = ethers.parseEther(letamount) -37671213890518646n;
+    if(chainId === 84532 && nativeFee1){
     const amount = ethers.parseEther(letamount) - nativeFee1.nativeFee;
-    form.setValue("outputCollateralAmount", Number((Number(amount)/10**18).toFixed(4)));
+    
   }
+  if(form.getValues("collateralAmount") !=0){
+    form.setValue("outputCollateralAmount", Number((Number(amount)/10**18).toFixed(4)));
+    
+  }
+
 
   }, [form.watch("collateralAmount")]);
   
@@ -138,12 +144,10 @@ export default function page() {
   const { data: nativeFee1, error: UsdaQuoteError, refetch: refetchnativeFee1 } = useReadUsDaQuoteSend({
     args: [transactionParams as any, false]
   });
-  console.log(nativeFee1, UsdaQuoteError)
 
   const { data: nativeFee2, error: TUSDTQuoteError, refetch: refetchnativeFee2 } = useReadTestusdtAbiQuoteSend({
     args: [transactionParams as any, false]
   });
-
 
   const {
     isPending: amintApproveLoading,
@@ -215,7 +219,8 @@ export default function page() {
           { nativeFee: nativeFee1.nativeFee, lzTokenFee: 0n },
           accountAddress,
         ],
-        value: nativeFee1.nativeFee,
+        // value: nativeFee1.nativeFee,
+        value:37671213890518646n
       })
     }
     else if(usdaErrorApprove) {
@@ -429,7 +434,8 @@ export default function page() {
           { nativeFee: nativeFee2.nativeFee, lzTokenFee: 0n },
           accountAddress,
         ],
-        value: nativeFee2.nativeFee,
+        // value: nativeFee2.nativeFee,
+        value:37671213890518646n
       })
     }
     else if(usdaErrorApprove) {
@@ -569,11 +575,12 @@ export default function page() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("values", values);
+    console.log(nativeFee2)
     if (accountAddress) {
 
 
 
-      if (values.inputCollateral === 'usda' && nativeFee1) {
+      if (values.inputCollateral === 'usda' ) {
         amintApproveWrite({
           args: [
   
@@ -583,7 +590,8 @@ export default function page() {
         })
  
 
-      } else if (values.inputCollateral === 'tusdt' && nativeFee2) {
+      } else if (values.inputCollateral === 'tusdt' ) {
+        
         tusDTApproveWrite({
           args: [
   
@@ -830,12 +838,13 @@ export default function page() {
                                 onValueChange={(value) => {
                                   field.onChange(value)
                                 }}
+                                
                                 disabled={true}
                                 value={field.value}
                               >
                                 {/* <label className='absolute ml-3 p-1 bg-white -top-1 text-[11px] text-gray-500 dark:bg-[#0F0F0F] dark:text-gray-400 '>{!form.getValues("inputCollateral") ? "" : "Input Type"}</label> */}
 
-                                <FormControl className='bg-[#020202] text-white py-5 rounded-none' >
+                                <FormControl className='bg-[#020202] disabled:opacity-100 text-white py-5 rounded-none' >
                                   <SelectTrigger >
                                     <SelectValue placeholder="Output Token" />
                                   </SelectTrigger>
@@ -870,13 +879,14 @@ export default function page() {
 
                                 {...field}
                                 value={Boolean(field.value) ? field.value : ""}
-                                className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] border-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                                className="w-full px-2 py-5 disabled:opacity-100 rounded-none text-sm text-gray-900 bg-[#ffffff] border-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] border lock dark:text-white focus:outline-none focus:ring-0 peer"
                                 style={{
                                   appearance: 'textfield',
                                   MozAppearance: 'textfield',
                                   WebkitAppearance: 'none',
                                   margin: 0
                                 }}
+                                disabled={true}
                               ></Input>
                               <label
                                 htmlFor="amount_of_usdt"
