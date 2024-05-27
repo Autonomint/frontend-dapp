@@ -237,7 +237,7 @@ const Dcds = () => {
     <>
       {
         !isConnected ? <ConnectWallet /> : (
-          <div className="relative w-full rounded-[10px] px-2   dark:bg-[#141414] dark:shadow-none  flex flex-col self-stretch overflow-hidden ">
+          <div className="relative w-full rounded-[10px] px-2  dark:border-[#3A3A3A]  dark:shadow-none  flex flex-col self-stretch overflow-hidden ">
 
             <NewDeposit handleRefetch={handleRefetch} openDeposits={setOpen2} />
 
@@ -258,18 +258,9 @@ const Dcds = () => {
             </div>
             <DialogHeader className="flex items-start -mt-5">
                   </DialogHeader>
-              <DialogTitle className="text-textPrimary  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-3xl text-2xl ">
-                <div className="flex flex-col gap-[10px] ">
-                  <h2 className="text-black dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
-                    Your Deposits
-                  </h2>
-                  <p className="text-textSecondary dark:text-[#EEEEEE]  text-sm min-[1440px]:text-base 2dppx:text-xs">
-                    A list of all the deposits you have made.
-                  </p>
-                </div>
-              </DialogTitle> */}
+
                 {/* <div className="mb-10 mx-0 min-w-[600px]  w-full overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto"> */}
-                <div className="flex border  h-[74vh] w-full">
+                <div className="flex border  h-[74vh] w-full dark:border-[#3A3A3A] ">
                   <div className="flex w-full ">
                     <div className={`${!sheetDetails ? "basis-full" : "basis-full xl:basis-2/3 "}  overflow-hidden `}>
                       <div className="flex flex-col gap-[10px] ">

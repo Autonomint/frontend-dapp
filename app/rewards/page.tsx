@@ -17,23 +17,23 @@ export default function page() {
     return (
         <div>
             <div className='w-full px-2 sm:px-5 '>
-                <div className='w-full bg-white border relative border-[#9E9E9E] shadow-custom min-h-[84vh]'>
+                <div className='w-full bg-white border relative border-[#9E9E9E] dark:bg-[#242424] dark:shadow-darkcustom  shadow-custom min-h-[84vh]'>
                     <div className="hidden gap-5 sm:flex sm:flex-col sm:absolute mdb:flex right-5 top-5">
                         <div onClick={() => { setShowNotification(!showNotification); setOpenSettings(false) }} className="border-[#041A50] hover:bg-[#d9feef]  bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
-                            <BellIcon className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
+                            <BellIcon className="w-6 h-6 text-[#000000] " />
                         </div>
                         <div onClick={() => { setOpenSettings(!openSettings); setShowNotification(false) }} className="border-[#041A50] bg-[#ABFFDE] hover:bg-[#d9feef] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
-                            <Settings className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
+                            <Settings className="w-6 h-6 text-[#000000] " />
                         </div>
                     </div>
                     <Notification showNotifications={showNotification} setShowNotifications={setShowNotification} />
                     <PageSettings showSettings={openSettings} setShowSettings={setOpenSettings} />
-                    <div className='w-[95%] sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[800px] mx-auto h-auto  dark:bg-[#141414]  p-1 sm:p-4'>
-                        <div className="justify-center flex flex-col gap-4 mt-2 py-4 align-middle dark:bg-[#141414] ">
+                    <div className='w-[95%] sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[800px] mx-auto h-auto  p-1 sm:p-4'>
+                        <div className="flex flex-col justify-center gap-4 py-4 mt-2 align-middle ">
                             <div className="w-full gap-5 text-xl text-center">
                                 Refer <span className='font-semibold ] '>Autonomint</span>  to your friends and boost your earnings!
                             </div>
-                            <div className='-4'>
+                            <div className=''>
                                 {
                                     showReferral ?
                                     (
@@ -50,9 +50,8 @@ export default function page() {
                                     ):(
                                         <div className='flex flex-col gap-2'>
                                         Create a referral link and share it with your friends. When they sign up and start earning.
-                                        
                                         <div className='flex justify-center w-full'>
-                                            <button onClick={generateReferral} className=' w-fit px-4 font-medium border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none'>Create Referral Link</button>
+                                            <button onClick={generateReferral} className=' w-fit px-4 font-medium border-[#041A50] bg-[#ABFFDE] dark:text-black text-sm border-[1px] shadow-smallcustom py-2 rounded-none'>Create Referral Link</button>
                                         </div>
                                     </div>
 
@@ -62,26 +61,21 @@ export default function page() {
                                
                             </div>
                             <div className='flex gap-2'>
-
-
-                                <div className='flex w-full flex-col gap-2 bg-[#EEEEEE] border-[#9E9E9E] shadow-custom p-4 '>
+                                <div className='flex w-full flex-col gap-2 bg-[#EEEEEE]  border-[#9E9E9E] shadow-custom dark:bg-[#020202] dark:shadow-darkcustom p-4 '>
                                     <div className='flex gap-2 text-sm font-semibold'><ReceiptIcon width={20} height={20} /> Collected</div>
                                     <div className='text-xl font-semibold text-center'>450 LP</div>
                                 </div>
-
-                                <div className='flex w-full flex-col gap-2 bg-[#EEEEEE] border-[#9E9E9E] shadow-custom p-4 '>
-
+                                <div className='flex w-full flex-col gap-2 bg-[#EEEEEE] border-[#9E9E9E] shadow-custom dark:bg-[#020202] dark:shadow-darkcustom p-4 '>
                                     <div className='flex justify-between'>
                                         <p className='flex items-center gap-2 text-sm'><Wallet width={20} height={20} />Total referred :</p><p className='text-sm font-semibold'>500</p>
                                     </div>
                                     <div className='flex justify-between'>
                                         <p className='flex items-center gap-2 text-sm'><ListChecks width={20} height={20} /> Total users :</p><p className='text-sm font-semibold'>10000</p>
                                     </div>
-
                                 </div>
                             </div>
 
-                            <div className='flex flex-col gap-2 bg-[#ffffff] border border-[#9E9E9E] shadow-custom p-4 '>
+                            <div className='flex flex-col gap-2 bg-[#ffffff] border border-[#9E9E9E]  dark:border-none dark:bg-[#3a3a3a] dark:shadow-darkcustom shadow-custom p-4 '>
                                 <div className='text-xl font-bold'>
                                     HOW TO EARN:
                                 </div>
@@ -98,7 +92,7 @@ export default function page() {
                                     <p className='flex items-center justify-between w-full gap-2 text-xs'>Bridge 500 USDa to Mode L2 - <span className='font-medium'>10 points/per day</span></p>
                                 </div>
                                 <div className='flex justify-between border-b border-[#9E9E9E] pb-1'>
-                                    <p className='flex items-center justify-between w-full gap-2 text-xs'>Tweet about Autonomint - <span className='font-medium'>1 points/per day</span></p>
+                                    <p className='flex items-center justify-between w-full gap-2 text-xs'>Tweet about Autonomint - <span className='font-medium'>3 points/per day</span></p>
                                 </div>
                                 <div className='flex '>
                                     <p className='flex justify-between w-full text-xs '>Invite people to Autonomint - <span className='font-medium'>5 points</span></p>

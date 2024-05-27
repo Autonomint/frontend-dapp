@@ -26,6 +26,7 @@ module.exports = {
       boxShadow: {
         custom: '4px 4px 0px #C4C4C4',
         smallcustom: '4px 4px 0px #00679F',
+        darkcustom: '4px 4px 0px #5B5B5B',
       },
       zIndex: {
         'max': 999999,

@@ -895,7 +895,7 @@ const NewDeposit = ({
                                     inputMode="numeric"
                                     pattern="[0-9]*"
                                     type="text"
-                                    className="w-full px-2 py-5 text-sm rounded-none text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655]  border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                                    className="w-full px-2 py-5 text-sm rounded-none text-gray-900 bg-[#ffffff] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] border-[#020202]  border lock dark:text-white focus:outline-none focus:ring-0 peer"
                                     placeholder=""
                                     {...field}
                                     value={field.value ?? ""}
@@ -904,7 +904,7 @@ const NewDeposit = ({
 
                                   <label
                                     htmlFor="amount_of_amint"
-                                    className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                                    className="absolute text-sm text-gray-500 dark:text-[#FFFFFF] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-[#3A3A3A]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                                   >
                                     Deposit AMINT
                                   </label>
@@ -937,7 +937,7 @@ const NewDeposit = ({
                                 inputMode="numeric"
                                 pattern="[0-9]*"
                                 type="text"
-                                className="w-full px-2 py-5 text-sm rounded-none text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655]  border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                                className="w-full px-2 py-5 text-sm rounded-none text-gray-900 bg-[#ffffff] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] border-[#020202]   border lock dark:text-white focus:outline-none focus:ring-0 peer"
                                 disabled={!tokensEnabled.USDT}
                                 placeholder=""
                                 {...field}
@@ -951,7 +951,7 @@ const NewDeposit = ({
                               ></Input>
                               <label
                                 htmlFor="amount_of_usdt"
-                                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                                className="absolute text-sm text-gray-500 dark:text-[#FFFFFF] duration-300 transform -translate-y-4 scale-75 bg-[#ffffff]  top-2 z-10 origin-[0] dark:bg-[#3A3A3A]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                               >
                                 Deposit USDT
                               </label>
@@ -1071,7 +1071,7 @@ const NewDeposit = ({
                     <div className="flex items-center ml-[4px]">
                       <InfoCircledIcon width={18} height={18} />
                     </div>
-                    <p className="min-[1440px]:text-base 2dppx:text-xs text-sm font-normal text-textGrey  dark:text-[#9E9E9E] text-center leading-none">
+                    <p className="min-[1440px]:text-base 2dppx:text-xs text-sm font-normal text-textGrey  dark:text-[#FFFFFF] text-center leading-none">
                       Minimum {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"} Amount is{" "}
                       <span className="font-medium text-textHighlight dark:text-[#ffff]">
                         500 {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"}
@@ -1087,17 +1087,16 @@ const NewDeposit = ({
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
-
                         >
                           <FormControl
-                            className="bg-white py-3 h-fit border-[#020202] rounded-none dark:bg-[#0F0F0F]  dark:text-white"
+                            className="bg-white py-3 h-fit border-[#020202] rounded-none dark:bg-[#3A3A3A] dark:border-[#9E9E9E]  dark:text-white"
                           >
                             <SelectTrigger>
                               <SelectValue placeholder="Choose a Lock-In Period" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent className="dark:bg-[#0F0F0F] py-2 bg-white  border-[#020202] rounded-none">
-                            <SelectGroup className="dark:bg-[#0F0F0F]">
+                          <SelectContent className=" py-2 bg-white  dark:bg-[#3A3A3A] dark:border-[#9E9E9E] rounded-none">
+                            <SelectGroup className="dark:bg-[#3A3A3A] dark:border-[#9E9E9E] text-white">
                               <SelectLabel>Lock-In Period</SelectLabel>
                               <SelectItem value="30">30 Days</SelectItem>
                               <SelectItem value="60">
@@ -1121,16 +1120,16 @@ const NewDeposit = ({
                     control={form.control}
                     name="liquidationGains"
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md p-2 min-[1440px]:p-4 2dppx:p-2">
+                      <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md my-2 min-[1440px]:p-4 2dppx:p-2">
                         <FormControl>
                           <Checkbox
                             checked={field.value}
                             onCheckedChange={field.onChange}
-                            className="dark:bg-[#020202] dark:border-[#020202] rounded-none dark:text-white"
+                            className="dark:bg-[#3A3A3A] dark:border-[#9E9E9E] rounded-none dark:text-white"
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
-                          <FormLabel className="text-textGrey dark:text-white">
+                          <FormLabel className="font-light text-textGrey dark:text-white">
                             Opt in for liquidation gains
                           </FormLabel>
                         </div>
@@ -1211,7 +1210,7 @@ const NewDeposit = ({
                   type="button"
                   onClick={() => openDeposits(true)}
                   variant={"primary"}
-                  className="text-[#020202] relative rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
+                  className="text-[#020202] relative rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] dark:bg-[#5B5B5B] dark:border-[#FFFFFF] dark:text-[white] py-2"
                 >
                   {'View Positions'}<Image src={arrowout} className="ml-2 sm:ml-0 sm:absolute sm:right-5" alt="arrow" width={20} height={15} />
                 </Button>

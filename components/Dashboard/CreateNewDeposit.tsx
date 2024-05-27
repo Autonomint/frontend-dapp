@@ -460,15 +460,9 @@ useEffect(()=>{
     } // mutate(address);
   }
 
-
-
   /**
    * Handles the Fee Calculation.
-   */
-
-
-
-
+   **/
 
   /**
    * Handles the calculation and setting of the amint to be minted and downside protection amounts.
@@ -534,7 +528,7 @@ useEffect(()=>{
           </div>
           <div className="flex flex-col ">
             <div className="flex  flex-col basis-1/2 min-[1440px]:pt-[30px] pt-[10px] min-[1440px]:gap-[20px] min-[1280px]:gap-[16px] 2dppx:gap-[10px] gap-[10px]">
-              <div className='relative flex w-full gap-2 dark:bg-[#020202]'>
+              <div className='relative flex w-full gap-2 '>
                 <FormField
                   control={form.control}
                   name="collateralAmount"
@@ -549,7 +543,7 @@ useEffect(()=>{
                             {...field}
                             value={Boolean(field.value) ? field.value : ""}
                             placeholder=""
-                            className="px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202]  dark:border-[#00B655] border-[1px] lock dark:text-white focus:outline-none focus:ring-0 peer"
+                            className="px-2 py-5 rounded-none text-sm disabled:opacity-100  text-gray-900 bg-[#ffffff] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] border-[#020202] border-[1px] lock dark:text-white focus:outline-none focus:ring-0 peer"
                             style={{
                               appearance: 'textfield',
                               MozAppearance: 'textfield',
@@ -560,7 +554,7 @@ useEffect(()=>{
                           ></Input>
                           <label
                             htmlFor="amount_of_usdt"
-                            className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                            className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#3A3A3A]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                           >
                             Input Amount
                           </label>
@@ -601,9 +595,9 @@ useEffect(()=>{
                                 <SelectValue placeholder="Collateral" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent className="text-white bg-[#020202] rounded-none">
+                            <SelectContent className="text-white bg-[#020202] dark:bg-black rounded-none">
                               <SelectGroup >
-                                <SelectItem className="text-white bg-[#020202] rounded-none" value="eth">ETH</SelectItem>
+                                <SelectItem className="text-white bg-[#020202] dark:bg-black  rounded-none" value="eth">ETH</SelectItem>
                               </SelectGroup>
                             </SelectContent>
 
@@ -646,11 +640,11 @@ useEffect(()=>{
                   :
                 </div>
                 <div className="flex gap-4">
-                  <div onClick={() => form.setValue("strikePrice", 5)} className={`p-[1px] ${form.getValues("strikePrice") == 5 ? "border-black border-2  text-black font-medium" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"}  text-sm border  w-[2.5rem] text-center cursor-pointer `}>5%</div>
-                  <div onClick={() => form.setValue("strikePrice", 10)} className={`p-[1px] ${form.getValues("strikePrice") == 10 ? "border-black border-2 text-black font-medium" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"} text-sm border w-[2.5rem] text-center  cursor-pointer `}>10%</div>
+                  <div onClick={() => form.setValue("strikePrice", 5)} className={`p-[1px] ${form.getValues("strikePrice") == 5 ? " border-2   font-medium dark:border-[#ABFFDE] text-[#ABFFDE]" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"}  text-sm border  w-[2.5rem] text-center cursor-pointer `}>5%</div>
+                  <div onClick={() => form.setValue("strikePrice", 10)} className={`p-[1px] ${form.getValues("strikePrice") == 10 ? "border-2 dark:border-[#ABFFDE] text-[#ABFFDE] font-medium" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"} text-sm border w-[2.5rem] text-center  cursor-pointer `}>10%</div>
                 </div>
               </div>
-              <div className='relative  bg-[#ffffff] dark:bg-[#020202] border-[#020202] border-[1px] dark:border-[#00B655]    rounded-none py-1 px-2'>
+              <div className='relative  dark:bg-[#3A3A3A] dark:border-[#9E9E9E] border-[#020202] border-[1px]    rounded-none py-1 px-2'>
                 <div>
                   <div className='text-sm text-textGrey font-medium dark:text-[#FFFF] flex justify-between'>
                     <div className='p-1 mt-1 basis-3/5'>{amintToBeMinted}</div>
@@ -663,7 +657,7 @@ useEffect(()=>{
                   type="button"
                   onClick={() => openPositions(true)}
                   variant={"primary"}
-                  className="text-[#020202] relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
+                  className="text-[#020202] relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] dark:bg-[#5B5B5B] dark:border-[#FFFFFF] dark:text-[white] bg-[#DEDEDE] py-2"
 
                 >
                   {'View Positions'} <Image src={arrowout} className="ml-2 sm:ml-0 sm:absolute sm:right-5" alt="arrow" width={20} height={15} />
@@ -672,7 +666,7 @@ useEffect(()=>{
                 <Button
                   type="submit"
                   variant={"primary"}
-                  className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
+                  className="border-[#041A50] bg-[#ABFFDE] dark:text-[#020202] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
                   disabled={isDepositsLoading ||isDepositdataLoading || isStoringbackend  || disabled}
                 >
                   {isDepositsLoading ||isDepositdataLoading || isStoringbackend ? <Spinner /> : 'Confirm Deposit'}
@@ -685,20 +679,20 @@ useEffect(()=>{
                   Abond and your collateral can be withdrawn by returning Abond."
               />
 
-              <div className="relative container flex px-0  mx-auto border-[1px] border-[#020202] dark:bg-[linear-gradient(270deg,#16603B_0%,#0D4A5C_100%)]  dark:border-gray-700 ">
+              <div className="relative container flex px-0  mx-auto border-[1px] border-[#020202]   dark:border-[#9E9E9E]  ">
                 <div className="absolute flex w-full h-8 ">
-                  <div style={{ background: 'linear-gradient(to bottom, #0029AC 1%, #6185F8 2%, white 80%)' }} className="w-[78%] h-8 "></div>
-                  <div style={{ background: 'linear-gradient(to bottom, #AA0001 1%, #F69596 2%, white 80%)' }} className="w-[2%] h-8 "></div>
-                  <div style={{ background: 'linear-gradient(to bottom, #006733 1%, #A1F9CD 2%, white 80%)' }} className="w-[21%] h-8"></div>
+                  <div  className="w-[78%] h-8 bg-[linear-gradient(to_bottom,#0029AC_1%,#6185F8_2%,white_80%)] dark:bg-[linear-gradient(to_bottom,#0029AC_1%,#6185F8_2%,#242424_80%)]"></div>
+                  <div  className="w-[2%] h-8 bg-[linear-gradient(to_bottom,#AA0001_1%,#F69596_2%,white_80%)] dark:bg-[linear-gradient(to_bottom,#AA0001_1%,#F69596_2%,#242424_80%)]"></div>
+                  <div  className="w-[21%] h-8 bg-[linear-gradient(to_bottom,#006733_1%,#A1F9CD_2%,white_80%)] dark:bg-[linear-gradient(to_bottom,#006733_1%,#A1F9CD_2%,#242424_80%)] "></div>
                 </div>
                 <div className="w-full p-4 mt-3 border-r dark:border-gray-700 dark:bg-none">
                   <h2 className="mb-2  text-black font-medium text-md dark:text-[#DEDEDE]">100% LTV</h2>
                   <div className="flex items-center justify-between w-full">
                     <div className="w-full ">
-                      <p className="text-sm text-gray-600 flex justify-between dark:text-[#DEDEDE] py-1 border-b border-[#9E9E9E] "><div>Deposit:</div> <div className="text-black">{(Number(ethPrice) / 100 * Number(form.getValues("collateralAmount"))).toFixed(2)}</div></p>
-                      <p className="w-full text-gray-600 text-sm flex justify-between  py-1 border-b border-[#9E9E9E]  "><div>Option Fee :</div> <div className="text-[#ff6d6d]">{optionFees.toFixed(2)}</div></p>
-                      <p className="text-sm text-gray-600  flex justify-between py-1 border-b border-[#9E9E9E] "><div>USDa borrowed :</div> <div className="text-[#007AFF]">{Number(amintToBeMinted).toFixed(2)}</div></p>
-                      <p className="flex justify-between py-1 text-sm text-gray-600"><div>Downside Protection <TooltipProvider>
+                      <p className="text-sm text-gray-600 flex justify-between dark:text-[#DEDEDE] py-1 border-b border-[#9E9E9E] "><div>Deposit:</div> <div className="text-black dark:text-white">{(Number(ethPrice) / 100 * Number(form.getValues("collateralAmount"))).toFixed(2)}</div></p>
+                      <p className="w-full text-gray-600 text-sm flex justify-between  py-1 border-b border-[#9E9E9E] dark:text-[#DEDEDE] "><div>Option Fee :</div> <div className="text-[#ff6d6d]">{optionFees.toFixed(2)}</div></p>
+                      <p className="text-sm text-gray-600  flex justify-between py-1 border-b border-[#9E9E9E] dark:text-[#DEDEDE]"><div>USDa borrowed :</div> <div className="text-[#007AFF]">{Number(amintToBeMinted).toFixed(2)}</div></p>
+                      <p className="flex justify-between py-1 text-sm text-gray-600 dark:text-[#DEDEDE]"><div>Downside Protection <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger type="button">
                             <InfoCircledIcon className="w-4 h-4 ml-0 mr-1 text-black dark:text-white" />

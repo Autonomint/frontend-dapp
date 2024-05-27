@@ -38,7 +38,7 @@ export default function RootLayout({
         enableSystem
         disableTransitionOnChange
       >
-        <body className={` font-plex-sans bg-[#EEEEEE] dark:bg-none dark:bg-[#020202]`}>
+        <body className={` font-plex-sans bg-[#EEEEEE] dark:bg-[#0F0F0F]`}>
           {/* <div className="max-w-[1440px] mx-auto"> */}
           <main className="relative flex w-full h-auto md:left-0 ">
             <WalletProvider>

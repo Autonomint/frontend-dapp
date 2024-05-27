@@ -599,10 +599,10 @@ const Redeem = ({
   }
 
   return (
-    <div className="justify-center  align-middle dark:bg-[#141414] ">
+    <div className="justify-center  align-middle ] ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full gap-4 ' action="#">
-          <div className=' flex  relative  gap-2 dark:bg-[#020202] overflow-visible'>
+          <div className='relative flex gap-2 overflow-visible '>
             <FormField
               control={form.control}
               name="collateralAmount"
@@ -620,7 +620,7 @@ const Redeem = ({
 
                         {...field}
                         value={Boolean(field.value) ? field.value : ""}
-                        className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655] border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                        className="w-full px-2 py-5 rounded-none text-sm disabled:opacity-100 text-gray-900 bg-[#ffffff] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] border-[#020202]  border lock dark:text-white focus:outline-none focus:ring-0 peer"
                         style={{
                           appearance: 'textfield',
                           MozAppearance: 'textfield',
@@ -631,7 +631,7 @@ const Redeem = ({
                       ></Input>
                       <label
                         htmlFor="amount_of_usdt"
-                        className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                        className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#3A3A3A]   px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                       >
                         Input Amount
                       </label>
@@ -693,8 +693,8 @@ const Redeem = ({
           </div>
 
 
-          <div className='relative bg-[#ffffff] border-[#004795] dark:border-[#004795] border mt-4  dark:bg-[#020202]   py-2 px-2'>
-            <div className='text-sm text-[#004795]'>
+          <div className='relative bg-[#ffffff] border-[#004795] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] border mt-4   py-2 px-2'>
+            <div className='text-sm text-[#004795] dark:text-white '>
               Redeemable Amount
             </div>
             <div>
@@ -702,23 +702,23 @@ const Redeem = ({
                 form.getValues("inputCollateral") === 'amint' ? (
                   <div className='text-sm text-[#004795] font-medium dark:text-[#FFFF] mt-2 flex justify-between'>
                     <div className='p-1 text-2xl basis-3/5 text-bold'>{form.getValues("collateralAmount")}</div>
-                    <div className='w-28 p-2  text-center px-3 mr-1 border border-[#004795]'>USDT</div>
+                    <div className='w-28 p-2  text-center px-3 mr-1 border border-[#004795] dark:border-[#9E9E9E]'>USDT</div>
                   </div>
                 ) : form.getValues("inputCollateral") === 'abond' ? (
                   <div className='text-sm text-[#041A50] mt-2 font-medium dark:text-[#FFFF] flex justify-between'>
                     <div className='flex justify-between mr-1 basis-2/5'>
 
                       <div className='flex items-center p-1 text-2xl basis-3/5 text-bold'>{outputData ? Number(formatEther(outputData[0])).toFixed(5) : 0}</div>
-                      <div className='w-28 p-2  text-center h-fit px-3 mr-1 border border-[#004795]'>ETH</div>
+                      <div className='w-28 p-2  text-center h-fit px-3 mr-1 border border-[#004795] dark:border-[#9E9E9E]'>ETH</div>
                     </div>
                     <div className='text-xl 1/5'>+</div>
                     <div className='flex justify-between basis-2/5 text-bold'>
 
                       <div className='flex items-center p-1 text-2xl basis-3/5 text-bold'>{outputData ? Number(formatEther(outputData[2])).toFixed(2) : 0}</div>
-                      <div className='w-28 p-2  text-center px-3 mr-1 border border-[#004795]'>USDa</div>
+                      <div className='w-28 p-2  text-center px-3 mr-1 border border-[#004795] dark:border-[#9E9E9E]'>USDa</div>
                     </div>
                   </div>
-                ) : <div className='flex items-center pt-1 basis-3/5 text-[#00679F] text-2xl font-semibold'>Output Amount</div>
+                ) : <div className='flex items-center pt-1 basis-3/5 text-[#00679F] dark:text-white text-2xl font-semibold'>Output Amount</div>
               }
 
             </div>
@@ -733,7 +733,7 @@ const Redeem = ({
               type="button"
               onClick={() => openRedeemableAssets(true)}
               variant={"primary"}
-              className="text-[#020202] relative rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] py-2"
+              className="text-[#020202] relative rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] dark:bg-[#5B5B5B] dark:border-[#FFFFFF] dark:text-[white] py-2"
 
             >
               {'Redeemable Assets'}<Image src={arrowout} className="ml-2 sm:ml-0 sm:absolute sm:right-5" alt="arrow" width={20} height={15} />

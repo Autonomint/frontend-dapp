@@ -11,6 +11,7 @@ const PageSettings = ({showSettings,setShowSettings }: {showSettings:Boolean,set
                   <div className="items-center -mt-2 border border-black cursor-pointer h-fit" onClick={() => setShowSettings(!showSettings)}><Cross2Icon/></div>
                 </div>
             <div className="flex ">
+                <div className='mr-5'>Theme</div>
                 <label className="relative items-center hidden cursor-pointer mdb:inline-flex ">
                     <input type="checkbox" value="" className="sr-only peer" onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")} checked={resolvedTheme === "dark" ? true : false} />
                     <div className="relative w-10 h-5 border border-black bg-white peer-focus:outline-none    peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[0px] after:start-[0px] after:bg-[#ABFFDE]  after:border after:h-full after:border-black after:w-5 after:transition-all dark:border-gray-600 "></div>

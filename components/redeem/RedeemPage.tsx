@@ -77,8 +77,8 @@ const RedeemPage = () => {
     <>
     {
       !isConnected ? <ConnectWallet /> :(
-        <div className="relative rounded-[10px] p-2 mt-4  dark:bg-[#0F0F0F]flex flex-col self-stretch overflow-hidden ">
-        <div className='flex flex-col w-full gap-4 dark:bg-[#141414]'>
+        <div className="relative rounded-[10px] p-2 mt-4   flex flex-col self-stretch overflow-hidden ">
+        <div className='flex flex-col w-full gap-4'>
           <div className='w-full '>
             <div className='w-full border-lineGrey'>
               <Redeem openRedeemableAssets={setOpen2} />

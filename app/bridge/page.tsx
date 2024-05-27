@@ -91,7 +91,7 @@ export default function page() {
 
   const chainId = useChainId();
 
-  const [Eid, setEid] = useState(chainId);
+  const Eid = 40260;
 
   const options = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
 
@@ -99,7 +99,7 @@ export default function page() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       sourceChain: "11155111",
-      destinationChain: "84532",
+      destinationChain: "919",
       inputCollateral: undefined,
       collateralAmount: 0,
       outputCollateral: undefined,
@@ -138,6 +138,7 @@ export default function page() {
   const { data: nativeFee1, error: UsdaQuoteError, refetch: refetchnativeFee1 } = useReadUsDaQuoteSend({
     args: [transactionParams as any, false]
   });
+  console.log(nativeFee1, UsdaQuoteError)
 
   const { data: nativeFee2, error: TUSDTQuoteError, refetch: refetchnativeFee2 } = useReadTestusdtAbiQuoteSend({
     args: [transactionParams as any, false]
@@ -595,14 +596,7 @@ export default function page() {
 
   }
 
-  useEffect(() => {
-    if (form.getValues("sourceChain") === '11155111') {
-      setEid(40245);
-    }
-    else {
-      setEid(40161);
-    }
-  }, [form.watch("sourceChain")]);
+
 
   useEffect(() => {
     if (form.getValues("inputCollateral") === 'usda') {
@@ -618,20 +612,20 @@ export default function page() {
  
   return (
     <div className='w-full px-2 sm:px-5 '>
-      <div className='w-full relative bg-white border border-[#9E9E9E] shadow-custom min-h-[84vh]'>
+      <div className='w-full relative bg-white border border-[#9E9E9E] shadow-custom dark:bg-[#242424] dark:shadow-darkcustom min-h-[84vh]'>
         <div className="hidden gap-5 sm:flex sm:flex-col sm:absolute mdb:flex right-5 top-5">
           <div onClick={() => { setShowNotification(!showNotification); setOpenSettings(false) }} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
-            <BellIcon className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
+            <BellIcon className="w-6 h-6 text-[#000000] " />
           </div>
           <div className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
-            <Settings onClick={() => { setOpenSettings(!openSettings); setShowNotification(false) }} className="w-6 h-6 text-[#000000] dark:text-[#90AFFF]" />
+            <Settings onClick={() => { setOpenSettings(!openSettings); setShowNotification(false) }} className="w-6 h-6 text-[#000000] " />
           </div>
         </div>
         <Notification showNotifications={showNotification} setShowNotifications={setShowNotification} />
         <PageSettings showSettings={openSettings} setShowSettings={setOpenSettings} />
-        <div className='w-[95%] sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[800px] mx-auto h-auto  dark:bg-[#141414]  p-1 sm:p-4'>
+        <div className='w-[95%] sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[800px] mx-auto h-auto   p-1 sm:p-4'>
 
-          <div className="justify-center mt-6  align-middle dark:bg-[#141414] ">
+          <div className="justify-center mt-6 align-middle ">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full gap-4 ' action="#">
                 <div >
@@ -644,7 +638,7 @@ export default function page() {
                         control={form.control}
                         name="sourceChain"
                         render={() => (
-                          <FormItem className=''>
+                          <FormItem className=' dark:bg-none'>
                             <Controller
                               control={form.control}
                               name="sourceChain"
@@ -652,18 +646,16 @@ export default function page() {
                                 <Select
                                   onValueChange={(value) => {
                                     form.setValue("collateralAmount", 0);
-                                    if (value === '11155111') {
-                                      form.setValue('destinationChain', '84532');
-                                    } else if (value === '84532') {
-                                      form.setValue('destinationChain', '11155111');
-                                    }
+                                    
+                                    form.setValue('destinationChain', '919');
+                                
                                     switchChain && switchChain({ chainId: Number(value) });
                                     field.onChange(value)
 
                                   }}
                                   value={field.value}
                                 >
-                                  <FormControl className='flex gap-4 text-black border-none rounded-none ' >
+                                  <FormControl className='flex gap-4 text-black border-none rounded-none dark:text-white ' >
                                     <SelectTrigger >
                                       <SelectValue placeholder="Source Chain" />
                                     </SelectTrigger>
@@ -677,22 +669,23 @@ export default function page() {
                                 </Select>
                               )}
                             />
-                            <FormMessage />
+
+                            
                           </FormItem>
                         )}
                       />
                     </div>
 
-                    <div className='text-[#020202] px-3 py-1 relative rounded-none  border-0 border-b-2 border-[#020202] bg-[#DEDEDE]'>
+                    <div className='text-[#020202] px-3 py-1 relative rounded-none  border-0 border-b-2 border-[#020202] bg-[#DEDEDE] dark:bg-[#3A3A3A] dark:border-white dark:text-white'>
                       max
                     </div>
                   </div>
-                  <div className='  relative flex  dark:bg-[#020202]'>
+                  <div className='relative flex '>
                     <FormField
                       control={form.control}
                       name="inputCollateral"
                       render={() => (
-                        <FormItem className='  basis-2/6 bg-[#020202] '>
+                        <FormItem className=' basis-2/6'>
                           <Controller
                             control={form.control}
                             name="inputCollateral"
@@ -711,7 +704,7 @@ export default function page() {
                                 value={field.value}
                               >
 
-                                <FormControl className='bg-[#020202] text-white py-5 rounded-none' >
+                                <FormControl className='bg-[#020202] text-white py-5  rounded-none' >
                                   <SelectTrigger >
                                     <SelectValue placeholder="Input Token" />
                                   </SelectTrigger>
@@ -726,7 +719,6 @@ export default function page() {
                               </Select>
                             )}
                           />
-                          <FormMessage />
                         </FormItem>
                       )}
                     />
@@ -747,7 +739,7 @@ export default function page() {
 
                                 {...field}
                                 value={Boolean(field.value) ? field.value : ""}
-                                className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655] border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                                className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff]  border-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] border lock dark:text-white focus:outline-none focus:ring-0 peer"
                                 style={{
                                   appearance: 'textfield',
                                   MozAppearance: 'textfield',
@@ -758,13 +750,13 @@ export default function page() {
                               ></Input>
                               <label
                                 htmlFor="amount_of_usdt"
-                                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#3A3A3A]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                               >
                                 Input Amount
                               </label>
                             </div>
                           </FormControl>
-                          <FormMessage className="dark:text-[#B43939]" />
+                          <FormMessage className="dark:text-[#B43939] " />
                         </FormItem>
                       )}
                     />
@@ -776,7 +768,7 @@ export default function page() {
                 </div>
                 <div className='flex items-center justify-center my-4'>
 
-                  <div className='w-20 h-20 p-5 bg-[#EEEEEE] rounded-full'>
+                  <div className='w-20 h-20 p-5 bg-[#EEEEEE] dark:bg-[#5B5B5B] rounded-full'>
                     <Image src={swapArrow} alt="arrow" className="w-full h-full" />
                   </div>
                 </div>
@@ -805,42 +797,38 @@ export default function page() {
                                   value={field.value}
                                   disabled={true}
                                 >
-                                  <FormControl className='flex gap-4 text-black border-none rounded-none ' >
+                                  <FormControl className='flex gap-4 text-black border-none rounded-none dark:text-white ' >
                                     <SelectTrigger >
                                       <SelectValue placeholder="Destination Chain" />
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent className='bg-[#020202] rounded-none text-white'>
                                     <SelectGroup>
-                                      <SelectItem value="11155111">Sepolia</SelectItem>
-                                      <SelectItem value="84532">Base Sepolia</SelectItem>
+                                      <SelectItem value="919">Mode Sepolia</SelectItem>
                                     </SelectGroup>
                                   </SelectContent>
                                 </Select>
                               )}
                             />
-                            <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
 
                   </div>
-                  <div className='  relative flex  dark:bg-[#020202]'>
+                  <div className='relative flex '>
                     <FormField
                       control={form.control}
                       name="outputCollateral"
                       render={() => (
-                        <FormItem className='  basis-2/6 bg-[#020202] '>
+                        <FormItem className=' basis-2/6'>
                           <Controller
                             control={form.control}
                             name="outputCollateral"
                             render={({ field }) => (
                               <Select
                                 onValueChange={(value) => {
-
                                   field.onChange(value)
-
                                 }}
                                 disabled={true}
                                 value={field.value}
@@ -862,7 +850,6 @@ export default function page() {
                               </Select>
                             )}
                           />
-                          <FormMessage />
                         </FormItem>
                       )}
                     />
@@ -883,7 +870,7 @@ export default function page() {
 
                                 {...field}
                                 value={Boolean(field.value) ? field.value : ""}
-                                className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] dark:bg-[#0f0f0f] border-[#020202] dark:border-[#00B655] border lock dark:text-white focus:outline-none focus:ring-0 peer"
+                                className="w-full px-2 py-5 rounded-none text-sm text-gray-900 bg-[#ffffff] border-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] border lock dark:text-white focus:outline-none focus:ring-0 peer"
                                 style={{
                                   appearance: 'textfield',
                                   MozAppearance: 'textfield',
@@ -893,13 +880,12 @@ export default function page() {
                               ></Input>
                               <label
                                 htmlFor="amount_of_usdt"
-                                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] top-2 z-10 origin-[0]  dark:bg-[#0F0F0F]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 bg-[#ffffff] dark:bg-[#3A3A3A] top-2 z-10 origin-[0]   px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                               >
                                 Output Amount
                               </label>
                             </div>
                           </FormControl>
-                          <FormMessage className="dark:text-[#B43939]" />
                         </FormItem>
                       )}
                     />
@@ -907,41 +893,41 @@ export default function page() {
                   </div>
                 </div>
 
-                <div className='bg-[#DEDEDE] shadow-custom px-4'>
+                <div className='bg-[#DEDEDE] dark:bg-[#020202] dark:shadow-darkcustom shadow-custom px-4 py-5'>
 
                   <div className="flex flex-col tracking-tighter">
 
-                    <div className="flex justify-between px-4 py-[10px]  border-b border-[#020202]">
-                      <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm  dark:text-[#9E9E9E]">
+                    <div className="flex justify-between px-4 py-[10px]  border-[#020202] dark:border-[#9E9E9E]">
+                      <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm  dark:text-[#FFFFFF]">
                         Gas on destination chain
                       </p>
-                      <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
-                        --
+                      <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#FFFFFF]">
+                        {form.getValues("inputCollateral") === 'usda' ? Number(nativeFee1?.nativeFee)/10**18 : Number(nativeFee2?.nativeFee)/10**18}
                       </p>
                     </div>
-                    <div className="px-4 py-[10px] border-b border-[#020202]">
+                    {/* <div className="px-4 py-[10px] border-b border-[#020202] dark:border-[#9E9E9E]">
                       <div className="flex justify-between ">
-                        <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textHighlight dark:text-[#9E9E9E]">
+                        <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textHighlight dark:text-[#FFFFFF]">
                           Fee
                         </p>
-                        <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
+                        <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#FFFFFF]">
                           --
                         </p>
                       </div>
 
-                    </div>
+                    </div> */}
 
-                    <div className="px-4 py-[10px] ">
+                    {/* <div className="px-4 py-[10px] ">
                       <div className="flex justify-between ">
-                        <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textHighlight dark:text-[#9E9E9E]">
+                        <p className=" min-[1440px]:text-base 2dppx:text-sm text-sm text-textHighlight dark:text-[#FFFFFF]">
                           Slipage tolerance
                         </p>
-                        <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#9E9E9E]">
+                        <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#FFFFFF]">
                           --
                         </p>
                       </div>
 
-                    </div>
+                    </div> */}
 
                   </div>
 
@@ -950,7 +936,7 @@ export default function page() {
                 <Button
                   type="submit"
                   variant={"primary"}
-                  className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
+                  className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 dark:text-black "
                   disabled={ isUsdaTransactionLoading  || istusdtTransactionLoading }
                   onClick={() => { form.handleSubmit(onSubmit) }}
                 >

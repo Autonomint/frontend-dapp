@@ -58,33 +58,33 @@ export default function page() {
       });
     return (
         <div className='w-full px-2 sm:px-5'>
-        <div className='px-2 sm:px-8 py-5 w-full bg-white shadow-custom border-[1px] border-[#9E9E9E] mdb:min-h-[84vh] '>
+        <div className='px-2 sm:px-8 py-5 w-full bg-white shadow-custom border-[1px] dark:bg-[#242424] dark:shadow-darkcustom border-[#9E9E9E] mdb:min-h-[84vh] '>
             <div className='overflow-hidden border-1 dark:border-none'>
-                <div className=' dark:bg-[#141414] flex mb-5 gap-2 md:gap-10 w-full '>
-                        <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
+                <div className='flex w-full gap-2 mb-5 md:gap-10'>
+                        <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] dark:bg-[#020B28] dark:text-[#4AFBD5] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
                             <div className='text-sm lg:text-normal' >Total number of borrowers</div>
                             <div className='text-xl font-semibold lg:text-3xl'>{Number(totalBorrowers)}</div>
                         </div>
-                        <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
+                        <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] dark:bg-[#020B28] dark:text-[#4AFBD5] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
                         <div  className='text-sm lg:text-normal'>Total number of dcds depositors</div>
                             <div className='text-xl font-semibold lg:text-3xl'>{Number(cdsdeposit)}</div>
                         </div>
-                        <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
+                        <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] dark:bg-[#020B28] dark:text-[#4AFBD5] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
                         <div  className='text-sm lg:text-normal'>Total Value Locked (TVL) </div>
                             <div className='text-xl font-semibold lg:text-3xl'>${formatNumber((Number(totalStable) / 10 ** 6) + Number(formatEther((ethLocked ?? 0n) / BigInt(100))))}</div>
                         </div>
                 </div>
 
-                <div className='flex flex-col lg:flex-row w-full gap-10 dark:bg-[#141414] shadow-custom p-0 sm:p-1 '>
-                    <div className='basis-1/2 dark:bg-none border border-[#020202] shadow-custom '>
-                        <div className=' text-[1.5rem] py-5 px-5 font-medium  bg-[linear-gradient(88.13deg,#CCFFDE_0%,#ABFFFF_99.86%)]'>
+                <div className='flex flex-col w-full gap-10 p-0 lg:flex-row shadow-custom sm:p-1 '>
+                    <div className='basis-1/2 dark:bg-none border border-[#020202] dark:border-[#9E9E9E] shadow-custom dark:shadow-darkcustom  '>
+                        <div className=' text-[1.5rem] py-5 px-5 font-medium  bg-[linear-gradient(88.13deg,#CCFFDE_0%,#ABFFFF_99.86%)] dark:bg-[linear-gradient(88.13deg,#004D1A_0%,#005050_99.86%)]'>
                             Top Borrowers
                         </div>
                         <LeaderTable tableType='borrow' data={borrowdeposits ?? []}/>
                     </div>
 
-                    <div className='basis-1/2 dark:bg-none border border-[#020202]  shadow-custom '>
-                        <div className='text-[1.5rem] py-5 px-5 font-medium bg-[linear-gradient(88.13deg,#FFCCF4_0%,#FFD8AB_99.86%)]'>
+                    <div className='basis-1/2 dark:bg-none border border-[#020202] dark:border-[#9E9E9E]  shadow-custom dark:shadow-darkcustom '>
+                        <div className='text-[1.5rem] py-5 px-5 font-medium bg-[linear-gradient(88.13deg,#FFCCF4_0%,#FFD8AB_99.86%)] dark:bg-[linear-gradient(88.13deg,#5E004A_0%,#4C2900_99.86%)]'>
                             Top dCDS Depositors
                         </div>
                         <LeaderTable tableType='cds' data={cdsdeposits ?? []}/>
@@ -98,7 +98,6 @@ export default function page() {
         </div>
     )
 }
-
 
 
 

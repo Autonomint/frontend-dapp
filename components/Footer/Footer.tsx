@@ -22,18 +22,18 @@ export default function Footer() {
     return (
         <div className='p-2 h-[8vh] '>
             <div className="relative flex flex-col-reverse justify-between gap-2 mx-auto sm:flex-row mdb-5 lg:ml-5 ">
-                <div className="flex justify-center p-3 text-sm   rounded-md dark:bg-[#020202]">
+                <div className="flex justify-center p-3 text-sm rounded-md">
                     <div className="flex justify-between w-40 ">
-                        <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[1.8rem]"><Image src={github} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
+                        <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[1.8rem]"><Image src={github} alt="autonomint-dapp" className="rounded-md " style={{ width: "100%", height: "100%" }} /></div></a>
                         <a href="https://twitter.com/autonomint" target="_blank" ><div className="w-[1.7rem] "><Image src={twitter} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} /></div></a>
-                        <a href="https://t.co/Ck6x2jhVOj" target="_blank" ><div className="w-[1.9rem]"><Image src={discord} alt="autonomint-dapp" className="rounded-md dark:border-2 dark:border-white" style={{ width: "100%", height: "100%" }} /></div></a>
+                        <a href="https://t.co/Ck6x2jhVOj" target="_blank" ><div className="w-[1.9rem]"><Image src={discord} alt="autonomint-dapp" className="rounded-md " style={{ width: "100%", height: "100%" }} /></div></a>
                     </div>
                 </div>
-                <div className="flex items-center justify-center w-full gap-5 mr-2 border sm:justify-normal sm:w-auto ">
-                    <div onClick={() => setOpen2(!open2)} className="px-8 py-2 h-fit text-sm font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+                <div className="flex items-center justify-center w-full gap-5 mr-2 sm:justify-normal sm:w-auto ">
+                    <div onClick={() => setOpen2(!open2)} className="px-8 py-2 h-fit text-sm  text-black bg-[#DEDEDE] dark:bg-[#3A3A3A] dark:text-white   border-b-2 border-black dark:border-white cursor-pointer">
                         ? FAQs
                     </div>
-                    <div onClick={() => setOpenGetstart(!open2)} className="px-8 py-2 h-fit text-sm font-semibold text-black bg-[#DEDEDE] dark:bg-none  dark:bg-[#143968] dark:text-white border-b-2 border-black cursor-pointer">
+                    <div onClick={() => setOpenGetstart(!open2)} className="px-8 py-2 h-fit text-sm  text-black bg-[#DEDEDE] dark:bg-[#3A3A3A] dark:text-white border-b-2 border-black dark:border-white cursor-pointer">
                         Get Started
                     </div>
                 </div>

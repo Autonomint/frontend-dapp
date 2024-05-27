@@ -115,7 +115,7 @@ const NavBar = () => {
   },[chainId])
   return (
     <div className="z-50 w-full ">
-      <div className="flex w-full justify-between  mx-auto h-[8vh] bg-[#EEEEEE]   dark:bg-none dark:bg-[#1a1a1a]  z-10">
+      <div className="flex w-full justify-between  mx-auto h-[8vh] bg-[#EEEEEE] dark:bg-[#0F0F0F]  z-10">
         <div className="flex items-center gap-2 ml-4">
           <div className="w-[3rem] h-[3rem]">
             <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
@@ -170,10 +170,10 @@ const NavBar = () => {
           }}
           value={selectedNetwork}
         >
-                <SelectTrigger className='border border-black rounded-none bg-[#020202] text-white' >
+                <SelectTrigger className='border border-black rounded-none bg-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] text-white' >
                   <SelectValue placeholder={selectedNetwork} />
                 </SelectTrigger>
-                <SelectContent className='text-white  bg-[#020202] rounded-none '>
+                <SelectContent className='text-white  bg-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] rounded-none '>
                   <SelectGroup>
                     <SelectItem value="Sepolia">Ethereum</SelectItem>
                     <SelectItem value="Base Sepolia">Base</SelectItem>
@@ -189,11 +189,11 @@ const NavBar = () => {
           <div className="flex items-center justify-center top-2">
 
           {isConnected ? (
-            <div onClick={() => setOpen2(!open2)} className="px-3 hidden mdb:flex gap-2 py-1 pt-2  h-fit text-[0.8rem] font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+            <div onClick={() => setOpen2(!open2)} className="px-3 hidden mdb:flex gap-2 py-1 pt-2  h-fit text-[0.8rem] font-semibold text-black bg-[#DEDEDE] dark:bg-[#3A3A3A] dark:text-white dark:border-white border-b-2 border-black  cursor-pointer">
               <div className="w-[1.5rem] -mt-[2px] "><Image src={walleticon} alt="autonomint-dapp" className="rounded-sm cursor-pointer " style={{ width: "100%", height: "100%" }} /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
             </div>
           ) : (
-            <div onClick={onConnect} className="hover:bg-[#d3d2d2] hidden mdb:flex px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+            <div onClick={onConnect} className="hover:bg-[#d3d2d2] hidden mdb:flex px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#3A3A3A] dark:border-white dark:text-white  border-b-2 border-black  cursor-pointer">
               Connect Wallet
             </div>
           )}
@@ -288,10 +288,10 @@ const NavBar = () => {
               <div className="flex flex-col gap-4">
 
                 <div className="flex flex-col gap-3">
-                  <div className="p-3 text-sm border  bg-[#EEEEEE]">
+                  <div className="p-3 text-sm border  bg-[#EEEEEE] dark:bg-[#3A3A3A]">
                     {address}
                   </div>
-                  <div className="p-3 relative text-sm border  bg-[#EEEEEE]">
+                  <div className="p-3 relative text-sm border  bg-[#EEEEEE] dark:bg-[#3A3A3A]">
                     <div className="text-[0.8rem]"> USDa Balance</div>
                     <div className="absolute flex items-center gap-2 text-xs top-3 right-2">
                       <div className="h-4 w-4 bg-[#93F3BA] rounded-full flex items-center justify-center">
@@ -304,14 +304,14 @@ const NavBar = () => {
                   </div>
 
                   <div className="flex gap-2 text-sm ">
-                    <Button className="text-[white]  w-full relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#020202] py-2" >Change Network</Button>
-                    <Button className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 " onClick={() => { disconnect(); setOpen2(!open2) }}>Disconnect</Button>
+                    <Button className="text-[white] dark:border-white  w-full relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#020202] py-2" >Change Network</Button>
+                    <Button className="border-[#041A50] bg-[#ABFFDE] dark:text-black text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 " onClick={() => { disconnect(); setOpen2(!open2) }}>Disconnect</Button>
                   </div>
                   <div className="p-3 text-sm underline border  bg-[#EEEEEE]">
                     <a href={`https://sepolia.etherscan.io/address/${address}`} >View All Wallets Transactions </a>
                   </div>
-                  <div className="flex justify-between p-3 text-sm border  bg-[#EEEEEE]"><div>Verify Joseon ID</div><a className="underline" href="https://www.joseon.com/l/en-US/" target="_blank">Learn More</a></div>
-                  <div className="p-3 text-sm border  bg-[#EEEEEE]">
+                  <div className="flex justify-between p-3 text-sm border  bg-[#EEEEEE] dark:bg-[#3A3A3A]"><div>Verify Joseon ID</div><a className="underline" href="https://www.joseon.com/l/en-US/" target="_blank">Learn More</a></div>
+                  <div className="p-3 text-sm border  bg-[#EEEEEE] dark:bg-[#3A3A3A]">
                     Terms & privacy policy <a href="https://www.autonomint.com/terms-and-privacy" target="_blank" className="text-black underline">click to view</a>
                   </div>
                 </div>

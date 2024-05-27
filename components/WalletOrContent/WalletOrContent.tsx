@@ -188,7 +188,7 @@ const WalletOrContent = () => {
   return (
     <>
       {isConnected ? (
-        <div className="relative p-2 sm:p-2 rounded-[10px] dark:bg-[#141414] dark:shadow-none flex flex-col self-stretch overflow-hidden h-full ">
+        <div className="relative p-2 sm:p-2 rounded-[10px]  flex flex-col self-stretch overflow-hidden h-full ">
 
           <CreateNewDeposit handleRefetch={handleRefetch} openPositions={setOpen2} />
 
@@ -221,7 +221,7 @@ const WalletOrContent = () => {
                   </div>
                 </DialogTitle>
               </DialogHeader> */}
-              <div className="flex border  h-[74vh] w-full ">
+              <div className="flex border  h-[74vh] w-full dark:border-[#3A3A3A]">
 
                 <DepositAndWithDrawTable
                   tableData={deposits}
