@@ -9,7 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons";
+import { ArrowTopRightIcon, Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons";
 import {
   Select,
   SelectContent,
@@ -62,6 +62,7 @@ import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 import Spinner from "../ui/spinner";
 import { DEV_PROXY_AMINT_ADDRESS } from "@/constants/Addresses";
+import { blue } from "colorette";
 
 
 const formSchema = z.object({
@@ -344,10 +345,12 @@ console.log(nativeFee1,nativeFee2,nativeFee)
 
 const{data:Depositdata , isError:depositError,isLoading:isDepositdataLoading,isSuccess:isDepositSuccess} = useWaitForTransactionReceipt({
   hash: depositDatahash,
+  confirmations:2
 })
 
 useEffect(()=>{
   if(isDepositSuccess){
+    handleRefetch();
     console.log("transaction completed", Depositdata);
     // const dataLogs = Depositdata.logs[Depositdata.logs.length - 1]
     // const { eventName, args } = decodeEventLogsFromAbi(
@@ -358,7 +361,6 @@ useEffect(()=>{
     // ) as { eventName: string; args: { normalizedAmount: bigint, borrowAmount: bigint } };
     form.reset();
     reset()
-    refetch();
     // // Log event name and normalized amount
     // console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toString())
     // // Set the normalizedAmount value
@@ -661,7 +663,7 @@ useEffect(()=>{
                   variant={"outline"}
                   className="basis-1/2"
                 >
-                  {'View Positions'} <Image src={arrowout} className="ml-2 sm:ml-0 sm:absolute sm:right-5" alt="arrow" width={20} height={15} />
+                  {'View Positions'} <ArrowTopRightIcon className="ml-2 sm:ml-0 sm:absolute sm:right-5" width={20} height={20}/>
                 </Button>
                 <Button
                   type="submit"

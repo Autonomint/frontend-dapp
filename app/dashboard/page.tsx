@@ -123,30 +123,29 @@ const page = () => {
   const { data: cdsPool } = useReadBorrowingContractOmniChainBorrowingCdsPoolValue()
   const { data: abondSupply} = useReadAbondTotalSupply();
   // get ratio data
+
   const {data:ratioData} = useQuery({
     queryKey: ["ratioData"],
-    queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/ratio/11155111/${ethPrice}`).then((res) => res.json()),
+    queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/ratio/${chainId}/${ethPrice}`).then((res) => res.json()),
     staleTime:Infinity,
   })
-
-  // get fees data
+  console.log(ratioData,ethPrice)
+  
   const {data:feeOptions} = useQuery({
     queryKey: ['optionFees'],
-    queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/optionFees/11155111/1000000000000000000/${ethPrice}/0`).then((res) => res.json()),
+    queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/1000000000000000000/${ethPrice}/0`).then((res) => res.json()),
     staleTime:Infinity
   })
+  console.log(feeOptions)
 
-
-  useEffect(() => {
-  }, [feeOption])
   useEffect(() => {
     handleStatsItem()
-  }, [ ethLocked, ethPrice, amintsupply, totalStable, cdsPool, ratioData, feeOptions, abondSupply])
+  }, [ ethLocked, ethPrice, amintsupply, totalStable, cdsPool, ratioData, feeOptions, abondSupply,feeOptions,ratioData])
   
   const handleStatsItem = async () => {
     console.log(ethLocked, ethPrice, amintsupply, totalStable, cdsPool, abondSupply, ratioData, feeOptions)
-    
     // check if all data is available
+    setLoading(true)
     if (ethLocked && ethPrice  && amintsupply && totalStable && cdsPool && ratioData && feeOptions && abondSupply) {
       amintValues[1].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
       amintValues[2].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
@@ -172,6 +171,7 @@ const page = () => {
       FeesValues[2].value = formatNumber(Number(formatEther((ethLocked) / BigInt(100))) * 0.20);
 
       abondValues[1].value = abondSupply ? formatNumber(Number(abondSupply) / 10 ** 18) : "0";
+      console.log("step-1-----------------------------------------------------")
       setLoading(false)
     }
   };
@@ -179,7 +179,7 @@ const page = () => {
 
   return (
     !isConnected ?<ConnectWallet/>:
-    <div className="z-40 static h-[84vh] overflow-y-scroll p-5 mx-2 sm:mx-5 bg-white shadow-custom border-[1px] border-[#9E9E9E]">
+    <div className="z-40 static h-[84vh] overflow-y-scroll p-5 mx-2 sm:mx-5 bg-white shadow-custom dark:bg-[#242424] dark:shadow-darkcustom border-[1px] border-[#9E9E9E]">
 
       {
          

@@ -6,14 +6,26 @@ import Notification from "@/components/pagePopover/Notification";
 import PageSettings from "@/components/pagePopover/PageSettings";
 import { BellIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { Settings } from "lucide-react";
+import { useQuery } from '@tanstack/react-query';
+import { BACKEND_API_URL } from '@/constants/BackendUrl';
+import { useAccount, useChainId } from 'wagmi';
 export default function page() {
     const [openSettings, setOpenSettings] = React.useState(false);
     const [showNotification, setShowNotification] = useState(false);
     const [showReferral, setShowReferral] = useState(false);
+    const chainId = useChainId()
+    const {address} = useAccount()
     const generateReferral = () => {
         console.log('referral generated')
         setShowReferral(true)
     }
+
+        const {data:points,error} = useQuery({
+            queryKey: ['points'],
+            queryFn:()=>fetch(`${BACKEND_API_URL}/points/userPoints/${chainId}/${address}`).then((res) => res.json()),
+            staleTime:Infinity
+        })
+
     return (
         <div>
             <div className='w-full px-2 sm:px-5 '>
@@ -63,7 +75,7 @@ export default function page() {
                             <div className='flex gap-2'>
                                 <div className='flex w-full flex-col gap-2 bg-[#EEEEEE]  border-[#9E9E9E] shadow-custom dark:bg-[#020202] dark:shadow-darkcustom p-4 '>
                                     <div className='flex gap-2 text-sm font-semibold'><ReceiptIcon width={20} height={20} /> Collected</div>
-                                    <div className='text-xl font-semibold text-center'>450 LP</div>
+                                    <div className='text-xl font-semibold text-center'>{points} LP</div>
                                 </div>
                                 <div className='flex w-full flex-col gap-2 bg-[#EEEEEE] border-[#9E9E9E] shadow-custom dark:bg-[#020202] dark:shadow-darkcustom p-4 '>
                                     <div className='flex justify-between'>

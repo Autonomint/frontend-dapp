@@ -152,7 +152,7 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
         mutation:{
 
         onError(error) {
-            console.log(error);
+            console.log(error.cause, error.message, error.name, error.stack);
             // Display custom toast with error message
             toast.custom(
                 (t) => {
@@ -509,6 +509,7 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
 
                     <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
                     </div>
+                 
 
                     {openConfirmNotice ? (
                         // If openConfirmNotice is true, render the ConfirmNoticeCds component
@@ -528,7 +529,8 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
                             variant={"primary"}
                             className="border-[#041A50] bg-[#ABFFDE] mx-4 text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
                             onClick={() => setOpenConfirmNotice(true)}
-                            disabled={(status === "WITHDREW" ? true : false) || (WithdrawalTime() > Date.now())}
+                            // disabled={(status === "WITHDREW" ? true : false) || (WithdrawalTime() > Date.now())}
+                            disabled={(status === "WITHDREW" ? true : false)}
                         >
                             Withdraw
                         </Button>

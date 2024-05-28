@@ -29,6 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Link2, WalletIcon } from "lucide-react";
 
 
 function formatNumber(num: number) {
@@ -181,20 +182,17 @@ const NavBar = () => {
                 </SelectContent>
 
               </Select>
-
-
-    
           </div>
 
           <div className="flex items-center justify-center top-2">
 
           {isConnected ? (
-            <Button onClick={() => setOpen2(!open2)} variant={'secondary'} className="flex gap-2 text-[0.85rem]" >
-              <div className="w-[1.5rem] -mt-[2px] "><Image src={walleticon} alt="autonomint-dapp" className="rounded-sm cursor-pointer " style={{ width: "100%", height: "100%" }} /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
+            <Button onClick={() => setOpen2(!open2)} variant={'secondary'} className="flex  text-[0.85rem] font-[500]" >
+              <div className="w-[1.5rem] -mt-[2px] "><WalletIcon className="w-5" /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
             </Button>
           ) : (
             <Button onClick={onConnect} variant={'secondary'} >
-              Connect Wallet
+             <Link2 className="w-5"/> Connect Wallet
             </Button>
           )}
           </div>
@@ -244,16 +242,14 @@ const NavBar = () => {
               </ul>
               <div className="h-[2px] bg-gray-300 my-5"></div>
               <ul className="flex flex-col gap-3 font-medium rounded-lg dark:border-gray-700">
-
-
                 <li>
                   {isConnected ? (
                     <div onClick={() => setOpen2(!open2)} className="px-5 flex gap-2 py-1 pt-2 h-fit text-sm font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
-                      <div className="w-[1.5rem] -mt-[2px] "><Image src={walleticon} alt="autonomint-dapp" className="rounded-sm cursor-pointer " style={{ width: "100%", height: "100%" }} /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
+                      <div className="w-[1.5rem] -mt-[2px] "><WalletIcon /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
                     </div>
                   ) : (
-                    <div className="hidden mdb:flex px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
-                      Connect Wallet
+                    <div className="hidden mdb:flex px-8 py-2 mt-2 gap-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
+                     <Link2 />   Connect Wallet
                     </div>
                   )}
                 </li>

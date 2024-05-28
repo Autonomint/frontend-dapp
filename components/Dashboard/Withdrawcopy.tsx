@@ -77,7 +77,7 @@ interface TableData {
   normalizedAmount: string;
   amountYetToWithdraw: string;
   noOfAbondMinted: string;
-  status: "DEPOSITED" | "WITHDREW1" | "WITHDREW2" | "LIQUIDATED";
+  status: "DEPOSITED" | "WITHDREW" | "LIQUIDATED";
 }
 
 type withdrawData = {
@@ -286,7 +286,7 @@ const Withdrawcopy = ({
           chainId as keyof typeof borrowingContractAddress
           ] as `0x${string}`, // address of borrowing contract based on chainId
           BigInt(
-            BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
+            BigInt(details.normalizedAmount ? Number(details.normalizedAmount)*10**6 : 0) *
             (lastCumulativeRate ?? 0n)
           ) / BigInt(10 ** 27) + 1000000n, // Total amint amount
         ],
@@ -444,12 +444,6 @@ const Withdrawcopy = ({
   });
 
 
-
-
-
-
-
-
   const {
     isLoading: borrowWithdrawisLoading, // Flag indicating if the transaction for borrowing and withdrawing is loading
     isSuccess: borrowWithdrawtransactionSuccess,
@@ -458,32 +452,32 @@ const Withdrawcopy = ({
     // Flag indicating if the transaction for borrowing and withdrawing was successful
   } = useWaitForTransactionReceipt({
     hash: borrowWithdrawData, // Hash of the transaction for borrowing and withdrawing
-    confirmations: 1, // Number of confirmations required for the transaction
+    confirmations: 2, // Number of confirmations required for the transaction
   });
 
   useEffect(() => {
-    if (backendWithdrawSuccess && withdrawDataLog) {
+    if ( borrowWithdrawtransactionSuccess) {
+      handleRefetch();
       // Callback function executed when the transaction is successful
       console.log("transaction completed", withdrawDataLog.blockHash);
       // Get data logs based on the chain ID
-      const dataLogs = withdrawDataLog.logs[withdrawDataLog.logs.length - 1]
-      const { eventName, args } = decodeEventLogsFromAbi(
-        borrowingContractAbi,
-        dataLogs.topics,
-        "Withdraw",
-        dataLogs.data
-      ) as {
-        eventName: string;
-        args: { borrowDebt: bigint; withdrawAmount: bigint; noOfAbond: bigint };
-      };
-      // Update current events value
-      eventsValue.current = {
-        borrowDebt: args?.borrowDebt.toString(),
-        withdrawAmount: args?.withdrawAmount.toString(),
-        noOfAbond: args?.noOfAbond.toString(),
-      };
-      console.log(eventsValue)
-      handleRefetch();
+      // const dataLogs = withdrawDataLog.logs[withdrawDataLog.logs.length - 1]
+      // const { eventName, args } = decodeEventLogsFromAbi(
+      //   borrowingContractAbi,
+      //   dataLogs.topics,
+      //   "Withdraw",
+      //   dataLogs.data
+      // ) as {
+      //   eventName: string;
+      //   args: { borrowDebt: bigint; withdrawAmount: bigint; noOfAbond: bigint };
+      // };
+      // // Update current events value
+      // eventsValue.current = {
+      //   borrowDebt: args?.borrowDebt.toString(),
+      //   withdrawAmount: args?.withdrawAmount.toString(),
+      //   noOfAbond: args?.noOfAbond.toString(),
+      // };
+      // console.log(eventsValue)
 
       // Perform backend withdraw
       // backendWithdraw?.({
@@ -558,49 +552,49 @@ const Withdrawcopy = ({
   }, [withdrawDataLog])
 
   //using custom hook to mutate backend withdraw
-  const { mutate: backendWithdraw, isPending, isSuccess: backendWithdrawSuccess } = useMutation({
-    // Specify the mutation function
-    mutationFn: withdrawFromBackend,
+  // const { mutate: backendWithdraw, isPending, isSuccess: backendWithdrawSuccess } = useMutation({
+  //   // Specify the mutation function
+  //   mutationFn: withdrawFromBackend,
 
-    // Handle any errors that occur during the mutation
-    onError(error: any) {
-      console.log(error);
-      queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
-    },
+  //   // Handle any errors that occur during the mutation
+  //   onError(error: any) {
+  //     console.log(error);
+  //     queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
+  //   },
 
-    // Perform actions after the mutation is completed or rejected
-    onSettled() {
-      // Invalidate the query for `dCDSdepositorsData`
-      queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
-      // Invalidate the queries for `dCDSdeposits`
-      queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
-      handleRefetch()
-      setOpenConfirmNotice(true)
+  //   // Perform actions after the mutation is completed or rejected
+  //   onSettled() {
+  //     // Invalidate the query for `dCDSdepositorsData`
+  //     queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
+  //     // Invalidate the queries for `dCDSdeposits`
+  //     queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
+  //     handleRefetch()
+  //     setOpenConfirmNotice(true)
 
-    },
-  });
+  //   },
+  // });
 
-  async function withdrawFromBackend(data: withdrawData) {
-    let bodyValue = JSON.stringify({
-      ...data,
-    });
-    console.log(bodyValue);
-    const response = await fetch(`${BACKEND_API_URL}/borrows/withdraw`, {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: bodyValue,
-    });
+  // async function withdrawFromBackend(data: withdrawData) {
+  //   let bodyValue = JSON.stringify({
+  //     ...data,
+  //   });
+  //   console.log(bodyValue);
+  //   const response = await fetch(`${BACKEND_API_URL}/borrows/withdraw`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: bodyValue,
+  //   });
 
-    const result = await response.json();
+  //   const result = await response.json();
 
-    if (!response.ok) {
-      throw new Error(result.message);
-    }
+  //   if (!response.ok) {
+  //     throw new Error(result.message);
+  //   }
 
-    return result;
-  }
+  //   return result;
+  // }
 
   /**
    * Handles the withdrawal time based on the current value of withdrawalTime.
@@ -612,39 +606,8 @@ const Withdrawcopy = ({
     approveReset?.();
     borrowReset?.();
     if (details.status === "DEPOSITED") {
-      // write?.();
-      /*
-      Call calculateCumulativeRate function to calculate the cumulative rate before withdrawal and then we are calling approval function to approve the withdrawal and then finally we are withdrawing on success of approval
-      */
       calculateCumulativeRate?.({})
-      // setOpenConfirmNotice(false);
-    } else if (details.status === "WITHDREW1") {
-      //TODO you have to manage second withdrawal it is not handled currently and simply shows a toast message
-      toast.custom(
-        (t) => (
-          <div>
-            <CustomToast
-              key={2}
-              props={{
-                t,
-                toastMainColor: "#B43939",
-                headline: `You have to wait for 30 days to withdraw after first withdrawal`,
-                toastClosebuttonHoverColor: "#e66d6d",
-                toastClosebuttonColor: "#C25757",
-              }}
-            />
-          </div>
-        ),
-        { duration: 5000 }
-      );
-      // setWithdrawalTime("liquidated");
-      handleSheetOpenChange(false)
-    } else {
-      // setWithdrawalTime("WITHDREW2");
-      console.log(details.status);
-      handleSheetOpenChange(false)
-
-    }
+    } 
   }
   /**
    * Updates the deposit data based on the provided details.
@@ -657,9 +620,9 @@ const Withdrawcopy = ({
     
 
     if (details) {
-      const totalAmintAmnt = lastCumulativeRate===undefined ? BigInt(details.normalizedAmount) :(
+      const totalAmintAmnt = lastCumulativeRate===undefined ? BigInt(Number(details.normalizedAmount)*10**6) :(
         BigInt(
-          BigInt(details.normalizedAmount ? details.normalizedAmount : 0) *
+          BigInt(details.normalizedAmount? Number(details.normalizedAmount)*10**6 : 0) *
           (lastCumulativeRate)
         ) / BigInt(10 ** 27))
 
@@ -827,7 +790,7 @@ const Withdrawcopy = ({
 
                         <Note note="Note: This deposit has already been liquidated" />
                       </div>
-                    ) : details.status==="WITHDREW1"?(
+                    ) : details.status==="WITHDREW"?(
                       <div className="p-4 text-center">
 
                         <Note note="Note: Amount fully withdrawn" />
@@ -850,20 +813,20 @@ const Withdrawcopy = ({
                 heading={"Calculate Interest #1"}
                 subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
                 status={cumulativeRateLoading ? "Loading" : (!cumulativeRateError && ispendingCumulative) ? "Progress" : cumulativeRateSuccess ? "Completed" : cumulativeRateError ? "Failed" : "Pending"}
-                className={`${cumulativeRateLoading || (!cumulativeRateError && ispendingCumulative) ? "w-[100%] px-4 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
+                className={`${cumulativeRateLoading || (!cumulativeRateError && ispendingCumulative) ? "w-[90%] border-[#FFFFFF] px-4 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
               />
               <TransactionLoader
                 heading={"Approve USDa #2"}
                 subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
                 status={amintApproveLoading ? "Loading" : (!amintApproveError && usdaHashLoading) ? "Progress" : amintApproveSuccess ? "Completed" : amintApproveError ? "Failed" : "Pending"}
-                className={`${amintApproveLoading || (!amintApproveError && usdaHashLoading) ? "w-[100%] px-4 py-3" : "bg-gray-100 dark:bg-[#141414]"} `}
+                className={`${amintApproveLoading || (!amintApproveError && usdaHashLoading) ? "w-[90%] px-4 py-3 border-[#FFFFFF] " : "bg-gray-100 dark:bg-[#141414]"} `}
 
               />
               <TransactionLoader
                 heading={"Withdraw #3"}
                 subheadingBefore={"Transaction Hash: 0x1234567890abcdef"}
-                status={borrowWithdrawisLoading ? "Loading" : (!borrowWithdrawtransactionError && isPending) ? "Progress" : borrowWithdrawtransactionSuccess && backendWithdrawSuccess ? "Completed" : borrowWithdrawtransactionError ? "Failed" : "Pending"}
-                className={`${borrowWithdrawisLoadingone || borrowWithdrawisLoading || (!borrowWithdrawtransactionError && isPending) ? "w-[100%] px-4 py-3" : "bg-gray-100  dark:bg-[#141414]"} `}
+                status={borrowWithdrawisLoadingone ? "Loading" : (borrowWithdrawisLoading ) ? "Progress" : borrowWithdrawtransactionSuccess  ? "Completed" : borrowWithdrawtransactionError ? "Failed" : "Pending"}
+                className={`${borrowWithdrawisLoadingone || (borrowWithdrawisLoading && !borrowWithdrawtransactionError ) ? "w-[90%] px-4 py-3 border-[#FFFFFF] " : "bg-gray-100  dark:bg-[#141414]"} `}
               />
             </div>
             ) 

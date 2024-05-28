@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { TableCell, TableRow } from "../ui/table";
+import { Button } from "../ui/button";
 
 
 interface TableData {
@@ -22,7 +23,7 @@ interface TableData {
   normalizedAmount: string;
   amountYetToWithdraw: string;
   noOfAbondMinted: string;
-  status: "DEPOSITED" | "WITHDREW1" | "WITHDREW2" | "LIQUIDATED";
+  status: "DEPOSITED" | "WITHDREW" |  "LIQUIDATED";
 }
 
 const TableRows = ({
@@ -154,7 +155,7 @@ const TableRows = ({
             {details.status === "LIQUIDATED" ? "Yes" : "No"}
         </TableCell>
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
-            <button className="py-1 px-2 mr-4 bg-[#020202] text-white" >repay</button>
+            <Button variant={"outline"}  className="py-1 px-2 mr-4 bg-[#020202] text-white" >repay</Button>
         </TableCell>
 
        

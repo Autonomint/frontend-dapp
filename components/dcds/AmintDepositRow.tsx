@@ -1,6 +1,7 @@
 import { TableCell, TableRow } from "@/components/ui/table";
 import React, { useEffect, useRef, useState } from "react";
 import calculateTimeDifference from "@/app/utils/calculateTimeDifference";
+import { Button } from "../ui/button";
 
 
 
@@ -89,7 +90,7 @@ const AmintDepositRow = ({ details ,onClick,isnewtxn,islasttxn}: { details: Depo
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
       {details.lockingPeriod} days
         </TableCell>
-        <TableCell className="text-textGrey dark:text-[#EEEEEE] "><button className="mr-4 px-2 py-1 bg-[#020202] text-white"> Withdraw</button> </TableCell>
+        <TableCell className="text-textGrey dark:text-[#EEEEEE] "><Button variant={"outline"} className="mr-4 px-2 pt-1 bg-[#020202] text-white"> Withdraw</Button> </TableCell>
       </TableRow>
   );
 };

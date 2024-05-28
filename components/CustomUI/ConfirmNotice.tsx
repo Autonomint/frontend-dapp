@@ -34,7 +34,7 @@ const ConfirmNotice = ({
             </div>
       <Button
         variant={"primary"}
-        className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
+        className="py-2 "
         onClick={handleWithdrawal}
       >
        {  `Confirm repay of ${withdrawalTime === "DEPOSITED" ? "USDa" : "ETH"}`}

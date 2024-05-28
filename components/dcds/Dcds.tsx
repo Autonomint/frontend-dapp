@@ -296,7 +296,7 @@ const Dcds = () => {
                         </Table>
                       </div>
                     </div>
-                    <div className={`${!sheetDetails ? "hidden basis-0" : "basis-1/3"} border-l h-[99.9%] overflow-y-scroll right-0 xl:overflow-auto absolute xl:relative border-black  bg-[#eeeeee]`}>
+                    <div className={`${!sheetDetails ? "hidden basis-0" : "basis-1/3"} border-l h-[99.9%] overflow-y-scroll right-0 xl:overflow-auto absolute xl:relative border-black  bg-[#eeeeee] dark:bg-[#242424]`}>
                       <div className="absolute right-0 p-1 border border-black cursor-pointer w-fit" onClick={() => setSheetDetails(undefined)}><Cross2Icon /></div>
 
                       {

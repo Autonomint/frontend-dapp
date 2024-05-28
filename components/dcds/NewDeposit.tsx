@@ -25,7 +25,8 @@ import {
   FontRomanIcon,
   InfoCircledIcon,
   PlusIcon,
-  ArrowRightIcon
+  ArrowRightIcon,
+  ArrowTopRightIcon
 } from "@radix-ui/react-icons";
 import {
   Select,
@@ -548,25 +549,26 @@ const NewDeposit = ({
       );
     }
     if (cdsDepositSuccess) {
-      console.log("data logs -------", DepositdataReceipt);
-      // Retrieve the relevant data from the transaction logs
-      const dataLogs =
-        chainId === 5 ? DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].data : DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].data;
-      // Decode event logs using the provided ABI and event name
-      console.log("data logs -------", DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].topics);
-      const { eventName, args } = decodeEventLogsFromAbi(
-        cdsAbi,
-        //topic to decode event variables
-        DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].topics ?? [],
-        "Deposit",
-        dataLogs
-      ) as { eventName: string; args: { depositVal: bigint } };
+      // console.log("data logs -------", DepositdataReceipt);
+      // // Retrieve the relevant data from the transaction logs
+      // const dataLogs =
+      //   chainId === 5 ? DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].data : DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].data;
+      // // Decode event logs using the provided ABI and event name
+      // console.log("data logs -------", DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].topics);
+      // const { eventName, args } = decodeEventLogsFromAbi(
+      //   cdsAbi,
+      //   //topic to decode event variables
+      //   DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].topics ?? [],
+      //   "Deposit",
+      //   dataLogs
+      // ) as { eventName: string; args: { depositVal: bigint } };
 
-      console.log(eventName, args?.depositVal);
-      // Update the deposit value
-      depositVal.current = args?.depositVal;
-      //store data to backend
-      mutate(address);
+      // console.log(eventName, args?.depositVal);
+      // // Update the deposit value
+      // depositVal.current = args?.depositVal;
+      // //store data to backend
+      // mutate(address);
+      handleRefetch()
       // Dismiss the toast notification after 5 seconds
       setTimeout(() => {
         toast.dismiss(toastId.current);
@@ -1100,7 +1102,7 @@ const NewDeposit = ({
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent className=" py-2 bg-white  dark:bg-[#3A3A3A] dark:border-[#9E9E9E] rounded-none">
-                            <SelectGroup className="dark:bg-[#3A3A3A] dark:border-[#9E9E9E] text-white">
+                            <SelectGroup className="dark:bg-[#3A3A3A] dark:border-[#9E9E9E] dark:text-white">
                               <SelectLabel>Lock-In Period</SelectLabel>
                               <SelectItem value="30">30 Days</SelectItem>
                               <SelectItem value="60">
@@ -1216,7 +1218,7 @@ const NewDeposit = ({
                   variant={"outline"}
                   className="py-2"
                 >
-                  {'View Positions'}<Image src={arrowout} className="ml-2 sm:ml-0 sm:absolute sm:right-5" alt="arrow" width={20} height={15} />
+                  {'View Positions'} <ArrowTopRightIcon className="ml-2 sm:ml-0 sm:absolute sm:right-5" width={20} height={20}/>
                 </Button>
 
 

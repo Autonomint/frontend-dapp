@@ -33,6 +33,7 @@ import arrowout from "@/app/assets/arrow_outward.svg";
 import Image from 'next/image';
 import GetBalance from '../ConnectWallet/GetBalance';
 import { Options } from '@layerzerolabs/lz-v2-utilities';
+import { ArrowTopRightIcon } from '@radix-ui/react-icons';
 const formSchema = z.object({
   inputCollateral: z.string(),
   collateralAmount: z
@@ -736,12 +737,12 @@ const Redeem = ({
               className="py-2 "
 
             >
-              {'Redeemable Assets'}<Image src={arrowout} className="ml-2 sm:ml-0 sm:absolute sm:right-5" alt="arrow" width={20} height={15} />
+              {'Redeemable Assets'} <ArrowTopRightIcon className="ml-2 sm:ml-0 sm:absolute sm:right-5" width={20} height={20}/>
             </Button>
             <Button
               type="submit"
               variant={"primary"}
-              className="py-2  basis-1/2"
+              className="py-2 basis-1/2"
               disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading}
             >
               {isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading ? <Spinner /> : "Redeem"}
