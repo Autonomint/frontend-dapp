@@ -38,9 +38,9 @@ export default function Home() {
       <div className="z-40 static min-h-[84vh] pb-5 mx-2 sm:mx-5 bg-white dark:bg-[#242424] dark:shadow-darkcustom shadow-custom border-[1px] border-[#9E9E9E]">
         <div className="relative flex flex-wrap justify-center mx-auto lg:flex-row lg:gap-5">
 
-        <div onClick={() => {setOpenInfo(!openInfo)}} className=" hidden sm:flex  mr-5 sm:mr-0 absolute  sm:left-5 sm:-bottom-10 sm:top-5 border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-1.5 sm:p-[15px] cursor-pointer">
+        <Button onClick={() => {setOpenInfo(!openInfo)}}  variant={'primary'}  className=" hidden sm:flex  mr-5 sm:mr-0 absolute  sm:left-5 sm:-bottom-10 sm:top-5 border-[#041A50] h-fit p-[15px]">
             <InfoCircledIcon className="w-6 h-6 text-[#000000] " />
-          </div>
+          </Button>
           
           <div className="w-[98%]   sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[900px] dark:border-none  ]  pb-4  mt-5 p-1 sm:p-4">
             {isConnected ? (
@@ -82,12 +82,12 @@ export default function Home() {
           </div>
           
           <div className="hidden gap-5 sm:flex sm:flex-col sm:absolute mdb:flex right-5 top-5">
-            <div onClick={() => {setShowNotification(!showNotification);setOpenSettings(false)}} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
+            <Button onClick={() => {setShowNotification(!showNotification);setOpenSettings(false)}} variant={'primary'} className="border-[#041A50] h-fit p-[15px]">
               <BellIcon className="w-6 h-6 text-[#000000] " />
-            </div>
-            <div onClick={() => {setOpenSettings(!openSettings);setShowNotification(false)}} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
+            </Button>
+            <Button onClick={() => {setOpenSettings(!openSettings);setShowNotification(false)}} variant={'primary'} className="border-[#041A50] h-fit p-[15px]">
               <Settings  className="w-6 h-6 text-[#000000] " />
-            </div>
+            </Button>
           </div>
 
 

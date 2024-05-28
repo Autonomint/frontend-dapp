@@ -5,20 +5,20 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-slate-300",
+  "inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-slate-300",
   {
     variants: {
       variant: {
         primary:
-          "border-borderBlue rounded-[100px] border bg-[linear-gradient(180deg,_#00679F_0%,#041A50_100%)] shadow-[0px_2px_4px 0px_rgba(0,0,0,0.25)]",
+          "border-[#041A50] bg-[#ABFFDE] dark:text-[#020202] text-sm border-[1px] shadow-smallcustom py-2 rounded-none",
         default:
           "bg-slate-900 text-slate-50 shadow hover:bg-slate-900/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90",
         destructive:
           "bg-red-500 text-slate-50 shadow-sm hover:bg-red-500/90 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/90",
         outline:
-          "border border-borderGrey rounded-[100px] bg-transparent shadow-sm hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:hover:bg-slate-800 dark:hover:text-slate-50",
+          "text-[#020202] relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] dark:bg-[#5B5B5B] dark:border-[#FFFFFF] dark:text-[white] bg-[#DEDEDE] py-2",
         secondary:
-          "bg-[linear-gradient(180deg,#FFF_-0.23%,#EEE_100%)] rounded-[8px] text-[#0f0f0f] text-base shadow-sm hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80",
+          "px-8 py-2 h-fit text-sm  text-black bg-[#DEDEDE] font-light dark:bg-[#3A3A3A] dark:text-white border-b-2 border-black dark:border-white cursor-pointer",
         ghost:
           " hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         ghostOutline:

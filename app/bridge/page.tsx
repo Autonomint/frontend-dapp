@@ -118,7 +118,7 @@ export default function page() {
       setCollateralAmountString(form.getValues("collateralAmount").toString())
     }
     const amount = ethers.parseEther(letamount) -37671213890518646n;
-    if(chainId === 84532 && nativeFee1){
+    if(chainId === 84532 && nativeFee1 && nativeFee2){
     const amount = ethers.parseEther(letamount) - nativeFee1.nativeFee;
     
   }
@@ -212,11 +212,11 @@ export default function page() {
   });
 
   useEffect(() => {
-    if(usdaApproveSuccess && nativeFee1 && accountAddress) {
+    if(usdaApproveSuccess && accountAddress) {
       usdaApproveWrite({
         args: [
           transactionParams,
-          { nativeFee: nativeFee1.nativeFee, lzTokenFee: 0n },
+          { nativeFee: 37671213890518646n, lzTokenFee: 0n },
           accountAddress,
         ],
         // value: nativeFee1.nativeFee,
@@ -427,11 +427,11 @@ export default function page() {
   });
 
   useEffect(() => {
-    if(tusDTApproveSuccess && nativeFee2 && accountAddress) {
+    if(tusDTApproveSuccess && accountAddress) {
       tusdtApproveWrite({
         args: [
           transactionParams,
-          { nativeFee: nativeFee2.nativeFee, lzTokenFee: 0n },
+          { nativeFee: 37671213890518646n, lzTokenFee: 0n },
           accountAddress,
         ],
         // value: nativeFee2.nativeFee,

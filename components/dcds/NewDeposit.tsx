@@ -68,6 +68,7 @@ import { DEV_PROXY_AMINT_ADDRESS, DEV_PROXY_TESTUSDT_ADDRESS } from "@/constants
 import ProductList from "../Markets/ProductList";
 import arrowout from "@/app/assets/arrow_outward.svg";
 import { Options } from '@layerzerolabs/lz-v2-utilities'
+import GetBalance from "../ConnectWallet/GetBalance";
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 interface TokensState {
@@ -320,6 +321,7 @@ const NewDeposit = ({
             BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
             liquidationGains,
             liquidationGains ? parseUnits(liqAmnt.toString(), 6) : 0n,
+            BigInt(Number(lockIn)*86400000),
           ],
           value: nativeFee1.nativeFee,
         });
@@ -456,7 +458,9 @@ const NewDeposit = ({
 
       onError: (error) => {
         // console.log(error.message);
-        console.log("MESSAGE", error.cause);
+        console.log("MESSAGE", error.cause );
+        console.log("MESSAGE", error.name );
+        console.log("MESSAGE", error.message );
         // Show a custom toast notification for the error
         toast.custom(
           (t) => (
@@ -628,6 +632,7 @@ const NewDeposit = ({
                 BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
                 liquidationGains,
                 liquidationGains ? parseUnits(liqAmnt.toString(), 6) : 0n,
+                BigInt(Number(lockIn)*86400000),
               ],
               value: nativeFee1.nativeFee,
             });
@@ -850,7 +855,6 @@ const NewDeposit = ({
       else {
         form.clearErrors("USDTDepositAmount");
       }
-
     }
 
   }, [form.watch("USDTDepositAmount"), form.watch("AmintDepositAmount")])
@@ -974,7 +978,7 @@ const NewDeposit = ({
                             </div>
                           </div>
                         </FormControl>
-                        <span className=" block text-[10px] text-right mr-1">bal. {usdtbal?.formatted.slice(0, 8)} USDT</span>
+                        <span className=" block text-[10px] text-right mr-1"><GetBalance token="TUSDT" /></span>
                         <FormMessage />
 
                       </FormItem>
@@ -1143,7 +1147,7 @@ const NewDeposit = ({
               </div>
 
               {(Boolean(amintAmnt) || Boolean(usdtAmnt)) && Boolean(lockIn) ? (
-                <div className="min-[144px]:px-[15px] px-[10px] flex flex-col border border-lineGrey rounded bg-gradient-to-r from-white to-[#eee] dark:bg-none dark:bg-[#0F0F0F]">
+                <div className="min-[144px]:px-[15px] px-[10px] flex flex-col border border-lineGrey ">
                   <div className="min-[144px]:py-[15px] py-[10px] flex items-center justify-between border-b border-lineGrey">
                     <div className="flex gap-[10px] items-center">
                       <Image
@@ -1209,8 +1213,8 @@ const NewDeposit = ({
                 <Button
                   type="button"
                   onClick={() => openDeposits(true)}
-                  variant={"primary"}
-                  className="text-[#020202] relative rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] dark:bg-[#5B5B5B] dark:border-[#FFFFFF] dark:text-[white] py-2"
+                  variant={"outline"}
+                  className="py-2"
                 >
                   {'View Positions'}<Image src={arrowout} className="ml-2 sm:ml-0 sm:absolute sm:right-5" alt="arrow" width={20} height={15} />
                 </Button>
@@ -1219,7 +1223,7 @@ const NewDeposit = ({
                 <Button
                   type="submit"
                   variant={"primary"}
-                  className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
+                  className="py-2 basis-1/2"
                   //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                   disabled={
                     (usdtAmountDepositedTillNow > usdtLimit) || isCdsDepositLoading || isPending || isLoading

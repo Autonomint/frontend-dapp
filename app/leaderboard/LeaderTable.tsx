@@ -67,12 +67,12 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
                                     }>
                                         <TableCell>
                                         <div className={
-                                        ` ${(currentPage - 1) * itemsPerPage + index + 1  === 1 ? 'bg-[#FFECC7] text-[#BC7C00] dark:text-[#71e889]   ' :
-                                        (currentPage - 1) * itemsPerPage + index + 1  === 2 ? 'bg-[#CEE1E6] text-[#587676] dark:text-[#71e889]  ' :
-                                        (currentPage - 1) * itemsPerPage + index + 1  === 3 ? 'bg-[#FFE4D5] text-[#8A4A00] dark:text-[#71e889]' :
+                                        ` ${(currentPage - 1) * itemsPerPage + index + 1  === 1 ? 'bg-[#FFECC7] text-[#BC7C00]  ' :
+                                        (currentPage - 1) * itemsPerPage + index + 1  === 2 ? 'bg-[#CEE1E6] text-[#587676] ' :
+                                        (currentPage - 1) * itemsPerPage + index + 1  === 3 ? 'bg-[#FFE4D5] text-[#8A4A00] ' :
                                                 
-                                                            ' dark:bg-[#1a1a1a]'}
-                                        hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11] rounded-[40%] p-1 text-center cursor-pointer`
+                                                            ' '}
+                                        hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:text-white dark:active:bg-[#002A11] rounded-[40%] p-1 text-center cursor-pointer`
                                     }>
                                            #{ (currentPage - 1) * itemsPerPage + index + 1 }
                                            </div>

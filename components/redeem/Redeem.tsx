@@ -732,8 +732,8 @@ const Redeem = ({
             <Button
               type="button"
               onClick={() => openRedeemableAssets(true)}
-              variant={"primary"}
-              className="text-[#020202] relative rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#DEDEDE] dark:bg-[#5B5B5B] dark:border-[#FFFFFF] dark:text-[white] py-2"
+              variant={"outline"}
+              className="py-2 "
 
             >
               {'Redeemable Assets'}<Image src={arrowout} className="ml-2 sm:ml-0 sm:absolute sm:right-5" alt="arrow" width={20} height={15} />
@@ -741,7 +741,7 @@ const Redeem = ({
             <Button
               type="submit"
               variant={"primary"}
-              className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2"
+              className="py-2  basis-1/2"
               disabled={isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading}
             >
               {isRedeemUsdt || isRedeemEthLoading || amintApproveLoading || abondApproveLoading || isAbondTransactionLoading || isAmintTransactionLoading || isRedeemUsdtTransactionLoading || isRedeemEthTransactionLoading ? <Spinner /> : "Redeem"}

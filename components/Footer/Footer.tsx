@@ -30,12 +30,12 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className="flex items-center justify-center w-full gap-5 mr-2 sm:justify-normal sm:w-auto ">
-                    <div onClick={() => setOpen2(!open2)} className="px-8 py-2 h-fit text-sm  text-black bg-[#DEDEDE] dark:bg-[#3A3A3A] dark:text-white   border-b-2 border-black dark:border-white cursor-pointer">
+                    <Button onClick={() => setOpen2(!open2)} variant={'secondary'} className='px-8' >
                         ? FAQs
-                    </div>
-                    <div onClick={() => setOpenGetstart(!open2)} className="px-8 py-2 h-fit text-sm  text-black bg-[#DEDEDE] dark:bg-[#3A3A3A] dark:text-white border-b-2 border-black dark:border-white cursor-pointer">
+                    </Button>
+                    <Button onClick={() => setOpenGetstart(!open2)} variant={'secondary'} className='px-8' >
                         Get Started
-                    </div>
+                    </Button>
                 </div>
 
                 {/* <div onClick={()=>setOpen2(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] border-2 border-gray-400 rounded-md cursor-pointer">
@@ -95,7 +95,7 @@ export default function Footer() {
                                     <li>Click the button below to go deposit collateral and mint some stable coins!</li>
                                 </ol>
                             </div>
-                            <Button className="border-[#041A50] mt-4 bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 ">Start Trade Now</Button>
+                            <Button className="border-[#041A50] mt-4 bg-[#ABFFDE] text-sm border-[1px] dark:text-black shadow-smallcustom py-2 rounded-none basis-1/2 ">Start Trade Now</Button>
                         </div>
                     </div>
 

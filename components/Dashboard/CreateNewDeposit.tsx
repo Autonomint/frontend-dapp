@@ -143,7 +143,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
     nonce: 40n
   }, options, false]})
 
-
+console.log(nativeFee1,nativeFee2,nativeFee)
   // Perform a mutation and get the mutate and depositReset functions
   const { mutate, reset: depositReset,isPending:isStoringbackend } = useMutation({
     // Specify the mutation function to be called
@@ -317,7 +317,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
       },
       onError: (error: any) => {
         // Log the error to the console
-        console.log(error);
+        console.log(error.name, error.message, error.cause);
         // Show custom toast
         toast.custom(
           (t) => (
@@ -349,22 +349,24 @@ const{data:Depositdata , isError:depositError,isLoading:isDepositdataLoading,isS
 useEffect(()=>{
   if(isDepositSuccess){
     console.log("transaction completed", Depositdata);
-    const dataLogs = Depositdata.logs[Depositdata.logs.length - 1]
-    const { eventName, args } = decodeEventLogsFromAbi(
-      borrowingContractAbi,
-      dataLogs.topics,
-      "Deposit",
-      dataLogs.data
-    ) as { eventName: string; args: { normalizedAmount: bigint, borrowAmount: bigint } };
+    // const dataLogs = Depositdata.logs[Depositdata.logs.length - 1]
+    // const { eventName, args } = decodeEventLogsFromAbi(
+    //   borrowingContractAbi,
+    //   dataLogs.topics,
+    //   "Deposit",
+    //   dataLogs.data
+    // ) as { eventName: string; args: { normalizedAmount: bigint, borrowAmount: bigint } };
+    form.reset();
+    reset()
+    refetch();
+    // // Log event name and normalized amount
+    // console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toString())
+    // // Set the normalizedAmount value
+    // normalizedAmount.current = args?.normalizedAmount.toString();
+    // noOfAmintMinted.current = args?.borrowAmount.toString();
 
-    // Log event name and normalized amount
-    console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toString())
-    // Set the normalizedAmount value
-    normalizedAmount.current = args?.normalizedAmount.toString();
-    noOfAmintMinted.current = args?.borrowAmount.toString();
-
-    // Call mutate function with the address to store things to backend
-    mutate(address);
+    // // Call mutate function with the address to store things to backend
+    // mutate(address);
     setOpen(false);
     // Show custom toast
     toast.custom(
@@ -640,8 +642,8 @@ useEffect(()=>{
                   :
                 </div>
                 <div className="flex gap-4">
-                  <div onClick={() => form.setValue("strikePrice", 5)} className={`p-[1px] ${form.getValues("strikePrice") == 5 ? " border-2   font-medium dark:border-[#ABFFDE] text-[#ABFFDE]" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"}  text-sm border  w-[2.5rem] text-center cursor-pointer `}>5%</div>
-                  <div onClick={() => form.setValue("strikePrice", 10)} className={`p-[1px] ${form.getValues("strikePrice") == 10 ? "border-2 dark:border-[#ABFFDE] text-[#ABFFDE] font-medium" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"} text-sm border w-[2.5rem] text-center  cursor-pointer `}>10%</div>
+                  <div onClick={() => form.setValue("strikePrice", 5)} className={`p-[1px] ${form.getValues("strikePrice") == 5 ? " border-2   font-medium dark:border-[#ABFFDE]  dark:text-[#ABFFDE] border-black text-black" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"}  text-sm border  w-[2.5rem] text-center cursor-pointer `}>5%</div>
+                  <div onClick={() => form.setValue("strikePrice", 10)} className={`p-[1px] ${form.getValues("strikePrice") == 10 ? "border-2 dark:border-[#ABFFDE] dark:text-[#ABFFDE] font-medium border-black text-black" : "dark:border-[#DEDEDE] border-gray-500 text-gray-500 dark:text-[#DEDEDE]"} text-sm border w-[2.5rem] text-center  cursor-pointer `}>10%</div>
                 </div>
               </div>
               <div className='relative  dark:bg-[#3A3A3A] dark:border-[#9E9E9E] border-[#020202] border-[1px]    rounded-none py-1 px-2'>
@@ -656,17 +658,15 @@ useEffect(()=>{
                 <Button
                   type="button"
                   onClick={() => openPositions(true)}
-                  variant={"primary"}
-                  className="text-[#020202] relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] dark:bg-[#5B5B5B] dark:border-[#FFFFFF] dark:text-[white] bg-[#DEDEDE] py-2"
-
+                  variant={"outline"}
+                  className="basis-1/2"
                 >
                   {'View Positions'} <Image src={arrowout} className="ml-2 sm:ml-0 sm:absolute sm:right-5" alt="arrow" width={20} height={15} />
                 </Button>
-
                 <Button
                   type="submit"
                   variant={"primary"}
-                  className="border-[#041A50] bg-[#ABFFDE] dark:text-[#020202] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
+                  className=" basis-1/2"
                   disabled={isDepositsLoading ||isDepositdataLoading || isStoringbackend  || disabled}
                 >
                   {isDepositsLoading ||isDepositdataLoading || isStoringbackend ? <Spinner /> : 'Confirm Deposit'}

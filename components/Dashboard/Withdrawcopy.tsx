@@ -483,19 +483,20 @@ const Withdrawcopy = ({
         noOfAbond: args?.noOfAbond.toString(),
       };
       console.log(eventsValue)
+      handleRefetch();
 
       // Perform backend withdraw
-      backendWithdraw?.({
-        address: address as `0x${string}`,
-        index: details.index,
-        chainId: chainId,
-        borrowDebt: eventsValue.current.borrowDebt,
-        withdrawTime: `${Date.now()}`,
-        withdrawAmount: eventsValue.current.withdrawAmount,
-        amountYetToWithdraw: eventsValue.current.withdrawAmount,
-        noOfAbond: eventsValue.current.noOfAbond,
-        totalDebtAmount: eventsValue.current.borrowDebt,
-      });
+      // backendWithdraw?.({
+      //   address: address as `0x${string}`,
+      //   index: details.index,
+      //   chainId: chainId,
+      //   borrowDebt: eventsValue.current.borrowDebt,
+      //   withdrawTime: `${Date.now()}`,
+      //   withdrawAmount: eventsValue.current.withdrawAmount,
+      //   amountYetToWithdraw: eventsValue.current.withdrawAmount,
+      //   noOfAbond: eventsValue.current.noOfAbond,
+      //   totalDebtAmount: eventsValue.current.borrowDebt,
+      // });
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();

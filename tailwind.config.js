@@ -22,6 +22,7 @@ module.exports = {
       },
       fontFamily: {
         'plex-sans': ['IBM Plex Sans', 'sans-serif'],
+        'plex-grotesk': ['Space Grotesk', 'sans-serif'],
       },
       boxShadow: {
         custom: '4px 4px 0px #C4C4C4',

@@ -8,10 +8,6 @@ export const SEPOLIA_BORROW_LIQUIDATION_ADDRESS = "0x74e0F0492E8F180F4FEF6d9392e
 export const SEPOLIA_TREASURY_ADDRESS = "0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB"
 export const SEPOLIA_OPTIONS_ADDRESS = "0x7C6441B23f21A7A5cd5965B516D8054F119bA53f"
 
-// "@uniswap/sdk-core": "^4.0.10",
-// "@uniswap/smart-order-router": "^3.21.0",
-// "@uniswap/v3-sdk": "^3.10.2",
-
 export const BASE_SEPOLIA_USDA_ADDRESS = "0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd"
 export const BASE_SEPOLIA_ABOND_ADDRESS = "0x37df4e70eDc4525Be0d7380730a7224Cf5205c14"
 export const BASE_SEPOLIA_TESTUSDT_ADDRESS = "0xfBAE0d4337d936538995A26685f69644e6427213"
@@ -22,7 +18,7 @@ export const BASE_SEPOLIA_BORROW_LIQUIDATION_ADDRESS = "0x05208cAfF03649cd1Cf967
 export const BASE_SEPOLIA_TREASURY_ADDRESS = "0x80f872b6402D1FB4BffF4837efe9E4b49cB91909"
 export const BASE_SEPOLIA_OPTIONS_ADDRESS = "0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec"
 
-export const borrowABI= [
+export const borrowABI=  [
   {
     "inputs": [
       {
@@ -276,6 +272,12 @@ export const borrowABI= [
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
         "internalType": "uint64",
         "name": "index",
         "type": "uint64"
@@ -289,14 +291,44 @@ export const borrowABI= [
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "borrowAmount",
+        "name": "normalizedAmount",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "normalizedAmount",
+        "name": "depositedTime",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "ethPrice",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "borrowAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "strikePrice",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "optionsFees",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum IOptions.StrikePrice",
+        "name": "strikePricePercent",
+        "type": "uint8"
       }
     ],
     "name": "Deposit",
@@ -408,8 +440,20 @@ export const borrowABI= [
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "index",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
-        "name": "borrowDebt",
+        "name": "withdrawTime",
         "type": "uint256"
       },
       {
@@ -423,6 +467,12 @@ export const borrowABI= [
         "internalType": "uint128",
         "name": "noOfAbond",
         "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "borrowDebt",
+        "type": "uint256"
       }
     ],
     "name": "Withdraw",
@@ -1221,7 +1271,7 @@ export const borrowABI= [
   }
 ]
 
-export const cdsABI = [
+export const cdsABI =  [
   {
     "inputs": [
       {
@@ -1430,9 +1480,9 @@ export const cdsABI = [
     "inputs": [
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "depositedUSDa",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       },
       {
         "indexed": false,
@@ -1443,20 +1493,44 @@ export const cdsABI = [
       {
         "indexed": false,
         "internalType": "uint128",
-        "name": "liquidationAmount",
+        "name": "depositedUSDa",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "depositedUSDT",
         "type": "uint128"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "normalizedAmount",
+        "name": "depositedTime",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint128",
-        "name": "depositVal",
+        "name": "ethPriceAtDeposit",
         "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "lockingPeriod",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "liquidationAmount",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "optedForLiquidation",
+        "type": "bool"
       }
     ],
     "name": "Deposit",
@@ -1531,8 +1605,26 @@ export const cdsABI = [
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "index",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
-        "name": "withdrewUSDa",
+        "name": "withdrawUSDa",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "withdrawTime",
         "type": "uint256"
       },
       {
@@ -1540,6 +1632,24 @@ export const cdsABI = [
         "internalType": "uint128",
         "name": "withdrawETH",
         "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "ethPriceAtWithdraw",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "optionsFees",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "optionsFeesWithdrawn",
+        "type": "uint256"
       }
     ],
     "name": "Withdraw",
@@ -1730,6 +1840,19 @@ export const cdsABI = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "cdsCount",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -1773,6 +1896,11 @@ export const cdsABI = [
       {
         "internalType": "uint128",
         "name": "_liquidationAmount",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "lockingPeriod",
         "type": "uint128"
       }
     ],
@@ -2533,12 +2661,38 @@ export const cdsABI = [
   },
   {
     "inputs": [],
-    "name": "usda",
+    "name": "usdaLimit",
     "outputs": [
       {
-        "internalType": "contract IUSDa",
+        "internalType": "uint8",
         "name": "",
-        "type": "address"
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "usdtAmountDepositedTillNow",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "usdtLimit",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
       }
     ],
     "stateMutability": "view",
@@ -2555,19 +2709,6 @@ export const cdsABI = [
     "name": "withdraw",
     "outputs": [],
     "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdrawTimeLimit",
-    "outputs": [
-      {
-        "internalType": "uint64",
-        "name": "",
-        "type": "uint64"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   }
 ]

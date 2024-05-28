@@ -120,7 +120,7 @@ const NavBar = () => {
           <div className="w-[3rem] h-[3rem]">
             <Image src={logo} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
           </div>
-          <div className="text-2xl font-medium tracking-tighter font-plex-mono text-[#041A50] dark:text-[#007AFF]">Autonomint</div>
+          <div className="text-2xl font-plex-grotesk  tracking-tighter text-[#041A50] dark:text-[#FFFFFF]">Autonomint</div>
         </div>
         <div className="items-center justify-between invisible hidden w-0 mr-0 md:flex md:w-fit mdb:visible">
           <div className="flex justify-center ">
@@ -189,13 +189,13 @@ const NavBar = () => {
           <div className="flex items-center justify-center top-2">
 
           {isConnected ? (
-            <div onClick={() => setOpen2(!open2)} className="px-3 hidden mdb:flex gap-2 py-1 pt-2  h-fit text-[0.8rem] font-semibold text-black bg-[#DEDEDE] dark:bg-[#3A3A3A] dark:text-white dark:border-white border-b-2 border-black  cursor-pointer">
+            <Button onClick={() => setOpen2(!open2)} variant={'secondary'} className="flex gap-2 text-[0.85rem]" >
               <div className="w-[1.5rem] -mt-[2px] "><Image src={walleticon} alt="autonomint-dapp" className="rounded-sm cursor-pointer " style={{ width: "100%", height: "100%" }} /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
-            </div>
+            </Button>
           ) : (
-            <div onClick={onConnect} className="hover:bg-[#d3d2d2] hidden mdb:flex px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#3A3A3A] dark:border-white dark:text-white  border-b-2 border-black  cursor-pointer">
+            <Button onClick={onConnect} variant={'secondary'} >
               Connect Wallet
-            </div>
+            </Button>
           )}
           </div>
           <div className="right-0 flex items-center justify-center top-2 mdb:hidden">
