@@ -30,6 +30,11 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
     const [pagecount, setPageCount] = useState(1);
     const itemsPerPage = 10;
     useEffect(() => {
+        if (!Array.isArray(data)) {
+            console.log("invalid",data);
+            console.error('Invalid prop: data should be an array');
+            return;
+        }
         let sorted = [...data];
         if (sortField) {
             sorted.sort((a, b) => (a[sortField] > b[sortField]) ? 1 : -1);
