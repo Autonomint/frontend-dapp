@@ -49,6 +49,9 @@ const DepositAndWithDrawTable = ({
     setSheetDetails(details)
     setSheetOpen(true);
   }
+  const DataRefetch=()=>{
+    handleRefetch()
+  }
 
   return (
     <div className="flex w-full h-[74vh] ">
@@ -97,18 +100,10 @@ const DepositAndWithDrawTable = ({
             details={sheetDetails}
             sheetOpen={sheetOpen}
             handleSheetOpenChange={setSheetOpen}
-            handleRefetch={handleRefetch}
+            handleRefetch={DataRefetch}
           />
         }
       </div>
-      {/* {
-        sheetDetails && <Withdraw
-        details={sheetDetails}
-        sheetOpen={sheetOpen}
-        handleSheetOpenChange={setSheetOpen}
-        handleRefetch={handleRefetch}
-        />
-      } */}
     </div>
   );
 };

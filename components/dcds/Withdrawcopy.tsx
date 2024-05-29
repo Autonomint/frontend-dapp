@@ -400,14 +400,13 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
             updatedData[1].value = details.depositedUsdt == "undefined" || details.depositedUsdt == "NaN" ? '0' : details.depositedUsdt; // Update depositedAmint value
             console.log(updatedData[1].value, updatedData[0].value)
             updatedData[2].value = `${details.ethPriceAtDeposit}`; // Update ethPriceAtDeposit value
-            updatedData[3].value = formatDateFromUnixTimestamp(details.depositedTime); // Update depositedTime value and format time in 'DD/MM/YYYY'
-            updatedData[4].value = `${details.lockingPeriod} days`; // Update lockingPeriod value
-            updatedData[5].value = calculateTimeDifference(details.depositedTime); // Update time difference value
+            updatedData[3].value = new Date(Number(details.depositedTime)*1000).toLocaleString(); // Update depositedTime value and format time in 'DD/MM/YYYY'
+            updatedData[4].value = `${(Number(details.lockingPeriod)/86400000).toFixed(0)} days`; // Update lockingPeriod value
+            updatedData[5].value = calculateTimeDifference(details.depositedTime+"000"); // Update time difference value
             updatedData[6].value = `${details.aprAtDeposit}%`; // Update aprAtDeposit value
             updatedData[7].value = `${details.aprAtDeposit}%`; // Update aprAtDeposit value
             updatedData[8].value = details.optedForLiquidation ? "Yes" : "No"; // Update optedForLiquidation value
             setDepositData(updatedData); // Update the depositData state with updatedData
-            
             calculateBackendWithdraw?.({
                 address: address as `0x${string}`,
                 index: details.index,

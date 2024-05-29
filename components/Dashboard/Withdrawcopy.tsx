@@ -458,39 +458,7 @@ const Withdrawcopy = ({
   useEffect(() => {
     if ( borrowWithdrawtransactionSuccess) {
       handleRefetch();
-      // Callback function executed when the transaction is successful
-      console.log("transaction completed", withdrawDataLog.blockHash);
-      // Get data logs based on the chain ID
-      // const dataLogs = withdrawDataLog.logs[withdrawDataLog.logs.length - 1]
-      // const { eventName, args } = decodeEventLogsFromAbi(
-      //   borrowingContractAbi,
-      //   dataLogs.topics,
-      //   "Withdraw",
-      //   dataLogs.data
-      // ) as {
-      //   eventName: string;
-      //   args: { borrowDebt: bigint; withdrawAmount: bigint; noOfAbond: bigint };
-      // };
-      // // Update current events value
-      // eventsValue.current = {
-      //   borrowDebt: args?.borrowDebt.toString(),
-      //   withdrawAmount: args?.withdrawAmount.toString(),
-      //   noOfAbond: args?.noOfAbond.toString(),
-      // };
-      // console.log(eventsValue)
-
-      // Perform backend withdraw
-      // backendWithdraw?.({
-      //   address: address as `0x${string}`,
-      //   index: details.index,
-      //   chainId: chainId,
-      //   borrowDebt: eventsValue.current.borrowDebt,
-      //   withdrawTime: `${Date.now()}`,
-      //   withdrawAmount: eventsValue.current.withdrawAmount,
-      //   amountYetToWithdraw: eventsValue.current.withdrawAmount,
-      //   noOfAbond: eventsValue.current.noOfAbond,
-      //   totalDebtAmount: eventsValue.current.borrowDebt,
-      // });
+      console.log("transaction completed -- hashedrefetched", withdrawDataLog.blockHash);
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
@@ -510,21 +478,10 @@ const Withdrawcopy = ({
             }}
           />
         ),
-        { id: toastId.current }
+        { id: toastId.current, duration: 5000}
       );
-
-      // Dismiss toast after 5 seconds
-      setTimeout(() => {
-        toast.dismiss(toastId.current);
-      }, 5000);
-
-
-      approveReset?.();
-      cumulativeReset?.();
-      borrowReset?.();
-      handleSheetOpenChange(!sheetOpen)
     }
-    if (borrowWithdrawtransactionError) {
+    else if (borrowWithdrawtransactionError) {
       toast.custom(
         (t) => (
           <div>
@@ -633,8 +590,6 @@ const Withdrawcopy = ({
       updatedData[1].value = `${details.ethPrice}`;
       updatedData[2].value = details.noOfAmintMinted;
       updatedData[3].value = (parseFloat(totalAmintAmnt.toString()) / 10 ** 6).toString();
-      console.log("----------------------->", (parseFloat(totalAmintAmnt.toString()) / 10 ** 6).toString())
-
       updatedData[4].value = `${details.aprAtDeposit}%`;
       updatedData[5].value = `${details.downsideProtectionPercentage}%`;
       updatedData[6].value = details.status === "LIQUIDATED" ? "Yes" : "No";

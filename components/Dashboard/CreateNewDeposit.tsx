@@ -144,7 +144,6 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
     nonce: 40n
   }, options, false]})
 
-console.log(nativeFee1,nativeFee2,nativeFee)
   // Perform a mutation and get the mutate and depositReset functions
   const { mutate, reset: depositReset,isPending:isStoringbackend } = useMutation({
     // Specify the mutation function to be called

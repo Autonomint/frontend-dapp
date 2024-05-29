@@ -82,13 +82,10 @@ const AmintDepositRow = ({ details ,onClick,isnewtxn,islasttxn}: { details: Depo
         {details.depositedAmint =="undefined" ? 0:details.depositedAmint} / {details.depositedUsdt=="undefined"?0:details.depositedUsdt}
         </TableCell>
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
-     
-            {/* Calculate the time difference */}
-            {calculateTimeDifference(details.depositedTime)}
-   
+          {new Date(Number(details.depositedTime)*1000).toLocaleString()}
         </TableCell>
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
-      {details.lockingPeriod} days
+      {(Number(details.lockingPeriod)/86400000).toFixed(0)} days
         </TableCell>
         <TableCell className="text-textGrey dark:text-[#EEEEEE] "><Button variant={"outline"} className="mr-4 px-2 pt-1 bg-[#020202] text-white"> Withdraw</Button> </TableCell>
       </TableRow>

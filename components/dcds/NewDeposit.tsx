@@ -587,6 +587,7 @@ const NewDeposit = ({
     data: amintApproveData,  // Data returned from the approve request
     reset: amintReset,  // Function to reset the approve request state
     isSuccess: amintApproved,  // Flag to indicate if the approve request is successful
+    isPending: amintApproveLoading,  // Flag to indicate if the approve request is pending
   } = useWriteUsDaApprove({
     mutation: {
 
@@ -835,7 +836,7 @@ const NewDeposit = ({
   }, [cdsDepositSuccess]);
 
   useEffect(() => {
-    console.log(usdtAmountDepositedTillNow, usdtLimit)
+    
     let amint = form.watch("AmintDepositAmount") ?? 0;
     let usdt = form.watch("USDTDepositAmount") ?? 0;
     if (usdtAmountDepositedTillNow >= usdtLimit) {
@@ -887,7 +888,7 @@ const NewDeposit = ({
             <div className="flex w-full flex-col min-[1440px]:pt-[10px] 2dppx:pt-[15px] pt-[10px] min-[1440px]:gap-[20px] 2dppx:gap-[10px] min-[1280px]:gap-[16px] gap-[10px]">
               <div className="flex flex-col md:flex-row gap-[10px] items-center w-full justify-between ">
                 {
-                  usdtAmountDepositedTillNow < usdtLimit ? ("") : (
+                   usdtLimit < usdtAmountDepositedTillNow ? (
                     <>
                       <div className="flex w-full ">
                         <FormField
@@ -918,7 +919,7 @@ const NewDeposit = ({
                                 </div>
 
                               </FormControl>
-                              <span className=" block text-[10px] text-right mr-1">bal. {amintbal?.formatted.slice(0, 8)} AMINT</span>
+                              <span className=" block text-[10px] text-right mr-1"><GetBalance token="USDa"/></span>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -926,7 +927,7 @@ const NewDeposit = ({
                       </div>
                       <PlusIcon className={` -mt-5`} width={35} height={50} />
                     </>
-                  )
+                  ):("")
                 }
 
                 <div className="flex flex-col  w-full  gap-[10px]">
@@ -1231,7 +1232,7 @@ const NewDeposit = ({
                     (usdtAmountDepositedTillNow > usdtLimit) || isCdsDepositLoading || isPending || isLoading
                   }
                 >
-                  {isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}
+                  {usdtApproveLoading || UsdtApprovalLoading ||amintApproveLoading|| isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}
                 </Button>
               </div>
             </div>
