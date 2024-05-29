@@ -9,6 +9,7 @@ import linkIcon from "@/app/assets/link.svg";
 
 import { useWeb3Modal ,createWeb3Modal } from '@web3modal/wagmi/react'
 import { config,projectId } from "@/providers/WalletProvider";
+import { Link2 } from "lucide-react";
 const ConnectWallet = () => {
   createWeb3Modal({
     wagmiConfig: config,
@@ -41,14 +42,14 @@ const ConnectWallet = () => {
         </div>
         {/* connect with wallet onClick on connect wallet button */}
         <Button
-          variant={"primary"}
+          variant={"outline"}
           className="hover:bg-[#d3d2d2] flex items-center justify-center gap-[5px] rounded-none  px-8 py-2 mt-2 h-fit font-semibold text-black bg-[#DEDEDE]  dark:bg-[#3A3A3A] dark:border-white dark:text-white border-0  border-b-2 border-[#020202]  cursor-pointer"
           onClick={onConnect}
         >
           <p className="text-[#020202] dark:text-white bg-clip-text bg-[linear-gradient(180deg,_#FFF_-0.23%,_#EEE 100%)] font-semibold text-base">
             Connect Wallet
           </p>
-          <Image src={linkIcon} alt="link icon" width={24} height={24}></Image>
+          <Link2 size={20} />
         </Button>
       </div>
     </div>
