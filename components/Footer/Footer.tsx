@@ -30,10 +30,10 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className="flex items-center justify-center w-full gap-5 mr-2 sm:justify-normal sm:w-auto ">
-                    <Button onClick={() => setOpen2(!open2)} variant={'secondary'} className='px-8' >
+                    <Button onClick={() => setOpen2(!open2)} variant={'secondary'} className='px-8 font-medium' >
                         ? FAQs
                     </Button>
-                    <Button onClick={() => setOpenGetstart(!open2)} variant={'secondary'} className='px-8' >
+                    <Button onClick={() => setOpenGetstart(!open2)} variant={'secondary'} className='px-8 font-medium' >
                         Get Started
                     </Button>
                 </div>
@@ -91,7 +91,7 @@ export default function Footer() {
                             <div>
                                 <ol className="text-sm list-disc ">
                                     <li>Make sure you have some Sepolia ETH in your account to pay for gas. if not, grab some the <a href='https://cloud.google.com/application/web3/faucet/ethereum/sepolia' className='underline' target='_black'>Sepolia Faucet</a> .</li>
-                                    <li>Grab some <a href="" className='underline'>TUSDT</a> and Eth to trade with from the USDa faucet.</li>
+                                    <li>Grab some <a href="https://sepolia.etherscan.io/address/0xC1fd34E478c147f0460dc013D636c63BC407D480#writeProxyContract" target='_blank' className='underline'>Sepolia TUSDT</a> / <a href="https://sepolia.basescan.org/address/0xfbae0d4337d936538995a26685f69644e6427213#writeProxyContract" target='_blank' className='underline'>Base TUSDT</a> and Eth to trade with from the USDa faucet.</li>
                                     <li>Click the button below to go deposit collateral and mint some stable coins!</li>
                                 </ol>
                             </div>

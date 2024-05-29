@@ -1,11 +1,7 @@
 import React from 'react'
-// import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-// import { Carousel } from 'react-responsive-carousel';
-import Divider from '../CustomUI/Divider/Divider';
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ArrowBigLeft, ArrowBigRight, ArrowLeftCircle, ArrowRightCircle, ArrowRightLeftIcon, MoveRightIcon } from 'lucide-react';
 import { useReadAbondTotalSupply, useReadUsDaTotalSupply, useReadCdsTotalCdsDepositedAmount, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
 import { formatEther } from 'viem';
 import Image from 'next/image';
@@ -19,7 +15,7 @@ const PrevArrow = (props: any) => {
       onClick={onClick}
       style={{ position: 'absolute', left: 70, top: '-4%', transform: 'translateY(-50%)', padding: '10px', cursor: 'pointer', zIndex: 2 }}
     >
-      <Image src={left_arrow} alt="left_arrow" width={30} height={30} />
+      <Image src={left_arrow} alt="left_arrow" className='text-white' width={30} height={30} />
       {/* <ArrowLeftCircle size={30} color='gray' /> */}
     </div>
   );
@@ -32,7 +28,7 @@ const NextArrow = (props: any) => {
       onClick={onClick}
       style={{ position: 'absolute', right: 70, top: '-4%', transform: 'translateY(-50%)', padding: '10px', cursor: 'pointer', zIndex: 2 }}
     >
-      <Image src={right_arrow} alt="right_arrow" width={30} height={30} />
+      <Image src={right_arrow} alt="right_arrow" className='dark:text-white' width={30} height={30} />
       {/* <ArrowRightCircle size={30} color='gray' /> */}
     </div>
   );
@@ -56,15 +52,10 @@ const BorrowSlider = ({
   open: Boolean,
   opentoggler: Function
 }) => {
-  const [isLoaded, setIsLoaded] = React.useState(false);
-
-  React.useEffect(() => {
-    setIsLoaded(true);
-  }, []);
 
   const settings = {
     dots: true,
-    dotsClass: "slick-dots slick-top absolute -top-8  font-bold ",
+    dotsClass: "slick-dots slick-top absolute h-10 -top-8  font-bold ",
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -72,10 +63,9 @@ const BorrowSlider = ({
     prevArrow: <PrevArrow />,
     autoplay: true,
     speed: 500,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 4000,
     cssEase: "linear",
-    variableWidth: false,
-    variableHeight: false
+    pauseOnHover: true,
 
   }
 
@@ -99,7 +89,7 @@ const BorrowSlider = ({
             <div className=" w-[300px] mt-5">
             <Slider {...settings}>
 
-              <div className=''  >
+              <div   >
                 <div className='mb-4  mx-auto text-xl font-bold text-center border text-white py-12 border-black bg-[linear-gradient(254.52deg,#65C578_0%,#23D1F6_100%)]'>
                   Borrow & Mint
                 </div>
@@ -146,7 +136,7 @@ const BorrowSlider = ({
             </Slider>
           </div>
       </div>
-          ):("hello")
+          ):("")
           
         }
 
