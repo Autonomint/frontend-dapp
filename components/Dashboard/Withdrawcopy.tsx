@@ -95,13 +95,9 @@ type withdrawData = {
 
 const Withdrawcopy = ({
   details,
-  handleSheetOpenChange,
-  sheetOpen,
   handleRefetch
 }: {
   details: TableData;
-  handleSheetOpenChange: (value: boolean) => void;
-  sheetOpen: boolean;
   handleRefetch: Function;
 }) => {
 
@@ -161,6 +157,7 @@ const Withdrawcopy = ({
       tooltipText: "",
     },
   ];
+  console.log(details)
   const [openConfirmNotice, setOpenConfirmNotice] = useState(false);
   const [amountView, setAmountView] = useState(false);
   const [amountProtected, setAmountProtected] = useState<number>(0);
@@ -173,21 +170,21 @@ const Withdrawcopy = ({
   const { address } = useAccount();
   const [spinner, setSpinner] = useState(false);
   // to store eventsValue we get from events while withdrawing
-  const eventsValue = useRef(events);
-  // get eth price from BorrowingContract getUSDValue function
-  const { data: ethPrice } = useReadBorrowingContractGetUsdValue({
 
+
+  const { data: ethPrice } = useReadBorrowingContractGetUsdValue({
     query: { staleTime: 10 * 1000, }
   });
+
+
   const Eid = chainId===11155111? 40245: 40161;
+
   const options  = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
 
   const {data:nativeFee } = useReadTreasuryQuote({ query: { enabled: !!address },args:[Eid, 1,
     {recipient:"0x0000000000000000000000000000000000000000",tokensToSend:0n},
     {recipient:"0x0000000000000000000000000000000000000000",nativeTokensToSend:0n}, options, false],
   });
-
-
 
 
   const {data:nativeFee2 } = useReadBorrowingContractQuote({query:{enabled:!!address},args:[Eid, {
@@ -201,24 +198,20 @@ const Withdrawcopy = ({
     nonce: 40n
   }, options, false]})
 
+
+
   const {
     isPending: cumulativeRateLoading,
     isError: cumulativeRateError,
-    // Data for the cumulative rate
     data: cumulativeRate,
-    // Function to calculate the cumulative rate
     writeContract: calculateCumulativeRate,
-    // Function to reset the cumulative rate
     reset: cumulativeReset,
   } = useWriteBorrowingContractCalculateCumulativeRate({
-    // Error handling
     mutation: {
       onError(error) {
         console.log(error);
         cumulativeReset?.();
-        // Show custom toast notification for error
         setOpenConfirmNotice(true);
-
         toast.custom(
           (t) => {
             toastId.current = t;
@@ -265,17 +258,19 @@ const Withdrawcopy = ({
       },
     }
   }
-
   );
+
+
   //get last cumulative rate from BorrowingContract using our custom useBorrowingContractLastCumulativeRate hook
   const { data: lastCumulativeRate } = useReadBorrowingContractLastCumulativeRate({
     query: { staleTime: 10 * 1000 }
   });
   const { isLoading: ispendingCumulative, isSuccess: cumulativeRateSuccess, data: culmulativeData } = useWaitForTransactionReceipt({
     hash: cumulativeRate, // Transaction hash to wait for
-    confirmations: 3, // Number of confirmations required
-
+    confirmations: 1, // Number of confirmations required
   });
+
+  
 
   useEffect(() => {
     if (culmulativeData) {
@@ -462,7 +457,6 @@ const Withdrawcopy = ({
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
-      handleSheetOpenChange(!sheetOpen)
       // Display custom toast for successful transaction
       toast.custom(
         (t) => (
@@ -504,54 +498,9 @@ const Withdrawcopy = ({
       approveReset?.();
       cumulativeReset?.();
       borrowReset?.();
-      handleSheetOpenChange(!sheetOpen)
     }
   }, [withdrawDataLog])
 
-  //using custom hook to mutate backend withdraw
-  // const { mutate: backendWithdraw, isPending, isSuccess: backendWithdrawSuccess } = useMutation({
-  //   // Specify the mutation function
-  //   mutationFn: withdrawFromBackend,
-
-  //   // Handle any errors that occur during the mutation
-  //   onError(error: any) {
-  //     console.log(error);
-  //     queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
-  //   },
-
-  //   // Perform actions after the mutation is completed or rejected
-  //   onSettled() {
-  //     // Invalidate the query for `dCDSdepositorsData`
-  //     queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
-  //     // Invalidate the queries for `dCDSdeposits`
-  //     queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
-  //     handleRefetch()
-  //     setOpenConfirmNotice(true)
-
-  //   },
-  // });
-
-  // async function withdrawFromBackend(data: withdrawData) {
-  //   let bodyValue = JSON.stringify({
-  //     ...data,
-  //   });
-  //   console.log(bodyValue);
-  //   const response = await fetch(`${BACKEND_API_URL}/borrows/withdraw`, {
-  //     method: "PATCH",
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //     body: bodyValue,
-  //   });
-
-  //   const result = await response.json();
-
-  //   if (!response.ok) {
-  //     throw new Error(result.message);
-  //   }
-
-  //   return result;
-  // }
 
   /**
    * Handles the withdrawal time based on the current value of withdrawalTime.
@@ -660,7 +609,7 @@ const Withdrawcopy = ({
     setOpenConfirmNotice(true);
     setSpinner(false);
 
-  }, [details, sheetOpen]);
+  }, [details]);
 
 
 
@@ -674,19 +623,6 @@ const Withdrawcopy = ({
         >
           <div className="flex flex-col min-[1440px]:gap-6 2dppx:gap-[10px] gap-[10px]">
             <div className="flex justify-end w-full">
-              {/* <SheetClose onClick={() => { handleSheetOpenChange(!sheetOpen) }} asChild>
-                <Button
-                  variant={"ghostOutline"}
-                  size={"primary"}
-                  className="flex gap-[10px] border border-borderGrey rounded-none"
-                  onClick={() => handleSheetOpenChange(!sheetOpen)}
-                >
-                  <Cross2Icon className="w-4 h-4" />
-                  <p className="text-transparent dark:text-[#808080]  bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
-                    Close
-                  </p>
-                </Button>
-              </SheetClose> */}
             </div>
             <SheetHeader>
               <SheetTitle className="text-[#020202] px-4 dark:text-[#90AFFF] font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">

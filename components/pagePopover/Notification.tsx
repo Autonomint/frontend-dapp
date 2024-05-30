@@ -1,7 +1,9 @@
 import React from 'react'
 import { useTheme } from "next-themes";
 import { Cross2Icon } from '@radix-ui/react-icons';
+
 const Notification = ({ showNotifications, setShowNotifications }: { showNotifications: Boolean, setShowNotifications: Function }) => {
+
     return (
         <div className={`${showNotifications?"flex":"hidden"} absolute flex-col gap-4 w-[300px] dark:bg-[#141414] right-20  top-5 border border-black z-30 bg-white px-2 py-4 shadow-xl`}>
             <div className="flex justify-between text-sm font-semibold rounded-md">

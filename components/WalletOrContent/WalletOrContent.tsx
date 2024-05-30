@@ -74,14 +74,12 @@ const WalletOrContent = () => {
    */
   function handleRefetch() {
     dataRefetech()
+    console.log("refetching")
     setOpen2(true);
     setnewtxn(true)
   }
+  console.log("deposits",deposits)
 
-  useEffect(() => {
-    console.log("returned data", depositorData);
-    console.log("error0", depositorDataError);
-  }, [depositorData, depositorDataError]);
 
   return (
     <>

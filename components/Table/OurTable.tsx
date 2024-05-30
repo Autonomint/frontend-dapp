@@ -43,19 +43,17 @@ const DepositAndWithDrawTable = ({
   handleRefetch: Function;
   newtxn?: boolean;
 }) => {
-  const [sheetOpen, setSheetOpen] = useState<boolean>(false);
-  const [sheetDetails, setSheetDetails] = useState<TableData>();
+  const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
   const handleSheet = (details: TableData) => {
-    setSheetDetails(details)
-    setSheetOpen(true);
+    setSelectedId(details.id);
   }
-  const DataRefetch=()=>{
-    handleRefetch()
-  }
+  const sheetDetails = tableData?.find(item => item.id === selectedId);
+  console.log(tableData)
+
 
   return (
     <div className="flex w-full h-[74vh] ">
-      <div className={`${!sheetDetails? "basis-full":"basis-full xl:basis-2/3 "}  overflow-hidden `}>
+      <div className={`${!sheetDetails ? "basis-full" : "basis-full xl:basis-2/3 "}  overflow-hidden `}>
         <div className="flex flex-col gap-[10px] h-[10vh] ">
           <div className="p-4">
 
@@ -68,39 +66,33 @@ const DepositAndWithDrawTable = ({
           </div>
         </div>
         <div className="overflow-y-scroll h-[63vh] ">
+          <Table  >
+            <TableHeader>
+              <TableRow className="hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-900">
+                <TableHead className="w-3 opacity-1 text-textGrey dark:text-[#C4C4C4]">Id</TableHead>
+                <TableHead className="text-textGrey dark:text-[#C4C4C4]">ETH Deposited</TableHead>
+                <TableHead className="text-textGrey dark:text-[#C4C4C4]">USDa minted</TableHead>
+                <TableHead className="text-textGrey dark:text-[#C4C4C4]">Interest rate</TableHead>
+                <TableHead className="text-textGrey dark:text-[#C4C4C4]">Abond minted</TableHead>
+                <TableHead className="text-textGrey dark:text-[#C4C4C4]">Liquidated</TableHead>
+                <TableHead className="text-textGrey dark:text-[#C4C4C4]">Repay</TableHead>
+              </TableRow>
+            </TableHeader>
 
-
-        <Table  >
-
-          <TableHeader>
-            <TableRow className="hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-900">
-              <TableHead className="w-3 opacity-1 text-textGrey dark:text-[#C4C4C4]">Id</TableHead>
-              <TableHead className="text-textGrey dark:text-[#C4C4C4]">ETH Deposited</TableHead>
-              <TableHead className="text-textGrey dark:text-[#C4C4C4]">USDa minted</TableHead>
-              <TableHead className="text-textGrey dark:text-[#C4C4C4]">Interest rate</TableHead>
-              <TableHead className="text-textGrey dark:text-[#C4C4C4]">Abond minted</TableHead>
-              <TableHead className="text-textGrey dark:text-[#C4C4C4]">Liquidated</TableHead>
-              <TableHead className="text-textGrey dark:text-[#C4C4C4]">Repay</TableHead>
-            </TableRow>
-          </TableHeader>
-
-          <TableBody>
-            {tableData && tableData?.map((details, index) => {
-              return <TableRows isnewtxn={newtxn} islasttxn={tableData.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} handleRefetch={handleRefetch} />
-            })}
-          </TableBody>
-
-        </Table>
-              </div>
+            <TableBody>
+              {tableData && tableData?.map((details, index) => {
+                return <TableRows isnewtxn={newtxn} islasttxn={tableData.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} />
+              })}
+            </TableBody>
+          </Table>
+        </div>
       </div>
-      <div className={`${!sheetDetails? "hidden basis-0":"basis-1/3"} border-l h-[99.9%] overflow-y-scroll right-0 xl:overflow-auto absolute xl:relative border-black  bg-[#eeeeee] dark:bg-[#242424]`}>
-            <div className="absolute right-0 p-1 border border-black cursor-pointer w-fit" onClick={()=>setSheetDetails(undefined)}><Cross2Icon/></div>
+      <div className={`${!sheetDetails ? "hidden basis-0" : "basis-1/3"} border-l h-[99.9%] overflow-y-scroll right-0 xl:overflow-auto absolute xl:relative border-black  bg-[#eeeeee] dark:bg-[#242424]`}>
+        <div className="absolute right-0 p-1 border border-black cursor-pointer w-fit" onClick={() => setSelectedId(undefined)}><Cross2Icon /></div>
         {
-          sheetDetails && <Withdrawcopy
+          selectedId && sheetDetails && <Withdrawcopy
             details={sheetDetails}
-            sheetOpen={sheetOpen}
-            handleSheetOpenChange={setSheetOpen}
-            handleRefetch={DataRefetch}
+            handleRefetch={handleRefetch}
           />
         }
       </div>

@@ -29,14 +29,12 @@ interface TableData {
 const TableRows = ({
   details,
   interest,
-  handleRefetch,
   onClick,
   isnewtxn,
   islasttxn
 }: {
   details: TableData;
   interest?: number;
-  handleRefetch: Function;
   onClick: Function;
   isnewtxn?: boolean;
   islasttxn?: boolean;
@@ -127,14 +125,10 @@ const TableRows = ({
     }
   }
 
-
-
   useEffect(() => {
     handleDepositData();
   }, [details]);
-
   return (
-
       <TableRow onClick={()=>onClick()} className={` ${islasttxn && isnewtxn ? "bg-[#57c262]":""} hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer`}>
         <TableCell className="w-3 text-borderGrey dark:text-[#EEEEEE]">
           {`#${details.index}`}
@@ -157,11 +151,7 @@ const TableRows = ({
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
             <Button variant={"outline"}  className="py-1 px-2 mr-4 bg-[#020202] text-white" >repay</Button>
         </TableCell>
-
-       
       </TableRow>
-
-
   );
 };
 

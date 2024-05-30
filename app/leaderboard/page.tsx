@@ -3,8 +3,8 @@ import React, { useEffect } from 'react'
 import LeaderTable from './LeaderTable';
 import { BACKEND_API_URL } from '@/constants/BackendUrl';
 import { useQuery } from "@tanstack/react-query";
-import { useChainId } from 'wagmi';
-import { useReadCdsCdsCount, useReadCdsTotalCdsDepositedAmount, useReadTreasuryNoOfBorrowers, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
+import { useChainId ,useReadContract} from 'wagmi';
+import {treasuryAbi,treasuryAddress,cdsAbi,cdsAddress, useReadCdsCdsCount, useReadCdsTotalCdsDepositedAmount, useReadTestusdtAbi, useReadTreasuryNoOfBorrowers, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
 import { formatEther } from 'viem';
 interface TableData {
     rank: string;
@@ -29,10 +29,39 @@ function formatNumber(num: number) {
 
 export default function page() {
     const chainId = useChainId();
-    const { data: ethLocked } = useReadTreasuryTotalVolumeOfBorrowersAmountinUsd()
+    const {data:ethlockedSepolia} = useReadContract({
+        abi:treasuryAbi,
+        address:treasuryAddress[11155111],
+        functionName:'totalVolumeOfBorrowersAmountinUSD',
+        args:[],
+        chainId:11155111
+    })
+    const {data:ethlockedbase} = useReadContract({
+        abi:treasuryAbi,
+        address:treasuryAddress[84532],
+        functionName:'totalVolumeOfBorrowersAmountinUSD',
+        args:[],
+        chainId:84532
+    })
+
+    const {data:stableLockedSepolia} = useReadContract({
+        abi:cdsAbi,
+        address:cdsAddress[11155111],
+        functionName:'totalCdsDepositedAmount',
+        args:[],
+        chainId:11155111
+    })
+    const {data:stableLockedBase} = useReadContract({
+        abi:cdsAbi,
+        address:cdsAddress[84532],
+        functionName:'totalCdsDepositedAmount',
+        args:[],
+        chainId:84532
+    })
+
+
+    console.log(ethlockedSepolia,ethlockedbase,stableLockedBase,stableLockedSepolia)
     const { data: totalStable } = useReadCdsTotalCdsDepositedAmount()
-    const {data :cdsdeposit} = useReadCdsCdsCount()
-    const {data:totalBorrowers} = useReadTreasuryNoOfBorrowers()
     async function getBorrowLeaderboard(): Promise<TableData[]> {
         const response = await fetch(`${BACKEND_API_URL}/borrows/leaderboard`);
         return await response.json();
@@ -43,17 +72,13 @@ export default function page() {
     }
     //   Fetch and store deposits using react-query
     const { data: borrowdeposits, error: borrowdepositsError } = useQuery<TableData[]>({
-        // Set the query key to include chainId and address
         queryKey: ["borrowDeposits", chainId],
-        // Call the getDeposits function to fetch deposits
         queryFn: () => getBorrowLeaderboard(),
       });
         console.log(borrowdeposits)
 
       const { data: cdsdeposits, error: cdsdepositsError } = useQuery<TableData[]>({
-        // Set the query key to include chainId and address
         queryKey: ["Cdsdeposits", chainId],
-        // Call the getDeposits function to fetch deposits
         queryFn: () => getCdsLeaderboard(),
       });
     return (
@@ -63,15 +88,15 @@ export default function page() {
                 <div className='flex w-full gap-2 mb-5 md:gap-10'>
                         <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] dark:bg-[#020B28] dark:text-[#4AFBD5] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
                             <div className='text-sm lg:text-normal' >Total number of borrowers</div>
-                            <div className='text-xl font-semibold lg:text-3xl'>{Number(totalBorrowers)}</div>
+                            <div className='text-xl font-semibold lg:text-3xl'>{borrowdeposits?.length}</div>
                         </div>
                         <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] dark:bg-[#020B28] dark:text-[#4AFBD5] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
                         <div  className='text-sm lg:text-normal'>Total number of dcds depositors</div>
-                            <div className='text-xl font-semibold lg:text-3xl'>{Number(cdsdeposit)}</div>
+                            <div className='text-xl font-semibold lg:text-3xl'>{cdsdeposits?.length}</div>
                         </div>
                         <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] dark:bg-[#020B28] dark:text-[#4AFBD5] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
                         <div  className='text-sm lg:text-normal'>Total Value Locked (TVL) </div>
-                            <div className='text-xl font-semibold lg:text-3xl'>${formatNumber((Number(totalStable) / 10 ** 6) + Number(formatEther((ethLocked ?? 0n) / BigInt(100))))}</div>
+                            <div className='text-xl font-semibold lg:text-3xl'>${formatNumber((Number((stableLockedBase ?? 0n ) +(stableLockedSepolia ?? 0n)) / 10 ** 6) + Number(formatEther(((ethlockedbase ?? 0n) + (ethlockedSepolia ?? 0n)) / BigInt(100))))}</div>
                         </div>
                 </div>
 

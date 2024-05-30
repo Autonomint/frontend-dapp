@@ -210,26 +210,6 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
 
 
     // Use the `mutate` function from the `useMutation` hook
-    const { mutate: backendCDSWithdraw } = useMutation({
-        // Specify the mutation function
-        mutationFn: withdrawCDSFromBackend,
-
-        // Handle any errors that occur during the mutation
-        onError(error) {
-            console.log(error);
-            queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
-        },
-
-        // Perform actions after the mutation is completed or rejected
-        onSettled() {
-            // Invalidate the query for `dCDSdepositorsData`
-            queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
-
-            // Invalidate the queries for `dCDSdeposits`
-            queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
-        },
-    });
-
 
     const {data:cdsLogdata, isError:isCdserror, isSuccess:isCdsSuccess} = useWaitForTransactionReceipt({
         hash: cdsWithdrawData, // The transaction hash to wait for
@@ -238,26 +218,9 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
     });
     useEffect(() => {
         if(isCdsSuccess) {
-
             const dataLogs = cdsLogdata.logs[cdsLogdata.logs.length - 1]
-            const { eventName, args } = decodeEventLogsFromAbi(
-              cdsAbi,
-              dataLogs.topics,
-              "Withdraw",
-              dataLogs.data
-            ) as{
-                eventName: string;
-                args: { withdrewAmint: bigint; withdrawETH: bigint };
-            };
-
-            // Update the current events value with the decoded values
-            eventsValue.current = {
-                withdrewAmint: args?.withdrewAmint.toString(),
-                withdrawETH: args?.withdrawETH.toString(),
-            };
-
-            backendCDSWithdraw(address); // Perform the backend CDS withdraw operation
-            // Show a custom toast notification
+            console.log("cdsLogdata", dataLogs)
+            handleRefetch();
             toast.custom(
                 (t) => (
                     <div>
@@ -287,56 +250,6 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
         }
 
     },[cdsLogdata])
-
-    /**
-     * Asynchronously withdraws CDS from the backend.
-     *
-     * @param {`0x${string}` | undefined} address - The address to withdraw CDS from.
-     * @return {Promise<any>} - A promise that resolves to the result of the withdrawal.
-     */
-
-    async function withdrawCDSFromBackend(
-        address: `0x${string}` | undefined
-    ): Promise<any> {
-        // Prepare the body value for the request
-        console.log("Deposit Started")
-        let bodyValue = JSON.stringify({
-            address: address,
-            index: details.index,
-            chainId: chainId,
-            withdrawTime: `${Date.now()}`,
-            withdrawAmount: eventsValue.current.withdrewAmint,
-            withdrawEthAmount: eventsValue.current.withdrawETH,
-            ethPriceAtWithdraw: Number(ethPrice || 0),
-            fees: '4000000',
-            feesWithdrawn: '2000000',
-        });
-        // Log the body value
-        console.log("deposit", bodyValue);
-
-        // Send the request to the backend API
-        const response = await fetch(`${BACKEND_API_URL}/cds/withdraw`, {
-            method: "PATCH",
-            headers: {
-                "content-type": "application/json",
-            },
-            body: bodyValue,
-        });
-        // Parse the response JSON
-        console.log("Deposit Response", response)
-        const result = await response.json();
-        console.log("Deposit Response", result)
-        console.log("Deposit End")
-
-        // Check if the response is not OK and throw an error if so
-        if (!response.ok) {
-            throw new Error(result.message);
-        }
-
-        // Return the result
-        return result;
-    }
-
 
 
 

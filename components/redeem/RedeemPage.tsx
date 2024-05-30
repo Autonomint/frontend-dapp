@@ -78,7 +78,7 @@ const RedeemPage = () => {
     {
       !isConnected ? <ConnectWallet /> :(
         <div className="relative rounded-[10px] p-2 mt-4   flex flex-col self-stretch overflow-hidden ">
-        <div className='flex flex-col w-full gap-4'>
+        <div className='flex flex-col w-full gap-4 '>
           <div className='w-full '>
             <div className='w-full border-lineGrey'>
               <Redeem openRedeemableAssets={setOpen2} />
@@ -86,25 +86,23 @@ const RedeemPage = () => {
           </div>
          
           <Dialog open={open2} onOpenChange={setOpen2} >
-            <DialogContent className="max-w-[800px] pb-5">
+            <DialogContent className="max-w-[800px] p-4">
               <div className="flex justify-end w-full ">
                 <DialogClose asChild>
                   <Button
                     variant={"ghostOutline"}
                     size={"primary"}
-                    className="flex gap-[10px] border border-borderGrey "
+                    className="flex gap-[10px] border rounded-none border-borderGrey "
                   >
                     <Cross2Icon className="w-4 h-4" />
-                    <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
-                      Close
-                    </p>
+                  
                   </Button>
                 </DialogClose>
               </div>
               <DialogHeader className="flex items-start">
-                <DialogTitle className="">
+                <DialogTitle className="mb-4">
                   <div>
-                    <div className='text-2xl text-[#041A50] font-medium dark:text-[#90AFFF] '>Collateral Pool</div>
+                    <div className='text-2xl text-[#041A50] font-medium dark:text-[#FFFFFF] '>Collateral Pool</div>
                     <div className='text-sm text-[#5B5B5B] dark:text-[#EEEEEE] '>A list of all locked assests int the Asset Pool</div>
                   </div>
                 </DialogTitle>
