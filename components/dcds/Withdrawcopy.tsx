@@ -213,7 +213,7 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
 
     const {data:cdsLogdata, isError:isCdserror, isSuccess:isCdsSuccess} = useWaitForTransactionReceipt({
         hash: cdsWithdrawData, // The transaction hash to wait for
-        confirmations: 1, // Number of confirmations required for success
+        confirmations: 2, // Number of confirmations required for success
        
     });
     useEffect(() => {

@@ -56,7 +56,7 @@ export default function page() {
                                             <button className=' px-4 font-medium border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none'>Refer</button>
                                         </div>
                                         <div className='flex justify-between w-full mt-4'>
-                                            <div>share to your network</div> <div className='flex items-center gap-2'><TwitterLogoIcon width={20} height={20} /> <InstagramLogoIcon height={20} width={20} /></div>
+                                            <div>share to your network</div> <div className='flex items-center gap-2'><TwitterLogoIcon width={20} height={20} /></div>
                                         </div>
                                     </div>
                                     ):(

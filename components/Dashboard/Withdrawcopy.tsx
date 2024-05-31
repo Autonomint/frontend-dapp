@@ -567,12 +567,13 @@ const Withdrawcopy = ({
   const handleAmountProtected = () => {
     //check if we have current ethPrice available or not
     if (ethPrice) {
+      console.log(ethPrice, details.ethPrice);
       //if current ethPrice > deposited time ethPrice
-      if (parseFloat(ethPrice.toString()) / 100 > details.ethPrice) {
+      if (parseFloat(ethPrice.toString())  > details.ethPrice) {
         setAmountProtected(0);
       }
       //if current ethPrice < depositedethPrice
-      else if (parseFloat(ethPrice.toString()) / 100 < details.ethPrice) {
+      else if (parseFloat(ethPrice.toString())  < details.ethPrice) {
         const amountProt =
           parseFloat(details.depositedAmount) *
           (details.ethPrice - parseFloat(ethPrice.toString()) / 100);
@@ -583,7 +584,7 @@ const Withdrawcopy = ({
       }
       //if current ethprice < 0.8 of depositedethPrice
       else if (
-        parseFloat(ethPrice.toString()) / 100 <=
+        parseFloat(ethPrice.toString()) <=
         0.8 * details.ethPrice
       ) {
         // 

@@ -82,24 +82,6 @@ const Dcds = () => {
     setSheetOpen(true);
   }
   const [newtxn, setNewtxn] = useState(false);
-  const [shouldRefetch, setShouldRefetch] = useState(1);
-
-  // useEffect(() => {
-  //   const handleConnectorUpdate = ({ account, chain }: ConnectorData) => {
-  //     window.location.reload();
-  //   };
-
-  //   if (activeConnector) {
-  //     activeConnector.on('change', handleConnectorUpdate);
-  //   }
-
-  //   return () => {
-  //     if (activeConnector) {
-  //       activeConnector.off('change', handleConnectorUpdate);
-  //     }
-  //   };
-  // }, [activeConnector]);
-
 
   // getting chainId from useChainId() of wagmi
   const chainId = useChainId();
@@ -121,17 +103,17 @@ const Dcds = () => {
     );
   }
   function handleRefetch() {
-    setShouldRefetch(shouldRefetch + 1);
+    refetchCDSDepositorData()
+    console.log("refetch", )
     setOpen2(true);
     setNewtxn(true);
-
   }
 
   // Define a variable to store the result of the query
   const { data: dCDSdepositorData, error: dCDSdepositorDataError, refetch: refetchCDSDepositorData } = useQuery({
     // Specify the query key, which consists of the "dCDSdepositorsData",
     // chainId, and address values
-    queryKey: ["dCDSdepositorsData", chainId, address, shouldRefetch],
+    queryKey: ["dCDSdepositorsData", chainId, address],
     // Specify the query function to be executed
     queryFn: () => getCDSDepositorData(address ? address : undefined),
     // Enable the query only if the address value is truthy
@@ -142,30 +124,8 @@ const Dcds = () => {
     refetchCDSDepositorData();
   }, [isConnected])
 
-  /**
-   * Retrieves the deposit details for a specific address.
-   *
-   * @param {`0x${string}` | undefined} address - The address to retrieve the deposit details for.
-   * @return {Promise<DepositDetail[]>} A promise that resolves to an array of deposit details.
-   */
-  async function getDeposits(
-    address: `0x${string}` | undefined
-  ): Promise<DepositDetail[]> {
-    const response = await fetch(`${BACKEND_API_URL}/cds/${chainId}/${address}`);
-    return await response.json().then((data) => data.sort((a: any, b: any) => a.index - b.index));;
-  }
 
-  // Fetch and store deposits using react-query
-  const { data: deposits, error: depositsError } = useQuery<DepositDetail[]>({
-    // Set the query key to include chainId and address
-    queryKey: ["dCDSdeposits", chainId, address],
-    // Call the getDeposits function to fetch deposits
-    queryFn: () => getDeposits(address ? address : undefined),
-    // Enable the query only if address is truthy
-    enabled: !!address,
-  });
-
-  console.log("deposits", deposits);
+  // console.log("deposits", deposits);
   function handleStatsItem() {
     // Check for error or 404 status code
 
@@ -226,7 +186,6 @@ const Dcds = () => {
    * It runs whenever dCDSdepositorData or dCDSdepositorDataError changes.
    */
   useEffect(() => {
-    console.log("cds deposits", deposits);
     console.log("cds total data", dCDSdepositorData);
     console.log("error1", dCDSdepositorDataError);
     handleStatsItem();
@@ -287,9 +246,9 @@ const Dcds = () => {
                             </TableRow>
                           </TableHeader>
                           <TableBody>
-                            {!depositsError
-                              ? deposits?.map((details: DepositDetail, index) => (
-                                <AmintDepositRow isnewtxn={newtxn} islasttxn={deposits.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} />
+                            {!dCDSdepositorDataError
+                              ? dCDSdepositorData?.deposits?.map((details: DepositDetail, index: number) => (
+                                <AmintDepositRow isnewtxn={newtxn} islasttxn={dCDSdepositorData.deposits.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} />
                               ))
                               : null}
                           </TableBody>

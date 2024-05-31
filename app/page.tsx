@@ -17,7 +17,10 @@ import PageSettings from "@/components/pagePopover/PageSettings";
 export default function Home() {
   const [openSettings, setOpenSettings] = React.useState(false);
   const [showNotification, setShowNotification] = useState(false);
-  const [selectedTab, setSelectedTab] = useState("mint");
+  const [selectedTab, setSelectedTab] = useState(() => {
+    const savedTab = localStorage.getItem('selectedTab');
+    return savedTab ?? 'mint';
+  });
   const [openInfo, setOpenInfo] = React.useState(false);
   // useEffect(() => {
   //   const checkIsStarted = localStorage.getItem("firstStart");
@@ -26,6 +29,9 @@ export default function Home() {
   //     localStorage.setItem("firstStart", "true");
   //   }
   // }, []);
+  useEffect(() => {
+    localStorage.setItem('selectedTab', selectedTab);
+  }, [selectedTab]);
 
 
   const { isConnected } = useAccount()

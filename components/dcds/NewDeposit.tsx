@@ -5,7 +5,7 @@ import {
   DialogContent,
 } from "@/components/ui/dialog";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import addIcon from "@/app/assets/add_circle.svg";
 import Note from "@/components/CustomUI/Note";
 import {
@@ -212,17 +212,6 @@ const NewDeposit = ({
     }
   );
 
-
-  const { data: amintbal } = useBalance({
-    address: DEV_PROXY_AMINT_ADDRESS ? address : undefined,
-    token: DEV_PROXY_AMINT_ADDRESS ? DEV_PROXY_AMINT_ADDRESS : undefined,
-  });
-
-  const { data: usdtbal } = useBalance({
-    address: DEV_PROXY_TESTUSDT_ADDRESS ? address : undefined,
-    token: DEV_PROXY_TESTUSDT_ADDRESS ? DEV_PROXY_TESTUSDT_ADDRESS : undefined,
-  });
-
   // get eth price from Borrowing contract and store it in ethPrice and setting default value to 0n
   const { data: ethPrice = 0n } = useReadBorrowingContractGetUsdValue({
     query: {
@@ -233,10 +222,11 @@ const NewDeposit = ({
 
   // get usdt limit from CDS contract and store it in usdtLimit and setting default value to 0n
   const { data: usdtLimit = 0n } = useReadCdsUsdtLimit();
-
+  
 
   // get usdt amount deposited till now from CDS contract and store it in usdtAmountDepositedTillNow and setting default value to 0n
   const { data: usdtAmountDepositedTillNow = 0n } = useReadCdsUsdtAmountDepositedTillNow();
+  console.log(usdtAmountDepositedTillNow)
 
   // get ratio from CDS contract and store it in ratio
   const { data: ratio } = useReadCdsUsdaLimit({ query: { staleTime: 60 * 1000 } });
@@ -510,7 +500,7 @@ const NewDeposit = ({
             );
           },
           // Set the duration of the toast notification to be infinite
-          { duration: Infinity, id: toastId.current }
+          { duration: 5000, id: toastId.current }
         );
       },
     }
@@ -522,6 +512,7 @@ const NewDeposit = ({
 
   const { isLoading, isSuccess: cdsDepositSuccess, isError: cdsDepositError, data: DepositdataReceipt } = useWaitForTransactionReceipt({
     hash: CdsDepositData,
+    confirmations:2
   });
 
 
@@ -549,30 +540,31 @@ const NewDeposit = ({
       );
     }
     if (cdsDepositSuccess) {
-      // console.log("data logs -------", DepositdataReceipt);
-      // // Retrieve the relevant data from the transaction logs
-      // const dataLogs =
-      //   chainId === 5 ? DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].data : DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].data;
-      // // Decode event logs using the provided ABI and event name
-      // console.log("data logs -------", DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].topics);
-      // const { eventName, args } = decodeEventLogsFromAbi(
-      //   cdsAbi,
-      //   //topic to decode event variables
-      //   DepositdataReceipt.logs[DepositdataReceipt.logs.length - 1].topics ?? [],
-      //   "Deposit",
-      //   dataLogs
-      // ) as { eventName: string; args: { depositVal: bigint } };
-
-      // console.log(eventName, args?.depositVal);
-      // // Update the deposit value
-      // depositVal.current = args?.depositVal;
-      // //store data to backend
-      // mutate(address);
       handleRefetch()
-      // Dismiss the toast notification after 5 seconds
-      setTimeout(() => {
-        toast.dismiss(toastId.current);
-      }, 5000);
+      form.reset();
+      toast.custom(
+        (t) => {
+          return (
+            <div>
+              <CustomToast
+                props={{
+                  t: toastId.current,
+                  toastMainColor: "#268730",
+                  headline: "Transaction Submitted",
+                  transactionHash: CdsDepositData,
+                  linkLabel: "View Transaction",
+                  toastClosebuttonHoverColor: "#90e398",
+                  toastClosebuttonColor: "#57C262",
+                  spinner: true,
+                }}
+              />
+            </div>
+          );
+        },
+        // Set the duration of the toast notification to be infinite
+        { duration: 5000, id: toastId.current }
+      );
+ 
     }
 
   }, [DepositdataReceipt])
@@ -617,30 +609,6 @@ const NewDeposit = ({
       // Handle success and show a custom toast notification
       onSuccess: (data) => {
 
-        if (form.getValues("USDCDepositAmount") && (usdtAmnt ?? 0) > 0) {
-          usdtWrite({
-            args: [
-              (cdsAddress[chainId as keyof typeof cdsAddress] as `0x${string}`),
-              BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
-            ],
-          })
-        }
-        else {
-          const liqAmnt =
-            ((Number(amintAmnt ? amintAmnt : 0) + Number(usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
-          if (nativeFee1) {
-            ConfirmDeposit?.({
-              args: [
-                BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
-                BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
-                liquidationGains,
-                liquidationGains ? parseUnits(liqAmnt.toString(), 6) : 0n,
-                BigInt(Number(lockIn)*86400000),
-              ],
-              value: nativeFee1.nativeFee,
-            });
-          }
-        }
 
         toast.custom(
           (t) => {
@@ -669,7 +637,61 @@ const NewDeposit = ({
       },
     }
   });
+  const { isLoading: AmintApprovalLoading, isSuccess: AmintApprovalSuccess, isError: AmintApprovalError, data: AmintApprovalReceipt } = useWaitForTransactionReceipt({
+    hash: amintApproveData,
+  });
 
+  useEffect(() => {
+    if(AmintApprovalSuccess){
+      if (form.getValues("USDTDepositAmount") && (usdtAmnt ?? 0) > 0) {
+        usdtWrite({
+          args: [
+            (cdsAddress[chainId as keyof typeof cdsAddress] as `0x${string}`),
+            BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
+          ],
+        })
+      }
+      else {
+        const liqAmnt =
+          ((Number(amintAmnt ? amintAmnt : 0) + Number(usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
+        if (nativeFee1) {
+          ConfirmDeposit?.({
+            args: [
+              BigInt(usdtAmnt ? parseUnits(usdtAmnt.toString(), 6) : 0),
+              BigInt(amintAmnt ? parseUnits(amintAmnt.toString(), 6) : 0),
+              liquidationGains,
+              liquidationGains ? parseUnits(liqAmnt.toString(), 6) : 0n,
+              BigInt(Number(lockIn)*86400000),
+            ],
+            value: nativeFee1.nativeFee,
+          });
+        }
+      }
+
+      toast.custom(
+        (t) => {
+          toastId.current = t;
+          return (
+            <div>
+              <CustomToast
+                props={{
+                  t,
+                  toastMainColor: "#268730",
+                  headline: "Transaction Submitted",
+                  transactionHash: amintApproveData,
+                  linkLabel: "View Transaction",
+                  toastClosebuttonHoverColor: "#90e398",
+                  toastClosebuttonColor: "#57C262",
+                }}
+              />
+            </div>
+          );
+        },
+        { duration: 5000 }
+      );
+    }
+
+  }, [AmintApprovalReceipt])
 
 
 
@@ -864,7 +886,8 @@ const NewDeposit = ({
 
   const [inputTypes, setInputTypes] = useState([1]);
   const inputOptions = ["AmintDepositAmount", "USDTDepositAmount"];
-
+  // Jm+/pX8ae*PP9TW
+  // 54dfdb483953af7b3d90d2dd9009d392fab7ff7e5187564ff7b525df29cc6096641e533e4f5d35f78c58da404678712916d81f87dc11e0840a8814f6
   return (
     <div className="flex items-center justify-between ">
       <div className="flex w-full gap-[10px]">
@@ -888,7 +911,7 @@ const NewDeposit = ({
             <div className="flex w-full flex-col min-[1440px]:pt-[10px] 2dppx:pt-[15px] pt-[10px] min-[1440px]:gap-[20px] 2dppx:gap-[10px] min-[1280px]:gap-[16px] gap-[10px]">
               <div className="flex flex-col md:flex-row gap-[10px] items-center w-full justify-between ">
                 {
-                   usdtLimit < usdtAmountDepositedTillNow ? (
+                   usdtLimit <= usdtAmountDepositedTillNow ? (
                     <>
                       <div className="flex w-full ">
                         <FormField
@@ -968,7 +991,7 @@ const NewDeposit = ({
 
                               {usdtAmountDepositedTillNow >= usdtLimit && (
                                 <div
-                                  className="text-xs cursor-pointer"
+                                  className="mr-2 text-xs cursor-pointer"
                                   onClick={() => {
                                     form.setValue("USDTDepositAmount", (100 / 80 * (form.getValues("AmintDepositAmount") ?? 0) - (form.getValues("AmintDepositAmount") ?? 0)));
                                   }}
@@ -1229,7 +1252,7 @@ const NewDeposit = ({
                   className="py-2 basis-1/2"
                   //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                   disabled={
-                    (usdtAmountDepositedTillNow > usdtLimit) || isCdsDepositLoading || isPending || isLoading
+                     isCdsDepositLoading || isPending || isLoading
                   }
                 >
                   {usdtApproveLoading || UsdtApprovalLoading ||amintApproveLoading|| isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}

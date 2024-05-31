@@ -75,7 +75,7 @@ const AmintDepositRow = ({ details ,onClick,isnewtxn,islasttxn}: { details: Depo
       <TableRow
       onClick={()=>onClick()}
         key={details.id}
-        className={` ${islasttxn && isnewtxn ? "bg-[#57c262]":""} hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer`}
+        className={` ${islasttxn && isnewtxn ? "bg-[#ABFFDE] dark:bg-[#3A3A3A]":""} hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer`}
       >
         <TableCell className="text-borderGrey dark:text-[#EEEEEE]">{`#${details.index}`}</TableCell>
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">

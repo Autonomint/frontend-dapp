@@ -358,7 +358,10 @@ useEffect(()=>{
     //   "Deposit",
     //   dataLogs.data
     // ) as { eventName: string; args: { normalizedAmount: bigint, borrowAmount: bigint } };
-    form.reset();
+    form.reset({
+      ...form.getValues(), // preserve other field values
+      collateral: 'default', // replace 'default' with your default collateral value
+    });
     reset()
     // // Log event name and normalized amount
     // console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toString())
@@ -413,6 +416,8 @@ useEffect(()=>{
   
 
 },[Depositdata])
+
+console.log("hello", form.getValues("collateral"))
 
   /**
    * useEffect hook that disables a deposit button based on certain conditions.
@@ -687,7 +692,7 @@ useEffect(()=>{
                   <div  className="w-[21%] h-8 bg-[linear-gradient(to_bottom,#006733_1%,#A1F9CD_2%,white_80%)] dark:bg-[linear-gradient(to_bottom,#006733_1%,#A1F9CD_2%,#242424_80%)] "></div>
                 </div>
                 <div className="w-full p-4 mt-3 border-r dark:border-gray-700 dark:bg-none">
-                  <h2 className="mb-2  text-black font-medium text-md dark:text-[#DEDEDE]">100% LTV</h2>
+                  <h2 className="mb-2  text-black font-medium text-md dark:text-[#DEDEDE]">100% Synthetic LTV</h2>
                   <div className="flex items-center justify-between w-full">
                     <div className="w-full ">
                       <p className="text-sm text-gray-600 flex justify-between dark:text-[#DEDEDE] py-1 border-b border-[#9E9E9E] "><div>Deposit:</div> <div className="text-black dark:text-white">{(Number(ethPrice) / 100 * Number(form.getValues("collateralAmount"))).toFixed(2)}</div></p>

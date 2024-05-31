@@ -129,7 +129,7 @@ const TableRows = ({
     handleDepositData();
   }, [details]);
   return (
-      <TableRow onClick={()=>onClick()} className={` ${islasttxn && isnewtxn ? "bg-[#57c262]":""} hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer`}>
+      <TableRow onClick={()=>onClick()} className={` ${islasttxn && isnewtxn ? "bg-[#ABFFDE] dark:bg-[#3A3A3A]":""} hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer`}>
         <TableCell className="w-3 text-borderGrey dark:text-[#EEEEEE]">
           {`#${details.index}`}
         </TableCell>
