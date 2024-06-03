@@ -61,7 +61,7 @@ export default function Footer() {
                     </div>
                     <div className='-mt-5'>
 
-                        <Faq type={selectedTab} />
+                        <Faq  />
                     </div>
                 </DialogContent>
             </Dialog>
@@ -83,7 +83,7 @@ export default function Footer() {
                     <div className='-mt-5'>
 
                         <DialogHeader className="flex items-start">
-                            <DialogTitle className="text-black  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-2xl text-xl ">
+                            <DialogTitle className="text-black dark:text-white mb-2  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-2xl text-xl ">
                                 <h1>Aqcuire ETH and Collateral</h1>
                             </DialogTitle>
                         </DialogHeader>

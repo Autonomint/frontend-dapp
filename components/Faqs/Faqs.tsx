@@ -85,17 +85,17 @@ const accordinContentCDS = [
     },
   ];
 
-const Faq = ({type}:{type:string}) => {
+const Faq = () => {
   const [allFaqVisible, setFaqVisible] = useState(false);
-  const accordinContent = type=="mint"?accordinContentBorrow:accordinContentCDS;
+  const [accordintype, setAccordintype] = useState('mint');
+  const accordinContent = accordintype=="mint"?accordinContentBorrow:accordinContentCDS;
 // const [accordinContent, setAccordinContent] = useState(accordinContentBorrow);
-const [accordintype, setAccordintype] = useState(type);
   return (
     <div className="mx-auto max-w-[1440px] w-full px-4">
       <div className="">
         <div className="mb-[15px]">
-          <p className=" font-semibold text-[20px] text-[#020202] dark:text-white">
-            <button className={`mr-2 tracking-[2px] `} >{accordintype=="mint"?'Borrow & Mint FAQs':"dCDS FAQs "}  </button>
+          <p className=" font-medium  text-[20px] text-[#020202] dark:text-white">
+            <button className={`mr-2 tracking-[2px] ${accordintype=='mint'?"font-semibold underline":""} `} onClick={()=>setAccordintype('mint')} >Borrow & Mint FAQs </button> / <button className={`ml-2 tracking-[2px] ${accordintype=='cds'?"font-semibold underline":""}`} onClick={()=>setAccordintype('cds')}>CDS FAQs</button>
           </p>
         </div>
         {!allFaqVisible ? (
