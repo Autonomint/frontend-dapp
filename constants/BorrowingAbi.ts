@@ -252,6 +252,12 @@ export const BorrowingABI = [
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
         "internalType": "uint64",
         "name": "index",
         "type": "uint64"
@@ -265,14 +271,44 @@ export const BorrowingABI = [
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "borrowAmount",
+        "name": "normalizedAmount",
         "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "normalizedAmount",
+        "name": "depositedTime",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "ethPrice",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "borrowAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "strikePrice",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "optionsFees",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum IOptions.StrikePrice",
+        "name": "strikePricePercent",
+        "type": "uint8"
       }
     ],
     "name": "Deposit",
@@ -384,8 +420,20 @@ export const BorrowingABI = [
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "index",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
-        "name": "borrowDebt",
+        "name": "withdrawTime",
         "type": "uint256"
       },
       {
@@ -399,6 +447,12 @@ export const BorrowingABI = [
         "internalType": "uint128",
         "name": "noOfAbond",
         "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "borrowDebt",
+        "type": "uint256"
       }
     ],
     "name": "Withdraw",
@@ -412,6 +466,19 @@ export const BorrowingABI = [
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "admin",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -909,11 +976,6 @@ export const BorrowingABI = [
             "type": "uint256"
           },
           {
-            "internalType": "uint128",
-            "name": "noOfLiquidations",
-            "type": "uint128"
-          },
-          {
             "internalType": "uint256",
             "name": "ethRemainingInWithdraw",
             "type": "uint256"
@@ -922,6 +984,11 @@ export const BorrowingABI = [
             "internalType": "uint256",
             "name": "ethValueRemainingInWithdraw",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint128",
+            "name": "noOfLiquidations",
+            "type": "uint128"
           },
           {
             "internalType": "uint64",
@@ -1175,6 +1242,19 @@ export const BorrowingABI = [
     "name": "upgradeToAndCall",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "usda",
+    "outputs": [
+      {
+        "internalType": "contract IUSDa",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

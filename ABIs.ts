@@ -1,24 +1,4 @@
-export const SEPOLIA_USDA_ADDRESS = "0x356F165ce6c6Ab223F983d9eC988202Af4f4CB64"
-export const SEPOLIA_ABOND_ADDRESS = "0xdd8F438822473bc650567231C940b55C3B1E98B3"
-export const SEPOLIA_TESTUSDT_ADDRESS = "0xC1fd34E478c147f0460dc013D636c63BC407D480"
-export const SEPOLIA_MULTISIGN_ADDRESS = "0x82347508d8e8d5963Fd070aABF5FE017574a953D"
-export const SEPOLIA_CDS_ADDRESS = "0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df"
-export const SEPOLIA_BORROWING_ADDRESS = "0xE5D4b991861E70D563e7d061e017e5566935941f"
-export const SEPOLIA_BORROW_LIQUIDATION_ADDRESS = "0x74e0F0492E8F180F4FEF6d9392e9f0e0FC8824bE"
-export const SEPOLIA_TREASURY_ADDRESS = "0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB"
-export const SEPOLIA_OPTIONS_ADDRESS = "0x7C6441B23f21A7A5cd5965B516D8054F119bA53f"
-
-export const BASE_SEPOLIA_USDA_ADDRESS = "0x7eAc043A7E4df19EFb31f8b5F37D73BF3a8e9ACd"
-export const BASE_SEPOLIA_ABOND_ADDRESS = "0x37df4e70eDc4525Be0d7380730a7224Cf5205c14"
-export const BASE_SEPOLIA_TESTUSDT_ADDRESS = "0xfBAE0d4337d936538995A26685f69644e6427213"
-export const BASE_SEPOLIA_MULTISIGN_ADDRESS = "0xF0C29E75985847a99D167C56abDA706ACc88Ff21"
-export const BASE_SEPOLIA_CDS_ADDRESS = "0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A"
-export const BASE_SEPOLIA_BORROWING_ADDRESS = "0x739E6a6C4233011D99F68d96D8A3560E690a64A3"
-export const BASE_SEPOLIA_BORROW_LIQUIDATION_ADDRESS = "0x05208cAfF03649cd1Cf9677A55c7E611014EE4e3"
-export const BASE_SEPOLIA_TREASURY_ADDRESS = "0x80f872b6402D1FB4BffF4837efe9E4b49cB91909"
-export const BASE_SEPOLIA_OPTIONS_ADDRESS = "0x10E070504eB1B4f03d29b9B5DeccAd3e49c134Ec"
-
-export const borrowABI=  [
+export const borrowABI= [
   {
     "inputs": [
       {
@@ -486,6 +466,19 @@ export const borrowABI=  [
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "admin",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -983,11 +976,6 @@ export const borrowABI=  [
             "type": "uint256"
           },
           {
-            "internalType": "uint128",
-            "name": "noOfLiquidations",
-            "type": "uint128"
-          },
-          {
             "internalType": "uint256",
             "name": "ethRemainingInWithdraw",
             "type": "uint256"
@@ -996,6 +984,11 @@ export const borrowABI=  [
             "internalType": "uint256",
             "name": "ethValueRemainingInWithdraw",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint128",
+            "name": "noOfLiquidations",
+            "type": "uint128"
           },
           {
             "internalType": "uint64",
@@ -1252,6 +1245,19 @@ export const borrowABI=  [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "usda",
+    "outputs": [
+      {
+        "internalType": "contract IUSDa",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -1271,7 +1277,360 @@ export const borrowABI=  [
   }
 ]
 
-export const cdsABI =  [
+export const borrowLiqABI = [
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      }
+    ],
+    "name": "AddressEmptyCode",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BorrowLiquidation_LiquidateBurnFailed",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      }
+    ],
+    "name": "ERC1967InvalidImplementation",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ERC1967NonPayable",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "FailedInnerCall",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidInitialization",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "optionType",
+        "type": "uint16"
+      }
+    ],
+    "name": "InvalidOptionType",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotInitializing",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnableInvalidOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ReentrancyGuardReentrantCall",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "bits",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "SafeCastOverflowedUintDowncast",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UUPSUnauthorizedCallContext",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "slot",
+        "type": "bytes32"
+      }
+    ],
+    "name": "UUPSUnsupportedProxiableUUID",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "version",
+        "type": "uint64"
+      }
+    ],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "index",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "liquidationAmount",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "profits",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "ethAmount",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "availableLiquidationAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Liquidate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      }
+    ],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "UPGRADE_INTERFACE_VERSION",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_borrowing",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_cds",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_usda",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint64",
+        "name": "_index",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "_currentEthPrice",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint128",
+        "name": "_globalNoOfLiquidations",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_lastCumulativeRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32",
+        "name": "_dstEid",
+        "type": "uint32"
+      }
+    ],
+    "name": "liquidateBorrowPosition",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proxiableUUID",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_treasury",
+        "type": "address"
+      }
+    ],
+    "name": "setTreasury",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  }
+]
+
+export const cdsABI = [
   {
     "inputs": [
       {
@@ -1663,6 +2022,19 @@ export const cdsABI =  [
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "admin",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -2657,6 +3029,19 @@ export const cdsABI =  [
     "name": "upgradeToAndCall",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "usda",
+    "outputs": [
+      {
+        "internalType": "contract IUSDa",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4675,6 +5060,19 @@ export const treasuryABI = [
   },
   {
     "inputs": [],
+    "name": "usda",
+    "outputs": [
+      {
+        "internalType": "contract IUSDa",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "usdaGainedFromLiquidation",
     "outputs": [
       {
@@ -5403,83 +5801,6 @@ export const usdaABI = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "__OAppOptionsType3_init",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "__OAppPreCrimeSimulator_init",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "_localDecimals",
-        "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "_endpoint",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_delegate",
-        "type": "address"
-      }
-    ],
-    "name": "__OFTCore_init",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_symbol",
-        "type": "string"
-      },
-      {
-        "internalType": "address",
-        "name": "_lzEndpoint",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_delegate",
-        "type": "address"
-      }
-    ],
-    "name": "__OFT_init",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8181,83 +8502,6 @@ export const usdtABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "__OAppOptionsType3_init",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "__OAppPreCrimeSimulator_init",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "_localDecimals",
-        "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "_endpoint",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_delegate",
-        "type": "address"
-      }
-    ],
-    "name": "__OFTCore_init",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_symbol",
-        "type": "string"
-      },
-      {
-        "internalType": "address",
-        "name": "_lzEndpoint",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_delegate",
-        "type": "address"
-      }
-    ],
-    "name": "__OFT_init",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "components": [
           {
             "internalType": "uint32",
@@ -8520,16 +8764,6 @@ export const usdtABI = [
   },
   {
     "inputs": [
-      {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_symbol",
-        "type": "string"
-      },
       {
         "internalType": "address",
         "name": "_lzEndpoint",

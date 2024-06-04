@@ -41,7 +41,7 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
         <div>
              
             <div className='border-t border-black shadow-sm dark:border-gray-700'>
-                <div className=' dark:bg-[#141414]   min-h-[24rem] sm:overflow-auto  overflow-x-scroll  '>
+                <div className=' dark:bg-[#141414]   min-h-[25rem] sm:overflow-auto  overflow-x-scroll  '>
                     <Table className='min-w-[400px]'>
                         <TableHeader>
                             <TableRow className='dark:bg-none  dark:bg-[#1a1a1a]'>
@@ -67,9 +67,9 @@ const LeaderTable = ({ tableType,data }: { tableType: string ,data:TableData[]})
                                     }>
                                         <TableCell>
                                         <div className={
-                                        ` ${(currentPage - 1) * itemsPerPage + index + 1  === 1 ? 'bg-[#FFECC7] text-[#BC7C00]  ' :
-                                        (currentPage - 1) * itemsPerPage + index + 1  === 2 ? 'bg-[#CEE1E6] text-[#587676] ' :
-                                        (currentPage - 1) * itemsPerPage + index + 1  === 3 ? 'bg-[#FFE4D5] text-[#8A4A00] ' :
+                                        ` ${(currentPage - 1) * itemsPerPage + index + 1  === 1 ? 'bg-[#FFECC7] text-[#BC7C00] dark:text-[#BC7C00] ' :
+                                        (currentPage - 1) * itemsPerPage + index + 1  === 2 ? 'bg-[#CEE1E6] text-[#587676] dark:text-[#587676]' :
+                                        (currentPage - 1) * itemsPerPage + index + 1  === 3 ? 'bg-[#FFE4D5] text-[#8A4A00] dark:text-[#8A4A00]' :
                                                 
                                                             ' '}
                                         hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:text-white dark:active:bg-[#002A11] rounded-[40%] p-1 text-center cursor-pointer`

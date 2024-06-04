@@ -60,7 +60,6 @@ export default function page() {
     })
 
 
-    console.log(ethlockedSepolia,ethlockedbase,stableLockedBase,stableLockedSepolia)
     const { data: totalStable } = useReadCdsTotalCdsDepositedAmount()
     async function getBorrowLeaderboard(): Promise<TableData[]> {
         const response = await fetch(`${BACKEND_API_URL}/borrows/leaderboard`);
@@ -75,12 +74,11 @@ export default function page() {
         queryKey: ["borrowDeposits", chainId],
         queryFn: () => getBorrowLeaderboard(),
       });
-        console.log(borrowdeposits)
-
+      
       const { data: cdsdeposits, error: cdsdepositsError } = useQuery<TableData[]>({
-        queryKey: ["Cdsdeposits", chainId],
-        queryFn: () => getCdsLeaderboard(),
-      });
+          queryKey: ["Cdsdeposits", chainId],
+          queryFn: () => getCdsLeaderboard(),
+        });
     return (
         <div className='w-full px-2 sm:px-5'>
         <div className='px-2 sm:px-8 py-5 w-full bg-white shadow-custom border-[1px] dark:bg-[#242424] dark:shadow-darkcustom border-[#9E9E9E] mdb:min-h-[84vh] '>

@@ -1669,6 +1669,19 @@ export const TreasuryAbi = [
   },
   {
     "inputs": [],
+    "name": "usda",
+    "outputs": [
+      {
+        "internalType": "contract IUSDa",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "usdaGainedFromLiquidation",
     "outputs": [
       {

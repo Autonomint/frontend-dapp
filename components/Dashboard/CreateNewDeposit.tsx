@@ -61,7 +61,6 @@ import displayNumberWithPrecision from "@/app/utils/precision";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 import Spinner from "../ui/spinner";
-import { DEV_PROXY_AMINT_ADDRESS } from "@/constants/Addresses";
 import { blue } from "colorette";
 
 
@@ -144,46 +143,9 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
     nonce: 40n
   }, options, false]})
 
-  // Perform a mutation and get the mutate and depositReset functions
-  const { mutate, reset: depositReset,isPending:isStoringbackend } = useMutation({
-    // Specify the mutation function to be called
-    mutationFn: storeToBackend,
-    // Handle any errors that occur during the mutation
-    onError(error, variables, context) {
-      console.log(error);
-    },
-    // Perform actions after the mutation is completed or failed
-    onSettled() {
-      // Invalidate the "depositorsData" and "deposits" queries in the query cache
-      queryClient.invalidateQueries({ queryKey: ["depositorsData"] });
-      queryClient.invalidateQueries({ queryKey: ["deposits"] });
 
-      // Call the handleRefetch function to rerender the data in the table
-      handleRefetch();
 
-      // Reset the form
-      form.reset();
-      reset()
-    },
-    // Retry the mutation up to 4 times if it fails
-    retry: 4,
-  });
 
-  const onWatchAssetAmintClick = async () => {
-    const result = await (window as any).ethereum?.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: {
-          address: DEV_PROXY_AMINT_ADDRESS,
-          decimals: 6,
-          name: "AMINT",
-          symbol: "AMINT"
-        }
-      }
-    });
-    console.log({ result });
-  };
 
 
 
@@ -351,28 +313,14 @@ useEffect(()=>{
   if(isDepositSuccess){
     handleRefetch();
     console.log("transaction completed", Depositdata);
-    // const dataLogs = Depositdata.logs[Depositdata.logs.length - 1]
-    // const { eventName, args } = decodeEventLogsFromAbi(
-    //   borrowingContractAbi,
-    //   dataLogs.topics,
-    //   "Deposit",
-    //   dataLogs.data
-    // ) as { eventName: string; args: { normalizedAmount: bigint, borrowAmount: bigint } };
+
     form.reset({
       ...form.getValues(), // preserve other field values
       collateral: 'default', // replace 'default' with your default collateral value
     });
     reset()
-    // // Log event name and normalized amount
-    // console.log(eventName, args?.normalizedAmount.toString(), args?.borrowAmount.toString())
-    // // Set the normalizedAmount value
-    // normalizedAmount.current = args?.normalizedAmount.toString();
-    // noOfAmintMinted.current = args?.borrowAmount.toString();
 
-    // // Call mutate function with the address to store things to backend
-    // mutate(address);
     setOpen(false);
-    // Show custom toast
     toast.custom(
       () => (
         <CustomToast
@@ -417,7 +365,6 @@ useEffect(()=>{
 
 },[Depositdata])
 
-console.log("hello", form.getValues("collateral"))
 
   /**
    * useEffect hook that disables a deposit button based on certain conditions.
@@ -447,13 +394,14 @@ console.log("hello", form.getValues("collateral"))
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("clicked")
+    console.log("clicked",values)
     refetch();
     let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);
     let strikePercent = strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4;
     const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${colateralamount}/${ethPrice}/${strikePercent}`).then(
       (res) => res.json()
     )
+    console.log("nativeFee1",nativeFee1,nativeFee2,nativeFee)
     console.log(data[0])
     if (data[0] != undefined  && nativeFee1 != undefined && nativeFee2 != undefined && nativeFee != undefined) {
       writeContract?.({
@@ -673,9 +621,9 @@ console.log("hello", form.getValues("collateral"))
                   type="submit"
                   variant={"primary"}
                   className=" basis-1/2"
-                  disabled={isDepositsLoading ||isDepositdataLoading || isStoringbackend  || disabled}
+                  disabled={isDepositsLoading ||isDepositdataLoading   || disabled}
                 >
-                  {isDepositsLoading ||isDepositdataLoading || isStoringbackend ? <Spinner /> : 'Confirm Deposit'}
+                  {isDepositsLoading ||isDepositdataLoading  ? <Spinner /> : 'Confirm Deposit'}
                 </Button>
               </div>
 

@@ -103,10 +103,12 @@ const Dcds = () => {
     );
   }
   function handleRefetch() {
-    refetchCDSDepositorData()
-    console.log("refetch", )
-    setOpen2(true);
-    setNewtxn(true);
+    console.log("fsfsgsgsgg refetched")
+    refetchCDSDepositorData().then(() => {
+      setOpen2(true);
+      setNewtxn(true);
+    })
+    
   }
 
   // Define a variable to store the result of the query

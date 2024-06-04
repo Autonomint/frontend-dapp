@@ -300,8 +300,8 @@ const NavBar = () => {
                   </div>
 
                   <div className="flex gap-2 text-sm ">
-                    <Button className="text-[white] dark:border-white  w-full relative text-sm rounded-none basis-1/2 border-0 border-b-2 border-[#020202] bg-[#020202] py-2" >Change Network</Button>
-                    <Button className="border-[#041A50] bg-[#ABFFDE] dark:text-black text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 " onClick={() => { disconnect(); setOpen2(!open2) }}>Disconnect</Button>
+                    <Button variant={'outline'} className="py-2" >Change Network</Button>
+                    <Button  className="border-[#041A50] bg-[#ABFFDE] dark:text-black text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 " onClick={() => { disconnect(); setOpen2(!open2) }}>Disconnect</Button>
                   </div>
                   <div className="p-3 text-sm underline border  bg-[#EEEEEE]">
                     <a href={`https://sepolia.etherscan.io/address/${address}`} >View All Wallets Transactions </a>

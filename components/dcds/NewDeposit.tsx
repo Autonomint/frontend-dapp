@@ -65,7 +65,6 @@ import { parseEther, parseUnits } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 import Spinner from "@/components/ui/spinner";
-import { DEV_PROXY_AMINT_ADDRESS, DEV_PROXY_TESTUSDT_ADDRESS } from "@/constants/Addresses";
 import ProductList from "../Markets/ProductList";
 import arrowout from "@/app/assets/arrow_outward.svg";
 import { Options } from '@layerzerolabs/lz-v2-utilities'
@@ -162,36 +161,7 @@ const NewDeposit = ({
     },
   });
 
-  const onWatchAssetAmintClick = async () => {
-    const result = await (window as any).ethereum?.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: {
-          address: DEV_PROXY_AMINT_ADDRESS,
-          decimals: 6,
-          name: "AMINT",
-          symbol: "AMINT"
-        }
-      }
-    });
-    console.log({ result });
-  };
-  const onWatchAssetUsdtClick = async () => {
-    const result = await (window as any).ethereum?.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: {
-          address: DEV_PROXY_TESTUSDT_ADDRESS,
-          decimals: 6,
-          name: "TUSDT",
-          symbol: "TUSDT"
-        }
-      }
-    });
-    console.log({ result });
-  };
+
 
 
 
@@ -1255,7 +1225,7 @@ const NewDeposit = ({
                      isCdsDepositLoading || isPending || isLoading
                   }
                 >
-                  {usdtApproveLoading || UsdtApprovalLoading ||amintApproveLoading|| isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}
+                  {usdtApproveLoading || UsdtApprovalLoading || amintApproveLoading || isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}
                 </Button>
               </div>
             </div>

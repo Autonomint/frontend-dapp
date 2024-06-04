@@ -73,10 +73,12 @@ const WalletOrContent = () => {
    * @return {void} This function does not return a value.
    */
   function handleRefetch() {
-    dataRefetech()
-    console.log("refetching")
-    setOpen2(true);
-    setnewtxn(true)
+    dataRefetech().then(()=>{
+      console.log("refetching")
+      setOpen2(true);
+      setnewtxn(true)
+    })
+  
   }
   console.log("deposits",deposits)
 
