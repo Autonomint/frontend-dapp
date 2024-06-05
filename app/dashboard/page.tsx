@@ -202,8 +202,8 @@ const page = () => {
               <ValueLocked />
               <div className="flex flex-col w-full md:w-[60%] lg:w-[70%]">
                 <CollateralRatio />
-                <div className="flex flex-col w-full h-full border border-t-0 border-black lg:flex-row">
-                  <div className="flex h-full min-w-[300px] flex-col bg-[#EEEEEE] border-r border-solid border-black  dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] dark:border-[#5B5B5B]">
+                <div className="flex flex-col w-full h-full border border-t-0 border-[#9E9E9E] lg:flex-row">
+                  <div className="flex h-full min-w-[300px] flex-col bg-[#EEEEEE] border-r   dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] border-[#9E9E9E]">
                     <div className="px-[50px] py-[25px] flex justify-between">
                       <div className="flex flex-col">
                         <h5 className="text-[#00773F] dark:text-[#2cc873] text-base font-normal">
@@ -229,11 +229,11 @@ const page = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col md:flex-row w-full  border border-black bg-[#EEEEEE] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] dark:border-[#5B5B5B]">
+            <div className="flex flex-col md:flex-row w-full  border  bg-[#EEEEEE] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] border-[#9E9E9E]">
               <FeesComp />
-              <div className="p-4 pl-0 w-full md:w-[70%] border-l border-black bg-white dark:bg-[#020202]">
-                  <div className="flex flex-col w-full bg-white md:max-w-sm dark:bg-[#141414] ">
-                    <div className="relative flex items-center h-12 w-full p-1 mx-0 lg:mx-8 mt-4 bg-[#EEEEEE] dark:bg-[#0f0f0f] border dark:border-[#5B5B5B] shadow">
+              <div className="p-4 pl-0 w-full md:w-[70%] border-l border-[#9E9E9E] bg-white dark:bg-[#020202]">
+                  <div className="flex flex-col w-full md:max-w-sm ">
+                    <div className="relative flex items-center h-12 w-full p-1 mx-0 lg:mx-8 mt-4 bg-[#EEEEEE] dark:bg-[#0f0f0f] border border-[#9E9E9E] ">
                       <div className="flex justify-center w-full">
                         <button onClick={()=>setFeeOption("option")}>Option Fees</button>
                       </div>
@@ -241,7 +241,7 @@ const page = () => {
                         <button onClick={()=>setFeeOption("borrow")}>Borrowing Fees</button>
                       </div>
                       <span
-                        className={` bg-[#ffffff] border-[1px] dark:bg-[#141414] dark:text-[#EEEEEE] border-[#C4C4C4] dark:border-[#5B5B5B] shadow text-gray-800 flex items-center justify-center w-1/2  h-10 transition-all top-[4px] absolute  ${feeOption=="borrow"?"right-1":"right-none"} `}>
+                        className={` bg-[#ffffff] border-[1px] dark:bg-[#141414] dark:text-[#EEEEEE] border-[#9E9E9E] shadow text-gray-800 flex items-center justify-center w-1/2  h-10 transition-all top-[4px] absolute  ${feeOption=="borrow"?"right-1":"right-none"} `}>
                         {feeOption === "option" ? "Option Fees" : "Borrowing Fees"}
                       </span>
                     </div>
@@ -327,7 +327,7 @@ const page = () => {
 
   function CollateralRatio() {
     return (
-      <div className="flex w-full flex-col  border border-black bg-[#EEEEEE] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] dark:border-[#5B5B5B]">
+      <div className="flex w-full flex-col  border bg-[#EEEEEE] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] border-[#9E9E9E]">
         <div className="flex flex-col gap-[10px] p-5">
           <div className="flex gap-[10px] flex-start w-full">
             <Image src={donut} alt="atm local" width={35} height={35}></Image>
@@ -379,8 +379,8 @@ const page = () => {
 
   function ValueLocked() {
     return (
-      <div className="flex md:w-[40%] lg:max-w-[30%] w-full flex-col justify-between  border border-black bg-[#EEEEEE] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] dark:border-[#5B5B5B]">
-        <div className="flex flex-col gap-[10px] p-5 border-b border-black">
+      <div className="flex md:w-[40%] lg:max-w-[30%] w-full flex-col justify-between  border  bg-[#EEEEEE] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] border-[#9E9E9E]">
+        <div className="flex flex-col gap-[10px] p-5 border-b border-[#9E9E9E]">
           <div className="flex gap-[10px] flex-start w-full">
             <Image src={dollar} alt="atm local" width={35} height={35}></Image>
             <h2 className="text-textPrimary dark:text-[#90AFFF] font-normal mt-1 md:mt-0 text-[24px] md:text-[32px] leading-none">
@@ -406,7 +406,7 @@ const page = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col p-5 gap-[15px] bg-white dark:border dark:border-[#5B5B5B]  dark:bg-[#141414] ">
+        <div className="flex flex-col p-5 gap-[15px] bg-white   dark:bg-[#141414] ">
           <div className="py-[0px]">
             <div className="flex flex-col gap-5">
               <p className="text-sm font-normal leading-none text-textGrey dark:text-[#EEEEEE]">
@@ -454,7 +454,7 @@ const page = () => {
     return (
       <div className="flex gap-[10px] ">
         <Image src={img} alt="currency icon" width={45} height={45}></Image>
-        <div className="relative w-full border border-[black] dark:border-[#5B5B5B] overflow-hidden">
+        <div className="relative w-full border border-[#9E9E9E] overflow-hidden">
           <div
             style={{ width: `${progress}%` }}
             className={`bg-[#90AFFF] absolute h-full z-0`}
@@ -476,8 +476,8 @@ const page = () => {
     data: { headline: string; value: string; lastElement?: boolean }[];
   }) {
     return (
-      <div className="flex flex-col w-full md:w-[50%] border border-black dark:border-[#5B5B5B] ">
-        <div className="flex flex-col p-3 md:p-5 gap-[10px]   border-b bg-[#EEEEEE] border-black shadow-[0_4px_8px_0px_rgba(0,0,0,0.1)] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] dark:border-[#5B5B5B]">
+      <div className="flex flex-col w-full md:w-[50%] border border-[#9E9E9E] ">
+        <div className="flex flex-col p-3 md:p-5 gap-[10px]   border-b bg-[#EEEEEE] dark:bg-[linear-gradient(180deg,#202020_-0.23%,#0D0D0D_100%)] border-[#9E9E9E]">
           <div className="flex flex-start w-full gap-[10px]">
             <Image src={toll} alt="toll" width={35} height={35}></Image>
             <h2 className="text-textPrimary font-normal dark:text-[#90AFFF] mt-1 md:mt-0 text-[24px] md:text-[32px] leading-none">

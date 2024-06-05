@@ -555,35 +555,11 @@ export const borrowingContractAbi = [
     type: 'event',
     anonymous: false,
     inputs: [
-      {
-        name: 'user',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
       { name: 'index', internalType: 'uint64', type: 'uint64', indexed: false },
       {
         name: 'depositedAmount',
         internalType: 'uint256',
         type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'normalizedAmount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'depositedTime',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'ethPrice',
-        internalType: 'uint128',
-        type: 'uint128',
         indexed: false,
       },
       {
@@ -593,21 +569,9 @@ export const borrowingContractAbi = [
         indexed: false,
       },
       {
-        name: 'strikePrice',
-        internalType: 'uint64',
-        type: 'uint64',
-        indexed: false,
-      },
-      {
-        name: 'optionsFees',
+        name: 'normalizedAmount',
         internalType: 'uint256',
         type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'strikePricePercent',
-        internalType: 'enum IOptions.StrikePrice',
-        type: 'uint8',
         indexed: false,
       },
     ],
@@ -709,14 +673,7 @@ export const borrowingContractAbi = [
     anonymous: false,
     inputs: [
       {
-        name: 'user',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-      { name: 'index', internalType: 'uint64', type: 'uint64', indexed: false },
-      {
-        name: 'withdrawTime',
+        name: 'borrowDebt',
         internalType: 'uint256',
         type: 'uint256',
         indexed: false,
@@ -733,12 +690,6 @@ export const borrowingContractAbi = [
         type: 'uint128',
         indexed: false,
       },
-      {
-        name: 'borrowDebt',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
     ],
     name: 'Withdraw',
   },
@@ -747,13 +698,6 @@ export const borrowingContractAbi = [
     inputs: [],
     name: 'UPGRADE_INTERFACE_VERSION',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'admin',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
     stateMutability: 'view',
   },
   {
@@ -996,6 +940,11 @@ export const borrowingContractAbi = [
           { name: 'cdsPoolValue', internalType: 'uint256', type: 'uint256' },
           { name: 'totalCDSPool', internalType: 'uint256', type: 'uint256' },
           {
+            name: 'noOfLiquidations',
+            internalType: 'uint128',
+            type: 'uint128',
+          },
+          {
             name: 'ethRemainingInWithdraw',
             internalType: 'uint256',
             type: 'uint256',
@@ -1004,11 +953,6 @@ export const borrowingContractAbi = [
             name: 'ethValueRemainingInWithdraw',
             internalType: 'uint256',
             type: 'uint256',
-          },
-          {
-            name: 'noOfLiquidations',
-            internalType: 'uint128',
-            type: 'uint128',
           },
           { name: 'nonce', internalType: 'uint64', type: 'uint64' },
         ],
@@ -1148,13 +1092,6 @@ export const borrowingContractAbi = [
   },
   {
     type: 'function',
-    inputs: [],
-    name: 'usda',
-    outputs: [{ name: '', internalType: 'contract IUSDa', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
     inputs: [
       { name: '_toAddress', internalType: 'address', type: 'address' },
       { name: '_index', internalType: 'uint64', type: 'uint64' },
@@ -1280,42 +1217,12 @@ export const cdsAbi = [
     anonymous: false,
     inputs: [
       {
-        name: 'user',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-      { name: 'index', internalType: 'uint64', type: 'uint64', indexed: false },
-      {
         name: 'depositedUSDa',
-        internalType: 'uint128',
-        type: 'uint128',
-        indexed: false,
-      },
-      {
-        name: 'depositedUSDT',
-        internalType: 'uint128',
-        type: 'uint128',
-        indexed: false,
-      },
-      {
-        name: 'depositedTime',
         internalType: 'uint256',
         type: 'uint256',
         indexed: false,
       },
-      {
-        name: 'ethPriceAtDeposit',
-        internalType: 'uint128',
-        type: 'uint128',
-        indexed: false,
-      },
-      {
-        name: 'lockingPeriod',
-        internalType: 'uint128',
-        type: 'uint128',
-        indexed: false,
-      },
+      { name: 'index', internalType: 'uint64', type: 'uint64', indexed: false },
       {
         name: 'liquidationAmount',
         internalType: 'uint128',
@@ -1323,9 +1230,15 @@ export const cdsAbi = [
         indexed: false,
       },
       {
-        name: 'optedForLiquidation',
-        internalType: 'bool',
-        type: 'bool',
+        name: 'normalizedAmount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'depositVal',
+        internalType: 'uint128',
+        type: 'uint128',
         indexed: false,
       },
     ],
@@ -1395,20 +1308,7 @@ export const cdsAbi = [
     anonymous: false,
     inputs: [
       {
-        name: 'user',
-        internalType: 'address',
-        type: 'address',
-        indexed: false,
-      },
-      { name: 'index', internalType: 'uint64', type: 'uint64', indexed: false },
-      {
-        name: 'withdrawUSDa',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'withdrawTime',
+        name: 'withdrewUSDa',
         internalType: 'uint256',
         type: 'uint256',
         indexed: false,
@@ -1419,24 +1319,6 @@ export const cdsAbi = [
         type: 'uint128',
         indexed: false,
       },
-      {
-        name: 'ethPriceAtWithdraw',
-        internalType: 'uint128',
-        type: 'uint128',
-        indexed: false,
-      },
-      {
-        name: 'optionsFees',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'optionsFeesWithdrawn',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
     ],
     name: 'Withdraw',
   },
@@ -1445,13 +1327,6 @@ export const cdsAbi = [
     inputs: [],
     name: 'UPGRADE_INTERFACE_VERSION',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'admin',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
     stateMutability: 'view',
   },
   {
@@ -1559,13 +1434,6 @@ export const cdsAbi = [
   },
   {
     type: 'function',
-    inputs: [],
-    name: 'cdsCount',
-    outputs: [{ name: '', internalType: 'uint64', type: 'uint64' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
     inputs: [{ name: '', internalType: 'address', type: 'address' }],
     name: 'cdsDetails',
     outputs: [
@@ -1581,7 +1449,6 @@ export const cdsAbi = [
       { name: 'usdaAmount', internalType: 'uint128', type: 'uint128' },
       { name: '_liquidate', internalType: 'bool', type: 'bool' },
       { name: '_liquidationAmount', internalType: 'uint128', type: 'uint128' },
-      { name: 'lockingPeriod', internalType: 'uint128', type: 'uint128' },
     ],
     name: 'deposit',
     outputs: [],
@@ -2004,31 +1871,17 @@ export const cdsAbi = [
   },
   {
     type: 'function',
-    inputs: [],
-    name: 'usdaLimit',
-    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'usdtAmountDepositedTillNow',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'usdtLimit',
-    outputs: [{ name: '', internalType: 'uint64', type: 'uint64' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
     inputs: [{ name: '_index', internalType: 'uint64', type: 'uint64' }],
     name: 'withdraw',
     outputs: [],
     stateMutability: 'payable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'withdrawTimeLimit',
+    outputs: [{ name: '', internalType: 'uint64', type: 'uint64' }],
+    stateMutability: 'view',
   },
 ] as const
 
@@ -4204,13 +4057,6 @@ export const treasuryAbi = [
   {
     type: 'function',
     inputs: [],
-    name: 'usda',
-    outputs: [{ name: '', internalType: 'contract IUSDa', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
     name: 'usdaGainedFromLiquidation',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
@@ -6008,19 +5854,6 @@ export const useReadBorrowingContractUpgradeInterfaceVersion =
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"admin"`
- *
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
- */
-export const useReadBorrowingContractAdmin =
-  /*#__PURE__*/ createUseReadContract({
-    abi: borrowingContractAbi,
-    address: borrowingContractAddress,
-    functionName: 'admin',
-  })
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"allowInitializePath"`
  *
  * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
@@ -6214,20 +6047,6 @@ export const useReadBorrowingContractQuote =
     address: borrowingContractAddress,
     functionName: 'quote',
   })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link borrowingContractAbi}__ and `functionName` set to `"usda"`
- *
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x739E6a6C4233011D99F68d96D8A3560E690a64A3)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xE5D4b991861E70D563e7d061e017e5566935941f)
- */
-export const useReadBorrowingContractUsda = /*#__PURE__*/ createUseReadContract(
-  {
-    abi: borrowingContractAbi,
-    address: borrowingContractAddress,
-    functionName: 'usda',
-  },
-)
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link borrowingContractAbi}__
@@ -6952,18 +6771,6 @@ export const useReadCdsUpgradeInterfaceVersion =
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"admin"`
- *
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
- */
-export const useReadCdsAdmin = /*#__PURE__*/ createUseReadContract({
-  abi: cdsAbi,
-  address: cdsAddress,
-  functionName: 'admin',
-})
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"allowInitializePath"`
  *
  * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
@@ -6975,18 +6782,6 @@ export const useReadCdsAllowInitializePath =
     address: cdsAddress,
     functionName: 'allowInitializePath',
   })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"cdsCount"`
- *
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
- */
-export const useReadCdsCdsCount = /*#__PURE__*/ createUseReadContract({
-  abi: cdsAbi,
-  address: cdsAddress,
-  functionName: 'cdsCount',
-})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"cdsDetails"`
@@ -7172,40 +6967,15 @@ export const useReadCdsUsda = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"usdaLimit"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"withdrawTimeLimit"`
  *
  * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
  * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
  */
-export const useReadCdsUsdaLimit = /*#__PURE__*/ createUseReadContract({
+export const useReadCdsWithdrawTimeLimit = /*#__PURE__*/ createUseReadContract({
   abi: cdsAbi,
   address: cdsAddress,
-  functionName: 'usdaLimit',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"usdtAmountDepositedTillNow"`
- *
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
- */
-export const useReadCdsUsdtAmountDepositedTillNow =
-  /*#__PURE__*/ createUseReadContract({
-    abi: cdsAbi,
-    address: cdsAddress,
-    functionName: 'usdtAmountDepositedTillNow',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link cdsAbi}__ and `functionName` set to `"usdtLimit"`
- *
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x3e39681Db0F3E0E848f3F7B0835B8ad58639F49A)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1ed5b275fE5eDcf7ddb9c6E253c77F6849E8A9df)
- */
-export const useReadCdsUsdtLimit = /*#__PURE__*/ createUseReadContract({
-  abi: cdsAbi,
-  address: cdsAddress,
-  functionName: 'usdtLimit',
+  functionName: 'withdrawTimeLimit',
 })
 
 /**
@@ -9651,18 +9421,6 @@ export const useReadTreasuryTotalVolumeOfBorrowersAmountinWei =
     address: treasuryAddress,
     functionName: 'totalVolumeOfBorrowersAmountinWei',
   })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"usda"`
- *
- * - [__View Contract on Base Sepolia Basescan__](https://sepolia.basescan.org/address/0x80f872b6402D1FB4BffF4837efe9E4b49cB91909)
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x4037E8dFE4CC62070593fBCd8C2bC648D29D34dB)
- */
-export const useReadTreasuryUsda = /*#__PURE__*/ createUseReadContract({
-  abi: treasuryAbi,
-  address: treasuryAddress,
-  functionName: 'usda',
-})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link treasuryAbi}__ and `functionName` set to `"usdaGainedFromLiquidation"`

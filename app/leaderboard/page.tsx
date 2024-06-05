@@ -4,7 +4,7 @@ import LeaderTable from './LeaderTable';
 import { BACKEND_API_URL } from '@/constants/BackendUrl';
 import { useQuery } from "@tanstack/react-query";
 import { useChainId ,useReadContract} from 'wagmi';
-import {treasuryAbi,treasuryAddress,cdsAbi,cdsAddress, useReadCdsCdsCount, useReadCdsTotalCdsDepositedAmount, useReadTestusdtAbi, useReadTreasuryNoOfBorrowers, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
+import {treasuryAbi,treasuryAddress,cdsAbi,cdsAddress, useReadCdsTotalCdsDepositedAmount, useReadTestusdtAbi, useReadTreasuryNoOfBorrowers, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
 import { formatEther } from 'viem';
 interface TableData {
     rank: string;
