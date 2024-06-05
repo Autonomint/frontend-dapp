@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "@/app/assets/logo.svg";
-import { useAccount, useBalance, useChainId, useDisconnect, useSwitchChain} from "wagmi";
+import { useAccount, useChainId, useSwitchChain } from "wagmi";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import dashboard from "@/app/assets/dashboard.svg";
@@ -11,15 +11,11 @@ import currencyExchange from "@/app/assets/currency_exchange.svg";
 import mintmark from "@/app/assets/mintmark.svg";
 import NavItems from "./NavItems";
 import { useTheme } from "next-themes";
-import { usDaAddress } from "@/abiAndHooks";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import truncateWeb3WalletAddress from "@/app/utils/truncateWeb3Address";
 import { useWeb3Modal, createWeb3Modal } from '@web3modal/wagmi/react'
 import { config, projectId } from "@/providers/WalletProvider";
-import {
-  Form,
-} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
@@ -30,6 +26,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link2, WalletIcon } from "lucide-react";
+import Profile from "./Profile";
 
 
 function formatNumber(num: number) {
@@ -78,6 +75,7 @@ const navItemsList = [
 
 
 const NavBar = () => {
+
   createWeb3Modal({
     wagmiConfig: config,
     projectId,
@@ -89,18 +87,11 @@ const NavBar = () => {
   }
   const { switchChain } = useSwitchChain();
 
-
-  const { disconnect } = useDisconnect();
   const chainId = useChainId();
   const [showMore, setShowMore] = useState(false);
-  const { address, isConnected } = useAccount();
+  const { address, isConnected,connector} = useAccount();
+  
 
-  const { data, isError, isLoading } = useBalance({
-    address: usDaAddress ? address : undefined,
-    token: usDaAddress
-      ? usDaAddress[chainId as keyof typeof usDaAddress]
-      : undefined,
-  });
 
 
   const segment = useSelectedLayoutSegment();
@@ -162,7 +153,7 @@ const NavBar = () => {
           {/* <div className="w-[2rem] h-[3rem]">
               <Image src={notification} className="rounded-sm cursor-pointer " onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
             </div> */}
-          <div className="flex items-center justify-end border-black w-28">
+          <div className="flex items-center justify-end border-black w-34">
 
         <Select
           onValueChange={(value) => {
@@ -171,13 +162,13 @@ const NavBar = () => {
           }}
           value={selectedNetwork}
         >
-                <SelectTrigger className='border border-black rounded-none bg-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] text-white' >
+                <SelectTrigger className='border  border-black rounded-none bg-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] text-white' >
                   <SelectValue placeholder={selectedNetwork} />
                 </SelectTrigger>
                 <SelectContent className='text-white  bg-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] rounded-none '>
                   <SelectGroup>
-                    <SelectItem value="Sepolia">Ethereum</SelectItem>
-                    <SelectItem value="Base Sepolia">Base</SelectItem>
+                    <SelectItem value="Sepolia">Ethereum Sepolia</SelectItem>
+                    <SelectItem value="Base Sepolia">Base Sepolia</SelectItem>
                   </SelectGroup>
                 </SelectContent>
 
@@ -274,45 +265,9 @@ const NavBar = () => {
           ) : ("")
         }
 
-
         {
           open2 ? (
-            <div className=" fixed w-[100%] border-black  sm:w-auto dark:bg-[#141414] sm:right-5 sm:top-[4rem] right-0 top-0 border dark:border-gray-600 bg-white px-4 py-4 pt-2 shadow-xl">
-              <div className="flex items-center justify-end w-full mb-2 ">
-                <button onClick={() => setOpen2(!open2)} className="p-1 border border-black dark:border-white dark:white hover:bg-gray-200"><Cross2Icon className="w-4 h-4" /></button>
-              </div>
-              <div className="flex flex-col gap-4">
-
-                <div className="flex flex-col gap-3">
-                  <div className="p-3 text-sm border  bg-[#EEEEEE] dark:bg-[#3A3A3A]">
-                    {address}
-                  </div>
-                  <div className="p-3 relative text-sm border  bg-[#EEEEEE] dark:bg-[#3A3A3A]">
-                    <div className="text-[0.8rem]"> USDa Balance</div>
-                    <div className="absolute flex items-center gap-2 text-xs top-3 right-2">
-                      <div className="h-4 w-4 bg-[#93F3BA] rounded-full flex items-center justify-center">
-                        <div className="h-2 w-2 bg-[#009350] rounded-full"></div>
-                      </div>
-                      {chainId === 11155111 ? "Ethereum Sepolia " : chainId === 84532 ? "Base Sepolia" : "unsupported network"}
-
-                    </div>
-                    <div className="text-xl font-bold">${data?.formatted.slice(0, 8)}</div>
-                  </div>
-
-                  <div className="flex gap-2 text-sm ">
-                    <Button variant={'outline'} className="py-2" >Change Network</Button>
-                    <Button  className="border-[#041A50] bg-[#ABFFDE] dark:text-black text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 " onClick={() => { disconnect(); setOpen2(!open2) }}>Disconnect</Button>
-                  </div>
-                  <div className="p-3 text-sm underline border  bg-[#EEEEEE]">
-                    <a href={`https://sepolia.etherscan.io/address/${address}`} >View All Wallets Transactions </a>
-                  </div>
-                  <div className="flex justify-between p-3 text-sm border  bg-[#EEEEEE] dark:bg-[#3A3A3A]"><div>Verify Joseon ID</div><a className="underline" href="https://www.joseon.com/l/en-US/" target="_blank">Learn More</a></div>
-                  <div className="p-3 text-sm border  bg-[#EEEEEE] dark:bg-[#3A3A3A]">
-                    Terms & privacy policy <a href="https://www.autonomint.com/terms-and-privacy" target="_blank" className="text-black underline">click to view</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+           <Profile setOpen={setOpen2} open={open2}/>
 
           ) : ("")
         }

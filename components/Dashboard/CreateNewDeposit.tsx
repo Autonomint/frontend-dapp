@@ -25,7 +25,7 @@ import Link from "next/link";
 import CustomToast from "../CustomUI/CustomToast";
 import Note from "../CustomUI/Note";
 import * as z from "zod";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, set, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -180,64 +180,6 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
     const data = await response.json();
     console.log(data)
     return data[1] ? (data[1] / 10 ** 6) : 0;
-  }
-
-
-
-  /**
-   * Stores data to the backend.
-   *
-   * @param address - The address to store.
-   * @returns The result from the backend.
-   */
-  async function storeToBackend(address: `0x${string}` | undefined) {
-    // Log the total index
-    let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);
-    let strikePercent = strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4;
-    const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${colateralamount}/${ethPrice}/${strikePercent}`).then(
-      (res) => res.json()
-    )
-
-
-
-    // Create the body value
-    let bodyValue = JSON.stringify({
-      address: address,
-      collateralType: "ETH",
-      index: totalIndex + 1,
-      chainId: chainId,
-      downsideProtectionPercentage: 100 - (ltv ? ltv : 0),
-      aprAtDeposit: 5,
-      depositedAmount: `${form.watch("collateralAmount")}`,
-      depositedTime: `${Date.now()}`,
-      ethPrice: Number(ethPrice ? ethPrice : 0) / 100,
-      noOfAmintMinted: `${noOfAmintMinted.current}`,
-      strikePrice: strikePrice,
-      strikePricePercent: strikePrice == 5 ? 'FIVE' : strikePrice == 10 ? 'TEN' : strikePrice == 15 ? 'FIFTEEN' : strikePrice == 20 ? 'TWENTY' : 'TWENTY_FIVE',
-      normalizedAmount: normalizedAmount.current,
-      optionFees: data[1].toString(),
-    });
-
-    // Log the body value
-    console.log(bodyValue);
-    // Send a POST request to the backend API
-    const response = await fetch(`${BACKEND_API_URL}/borrows/borrowAmint`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: bodyValue,
-    });
-
-    // Parse the response as JSON
-    const result = await response.json();
-
-    // If the response is not ok, throw an error with the result's message
-    if (!response.ok) {
-      throw new Error(result.message);
-    }
-    // Return the result
-    return result;
   }
 
 
@@ -456,6 +398,11 @@ useEffect(()=>{
   useEffect(() => {
     if (form.getValues("collateral") == undefined) {
       form.setError("collateralAmount", { message: "select collateral type" });
+    }
+    else if(form.getValues("collateralAmount") == 0) {
+      setAmintToBeMinted('0');
+      setDownsideProtectionAmnt('0');
+      setOptionFees(0);
     }
     else if (form.getValues("collateralAmount") != 0) {
       form.clearErrors("collateralAmount");

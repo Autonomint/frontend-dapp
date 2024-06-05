@@ -625,8 +625,8 @@ export default function page() {
           <div onClick={() => { setShowNotification(!showNotification); setOpenSettings(false) }} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
             <BellIcon className="w-6 h-6 text-[#000000] " />
           </div>
-          <div className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
-            <Settings onClick={() => { setOpenSettings(!openSettings); setShowNotification(false) }} className="w-6 h-6 text-[#000000] " />
+          <div  onClick={() => { setOpenSettings(!openSettings); setShowNotification(false) }} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
+            <Settings className="w-6 h-6 text-[#000000] " />
           </div>
         </div>
         <Notification showNotifications={showNotification} setShowNotifications={setShowNotification} />

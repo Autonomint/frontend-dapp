@@ -15,6 +15,7 @@ interface TableData {
     points: string;
     totalLTV?: number;
     yield: number;
+    chainId: number;
 }
 function formatNumber(num: number) {
     if (num >= 1000000) {
@@ -69,16 +70,20 @@ export default function page() {
         const response = await fetch(`${BACKEND_API_URL}/cds/cds/leaderboard`);
         return await response.json();
     }
+    
     //   Fetch and store deposits using react-query
     const { data: borrowdeposits, error: borrowdepositsError } = useQuery<TableData[]>({
         queryKey: ["borrowDeposits", chainId],
         queryFn: () => getBorrowLeaderboard(),
-      });
+    });
+    console.log('borrowdeposits',borrowdeposits)
       
       const { data: cdsdeposits, error: cdsdepositsError } = useQuery<TableData[]>({
           queryKey: ["Cdsdeposits", chainId],
           queryFn: () => getCdsLeaderboard(),
         });
+    console.log('cdsdeposits',cdsdeposits)
+
     return (
         <div className='w-full px-2 sm:px-5'>
         <div className='px-2 sm:px-8 py-5 w-full bg-white shadow-custom border-[1px] dark:bg-[#242424] dark:shadow-darkcustom border-[#9E9E9E] mdb:min-h-[84vh] '>

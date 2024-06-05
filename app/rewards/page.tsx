@@ -77,14 +77,14 @@ export default function page() {
                                     <div className='flex gap-2 text-sm font-semibold'><ReceiptIcon width={20} height={20} /> Collected</div>
                                     <div className='text-xl font-semibold text-center'>{points == undefined? 0 :points} LP</div>
                                 </div>
-                                <div className='flex w-full flex-col gap-2 bg-[#EEEEEE] border-[#9E9E9E] shadow-custom dark:bg-[#020202] dark:shadow-darkcustom p-4 '>
+                                {/* <div className='flex w-full flex-col gap-2 bg-[#EEEEEE] border-[#9E9E9E] shadow-custom dark:bg-[#020202] dark:shadow-darkcustom p-4 '>
                                     <div className='flex justify-between'>
                                         <p className='flex items-center gap-2 text-sm'><Wallet width={20} height={20} />Total referred :</p><p className='text-sm font-semibold'>500</p>
                                     </div>
                                     <div className='flex justify-between'>
                                         <p className='flex items-center gap-2 text-sm'><ListChecks width={20} height={20} /> Total users :</p><p className='text-sm font-semibold'>10000</p>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
 
                             <div className='flex flex-col gap-2 bg-[#ffffff] border border-[#9E9E9E]  dark:border-none dark:bg-[#3a3a3a] dark:shadow-darkcustom shadow-custom p-4 '>
@@ -92,22 +92,22 @@ export default function page() {
                                     HOW TO EARN:
                                 </div>
                                 <div className='flex justify-between border-b border-[#9E9E9E] pb-1'>
-                                    <p className='flex items-center justify-between w-full text-xs '><span>Mint & Borrow USDa -</span> <span className='font-medium'>10 points/per day</span></p>
+                                    <p className='flex items-center justify-between w-full text-xs '><span>Mint & Borrow USDa </span> <span className='font-medium'>10 points/per day</span></p>
                                 </div>
                                 <div className='flex justify-between border-b border-[#9E9E9E] pb-1'>
-                                    <p className='flex items-center justify-between w-full gap-2 text-xs'>Deposit 500 USDa in dCDS - <span className='font-medium'>10 points/per day</span></p>
+                                    <p className='flex items-center justify-between w-full gap-2 text-xs'>Deposit 500 USDa in dCDS  <span className='font-medium'>10 points/per day</span></p>
                                 </div>
                                 <div className='flex justify-between border-b border-[#9E9E9E] pb-1'>
-                                    <p className='flex items-center justify-between w-full gap-2 text-xs'>Deposit 500 TUSDT in dCDS - <span className='font-medium'>5 points/per day</span></p>
+                                    <p className='flex items-center justify-between w-full gap-2 text-xs'>Deposit 500 TUSDT in dCDS <span className='font-medium'>5 points/per day</span></p>
                                 </div>
                                 <div className='flex justify-between border-b border-[#9E9E9E] pb-1'>
-                                    <p className='flex items-center justify-between w-full gap-2 text-xs'>Bridge 500 USDa to Mode L2 - <span className='font-medium'>10 points/per day</span></p>
+                                    <p className='flex items-center justify-between w-full gap-2 text-xs'>Bridge 500 USDa to Mode L2  <span className='font-medium'>10 points/per day</span></p>
                                 </div>
                                 <div className='flex justify-between border-b border-[#9E9E9E] pb-1'>
-                                    <p className='flex items-center justify-between w-full gap-2 text-xs'>Tweet about Autonomint - <span className='font-medium'>3 points/per day</span></p>
+                                    <p className='flex items-center justify-between w-full gap-2 text-xs'>Tweet about Autonomint  <span className='font-medium'>3 points/per day</span></p>
                                 </div>
                                 <div className='flex '>
-                                    <p className='flex justify-between w-full text-xs '>Invite people to Autonomint - <span className='font-medium'>5 points</span></p>
+                                    <p className='flex justify-between w-full text-xs '>Invite people to Autonomint <span className='font-medium'>5 points</span></p>
                                 </div>
                             </div>
 
