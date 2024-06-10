@@ -19,7 +19,7 @@ export default function page() {
         console.log('referral generated')
         setShowReferral(true)
     }
-
+    // Fetch user points data using the useQuery hook
         const {data:points,error} = useQuery({
             queryKey: ['points'],
             queryFn:()=>fetch(`${BACKEND_API_URL}/points/userPoints/${chainId}/${address}`).then((res) => res.json()),

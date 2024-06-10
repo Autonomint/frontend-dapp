@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import CreateNewDeposit from "@/components/Dashboard/CreateNewDeposit";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
-import DepositAndWithDrawTable from "@/components/Table/OurTable";
+import DepositAndWithDrawTable from "@/components/Dashboard/OurTable";
 import { useAccount, useChainId } from "wagmi";
 import {
   useReadBorrowingContractGetUsdValue

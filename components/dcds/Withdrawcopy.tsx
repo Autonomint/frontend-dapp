@@ -138,12 +138,6 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
         }
     });
 
-    console.log("cdscds", ethPrice)
-    // get the current apy
-    // const { data: currentApy } = useBorrowingContractGetApy({
-    //   enabled: !!address,
-    // });
-
 
 
 

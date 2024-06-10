@@ -93,3 +93,5 @@ const AmintDepositRow = ({ details ,onClick,isnewtxn,islasttxn}: { details: Depo
 };
 
 export default AmintDepositRow;
+
+

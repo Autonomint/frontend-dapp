@@ -137,16 +137,15 @@ export default function page() {
   });
 
 
-
+// Get the maximum amount of collateral set to the input field
   const getmax=()=>{
-
     if(form.getValues("inputCollateral") === 'usda'){
       form.setValue('collateralAmount',Number(usdaBal?.formatted.slice(0, 8)))
     }else if(form.getValues("inputCollateral") === 'tusdt'){
       form.setValue('collateralAmount',Number(tusdtBal?.formatted.slice(0, 8)))
     }
   }
-
+//  Define the transaction parameters
   const transactionParams: TransactionParams = {
     dstEid: Eid,
     to: ethers.zeroPadValue(accountAddress ?? '0', 32) as `0x${string}`,
@@ -156,11 +155,11 @@ export default function page() {
     composeMsg: `0x${''.padEnd(64, '0')}`,
     oftCmd: `0x${''.padEnd(64, '0')}`,
   };
-
+// Get the native fee for the transaction
   const { data: nativeFee1, error: UsdaQuoteError, refetch: refetchnativeFee1 } = useReadUsDaQuoteSend({
     args: [transactionParams as any, false]
   });
-
+// Get the native fee for the transaction
   const { data: nativeFee2, error: TUSDTQuoteError, refetch: refetchnativeFee2 } = useReadTestusdtAbiQuoteSend({
     args: [transactionParams as any, false]
   });
@@ -725,10 +724,8 @@ export default function page() {
                                   }
                                   field.onChange(value)
                                 }}
-
                                 value={field.value}
                               >
-
                                 <FormControl className='bg-[#020202] text-white py-5  rounded-none' >
                                   <SelectTrigger >
                                     <SelectValue placeholder="Input Token" />
@@ -855,7 +852,6 @@ export default function page() {
                                 onValueChange={(value) => {
                                   field.onChange(value)
                                 }}
-
                                 disabled={true}
                                 value={field.value}
                               >
@@ -872,7 +868,6 @@ export default function page() {
                                     <SelectItem value="tusdt">TUSDT</SelectItem>
                                   </SelectGroup>
                                 </SelectContent>
-
                               </Select>
                             )}
                           />
@@ -954,7 +949,6 @@ export default function page() {
                           --
                         </p>
                       </div>
-
                     </div> */}
 
                   </div>

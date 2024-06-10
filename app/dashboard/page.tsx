@@ -110,6 +110,7 @@ function formatNumber(num: number) {
   }
 }
 
+
 const page = () => {
   // connected wallet
   const { isConnected} = useAccount();
@@ -122,24 +123,23 @@ const page = () => {
   const { data: amintsupply } = useReadUsDaTotalSupply()
   const { data: cdsPool } = useReadBorrowingContractOmniChainBorrowingCdsPoolValue()
   const { data: abondSupply} = useReadAbondTotalSupply();
-  // get ratio data
+  
 
   const {data:ratioData} = useQuery({
     queryKey: ["ratioData"],
     queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/ratio/${chainId}/${ethPrice}`).then((res) => res.json()),
-    staleTime:Infinity,
   })
   console.log(ratioData,ethPrice)
   
-  const {data:feeOptions} = useQuery({
+  const {data:feeOptions,refetch} = useQuery({
     queryKey: ['optionFees'],
     queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/1000000000000000000/${ethPrice}/0`).then((res) => res.json()),
-    staleTime:Infinity
   })
   console.log(feeOptions)
 
   useEffect(() => {
     handleStatsItem()
+    refetch()
   }, [ ethLocked, ethPrice, amintsupply, totalStable, cdsPool, ratioData, feeOptions, abondSupply,feeOptions,ratioData])
   
   const handleStatsItem = async () => {

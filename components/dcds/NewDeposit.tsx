@@ -65,7 +65,6 @@ import { parseEther, parseUnits } from "viem";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 import Spinner from "@/components/ui/spinner";
-import ProductList from "../Markets/ProductList";
 import arrowout from "@/app/assets/arrow_outward.svg";
 import { Options } from '@layerzerolabs/lz-v2-utilities'
 import GetBalance from "../ConnectWallet/GetBalance";
@@ -238,7 +237,7 @@ const NewDeposit = ({
             { duration: 5000 }
           );
         },
-
+// Handle success and show a custom toast notification
         onSuccess: (data) => {
           toast.custom(
             (t) => {
@@ -265,11 +264,11 @@ const NewDeposit = ({
       }
     }
   );
-
+// get the status of the usdt approval transaction
   const { isLoading: UsdtApprovalLoading, isSuccess: UsdtApprovalSuccess, isError: UsdtApprovalError, data: UsdtApprovalReceipt } = useWaitForTransactionReceipt({
     hash: usdtApproveData,
   });
-
+// useEffect to check the status of the usdt approval transaction
   useEffect(() => {
     console.log(usdtApproveData, UsdtApprovalReceipt?.logs);
     if (UsdtApprovalSuccess) {
@@ -318,91 +317,6 @@ const NewDeposit = ({
     );
   }
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: storeToCDSBackend,
-    onError(error) {
-      // Log any errors that occur during the mutation
-      console.log(error);
-    },
-    onSettled() {
-      // Invalidate queries to update related data after the mutation is completed
-      queryClient.invalidateQueries({ queryKey: ["dCDSdepositorsData"] });
-      queryClient.invalidateQueries({ queryKey: ["dCDSdeposits"] });
-
-      // Reset form fields and state after the mutation is completed
-      setOpen(false);
-      handleRefetch()
-      reset?.();
-      amintReset?.();
-      form.reset();
-    },
-  });
-
-
-  /**
- * Stores the data to the CDS backend.
- *
- * @param address - The address to store.
- */
-  async function storeToCDSBackend(address: `0x${string}` | undefined) {
-    console.log("storeToCDSBackend", address)
-    // Calculate the liquidation amount based on amintAmnt and usdtAmnt for now i am just adding usdt and amint considering both as 18 decimals but as usdt is 6 decimals you will have to manage it yourself or ask abhishek sir
-    const liqAmnt =
-      (((amintAmnt ? amintAmnt : 0) + (usdtAmnt ? usdtAmnt : 0)) * 80) / 100;
-    // Determine the collateral type based on amintAmnt and usdtAmnt
-    console.log("storeToCDSBackend", address)
-    const colType =
-      (amintAmnt !== 0 && amintAmnt != undefined) && (usdtAmnt !== 0 && usdtAmnt != undefined)
-        ? "AMINT&USDT"
-        : amintAmnt !== 0 && amintAmnt != undefined
-          ? "AMINT"
-          : usdtAmnt !== 0 && usdtAmnt != undefined
-            ? "USDT"
-            : "NONE";
-
-    // Create the body value for the API request
-    let bodyValue = JSON.stringify({
-      address: address,
-      index: totalCDSIndex ? totalCDSIndex + 1 : 1,
-      chainId: chainId,
-      depositedAmint: `${amintAmnt == undefined ? 0 : amintAmnt}`,
-      depositedUsdt: `${usdtAmnt == undefined ? 0 : usdtAmnt}`,
-      collateralType: colType,
-      depositedTime: `${Date.now()}`,
-      ethPriceAtDeposit: Number(ethPrice ? ethPrice : 0) / 100,
-      aprAtDeposit: 5,
-      lockingPeriod: Number(lockIn),
-      optedForLiquidation: liquidationGains,
-      liquidationAmount: `${liquidationGains ? liqAmnt : '0'}`,
-      depositVal: Number(depositVal.current),
-    });
-
-    // Log the body value for debugging purposes
-    console.log(bodyValue);
-
-    // Send the API request to the CDS backend
-    const response = await fetch(`${BACKEND_API_URL}/cds/depositAmint`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: bodyValue,
-    });
-
-    // Parse the response as JSON
-    const result = await response.json();
-
-    // If the response is not successful, throw an error with the result message
-    if (!response.ok) {
-      throw new Error(result.message);
-    }
-
-    form.reset();
-    // Return the result
-    return result;
-  }
-
-
 
 
 
@@ -440,6 +354,8 @@ const NewDeposit = ({
           ),
           { duration: 5000 }
         );
+
+        // Dismiss the toast notification after 5 seconds
 
       },
       // Handle the successful completion of the CDS deposit process
@@ -1218,38 +1134,16 @@ const NewDeposit = ({
                   className="py-2 basis-1/2"
                   //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                   disabled={
-                     isCdsDepositLoading || isPending || isLoading
+                     isCdsDepositLoading || AmintApprovalLoading || usdtApproveLoading || UsdtApprovalLoading 
                   }
                 >
-                  {usdtApproveLoading || UsdtApprovalLoading || amintApproveLoading || isCdsDepositLoading || isPending || isLoading ? <Spinner /> : 'Confirm Deposit'}
+                  {usdtApproveLoading || UsdtApprovalLoading || amintApproveLoading || isCdsDepositLoading || AmintApprovalLoading ? <Spinner /> : 'Confirm Deposit'}
                 </Button>
               </div>
             </div>
           </form>
         </Form>
 
-
-        <Dialog open={openmarket} onOpenChange={setOpenmarket} >
-          <DialogContent className="max-w-[340px] pb-5">
-            <div className="flex justify-end w-full ">
-              <DialogClose asChild>
-                <Button
-                  variant={"ghostOutline"}
-                  size={"primary"}
-                  className="flex gap-[10px] border border-borderGrey "
-                >
-                  <Cross2Icon className="w-4 h-4" />
-                  <p className="text-transparent bg-clip-text bg-[linear-gradient(180deg,#808080_-0.23%,#000_100%)] font-semibold text-base">
-                    Close
-                  </p>
-                </Button>
-              </DialogClose>
-            </div>
-
-            <ProductList />
-
-          </DialogContent>
-        </Dialog>
 
       </div>
     </div>

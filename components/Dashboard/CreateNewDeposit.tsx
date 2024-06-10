@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
-import Image from "next/image";
 import { toast } from "sonner";
 import {
   Tooltip,
@@ -40,12 +39,6 @@ import { useAccount, useBalance, useChainId, useWaitForTransactionReceipt, useRe
 import { parseEther, parseUnits } from "viem";
 import arrowout from "@/app/assets/arrow_outward.svg";
 import {
-  borrowingContractAbi,
-  treasuryAbi,
-  cdsAddress,
-  cdsAbi,
-  borrowingContractAddress,
-  treasuryAddress,
   useWriteBorrowingContractDepositTokens,
   useReadBorrowingContractGetLtv,
   useReadBorrowingContractGetUsdValue,
@@ -91,11 +84,6 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
 
   const Eid = chainId===11155111? 40245: 40161;
 
-  // const timer = useRef<number>();
-  const queryClient = useQueryClient();
-  //we will get this normalizedAmount from events while depositing
-  const normalizedAmount = useRef("");
-  const noOfAmintMinted = useRef("");
   // to manage the toastId
   const toastId = useRef<string | number>("");
   const form = useForm<z.infer<typeof formSchema>>({
@@ -106,7 +94,10 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
       strikePrice: 5,
     },
   });
+
   const ethBalance = useBalance({ address: address })
+
+  // Create the options for the contract
   const options  = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
 
   // watch for the strikePrice in the form
@@ -119,19 +110,22 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
       query: { staleTime: 10 * 1000 }
     });
 
+
   const { data: totalCdsDepositedAmount } = useReadCdsTotalCdsDepositedAmount({
     query: { staleTime: 10 * 1000 }
   });
 
+  // Use the useQuery hook to quote the Treasury nativefee
   const {data:nativeFee } = useReadTreasuryQuote({ query: { enabled: !!address },args:[Eid, 1,
     {recipient:"0x0000000000000000000000000000000000000000",tokensToSend:0n},
     {recipient:"0x0000000000000000000000000000000000000000",nativeTokensToSend:0n}, options, false],
   });
 
+  // Use the useQuery hook to quote the CDS nativefee
   const {data:nativeFee1,error  } = useReadCdsQuote({ query: { enabled: !!address },args:[Eid, 1,123n,123n,123n,
     {liquidationAmount: 0n, profits: 0n, ethAmount: 0n, availableLiquidationAmount: 0n},0n, options, false] });
 
-
+// Use the useQuery hook to quote the Borrow nativefee
   const {data:nativeFee2 } = useReadBorrowingContractQuote({query:{enabled:!!address},args:[Eid, {
     normalizedAmount: 5n,
     ethVaultValue: 10n,
@@ -142,10 +136,6 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
     ethValueRemainingInWithdraw: 35n,
     nonce: 40n
   }, options, false]})
-
-
-
-
 
 
 
@@ -169,6 +159,8 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
     enabled: !!address,
     staleTime: 10 * 1000,
   });
+
+
   /**
    * Retrieves the option fees for a given address.
    *
@@ -245,7 +237,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
 
   });
 
-
+// Use the useWaitForTransactionReceipt hook to wait for the transaction receipt
 const{data:Depositdata , isError:depositError,isLoading:isDepositdataLoading,isSuccess:isDepositSuccess} = useWaitForTransactionReceipt({
   hash: depositDatahash,
   confirmations:2
@@ -277,10 +269,9 @@ useEffect(()=>{
           }}
         />
       ),
-      { id: toastId.current }
+      { duration: 5000 } // Toast duration: 5000 milliseconds
     );
 
-    // Dismiss toast after 3 seconds
     setTimeout(() => {
       toast.dismiss(toastId.current);
     }, 3000);
@@ -300,7 +291,7 @@ useEffect(()=>{
           />
         </div>
       ),
-      { duration: 10000 } // Toast duration: 5000 milliseconds
+      { duration: 5000 } // Toast duration: 5000 milliseconds
     );
   }
   
@@ -389,12 +380,9 @@ useEffect(()=>{
   };
 
 
-
-
   /**
    * Handles the calculation and setting of the eth volatility.
    */
-
   useEffect(() => {
     if (form.getValues("collateral") == undefined) {
       form.setError("collateralAmount", { message: "select collateral type" });

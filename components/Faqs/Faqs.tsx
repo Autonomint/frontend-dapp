@@ -9,6 +9,7 @@ import {
 import parse from "html-react-parser";
 import { Button } from "@/components/ui/button";
 
+
 const accordinContentBorrow = [
   {
     headline: "What is USDa? ",
@@ -86,10 +87,10 @@ const accordinContentCDS = [
   ];
 
 const Faq = () => {
+  
   const [allFaqVisible, setFaqVisible] = useState(false);
   const [accordintype, setAccordintype] = useState('mint');
   const accordinContent = accordintype=="mint"?accordinContentBorrow:accordinContentCDS;
-// const [accordinContent, setAccordinContent] = useState(accordinContentBorrow);
   return (
     <div className="mx-auto max-w-[1440px] w-full px-4">
       <div className="">

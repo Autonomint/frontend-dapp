@@ -2,13 +2,10 @@
 import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
-import heroPattern from "@/app/assets/gridBg.svg";
 import wallets from "@/app/assets/wallet icons.svg";
-import linkIcon from "@/app/assets/link.svg";
 
-
-import { useWeb3Modal ,createWeb3Modal } from '@web3modal/wagmi/react'
-import { config,projectId } from "@/providers/WalletProvider";
+import { useWeb3Modal, createWeb3Modal } from '@web3modal/wagmi/react'
+import { config, projectId } from "@/providers/WalletProvider";
 import { Link2 } from "lucide-react";
 const ConnectWallet = () => {
   createWeb3Modal({
@@ -17,17 +14,15 @@ const ConnectWallet = () => {
     enableAnalytics: true,
   })
   const { open, close } = useWeb3Modal()
-    const onConnect = ()=>{
-      open()
-    }
+  const onConnect = () => {
+    open()
+  }
   return (
     <div className="relative p-6 rounded-[10px] bg-none w-full  flex flex-col gap-[30px] flex-1 items-center justify-center min-h-[70vh] md:min-h-[70vh] self-stretch overflow-hidden">
       <div
         className={`absolute w-[1733.078px] rotate-[14deg] h-[1108.473px] z-0 rounded-xl shrink-0`}
       >
-      
       </div>
-
       <div className="absolute rounded-[10px]   overflow-hidden w-full h-full shrink-0"></div>
       <div className="flex flex-col gap-[30px] items-center justify-center z-10">
         <Image src={wallets} alt="wallets" width={266.044} height={82}></Image>
@@ -54,5 +49,5 @@ const ConnectWallet = () => {
       </div>
     </div>
   );
-}; 
+};
 export default ConnectWallet;

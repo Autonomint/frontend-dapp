@@ -33,9 +33,10 @@ const LeaderTable = ({ tableType, data }: { tableType: string, data: TableData[]
     const [sortField, setSortField] = useState(null);
     const [pagecount, setPageCount] = useState(1);
     const itemsPerPage = 10;
+
+    // sort the data based on the sortField
     useEffect(() => {
         let sorted = [...data];
-
         if (sortField) {
             sorted.sort((a, b) => (a[sortField] > b[sortField]) ? 1 : -1);
         }
@@ -43,7 +44,6 @@ const LeaderTable = ({ tableType, data }: { tableType: string, data: TableData[]
     }, [data, currentPage, sortField]);
     return (
         <div>
-
             <div className='border-t border-black shadow-sm dark:border-gray-700'>
                 <div className=' dark:bg-[#141414]   min-h-[25rem] sm:overflow-auto  overflow-x-scroll  '>
                     <Table className='min-w-[400px]'>
@@ -55,7 +55,6 @@ const LeaderTable = ({ tableType, data }: { tableType: string, data: TableData[]
                                     tableType === 'borrow' ? <TableHead className="text-[#5B5B5B] dark:text-[#C4C4C4]">USDa Borrowed</TableHead> :
                                         <TableHead className="text-[#5B5B5B] dark:text-[#C4C4C4]">dCDS deposits</TableHead>
                                 }
-                                {/* <TableHead className="text-white dark:text-[#C4C4C4]">Points</TableHead> */}
                                 {
                                     tableType === 'cds' ? null : <TableHead className="text-[#5B5B5B] dark:text-[#C4C4C4]">LTV ratio</TableHead>
                                 }
@@ -80,7 +79,7 @@ const LeaderTable = ({ tableType, data }: { tableType: string, data: TableData[]
                                             </div>
                                         </TableCell>
                                         <TableCell className="  dark:text-[#EEEEEE] flex gap-2">
-                                            {truncateWeb3WalletAddress(`0x${data.address}`)} <Image src={data.chainId === 11155111 ?  sepolialogo:baselogo } alt='logo' width={20} height={20} />
+                                            {truncateWeb3WalletAddress(`0x${data.address}`)} <Image src={data.chainId === 11155111 ? sepolialogo : baselogo} alt='logo' width={20} height={20} />
                                         </TableCell>
                                         {
                                             tableType === 'borrow' ? <TableCell className=" dark:text-[#EEEEEE]">{Number(data.totalAmint).toFixed(4)} </TableCell> :
@@ -93,7 +92,7 @@ const LeaderTable = ({ tableType, data }: { tableType: string, data: TableData[]
                                                 <TableCell className=" dark:text-[#EEEEEE]">{0}
                                                 </TableCell>
                                         }
-                                        <TableCell className=" dark:text-[#EEEEEE]">{data.points==null?0:data.points}
+                                        <TableCell className=" dark:text-[#EEEEEE]">{data.points == null ? 0 : data.points}
                                         </TableCell>
 
                                     </TableRow>
