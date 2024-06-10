@@ -182,7 +182,7 @@ const NavBar = () => {
               <div className="w-[1.5rem] -mt-[2px] "><WalletIcon className="w-5" /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
             </Button>
           ) : (
-            <Button onClick={onConnect} className="font-[500]" variant={'secondary'} >
+            <Button onClick={onConnect} className="font-[500] gap-2" variant={'secondary'} >
              <Link2 className="w-5"/> Connect Wallet
             </Button>
           )}

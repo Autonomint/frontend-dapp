@@ -25,7 +25,7 @@ const ConfirmNotice = ({
           </p>
           <p className="text-[#00679F] font-medium min-[1440px]:text-[32px] 2dppx:text-2xl text-2xl leading-none dark:text-[#ffff]">
           {withdrawalTime === "DEPOSITED"
-            ? `${(parseFloat(amintToMint.toString())/10**6).toString()} USDa`
+            ? `${(parseFloat(amintToMint.toString())/10**6).toFixed(2)} USDa`
             : `~${amintToMint.toString()} ETH`}
           
           </p>

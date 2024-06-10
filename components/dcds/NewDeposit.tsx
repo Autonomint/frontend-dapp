@@ -259,7 +259,7 @@ const NewDeposit = ({
                 </div>
               );
             },
-            { duration: Infinity }
+            { duration: 5000 }
           );
         },
       }
@@ -438,13 +438,9 @@ const NewDeposit = ({
               />
             </div>
           ),
-          { duration: Infinity, id: toastId.current }
+          { duration: 5000 }
         );
 
-        // Dismiss the toast notification after 5 seconds
-        setTimeout(() => {
-          toast.dismiss(toastId.current);
-        }, 5000);
       },
       // Handle the successful completion of the CDS deposit process
       onSuccess: (data) => {
@@ -463,14 +459,14 @@ const NewDeposit = ({
                     linkLabel: "View Transaction",
                     toastClosebuttonHoverColor: "#90e398",
                     toastClosebuttonColor: "#57C262",
-                    spinner: true,
+                    spinner: false,
                   }}
                 />
               </div>
             );
           },
           // Set the duration of the toast notification to be infinite
-          { duration: 5000, id: toastId.current }
+          { duration: 5000 }
         );
       },
     }
@@ -525,7 +521,7 @@ const NewDeposit = ({
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
-                  spinner: true,
+                  spinner: false,
                 }}
               />
             </div>

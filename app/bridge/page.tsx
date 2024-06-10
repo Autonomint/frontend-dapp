@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useReadTestusdtAbiQuoteSend, useReadUsDaQuoteSend, useWriteTestusdtAbiSend, useWriteUsDaSend,useWriteUsDaApprove, testusdtAbiAddress, usDaAddress } from '@/abiAndHooks';
+import { useReadTestusdtAbiQuoteSend, useReadUsDaQuoteSend, useWriteTestusdtAbiSend, useWriteUsDaSend, useWriteUsDaApprove, testusdtAbiAddress, usDaAddress } from '@/abiAndHooks';
 import { Input } from "@/components/ui/input";
 import { Button } from '@/components/ui/button';
 import * as z from "zod";
@@ -98,7 +98,7 @@ export default function page() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      sourceChain: "11155111",
+      sourceChain: chainId.toString(),
       destinationChain: "919",
       inputCollateral: undefined,
       collateralAmount: 0,
@@ -106,36 +106,52 @@ export default function page() {
       outputCollateralAmount: 0
     },
   });
+
   const [collateralAmountString, setCollateralAmountString] = useState<string>("0");
+
   useEffect(() => {
-    console.log(form.getValues("collateralAmount"))
     let letamount = form.getValues("collateralAmount").toString();
-    if(!form.getValues("collateralAmount")){
+    if (!form.getValues("collateralAmount")) {
       setCollateralAmountString('0')
       letamount = "0"
     }
-    else{
-      setCollateralAmountString(form.getValues("collateralAmount").toString())
+    else {
+      setCollateralAmountString((form.getValues("collateralAmount")*10**6).toString())
     }
-    const amount = ethers.parseEther(letamount) -37671213890518646n;
-    if(chainId === 84532 && nativeFee1 && nativeFee2){
-    const amount = ethers.parseEther(letamount) - nativeFee1.nativeFee;
-    
-  }
-  if(form.getValues("collateralAmount") !=0){
-    form.setValue("outputCollateralAmount", Number((Number(amount)/10**18).toFixed(4)));
-    
-  }
-
-
+    const amount = ethers.parseEther(letamount) - 37671213890518646n;
+    if (chainId === 84532 && nativeFee1 && nativeFee2) {
+      const amount = ethers.parseEther(letamount) - nativeFee1.nativeFee;
+    }
+    if (form.getValues("collateralAmount") != 0) {
+      form.setValue("outputCollateralAmount", Number((Number(amount) / 10 ** 18).toFixed(4)));
+    }
   }, [form.watch("collateralAmount")]);
-  
+
+  const { data:tusdtBal } = useBalance({
+    address:accountAddress,
+    token: testusdtAbiAddress[chainId as keyof typeof testusdtAbiAddress]
+  });
+  const { data:usdaBal } = useBalance({
+    address:accountAddress,
+    token:   usDaAddress[chainId as keyof typeof usDaAddress] 
+  });
+
+
+
+  const getmax=()=>{
+
+    if(form.getValues("inputCollateral") === 'usda'){
+      form.setValue('collateralAmount',Number(usdaBal?.formatted.slice(0, 8)))
+    }else if(form.getValues("inputCollateral") === 'tusdt'){
+      form.setValue('collateralAmount',Number(tusdtBal?.formatted.slice(0, 8)))
+    }
+  }
 
   const transactionParams: TransactionParams = {
     dstEid: Eid,
     to: ethers.zeroPadValue(accountAddress ?? '0', 32) as `0x${string}`,
     amountLD: BigInt(collateralAmountString),
-    minAmountLD:  BigInt(collateralAmountString),
+    minAmountLD: BigInt(collateralAmountString),
     extraOptions: options,
     composeMsg: `0x${''.padEnd(64, '0')}`,
     oftCmd: `0x${''.padEnd(64, '0')}`,
@@ -149,6 +165,8 @@ export default function page() {
     args: [transactionParams as any, false]
   });
 
+
+
   const {
     isPending: amintApproveLoading,
     data: amintApproveData,
@@ -156,63 +174,63 @@ export default function page() {
     isSuccess: amintApproved,
   } = useWriteUsDaApprove(
     {
-      mutation:{
-      onError(error) {
-        toast.custom(
-          (t) => {
-            toastId.current = t;
-            return (
-              <div>
-                <CustomToast
-                  key={2}
-                  props={{
-                    t,
-                    toastMainColor: "#B43939",
-                    headline: `Uhh Ohh! ${error.name}`,
-                    toastClosebuttonHoverColor: "#e66d6d",
-                    toastClosebuttonColor: "#C25757",
-                  }}
-                />
-              </div>
-            );
-          },
-          { duration: 5000 }
-        );
-      },
+      mutation: {
+        onError(error) {
+          toast.custom(
+            (t) => {
+              toastId.current = t;
+              return (
+                <div>
+                  <CustomToast
+                    key={2}
+                    props={{
+                      t,
+                      toastMainColor: "#B43939",
+                      headline: `Uhh Ohh! ${error.name}`,
+                      toastClosebuttonHoverColor: "#e66d6d",
+                      toastClosebuttonColor: "#C25757",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: 3000 }
+          );
+        },
 
-      // Handle success and show a custom toast notification
-      onSuccess: (data) => {
-        toast.custom(
-          (t) => {
-            toastId.current = t;
-            return (
-              <div>
-                <CustomToast
-                  props={{
-                    t,
-                    toastMainColor: "#268730",
-                    headline: "Transaction Submitted",
-                    transactionHash: data,
-                    linkLabel: "View Transaction",
-                    toastClosebuttonHoverColor: "#90e398",
-                    toastClosebuttonColor: "#57C262",
-                  }}
-                />
-              </div>
-            );
-          },
-          { duration: Infinity }
-        );
-      },
-    }
-  });
+        // Handle success and show a custom toast notification
+        onSuccess: (data) => {
+          toast.custom(
+            (t) => {
+              toastId.current = t;
+              return (
+                <div>
+                  <CustomToast
+                    props={{
+                      t,
+                      toastMainColor: "#268730",
+                      headline: "Transaction Submitted",
+                      transactionHash: data,
+                      linkLabel: "View Transaction",
+                      toastClosebuttonHoverColor: "#90e398",
+                      toastClosebuttonColor: "#57C262",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: 3000 }
+          );
+        },
+      }
+    });
 
-  const { data: amintTransactionAllowed, isLoading: isAmintTransactionLoading ,isError:usdaErrorApprove,isSuccess:usdaApproveSuccess} = useWaitForTransactionReceipt({
+  const { data: amintTransactionAllowed, isLoading: isAmintTransactionLoading, isError: usdaErrorApprove, isSuccess: usdaApproveSuccess } = useWaitForTransactionReceipt({
     hash: amintApproveData
   });
 
   useEffect(() => {
-    if(usdaApproveSuccess && accountAddress) {
+    if (usdaApproveSuccess && accountAddress) {
       usdaApproveWrite({
         args: [
           transactionParams,
@@ -220,10 +238,10 @@ export default function page() {
           accountAddress,
         ],
         // value: nativeFee1.nativeFee,
-        value:37671213890518646n
+        value: 37671213890518646n
       })
     }
-    else if(usdaErrorApprove) {
+    else if (usdaErrorApprove) {
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -246,7 +264,7 @@ export default function page() {
       );
     }
 
-  },[amintTransactionAllowed])
+  }, [amintTransactionAllowed])
 
 
   const {
@@ -302,7 +320,7 @@ export default function page() {
                 </div>
               );
             },
-            { duration: Infinity }
+            { duration: 3000 }
           );
         },
       }
@@ -326,7 +344,7 @@ export default function page() {
                 props={{
                   t,
                   toastMainColor: "#268730",
-                  headline: "Amint Approved,Plz confirm the transaction to redeem USDT",
+                  headline: "Amint Approved,Plz confirm the transaction on your wallet",
                   transactionHash: usdaApproveData,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
@@ -371,63 +389,63 @@ export default function page() {
     isSuccess: tusDTApproved,
   } = useWriteUsDaApprove(
     {
-      mutation:{
-      onError(error) {
-        toast.custom(
-          (t) => {
-            toastId.current = t;
-            return (
-              <div>
-                <CustomToast
-                  key={2}
-                  props={{
-                    t,
-                    toastMainColor: "#B43939",
-                    headline: `Uhh Ohh! ${error.name}`,
-                    toastClosebuttonHoverColor: "#e66d6d",
-                    toastClosebuttonColor: "#C25757",
-                  }}
-                />
-              </div>
-            );
-          },
-          { duration: 5000 }
-        );
-      },
+      mutation: {
+        onError(error) {
+          toast.custom(
+            (t) => {
+              toastId.current = t;
+              return (
+                <div>
+                  <CustomToast
+                    key={2}
+                    props={{
+                      t,
+                      toastMainColor: "#B43939",
+                      headline: `Uhh Ohh! ${error.name}`,
+                      toastClosebuttonHoverColor: "#e66d6d",
+                      toastClosebuttonColor: "#C25757",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: 5000 }
+          );
+        },
 
-      // Handle success and show a custom toast notification
-      onSuccess: (data) => {
-        toast.custom(
-          (t) => {
-            toastId.current = t;
-            return (
-              <div>
-                <CustomToast
-                  props={{
-                    t,
-                    toastMainColor: "#268730",
-                    headline: "Transaction Submitted",
-                    transactionHash: data,
-                    linkLabel: "View Transaction",
-                    toastClosebuttonHoverColor: "#90e398",
-                    toastClosebuttonColor: "#57C262",
-                  }}
-                />
-              </div>
-            );
-          },
-          { duration: Infinity }
-        );
-      },
-    }
-  });
+        // Handle success and show a custom toast notification
+        onSuccess: (data) => {
+          toast.custom(
+            (t) => {
+              toastId.current = t;
+              return (
+                <div>
+                  <CustomToast
+                    props={{
+                      t,
+                      toastMainColor: "#268730",
+                      headline: "Transaction Submitted",
+                      transactionHash: data,
+                      linkLabel: "View Transaction",
+                      toastClosebuttonHoverColor: "#90e398",
+                      toastClosebuttonColor: "#57C262",
+                    }}
+                  />
+                </div>
+              );
+            },
+            { duration: 3000 }
+          );
+        },
+      }
+    });
 
-  const { data: tusDTTransactionAllowed, isLoading: tusDTTransactionLoading ,isError:tusDTErrorApprove,isSuccess:tusDTApproveSuccess} = useWaitForTransactionReceipt({
+  const { data: tusDTTransactionAllowed, isLoading: tusDTTransactionLoading, isError: tusDTErrorApprove, isSuccess: tusDTApproveSuccess } = useWaitForTransactionReceipt({
     hash: tusDTApproveData
   });
 
   useEffect(() => {
-    if(tusDTApproveSuccess && accountAddress) {
+    if (tusDTApproveSuccess && accountAddress) {
       tusdtApproveWrite({
         args: [
           transactionParams,
@@ -435,10 +453,10 @@ export default function page() {
           accountAddress,
         ],
         // value: nativeFee2.nativeFee,
-        value:37671213890518646n
+        value: 37671213890518646n
       })
     }
-    else if(usdaErrorApprove) {
+    else if (usdaErrorApprove) {
       toast.custom(
         (t) => {
           toastId.current = t;
@@ -461,7 +479,7 @@ export default function page() {
       );
     }
 
-  },[tusDTTransactionAllowed])
+  }, [tusDTTransactionAllowed])
 
   const {
     isPending: tusdtApproveLoading,
@@ -513,7 +531,7 @@ export default function page() {
                 </div>
               );
             },
-            { duration: Infinity }
+            { duration: 3000 }
           );
         },
       }
@@ -535,7 +553,7 @@ export default function page() {
                 props={{
                   t,
                   toastMainColor: "#268730",
-                  headline: "Amint Approved,Plz confirm the transaction to redeem USDT",
+                  headline: "Amint Approved,Plz confirm the transaction ",
                   transactionHash: tusdtApproveData,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
@@ -580,21 +598,21 @@ export default function page() {
 
 
 
-      if (values.inputCollateral === 'usda' ) {
+      if (values.inputCollateral === 'usda') {
         amintApproveWrite({
           args: [
-  
+
             (usDaAddress[chainId as keyof typeof usDaAddress] as `0x${string}`),
             BigInt(values.collateralAmount * 10 ** 6),
           ],
         })
- 
 
-      } else if (values.inputCollateral === 'tusdt' ) {
-        
+
+      } else if (values.inputCollateral === 'tusdt') {
+
         tusDTApproveWrite({
           args: [
-  
+
             (testusdtAbiAddress[chainId as keyof typeof testusdtAbiAddress] as `0x${string}`),
             BigInt(values.collateralAmount * 10 ** 6),
           ],
@@ -603,7 +621,6 @@ export default function page() {
     }
 
   }
-
 
 
   useEffect(() => {
@@ -617,7 +634,7 @@ export default function page() {
 
   }, [form.watch("inputCollateral")]);
 
- 
+
   return (
     <div className='w-full px-2 sm:px-5 '>
       <div className='w-full relative bg-white border border-[#9E9E9E] shadow-custom dark:bg-[#242424] dark:shadow-darkcustom min-h-[84vh]'>
@@ -625,7 +642,7 @@ export default function page() {
           <div onClick={() => { setShowNotification(!showNotification); setOpenSettings(false) }} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
             <BellIcon className="w-6 h-6 text-[#000000] " />
           </div>
-          <div  onClick={() => { setOpenSettings(!openSettings); setShowNotification(false) }} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
+          <div onClick={() => { setOpenSettings(!openSettings); setShowNotification(false) }} className="border-[#041A50] bg-[#ABFFDE] border-[1px] shadow-smallcustom h-fit p-[15px] cursor-pointer">
             <Settings className="w-6 h-6 text-[#000000] " />
           </div>
         </div>
@@ -654,9 +671,9 @@ export default function page() {
                                 <Select
                                   onValueChange={(value) => {
                                     form.setValue("collateralAmount", 0);
-                                    
+
                                     form.setValue('destinationChain', '919');
-                                
+
                                     switchChain && switchChain({ chainId: Number(value) });
                                     field.onChange(value)
 
@@ -678,13 +695,13 @@ export default function page() {
                               )}
                             />
 
-                            
+
                           </FormItem>
                         )}
                       />
                     </div>
 
-                    <div className='text-[#020202] px-3 py-1 relative rounded-none  border-0 border-b-2 border-[#020202] bg-[#DEDEDE] dark:bg-[#3A3A3A] dark:border-white dark:text-white'>
+                    <div onClick={getmax} className='text-[#020202] cursor-pointer max-h-8 flex items-center justify-center px-3 py-1 relative rounded-none  border-0 border-b-2 border-[#020202] bg-[#DEDEDE] dark:bg-[#3A3A3A] dark:border-white dark:text-white'>
                       max
                     </div>
                   </div>
@@ -771,7 +788,7 @@ export default function page() {
 
                   </div>
                   <div className='flex items-center justify-end text-xs text-end '>
-                   <GetBalance token={form.getValues("inputCollateral")==="usda"?"USDa":"TUSDT"} />
+                    {form.getValues('inputCollateral') && <GetBalance token={form.getValues("inputCollateral") === "usda" ? "USDa" :form.getValues("inputCollateral") === "tusdt" ? "TUSDT" :""} />}
                   </div>
                 </div>
                 <div className='flex items-center justify-center my-4'>
@@ -838,7 +855,7 @@ export default function page() {
                                 onValueChange={(value) => {
                                   field.onChange(value)
                                 }}
-                                
+
                                 disabled={true}
                                 value={field.value}
                               >
@@ -912,7 +929,8 @@ export default function page() {
                         Gas on destination chain
                       </p>
                       <p className="text-textHighlight font-medium  min-[1440px]:text-base 2dppx:text-sm text-sm dark:text-[#FFFFFF]">
-                        {form.getValues("inputCollateral") === 'usda' ? Number(nativeFee1?.nativeFee)/10**18 : Number(nativeFee2?.nativeFee)/10**18}
+                        {form.getValues("inputCollateral") === 'usda' ? Number(nativeFee1?.nativeFee) / 10 ** 18 : form.getValues("inputCollateral") === 'tusdt'?Number(nativeFee2?.nativeFee) / 10 ** 18:0}
+
                       </p>
                     </div>
                     {/* <div className="px-4 py-[10px] border-b border-[#020202] dark:border-[#9E9E9E]">
@@ -947,10 +965,10 @@ export default function page() {
                   type="submit"
                   variant={"primary"}
                   className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 dark:text-black "
-                  disabled={ isUsdaTransactionLoading  || istusdtTransactionLoading }
+                  disabled={isUsdaTransactionLoading || istusdtTransactionLoading}
                   onClick={() => { form.handleSubmit(onSubmit) }}
                 >
-                  { isUsdaTransactionLoading || istusdtTransactionLoading ? <Spinner /> : "Bridge"}
+                  {isUsdaTransactionLoading || istusdtTransactionLoading ? <Spinner /> : "Bridge"}
                 </Button>
 
               </form>

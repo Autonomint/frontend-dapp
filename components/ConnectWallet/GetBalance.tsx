@@ -11,12 +11,11 @@ import { useBalance,useAccount, useChainId } from "wagmi";
         : token == "TUSDT" ? testusdtAbiAddress[chainId as keyof typeof testusdtAbiAddress]
         : token=="ABOND"?abondAddress[chainId as keyof typeof abondAddress]
         : undefined,
-
       });
   return (
     <div>
       
-       bal. {data?.formatted.slice(0, 8) } {data?.value} {token}
+       bal. {data?.formatted.slice(0, 8) }  {token}
     </div>
   )
 }

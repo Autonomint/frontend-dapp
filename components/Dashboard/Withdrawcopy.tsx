@@ -535,10 +535,10 @@ const Withdrawcopy = ({
       totalAmintAmount.current = totalAmintAmnt;
       // If details are available, update each value in the depositData array
       const updatedData = [...depositData];
-      updatedData[0].value = details.depositedAmount + ` (${(Number(details.depositedAmount) * Number(details.ethPrice)).toFixed(2)} $) `;
-      updatedData[1].value = `${details.ethPrice}`;
-      updatedData[2].value = details.noOfAmintMinted;
-      updatedData[3].value = (parseFloat(totalAmintAmnt.toString()) / 10 ** 6).toString();
+      updatedData[0].value = details.depositedAmount + ` (${(Number(details.depositedAmount) * Number(details.ethPrice)/100).toFixed(2)} $) `;
+      updatedData[1].value = `${Number(details.ethPrice)/100}`;
+      updatedData[2].value = Number(details.noOfAmintMinted).toFixed(2);
+      updatedData[3].value = (parseFloat(totalAmintAmnt.toString()) / 10 ** 6).toFixed(2);
       updatedData[4].value = `${details.aprAtDeposit}%`;
       updatedData[5].value = `${details.downsideProtectionPercentage}%`;
       updatedData[6].value = details.status === "LIQUIDATED" ? "Yes" : "No";
@@ -576,9 +576,9 @@ const Withdrawcopy = ({
       else if (parseFloat(ethPrice.toString())  < details.ethPrice) {
         const amountProt =
           parseFloat(details.depositedAmount) *
-          (details.ethPrice - parseFloat(ethPrice.toString()) / 100);
+          (details.ethPrice - parseFloat(ethPrice.toString()));
         const amountProtPrecision = parseFloat(
-          displayNumberWithPrecision(amountProt.toString())
+          displayNumberWithPrecision((amountProt/100).toFixed(2))
         );
         setAmountProtected(amountProtPrecision);
       }
@@ -591,7 +591,7 @@ const Withdrawcopy = ({
         const amountProt =
           0.2 * parseFloat(details.depositedAmount) * details.ethPrice;
         const amountProtPrecision = parseFloat(
-          displayNumberWithPrecision(amountProt.toString())
+          displayNumberWithPrecision((amountProt/100).toFixed(2))
         );
         setAmountProtected(amountProtPrecision);
       }
