@@ -38,6 +38,7 @@ export default function page() {
                             <Settings className="w-6 h-6 text-[#000000] " />
                         </div>
                     </div>
+                    {/*  Open Info Slider  */}
                     <Notification showNotifications={showNotification} setShowNotifications={setShowNotification} />
                     <PageSettings showSettings={openSettings} setShowSettings={setOpenSettings} />
                     <div className='w-[95%] sm:w-[500px] md:w-[600px] 2xl:w-[600px] 3xl:w-[800px] mx-auto h-auto  p-1 sm:p-4'>
@@ -110,8 +111,6 @@ export default function page() {
                                     <p className='flex justify-between w-full text-xs '>Invite people to Autonomint <span className='font-medium'>5 points</span></p>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>

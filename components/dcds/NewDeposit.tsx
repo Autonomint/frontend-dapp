@@ -129,6 +129,7 @@ const NewDeposit = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(Number(event.target.value)); // Convert input value to a number
   };
+  // Define the initial state for the options variable
   const options = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
 
 
@@ -391,13 +392,13 @@ const NewDeposit = ({
 
 
 
-
+// get the confirmed txn receipt
   const { isLoading, isSuccess: cdsDepositSuccess, isError: cdsDepositError, data: DepositdataReceipt } = useWaitForTransactionReceipt({
     hash: CdsDepositData,
     confirmations:2
   });
 
-
+// useEffect to check the status of the cds deposit transaction
   useEffect(() => {
     if (cdsDepositError) {
       toast.custom(
@@ -513,16 +514,17 @@ const NewDeposit = ({
           },
           { duration: 5000 }
         );
-        //closing sheet so that user can click on the links from the toast
-        // setOpen(false);
 
       },
     }
   });
+
+  // get the confirmed txn receipt
   const { isLoading: AmintApprovalLoading, isSuccess: AmintApprovalSuccess, isError: AmintApprovalError, data: AmintApprovalReceipt } = useWaitForTransactionReceipt({
     hash: amintApproveData,
   });
 
+// useEffect to check the status of the amint approval transaction
   useEffect(() => {
     if(AmintApprovalSuccess){
       if (form.getValues("USDTDepositAmount") && (usdtAmnt ?? 0) > 0) {
@@ -731,7 +733,7 @@ const NewDeposit = ({
   }, [usdtLimit, usdtAmountDepositedTillNow]);
 
 
-
+  // useEffect to check if the cdsDepositSuccess is true
   useEffect(() => {
     // Check if cdsDepositSuccess is true
     if (cdsDepositSuccess) {
@@ -739,8 +741,9 @@ const NewDeposit = ({
     }
   }, [cdsDepositSuccess]);
 
+
+  // useEffect to check if the amint amount and usdt amount is greater than 0 and the usdtAmountDepositedTillNow is greater than usdtLimit
   useEffect(() => {
-    
     let amint = form.watch("AmintDepositAmount") ?? 0;
     let usdt = form.watch("USDTDepositAmount") ?? 0;
     if (usdtAmountDepositedTillNow >= usdtLimit) {
@@ -763,13 +766,10 @@ const NewDeposit = ({
         form.clearErrors("USDTDepositAmount");
       }
     }
-
   }, [form.watch("USDTDepositAmount"), form.watch("AmintDepositAmount")])
 
-  const [inputTypes, setInputTypes] = useState([1]);
-  const inputOptions = ["AmintDepositAmount", "USDTDepositAmount"];
-  // Jm+/pX8ae*PP9TW
-  // 54dfdb483953af7b3d90d2dd9009d392fab7ff7e5187564ff7b525df29cc6096641e533e4f5d35f78c58da404678712916d81f87dc11e0840a8814f6
+
+
   return (
     <div className="flex items-center justify-between ">
       <div className="flex w-full gap-[10px]">
@@ -835,8 +835,8 @@ const NewDeposit = ({
                   ):("")
                 }
 
+                {/* // USDT Deposit */}
                 <div className="flex flex-col  w-full  gap-[10px]">
-
                   <FormField
                     control={form.control}
                     name="USDTDepositAmount"

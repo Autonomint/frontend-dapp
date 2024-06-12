@@ -110,7 +110,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
       query: { staleTime: 10 * 1000 }
     });
 
-
+// total cds deposited amount
   const { data: totalCdsDepositedAmount } = useReadCdsTotalCdsDepositedAmount({
     query: { staleTime: 10 * 1000 }
   });
@@ -230,7 +230,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
               />
             </div>
           ),
-          { duration: 10000 } // Toast duration: 5000 milliseconds
+          { duration: 5000 } // Toast duration: 5000 milliseconds
         );
       },
     }

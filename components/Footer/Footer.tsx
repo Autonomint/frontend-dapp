@@ -19,7 +19,6 @@ import { testusdtAbiAddress } from '@/abiAndHooks';
 
 export default function Footer() {
     const chainId = useChainId();
-    const [selectedTab, setSelectedTab] = useState("mint");
     const [open2, setOpen2] = React.useState(false);
     const [openGetstart, setOpenGetstart] = React.useState(false);
     return (
@@ -40,14 +39,10 @@ export default function Footer() {
                         Get Started
                     </Button>
                 </div>
-
-                {/* <div onClick={()=>setOpen2(!open2)} className="px-8 py-4 font-semibold text-gray-600 bg-[linear-gradient(180deg,#E4EDFF_-0.23%,#F4F8FF_100%)] border-2 border-gray-400 rounded-md cursor-pointer">
-          Key Highlights
-          </div> */}
             </div>
 
 
-
+            // Faqs Dialog
             <Dialog open={open2} onOpenChange={setOpen2} >
                 <DialogContent className="max-w-[800px]  p-5">
                     <div className="flex justify-end mb-4 right-5 top-2">
@@ -69,6 +64,7 @@ export default function Footer() {
                 </DialogContent>
             </Dialog>
 
+            // Get Started Dialog
             <Dialog open={openGetstart} onOpenChange={setOpenGetstart} >
                 <DialogContent className="max-w-[800px] p-5">
                     <div className="flex justify-end w-full ">

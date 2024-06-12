@@ -38,7 +38,7 @@ export default function Home() {
       <div className="z-40 static min-h-[84vh] pb-5 mx-2 sm:mx-5 bg-white dark:bg-[#242424] dark:shadow-darkcustom shadow-custom border-[1px] border-[#9E9E9E]">
         <div className="relative flex flex-wrap justify-center mx-auto lg:flex-row lg:gap-5">
 
-        // Open Info Slider
+        {/*  Open Info Slider */}
         <Button onClick={() => {setOpenInfo(!openInfo)}}  variant={'primary'}  className=" hidden sm:flex  mr-5 sm:mr-0 absolute  sm:left-5 sm:-bottom-10 sm:top-5 border-[#041A50] h-fit p-[15px]">
             <InfoCircledIcon className="w-6 h-6 text-[#000000] " />
           </Button>
@@ -81,7 +81,7 @@ export default function Home() {
             )}
           </div>
           
-          // Notification and Settings
+  {/* Notification and Settings */}
           <div className="hidden gap-5 sm:flex sm:flex-col sm:absolute mdb:flex right-5 top-5">
             <Button onClick={() => {setShowNotification(!showNotification);setOpenSettings(false)}} variant={'primary'} className="border-[#041A50] h-fit p-[15px]">
               <BellIcon className="w-6 h-6 text-[#000000] " />
@@ -91,7 +91,7 @@ export default function Home() {
             </Button>
           </div>
 
-          // Popovers
+          {/* Popovers */}
           <BorrowSlider open={openInfo} opentoggler={setOpenInfo} />
           <Notification showNotifications={showNotification} setShowNotifications={setShowNotification} />
           <PageSettings showSettings={openSettings} setShowSettings={setOpenSettings} />

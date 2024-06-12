@@ -555,11 +555,35 @@ export const borrowingContractAbi = [
     type: 'event',
     anonymous: false,
     inputs: [
+      {
+        name: 'user',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
       { name: 'index', internalType: 'uint64', type: 'uint64', indexed: false },
       {
         name: 'depositedAmount',
         internalType: 'uint256',
         type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'normalizedAmount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'depositedTime',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'ethPrice',
+        internalType: 'uint128',
+        type: 'uint128',
         indexed: false,
       },
       {
@@ -569,9 +593,21 @@ export const borrowingContractAbi = [
         indexed: false,
       },
       {
-        name: 'normalizedAmount',
+        name: 'strikePrice',
+        internalType: 'uint64',
+        type: 'uint64',
+        indexed: false,
+      },
+      {
+        name: 'optionsFees',
         internalType: 'uint256',
         type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'strikePricePercent',
+        internalType: 'enum IOptions.StrikePrice',
+        type: 'uint8',
         indexed: false,
       },
     ],
@@ -673,7 +709,14 @@ export const borrowingContractAbi = [
     anonymous: false,
     inputs: [
       {
-        name: 'borrowDebt',
+        name: 'user',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      { name: 'index', internalType: 'uint64', type: 'uint64', indexed: false },
+      {
+        name: 'withdrawTime',
         internalType: 'uint256',
         type: 'uint256',
         indexed: false,
@@ -688,6 +731,12 @@ export const borrowingContractAbi = [
         name: 'noOfAbond',
         internalType: 'uint128',
         type: 'uint128',
+        indexed: false,
+      },
+      {
+        name: 'borrowDebt',
+        internalType: 'uint256',
+        type: 'uint256',
         indexed: false,
       },
     ],

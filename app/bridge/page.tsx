@@ -127,10 +127,12 @@ export default function page() {
     }
   }, [form.watch("collateralAmount")]);
 
+  // Get the tusdt balance of the user
   const { data:tusdtBal } = useBalance({
     address:accountAddress,
     token: testusdtAbiAddress[chainId as keyof typeof testusdtAbiAddress]
   });
+  // Get the usda balance of the user
   const { data:usdaBal } = useBalance({
     address:accountAddress,
     token:   usDaAddress[chainId as keyof typeof usDaAddress] 
@@ -165,7 +167,7 @@ export default function page() {
   });
 
 
-
+ // Approve USDa
   const {
     isPending: amintApproveLoading,
     data: amintApproveData,
@@ -224,10 +226,12 @@ export default function page() {
       }
     });
 
+  // Wait for the transaction to be confirmed
   const { data: amintTransactionAllowed, isLoading: isAmintTransactionLoading, isError: usdaErrorApprove, isSuccess: usdaApproveSuccess } = useWaitForTransactionReceipt({
     hash: amintApproveData
   });
 
+  
   useEffect(() => {
     if (usdaApproveSuccess && accountAddress) {
       usdaApproveWrite({
@@ -265,7 +269,7 @@ export default function page() {
 
   }, [amintTransactionAllowed])
 
-
+// Approve TUSDT
   const {
     isPending: usdaApproveLoading,
     data: usdaApproveData,
@@ -326,15 +330,13 @@ export default function page() {
     }
   );
 
-
+// Wait for the transaction to be confirmed
   const { data: usdaTransactionConfirmed, isLoading: isUsdaTransactionLoading, isError: usdaIsError, isSuccess: usdaIsSuccess, error: usdaError } = useWaitForTransactionReceipt({
     hash: usdaApproveData,
   });
-
+// If the transaction is confirmed, show a toast notification
   useEffect(() => {
     if (usdaIsSuccess) {
-
-
       toast.custom(
         (t) => {
           return (
@@ -380,7 +382,7 @@ export default function page() {
     }
   }, [usdaTransactionConfirmed]);
 
-
+// Approve TUSDT
   const {
     isPending: tusDTApproveLoading,
     data: tusDTApproveData,
@@ -439,10 +441,11 @@ export default function page() {
       }
     });
 
+// Wait for the transaction to be confirmed
   const { data: tusDTTransactionAllowed, isLoading: tusDTTransactionLoading, isError: tusDTErrorApprove, isSuccess: tusDTApproveSuccess } = useWaitForTransactionReceipt({
     hash: tusDTApproveData
   });
-
+ // If the transaction is confirmed, show a toast notification
   useEffect(() => {
     if (tusDTApproveSuccess && accountAddress) {
       tusdtApproveWrite({
@@ -537,11 +540,11 @@ export default function page() {
     }
   );
 
-
+  // Wait for the transaction to be confirmed
   const { data: tusdtTransactionConfirmed, isLoading: istusdtTransactionLoading, isError: tusdtIsError, isSuccess: tusdtIsSuccess, error: tusdtError } = useWaitForTransactionReceipt({
     hash: tusdtApproveData,
   });
-
+  // If the transaction is confirmed, show a toast notification
   useEffect(() => {
     if (tusdtIsSuccess) {
       toast.custom(
@@ -589,29 +592,21 @@ export default function page() {
     }
   }, [usdaTransactionConfirmed]);
 
-
+// Handle the form submission
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("values", values);
     console.log(nativeFee2)
     if (accountAddress) {
-
-
-
       if (values.inputCollateral === 'usda') {
         amintApproveWrite({
           args: [
-
             (usDaAddress[chainId as keyof typeof usDaAddress] as `0x${string}`),
             BigInt(values.collateralAmount * 10 ** 6),
           ],
         })
-
-
       } else if (values.inputCollateral === 'tusdt') {
-
         tusDTApproveWrite({
           args: [
-
             (testusdtAbiAddress[chainId as keyof typeof testusdtAbiAddress] as `0x${string}`),
             BigInt(values.collateralAmount * 10 ** 6),
           ],
@@ -621,7 +616,7 @@ export default function page() {
 
   }
 
-
+// Fetch the native fee for USDa
   useEffect(() => {
     if (form.getValues("inputCollateral") === 'usda') {
       refetchnativeFee1()
@@ -670,9 +665,7 @@ export default function page() {
                                 <Select
                                   onValueChange={(value) => {
                                     form.setValue("collateralAmount", 0);
-
                                     form.setValue('destinationChain', '919');
-
                                     switchChain && switchChain({ chainId: Number(value) });
                                     field.onChange(value)
 
@@ -693,8 +686,6 @@ export default function page() {
                                 </Select>
                               )}
                             />
-
-
                           </FormItem>
                         )}
                       />
