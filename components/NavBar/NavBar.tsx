@@ -15,7 +15,7 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import truncateWeb3WalletAddress from "@/app/utils/truncateWeb3Address";
 import { useWeb3Modal, createWeb3Modal } from '@web3modal/wagmi/react'
-import { config, projectId } from "@/providers/WalletProvider";
+import { config,projectId } from "@/providers/WalletProvider";
 import {
   Select,
   SelectContent,
@@ -89,8 +89,8 @@ const NavBar = () => {
 
   const chainId = useChainId();
   const [showMore, setShowMore] = useState(false);
-  const { address, isConnected,connector} = useAccount();
-  
+  const { address, isConnected, connector } = useAccount();
+
 
 
 
@@ -100,11 +100,11 @@ const NavBar = () => {
   const [open2, setOpen2] = React.useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
-  const [selectedNetwork,setSelectedNetwork] = React.useState<string>(chainId===11155111 ? "Sepolia" :chainId===84532 ? "Base Sepolia"  :  "unsupported network")
+  const [selectedNetwork, setSelectedNetwork] = React.useState<string>(chainId === 11155111 ? "Sepolia" : chainId === 84532 ? "Base Sepolia" : "unsupported network")
 
-  useEffect(()=>{
-    setSelectedNetwork(chainId===11155111 ? "Sepolia" :chainId===84532 ? "Base Sepolia"  :  "unsupported network")
-  },[chainId])
+  useEffect(() => {
+    setSelectedNetwork(chainId === 11155111 ? "Sepolia" : chainId === 84532 ? "Base Sepolia" : "unsupported network")
+  }, [chainId])
   return (
     <div className="z-50 w-full ">
       <div className="flex w-full justify-between  mx-auto h-[8vh] bg-[#EEEEEE] dark:bg-[#0F0F0F]  z-10">
@@ -147,45 +147,38 @@ const NavBar = () => {
           </div>
         </div>
         <div className="flex gap-4 mr-5">
-
-
-
-          {/* <div className="w-[2rem] h-[3rem]">
-              <Image src={notification} className="rounded-sm cursor-pointer " onClick={() => setShowNotification(!showNotification)} alt="autonomint-dapp" style={{ width: "100%", height: "100%" }} />
-            </div> */}
           <div className="flex items-center justify-end border-black w-34">
+            <Select
+              onValueChange={(value) => {
+                console.log("value", value)
+                switchChain({ chainId: value === "Sepolia" ? 11155111 : 84532 });
+              }}
+              value={selectedNetwork}
+            >
+              <SelectTrigger className='border  border-black rounded-none bg-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] text-white' >
+                <SelectValue placeholder={selectedNetwork} />
+              </SelectTrigger>
+              <SelectContent className='text-white  bg-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] rounded-none '>
+                <SelectGroup>
+                  <SelectItem value="Sepolia">Ethereum Sepolia</SelectItem>
+                  <SelectItem value="Base Sepolia">Base Sepolia</SelectItem>
+                </SelectGroup>
+              </SelectContent>
 
-        <Select
-          onValueChange={(value) => {
-            console.log("value",value)
-            switchChain({ chainId: value === "Sepolia" ? 11155111 : 84532});
-          }}
-          value={selectedNetwork}
-        >
-                <SelectTrigger className='border  border-black rounded-none bg-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] text-white' >
-                  <SelectValue placeholder={selectedNetwork} />
-                </SelectTrigger>
-                <SelectContent className='text-white  bg-[#020202] dark:bg-[#3A3A3A] dark:border-[#9E9E9E] rounded-none '>
-                  <SelectGroup>
-                    <SelectItem value="Sepolia">Ethereum Sepolia</SelectItem>
-                    <SelectItem value="Base Sepolia">Base Sepolia</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-
-              </Select>
+            </Select>
           </div>
 
           <div className="flex items-center justify-center top-2">
 
-          {isConnected ? (
-            <Button onClick={() => setOpen2(!open2)} variant={'secondary'} className="flex  text-[0.85rem] font-[500]" >
-              <div className="w-[1.5rem] -mt-[2px] "><WalletIcon className="w-5" /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
-            </Button>
-          ) : (
-            <Button onClick={onConnect} className="font-[500] gap-2" variant={'secondary'} >
-             <Link2 className="w-5"/> Connect Wallet
-            </Button>
-          )}
+            {isConnected ? (
+              <Button onClick={() => setOpen2(!open2)} variant={'secondary'} className="flex  text-[0.85rem] font-[500]" >
+                <div className="w-[1.5rem] -mt-[2px] "><WalletIcon className="w-5" /> </div>{truncateWeb3WalletAddress(`0x${address}`)}
+              </Button>
+            ) : (
+              <Button onClick={onConnect} className="font-[500] gap-2" variant={'secondary'} >
+                <Link2 className="w-5" /> Connect Wallet
+              </Button>
+            )}
           </div>
           <div className="right-0 flex items-center justify-center top-2 mdb:hidden">
 
@@ -240,7 +233,7 @@ const NavBar = () => {
                     </div>
                   ) : (
                     <div className="hidden mdb:flex px-8 py-2 mt-2 gap-2 h-fit font-semibold text-black bg-[#DEDEDE] dark:bg-[#FC9550] dark:text-white  border-b-2 border-black  cursor-pointer">
-                     <Link2 />   Connect Wallet
+                      <Link2 />   Connect Wallet
                     </div>
                   )}
                 </li>
@@ -265,13 +258,8 @@ const NavBar = () => {
           ) : ("")
         }
 
-        {
-          open2 ? (
-           <Profile setOpen={setOpen2} open={open2}/>
 
-          ) : ("")
-        }
-
+        <Profile setOpen={setOpen2} open={open2} />
       </div >
     </div>
 

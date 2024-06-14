@@ -415,7 +415,6 @@ const Redeem = ({
   );
 
   const { data: abondTransactionAllowed, isLoading: isAbondTransactionLoading ,isError:abondApproveError,isSuccess:abondApproveSuccess,error:AbondError } = useWaitForTransactionReceipt({
-    // TODO: Add OnError Custom Toast
 
     // look for approval transaction hash
     hash: abondApproveData,

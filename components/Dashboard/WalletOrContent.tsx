@@ -19,7 +19,6 @@ const WalletOrContent = () => {
   // destructure isConnected and address from useAccount hook of wagmi
   const { isConnected, address, connector: activeConnector } = useAccount();
   const chainId = useChainId();
-  const queryClient = useQueryClient();
   const [open2, setOpen2] = React.useState(false);
   const [newtxn,setnewtxn]=useState(false)
   // get ethPrice from use Borrowing Contract using wagmi useContractRead Hook
@@ -85,7 +84,6 @@ const WalletOrContent = () => {
 
   return (
     <>
-      {isConnected ? (
         <div className="relative p-2 sm:p-2 rounded-[10px]  flex flex-col self-stretch overflow-hidden h-full ">
           <CreateNewDeposit handleRefetch={handleRefetch} openPositions={setOpen2} />
           <Dialog open={open2} onOpenChange={setOpen2}  >
@@ -100,9 +98,6 @@ const WalletOrContent = () => {
             </DialogContent>
           </Dialog>
         </div>
-      ) : (
-        <ConnectWallet />
-      )}
     </>
   );
 };

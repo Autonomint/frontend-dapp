@@ -18,8 +18,9 @@ import { useChainId } from 'wagmi';
 import { testusdtAbiAddress } from '@/abiAndHooks';
 
 export default function Footer() {
+    
     const chainId = useChainId();
-    const [open2, setOpen2] = React.useState(false);
+    const [openFaq, setOpenFaq] = React.useState(false);
     const [openGetstart, setOpenGetstart] = React.useState(false);
     return (
         <div className='p-2 h-[8vh] '>
@@ -32,18 +33,18 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className="flex items-center justify-center w-full gap-5 mr-2 sm:justify-normal sm:w-auto ">
-                    <Button onClick={() => setOpen2(!open2)} variant={'secondary'} className='px-8 font-medium' >
+                    <Button onClick={() => setOpenFaq(!openFaq)} variant={'secondary'} className='px-8 font-medium' >
                         ? FAQs
                     </Button>
-                    <Button onClick={() => setOpenGetstart(!open2)} variant={'secondary'} className='px-8 font-medium' >
+                    <Button onClick={() => setOpenGetstart(!openGetstart)} variant={'secondary'} className='px-8 font-medium' >
                         Get Started
                     </Button>
                 </div>
             </div>
 
 
-            // Faqs Dialog
-            <Dialog open={open2} onOpenChange={setOpen2} >
+            {/* Faqs Dialog */}
+            <Dialog open={openFaq} onOpenChange={setOpenFaq} >
                 <DialogContent className="max-w-[800px]  p-5">
                     <div className="flex justify-end mb-4 right-5 top-2">
                         <DialogClose asChild>
@@ -58,13 +59,12 @@ export default function Footer() {
                         </DialogClose>
                     </div>
                     <div className='-mt-5'>
-
                         <Faq  />
                     </div>
                 </DialogContent>
             </Dialog>
 
-            // Get Started Dialog
+            {/* Get Started Dialog */}
             <Dialog open={openGetstart} onOpenChange={setOpenGetstart} >
                 <DialogContent className="max-w-[800px] p-5">
                     <div className="flex justify-end w-full ">
@@ -75,12 +75,10 @@ export default function Footer() {
                                 className="flex gap-[10px] mb-4 border border-borderGrey rounded-none"
                             >
                                 <Cross2Icon className="w-4 h-4" />
-                                
                             </Button>
                         </DialogClose>
                     </div>
                     <div className='-mt-5'>
-
                         <DialogHeader className="flex items-start">
                             <DialogTitle className="text-black dark:text-white mb-2  font-medium  min-[1440px]:text-4xl 2dppx:text-2xl min-[1280px]:text-2xl text-xl ">
                                 <h1>Aqcuire ETH and Collateral</h1>
