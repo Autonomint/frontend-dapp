@@ -127,13 +127,13 @@ const page = () => {
 
   const {data:ratioData} = useQuery({
     queryKey: ["ratioData"],
-    queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/ratio/${chainId}/${ethPrice}`).then((res) => res.json()),
+    queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/ratio/${chainId}/${ethPrice ?? 0}`).then((res) => res.json()),
   })
   console.log(ratioData,ethPrice)
   
   const {data:feeOptions,refetch} = useQuery({
     queryKey: ['optionFees'],
-    queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/1000000000000000000/${ethPrice}/0`).then((res) => res.json()),
+    queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/1000000000000000000/${ethPrice ?? 0}/0`).then((res) => res.json()),
   })
   console.log(feeOptions)
 
@@ -368,7 +368,7 @@ const page = () => {
                 textValue: `${RatioValues[3].value} USDa`,
                 className: "",
                 lastElement: true,
-                textColor: `${Number(RatioValues[3].value) > 0 ? "#00773F" : "#FF0000"}`,
+                textColor: `${Number(RatioValues[3].value) > 0 ? "#2cc873" : "#FF0000"}`,
               }}
             />
           </div>

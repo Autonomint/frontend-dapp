@@ -142,6 +142,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
     }, options, false]
   })
 
+  const { data: ethPrice } = useReadBorrowingContractGetUsdValue({});
 
 
 
@@ -154,15 +155,13 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
    * @return {Promise<any>} A promise that resolves to the option fees.
    */
   async function getOptionFees() {
-    const response = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${parseUnits(form.getValues("collateralAmount").toString(), 18)}/${ethPrice}/${(strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4)}`);
+    const response = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${parseUnits(form.getValues("collateralAmount").toString(), 18)}/${ethPrice ?? 0}/${(strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4)}`);
     const data = await response.json();
     console.log(data)
     return data[1] ? (data[1] / 10 ** 6) : 0;
   }
 
 
-  // get  ethPrice using useContractRead hook
-  const { data: ethPrice } = useReadBorrowingContractGetUsdValue({});
 
 
   const {
