@@ -82,7 +82,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
   const { address } = useAccount();
   const chainId = useChainId();
 
-  const Eid = chainId===11155111? 40245: 40161;
+  const Eid = chainId === 11155111 ? 40245 : 40161;
 
   // to manage the toastId
   const toastId = useRef<string | number>("");
@@ -98,7 +98,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
   const ethBalance = useBalance({ address: address })
 
   // Create the options for the contract
-  const options  = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
+  const options = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
 
   // watch for the strikePrice in the form
   const strikePrice = form.watch("strikePrice");
@@ -110,55 +110,41 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
       query: { staleTime: 10 * 1000 }
     });
 
-// total cds deposited amount
+  // total cds deposited amount
   const { data: totalCdsDepositedAmount } = useReadCdsTotalCdsDepositedAmount({
     query: { staleTime: 10 * 1000 }
   });
 
   // Use the useQuery hook to quote the Treasury nativefee
-  const {data:nativeFee } = useReadTreasuryQuote({ query: { enabled: !!address },args:[Eid, 1,
-    {recipient:"0x0000000000000000000000000000000000000000",tokensToSend:0n},
-    {recipient:"0x0000000000000000000000000000000000000000",nativeTokensToSend:0n}, options, false],
+  const { data: nativeFee } = useReadTreasuryQuote({
+    query: { enabled: !!address }, args: [Eid, 1,
+      { recipient: "0x0000000000000000000000000000000000000000", tokensToSend: 0n },
+      { recipient: "0x0000000000000000000000000000000000000000", nativeTokensToSend: 0n }, options, false],
   });
 
   // Use the useQuery hook to quote the CDS nativefee
-  const {data:nativeFee1,error  } = useReadCdsQuote({ query: { enabled: !!address },args:[Eid, 1,123n,123n,123n,
-    {liquidationAmount: 0n, profits: 0n, ethAmount: 0n, availableLiquidationAmount: 0n},0n, options, false] });
-
-// Use the useQuery hook to quote the Borrow nativefee
-  const {data:nativeFee2 } = useReadBorrowingContractQuote({query:{enabled:!!address},args:[Eid, {
-    normalizedAmount: 5n,
-    ethVaultValue: 10n,
-    cdsPoolValue: 15n,
-    totalCDSPool: 20n,
-    noOfLiquidations: 25n,
-    ethRemainingInWithdraw: 30n,
-    ethValueRemainingInWithdraw: 35n,
-    nonce: 40n
-  }, options, false]})
-
-
-
-  /**
-   * Retrieves the total index for a given address.
-   *
-   * @param {`0x${string}` | undefined} address - The address to retrieve the total index for.
-   * @return {Promise<any>} A promise that resolves to the total index.
-   */
-  function getTotalIndex(address: `0x${string}` | undefined) {
-    return fetch(`${BACKEND_API_URL}/borrows/index/${chainId}/${address}`).then(
-      (response) => response.json()
-    )
-  }
-
-
-  // Use the useQuery hook to fetch the total index
-  const { data: totalIndex, refetch } = useQuery({
-    queryKey: ["totalIndex", "deposits"],
-    queryFn: () => getTotalIndex(address ? address : undefined),
-    enabled: !!address,
-    staleTime: 10 * 1000,
+  const { data: nativeFee1, error } = useReadCdsQuote({
+    query: { enabled: !!address }, args: [Eid, 1, 123n, 123n, 123n,
+      { liquidationAmount: 0n, profits: 0n, ethAmount: 0n, availableLiquidationAmount: 0n }, 0n, options, false]
   });
+
+  // Use the useQuery hook to quote the Borrow nativefee
+  const { data: nativeFee2 } = useReadBorrowingContractQuote({
+    query: { enabled: !!address }, args: [Eid, {
+      normalizedAmount: 5n,
+      ethVaultValue: 10n,
+      cdsPoolValue: 15n,
+      totalCDSPool: 20n,
+      noOfLiquidations: 25n,
+      ethRemainingInWithdraw: 30n,
+      ethValueRemainingInWithdraw: 35n,
+      nonce: 40n
+    }, options, false]
+  })
+
+
+
+
 
 
   /**
@@ -237,66 +223,66 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
 
   });
 
-// Use the useWaitForTransactionReceipt hook to wait for the transaction receipt
-const{data:Depositdata , isError:depositError,isLoading:isDepositdataLoading,isSuccess:isDepositSuccess} = useWaitForTransactionReceipt({
-  hash: depositDatahash,
-  confirmations:2
-})
+  // Use the useWaitForTransactionReceipt hook to wait for the transaction receipt
+  const { data: Depositdata, isError: depositError, isLoading: isDepositdataLoading, isSuccess: isDepositSuccess } = useWaitForTransactionReceipt({
+    hash: depositDatahash,
+    confirmations: 2
+  })
 
-useEffect(()=>{
-  if(isDepositSuccess){
-    handleRefetch();
-    console.log("transaction completed", Depositdata);
+  useEffect(() => {
+    if (isDepositSuccess) {
+      handleRefetch();
+      console.log("transaction completed", Depositdata);
 
-    form.reset({
-      ...form.getValues(), // preserve other field values
-      collateral: 'default', // replace 'default' with your default collateral value
-    });
-    reset()
+      form.reset({
+        ...form.getValues(), // preserve other field values
+        collateral: 'default', // replace 'default' with your default collateral value
+      });
+      reset()
 
-    setOpen(false);
-    toast.custom(
-      () => (
-        <CustomToast
-          props={{
-            t: toastId.current,
-            toastMainColor: "#268730",
-            headline: "Transaction Completed. A new Deposit has been created",
-            transactionHash: Depositdata.blockHash,
-            linkLabel: "View Transaction",
-            toastClosebuttonHoverColor: "#90e398",
-            toastClosebuttonColor: "#57C262",
-          }}
-        />
-      ),
-      { duration: 5000 } // Toast duration: 5000 milliseconds
-    );
-
-    setTimeout(() => {
-      toast.dismiss(toastId.current);
-    }, 3000);
-  }else if(depositError){
-    toast.custom(
-      (t) => (
-        <div>
+      setOpen(false);
+      toast.custom(
+        () => (
           <CustomToast
-            key={2}
             props={{
-              t,
-              toastMainColor: "#B43939",
-              headline: `Uhh Ohh! Unknow error occured`,
-              toastClosebuttonHoverColor: "#e66d6d",
-              toastClosebuttonColor: "#C25757",
+              t: toastId.current,
+              toastMainColor: "#268730",
+              headline: "Transaction Completed. A new Deposit has been created",
+              transactionHash: Depositdata.blockHash,
+              linkLabel: "View Transaction",
+              toastClosebuttonHoverColor: "#90e398",
+              toastClosebuttonColor: "#57C262",
             }}
           />
-        </div>
-      ),
-      { duration: 5000 } // Toast duration: 5000 milliseconds
-    );
-  }
-  
+        ),
+        { duration: 5000 } // Toast duration: 5000 milliseconds
+      );
 
-},[Depositdata])
+      setTimeout(() => {
+        toast.dismiss(toastId.current);
+      }, 3000);
+    } else if (depositError) {
+      toast.custom(
+        (t) => (
+          <div>
+            <CustomToast
+              key={2}
+              props={{
+                t,
+                toastMainColor: "#B43939",
+                headline: `Uhh Ohh! Unknow error occured`,
+                toastClosebuttonHoverColor: "#e66d6d",
+                toastClosebuttonColor: "#C25757",
+              }}
+            />
+          </div>
+        ),
+        { duration: 5000 } // Toast duration: 5000 milliseconds
+      );
+    }
+
+
+  }, [Depositdata])
 
 
   /**
@@ -327,16 +313,15 @@ useEffect(()=>{
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("clicked",values)
-    refetch();
+    console.log("clicked", values)
     let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);
     let strikePercent = strikePrice == 5 ? 0 : strikePrice == 10 ? 1 : strikePrice == 15 ? 2 : strikePrice == 20 ? 3 : 4;
     const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${colateralamount}/${ethPrice}/${strikePercent}`).then(
       (res) => res.json()
     )
-    console.log("nativeFee1",nativeFee1,nativeFee2,nativeFee)
+    console.log("nativeFee1", nativeFee1, nativeFee2, nativeFee)
     console.log(data[0])
-    if (data[0] != undefined  && nativeFee1 != undefined && nativeFee2 != undefined && nativeFee != undefined) {
+    if (data[0] != undefined && nativeFee1 != undefined && nativeFee2 != undefined && nativeFee != undefined) {
       writeContract?.({
         args: [
           strikePercent,
@@ -344,7 +329,7 @@ useEffect(()=>{
           BigInt(data[0]),
           parseEther((form.getValues("collateralAmount")).toString()),
         ],
-        value: parseEther(form.getValues("collateralAmount").toString())+ nativeFee1.nativeFee + nativeFee2.nativeFee + nativeFee.nativeFee,
+        value: parseEther(form.getValues("collateralAmount").toString()) + nativeFee1.nativeFee + nativeFee2.nativeFee + nativeFee.nativeFee,
       });
     } // mutate(address);
   }
@@ -361,10 +346,8 @@ useEffect(()=>{
     // Calculate the amint to be minted
     const optionf = await getOptionFees();
     setOptionFees(optionf);
-    const amintToMint =
-      (form.watch("collateralAmount") * Number(ethPrice) * 80) / 10000;
+    const amintToMint = (form.watch("collateralAmount") * Number(ethPrice) * 80) / 10000;
     const amint2Decimal = displayNumberWithPrecision(amintToMint.toString());
-    console.log(amint2Decimal, optionf)
     setAmintToBeMinted((Number(amint2Decimal) - optionf).toFixed(2));
 
     // Calculate the downside protection amount
@@ -387,7 +370,7 @@ useEffect(()=>{
     if (form.getValues("collateral") == undefined) {
       form.setError("collateralAmount", { message: "select collateral type" });
     }
-    else if(form.getValues("collateralAmount") == 0) {
+    else if (form.getValues("collateralAmount") == 0) {
       setAmintToBeMinted('0');
       setDownsideProtectionAmnt('0');
       setOptionFees(0);
@@ -550,15 +533,15 @@ useEffect(()=>{
                   variant={"outline"}
                   className="basis-1/2"
                 >
-                  {'View Positions'} <ArrowTopRightIcon className="ml-2 sm:ml-0 sm:absolute sm:right-5" width={20} height={20}/>
+                  {'View Positions'} <ArrowTopRightIcon className="ml-2 sm:ml-0 sm:absolute sm:right-5" width={20} height={20} />
                 </Button>
                 <Button
                   type="submit"
                   variant={"primary"}
                   className=" basis-1/2"
-                  disabled={isDepositsLoading ||isDepositdataLoading   || disabled}
+                  disabled={isDepositsLoading || isDepositdataLoading || disabled}
                 >
-                  {isDepositsLoading ||isDepositdataLoading  ? <Spinner /> : 'Confirm Deposit'}
+                  {isDepositsLoading || isDepositdataLoading ? <Spinner /> : 'Confirm Deposit'}
                 </Button>
               </div>
 
@@ -570,9 +553,9 @@ useEffect(()=>{
 
               <div className="relative container flex px-0  mx-auto border-[1px] border-[#020202]   dark:border-[#9E9E9E]  ">
                 <div className="absolute flex w-full h-8 ">
-                  <div  className="w-[78%] h-8 bg-[linear-gradient(to_bottom,#0029AC_1%,#6185F8_2%,white_80%)] dark:bg-[linear-gradient(to_bottom,#0029AC_1%,#6185F8_2%,#242424_80%)]"></div>
-                  <div  className="w-[2%] h-8 bg-[linear-gradient(to_bottom,#AA0001_1%,#F69596_2%,white_80%)] dark:bg-[linear-gradient(to_bottom,#AA0001_1%,#F69596_2%,#242424_80%)]"></div>
-                  <div  className="w-[21%] h-8 bg-[linear-gradient(to_bottom,#006733_1%,#A1F9CD_2%,white_80%)] dark:bg-[linear-gradient(to_bottom,#006733_1%,#A1F9CD_2%,#242424_80%)] "></div>
+                  <div className="w-[78%] h-8 bg-[linear-gradient(to_bottom,#0029AC_1%,#6185F8_2%,white_80%)] dark:bg-[linear-gradient(to_bottom,#0029AC_1%,#6185F8_2%,#242424_80%)]"></div>
+                  <div className="w-[2%] h-8 bg-[linear-gradient(to_bottom,#AA0001_1%,#F69596_2%,white_80%)] dark:bg-[linear-gradient(to_bottom,#AA0001_1%,#F69596_2%,#242424_80%)]"></div>
+                  <div className="w-[21%] h-8 bg-[linear-gradient(to_bottom,#006733_1%,#A1F9CD_2%,white_80%)] dark:bg-[linear-gradient(to_bottom,#006733_1%,#A1F9CD_2%,#242424_80%)] "></div>
                 </div>
                 <div className="w-full p-4 mt-3 border-r dark:border-gray-700 dark:bg-none">
                   <h2 className="mb-2  text-black font-medium text-md dark:text-[#DEDEDE]">100% Synthetic LTV</h2>

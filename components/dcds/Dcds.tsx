@@ -206,21 +206,7 @@ const Dcds = () => {
 
             <Dialog open={open2} onOpenChange={setOpen2} >
               <DialogContent className="min-w-[80%]">
-                {/* <div className="flex justify-end w-full ">
-              <DialogClose asChild>
-                <Button
-                  variant={"ghostOutline"}
-                  size={"primary"}
-                  className="flex gap-[10px] border border-borderGrey rounded-none "
-                >
-                  <Cross2Icon className="w-4 h-4" />
-                </Button>
-              </DialogClose>
-            </div>
-            <DialogHeader className="flex items-start -mt-5">
-                  </DialogHeader>
-
-                {/* <div className="mb-10 mx-0 min-w-[600px]  w-full overflow-x-scroll overflow-y-scroll max-h-[18rem] md:overflow-x-auto"> */}
+     
                 <div className="flex border  h-[74vh] w-full dark:border-[#3A3A3A] ">
                   <div className="flex w-full ">
                     <div className={`${!sheetDetails ? "basis-full" : "basis-full xl:basis-2/3 "}  overflow-hidden `}>

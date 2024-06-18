@@ -1,9 +1,4 @@
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-} from "@/components/ui/dialog";
 import Image from "next/image";
 import React, { use, useEffect, useRef, useState } from "react";
 import addIcon from "@/app/assets/add_circle.svg";
@@ -20,9 +15,6 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from "zod";
 import {
-  CaretDownIcon,
-  Cross2Icon,
-  FontRomanIcon,
   InfoCircledIcon,
   PlusIcon,
   ArrowRightIcon,
@@ -627,110 +619,7 @@ const NewDeposit = ({
       })
     }
 
-
-
   }
-
-
-
-  //change schema based on the usdtDepositTillNow and usdtLimit
-  //This is not a good way to do it but it works and is used here because i lacked the knowledge to do this properly
-  useEffect(() => {
-
-    if (usdtAmountDepositedTillNow < usdtLimit) {
-      const updatedSchema = z.object({
-        AmintDepositAmount: z
-          .number()
-          .gte(0, { message: "Value must be greater than 0" })
-          .or(z.string())
-          .pipe(
-            z.coerce
-              .number()
-              .gte(0, { message: "Value must be greater than 0" })
-          )
-          .optional(),
-        USDTDepositAmount: z
-          .number()
-          .gte(0, { message: "Value must be greater than 0" })
-          .or(z.string())
-          .pipe(
-            z.coerce
-              .number()
-              .gte(0, { message: "Value must be greater than 0" })
-          ),
-        COMPDepositAmount: z
-          .number()
-          .gte(0, { message: "Value must be greater than 0" })
-          .or(z.string())
-          .pipe(
-            z.coerce
-              .number()
-              .gte(0, { message: "Value must be greater than 0" })
-          )
-          .optional(),
-        USDCDepositAmount: z
-          .number()
-          .gte(0, { message: "Value must be greater than 0" })
-          .or(z.string())
-          .pipe(
-            z.coerce
-              .number()
-              .gte(0, { message: "Value must be greater than 0" })
-          )
-          .optional(),
-        lockInPeriod: z.string(),
-        liquidationGains: z.boolean(),
-      });
-      // @ts-ignore
-      formSchema.current = updatedSchema;
-    } else if (usdtAmountDepositedTillNow < usdtLimit) {
-      const updatedSchema = z.object({
-        AmintDepositAmount: z
-          .number()
-          .gte(500, { message: "Value must be greater than 500" })
-          .or(z.string())
-          .pipe(
-            z.coerce
-              .number()
-              .gte(500, { message: "Value must be greater than 500" })
-          ),
-        USDTDepositAmount: z
-          .number()
-          .gte(0, { message: "Value must be greater than 0" })
-          .or(z.string())
-          .pipe(
-            z.coerce
-              .number()
-              .gte(0, { message: "Value must be greater than 0" })
-          )
-          .optional(),
-        COMPDepositAmount: z
-          .number()
-          .gte(0, { message: "Value must be greater than 0" })
-          .or(z.string())
-          .pipe(
-            z.coerce
-              .number()
-              .gte(0, { message: "Value must be greater than 0" })
-          )
-          .optional(),
-        USDCDepositAmount: z
-          .number()
-          .gte(0, { message: "Value must be greater than 0" })
-          .or(z.string())
-          .pipe(
-            z.coerce
-              .number()
-              .gte(0, { message: "Value must be greater than 0" })
-          )
-          .optional(),
-        lockInPeriod: z.string(),
-        liquidationGains: z.boolean(),
-      });
-      // @ts-ignore
-      formSchema.current = updatedSchema;
-    }
-  }, [usdtLimit, usdtAmountDepositedTillNow]);
 
 
   // useEffect to check if the cdsDepositSuccess is true

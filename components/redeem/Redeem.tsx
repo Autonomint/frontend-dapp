@@ -58,9 +58,6 @@ const formSchema = z.object({
   outputCollateral: z.string(),
 });
 
-
-
-
 const Redeem = ({
   openRedeemableAssets
 }: {

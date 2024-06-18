@@ -139,8 +139,6 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
     });
 
 
-
-
     const { writeContract: cdsWithdraw, data: cdsWithdrawData, isPending:isLoading } = useWriteCdsWithdraw({
         // onError callback function
         mutation:{
@@ -202,9 +200,7 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
 
     });
 
-
-    // Use the `mutate` function from the `useMutation` hook
-
+    // useWaitForTransactionReceipt hook to wait for the transaction receipt
     const {data:cdsLogdata, isError:isCdserror, isSuccess:isCdsSuccess} = useWaitForTransactionReceipt({
         hash: cdsWithdrawData, // The transaction hash to wait for
         confirmations: 2, // Number of confirmations required for success
@@ -269,8 +265,6 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
     async function calculateWithdrawAmount(
       data: calculateData
     ) {
-
-        console.log("1step",data)
       let bodyValue = JSON.stringify({
         ...data,
       });
@@ -330,10 +324,6 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
         }
     }
 
-    const WithdrawalTime = () => {
-        const storedDate = new Date(parseInt(details.depositedTime));
-        return storedDate.getTime() + 30 * 24 * 60 * 60 * 1000;
-      }
     /**
      * Handles the withdrawal.
      *
