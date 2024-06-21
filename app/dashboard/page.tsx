@@ -17,7 +17,6 @@ import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import { useChainId,useAccount } from "wagmi";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import { useQueries,useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 const amintValues = [
   {

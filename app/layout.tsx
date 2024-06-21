@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic'
 import CheckNetwork from "@/components/ConnectWallet/CheckNetwork";
 import WaitlistBanner from "@/components/Banner/WaitlistBanner";
 import Footer from "@/components/Footer/Footer";
-
+import StipeBanner from "@/components/Banner/StipeBanner";
 const WalletProvider = dynamic(() => import('@/providers/WalletProvider'), {
   ssr: false,
 })
@@ -46,6 +46,7 @@ export default function RootLayout({
               <QueryProvider>
 
                 <div className="flex flex-col w-full h-full mx-0 basis-full ">
+                  <StipeBanner />
                   {/* <WaitlistBanner/> */}
                   <NavBar />
                   {children}

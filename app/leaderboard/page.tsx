@@ -76,12 +76,13 @@ export default function page() {
         const response = await fetch(`${BACKEND_API_URL}/cds/cds/leaderboard`);
         return await response.json();
     }
-
+    
     //   Fetch and store deposits using react-query
     const { data: borrowdeposits, error: borrowdepositsError } = useQuery<TableData[]>({
         queryKey: ["borrowDeposits", chainId],
         queryFn: () => getBorrowLeaderboard(),
     });
+    console.log(borrowdeposits)
 
     //   Fetch and store cds deposits using react-query
     const { data: cdsdeposits, error: cdsdepositsError } = useQuery<TableData[]>({
