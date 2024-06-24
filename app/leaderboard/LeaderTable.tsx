@@ -12,6 +12,7 @@ import truncateWeb3WalletAddress from "@/app/utils/truncateWeb3Address";
 import Image from 'next/image';
 import baselogo from '@/app/assets/base-logo.png';
 import sepolialogo from '@/app/assets/eth.svg';
+import { useReadBorrowingContractGetUsdValue } from '@/abiAndHooks';
 interface TableData {
     rank: string;
     address: string;
@@ -33,8 +34,11 @@ const LeaderTable = ({ tableType, data }: { tableType: string, data: TableData[]
     const [sortField, setSortField] = useState(null);
     const [pagecount, setPageCount] = useState(1);
     const itemsPerPage = 10;
-
+    const { data: ethPrice} = useReadBorrowingContractGetUsdValue();
     // sort the data based on the sortField
+    useEffect(() => {
+    }, [ethPrice]);
+    console.log(ethPrice)
     useEffect(() => {
         let sorted = [...data];
         if (sortField) {
@@ -89,7 +93,7 @@ const LeaderTable = ({ tableType, data }: { tableType: string, data: TableData[]
 
                                         {
                                             tableType === 'cds' ? null :
-                                                <TableCell className=" dark:text-[#EEEEEE]">{0}
+                                                <TableCell className=" dark:text-[#EEEEEE]">{(Number(data.totalAmint)*100/(Number(data.totalDepositedAmount)*Number(ethPrice))).toFixed(2)}
                                                 </TableCell>
                                         }
                                         <TableCell className=" dark:text-[#EEEEEE]">{data.points == null ? 0 : data.points}
