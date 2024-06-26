@@ -2,9 +2,6 @@ import Note from "@/components/CustomUI/Note";
 import SheetRow from "@/components/CustomUI/SheetRow";
 import { Button } from "@/components/ui/button";
 import {
-    Sheet,
-    SheetClose,
-    SheetContent,
     SheetHeader,
     SheetTitle,
 } from "@/components/ui/sheet";
@@ -20,11 +17,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAccount, useChainId, useWaitForTransactionReceipt } from "wagmi";
 import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
-import { parseEther } from "viem";
-import { formatDateFromUnixTimestamp } from "@/app/utils/calculateNext30Days";
 import ConfirmNoticeCds from "./ConfirmNoticeCds";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
-import decodeEventLogsFromAbi from "@/app/utils/decodeEventLogsFromAbi";
 
 const events = {
     withdrewAmint: "0",
@@ -102,11 +96,11 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
             value: "0 days",
         },
         {
-            headline: "Deposit Time APR",
+            headline: "Deposit Time APY",
             value: "5%",
         },
         {
-            headline: "Current Time APR",
+            headline: "Current Time APY",
             value: "5%",
         },
         {
