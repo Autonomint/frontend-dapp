@@ -108,7 +108,6 @@ const Dcds = () => {
       setOpen2(true);
       setNewtxn(true);
     })
-    
   }
 
   // Define a variable to store the result of the query

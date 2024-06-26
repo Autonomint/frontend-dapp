@@ -299,8 +299,8 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
             const updatedData = [...depositData];
             updatedData[0].value = details.depositedAmint == "undefined" || details.depositedAmint == "NaN" ? '0' : details.depositedAmint  // Update depositedAmint value
             updatedData[1].value = details.depositedUsdt == "undefined" || details.depositedUsdt == "NaN" ? '0' : details.depositedUsdt; // Update depositedAmint value
-            console.log(updatedData[1].value, updatedData[0].value)
-            updatedData[2].value = `${details.ethPriceAtDeposit}`; // Update ethPriceAtDeposit value
+            console.log("date()=>", Date.now(), details.depositedTime, Number(details.depositedTime) * 1000)
+            updatedData[2].value = `${details.ethPriceAtDeposit/100}`; // Update ethPriceAtDeposit value
             updatedData[3].value = new Date(Number(details.depositedTime)*1000).toLocaleString(); // Update depositedTime value and format time in 'DD/MM/YYYY'
             updatedData[4].value = `${(Number(details.lockingPeriod)/86400000).toFixed(0)} days`; // Update lockingPeriod value
             updatedData[5].value = calculateTimeDifference(details.depositedTime+"000"); // Update time difference value
@@ -425,8 +425,8 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
                             variant={"primary"}
                             className="border-[#041A50] bg-[#ABFFDE] mx-4 text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
                             onClick={() => setOpenConfirmNotice(true)}
-                            // disabled={(status === "WITHDREW" ? true : false) || (WithdrawalTime() > Date.now())}
-                            disabled={(status === "WITHDREW" ? true : false)}
+                            disabled={(status === "WITHDREW" ? true : false) || (Number(details.lockingPeriod *1000) > Date.now())}
+                            // disabled={(status === "WITHDREW" ? true : false)}
                         >
                             Withdraw
                         </Button>

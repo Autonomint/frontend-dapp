@@ -523,14 +523,13 @@ const Withdrawcopy = ({
 
   function handleDepositData() {
     // Calculate the totalAmintAmnt
-    
-
-    if (details) {
+    if (details && lastCumulativeRate) {
       const totalAmintAmnt = lastCumulativeRate===undefined ? BigInt(Number(details.normalizedAmount)*10**6) :(
         BigInt(
           BigInt(details.normalizedAmount? Number(details.normalizedAmount)*10**6 : 0) *
           (lastCumulativeRate)
         ) / BigInt(10 ** 27))
+        console.log(lastCumulativeRate,totalAmintAmnt)
 
       totalAmintAmount.current = totalAmintAmnt;
       // If details are available, update each value in the depositData array
@@ -610,7 +609,7 @@ const Withdrawcopy = ({
     setOpenConfirmNotice(true);
     setSpinner(false);
 
-  }, [details]);
+  }, [details,lastCumulativeRate]);
 
 
 

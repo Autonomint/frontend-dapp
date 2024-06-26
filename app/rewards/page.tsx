@@ -9,22 +9,36 @@ import { Settings } from "lucide-react";
 import { useQuery } from '@tanstack/react-query';
 import { BACKEND_API_URL } from '@/constants/BackendUrl';
 import { useAccount, useChainId } from 'wagmi';
+import { Button } from '@/components/ui/button';
+import { useWeb3Modal, createWeb3Modal } from '@web3modal/wagmi/react'
+import { config, projectId } from "@/providers/WalletProvider";
+
+
 export default function page() {
     const [openSettings, setOpenSettings] = React.useState(false);
     const [showNotification, setShowNotification] = useState(false);
     const [showReferral, setShowReferral] = useState(false);
     const chainId = useChainId()
-    const {address} = useAccount()
+    const { address, isConnected } = useAccount()
     const generateReferral = () => {
         console.log('referral generated')
         setShowReferral(true)
     }
+    createWeb3Modal({
+        wagmiConfig: config,
+        projectId,
+        enableAnalytics: true,
+      })
+      const { open, close } = useWeb3Modal()
+      const onConnect = () => {
+        open()
+      }
     // Fetch user points data using the useQuery hook
-        const {data:points,error} = useQuery({
-            queryKey: ['points'],
-            queryFn:()=>fetch(`${BACKEND_API_URL}/points/userPoints/${chainId}/${address}`).then((res) => res.json()),
-            staleTime:Infinity
-        })
+    const { data: points, error } = useQuery({
+        queryKey: ['points'],
+        queryFn: () => fetch(`${BACKEND_API_URL}/points/userPoints/${chainId}/${address}`).then((res) => res.json()),
+        staleTime: Infinity
+    })
 
     return (
         <div>
@@ -46,47 +60,64 @@ export default function page() {
                             <div className="w-full gap-5 text-xl text-center">
                                 Refer <span className='font-semibold ] '>Autonomint</span>  to your friends and boost your earnings!
                             </div>
-                            <div className=''>
-                                {
-                                    showReferral ?
-                                    (
-                                        <div>
-                                        <div className='text-xl font-bold'>Refer and Earn</div>
-                                        <div className='flex gap-4'>
-                                            <input type='text' placeholder='Enter your friend email' className='border border-[#020202] p-2 w-full text-sm' />
-                                            <button className=' px-4 font-medium border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none'>Refer</button>
-                                        </div>
-                                        <div className='flex justify-between w-full mt-4'>
-                                            <div>share to your network</div> <div className='flex items-center gap-2'><TwitterLogoIcon width={20} height={20} /></div>
-                                        </div>
-                                    </div>
-                                    ):(
-                                        <div className='flex flex-col gap-2'>
-                                        Create a referral link and share it with your friends. When they sign up and start earning.
-                                        <div className='flex justify-center w-full'>
-                                            <button onClick={generateReferral} className=' w-fit px-4 font-medium border-[#041A50] bg-[#ABFFDE] dark:text-black text-sm border-[1px] shadow-smallcustom py-2 rounded-none'>Create Referral Link</button>
-                                        </div>
-                                    </div>
+                            {
+                                isConnected ? (
+                                    <div className='flex flex-col gap-4'>
 
-                                    )
-                                }
-                              
-                               
-                            </div>
-                            <div className='flex gap-2'>
-                                <div className='flex w-full flex-col gap-2 bg-[#EEEEEE]  border-[#9E9E9E] shadow-custom dark:bg-[#020202] dark:shadow-darkcustom p-4 '>
-                                    <div className='flex gap-2 text-sm font-semibold'><ReceiptIcon width={20} height={20} /> Collected</div>
-                                    <div className='text-xl font-semibold text-center'>{points == undefined? 0 :points} LP</div>
+                                        <div>
+                                            {
+                                                showReferral ?
+                                                    (
+                                                        <div>
+                                                            <div className='text-xl font-bold'>Refer and Earn</div>
+                                                            <div className='flex gap-4'>
+                                                                <input type='text' placeholder='Enter your friend email' className='border border-[#020202] p-2 w-full text-sm' />
+                                                                <Button variant={'primary'} className=' w-fit px-4 font-medium text-sm border-[1px] py-2 '>Refer</Button>
+                                                            </div>
+                                                            <div className='flex justify-between w-full mt-4'>
+                                                                <div>share to your network</div> <div className='flex items-center gap-2'><TwitterLogoIcon width={20} height={20} /></div>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className='flex flex-col gap-2'>
+                                                            Create a referral link and share it with your friends. When they sign up and start earning.
+                                                            <div className='flex justify-center w-full'>
+                                                                <Button onClick={generateReferral} variant={'primary'} className=' w-fit px-4 font-medium text-sm border-[1px] py-2 '>Create Referral Link</Button>
+                                                            </div>
+                                                        </div>
+
+                                                    )
+                                            }
+
+
+                                        </div>
+                                        <div className='flex gap-2'>
+                                            <div className='flex w-full flex-col gap-2 bg-[#EEEEEE]  border-[#9E9E9E] shadow-custom dark:bg-[#020202] dark:shadow-darkcustom p-4 '>
+                                                <div className='flex gap-2 text-sm font-semibold'><ReceiptIcon width={20} height={20} /> Collected</div>
+                                                <div className='text-xl font-semibold text-center'>{points == undefined ? 0 : points} LP</div>
+                                            </div>
+                                            {/* <div className='flex w-full flex-col gap-2 bg-[#EEEEEE] border-[#9E9E9E] shadow-custom dark:bg-[#020202] dark:shadow-darkcustom p-4 '>
+                                    <div className='flex justify-between'>
+                                    <p className='flex items-center gap-2 text-sm'><Wallet width={20} height={20} />Total referred :</p><p className='text-sm font-semibold'>500</p>
+                                    </div>
+                                    <div className='flex justify-between'>
+                                    <p className='flex items-center gap-2 text-sm'><ListChecks width={20} height={20} /> Total users :</p><p className='text-sm font-semibold'>10000</p>
+                                    </div>
+                                    </div> */}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className='flex flex-col gap-2 text-center'>
+                                    Connect your wallet to start earning points
+                                    <div className='flex justify-center w-full'>
+                                        <Button onClick={onConnect} variant={'primary'} className=' w-fit px-4 font-medium text-sm border-[1px] py-2 '>Connect Wallet</Button>
+                                    </div>
                                 </div>
-                                {/* <div className='flex w-full flex-col gap-2 bg-[#EEEEEE] border-[#9E9E9E] shadow-custom dark:bg-[#020202] dark:shadow-darkcustom p-4 '>
-                                    <div className='flex justify-between'>
-                                        <p className='flex items-center gap-2 text-sm'><Wallet width={20} height={20} />Total referred :</p><p className='text-sm font-semibold'>500</p>
-                                    </div>
-                                    <div className='flex justify-between'>
-                                        <p className='flex items-center gap-2 text-sm'><ListChecks width={20} height={20} /> Total users :</p><p className='text-sm font-semibold'>10000</p>
-                                    </div>
-                                </div> */}
-                            </div>
+                                    
+
+                                )
+                            }
+
 
                             <div className='flex flex-col gap-2 bg-[#ffffff] border border-[#9E9E9E]  dark:border-none dark:bg-[#3a3a3a] dark:shadow-darkcustom shadow-custom p-4 '>
                                 <div className='text-xl font-bold'>
