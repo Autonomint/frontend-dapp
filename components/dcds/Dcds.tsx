@@ -49,7 +49,7 @@ interface DepositDetail {
 }
 const dasboardStatsItem = [
   {
-    heading: "Total AMINT / USDT Deposited",
+    heading: "Total USDa / USDT Deposited",
     value: "1324.32",
     showSubHeading: false,
   },
@@ -108,7 +108,6 @@ const Dcds = () => {
       setOpen2(true);
       setNewtxn(true);
     })
-    
   }
 
   // Define a variable to store the result of the query
@@ -244,7 +243,7 @@ const Dcds = () => {
                       </div>
                     </div>
                     <div className={`${!sheetDetails ? "hidden basis-0" : "basis-1/3"} border-l h-[99.9%] overflow-y-scroll right-0 xl:overflow-auto absolute xl:relative border-black  bg-[#eeeeee] dark:bg-[#242424]`}>
-                      <div className="absolute right-0 p-1 border border-black cursor-pointer w-fit" onClick={() => setSheetDetails(undefined)}><Cross2Icon /></div>
+                      <div className="absolute right-0 p-1 border border-black cursor-pointer dark:border-[#9E9E9E] w-fit" onClick={() => setSheetDetails(undefined)}><Cross2Icon /></div>
 
                       {
                         sheetDetails && <AmintDepositRowCopy

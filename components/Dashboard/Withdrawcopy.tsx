@@ -103,7 +103,7 @@ const Withdrawcopy = ({
 
   const depositDetails = [
     {
-      headline: "Eth Deposited",
+      headline: "ETH Deposited",
       value: "0.00123",
       tooltip: false,
       tooltipText: "",
@@ -115,25 +115,25 @@ const Withdrawcopy = ({
       tooltipText: "",
     },
     {
-      headline: "Amint Amount minted",
+      headline: "USDa Amount Minted",
       value: "1.234",
       tooltip: true,
       tooltipText: "80% of the total deposited amount",
     },
     {
-      headline: "Total Amount (Amint minted + Interest)",
+      headline: "Total Amount (USDa minted + Interest)",
       value: "-",
       tooltip: false,
       tooltipText: "",
     },
     {
-      headline: "APR at Deposit",
+      headline: "Deposit Time APR",
       value: "5%",
       tooltip: false,
       tooltipText: "",
     },
     {
-      headline: "Downside percentage at Deposit",
+      headline: "Downside Percentage At Deposit",
       value: "20%",
       tooltip: false,
       tooltipText: "",
@@ -145,8 +145,8 @@ const Withdrawcopy = ({
       tooltipText: "",
     },
     {
-      headline: "Interest rate gained",
-      value: "3%",
+      headline: "Interest Rate Gained",
+      value: "-",
       tooltip: false,
       tooltipText: "",
     },
@@ -523,14 +523,13 @@ const Withdrawcopy = ({
 
   function handleDepositData() {
     // Calculate the totalAmintAmnt
-    
-
-    if (details) {
+    if (details && lastCumulativeRate) {
       const totalAmintAmnt = lastCumulativeRate===undefined ? BigInt(Number(details.normalizedAmount)*10**6) :(
         BigInt(
           BigInt(details.normalizedAmount? Number(details.normalizedAmount)*10**6 : 0) *
           (lastCumulativeRate)
         ) / BigInt(10 ** 27))
+        console.log(lastCumulativeRate,totalAmintAmnt)
 
       totalAmintAmount.current = totalAmintAmnt;
       // If details are available, update each value in the depositData array
@@ -542,7 +541,7 @@ const Withdrawcopy = ({
       updatedData[4].value = `${details.aprAtDeposit}%`;
       updatedData[5].value = `${details.downsideProtectionPercentage}%`;
       updatedData[6].value = details.status === "LIQUIDATED" ? "Yes" : "No";
-      // updatedData[7].value = details.depositedAmount;
+      updatedData[7].value = details.noOfAbondMinted? "3%" : "-";
       updatedData[8].value = details.noOfAbondMinted
         ? details.noOfAbondMinted
         : "-";
@@ -610,7 +609,7 @@ const Withdrawcopy = ({
     setOpenConfirmNotice(true);
     setSpinner(false);
 
-  }, [details]);
+  }, [details,lastCumulativeRate]);
 
 
 
@@ -626,7 +625,7 @@ const Withdrawcopy = ({
             <div className="flex justify-end w-full">
             </div>
             <SheetHeader>
-              <SheetTitle className="text-[#020202] px-4 dark:text-[#90AFFF] font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
+              <SheetTitle className="text-[#020202] px-4 dark:text-[#FFFFFF] font-medium min-[1440px]:text-4xl 2dppx:text-2xl text-2xl tracking-[-1.8px]">
                 Deposit #{details.index}
               </SheetTitle>
             </SheetHeader>

@@ -34,7 +34,7 @@ const TableRows = ({
   islasttxn
 }: {
   details: TableData;
-  interest?: number;
+  interest?: string;
   onClick: Function;
   isnewtxn?: boolean;
   islasttxn?: boolean;
@@ -140,7 +140,7 @@ const TableRows = ({
           {details.noOfAmintMinted}
         </TableCell>
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
-          {interest}%
+          {interest}
         </TableCell>
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
             {details.noOfAbondMinted === null ? "-" : details.noOfAbondMinted}
@@ -149,7 +149,7 @@ const TableRows = ({
             {details.status === "LIQUIDATED" ? "Yes" : "No"}
         </TableCell>
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
-            <Button variant={"outline"}  className="py-1 px-2 mr-4 bg-[#020202] text-white" >repay</Button>
+            <Button variant={"outline"}  className={`${details.status=="DEPOSITED"?"bg-[#020202]":"bg-[#3b3a3a] dark:bg-[#464646]"}py-1 px-2 mr-4 min-w-24  text-white`} >{details.status =="DEPOSITED"?"Repay" : details.status=="LIQUIDATED"?"Liquidated":"Repaid"}</Button>
         </TableCell>
       </TableRow>
   );

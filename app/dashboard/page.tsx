@@ -177,10 +177,8 @@ const page = () => {
 
 
   return (
-    !isConnected ?<ConnectWallet/>:
     <div className="z-40 static h-[84vh] overflow-y-scroll p-5 mx-2 sm:mx-5 bg-white shadow-custom dark:bg-[#242424] dark:shadow-darkcustom border-[1px] border-[#9E9E9E]">
-
-      {
+      {!isConnected ?<ConnectWallet/>:
          
         loading ? (<div className="w-full h-[80vh] flex justify-center items-center">
           <div role="status">
@@ -257,8 +255,8 @@ const page = () => {
             </div>
           </div>
         )
+      
       }
-
 
     </div>
   );

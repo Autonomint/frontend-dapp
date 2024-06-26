@@ -57,7 +57,7 @@ const DepositAndWithDrawTable = ({
         <div className="flex flex-col gap-[10px] h-[10vh] ">
           <div className="p-4">
 
-            <h2 className="text-black dark:text-[#90AFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
+            <h2 className="text-black dark:text-[#FFFFFF]  font-medium text-2xl min-[1280px]:text-3xl tracking-[-1.8px] min-[1440px]:text-4xl 2dppx:text-2xl">
               Your Deposits
             </h2>
             <p className="text-textSecondary dark:text-[#EEEEEE]  text-sm min-[1440px]:text-base 2dppx:text-xs">
@@ -81,14 +81,14 @@ const DepositAndWithDrawTable = ({
 
             <TableBody>
               {tableData && tableData?.map((details, index) => {
-                return <TableRows isnewtxn={newtxn} islasttxn={tableData.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} interest={3} />
+                return <TableRows isnewtxn={newtxn} islasttxn={tableData.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} interest={details.noOfAbondMinted?"3%":"-"} />
               })}
             </TableBody>
           </Table>
         </div>
       </div>
       <div className={`${!sheetDetails ? "hidden basis-0" : "basis-1/3"} border-l h-[99.9%] overflow-y-scroll right-0 xl:overflow-auto absolute xl:relative border-black  bg-[#eeeeee] dark:bg-[#242424]`}>
-        <div className="absolute right-0 p-1 border border-black cursor-pointer w-fit" onClick={() => setSelectedId(undefined)}><Cross2Icon /></div>
+        <div className="absolute right-0 p-1 border border-black dark:border-[#9E9E9E] cursor-pointer w-fit" onClick={() => setSelectedId(undefined)}><Cross2Icon /></div>
         {
           selectedId && sheetDetails && <Withdrawcopy
             details={sheetDetails}

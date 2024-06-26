@@ -996,7 +996,7 @@ const NewDeposit = ({
                         height={24}
                       />
                       <p className="min-[1440px]:text-base text-sm text-[#242424] 2dppx:text-sm dark:text-[#EEEEEE]">
-                        Expected APR can range from{" "}
+                        Expected APY can range from{" "}
                         <span className="text-textHighlight dark:text-white"> ~5%</span> to{" "}
                         <span className="text-textHighlight dark:text-white">~200%</span>
                       </p>
