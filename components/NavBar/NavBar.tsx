@@ -71,12 +71,12 @@ const navItemsList = [
     href: "rewards",
     targetSegment: "rewards",
   },
-  {
-    image: mintmark,
-    label: "Markets",
-    href: "markets",
-    targetSegment: "markets",
-  }
+  // {
+  //   image: mintmark,
+  //   label: "Markets",
+  //   href: "markets",
+  //   targetSegment: "markets",
+  // }
 ];
 
 
