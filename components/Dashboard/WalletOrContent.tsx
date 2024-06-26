@@ -93,6 +93,7 @@ const WalletOrContent = () => {
                   tableData={deposits}
                   handleRefetch={handleRefetch}
                   newtxn ={newtxn}
+                  ethprice={ethPrice}
                 />
               </div>
             </DialogContent>

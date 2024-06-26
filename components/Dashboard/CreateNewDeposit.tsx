@@ -491,7 +491,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                 <p className=" min-[1440px]:text-base 2dppx:text-sm text-xs font-normal text-textGrey dark:text-[#DEDEDE] ">
                   Minimum Collateral Amount is{" "}
                   <span className="font-medium text-textHighlight dark:text-[#ffff]">
-                    0.02 ETH
+                    0.05 ETH
                   </span>
                 </p>
               </div>

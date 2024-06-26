@@ -37,11 +37,13 @@ interface TableData {
 const DepositAndWithDrawTable = ({
   tableData,
   handleRefetch,
-  newtxn
+  newtxn,
+  ethprice
 }: {
   tableData: TableData[];
   handleRefetch: Function;
   newtxn?: boolean;
+  ethprice: bigint | undefined;
 }) => {
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
   const handleSheet = (details: TableData) => {
@@ -49,6 +51,8 @@ const DepositAndWithDrawTable = ({
   }
   const sheetDetails = tableData?.find(item => item.id === selectedId);
   console.log(tableData)
+
+
 
 
   return (
@@ -72,7 +76,7 @@ const DepositAndWithDrawTable = ({
                 <TableHead className="w-3 opacity-1 text-textGrey dark:text-[#C4C4C4]">Id</TableHead>
                 <TableHead className="text-textGrey dark:text-[#C4C4C4]">ETH Deposited</TableHead>
                 <TableHead className="text-textGrey dark:text-[#C4C4C4]">USDa minted</TableHead>
-                <TableHead className="text-textGrey dark:text-[#C4C4C4]">Interest rate</TableHead>
+                <TableHead className="text-textGrey dark:text-[#C4C4C4]">Amount Protected (in USD)</TableHead>
                 <TableHead className="text-textGrey dark:text-[#C4C4C4]">Abond minted</TableHead>
                 <TableHead className="text-textGrey dark:text-[#C4C4C4]">Liquidated</TableHead>
                 <TableHead className="text-textGrey dark:text-[#C4C4C4]">Repay</TableHead>
@@ -81,7 +85,7 @@ const DepositAndWithDrawTable = ({
 
             <TableBody>
               {tableData && tableData?.map((details, index) => {
-                return <TableRows isnewtxn={newtxn} islasttxn={tableData.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} interest={details.noOfAbondMinted?"3%":"-"} />
+                return <TableRows isnewtxn={newtxn} islasttxn={tableData.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} ethprice={ethprice} interest={details.noOfAbondMinted?"3%":"-"} />
               })}
             </TableBody>
           </Table>

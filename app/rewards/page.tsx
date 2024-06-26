@@ -124,7 +124,7 @@ export default function page() {
                                     HOW TO EARN:
                                 </div>
                                 <div className='flex justify-between border-b border-[#9E9E9E] pb-1'>
-                                    <p className='flex items-center justify-between w-full text-xs '><span>Mint & Borrow USDa </span> <span className='font-medium'>10 points/per day</span></p>
+                                    <p className='flex items-center justify-between w-full text-xs '><span>Mint & Borrow USDa (min 0.05 ETH) </span> <span className='font-medium'>10 points/per day</span></p>
                                 </div>
                                 <div className='flex justify-between border-b border-[#9E9E9E] pb-1'>
                                     <p className='flex items-center justify-between w-full gap-2 text-xs'>Deposit 500 USDa in dCDS  <span className='font-medium'>10 points/per day</span></p>

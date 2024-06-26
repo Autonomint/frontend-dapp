@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TableCell, TableRow } from "../ui/table";
 import { Button } from "../ui/button";
+import displayNumberWithPrecision from "@/app/utils/precision";
 
 
 interface TableData {
@@ -31,13 +32,15 @@ const TableRows = ({
   interest,
   onClick,
   isnewtxn,
-  islasttxn
+  islasttxn,
+  ethprice
 }: {
   details: TableData;
   interest?: string;
   onClick: Function;
   isnewtxn?: boolean;
   islasttxn?: boolean;
+  ethprice: bigint | undefined;
 }) => {
   const depositDetails = [
     {
@@ -96,8 +99,40 @@ const TableRows = ({
     },
   ];
   const [depositData, setDepositData] = useState(depositDetails);
+  const [amountProtected, setAmountProtected] = useState(0);
+  
+  const amountProtectedFuntion =()=>{
+    if(ethprice === undefined) return;
+    if (parseFloat(ethprice.toString())  > details.ethPrice) {
+      setAmountProtected(0);
+    }
+    //if current ethPrice < depositedethPrice
+    else if (parseFloat(ethprice.toString())  < details.ethPrice) {
+      const amountProt =
+        parseFloat(details.depositedAmount) *
+        (details.ethPrice - parseFloat(ethprice.toString()));
+      const amountProtPrecision = parseFloat(
+        displayNumberWithPrecision((amountProt/100).toFixed(2))
+      );
+      setAmountProtected(amountProtPrecision);
+    }
+    //if current ethprice < 0.8 of depositedethPrice
+    else if (
+      parseFloat(ethprice.toString()) <=
+      0.8 * details.ethPrice
+    ) {
+      const amountProt =
+        0.2 * parseFloat(details.depositedAmount) * details.ethPrice;
+      const amountProtPrecision = parseFloat(
+        displayNumberWithPrecision((amountProt/100).toFixed(2))
+      );
+      setAmountProtected(amountProtPrecision);
+    }
+    
+  }
   function handleDepositData() {
     if (details) {
+      
       const updatedData = [...depositData];
       updatedData[0].value = details.depositedAmount;
       updatedData[1].value = `${details.ethPrice}`;
@@ -126,8 +161,9 @@ const TableRows = ({
   }
 
   useEffect(() => {
+    amountProtectedFuntion()
     handleDepositData();
-  }, [details]);
+  }, [details , ethprice]);
   return (
       <TableRow onClick={()=>onClick()} className={` ${islasttxn && isnewtxn ? "bg-[#ABFFDE] dark:bg-[#3A3A3A]":""} hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer`}>
         <TableCell className="w-3 text-borderGrey dark:text-[#EEEEEE]">
@@ -140,7 +176,7 @@ const TableRows = ({
           {details.noOfAmintMinted}
         </TableCell>
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
-          {interest}
+          {amountProtected}
         </TableCell>
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
             {details.noOfAbondMinted === null ? "-" : details.noOfAbondMinted}
