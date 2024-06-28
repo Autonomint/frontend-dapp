@@ -9,6 +9,7 @@ import {
   SEPOLIA_OPTIONS_ADDRESS,
   SEPOLIA_TESTUSDT_ADDRESS,
   SEPOLIA_TREASURY_ADDRESS,
+  SEPOLIA_GLOBAL_ADDRESS,
   BASE_SEPOLIA_USDA_ADDRESS,
   BASE_SEPOLIA_ABOND_ADDRESS,
   BASE_SEPOLIA_BORROWING_ADDRESS,
@@ -16,6 +17,7 @@ import {
   BASE_SEPOLIA_OPTIONS_ADDRESS,
   BASE_SEPOLIA_TESTUSDT_ADDRESS,
   BASE_SEPOLIA_TREASURY_ADDRESS,
+  BASE_SEPOLIA_GLOBAL_ADDRESS
 } from "./constants/Addresses";
 import * as chains from "wagmi/chains";
 import { UsdaABI } from "./constants/UsdaABI";
@@ -24,6 +26,7 @@ import { CDSABI } from "./constants/CDSAbi";
 import { TreasuryAbi } from "./constants/TreasuryAbi";
 import { OPTIONSABI } from "./constants/OptionsAbi";
 import { TusdtABI } from "./constants/TusdtABI";
+import { GLOBALABI } from "./constants/GlobalAbi";
 
 
 export default defineConfig({
@@ -87,6 +90,14 @@ export default defineConfig({
         [chains.baseSepolia.id]: BASE_SEPOLIA_ABOND_ADDRESS,
       },
     },
+    {
+      name:"GLOBAL",
+      abi: GLOBALABI,
+      address: {
+        [chains.sepolia.id]: SEPOLIA_GLOBAL_ADDRESS,
+        [chains.baseSepolia.id]: BASE_SEPOLIA_GLOBAL_ADDRESS,
+      },
+    }
 
   ],
   plugins: [react()],

@@ -11,7 +11,8 @@ import calculateTimeDifference from "@/app/utils/calculateTimeDifference";
 import {
     cdsAbi,
     useReadBorrowingContractGetUsdValue,
-    useWriteCdsWithdraw
+    useWriteCdsWithdraw,
+    useReadGlobalQuote
 } from "@/abiAndHooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAccount, useChainId, useWaitForTransactionReceipt } from "wagmi";
@@ -19,6 +20,8 @@ import { toast } from "sonner";
 import CustomToast from "@/components/CustomUI/CustomToast";
 import ConfirmNoticeCds from "./ConfirmNoticeCds";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
+import { Options } from '@layerzerolabs/lz-v2-utilities'
+
 
 const events = {
     withdrewAmint: "0",
@@ -49,7 +52,7 @@ type calculateData = {
     index: number;
     chainId: number;
     ethPrice: string;
-  };
+};
 
 
 //   usdt present in the pool
@@ -127,81 +130,89 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
 
 
     const { data: ethPrice } = useReadBorrowingContractGetUsdValue({
-        query:{
+        query: {
             staleTime: 10 * 1000, //refresh eth price after 10 seconds
         }
     });
+    const options = Options.newOptions().addExecutorLzReceiveOption(11500000, 0).toHex().toString() as `0x${string}`;
+    const { data: nativeFee1, error } = useReadGlobalQuote({
+        query: { enabled: !!address }, args: [1, options, false]
+    });
 
 
-    const { writeContract: cdsWithdraw, data: cdsWithdrawData, isPending:isLoading } = useWriteCdsWithdraw({
+    const { writeContract: cdsWithdraw, data: cdsWithdrawData, isPending: isLoading } = useWriteCdsWithdraw({
         // onError callback function
-        mutation:{
+        mutation: {
 
-        onError(error) {
-            console.log(error.cause, error.message, error.name, error.stack);
-            // Display custom toast with error message
-            toast.custom(
-                (t) => {
-                    toastId.current = t;
-                    return (
-                        <div>
-                            <CustomToast
-                                key={2}
-                                props={{
-                                    t,
-                                    toastMainColor: "#B43939",
-                                    headline: `Uhh Ohh! ${error.message}`,
-                                    toastClosebuttonHoverColor: "#e66d6d",
-                                    toastClosebuttonColor: "#C25757",
-                                }}
-                            />
-                        </div>
-                    );
-                },
-                { duration: 5000 }
-            );
-        },
-        // onSuccess callback function
-        onSuccess(data) {
-            console.log(data);
-            // Close the sheet
-            // setSheetOpen(false);
-            // Display custom toast with success message and transaction hash
-            toast.custom(
-                (t) => {
-                    toastId.current = t;
-                    return (
-                        <div>
-                            <CustomToast
-                                props={{
-                                    t,
-                                    toastMainColor: "#268730",
-                                    headline: "Transaction Submitted",
-                                    transactionHash: data,
-                                    linkLabel: "View Transaction",
-                                    toastClosebuttonHoverColor: "#90e398",
-                                    toastClosebuttonColor: "#57C262",
-                                    spinner: true,
-                                }}
-                            />
-                        </div>
-                    );
-                },
-                { duration: Infinity }
-            );
-        },
-    }
+            onError(error: any) {
+                console.log(error.cause, error.message, error.name, error.stack);
+                // Display custom toast with error message
+                toast.custom(
+                    (t) => {
+                        toastId.current = t;
+                        return (
+                            <div>
+                                <CustomToast
+                                    key={2}
+                                    props={{
+                                        t: toastId.current,
+                                        toastMainColor: "#B43939",
+                                        headline: `Uhh Ohh! ${error.details}`,
+                                        toastClosebuttonHoverColor: "#e66d6d",
+                                        toastClosebuttonColor: "#C25757",
+                                        type: "error"
+
+                                    }}
+                                />
+                            </div>
+                        );
+                    },
+                    { duration: 5000 }
+                );
+            },
+            // onSuccess callback function
+            onSuccess(data) {
+                console.log(data);
+                // Close the sheet
+                // setSheetOpen(false);
+                // Display custom toast with success message and transaction hash
+                toast.custom(
+                    (t) => {
+                        toastId.current = t;
+                        return (
+                            <div>
+                                <CustomToast
+                                    props={{
+                                        t: toastId.current,
+                                        toastMainColor: "#268730",
+                                        headline: "Transaction Submitted",
+                                        transactionHash: data,
+                                        linkLabel: "View Transaction",
+                                        toastClosebuttonHoverColor: "#90e398",
+                                        toastClosebuttonColor: "#57C262",
+                                        spinner: true,
+                                        type: "success"
+
+                                    }}
+                                />
+                            </div>
+                        );
+                    },
+                    { duration: Infinity }
+                );
+            },
+        }
 
     });
 
     // useWaitForTransactionReceipt hook to wait for the transaction receipt
-    const {data:cdsLogdata, isError:isCdserror, isSuccess:isCdsSuccess} = useWaitForTransactionReceipt({
+    const { data: cdsLogdata, isError: isCdserror, isSuccess: isCdsSuccess } = useWaitForTransactionReceipt({
         hash: cdsWithdrawData, // The transaction hash to wait for
         confirmations: 2, // Number of confirmations required for success
-       
     });
+
     useEffect(() => {
-        if(isCdsSuccess) {
+        if (isCdsSuccess) {
             const dataLogs = cdsLogdata.logs[cdsLogdata.logs.length - 1]
             console.log("cdsLogdata", dataLogs)
             handleRefetch();
@@ -220,6 +231,7 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
                                 toastClosebuttonHoverColor: "#90e398",
                                 toastClosebuttonColor: "#57C262",
                                 completed: true,
+                                type: "success"
                             }}
                         />
                     </div>
@@ -233,11 +245,11 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
             }, 5000);
         }
 
-    },[cdsLogdata])
+    }, [cdsLogdata])
 
 
 
-    const { mutate: calculateBackendWithdraw,data:withdrawdata } = useMutation({
+    const { mutate: calculateBackendWithdraw, data: withdrawdata } = useMutation({
         // Specify the mutation function
         mutationFn: calculateWithdrawAmount,
         // Handle any errors that occur during the mutation
@@ -257,29 +269,29 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
     console.log(withdrawdata)
 
     async function calculateWithdrawAmount(
-      data: calculateData
+        data: calculateData
     ) {
-      let bodyValue = JSON.stringify({
-        ...data,
-      });
-      console.log(bodyValue);
-      const response = await fetch(
-        `${BACKEND_API_URL}/cds/calculateWithdrawAmount`,
-        {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: bodyValue,
-        }
-      );
-      const result = await response.json();
-      console.log(result);
+        let bodyValue = JSON.stringify({
+            ...data,
+        });
+        console.log(bodyValue);
+        const response = await fetch(
+            `${BACKEND_API_URL}/cds/calculateWithdrawAmount`,
+            {
+                method: "GET",
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: bodyValue,
+            }
+        );
+        const result = await response.json();
+        console.log(result);
 
-      if (!response.ok) {
-        throw new Error(result.message);
-      }
-      return result;
+        if (!response.ok) {
+            throw new Error(result.message);
+        }
+        return result;
     }
 
     /**
@@ -294,10 +306,10 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
             updatedData[0].value = details.depositedAmint == "undefined" || details.depositedAmint == "NaN" ? '0' : details.depositedAmint  // Update depositedAmint value
             updatedData[1].value = details.depositedUsdt == "undefined" || details.depositedUsdt == "NaN" ? '0' : details.depositedUsdt; // Update depositedAmint value
             console.log("date()=>", Date.now(), details.depositedTime, Number(details.depositedTime) * 1000)
-            updatedData[2].value = `${details.ethPriceAtDeposit/100}`; // Update ethPriceAtDeposit value
-            updatedData[3].value = new Date(Number(details.depositedTime)*1000).toLocaleString(); // Update depositedTime value and format time in 'DD/MM/YYYY'
-            updatedData[4].value = `${(Number(details.lockingPeriod)/86400000).toFixed(0)} days`; // Update lockingPeriod value
-            updatedData[5].value = calculateTimeDifference(details.depositedTime+"000"); // Update time difference value
+            updatedData[2].value = `${details.ethPriceAtDeposit / 100}`; // Update ethPriceAtDeposit value
+            updatedData[3].value = new Date(Number(details.depositedTime) * 1000).toLocaleString(); // Update depositedTime value and format time in 'DD/MM/YYYY'
+            updatedData[4].value = `${(Number(details.lockingPeriod) / 86400000).toFixed(0)} days`; // Update lockingPeriod value
+            updatedData[5].value = calculateTimeDifference(details.depositedTime + "000"); // Update time difference value
             updatedData[6].value = `${details.aprAtDeposit}%`; // Update aprAtDeposit value
             updatedData[7].value = `${details.aprAtDeposit}%`; // Update aprAtDeposit value
             updatedData[8].value = details.optedForLiquidation ? "Yes" : "No"; // Update optedForLiquidation value
@@ -306,7 +318,7 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
                 address: address as `0x${string}`,
                 index: details.index,
                 chainId: chainId,
-                ethPrice: (Number(ethPrice??0n)/100).toFixed(2)
+                ethPrice: (Number(ethPrice ?? 0n) / 100).toFixed(2)
             });
         } else {
             const updatedData = [...depositData];
@@ -327,7 +339,9 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
 
 
     function handleWithdrawal() {
-        cdsWithdraw?.({ args: [BigInt(details.index)] });
+        if(nativeFee1){
+            cdsWithdraw?.({ args: [BigInt(details.index)], value: nativeFee1.nativeFee });
+        }
     }
 
     useEffect(() => {
@@ -336,7 +350,7 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
         // Set the status to the value of details.status
         // we are setting the status any time details change meaning when deposit is withdraw we want to change the status of it to withdrew and that is what this code is doing
         setStatus(details.status);
-    }, [details,sheetOpen]);
+    }, [details, sheetOpen]);
 
     return (
         <div>
@@ -397,9 +411,9 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
                     </div>
                     <div className="px-4">
 
-                    <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
+                        <Note note="Note: Your amount will be used to offer protection to borrowers & protocol in return for fixed yields" />
                     </div>
-                 
+
 
                     {openConfirmNotice ? (
                         // If openConfirmNotice is true, render the ConfirmNoticeCds component
@@ -408,7 +422,7 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
                                 handleWithdrawal={handleWithdrawal}
                                 amintToMint={(Number(depositData[0].value) + Number(depositData[1].value)).toFixed(2)}
                                 setLoding={isLoading}
-                                withdrawdata={withdrawdata??[0]}
+                                withdrawdata={withdrawdata ?? [0]}
                                 optedForLiquidation={details.optedForLiquidation}
                             />
                         </>
@@ -419,8 +433,8 @@ const AmintDepositRowCopy = ({ details, handleSheetOpenChange,
                             variant={"primary"}
                             className="border-[#041A50] bg-[#ABFFDE] mx-4 text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 "
                             onClick={() => setOpenConfirmNotice(true)}
-                            disabled={(status === "WITHDREW" ? true : false) || (Number(details.lockingPeriod *1000) > Date.now())}
-                            // disabled={(status === "WITHDREW" ? true : false)}
+                            disabled={(status === "WITHDREW" ? true : false) || (Number(details.lockingPeriod * 1000) > Date.now())}
+                        // disabled={(status === "WITHDREW" ? true : false)}
                         >
                             Withdraw
                         </Button>

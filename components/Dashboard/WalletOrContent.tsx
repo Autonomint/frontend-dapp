@@ -22,10 +22,6 @@ const WalletOrContent = () => {
   const [open2, setOpen2] = React.useState(false);
   const [newtxn,setnewtxn]=useState(false)
   // get ethPrice from use Borrowing Contract using wagmi useContractRead Hook
-  const { data: ethPrice } = useReadBorrowingContractGetUsdValue({
-    query:{staleTime: 10 * 1000}
-  });
-
 
   /**
    * Retrieves the depositor data for a given address.
@@ -93,7 +89,6 @@ const WalletOrContent = () => {
                   tableData={deposits}
                   handleRefetch={handleRefetch}
                   newtxn ={newtxn}
-                  ethprice={ethPrice}
                 />
               </div>
             </DialogContent>

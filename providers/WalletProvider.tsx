@@ -5,8 +5,9 @@ import { WagmiProvider } from 'wagmi'
 
 import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
 import { baseSepolia, sepolia } from 'viem/chains'
+import { createWeb3Modal } from "@web3modal/wagmi/react";
 
-export const projectId ="077109262f9ea2fe0fbbf0bf65fd7e57"
+export const projectId ="c5e418f96f8c8cb7719d88f933f581f2"
 
 if (!projectId) throw new Error('Project ID is not defined')
 
@@ -23,11 +24,7 @@ export const config = defaultWagmiConfig({
   metadata, 
 });
 
-// createWeb3Modal({
-//   wagmiConfig: config,
-//   projectId,
-//   enableAnalytics: true,
-// })
+
 
 const WalletProvider = ({ children }: PropsWithChildren) => {
   return <WagmiProvider config={config}>{children}</WagmiProvider>;

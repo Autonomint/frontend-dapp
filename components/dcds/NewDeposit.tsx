@@ -47,7 +47,8 @@ import {
   useReadCdsUsdtAmountDepositedTillNow,
   useReadCdsUsdtLimit,
   useReadCdsUsdaLimit,
-  useReadCdsQuote
+  useReadGlobalQuote,
+  useReadGlobalGetOmniChainData,
 } from "@/abiAndHooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAccount, useBalance, useChainId, useWaitForTransactionReceipt } from "wagmi";
@@ -183,19 +184,19 @@ const NewDeposit = ({
 
 
   // get usdt limit from CDS contract and store it in usdtLimit and setting default value to 0n
-  const { data: usdtLimit = 0n } = useReadCdsUsdtLimit();
+  // const { data: usdtLimit = 0n } = useReadCdsUsdtLimit();
+  const usdtLimit = 20000n
   
 
   // get usdt amount deposited till now from CDS contract and store it in usdtAmountDepositedTillNow and setting default value to 0n
-  const { data: usdtAmountDepositedTillNow = 0n } = useReadCdsUsdtAmountDepositedTillNow();
-  console.log(usdtAmountDepositedTillNow)
+  const { data: contractData } = useReadGlobalGetOmniChainData({});
+
 
   // get ratio from CDS contract and store it in ratio
   const { data: ratio } = useReadCdsUsdaLimit({ query: { staleTime: 60 * 1000 } });
 
-  const { data: nativeFee1, error } = useReadCdsQuote({
-    query: { enabled: !!address }, args: [Eid, 1, 123n, 123n, 123n,
-      { liquidationAmount: 0n, profits: 0n, ethAmount: 0n, availableLiquidationAmount: 0n }, 0n, options, false]
+  const { data: nativeFee1, error } = useReadGlobalQuote({
+    query: { enabled: !!address }, args: [1, options, false]
   });
 
   // usdt approval
@@ -208,7 +209,7 @@ const NewDeposit = ({
     {
 
       mutation: {
-        onError(error) {
+        onError(error:any) {
           toast.custom(
             (t) => {
               toastId.current = t;
@@ -217,11 +218,12 @@ const NewDeposit = ({
                   <CustomToast
                     key={2}
                     props={{
-                      t,
+                      t: toastId.current,
                       toastMainColor: "#B43939",
-                      headline: `Uhh Ohh! ${error.name}`,
+                      headline: `Uhh Ohh! ${error.details}`,
                       toastClosebuttonHoverColor: "#e66d6d",
                       toastClosebuttonColor: "#C25757",
+                      type:"error"
                     }}
                   />
                 </div>
@@ -239,13 +241,14 @@ const NewDeposit = ({
                 <div>
                   <CustomToast
                     props={{
-                      t,
+                      t: toastId.current,
                       toastMainColor: "#268730",
                       headline: "Transaction Submitted",
                       transactionHash: data,
                       linkLabel: "View Transaction",
                       toastClosebuttonHoverColor: "#90e398",
                       toastClosebuttonColor: "#57C262",
+                      type:"success",
                     }}
                   />
                 </div>
@@ -323,40 +326,34 @@ const NewDeposit = ({
   } = useWriteCdsDeposit({
     // Handle errors during the CDS deposit process
     mutation: {
-
-      onError: (error) => {
-        // console.log(error.message);
-        console.log("MESSAGE", error.cause );
-        console.log("MESSAGE", error.name );
-        console.log("MESSAGE", error.message );
-        // Show a custom toast notification for the error
-        toast.custom(
-          (t) => (
-            <div>
-              <CustomToast
-                key={2}
-                props={{
-                  t: toastId.current,
-                  toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.cause}`,
-                  toastClosebuttonHoverColor: "#e66d6d",
-                  toastClosebuttonColor: "#C25757",
-                }}
-              />
-            </div>
-          ),
-          { duration: 5000 }
-        );
-
-        // Dismiss the toast notification after 5 seconds
-
-      },
-      // Handle the successful completion of the CDS deposit process
-      onSuccess: (data) => {
-        console.log(data);
-        // Show a custom toast notification for the successful transaction
+      onError(error:any) {
         toast.custom(
           (t) => {
+            toastId.current = t;
+            return (
+              <div>
+                <CustomToast
+                  key={2}
+                  props={{
+                    t: toastId.current,
+                    toastMainColor: "#B43939",
+                    headline: `Uhh Ohh! ${error.details}`,
+                    toastClosebuttonHoverColor: "#e66d6d",
+                    toastClosebuttonColor: "#C25757",
+                    type:"error"
+                  }}
+                />
+              </div>
+            );
+          },
+          { duration: 5000 }
+        );
+      },
+// Handle success and show a custom toast notification
+      onSuccess: (data) => {
+        toast.custom(
+          (t) => {
+            toastId.current = t;
             return (
               <div>
                 <CustomToast
@@ -368,13 +365,12 @@ const NewDeposit = ({
                     linkLabel: "View Transaction",
                     toastClosebuttonHoverColor: "#90e398",
                     toastClosebuttonColor: "#57C262",
-                    spinner: false,
+                    type:"success",
                   }}
                 />
               </div>
             );
           },
-          // Set the duration of the toast notification to be infinite
           { duration: 5000 }
         );
       },
@@ -395,17 +391,19 @@ const NewDeposit = ({
     if (cdsDepositError) {
       toast.custom(
         (t) => {
-          toastId.current = t;
+          
           return (
             <div>
               <CustomToast
                 key={2}
                 props={{
-                  t,
+                  t: toastId.current,
                   toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! `,
+                  headline: `Uhh Ohh! Error Occured `,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
+                  type:"error"
+
                 }}
               />
             </div>
@@ -431,6 +429,7 @@ const NewDeposit = ({
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
                   spinner: false,
+                  type:"success",
                 }}
               />
             </div>
@@ -446,8 +445,6 @@ const NewDeposit = ({
 
 
 
-
-
   // Destructure the necessary values from the hook
   const {
     writeContract: amintApprove,  // Function to initiate the approve request
@@ -458,20 +455,21 @@ const NewDeposit = ({
   } = useWriteUsDaApprove({
     mutation: {
 
-      onError(error) {
+      onError(error:any) {
         toast.custom(
           (t) => {
-            toastId.current = t;
             return (
               <div>
                 <CustomToast
                   key={2}
                   props={{
-                    t,
+                    t:toastId.current,
                     toastMainColor: "#B43939",
-                    headline: `Uhh Ohh! ${error.name}`,
+                    headline: `Uhh Ohh! ${error.details}`,
                     toastClosebuttonHoverColor: "#e66d6d",
                     toastClosebuttonColor: "#C25757",
+                    type:"error"
+
                   }}
                 />
               </div>
@@ -487,12 +485,12 @@ const NewDeposit = ({
 
         toast.custom(
           (t) => {
-            toastId.current = t;
             return (
               <div>
                 <CustomToast
                   props={{
-                    t,
+                    t:toastId.current,
+                    type:"success",
                     toastMainColor: "#268730",
                     headline: "Transaction Submitted",
                     transactionHash: data,
@@ -551,13 +549,14 @@ const NewDeposit = ({
             <div>
               <CustomToast
                 props={{
-                  t,
+                  t: toastId.current,
                   toastMainColor: "#268730",
                   headline: "Transaction Submitted",
                   transactionHash: amintApproveData,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
+                  type:"error"
                 }}
               />
             </div>
@@ -577,7 +576,7 @@ const NewDeposit = ({
    * @param {typeof formSchema.current} values - The values submitted in the form.
    */
   function onSubmit(values: z.infer<typeof formSchema.current>) {
-    if (usdtAmountDepositedTillNow >= usdtLimit) {
+    if (contractData?.usdtAmountDepositedTillNow ?? 0n >= usdtLimit) {
       if (amintAmnt == undefined || amintAmnt == 0) {
         toast.custom(
           (t) => {
@@ -587,11 +586,12 @@ const NewDeposit = ({
                 <CustomToast
                   key={2}
                   props={{
-                    t,
+                    t:toastId.current,
                     toastMainColor: "#B43939",
                     headline: `Uhh Ohh! Amint Amount must be greater than 500`,
                     toastClosebuttonHoverColor: "#e66d6d",
                     toastClosebuttonColor: "#C25757",
+                    type:"error"
                   }}
                 />
               </div>
@@ -635,7 +635,7 @@ const NewDeposit = ({
   useEffect(() => {
     let amint = form.watch("AmintDepositAmount") ?? 0;
     let usdt = form.watch("USDTDepositAmount") ?? 0;
-    if (usdtAmountDepositedTillNow >= usdtLimit) {
+    if (contractData?.usdtAmountDepositedTillNow ?? 0n  >= usdtLimit) {
       if (form.getValues("AmintDepositAmount") != undefined && amint < 500) {
         form.setError("AmintDepositAmount", {
           type: "manual",
@@ -682,7 +682,7 @@ const NewDeposit = ({
             <div className="flex w-full flex-col min-[1440px]:pt-[10px] 2dppx:pt-[15px] pt-[10px] min-[1440px]:gap-[20px] 2dppx:gap-[10px] min-[1280px]:gap-[16px] gap-[10px]">
               <div className="flex flex-col md:flex-row gap-[10px] items-center w-full justify-between ">
                 {
-                   usdtLimit <= usdtAmountDepositedTillNow ? (
+                   usdtLimit <= (contractData?.usdtAmountDepositedTillNow ?? 0n ) ? (
                     <>
                       <div className="flex w-full ">
                         <FormField
@@ -760,7 +760,7 @@ const NewDeposit = ({
 
                             <div className="absolute top-0 right-0 flex items-center justify-between h-full">
 
-                              {usdtAmountDepositedTillNow >= usdtLimit && (
+                              {(contractData?.usdtAmountDepositedTillNow ?? 0n)  >= usdtLimit && (
                                 <div
                                   className="mr-2 text-xs cursor-pointer"
                                   onClick={() => {
@@ -873,9 +873,9 @@ const NewDeposit = ({
                       <InfoCircledIcon width={18} height={18} />
                     </div>
                     <p className="min-[1440px]:text-base 2dppx:text-xs text-sm font-normal text-textGrey  dark:text-[#FFFFFF] text-center leading-none">
-                      Minimum {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"} Amount is{" "}
+                      Minimum {(contractData?.usdtAmountDepositedTillNow ?? 0n ) < usdtLimit ? "USDT" : "AMINT"} Amount is{" "}
                       <span className="font-medium text-textHighlight dark:text-[#ffff]">
-                        500 {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"}
+                        500 {(contractData?.usdtAmountDepositedTillNow ?? 0n ) < usdtLimit ? "USDT" : "AMINT"}
                       </span>
                     </p>
                   </div>
@@ -954,7 +954,7 @@ const NewDeposit = ({
                         height={24}
                       />
                       <p className="min-[1440px]:text-base text-sm text-textHighlight 2dppx:text-xs dark:text-[#EEEEEE]">
-                        {amintAmnt == undefined ? 0 : amintAmnt} AMINT + {usdtAmnt == undefined ? 0 : usdtAmnt} USDT
+                        {amintAmnt == undefined ? 0 : amintAmnt} USDa + {usdtAmnt == undefined ? 0 : usdtAmnt} USDT
                       </p>
                     </div>
                     <div className="flex gap-[10px]">

@@ -13,6 +13,7 @@ interface Props {
     t: string | number;
     headline: string;
     transactionHash?: `0x${string}` | undefined;
+    type:string,
     linkLabel?: string;
     toastMainColor?: string;
     toastClosebuttonColor?: string;
@@ -27,6 +28,7 @@ const CustomToast = ({
     t,
     headline,
     transactionHash,
+    type ="success",
     linkLabel = "view",
     toastMainColor = "#268730",
     toastClosebuttonColor = "#57C262",
@@ -38,10 +40,9 @@ const CustomToast = ({
 
   const chainId = useChainId();
   return (
-    <div className="fixed flex rounded pointer-events-auto z-max">
+    <div className="fixed flex pointer-events-auto z-max">
       <div
-        style={{ background: toastMainColor }}
-        className={`flex gap-[10px] text-white items-center rounded`}
+        className={`flex gap-[10px] text-white ${type=="success"?"bg-[#28a745] dark:bg-[#34d399]":"bg-[#dc3545] dark:bg-[#c82333]"} items-center `}
       >
         {spinner && (
           <div className="ml-2">
@@ -96,7 +97,7 @@ const CustomToast = ({
             variant={"ghost"}
             size={"toastSize"}
             onClick={() => toast.dismiss(t)}
-            className={`flex items-center justify-center hover:bg-[${toastClosebuttonHoverColor}] rounded-none`}
+            className={`flex items-center justify-center hover:opacity-80 rounded-none`}
           >
             <Cross1Icon />
           </Button>

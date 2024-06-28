@@ -43,10 +43,8 @@ import {
   useReadBorrowingContractGetLtv,
   useReadBorrowingContractGetUsdValue,
   useReadCdsTotalCdsDepositedAmount,
-  useReadTreasuryTotalVolumeOfBorrowersAmountinUsd,
-  useReadCdsQuote,
-  useReadTreasuryQuote,
-  useReadBorrowingContractQuote,
+  useReadGlobalGetOmniChainData,
+  useReadGlobalQuote,
 } from "@/abiAndHooks";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -105,47 +103,19 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
   // watch for the ltv from the borrowing Contract
   const { data: ltv } = useReadBorrowingContractGetLtv({ query: { enabled: !!address } });
   // watch for the totalVolumeOfBorrowersAmountinUsd from the  treasury
-  const { data: totalVolumeOfBorrowersAmountinUsd } =
-    useReadTreasuryTotalVolumeOfBorrowersAmountinUsd({
-      query: { staleTime: 10 * 1000 }
-    });
 
   // total cds deposited amount
-  const { data: totalCdsDepositedAmount } = useReadCdsTotalCdsDepositedAmount({
-    query: { staleTime: 10 * 1000 }
-  });
-
-  // Use the useQuery hook to quote the Treasury nativefee
-  const { data: nativeFee } = useReadTreasuryQuote({
-    query: { enabled: !!address }, args: [Eid, 1,
-      { recipient: "0x0000000000000000000000000000000000000000", tokensToSend: 0n },
-      { recipient: "0x0000000000000000000000000000000000000000", nativeTokensToSend: 0n }, options, false],
-  });
-
-  // Use the useQuery hook to quote the CDS nativefee
-  const { data: nativeFee1, error } = useReadCdsQuote({
-    query: { enabled: !!address }, args: [Eid, 1, 123n, 123n, 123n,
-      { liquidationAmount: 0n, profits: 0n, ethAmount: 0n, availableLiquidationAmount: 0n }, 0n, options, false]
-  });
-
-  // Use the useQuery hook to quote the Borrow nativefee
-  const { data: nativeFee2 } = useReadBorrowingContractQuote({
-    query: { enabled: !!address }, args: [Eid, {
-      normalizedAmount: 5n,
-      ethVaultValue: 10n,
-      cdsPoolValue: 15n,
-      totalCDSPool: 20n,
-      noOfLiquidations: 25n,
-      ethRemainingInWithdraw: 30n,
-      ethValueRemainingInWithdraw: 35n,
-      nonce: 40n
-    }, options, false]
+  const {data: contractData} = useReadGlobalGetOmniChainData({
+    query:{staleTime: 10 * 1000}
   })
 
+  console.log(contractData)
+  // Use the useQuery hook to quote the Treasury nativefee
+  const { data: nativeFee } = useReadGlobalQuote({
+    query: { enabled: !!address }, args: [1, options, false],
+  });
+
   const { data: ethPrice } = useReadBorrowingContractGetUsdValue({});
-
-
-
 
 
   /**
@@ -185,6 +155,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
                 linkLabel: "View Transaction",
                 toastClosebuttonHoverColor: "#90e398",
                 toastClosebuttonColor: "#57C262",
+                type:"success",
               }}
             />
           ),
@@ -198,7 +169,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
       },
       onError: (error: any) => {
         // Log the error to the console
-        console.log(error.name, error.message, error.cause);
+        
         // Show custom toast
         toast.custom(
           (t) => (
@@ -206,11 +177,12 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
               <CustomToast
                 key={2}
                 props={{
-                  t,
+                  t: toastId.current,
                   toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.cause}`,
+                  headline: `Uhh Ohh! ${error.details}`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
+                  type:"error",
                 }}
               />
             </div>
@@ -223,7 +195,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
   });
 
   // Use the useWaitForTransactionReceipt hook to wait for the transaction receipt
-  const { data: Depositdata, isError: depositError, isLoading: isDepositdataLoading, isSuccess: isDepositSuccess } = useWaitForTransactionReceipt({
+  const { data: Depositdata, isError: depositError,error:depositErrorDetails, isLoading: isDepositdataLoading, isSuccess: isDepositSuccess } = useWaitForTransactionReceipt({
     hash: depositDatahash,
     confirmations: 2
   })
@@ -251,6 +223,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
               linkLabel: "View Transaction",
               toastClosebuttonHoverColor: "#90e398",
               toastClosebuttonColor: "#57C262",
+              type:"success",
             }}
           />
         ),
@@ -267,11 +240,12 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
             <CustomToast
               key={2}
               props={{
-                t,
+                t: toastId.current,
                 toastMainColor: "#B43939",
-                headline: `Uhh Ohh! Unknow error occured`,
+                headline: `Uhh Ohh! ${depositErrorDetails.name}}`,
                 toastClosebuttonHoverColor: "#e66d6d",
                 toastClosebuttonColor: "#C25757",
+                type:"error",
               }}
             />
           </div>
@@ -299,16 +273,16 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
       setDisabled(true);
     } else {
       //check if we have both values or not
-      if (totalCdsDepositedAmount && totalVolumeOfBorrowersAmountinUsd) {
+      if (contractData?.totalCdsDepositedAmount && contractData?.totalVolumeOfBorrowersAmountinUSD) {
         if (
-          totalCdsDepositedAmount <
-          (20n / 100n) * totalVolumeOfBorrowersAmountinUsd
+          contractData?.totalCdsDepositedAmountWithOptionFees <
+          (20n / 100n) * contractData.totalVolumeOfBorrowersAmountinUSD
         ) {
           setDisabled(true);
         }
       }
     }
-  }, [totalCdsDepositedAmount, totalVolumeOfBorrowersAmountinUsd]);
+  }, [contractData]);
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -318,9 +292,9 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
     const data = await fetch(`${BACKEND_API_URL}/borrows/optionFees/${chainId}/${colateralamount}/${ethPrice}/${strikePercent}`).then(
       (res) => res.json()
     )
-    console.log("nativeFee1", nativeFee1, nativeFee2, nativeFee)
+    console.log("nativeFee1", nativeFee)
     console.log(data[0])
-    if (data[0] != undefined && nativeFee1 != undefined && nativeFee2 != undefined && nativeFee != undefined) {
+    if (data[0] != undefined && nativeFee != undefined) {
       writeContract?.({
         args: [
           strikePercent,
@@ -328,7 +302,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
           BigInt(data[0]),
           parseEther((form.getValues("collateralAmount")).toString()),
         ],
-        value: parseEther(form.getValues("collateralAmount").toString()) + nativeFee1.nativeFee + nativeFee2.nativeFee + nativeFee.nativeFee,
+        value: parseEther(form.getValues("collateralAmount").toString()) + nativeFee.nativeFee,
       });
     } // mutate(address);
   }

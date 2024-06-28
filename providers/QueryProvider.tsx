@@ -9,7 +9,7 @@ export default function QueryProvider({ children }: PropsWithChildren) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 10 * 1000,
+            staleTime: 20 * 1000,
           
           },
           mutations:{

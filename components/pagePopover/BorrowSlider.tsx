@@ -2,7 +2,7 @@ import React from 'react'
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useReadAbondTotalSupply, useReadUsDaTotalSupply, useReadCdsTotalCdsDepositedAmount, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
+import { useReadAbondTotalSupply, useReadUsDaTotalSupply, useReadCdsTotalCdsDepositedAmount, useReadGlobalGetOmniChainData } from '@/abiAndHooks';
 import { formatEther } from 'viem';
 import Image from 'next/image';
 import left_arrow from '@/app/assets/left_arrow.svg';
@@ -70,7 +70,7 @@ const BorrowSlider = ({
   }
 
   const { data: totalStable } = useReadCdsTotalCdsDepositedAmount()
-  const { data: ethLocked } = useReadTreasuryTotalVolumeOfBorrowersAmountinUsd()
+  const { data : contractData } = useReadGlobalGetOmniChainData()
   const { data: amintsupply } = useReadUsDaTotalSupply()
   const { data: abondSupply } = useReadAbondTotalSupply();
 
@@ -97,7 +97,7 @@ const BorrowSlider = ({
                   Mint stablecoins at 80% LTV by depositing crypto collateral (currently ETH). Enhance to 100% synthetic LTV by opting for 20% downside protection on your crypto price. Surrender a percentage of your upside and pay option fees to achieve this synthetic LTV.
                 </div>
                 <div className='text-[0.8rem] flex flex-col  gap-2 mt-5 text-[#0F0F0F] dark:text-white'>
-                  <div className='flex justify-between text-md py-1 border-b border-[#020202] dark:border-white'> <p> Borrowing TVL</p>  <p className='font-bold'>${formatNumber(Number(formatEther((ethLocked ?? 0n) / BigInt(100))))}</p>  </div>
+                  <div className='flex justify-between text-md py-1 border-b border-[#020202] dark:border-white'> <p> Borrowing TVL</p>  <p className='font-bold'>${formatNumber(Number(formatEther((contractData?.totalVolumeOfBorrowersAmountinUSD ?? 0n) / BigInt(100))))}</p>  </div>
                   <div className='flex justify-between text-md py-1 border-b border-[#020202] dark:border-white'> <p >USDa Supply</p>  <p className='font-bold'>{formatNumber(Number(amintsupply) / 10 ** 6)}</p>  </div>
                   <div className='flex justify-between py-1 text-md '> <p>USDa Price</p>  <p className='font-bold'>$1</p>  </div>
                 </div>
@@ -127,7 +127,7 @@ const BorrowSlider = ({
                   Once you've settled your stablecoin loan, get back half of your crypto collateral upfront, and the rest after a month. Plus, snag some ABOND—redeemable at $4 and backed by half of your crypto stash. Your collateral doesn't just sit idle; it's out there, earning you yields. Ready to cash in? Head over to the "Redeem" page after one month.
                 </div>
                 <div className='text-[0.8rem] flex flex-col mt-5 gap-2 text-[#0F0F0F] dark:text-white'>
-                  <div className='flex justify-between text-md py-1 border-b border-[#020202] dark:border-white'> <p> Borrowing TVL</p>  <p className='font-bold'>${formatNumber(Number(formatEther((ethLocked ?? 0n) / BigInt(100))))}</p>  </div>
+                  <div className='flex justify-between text-md py-1 border-b border-[#020202] dark:border-white'> <p> Borrowing TVL</p>  <p className='font-bold'>${formatNumber(Number(formatEther((contractData?.totalVolumeOfBorrowersAmountinUSD ?? 0n) / BigInt(100))))}</p>  </div>
                   <div className='flex justify-between text-md py-1 border-b border-[#020202] dark:border-white'> <p>ABOND Supply</p>  <p className='font-bold'>{formatNumber(Number(abondSupply) / 10 ** 18)}</p>  </div>
                   <div className='flex justify-between py-1 text-md '> <p> ABOND APY</p>  <p className='font-bold'>200%</p>  </div>
                 </div>

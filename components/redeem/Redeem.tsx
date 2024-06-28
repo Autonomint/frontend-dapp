@@ -106,7 +106,7 @@ const Redeem = ({
   } = useWriteUsDaApprove(
     {
       mutation:{
-      onError(error) {
+      onError(error:any) {
         toast.custom(
           (t) => {
             toastId.current = t;
@@ -115,11 +115,12 @@ const Redeem = ({
                 <CustomToast
                   key={2}
                   props={{
-                    t,
+                    t: toastId.current,
                     toastMainColor: "#B43939",
-                    headline: `Uhh Ohh! ${error.name}`,
+                    headline: `Uhh Ohh! ${error.details}`,
                     toastClosebuttonHoverColor: "#e66d6d",
                     toastClosebuttonColor: "#C25757",
+                    type:"error",
                   }}
                 />
               </div>
@@ -138,19 +139,20 @@ const Redeem = ({
               <div>
                 <CustomToast
                   props={{
-                    t,
+                    t: toastId.current,
                     toastMainColor: "#268730",
                     headline: "Transaction Submitted",
                     transactionHash: data,
                     linkLabel: "View Transaction",
                     toastClosebuttonHoverColor: "#90e398",
                     toastClosebuttonColor: "#57C262",
+                    type:"success",
                   }}
                 />
               </div>
             );
           },
-          { duration: Infinity }
+          { duration: 5000 }
         );
       },
     }
@@ -181,11 +183,12 @@ const Redeem = ({
               <CustomToast
                 key={2}
                 props={{
-                  t,
+                  t: toastId.current,
                   toastMainColor: "#B43939",
                   headline: `Uhh Ohh! Unable to approve USDa`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
+                  type:"error",
                 }}
               />
             </div>
@@ -207,7 +210,7 @@ const Redeem = ({
   } = useWriteCdsRedeemUsdt({
     // Handle errors during the process
     mutation:{
-    onError: (error) => {
+    onError: (error:any) => {
       // console.log(error.message);
       console.log("MESSAGE", error.cause);
       // Show a custom toast notification for the error
@@ -219,14 +222,15 @@ const Redeem = ({
               props={{
                 t: toastId.current,
                 toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.cause}`,
+                headline: `Uhh Ohh! ${error.details}`,
                 toastClosebuttonHoverColor: "#e66d6d",
                 toastClosebuttonColor: "#C25757",
+                type:"error",
               }}
             />
           </div>
         ),
-        { duration: Infinity, id: toastId.current }
+        { duration: 5000, id: toastId.current }
       );
 
       setTimeout(() => {
@@ -247,13 +251,14 @@ const Redeem = ({
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
+                  type:"success",
                 }}
               />
             </div>
           );
         },
         // Set the duration of the toast notification to be infinite
-        { duration: 10000, id: toastId.current }
+        { duration: 5000, id: toastId.current }
       );
     },
   }
@@ -275,13 +280,14 @@ const Redeem = ({
             <div>
               <CustomToast
                 props={{
-                  t,
+                  t: toastId.current,
                   toastMainColor: "#268730",
                   headline: "Transaction Completed",
                   transactionHash: redeemUsdtData,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
+                  type:"success",
                 }}
               />
             </div>
@@ -299,11 +305,12 @@ const Redeem = ({
               <CustomToast
                 key={2}
                 props={{
-                  t,
+                  t: toastId.current,
                   toastMainColor: "#B43939",
                   headline: `Uhh Ohh! ${redeemError.name}`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
+                  type:"error",
                 }}
               />
             </div>
@@ -356,7 +363,7 @@ const Redeem = ({
     {
       // Handle error and show a custom toast notification
       mutation:{
-      onError(error) {
+      onError(error:any) {
         toast.custom(
           (t) => {
             toastId.current = t;
@@ -365,11 +372,12 @@ const Redeem = ({
                 <CustomToast
                   key={2}
                   props={{
-                    t,
+                    t: toastId.current,
                     toastMainColor: "#B43939",
-                    headline: `Uhh Ohh! ${error.name}`,
+                    headline: `Uhh Ohh! ${error.details}`,
                     toastClosebuttonHoverColor: "#e66d6d",
                     toastClosebuttonColor: "#C25757",
+                    type:"error",
                   }}
                 />
               </div>
@@ -390,13 +398,14 @@ const Redeem = ({
               <div>
                 <CustomToast
                   props={{
-                    t,
+                    t: toastId.current,
                     toastMainColor: "#268730",
                     headline: "Transaction Submitted",
                     transactionHash: data,
                     linkLabel: "View Transaction",
                     toastClosebuttonHoverColor: "#90e398",
                     toastClosebuttonColor: "#57C262",
+                    type:"success",
                   }}
                 />
               </div>
@@ -437,11 +446,12 @@ const Redeem = ({
               <CustomToast
                 key={2}
                 props={{
-                  t,
+                  t: toastId.current,
                   toastMainColor: "#B43939",
                   headline: `Uhh Ohh! ${AbondError.name}`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
+                  type:"error",
                 }}
               />
             </div>
@@ -463,7 +473,7 @@ const Redeem = ({
     // Handle errors during the CDS deposit process
     mutation:{
 
-    onError: (error) => {
+    onError: (error:any) => {
       // console.log(error.message);
       console.log("MESSAGE", error.cause);
       // Show a custom toast notification for the error
@@ -475,9 +485,10 @@ const Redeem = ({
               props={{
                 t: toastId.current,
                 toastMainColor: "#B43939",
-                headline: `Uhh Ohh! ${error.cause}`,
+                headline: `Uhh Ohh! ${error.details}`,
                 toastClosebuttonHoverColor: "#e66d6d",
                 toastClosebuttonColor: "#C25757",
+                type:"error",
               }}
             />
           </div>
@@ -507,6 +518,7 @@ const Redeem = ({
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
+                  type:"success",
                 }}
               />
             </div>
@@ -532,13 +544,14 @@ const Redeem = ({
             <div>
               <CustomToast
                 props={{
-                  t,
+                  t: toastId.current,
                   toastMainColor: "#268730",
                   headline: "Transaction Completed",
                   transactionHash: redeemEthData,
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
+                  type:"success",
                 }}
               />
             </div>
@@ -561,6 +574,7 @@ const Redeem = ({
                   headline: `Uhh Ohh! ${redeemEthErorrdata.name}`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
+                  type:"success",
                 }}
               />
             </div>

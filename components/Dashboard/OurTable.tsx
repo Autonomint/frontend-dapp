@@ -37,13 +37,11 @@ interface TableData {
 const DepositAndWithDrawTable = ({
   tableData,
   handleRefetch,
-  newtxn,
-  ethprice
+  newtxn
 }: {
   tableData: TableData[];
   handleRefetch: Function;
   newtxn?: boolean;
-  ethprice: bigint | undefined;
 }) => {
   const [selectedId, setSelectedId] = useState<string | undefined>(undefined);
   const handleSheet = (details: TableData) => {
@@ -85,7 +83,7 @@ const DepositAndWithDrawTable = ({
 
             <TableBody>
               {tableData && tableData?.map((details, index) => {
-                return <TableRows isnewtxn={newtxn} islasttxn={tableData.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} ethprice={ethprice} interest={details.noOfAbondMinted?"3%":"-"} />
+                return <TableRows isnewtxn={newtxn} islasttxn={tableData.length - 1 == index} key={details.id} onClick={() => handleSheet(details)} details={details} interest={details.noOfAbondMinted?"3%":"-"} />
               })}
             </TableBody>
           </Table>

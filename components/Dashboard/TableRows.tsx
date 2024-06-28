@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { TableCell, TableRow } from "../ui/table";
 import { Button } from "../ui/button";
 import displayNumberWithPrecision from "@/app/utils/precision";
+import { useReadBorrowingContractGetUsdValue } from "@/abiAndHooks";
 
 
 interface TableData {
@@ -32,15 +33,14 @@ const TableRows = ({
   interest,
   onClick,
   isnewtxn,
-  islasttxn,
-  ethprice
+  islasttxn
+
 }: {
   details: TableData;
   interest?: string;
   onClick: Function;
   isnewtxn?: boolean;
   islasttxn?: boolean;
-  ethprice: bigint | undefined;
 }) => {
   const depositDetails = [
     {
@@ -100,7 +100,7 @@ const TableRows = ({
   ];
   const [depositData, setDepositData] = useState(depositDetails);
   const [amountProtected, setAmountProtected] = useState(0);
-  
+  const {data:ethprice} = useReadBorrowingContractGetUsdValue()
   const amountProtectedFuntion =()=>{
     if(ethprice === undefined) return;
     if (parseFloat(ethprice.toString())  > details.ethPrice) {
@@ -163,7 +163,7 @@ const TableRows = ({
   useEffect(() => {
     amountProtectedFuntion()
     handleDepositData();
-  }, [details , ethprice]);
+  }, [details]);
   return (
       <TableRow onClick={()=>onClick()} className={` ${islasttxn && isnewtxn ? "bg-[#ABFFDE] dark:bg-[#3A3A3A]":""} hover:bg-[#E4EDFF] active:bg-[#E4EDFF] dark:active:bg-[#002A11]  dark:border cursor-pointer`}>
         <TableCell className="w-3 text-borderGrey dark:text-[#EEEEEE]">

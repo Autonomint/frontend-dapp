@@ -5,11 +5,6 @@ export const CDSABI = [
     type: "error",
   },
   {
-    inputs: [{ internalType: "address", name: "account", type: "address" }],
-    name: "AddressInsufficientBalance",
-    type: "error",
-  },
-  {
     inputs: [
       { internalType: "address", name: "implementation", type: "address" },
     ],
@@ -17,41 +12,14 @@ export const CDSABI = [
     type: "error",
   },
   { inputs: [], name: "ERC1967NonPayable", type: "error" },
-  { inputs: [], name: "EndPointUnavailable", type: "error" },
   { inputs: [], name: "FailedInnerCall", type: "error" },
-  { inputs: [], name: "InvalidDelegate", type: "error" },
-  { inputs: [], name: "InvalidEndpointCall", type: "error" },
   { inputs: [], name: "InvalidInitialization", type: "error" },
   {
     inputs: [{ internalType: "uint16", name: "optionType", type: "uint16" }],
     name: "InvalidOptionType",
     type: "error",
   },
-  { inputs: [], name: "LzTokenUnavailable", type: "error" },
-  {
-    inputs: [{ internalType: "uint32", name: "eid", type: "uint32" }],
-    name: "NoPeer",
-    type: "error",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "msgValue", type: "uint256" }],
-    name: "NotEnoughNative",
-    type: "error",
-  },
   { inputs: [], name: "NotInitializing", type: "error" },
-  {
-    inputs: [{ internalType: "address", name: "addr", type: "address" }],
-    name: "OnlyEndpoint",
-    type: "error",
-  },
-  {
-    inputs: [
-      { internalType: "uint32", name: "eid", type: "uint32" },
-      { internalType: "bytes32", name: "sender", type: "bytes32" },
-    ],
-    name: "OnlyPeer",
-    type: "error",
-  },
   {
     inputs: [{ internalType: "address", name: "owner", type: "address" }],
     name: "OwnableInvalidOwner",
@@ -69,11 +37,6 @@ export const CDSABI = [
       { internalType: "uint256", name: "value", type: "uint256" },
     ],
     name: "SafeCastOverflowedUintDowncast",
-    type: "error",
-  },
-  {
-    inputs: [{ internalType: "address", name: "token", type: "address" }],
-    name: "SafeERC20FailedOperation",
     type: "error",
   },
   { inputs: [], name: "UUPSUnauthorizedCallContext", type: "error" },
@@ -173,20 +136,6 @@ export const CDSABI = [
   {
     anonymous: false,
     inputs: [
-      { indexed: false, internalType: "uint32", name: "eid", type: "uint32" },
-      {
-        indexed: false,
-        internalType: "bytes32",
-        name: "peer",
-        type: "bytes32",
-      },
-    ],
-    name: "PeerSet",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
       {
         indexed: true,
         internalType: "address",
@@ -255,106 +204,17 @@ export const CDSABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        components: [
-          { internalType: "uint32", name: "srcEid", type: "uint32" },
-          { internalType: "bytes32", name: "sender", type: "bytes32" },
-          { internalType: "uint64", name: "nonce", type: "uint64" },
-        ],
-        internalType: "struct Origin",
-        name: "origin",
-        type: "tuple",
-      },
-    ],
-    name: "allowInitializePath",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    inputs: [],
+    name: "admin",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [{ internalType: "uint128", name: "fees", type: "uint128" }],
     name: "calculateCumulativeRate",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint32", name: "_dstEid", type: "uint32" },
-      {
-        internalType: "enum CDSInterface.FunctionToDo",
-        name: "functionToDo",
-        type: "uint8",
-      },
-      {
-        internalType: "uint256",
-        name: "optionsFeesToGetFromOtherChain",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "cdsAmountToGetFromOtherChain",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "liqAmountToGetFromOtherChain",
-        type: "uint256",
-      },
-      {
-        components: [
-          {
-            internalType: "uint128",
-            name: "liquidationAmount",
-            type: "uint128",
-          },
-          { internalType: "uint128", name: "profits", type: "uint128" },
-          { internalType: "uint128", name: "ethAmount", type: "uint128" },
-          {
-            internalType: "uint256",
-            name: "availableLiquidationAmount",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct CDSInterface.LiquidationInfo",
-        name: "liquidationInfo",
-        type: "tuple",
-      },
-      { internalType: "uint128", name: "liqIndex", type: "uint128" },
-      {
-        components: [
-          { internalType: "uint256", name: "nativeFee", type: "uint256" },
-          { internalType: "uint256", name: "lzTokenFee", type: "uint256" },
-        ],
-        internalType: "struct MessagingFee",
-        name: "fee",
-        type: "tuple",
-      },
-      { internalType: "bytes", name: "_options", type: "bytes" },
-    ],
-    name: "callLzSendFromExternal",
-    outputs: [
-      {
-        components: [
-          { internalType: "bytes32", name: "guid", type: "bytes32" },
-          { internalType: "uint64", name: "nonce", type: "uint64" },
-          {
-            components: [
-              { internalType: "uint256", name: "nativeFee", type: "uint256" },
-              { internalType: "uint256", name: "lzTokenFee", type: "uint256" },
-            ],
-            internalType: "struct MessagingFee",
-            name: "fee",
-            type: "tuple",
-          },
-        ],
-        internalType: "struct MessagingReceipt",
-        name: "receipt",
-        type: "tuple",
-      },
-    ],
-    stateMutability: "payable",
+    outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -385,19 +245,6 @@ export const CDSABI = [
     name: "deposit",
     outputs: [],
     stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "endpoint",
-    outputs: [
-      {
-        internalType: "contract ILayerZeroEndpointV2",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -458,88 +305,10 @@ export const CDSABI = [
       { internalType: "address", name: "priceFeed", type: "address" },
       { internalType: "address", name: "_usdt", type: "address" },
       { internalType: "address", name: "_multiSign", type: "address" },
-      { internalType: "address", name: "_endpoint", type: "address" },
-      { internalType: "address", name: "_delegate", type: "address" },
     ],
     name: "initialize",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        components: [
-          { internalType: "uint32", name: "srcEid", type: "uint32" },
-          { internalType: "bytes32", name: "sender", type: "bytes32" },
-          { internalType: "uint64", name: "nonce", type: "uint64" },
-        ],
-        internalType: "struct Origin",
-        name: "",
-        type: "tuple",
-      },
-      { internalType: "bytes", name: "", type: "bytes" },
-      { internalType: "address", name: "_sender", type: "address" },
-    ],
-    name: "isComposeMsgSender",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        components: [
-          { internalType: "uint32", name: "srcEid", type: "uint32" },
-          { internalType: "bytes32", name: "sender", type: "bytes32" },
-          { internalType: "uint64", name: "nonce", type: "uint64" },
-        ],
-        internalType: "struct Origin",
-        name: "_origin",
-        type: "tuple",
-      },
-      { internalType: "bytes32", name: "_guid", type: "bytes32" },
-      { internalType: "bytes", name: "_message", type: "bytes" },
-      { internalType: "address", name: "_executor", type: "address" },
-      { internalType: "bytes", name: "_extraData", type: "bytes" },
-    ],
-    name: "lzReceive",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint32", name: "", type: "uint32" },
-      { internalType: "bytes32", name: "", type: "bytes32" },
-    ],
-    name: "nextNonce",
-    outputs: [{ internalType: "uint64", name: "nonce", type: "uint64" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "oAppVersion",
-    outputs: [
-      { internalType: "uint64", name: "senderVersion", type: "uint64" },
-      { internalType: "uint64", name: "receiverVersion", type: "uint64" },
-    ],
-    stateMutability: "pure",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "omniChainCDSTotalAvailableLiquidationAmount",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "omniChainCDSTotalCdsDepositedAmount",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -550,77 +319,9 @@ export const CDSABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint32", name: "eid", type: "uint32" }],
-    name: "peers",
-    outputs: [{ internalType: "bytes32", name: "peer", type: "bytes32" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "proxiableUUID",
     outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint32", name: "_dstEid", type: "uint32" },
-      {
-        internalType: "enum CDSInterface.FunctionToDo",
-        name: "_functionToDo",
-        type: "uint8",
-      },
-      {
-        internalType: "uint256",
-        name: "optionsFeesToGetFromOtherChain",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "cdsAmountToGetFromOtherChain",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "liqAmountToGetFromOtherChain",
-        type: "uint256",
-      },
-      {
-        components: [
-          {
-            internalType: "uint128",
-            name: "liquidationAmount",
-            type: "uint128",
-          },
-          { internalType: "uint128", name: "profits", type: "uint128" },
-          { internalType: "uint128", name: "ethAmount", type: "uint128" },
-          {
-            internalType: "uint256",
-            name: "availableLiquidationAmount",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct CDSInterface.LiquidationInfo",
-        name: "liquidationInfo",
-        type: "tuple",
-      },
-      { internalType: "uint128", name: "liqIndex", type: "uint128" },
-      { internalType: "bytes", name: "_options", type: "bytes" },
-      { internalType: "bool", name: "_payInLzToken", type: "bool" },
-    ],
-    name: "quote",
-    outputs: [
-      {
-        components: [
-          { internalType: "uint256", name: "nativeFee", type: "uint256" },
-          { internalType: "uint256", name: "lzTokenFee", type: "uint256" },
-        ],
-        internalType: "struct MessagingFee",
-        name: "fee",
-        type: "tuple",
-      },
-    ],
     stateMutability: "view",
     type: "function",
   },
@@ -664,25 +365,8 @@ export const CDSABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "_delegate", type: "address" }],
-    name: "setDelegate",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint32", name: "_eid", type: "uint32" }],
-    name: "setDstEid",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint32", name: "_eid", type: "uint32" },
-      { internalType: "bytes32", name: "_peer", type: "bytes32" },
-    ],
-    name: "setPeer",
+    inputs: [{ internalType: "address", name: "_address", type: "address" }],
+    name: "setGlobalVariables",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -793,6 +477,13 @@ export const CDSABI = [
     name: "upgradeToAndCall",
     outputs: [],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "usda",
+    outputs: [{ internalType: "contract IUSDa", name: "", type: "address" }],
+    stateMutability: "view",
     type: "function",
   },
   {

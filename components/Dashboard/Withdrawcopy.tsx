@@ -30,8 +30,8 @@ import {
   useReadBorrowingContractLastCumulativeRate,
   useReadBorrowingContractGetUsdValue,
   useWriteBorrowingContractWithDraw,
-  useReadTreasuryQuote,
-  useReadBorrowingContractQuote
+  useReadGlobalGetOmniChainData,
+  useReadGlobalQuote
 } from "@/abiAndHooks";
 import { Options } from '@layerzerolabs/lz-v2-utilities'
 import { useAccount, useBalance, useChainId, useWaitForTransactionReceipt, useReadContract } from "wagmi";
@@ -181,22 +181,8 @@ const Withdrawcopy = ({
 
   const options  = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
 
-  const {data:nativeFee } = useReadTreasuryQuote({ query: { enabled: !!address },args:[Eid, 1,
-    {recipient:"0x0000000000000000000000000000000000000000",tokensToSend:0n},
-    {recipient:"0x0000000000000000000000000000000000000000",nativeTokensToSend:0n}, options, false],
+  const {data:nativeFee } = useReadGlobalQuote({ query: { enabled: !!address },args:[1, options, false],
   });
-
-
-  const {data:nativeFee2 } = useReadBorrowingContractQuote({query:{enabled:!!address},args:[Eid, {
-    normalizedAmount: 5n,
-    ethVaultValue: 10n,
-    cdsPoolValue: 15n,
-    totalCDSPool: 20n,
-    noOfLiquidations: 25n,
-    ethRemainingInWithdraw: 30n,
-    ethValueRemainingInWithdraw: 35n,
-    nonce: 40n
-  }, options, false]})
 
 
 
@@ -208,7 +194,7 @@ const Withdrawcopy = ({
     reset: cumulativeReset,
   } = useWriteBorrowingContractCalculateCumulativeRate({
     mutation: {
-      onError(error) {
+      onError(error:any) {
         console.log(error);
         cumulativeReset?.();
         setOpenConfirmNotice(true);
@@ -222,9 +208,10 @@ const Withdrawcopy = ({
                   props={{
                     t,
                     toastMainColor: "#B43939",
-                    headline: `Uhh Ohh! ${error.name}`,
+                    headline: `Uhh Ohh! ${error.details}`,
                     toastClosebuttonHoverColor: "#e66d6d",
                     toastClosebuttonColor: "#C25757",
+                    type:"error",
                   }}
                 />
               </div>
@@ -247,6 +234,7 @@ const Withdrawcopy = ({
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
+                  type:"success",
                 }}
               />
             );
@@ -301,7 +289,7 @@ const Withdrawcopy = ({
     data: amintApproveHash,
   } = useWriteUsDaApprove({
     mutation: {
-      onError(error) {
+      onError(error:any) {
         console.log(error);
         approveReset?.();
         // Show custom toast notification for error
@@ -315,9 +303,10 @@ const Withdrawcopy = ({
                   props={{
                     t,
                     toastMainColor: "#B43939",
-                    headline: `Uhh Ohh! ${error.message}`,
+                    headline: `Uhh Ohh! ${error.details}`,
                     toastClosebuttonHoverColor: "#e66d6d",
                     toastClosebuttonColor: "#C25757",
+                    type:"error",
                   }}
                 />
               </div>
@@ -341,6 +330,7 @@ const Withdrawcopy = ({
                   linkLabel: "View Transaction",
                   toastClosebuttonHoverColor: "#90e398",
                   toastClosebuttonColor: "#57C262",
+                  type:"success",
                 }}
               />
             </div>
@@ -367,13 +357,13 @@ const Withdrawcopy = ({
 
 
   const withdrawBorrowAmount = async () => {
-    if(nativeFee && nativeFee2){
+    if(nativeFee){
     borrowWithdraw?.({
       args: [
         address as `0x${string}`,
         BigInt(details.index),
       ],
-      value: nativeFee.nativeFee + nativeFee2.nativeFee
+      value: nativeFee.nativeFee 
     });
   }
   }
@@ -401,6 +391,8 @@ const Withdrawcopy = ({
                     linkLabel: "View Transaction",
                     toastClosebuttonHoverColor: "#90e398",
                     toastClosebuttonColor: "#57C262",
+                    type:"success",
+
                   }}
                 />
               </div>
@@ -410,7 +402,7 @@ const Withdrawcopy = ({
           
         );
       },
-      onError(error) {
+      onError(error:any) {
         // Error callback for borrowing withdrawal
         setOpenConfirmNotice(true);
         approveReset?.();
@@ -421,9 +413,11 @@ const Withdrawcopy = ({
                 props={{
                   t: toastId.current,
                   toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.message}`,
+                  headline: `Uhh Ohh! ${error.details}`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
+                  type:"error",
+
                 }}
               />
             </div>
@@ -469,6 +463,7 @@ const Withdrawcopy = ({
               linkLabel: "View Transaction",
               toastClosebuttonHoverColor: "#90e398",
               toastClosebuttonColor: "#57C262",
+              type:"success",
             }}
           />
         ),
@@ -487,6 +482,7 @@ const Withdrawcopy = ({
                 headline: `Uhh Ohh! Failed to withdraw`,
                 toastClosebuttonHoverColor: "#e66d6d",
                 toastClosebuttonColor: "#C25757",
+                type:"error",
               }}
             />
           </div>

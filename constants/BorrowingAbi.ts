@@ -4,11 +4,6 @@ export const BorrowingABI = [
     name: "AddressEmptyCode",
     type: "error",
   },
-  {
-    inputs: [{ internalType: "address", name: "account", type: "address" }],
-    name: "AddressInsufficientBalance",
-    type: "error",
-  },
   { inputs: [], name: "Borrowing_DepositFailed", type: "error" },
   { inputs: [], name: "Borrowing_GettingETHPriceFailed", type: "error" },
   { inputs: [], name: "Borrowing_LiquidateBurnFailed", type: "error" },
@@ -30,41 +25,14 @@ export const BorrowingABI = [
     type: "error",
   },
   { inputs: [], name: "ERC1967NonPayable", type: "error" },
-  { inputs: [], name: "EndPointUnavailable", type: "error" },
   { inputs: [], name: "FailedInnerCall", type: "error" },
-  { inputs: [], name: "InvalidDelegate", type: "error" },
-  { inputs: [], name: "InvalidEndpointCall", type: "error" },
   { inputs: [], name: "InvalidInitialization", type: "error" },
   {
     inputs: [{ internalType: "uint16", name: "optionType", type: "uint16" }],
     name: "InvalidOptionType",
     type: "error",
   },
-  { inputs: [], name: "LzTokenUnavailable", type: "error" },
-  {
-    inputs: [{ internalType: "uint32", name: "eid", type: "uint32" }],
-    name: "NoPeer",
-    type: "error",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "msgValue", type: "uint256" }],
-    name: "NotEnoughNative",
-    type: "error",
-  },
   { inputs: [], name: "NotInitializing", type: "error" },
-  {
-    inputs: [{ internalType: "address", name: "addr", type: "address" }],
-    name: "OnlyEndpoint",
-    type: "error",
-  },
-  {
-    inputs: [
-      { internalType: "uint32", name: "eid", type: "uint32" },
-      { internalType: "bytes32", name: "sender", type: "bytes32" },
-    ],
-    name: "OnlyPeer",
-    type: "error",
-  },
   {
     inputs: [{ internalType: "address", name: "owner", type: "address" }],
     name: "OwnableInvalidOwner",
@@ -82,11 +50,6 @@ export const BorrowingABI = [
       { internalType: "uint256", name: "value", type: "uint256" },
     ],
     name: "SafeCastOverflowedUintDowncast",
-    type: "error",
-  },
-  {
-    inputs: [{ internalType: "address", name: "token", type: "address" }],
-    name: "SafeERC20FailedOperation",
     type: "error",
   },
   { inputs: [], name: "UUPSUnauthorizedCallContext", type: "error" },
@@ -153,6 +116,7 @@ export const BorrowingABI = [
         name: "strikePricePercent",
         type: "uint8",
       },
+      { indexed: false, internalType: "uint8", name: "APR", type: "uint8" },
     ],
     name: "Deposit",
     type: "event",
@@ -224,20 +188,6 @@ export const BorrowingABI = [
   {
     anonymous: false,
     inputs: [
-      { indexed: false, internalType: "uint32", name: "eid", type: "uint32" },
-      {
-        indexed: false,
-        internalType: "bytes32",
-        name: "peer",
-        type: "bytes32",
-      },
-    ],
-    name: "PeerSet",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
       {
         indexed: true,
         internalType: "address",
@@ -294,20 +244,9 @@ export const BorrowingABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        components: [
-          { internalType: "uint32", name: "srcEid", type: "uint32" },
-          { internalType: "bytes32", name: "sender", type: "bytes32" },
-          { internalType: "uint64", name: "nonce", type: "uint64" },
-        ],
-        internalType: "struct Origin",
-        name: "origin",
-        type: "tuple",
-      },
-    ],
-    name: "allowInitializePath",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    inputs: [],
+    name: "admin",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -342,19 +281,6 @@ export const BorrowingABI = [
     name: "depositTokens",
     outputs: [],
     stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "endpoint",
-    outputs: [
-      {
-        internalType: "contract ILayerZeroEndpointV2",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -393,32 +319,11 @@ export const BorrowingABI = [
       { internalType: "address", name: "_multiSign", type: "address" },
       { internalType: "address", name: "_priceFeedAddress", type: "address" },
       { internalType: "uint64", name: "chainId", type: "uint64" },
-      { internalType: "address", name: "_endpoint", type: "address" },
-      { internalType: "address", name: "_delegate", type: "address" },
+      { internalType: "address", name: "_globalVariables", type: "address" },
     ],
     name: "initialize",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        components: [
-          { internalType: "uint32", name: "srcEid", type: "uint32" },
-          { internalType: "bytes32", name: "sender", type: "bytes32" },
-          { internalType: "uint64", name: "nonce", type: "uint64" },
-        ],
-        internalType: "struct Origin",
-        name: "",
-        type: "tuple",
-      },
-      { internalType: "bytes", name: "", type: "bytes" },
-      { internalType: "address", name: "_sender", type: "address" },
-    ],
-    name: "isComposeMsgSender",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -439,62 +344,6 @@ export const BorrowingABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        components: [
-          { internalType: "uint32", name: "srcEid", type: "uint32" },
-          { internalType: "bytes32", name: "sender", type: "bytes32" },
-          { internalType: "uint64", name: "nonce", type: "uint64" },
-        ],
-        internalType: "struct Origin",
-        name: "_origin",
-        type: "tuple",
-      },
-      { internalType: "bytes32", name: "_guid", type: "bytes32" },
-      { internalType: "bytes", name: "_message", type: "bytes" },
-      { internalType: "address", name: "_executor", type: "address" },
-      { internalType: "bytes", name: "_extraData", type: "bytes" },
-    ],
-    name: "lzReceive",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint32", name: "", type: "uint32" },
-      { internalType: "bytes32", name: "", type: "bytes32" },
-    ],
-    name: "nextNonce",
-    outputs: [{ internalType: "uint64", name: "nonce", type: "uint64" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "oAppVersion",
-    outputs: [
-      { internalType: "uint64", name: "senderVersion", type: "uint64" },
-      { internalType: "uint64", name: "receiverVersion", type: "uint64" },
-    ],
-    stateMutability: "pure",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "omniChainBorrowingCDSPoolValue",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "omniChainBorrowingNoOfLiquidations",
-    outputs: [{ internalType: "uint128", name: "", type: "uint128" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "owner",
     outputs: [{ internalType: "address", name: "", type: "address" }],
@@ -502,68 +351,9 @@ export const BorrowingABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint32", name: "eid", type: "uint32" }],
-    name: "peers",
-    outputs: [{ internalType: "bytes32", name: "peer", type: "bytes32" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "proxiableUUID",
     outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint32", name: "_dstEid", type: "uint32" },
-      {
-        components: [
-          {
-            internalType: "uint256",
-            name: "normalizedAmount",
-            type: "uint256",
-          },
-          { internalType: "uint256", name: "ethVaultValue", type: "uint256" },
-          { internalType: "uint256", name: "cdsPoolValue", type: "uint256" },
-          { internalType: "uint256", name: "totalCDSPool", type: "uint256" },
-          {
-            internalType: "uint128",
-            name: "noOfLiquidations",
-            type: "uint128",
-          },
-          {
-            internalType: "uint256",
-            name: "ethRemainingInWithdraw",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "ethValueRemainingInWithdraw",
-            type: "uint256",
-          },
-          { internalType: "uint64", name: "nonce", type: "uint64" },
-        ],
-        internalType: "struct IBorrowing.OmniChainBorrowingData",
-        name: "_message",
-        type: "tuple",
-      },
-      { internalType: "bytes", name: "_options", type: "bytes" },
-      { internalType: "bool", name: "_payInLzToken", type: "bool" },
-    ],
-    name: "quote",
-    outputs: [
-      {
-        components: [
-          { internalType: "uint256", name: "nativeFee", type: "uint256" },
-          { internalType: "uint256", name: "lzTokenFee", type: "uint256" },
-        ],
-        internalType: "struct MessagingFee",
-        name: "fee",
-        type: "tuple",
-      },
-    ],
     stateMutability: "view",
     type: "function",
   },
@@ -585,7 +375,10 @@ export const BorrowingABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint128", name: "_ratePerSec", type: "uint128" }],
+    inputs: [
+      { internalType: "uint8", name: "_APR", type: "uint8" },
+      { internalType: "uint128", name: "_ratePerSec", type: "uint128" },
+    ],
     name: "setAPR",
     outputs: [],
     stateMutability: "nonpayable",
@@ -615,20 +408,6 @@ export const BorrowingABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "_delegate", type: "address" }],
-    name: "setDelegate",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint32", name: "_eid", type: "uint32" }],
-    name: "setDstEid",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [{ internalType: "uint8", name: "_LTV", type: "uint8" }],
     name: "setLTV",
     outputs: [],
@@ -638,16 +417,6 @@ export const BorrowingABI = [
   {
     inputs: [{ internalType: "address", name: "_options", type: "address" }],
     name: "setOptions",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint32", name: "_eid", type: "uint32" },
-      { internalType: "bytes32", name: "_peer", type: "bytes32" },
-    ],
-    name: "setPeer",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -674,6 +443,13 @@ export const BorrowingABI = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "uint32", name: "usdaPrice", type: "uint32" }],
+    name: "updateRatePerSecByUSDaPrice",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "newImplementation", type: "address" },
       { internalType: "bytes", name: "data", type: "bytes" },
@@ -681,6 +457,13 @@ export const BorrowingABI = [
     name: "upgradeToAndCall",
     outputs: [],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "usda",
+    outputs: [{ internalType: "contract IUSDa", name: "", type: "address" }],
+    stateMutability: "view",
     type: "function",
   },
   {

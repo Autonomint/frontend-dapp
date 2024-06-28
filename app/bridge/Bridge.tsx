@@ -178,7 +178,7 @@ export default function Bridge() {
     } = useWriteUsDaApprove(
         {
             mutation: {
-                onError(error) {
+                onError(error:any) {
                     toast.custom(
                         (t) => {
                             toastId.current = t;
@@ -187,11 +187,12 @@ export default function Bridge() {
                                     <CustomToast
                                         key={2}
                                         props={{
-                                            t,
+                                            t: toastId.current,
                                             toastMainColor: "#B43939",
-                                            headline: `Uhh Ohh! ${error.name}`,
+                                            headline: `Uhh Ohh! ${error.details}`,
                                             toastClosebuttonHoverColor: "#e66d6d",
                                             toastClosebuttonColor: "#C25757",
+                                            type:"error",
                                         }}
                                     />
                                 </div>
@@ -210,13 +211,14 @@ export default function Bridge() {
                                 <div>
                                     <CustomToast
                                         props={{
-                                            t,
+                                            t: toastId.current,
                                             toastMainColor: "#268730",
                                             headline: "Transaction Submitted",
                                             transactionHash: data,
                                             linkLabel: "View Transaction",
                                             toastClosebuttonHoverColor: "#90e398",
                                             toastClosebuttonColor: "#57C262",
+                                            type:"success",
                                         }}
                                     />
                                 </div>
@@ -255,11 +257,12 @@ export default function Bridge() {
                             <CustomToast
                                 key={2}
                                 props={{
-                                    t,
+                                    t: toastId.current,
                                     toastMainColor: "#B43939",
                                     headline: `Uhh Ohh! Unable to approve USDa`,
                                     toastClosebuttonHoverColor: "#e66d6d",
                                     toastClosebuttonColor: "#C25757",
+                                    type:"error",
                                 }}
                             />
                         </div>
@@ -280,10 +283,8 @@ export default function Bridge() {
     } = useWriteUsDaSend(
         {
             mutation: {
-                onError(error) {
-                    console.log(error.cause)
-                    console.log(error.message)
-                    console.log(error.name)
+                onError(error:any) {
+                
                     toast.custom(
                         (t) => {
                             toastId.current = t;
@@ -292,11 +293,12 @@ export default function Bridge() {
                                     <CustomToast
                                         key={2}
                                         props={{
-                                            t,
+                                            t: toastId.current,
                                             toastMainColor: "#B43939",
-                                            headline: `Uhh Ohh! ${error.name}`,
+                                            headline: `Uhh Ohh! ${error.details}`,
                                             toastClosebuttonHoverColor: "#e66d6d",
                                             toastClosebuttonColor: "#C25757",
+                                            type:"error",
                                         }}
                                     />
                                 </div>
@@ -313,13 +315,14 @@ export default function Bridge() {
                                 <div>
                                     <CustomToast
                                         props={{
-                                            t,
+                                            t: toastId.current,
                                             toastMainColor: "#268730",
                                             headline: "Transaction Submitted",
                                             transactionHash: data,
                                             linkLabel: "View Transaction",
                                             toastClosebuttonHoverColor: "#90e398",
                                             toastClosebuttonColor: "#57C262",
+                                            type:"success",
                                         }}
                                     />
                                 </div>
@@ -345,13 +348,14 @@ export default function Bridge() {
                         <div>
                             <CustomToast
                                 props={{
-                                    t,
+                                    t: toastId.current,
                                     toastMainColor: "#268730",
                                     headline: "Amint Approved,Plz confirm the transaction on your wallet",
                                     transactionHash: usdaApproveData,
                                     linkLabel: "View Transaction",
                                     toastClosebuttonHoverColor: "#90e398",
                                     toastClosebuttonColor: "#57C262",
+                                    type:"success",
                                 }}
                             />
                         </div>
@@ -369,11 +373,12 @@ export default function Bridge() {
                             <CustomToast
                                 key={2}
                                 props={{
-                                    t,
+                                    t: toastId.current,
                                     toastMainColor: "#B43939",
                                     headline: `Uhh Ohh! ${usdaError.name}`,
                                     toastClosebuttonHoverColor: "#e66d6d",
                                     toastClosebuttonColor: "#C25757",
+                                    type:"error",
                                 }}
                             />
                         </div>
@@ -393,7 +398,7 @@ export default function Bridge() {
     } = useWriteUsDaApprove(
         {
             mutation: {
-                onError(error) {
+                onError(error:any) {
                     toast.custom(
                         (t) => {
                             toastId.current = t;
@@ -402,11 +407,12 @@ export default function Bridge() {
                                     <CustomToast
                                         key={2}
                                         props={{
-                                            t,
+                                            t: toastId.current,
                                             toastMainColor: "#B43939",
-                                            headline: `Uhh Ohh! ${error.name}`,
+                                            headline: `Uhh Ohh! ${error.details}`,
                                             toastClosebuttonHoverColor: "#e66d6d",
                                             toastClosebuttonColor: "#C25757",
+                                            type:"error",
                                         }}
                                     />
                                 </div>
@@ -425,13 +431,14 @@ export default function Bridge() {
                                 <div>
                                     <CustomToast
                                         props={{
-                                            t,
+                                            t: toastId.current,
                                             toastMainColor: "#268730",
                                             headline: "Transaction Submitted",
                                             transactionHash: data,
                                             linkLabel: "View Transaction",
                                             toastClosebuttonHoverColor: "#90e398",
                                             toastClosebuttonColor: "#57C262",
+                                            type:"success",
                                         }}
                                     />
                                 </div>
@@ -469,11 +476,12 @@ export default function Bridge() {
                             <CustomToast
                                 key={2}
                                 props={{
-                                    t,
+                                    t: toastId.current,
                                     toastMainColor: "#B43939",
                                     headline: `Uhh Ohh! Unable to approve USDa`,
                                     toastClosebuttonHoverColor: "#e66d6d",
                                     toastClosebuttonColor: "#C25757",
+                                    type:"error",
                                 }}
                             />
                         </div>
@@ -493,7 +501,7 @@ export default function Bridge() {
     } = useWriteTestusdtAbiSend(
         {
             mutation: {
-                onError(error) {
+                onError(error:any) {
                     toast.custom(
                         (t) => {
                             toastId.current = t;
@@ -502,11 +510,12 @@ export default function Bridge() {
                                     <CustomToast
                                         key={2}
                                         props={{
-                                            t,
+                                            t: toastId.current,
                                             toastMainColor: "#B43939",
-                                            headline: `Uhh Ohh! ${error.name}`,
+                                            headline: `Uhh Ohh! ${error.details}`,
                                             toastClosebuttonHoverColor: "#e66d6d",
                                             toastClosebuttonColor: "#C25757",
+                                            type:"error",
                                         }}
                                     />
                                 </div>
@@ -523,13 +532,14 @@ export default function Bridge() {
                                 <div>
                                     <CustomToast
                                         props={{
-                                            t,
+                                            t: toastId.current,
                                             toastMainColor: "#268730",
                                             headline: "Transaction Submitted",
                                             transactionHash: data,
                                             linkLabel: "View Transaction",
                                             toastClosebuttonHoverColor: "#90e398",
                                             toastClosebuttonColor: "#57C262",
+                                            type:"success",
                                         }}
                                     />
                                 </div>
@@ -555,13 +565,14 @@ export default function Bridge() {
                         <div>
                             <CustomToast
                                 props={{
-                                    t,
+                                    t: toastId.current,
                                     toastMainColor: "#268730",
                                     headline: "Amint Approved,Plz confirm the transaction ",
                                     transactionHash: tusdtApproveData,
                                     linkLabel: "View Transaction",
                                     toastClosebuttonHoverColor: "#90e398",
                                     toastClosebuttonColor: "#57C262",
+                                    type:"success",
                                 }}
                             />
                         </div>
@@ -579,11 +590,12 @@ export default function Bridge() {
                             <CustomToast
                                 key={2}
                                 props={{
-                                    t,
+                                    t: toastId.current,
                                     toastMainColor: "#B43939",
                                     headline: `Uhh Ohh! ${tusdtError.name}`,
                                     toastClosebuttonHoverColor: "#e66d6d",
                                     toastClosebuttonColor: "#C25757",
+                                    type:"error",
                                 }}
                             />
                         </div>

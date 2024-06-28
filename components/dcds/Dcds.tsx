@@ -198,11 +198,7 @@ const Dcds = () => {
       {
         !isConnected ? <ConnectWallet /> : (
           <div className="relative w-full rounded-[10px] px-2  dark:border-[#3A3A3A]  dark:shadow-none  flex flex-col self-stretch overflow-hidden ">
-
             <NewDeposit handleRefetch={handleRefetch} openDeposits={setOpen2} />
-
-
-
             <Dialog open={open2} onOpenChange={setOpen2} >
               <DialogContent className="min-w-[80%]">
      
