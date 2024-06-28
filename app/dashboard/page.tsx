@@ -11,7 +11,7 @@ import money from "@/app/assets/send_money.svg";
 import HeaderItems from "@/components/Header/HeaderItems";
 import Charts from "./Charts";
 import RatioPieChart from "./RatioPieChart";
-import { useReadAbondTotalSupply, useReadUsDaTotalSupply, useReadBorrowingContractGetUsdValue, useReadBorrowingContractOmniChainBorrowingCdsPoolValue, useReadCdsTotalCdsDepositedAmount, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from "@/abiAndHooks";
+import { useReadAbondTotalSupply, useReadUsDaTotalSupply, useReadGlobalGetOmniChainData, useReadBorrowingContractGetUsdValue } from "@/abiAndHooks";
 import { ethers, formatEther } from "ethers";
 import { BACKEND_API_URL } from "@/constants/BackendUrl";
 import { useChainId,useAccount } from "wagmi";
@@ -116,13 +116,10 @@ const page = () => {
   const chainId = useChainId();
   const [loading, setLoading] = React.useState(true);
   const [feeOption, setFeeOption] = React.useState("option");
-  const { data: totalStable } = useReadCdsTotalCdsDepositedAmount()
   const { data: ethPrice} = useReadBorrowingContractGetUsdValue()
-  const { data: ethLocked } = useReadTreasuryTotalVolumeOfBorrowersAmountinUsd()
   const { data: amintsupply } = useReadUsDaTotalSupply()
-  const { data: cdsPool } = useReadBorrowingContractOmniChainBorrowingCdsPoolValue()
   const { data: abondSupply} = useReadAbondTotalSupply();
-  
+  const {data:globalData} = useReadGlobalGetOmniChainData();
 
   const {data:ratioData} = useQuery({
     queryKey: ["ratioData"],
@@ -139,35 +136,35 @@ const page = () => {
   useEffect(() => {
     handleStatsItem()
     refetch()
-  }, [ ethLocked, ethPrice, amintsupply, totalStable, cdsPool, ratioData, feeOptions, abondSupply,feeOptions,ratioData])
+  }, [ globalData, ethPrice, amintsupply, ratioData, feeOptions, abondSupply,feeOptions,ratioData])
   
   const handleStatsItem = async () => {
-    console.log(ethLocked, ethPrice, amintsupply, totalStable, cdsPool, abondSupply, ratioData, feeOptions)
+    console.log( ethPrice, amintsupply,abondSupply, ratioData, feeOptions)
     // check if all data is available
     setLoading(true)
-    if (ethLocked && ethPrice  && amintsupply && totalStable && cdsPool && ratioData && feeOptions && abondSupply) {
+    if ( ethPrice  && amintsupply && globalData && ratioData && feeOptions && abondSupply) {
       amintValues[1].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
       amintValues[2].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
 
       
       // locked values
-      lockedValues[0].value = totalStable ? formatNumber((Number(totalStable) / 10 ** 6) + (Number(formatEther(ethLocked / BigInt(100))))) : "0";
-      lockedValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
-      lockedValues[2].value = totalStable ? formatNumber(Number(formatEther((ethLocked ) / BigInt(100)))) : "0";
+      lockedValues[0].value = globalData.totalCdsDepositedAmount  ? formatNumber((Number(globalData.totalCdsDepositedAmount) / 10 ** 6) + (Number(formatEther(globalData.totalVolumeOfBorrowersAmountinUSD  / BigInt(100))))) : "0";
+      lockedValues[1].value = globalData.totalCdsDepositedAmount ? formatNumber(Number(globalData.totalCdsDepositedAmount) / 10 ** 6) : "0";
+      lockedValues[2].value = globalData.totalCdsDepositedAmount ? formatNumber(Number(formatEther((globalData.totalVolumeOfBorrowersAmountinUSD  ) / BigInt(100)))) : "0";
 
       // ratio values
       RatioValues[0].value = ratioData == undefined ? "-" : (ratioData).toFixed(2);
-      RatioValues[1].value = totalStable ? formatNumber(Number(totalStable) / 10 ** 6) : "0";
-      RatioValues[2].value = cdsPool ? formatNumber(Number(cdsPool/BigInt(10**6))) : "0";
-      RatioValues[3].value = (Number(cdsPool/BigInt(10**6)) - (Number(totalStable) / 10 ** 6)).toFixed(2);
-      const total = (Number(formatEther(ethLocked / BigInt(100)))) + (Number(totalStable) / 10 ** 6);
-      RatioValues[4].value = (((Number(formatEther(ethLocked/ BigInt(100)))) / total) * 100).toFixed(1);
-      RatioValues[5].value = (((Number(totalStable) / 10 ** 6) / total) * 100).toFixed(1);
+      RatioValues[1].value = globalData.totalCdsDepositedAmount ? formatNumber(Number(globalData.totalCdsDepositedAmount) / 10 ** 6) : "0";
+      RatioValues[2].value = globalData.totalCDSPool ? formatNumber(Number(globalData.totalCDSPool/BigInt(10**6))) : "0";
+      RatioValues[3].value = (Number(globalData.totalCDSPool/BigInt(10**6)) - (Number(globalData.totalCdsDepositedAmount) / 10 ** 6)).toFixed(2);
+      const total = (Number(formatEther(globalData.totalVolumeOfBorrowersAmountinUSD  / BigInt(100)))) + (Number(globalData.totalCdsDepositedAmount) / 10 ** 6);
+      RatioValues[4].value = (((Number(formatEther(globalData.totalVolumeOfBorrowersAmountinUSD / BigInt(100)))) / total) * 100).toFixed(1);
+      RatioValues[5].value = (((Number(globalData.totalCdsDepositedAmount) / 10 ** 6) / total) * 100).toFixed(1);
 
       // fees values
       FeesValues[0].value = `${feeOptions[1] == undefined ? 0 : (parseFloat(feeOptions[1]) / 10 ** 6).toFixed(2)}`;
       FeesValues[1].value = `${feeOptions[1] == undefined ? 0 : (parseFloat(feeOptions[1]) / 10 ** 6).toFixed(2)}`;
-      FeesValues[2].value = formatNumber(Number(formatEther((ethLocked) / BigInt(100))) * 0.20);
+      FeesValues[2].value = formatNumber(Number(formatEther((globalData.totalVolumeOfBorrowersAmountinUSD ) / BigInt(100))) * 0.20);
 
       abondValues[1].value = abondSupply ? formatNumber(Number(abondSupply) / 10 ** 18) : "0";
       console.log("step-1-----------------------------------------------------")

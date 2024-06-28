@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useWriteCdsRedeemUsdt,useReadCdsQuote, useWriteBorrowingContractRedeemYields, useWriteUsDaApprove, useWriteAbondApprove, cdsAddress, borrowingContractAddress, useReadBorrowingContractGetAbondYields, abondAddress, usDaAddress } from '@/abiAndHooks';
+import { useWriteCdsRedeemUsdt,useReadGlobalQuote, useWriteBorrowingContractRedeemYields, useWriteUsDaApprove, useWriteAbondApprove, cdsAddress, borrowingContractAddress, useReadBorrowingContractGetAbondYields, abondAddress, usDaAddress } from '@/abiAndHooks';
 import { Input } from "@/components/ui/input";
 import { Button } from '@/components/ui/button';
 import Note from '@/components/CustomUI/Note';
@@ -92,9 +92,8 @@ const Redeem = ({
   const options = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
   const Eid = chainId === 11155111 ? 40245 : 40161;
 
-  const { data: nativeFee1, error } = useReadCdsQuote({
-    args: [Eid, 1, 123n, 123n, 123n,
-      { liquidationAmount: 0n, profits: 0n, ethAmount: 0n, availableLiquidationAmount: 0n }, 0n, options, false]
+  const { data: nativeFee1, error } = useReadGlobalQuote({
+    args: [1, options, false]
   });
 
 
