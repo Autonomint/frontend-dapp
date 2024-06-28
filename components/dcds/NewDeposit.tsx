@@ -589,7 +589,7 @@ const NewDeposit = ({
                   props={{
                     t,
                     toastMainColor: "#B43939",
-                    headline: `Uhh Ohh! Amint Amount must be greater than 500`,
+                    headline: `Uhh Ohh! USDa Amount must be greater than 500`,
                     toastClosebuttonHoverColor: "#e66d6d",
                     toastClosebuttonColor: "#C25757",
                   }}
@@ -639,7 +639,7 @@ const NewDeposit = ({
       if (form.getValues("AmintDepositAmount") != undefined && amint < 500) {
         form.setError("AmintDepositAmount", {
           type: "manual",
-          message: "Amint Amount must be greater than 500",
+          message: "USDa Amount must be greater than 500",
         });
       }
       else {
@@ -648,7 +648,7 @@ const NewDeposit = ({
       if (usdt > (((100 / 80) * amint) - amint)) {
         form.setError("USDTDepositAmount", {
           type: "manual",
-          message: "USDT Amount must be less than or equal to 80% of Amint Amount",
+          message: "USDT Amount must be less than or equal to 80% of USDa Amount",
         });
       }
       else {
@@ -707,7 +707,7 @@ const NewDeposit = ({
                                     htmlFor="amount_of_amint"
                                     className="absolute text-sm text-gray-500 dark:text-[#FFFFFF] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-[#3A3A3A]  px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
                                   >
-                                    Deposit AMINT
+                                    Deposit USDa
                                   </label>
 
                                 </div>
@@ -873,9 +873,9 @@ const NewDeposit = ({
                       <InfoCircledIcon width={18} height={18} />
                     </div>
                     <p className="min-[1440px]:text-base 2dppx:text-xs text-sm font-normal text-textGrey  dark:text-[#FFFFFF] text-center leading-none">
-                      Minimum {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"} Amount is{" "}
+                      Minimum {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "USDa"} Amount is{" "}
                       <span className="font-medium text-textHighlight dark:text-[#ffff]">
-                        500 {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "AMINT"}
+                        500 {usdtAmountDepositedTillNow < usdtLimit ? "USDT" : "USDa"}
                       </span>
                     </p>
                   </div>
@@ -954,7 +954,7 @@ const NewDeposit = ({
                         height={24}
                       />
                       <p className="min-[1440px]:text-base text-sm text-textHighlight 2dppx:text-xs dark:text-[#EEEEEE]">
-                        {amintAmnt == undefined ? 0 : amintAmnt} AMINT + {usdtAmnt == undefined ? 0 : usdtAmnt} USDT
+                        {amintAmnt == undefined ? 0 : amintAmnt} USDa + {usdtAmnt == undefined ? 0 : usdtAmnt} USDT
                       </p>
                     </div>
                     <div className="flex gap-[10px]">
