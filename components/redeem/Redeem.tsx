@@ -117,7 +117,7 @@ const Redeem = ({
                   props={{
                     t,
                     toastMainColor: "#B43939",
-                    headline: `Uhh Ohh! ${error.name}`,
+                    headline: `Uhh Ohh! ${error.cause}`,
                     toastClosebuttonHoverColor: "#e66d6d",
                     toastClosebuttonColor: "#C25757",
                   }}
@@ -150,7 +150,7 @@ const Redeem = ({
               </div>
             );
           },
-          { duration: Infinity }
+          { duration: 5000 }
         );
       },
     }
@@ -226,7 +226,7 @@ const Redeem = ({
             />
           </div>
         ),
-        { duration: Infinity, id: toastId.current }
+        { duration: 5000, id: toastId.current }
       );
 
       setTimeout(() => {
@@ -253,7 +253,7 @@ const Redeem = ({
           );
         },
         // Set the duration of the toast notification to be infinite
-        { duration: 10000, id: toastId.current }
+        { duration: 5000, id: toastId.current }
       );
     },
   }
