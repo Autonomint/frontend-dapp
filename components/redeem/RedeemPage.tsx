@@ -3,7 +3,7 @@ import ConnectWallet from '@/components/ConnectWallet/ConnectWallet';
 import React, { useEffect } from 'react'
 import { useAccount } from 'wagmi';
 import Redeem from './Redeem';
-import { borrowingContractAbi, useReadCdsUsdtAmountDepositedTillNow, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
+import { borrowingContractAbi, useReadGlobalGetOmniChainData } from '@/abiAndHooks';
 import { formatEther } from 'ethers';
 import eth from "@/app/assets/eth.svg";
 import usdt from "@/app/assets/tether-usdt.svg";
@@ -59,8 +59,9 @@ const RedeemPage = () => {
   const { isConnected, address, connector: activeConnector } = useAccount();
   const [open2, setOpen2] = React.useState(false);
   // fetch data from the blockchain
-  const { data: ethLocked } = useReadTreasuryTotalVolumeOfBorrowersAmountinUsd();
-  const { data: usdtLocked } = useReadCdsUsdtAmountDepositedTillNow();
+  const {data:globalData} = useReadGlobalGetOmniChainData()
+  const ethLocked  = globalData?.totalVolumeOfBorrowersAmountinUSD ??0n;
+  const  usdtLocked  = globalData?.usdtAmountDepositedTillNow ??0n;
 
   useEffect(() => {
     if (ethLocked && usdtLocked) {

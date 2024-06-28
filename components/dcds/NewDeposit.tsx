@@ -599,7 +599,7 @@ const NewDeposit = ({
                   props={{
                     t: toastId.current,
                     toastMainColor: "#B43939",
-                    headline: `Uhh Ohh! Amint Amount must be greater than 500`,
+                    headline: `Uhh Ohh! USDa Amount must be greater than 500`,
                     toastClosebuttonHoverColor: "#e66d6d",
                     toastClosebuttonColor: "#C25757",
                     type:'error'
@@ -650,7 +650,7 @@ const NewDeposit = ({
       if (form.getValues("AmintDepositAmount") != undefined && amint < 500) {
         form.setError("AmintDepositAmount", {
           type: "manual",
-          message: "Amint Amount must be greater than 500",
+          message: "USDa Amount must be greater than 500",
         });
       }
       else {
@@ -659,7 +659,7 @@ const NewDeposit = ({
       if (usdt > (((100 / 80) * amint) - amint)) {
         form.setError("USDTDepositAmount", {
           type: "manual",
-          message: "USDT Amount must be less than or equal to 80% of Amint Amount",
+          message: "USDT Amount must be less than or equal to 80% of USDa Amount",
         });
       }
       else {
