@@ -18,6 +18,8 @@ import { useChainId,useAccount } from "wagmi";
 import ConnectWallet from "@/components/ConnectWallet/ConnectWallet";
 import { useQueries,useQuery } from "@tanstack/react-query";
 
+
+
 const amintValues = [
   {
     headline: "Price",
@@ -119,7 +121,7 @@ const page = () => {
   const { data: totalStable } = useReadCdsTotalCdsDepositedAmount()
   const { data: ethPrice} = useReadBorrowingContractGetUsdValue()
   const { data: ethLocked } = useReadTreasuryTotalVolumeOfBorrowersAmountinUsd()
-  const { data: amintsupply } = useReadUsDaTotalSupply()
+  const { data: amintsupply } = useReadUsDaTotalSupply();
   const { data: cdsPool } = useReadBorrowingContractOmniChainBorrowingCdsPoolValue()
   const { data: abondSupply} = useReadAbondTotalSupply();
   
