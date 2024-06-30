@@ -1,8 +1,9 @@
 "use client";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useRef, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CustomToast from "@/components/CustomUI/CustomToast";
 import { toast } from "sonner";
+const toastId = useRef<number | string>("");
 export default function QueryProvider({ children }: PropsWithChildren) {
   const [queryClient] = useState(
     () =>
@@ -21,11 +22,12 @@ export default function QueryProvider({ children }: PropsWithChildren) {
                       <CustomToast
                         key={2}
                         props={{
-                          t,
+                          t:toastId.current,
                           toastMainColor: "#B43939",
                           headline: `Uhh Ohh! ${error.name}`,
                           toastClosebuttonHoverColor: "#e66d6d",
                           toastClosebuttonColor: "#C25757",
+                          type: "error",
                         }}
                       />
                     </div>
