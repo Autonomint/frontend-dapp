@@ -150,7 +150,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
               props={{
                 t: toastId.current,
                 toastMainColor: "#268730",
-                headline: "Transaction Completed. A new Deposit has been created",
+                headline: "Transaction Initiated",
                 transactionHash: data,
                 linkLabel: "View Transaction",
                 toastClosebuttonHoverColor: "#90e398",
@@ -169,7 +169,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
       },
       onError: (error: any) => {
         // Log the error to the console
-        
+        console.log(error.cause,error.message,error.name)
         // Show custom toast
         toast.custom(
           (t) => (
@@ -318,6 +318,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
   const handleAmintToBeMinted = async () => {
     // Calculate the amint to be minted
     const optionf = await getOptionFees();
+    console.log(optionFees)
     setOptionFees(optionf);
     const amintToMint = (form.watch("collateralAmount") * Number(ethPrice) * 80) / 10000;
     const amint2Decimal = displayNumberWithPrecision(amintToMint.toString());

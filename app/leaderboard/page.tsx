@@ -4,7 +4,7 @@ import LeaderTable from './LeaderTable';
 import { BACKEND_API_URL } from '@/constants/BackendUrl';
 import { useQuery } from "@tanstack/react-query";
 import { useChainId, useReadContract } from 'wagmi';
-import { treasuryAbi, treasuryAddress, cdsAbi, cdsAddress, useReadCdsTotalCdsDepositedAmount, useReadTestusdtAbi, useReadTreasuryNoOfBorrowers, useReadTreasuryTotalVolumeOfBorrowersAmountinUsd } from '@/abiAndHooks';
+import {useReadGlobalGetOmniChainData} from '@/abiAndHooks';
 import { formatEther } from 'viem';
 
 // Define the interface for the table data
@@ -34,37 +34,8 @@ function formatNumber(num: number) {
 export default function page() {
     const chainId = useChainId();
     // Fetch the total volume of borrowers amount in USD
-    const { data: ethlockedSepolia } = useReadContract({
-        abi: treasuryAbi,
-        address: treasuryAddress[11155111],
-        functionName: 'totalVolumeOfBorrowersAmountinUSD',
-        args: [],
-        chainId: 11155111
-    })
-    // Fetch the total volume of borrowers amount in USD
-    const { data: ethlockedbase } = useReadContract({
-        abi: treasuryAbi,
-        address: treasuryAddress[84532],
-        functionName: 'totalVolumeOfBorrowersAmountinUSD',
-        args: [],
-        chainId: 84532
-    })
-    // Fetch the total number of stable locked in Sepolia
-    const { data: stableLockedSepolia } = useReadContract({
-        abi: cdsAbi,
-        address: cdsAddress[11155111],
-        functionName: 'totalCdsDepositedAmount',
-        args: [],
-        chainId: 11155111
-    })
-    // Fetch the total number of stable locked in Base
-    const { data: stableLockedBase } = useReadContract({
-        abi: cdsAbi,
-        address: cdsAddress[84532],
-        functionName: 'totalCdsDepositedAmount',
-        args: [],
-        chainId: 84532
-    })
+    const {data: globalData} = useReadGlobalGetOmniChainData();
+
 
     // Fetch the total number of borrowers
     async function getBorrowLeaderboard(): Promise<TableData[]> {
@@ -105,7 +76,7 @@ export default function page() {
                         </div>
                         <div className='flex flex-col gap-2 basis-1/3 bg-[#E4EDFF] dark:bg-[#020B28] dark:text-[#4AFBD5] px-4 py-4 lg:px-5 lg:py-4 shadow-sm text-[#00679F]'>
                             <div className='text-sm lg:text-normal'>Total Value Locked (TVL) </div>
-                            <div className='text-xl font-semibold lg:text-3xl'>${formatNumber((Number((stableLockedBase ?? 0n) + (stableLockedSepolia ?? 0n)) / 10 ** 6) + Number(formatEther(((ethlockedbase ?? 0n) + (ethlockedSepolia ?? 0n)) / BigInt(100))))}</div>
+                            <div className='text-xl font-semibold lg:text-3xl'>${formatNumber((Number((globalData?.totalCdsDepositedAmount ?? 0n)) / 10 ** 6) + Number(formatEther(( (globalData?.totalVolumeOfBorrowersAmountinUSD ?? 0n)) / BigInt(100))))}</div>
                         </div>
                     </div>
 

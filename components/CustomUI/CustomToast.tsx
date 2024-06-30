@@ -42,7 +42,7 @@ const CustomToast = ({
   return (
     <div className="fixed flex pointer-events-auto z-max">
       <div
-        className={`flex gap-[10px] text-white ${type=="success"?"bg-[#28a745] dark:bg-[#34d399]":"bg-[#dc3545] dark:bg-[#c82333]"} items-center `}
+        className={`flex gap-[10px] text-white ${type=="success"?"bg-[#28a745]":"bg-[#c82333]"} items-center `}
       >
         {spinner && (
           <div className="ml-2">
@@ -97,7 +97,7 @@ const CustomToast = ({
             variant={"ghost"}
             size={"toastSize"}
             onClick={() => toast.dismiss(t)}
-            className={`flex items-center justify-center hover:opacity-80 rounded-none`}
+            className={`flex items-center justify-center ${type=="success"?"bg-[#46cd65] hover:bg-[#34d399]":"bg-[#dc3545] hover:bg-[#dc3545]"} opacity-80 hover:opacity-80 rounded-none`}
           >
             <Cross1Icon />
           </Button>

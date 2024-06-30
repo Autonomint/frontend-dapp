@@ -210,7 +210,6 @@ const NewDeposit = ({
         onError(error) {
           toast.custom(
             (t) => {
-              toastId.current = t;
               return (
                 <div>
                   <CustomToast
@@ -234,7 +233,6 @@ const NewDeposit = ({
         onSuccess: (data) => {
           toast.custom(
             (t) => {
-              toastId.current = t;
               return (
                 <div>
                   <CustomToast
@@ -468,7 +466,6 @@ const NewDeposit = ({
       onError(error) {
         toast.custom(
           (t) => {
-            toastId.current = t;
             return (
               <div>
                 <CustomToast
@@ -495,7 +492,6 @@ const NewDeposit = ({
 
         toast.custom(
           (t) => {
-            toastId.current = t;
             return (
               <div>
                 <CustomToast
@@ -555,7 +551,6 @@ const NewDeposit = ({
 
       toast.custom(
         (t) => {
-          toastId.current = t;
           return (
             <div>
               <CustomToast
@@ -591,7 +586,6 @@ const NewDeposit = ({
       if (amintAmnt == undefined || amintAmnt == 0) {
         toast.custom(
           (t) => {
-            toastId.current = t;
             return (
               <div>
                 <CustomToast

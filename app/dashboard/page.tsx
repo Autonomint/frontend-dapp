@@ -142,7 +142,7 @@ const page = () => {
     console.log( ethPrice, amintsupply,abondSupply, ratioData, feeOptions)
     // check if all data is available
     setLoading(true)
-    if ( ethPrice  && amintsupply && globalData && ratioData && feeOptions && abondSupply) {
+    if ( ethPrice  && amintsupply !=undefined && globalData  !=undefined && ratioData  !=undefined && feeOptions  !=undefined && abondSupply  !=undefined) {
       amintValues[1].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
       amintValues[2].value = amintsupply ? formatNumber(Number(amintsupply) / 10 ** 6) : "0";
 
