@@ -179,7 +179,7 @@ const Withdrawcopy = ({
 
   const Eid = chainId===11155111? 40245: 40161;
 
-  const options  = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
+  const options  = Options.newOptions().addExecutorLzReceiveOption(250000, 0).toHex().toString() as `0x${string}`;
 
   const {data:nativeFee } = useReadGlobalQuote({ query: { enabled: !!address },args:[1, options, false],
   });

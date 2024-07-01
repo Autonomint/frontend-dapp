@@ -96,7 +96,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
   const ethBalance = useBalance({ address: address })
 
   // Create the options for the contract
-  const options = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
+  const options = Options.newOptions().addExecutorLzReceiveOption(250000, 0).toHex().toString() as `0x${string}`;
 
   // watch for the strikePrice in the form
   const strikePrice = form.watch("strikePrice");
@@ -114,6 +114,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
   const { data: nativeFee } = useReadGlobalQuote({
     query: { enabled: !!address }, args: [1, options, false],
   });
+  console.log("nativeFee", nativeFee)
 
   const { data: ethPrice } = useReadBorrowingContractGetUsdValue({});
 
@@ -170,6 +171,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
       onError: (error: any) => {
         // Log the error to the console
         console.log(error.cause,error.message,error.name)
+        console.log(error)
         // Show custom toast
         toast.custom(
           (t) => (
@@ -284,7 +286,7 @@ const CreateNewDeposit = ({ handleRefetch, openPositions }: { handleRefetch: () 
     }
   }, [contractData]);
 
-
+  // 500 000 000 000 000 000
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("clicked", values)
     let colateralamount = parseUnits(form.getValues("collateralAmount").toString(), 18);

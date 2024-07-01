@@ -26,6 +26,7 @@ import {
 import { ArrowRightIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import AmintDepositRowCopy from "./Withdrawcopy";
+import { RefreshCcw } from "lucide-react";
 
 interface DepositDetail {
   id: string;
@@ -182,6 +183,21 @@ const Dcds = () => {
 
     console.log("cds data", dCDSdepositorData);
   }
+  const [transform, setTransform] = useState(false)
+
+  const RefreshTableData = async() => {
+    const res = await fetch(`${BACKEND_API_URL}/cds/${chainId}/${address}`)
+    return await res.json()
+  }
+  const OnclickRefreshHandler = async() => {
+    setTransform(true)
+    const data = await RefreshTableData()
+    if(data){
+      handleRefetch()
+    }
+    setTransform(false)
+  }
+
   /**
    * This useEffect hook is responsible for logging the deposits, total data, error, and calling the handleStatsItem function.
    * It runs whenever dCDSdepositorData or dCDSdepositorDataError changes.
@@ -216,6 +232,9 @@ const Dcds = () => {
                           </p>
                         </div>
                       </div>
+                      <div className="absolute top-3 right-5 ">
+          <Button variant={"primary"} onClick={OnclickRefreshHandler} className="flex gap-2">Refresh <RefreshCcw className={`${transform ? "rotate-180":""}  duration-100 w-5 h-5 `}/></Button>
+        </div>
                       <div className="min-h-[58.6vh] h-full overflow-y-scroll ">
                         <Table>
                           <TableHeader>

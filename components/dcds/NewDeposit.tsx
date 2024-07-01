@@ -122,7 +122,7 @@ const NewDeposit = ({
     setValue(Number(event.target.value)); // Convert input value to a number
   };
   // Define the initial state for the options variable
-  const options = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
+  const options = Options.newOptions().addExecutorLzReceiveOption(250000, 0).toHex().toString() as `0x${string}`;
 
 
   // Define the initial state for the tokensEnabled variable
@@ -183,7 +183,7 @@ const NewDeposit = ({
 
 
   // get usdt limit from CDS contract and store it in usdtLimit and setting default value to 0n
-  const usdtLimit = 20000n
+  const usdtLimit = 20000000000n
   
 
   // get usdt amount deposited till now from CDS contract and store it in usdtAmountDepositedTillNow and setting default value to 0n
@@ -196,6 +196,7 @@ const NewDeposit = ({
   const { data: nativeFee1, error } = useReadGlobalQuote({
     query: { enabled: !!address }, args: [1,options, false]
   });
+  console.log("nativefee", nativeFee1);
 
   // usdt approval
   const {
@@ -387,7 +388,7 @@ const NewDeposit = ({
 
 
 // get the confirmed txn receipt
-  const { isLoading, isSuccess: cdsDepositSuccess, isError: cdsDepositError, data: DepositdataReceipt } = useWaitForTransactionReceipt({
+  const { isLoading:isCdsConfirmationLoading, isSuccess: cdsDepositSuccess, isError: cdsDepositError, data: DepositdataReceipt } = useWaitForTransactionReceipt({
     hash: CdsDepositData,
     confirmations:2
   });
@@ -1028,10 +1029,10 @@ const NewDeposit = ({
                   className="py-2 basis-1/2"
                   //   disabled if the amount deposited is less than the limit and the user has not approved usdt
                   disabled={
-                     isCdsDepositLoading || AmintApprovalLoading || usdtApproveLoading || UsdtApprovalLoading 
+                     isCdsDepositLoading || AmintApprovalLoading || usdtApproveLoading || UsdtApprovalLoading || isCdsConfirmationLoading
                   }
                 >
-                  {usdtApproveLoading || UsdtApprovalLoading || amintApproveLoading || isCdsDepositLoading || AmintApprovalLoading ? <Spinner /> : 'Confirm Deposit'}
+                  {usdtApproveLoading || UsdtApprovalLoading || amintApproveLoading || isCdsDepositLoading || AmintApprovalLoading || isCdsConfirmationLoading ? <Spinner /> : 'Confirm Deposit'}
                 </Button>
               </div>
             </div>

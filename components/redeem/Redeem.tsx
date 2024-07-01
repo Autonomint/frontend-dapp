@@ -108,7 +108,7 @@ const Redeem = ({
       onError(error:any) {
         toast.custom(
           (t) => {
-            toastId.current = t;
+          
             return (
               <div>
                 <CustomToast
@@ -133,7 +133,7 @@ const Redeem = ({
       onSuccess: (data) => {
         toast.custom(
           (t) => {
-            toastId.current = t;
+        
             return (
               <div>
                 <CustomToast
@@ -176,7 +176,7 @@ const Redeem = ({
     else if(usdaErrorApprove) {
       toast.custom(
         (t) => {
-          toastId.current = t;
+          
           return (
             <div>
               <CustomToast
@@ -298,7 +298,7 @@ const Redeem = ({
     else if(redeemUsdtError) {
       toast.custom(
         (t) => {
-          toastId.current = t;
+          
           return (
             <div>
               <CustomToast
@@ -365,7 +365,7 @@ const Redeem = ({
       onError(error:any) {
         toast.custom(
           (t) => {
-            toastId.current = t;
+            
             return (
               <div>
                 <CustomToast
@@ -392,7 +392,7 @@ const Redeem = ({
       onSuccess: (data) => {
         toast.custom(
           (t) => {
-            toastId.current = t;
+           
             return (
               <div>
                 <CustomToast
@@ -410,7 +410,7 @@ const Redeem = ({
               </div>
             );
           },
-          { duration: Infinity }
+          { duration: 5000 }
         );
         //closing sheet so that user can click on the links from the toast
         // setOpen(false);
@@ -439,7 +439,6 @@ const Redeem = ({
     if(abondApproveError) {
       toast.custom(
         (t) => {
-          toastId.current = t;
           return (
             <div>
               <CustomToast
@@ -524,7 +523,7 @@ const Redeem = ({
           );
         },
         // Set the duration of the toast notification to be infinite
-        { duration: 10000, id: toastId.current }
+        { duration: 5000, id: toastId.current }
       );
     },
   }

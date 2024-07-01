@@ -121,10 +121,11 @@ const page = () => {
   const { data: abondSupply} = useReadAbondTotalSupply();
   const {data:globalData} = useReadGlobalGetOmniChainData();
 
-  const {data:ratioData} = useQuery({
+  const {data:resRatioData} = useQuery({
     queryKey: ["ratioData"],
     queryFn:()=>fetch(`${BACKEND_API_URL}/borrows/ratio/${chainId}/${ethPrice ?? 0}`).then((res) => res.json()),
   })
+  const ratioData = resRatioData || 0;
   console.log(ratioData,ethPrice)
   
   const {data:feeOptions,refetch} = useQuery({
