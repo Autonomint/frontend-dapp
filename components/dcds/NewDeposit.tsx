@@ -208,7 +208,7 @@ const NewDeposit = ({
     {
 
       mutation: {
-        onError(error) {
+        onError(error:any) {
           toast.custom(
             (t) => {
               return (
@@ -218,7 +218,7 @@ const NewDeposit = ({
                     props={{
                       t: toastId.current,
                       toastMainColor: "#B43939",
-                      headline: `Uhh Ohh! ${error.name}`,
+                      headline: `Uhh Ohh! ${error.details}`,
                       toastClosebuttonHoverColor: "#e66d6d",
                       toastClosebuttonColor: "#C25757",
                       type:'error'
@@ -240,7 +240,7 @@ const NewDeposit = ({
                     props={{
                       t: toastId.current,
                       toastMainColor: "#268730",
-                      headline: "Transaction Submitted",
+                      headline: "Transaction Initiated",
                       transactionHash: data,
                       linkLabel: "View Transaction",
                       toastClosebuttonHoverColor: "#90e398",
@@ -324,7 +324,7 @@ const NewDeposit = ({
     // Handle errors during the CDS deposit process
     mutation: {
 
-      onError: (error) => {
+      onError: (error:any) => {
         // console.log(error.message);
         console.log("MESSAGE", error.cause );
         console.log("MESSAGE", error.name );
@@ -338,7 +338,7 @@ const NewDeposit = ({
                 props={{
                   t: toastId.current,
                   toastMainColor: "#B43939",
-                  headline: `Uhh Ohh! ${error.cause}`,
+                  headline: `Uhh Ohh! ${error.details}`,
                   toastClosebuttonHoverColor: "#e66d6d",
                   toastClosebuttonColor: "#C25757",
                   type:'error'
@@ -464,7 +464,7 @@ const NewDeposit = ({
   } = useWriteUsDaApprove({
     mutation: {
 
-      onError(error) {
+      onError(error:any) {
         toast.custom(
           (t) => {
             return (
@@ -474,7 +474,7 @@ const NewDeposit = ({
                   props={{
                     t: toastId.current,
                     toastMainColor: "#B43939",
-                    headline: `Uhh Ohh! ${error.name}`,
+                    headline: `Uhh Ohh! ${error.details}`,
                     toastClosebuttonHoverColor: "#e66d6d",
                     toastClosebuttonColor: "#C25757",
                     type:'error'
@@ -499,7 +499,7 @@ const NewDeposit = ({
                   props={{
                     t: toastId.current,
                     toastMainColor: "#268730",
-                    headline: "Transaction Submitted",
+                    headline: "Transaction Initiated",
                     transactionHash: data,
                     linkLabel: "View Transaction",
                     toastClosebuttonHoverColor: "#90e398",

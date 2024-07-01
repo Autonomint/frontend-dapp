@@ -93,7 +93,7 @@ export default function Bridge() {
 
     const chainId = useChainId();
 
-    const Eid = 40260;
+    const Eid = chainId === 11155111 ? 40245 : 40161;
 
     const options = Options.newOptions().addExecutorLzReceiveOption(200000, 0).toHex().toString() as `0x${string}`;
 
@@ -167,6 +167,7 @@ export default function Bridge() {
     const { data: nativeFee2, error: TUSDTQuoteError, refetch: refetchnativeFee2 } = useReadTestusdtAbiQuoteSend({
         args: [transactionParams as any, false]
     });
+    console.log(nativeFee1, nativeFee2)
 
 
     // Approve USDa
@@ -181,7 +182,6 @@ export default function Bridge() {
                 onError(error:any) {
                     toast.custom(
                         (t) => {
-                            toastId.current = t;
                             return (
                                 <div>
                                     <CustomToast
@@ -206,14 +206,13 @@ export default function Bridge() {
                 onSuccess: (data) => {
                     toast.custom(
                         (t) => {
-                            toastId.current = t;
                             return (
                                 <div>
                                     <CustomToast
                                         props={{
                                             t: toastId.current,
                                             toastMainColor: "#268730",
-                                            headline: "Transaction Submitted",
+                                            headline: "Transaction Initiated",
                                             transactionHash: data,
                                             linkLabel: "View Transaction",
                                             toastClosebuttonHoverColor: "#90e398",
@@ -251,7 +250,6 @@ export default function Bridge() {
         else if (usdaErrorApprove) {
             toast.custom(
                 (t) => {
-                    toastId.current = t;
                     return (
                         <div>
                             <CustomToast
@@ -287,7 +285,6 @@ export default function Bridge() {
                 
                     toast.custom(
                         (t) => {
-                            toastId.current = t;
                             return (
                                 <div>
                                     <CustomToast
@@ -310,14 +307,13 @@ export default function Bridge() {
                 onSuccess: (data) => {
                     toast.custom(
                         (t) => {
-                            toastId.current = t;
                             return (
                                 <div>
                                     <CustomToast
                                         props={{
                                             t: toastId.current,
                                             toastMainColor: "#268730",
-                                            headline: "Transaction Submitted",
+                                            headline: "Transaction Initiated",
                                             transactionHash: data,
                                             linkLabel: "View Transaction",
                                             toastClosebuttonHoverColor: "#90e398",
@@ -350,7 +346,7 @@ export default function Bridge() {
                                 props={{
                                     t: toastId.current,
                                     toastMainColor: "#268730",
-                                    headline: "Amint Approved,Plz confirm the transaction on your wallet",
+                                    headline: "Transaction Completed",
                                     transactionHash: usdaApproveData,
                                     linkLabel: "View Transaction",
                                     toastClosebuttonHoverColor: "#90e398",
@@ -367,7 +363,6 @@ export default function Bridge() {
         else if (usdaIsError) {
             toast.custom(
                 (t) => {
-                    toastId.current = t;
                     return (
                         <div>
                             <CustomToast
@@ -401,7 +396,6 @@ export default function Bridge() {
                 onError(error:any) {
                     toast.custom(
                         (t) => {
-                            toastId.current = t;
                             return (
                                 <div>
                                     <CustomToast
@@ -426,14 +420,13 @@ export default function Bridge() {
                 onSuccess: (data) => {
                     toast.custom(
                         (t) => {
-                            toastId.current = t;
                             return (
                                 <div>
                                     <CustomToast
                                         props={{
                                             t: toastId.current,
                                             toastMainColor: "#268730",
-                                            headline: "Transaction Submitted",
+                                            headline: "Transaction Initiated",
                                             transactionHash: data,
                                             linkLabel: "View Transaction",
                                             toastClosebuttonHoverColor: "#90e398",
@@ -470,7 +463,6 @@ export default function Bridge() {
         else if (usdaErrorApprove) {
             toast.custom(
                 (t) => {
-                    toastId.current = t;
                     return (
                         <div>
                             <CustomToast
@@ -504,7 +496,6 @@ export default function Bridge() {
                 onError(error:any) {
                     toast.custom(
                         (t) => {
-                            toastId.current = t;
                             return (
                                 <div>
                                     <CustomToast
@@ -527,14 +518,13 @@ export default function Bridge() {
                 onSuccess: (data) => {
                     toast.custom(
                         (t) => {
-                            toastId.current = t;
                             return (
                                 <div>
                                     <CustomToast
                                         props={{
                                             t: toastId.current,
                                             toastMainColor: "#268730",
-                                            headline: "Transaction Submitted",
+                                            headline: "Transaction Initiated",
                                             transactionHash: data,
                                             linkLabel: "View Transaction",
                                             toastClosebuttonHoverColor: "#90e398",
@@ -567,7 +557,7 @@ export default function Bridge() {
                                 props={{
                                     t: toastId.current,
                                     toastMainColor: "#268730",
-                                    headline: "Amint Approved,Plz confirm the transaction ",
+                                    headline: "Transaction Completed",
                                     transactionHash: tusdtApproveData,
                                     linkLabel: "View Transaction",
                                     toastClosebuttonHoverColor: "#90e398",
@@ -584,7 +574,6 @@ export default function Bridge() {
         else if (tusdtIsError) {
             toast.custom(
                 (t) => {
-                    toastId.current = t;
                     return (
                         <div>
                             <CustomToast
@@ -919,7 +908,7 @@ export default function Bridge() {
 
                                 </div>
                             </div>
-
+                            {/* 62 577 588 951 147 */}
                             <div className='bg-[#DEDEDE] dark:bg-[#020202] dark:shadow-darkcustom shadow-custom px-4 py-5'>
 
                                 <div className="flex flex-col tracking-tighter">
@@ -964,10 +953,10 @@ export default function Bridge() {
                                 type="submit"
                                 variant={"primary"}
                                 className="border-[#041A50] bg-[#ABFFDE] text-sm border-[1px] shadow-smallcustom py-2 rounded-none basis-1/2 dark:text-black "
-                                disabled={isUsdaTransactionLoading || istusdtTransactionLoading}
+                                disabled={isUsdaTransactionLoading || tusDTTransactionLoading || istusdtTransactionLoading || amintApproveLoading ||isAmintTransactionLoading|| usdaApproveLoading || tusDTApproveLoading  || !form.formState.isValid }
                                 onClick={() => { form.handleSubmit(onSubmit) }}
                             >
-                                {isUsdaTransactionLoading || istusdtTransactionLoading ? <Spinner /> : "Bridge"}
+                                {isUsdaTransactionLoading || tusdtTransactionConfirmed || tusDTTransactionLoading|| istusdtTransactionLoading || amintApproveLoading ||isAmintTransactionLoading|| usdaApproveLoading || tusDTApproveLoading  ? <Spinner /> : "Bridge"}
                             </Button>
 
                         </form>

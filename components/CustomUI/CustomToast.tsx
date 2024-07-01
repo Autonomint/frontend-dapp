@@ -75,7 +75,7 @@ const CustomToast = ({
                 href={
                
                     chainId === 84532
-                    ? `https://https://sepolia.basescan.org/tx/${transactionHash}`
+                    ? `https://sepolia.basescan.org/tx/${transactionHash}`
                     : chainId === 11155111
                     ? `https://sepolia.etherscan.io/tx/${transactionHash}`
                     : "Network Not yet Supported please switch to mumbai or sepolia"
