@@ -3,8 +3,8 @@ import { PropsWithChildren, useRef, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import CustomToast from "@/components/CustomUI/CustomToast";
 import { toast } from "sonner";
-const toastId = useRef<number | string>("");
 export default function QueryProvider({ children }: PropsWithChildren) {
+  const toastId = useRef<number | string>("");
   const [queryClient] = useState(
     () =>
       new QueryClient({
