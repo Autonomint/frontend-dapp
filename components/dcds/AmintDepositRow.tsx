@@ -87,7 +87,7 @@ const AmintDepositRow = ({ details ,onClick,isnewtxn,islasttxn}: { details: Depo
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
       {(Number(details.lockingPeriod)/86400000).toFixed(0)} days
         </TableCell>
-        <TableCell className="text-textGrey dark:text-[#EEEEEE] "><Button variant={"outline"} className="mr-4 px-2 pt-1 bg-[#020202] text-white"> Withdraw</Button> </TableCell>
+        <TableCell className="text-textGrey dark:text-[#EEEEEE] "><Button variant={"outline"} className={`${details.status == "DEPOSITED"?"":" opacity-70"} mr-4 px-2 pt-1 `}> {details.status=="DEPOSITED"? "Withdraw":"Withdrew"}</Button> </TableCell>
       </TableRow>
   );
 };

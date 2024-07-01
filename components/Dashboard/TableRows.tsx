@@ -185,7 +185,7 @@ const TableRows = ({
             {details.status === "LIQUIDATED" ? "Yes" : "No"}
         </TableCell>
         <TableCell className="text-textGrey dark:text-[#EEEEEE]">
-            <Button variant={"outline"}  className={`${details.status=="DEPOSITED"?"bg-[#020202]":"bg-[#3b3a3a] dark:bg-[#464646]"}py-1 px-2 mr-4 min-w-24  text-white`} >{details.status =="DEPOSITED"?"Repay" : details.status=="LIQUIDATED"?"Liquidated":"Repaid"}</Button>
+            <Button variant={"outline"}  className={`${details.status=="DEPOSITED"?" text-black":"bg-[#3b3a3a] text-white dark:bg-[#464646]"} py-1 px-2 mr-4 min-w-24`} >{details.status =="DEPOSITED"?"Repay" : details.status=="LIQUIDATED"?"Liquidated":"Repaid"}</Button>
         </TableCell>
       </TableRow>
   );

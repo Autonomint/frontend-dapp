@@ -58,12 +58,13 @@ const DepositAndWithDrawTable = ({
     const res = await fetch(`${BACKEND_API_URL}/borrows/refresh/${chainId}/${address}`, {
       method: "POST"
     });
-    console.log(res)
-    return await res.json()
+   
+    return res
   }
   const OnclickRefreshHandler = async() => {
     setTransform(true)
     const data = await RefreshTableData()
+    console.log(data)
     if(data){
       handleRefetch()
     }

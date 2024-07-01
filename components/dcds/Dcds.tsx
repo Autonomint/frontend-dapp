@@ -187,7 +187,7 @@ const Dcds = () => {
 
   const RefreshTableData = async() => {
     const res = await fetch(`${BACKEND_API_URL}/cds/${chainId}/${address}`)
-    return await res.json()
+    return res
   }
   const OnclickRefreshHandler = async() => {
     setTransform(true)
